@@ -9703,3 +9703,6 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+#toolkit-hero {
+  padding-top: 100px;   /* space below navbar */
+}
