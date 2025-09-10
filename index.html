@@ -562,6 +562,58 @@
 	  </div>
     </section>
 
+<section class="ftco-section" id="toolkit-section">
+  <div class="container">
+    <div class="row justify-content-center mb-5 pb-4">
+      <div class="col-md-8 heading-section text-center ftco-animate">
+        <h2 class="mb-4">My Cybersecurity Toolkit</h2>
+        <p>Curated resources I use for threat intel, blue-team analysis, and investigations.</p>
+      </div>
+    </div>
+
+    <style>
+      /* Toolkit glimpse styles (kept local to avoid breaking other pages) */
+      .tk-card { cursor:pointer; border-radius:16px; padding:24px; transition:transform .2s ease, box-shadow .2s ease; background:#ffffff10; }
+      .tk-card:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.15); }
+      .tk-icon { width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; background:#ffbd39; color:#111; }
+      .tk-icon .icon { font-size:26px; line-height:1; }
+      @media (prefers-color-scheme: dark){ .tk-card{background:#1a1a1a;} }
+    </style>
+
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-4 d-flex ftco-animate" onclick="location.href='toolkit.html#threat-feeds'">
+        <div class="blog-entry text-center tk-card">
+          <div class="tk-icon"><span class="icon-shield"></span></div>
+          <h3 class="heading mb-2">Threat Intel & Feeds</h3>
+          <p class="mb-0">OTX, Pulsedive, ThreatFox, URLHaus, Feodo…</p>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex ftco-animate" onclick="location.href='toolkit.html#domain-dns'">
+        <div class="blog-entry text-center tk-card">
+          <div class="tk-icon"><span class="icon-globe"></span></div>
+          <h3 class="heading mb-2">Domain, IP & DNS</h3>
+          <p class="mb-0">WHOIS, passive DNS, ASN, hosting intel.</p>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex ftco-animate" onclick="location.href='toolkit.html#malware-analysis'">
+        <div class="blog-entry text-center tk-card">
+          <div class="tk-icon"><span class="icon-activity"></span></div>
+          <h3 class="heading mb-2">Malware & URL Analysis</h3>
+          <p class="mb-0">Sandboxes, scanners, artifact triage.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-6 text-center">
+        <p><a href="toolkit.html" class="btn btn-primary py-3 px-5">Explore Full Toolkit</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+	  
 	<section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img" id="section-counter">
       <div class="container">
 		<div class="row d-md-flex align-items-center">
