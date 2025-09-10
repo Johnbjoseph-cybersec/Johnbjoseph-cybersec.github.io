@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>John B Joseph - Cybersecurity Toolkit</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Reuse your site stack -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+      /* Page-local styles */
+      .tool-card { border-radius: 16px; padding: 20px; background: #ffffff10; height: 100%; }
+      .tool-card h4 { margin-bottom: 10px; }
+      .tool-card ul { margin-bottom: 0; padding-left: 18px; }
+      .tool-card ul li { margin-bottom: 6px; }
+      .cat-title { display:flex; align-items:center; gap:.5rem; }
+      .cat-title .icon { font-size: 22px; }
+      .section-anchor { position: relative; top: -90px; visibility: hidden; }
+      .chip {
+        border:1px solid #ffbd39; color:#111; background:#ffbd39;
+        padding:6px 10px; border-radius:999px; font-weight:600;
+        cursor:pointer; margin:4px; display:inline-flex; align-items:center; gap:8px;
+      }
+      .chip.ghost { background:transparent; color:#ffbd39; }
+      .chip.active { box-shadow: 0 0 0 3px rgba(255,189,57,.25); }
+      .badge {
+        display:inline-block; padding:2px 8px; border-radius:999px;
+        background:#fff; color:#111; font-weight:700; font-size:12px;
+      }
+      .tk-search { border-radius:999px; padding:12px 18px; width:100%; border:1px solid #eee; }
+      .muted { opacity:.8; }
+      .hidden { display:none !important; }
+      @media (prefers-color-scheme: dark){
+        .tool-card{ background:#1a1a1a; }
+        .tk-search{ background:#0f0f0f; color:#fff; border-color:#222; }
+        .badge{ background:#222; color:#fff; }
+      }
+      /* responsive card grid */
+      .grid-3 { display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; }
+      @media (max-width: 991px){ .grid-3 { grid-template-columns: repeat(2, 1fr); } }
+      @media (max-width: 576px){ .grid-3 { grid-template-columns: 1fr; } }
+      /* tiny helper so li hide doesn't leave bullet gaps */
+      li.hidden { margin:0 !important; padding:0 !important; }
+    </style>
+  </head>
+
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="100" id="top">
+    <!-- NAV -->
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">John B Joseph</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav nav ml-auto">
+            <li class="nav-item"><a href="index.html#home-section" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="index.html#about-section" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="index.html#resume-section" class="nav-link">Resume</a></li>
+            <li class="nav-item"><a href="index.html#Certifications-section" class="nav-link">Certifications</a></li>
+            <li class="nav-item active"><a href="toolkit.html" class="nav-link">Toolkit</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HEADER -->
+    <section class="ftco-section pt-5">
+      <div class="container">
+        <div class="row justify-content-center mb-4">
+          <div class="col-md-10 text-center heading-section ftco-animate">
+            <h2 class="mb-3">My Cybersecurity Toolkit</h2>
+            <p class="muted">Everything I use for threat intel discovery, enrichment, and blue-team investigations—organized for speed.</p>
+          </div>
+        </div>
+
+        <!-- Quick jump + search/filter -->
+        <div class="row justify-content-center">
+          <div class="col-md-10 text-center">
+            <!-- Chips (category filters with live badges) -->
+            <div class="mb-3" id="chips">
+              <span class="chip active" data-chip="all">All <span class="badge" data-badge="all">0</span></span>
+              <span class="chip ghost" data-chip="threat-feeds">Threat Feeds <span class="badge" data-badge="threat-feeds">0</span></span>
+              <span class="chip ghost" data-chip="ti-platforms">TI Platforms <span class="badge" data-badge="ti-platforms">0</span></span>
+              <span class="chip ghost" data-chip="domain-dns">Domain/IP/DNS <span class="badge" data-badge="domain-dns">0</span></span>
+              <span class="chip ghost" data-chip="internet-scanners">Internet Scanners <span class="badge" data-badge="internet-scanners">0</span></span>
+              <span class="chip ghost" data-chip="certificates-ssl">Certificates & SSL <span class="badge" data-badge="certificates-ssl">0</span></span>
+              <span class="chip ghost" data-chip="malware-analysis">Malware <span class="badge" data-badge="malware-analysis">0</span></span>
+              <span class="chip ghost" data-chip="url-analysis">URL Analysis <span class="badge" data-badge="url-analysis">0</span></span>
+              <span class="chip ghost" data-chip="reputation">Reputation <span class="badge" data-badge="reputation">0</span></span>
+              <span class="chip ghost" data-chip="web-tech-osint">Web Tech OSINT <span class="badge" data-badge="web-tech-osint">0</span></span>
+              <span class="chip ghost" data-chip="vuln-exploit">Vulns & Exploits <span class="badge" data-badge="vuln-exploit">0</span></span>
+              <span class="chip ghost" data-chip="ransomware">Ransomware Intel <span class="badge" data-badge="ransomware">0</span></span>
+              <span class="chip ghost" data-chip="utilities">Utilities <span class="badge" data-badge="utilities">0</span></span>
+              <span class="chip ghost" data-chip="intel-blogs">Intel Blogs <span class="badge" data-badge="intel-blogs">0</span></span>
+            </div>
+
+            <!-- Search -->
+            <input type="search" id="search" class="tk-search" placeholder="Search tools (e.g., VirusTotal, OTX, Shodan, urlscan)…">
+            <p class="text-center mt-2 muted" id="resultCount"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTENT -->
+    <section class="ftco-section pt-4">
+      <div class="container" id="toolkitRoot">
+        <!-- Each category block gets data-cat and every link gets data-name + tooltip title -->
+
+        <!-- ================= THREAT FEEDS ================= -->
+        <span id="threat-feeds" class="section-anchor"></span>
+        <div class="row mb-4 cat" data-cat="threat-feeds" data-title="Threat Intelligence Feeds & IOC Sources">
+          <div class="col-md-12">
+            <h3 class="mb-3 cat-title"><span class="icon icon-bell"></span> Threat Intelligence Feeds & IOC Sources</h3>
+            <p class="mb-4">Live/community feeds for IPs, URLs, hashes, botnets, and phishing.</p>
+          </div>
+          <div class="col-md-12">
+            <div class="grid-3">
+              <div class="tool-card">
+                <h4>Community & Aggregators</h4>
+                <ul>
+                  <li><a href="https://otx.alienvault.com/" target="_blank" rel="noopener" data-name="AlienVault OTX" data-toggle="tooltip" title="Community-driven indicators, pulses, and exports">AlienVault OTX</a></li>
+                  <li><a href="https://pulsedive.com/" target="_blank" rel="noopener" data-name="Pulsedive" data-toggle="tooltip" title="IOC search, risk scoring, community feeds">Pulsedive</a></li>
+                  <li><a href="https://threatfox.abuse.ch/" target="_blank" rel="noopener" data-name="ThreatFox" data-toggle="tooltip" title="Fresh IOCs for active malware campaigns">ThreatFox</a></li>
+                  <li><a href="https://urlhaus.abuse.ch/" target="_blank" rel="noopener" data-name="URLHaus" data-toggle="tooltip" title="Malicious URL tracking and takedown collaboration">URLHaus</a></li>
+                  <li><a href="https://feodotracker.abuse.ch/" target="_blank" rel="noopener" data-name="Feodo Tracker" data-toggle="tooltip" title="Feodo/Botnet C2 trackers and blocklists">Feodo Tracker</a></li>
+                  <li><a href="https://sslbl.abuse.ch/" target="_blank" rel="noopener" data-name="SSLBL" data-toggle="tooltip" title="Malicious SSL fingerprints and JA3/JA3S">SSLBL</a></li>
+                  <li><a href="https://bazaar.abuse.ch/" target="_blank" rel="noopener" data-name="MalwareBazaar" data-toggle="tooltip" title="Hashes, samples, and malware families (research use)">MalwareBazaar</a></li>
+                  <li><a href="https://phishtank.org/" target="_blank" rel="noopener" data-name="PhishTank" data-toggle="tooltip" title="Community-submitted phishing URLs">PhishTank</a></li>
+                  <li><a href="https://threatminer.org/" target="_blank" rel="noopener" data-name="ThreatMiner" data-toggle="tooltip" title="IOC search with relations (domains, IPs, hashes, docs)">ThreatMiner</a></li>
+                  <li><a href="https://blocklist.de/en/" target="_blank" rel="noopener" data-name="blocklist.de" data-toggle="tooltip" title="Attackers reported by servers worldwide (IPs)">blocklist.de</a></li>
+                  <li><a href="https://www.spamhaus.org/" target="_blank" rel="noopener" data-name="Spamhaus" data-toggle="tooltip" title="Reputation data and blocklists (SBL/XBL/DBL)">Spamhaus</a></li>
+                  <li><a href="https://checkurl.phishtank.com/" target="_blank" rel="noopener" data-name="PhishTank CheckURL" data-toggle="tooltip" title="Quick check if a URL is in PhishTank database">PhishTank Check URL</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>Phishing Feeds</h4>
+                <ul>
+                  <li><a href="https://phishstats.info/" target="_blank" rel="noopener" data-name="PhishStats" data-toggle="tooltip" title="Live phishing domains, URLs, and brands">PhishStats</a></li>
+                  <li><a href="https://openphish.com/" target="_blank" rel="noopener" data-name="OpenPhish" data-toggle="tooltip" title="Automated phishing URL feed (free/community)">OpenPhish</a></li>
+                  <li><a href="https://phishtool.github.io/feeds/" target="_blank" rel="noopener" data-name="PhishTool Feeds" data-toggle="tooltip" title="Curated list of phishing and brand-abuse feeds">Phish feeds list</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>APT & Campaign Tracking</h4>
+                <ul>
+                  <li><a href="https://cybertracker.mandiant.com/" target="_blank" rel="noopener" data-name="Mandiant Cyber Threat Intelligence" data-toggle="tooltip" title="Mandiant reports and indicators (overview page)">Mandiant Intel (overview)</a></li>
+                  <li><a href="https://securelist.com/" target="_blank" rel="noopener" data-name="Kaspersky Securelist" data-toggle="tooltip" title="APT campaign write-ups and malware analysis">Securelist (Kaspersky)</a></li>
+                  <li><a href="https://apt.etda.or.th/cgi-bin/aptgroups.cgi" target="_blank" rel="noopener" data-name="ETDA APT groups" data-toggle="tooltip" title="Public index of APT groups and aliases">APT Groups Index</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= TI PLATFORMS ================= -->
+        <span id="ti-platforms" class="section-anchor"></span>
+        <div class="row mb-4 cat" data-cat="ti-platforms" data-title="Threat Intelligence Platforms">
+          <div class="col-md-12">
+            <h3 class="mb-3 cat-title"><span class="icon icon-layers"></span> Threat Intelligence Platforms (Self-Host & SaaS)</h3>
+            <p class="mb-4">Manage IOCs, relationships, and context. Build your own intel workflows.</p>
+          </div>
+          <div class="col-md-12">
+            <div class="grid-3">
+              <div class="tool-card">
+                <h4>Open Source / Self-Host</h4>
+                <ul>
+                  <li><a href="https://www.misp-project.org/" target="_blank" rel="noopener" data-name="MISP" data-toggle="tooltip" title="Open-source threat intel & sharing platform (STIX/TAXII)">MISP</a></li>
+                  <li><a href="https://www.opencti.io/" target="_blank" rel="noopener" data-name="OpenCTI" data-toggle="tooltip" title="Graph-based knowledge management with STIX 2.1">OpenCTI</a></li>
+                  <li><a href="https://yeti-platform.github.io/" target="_blank" rel="noopener" data-name="YETI" data-toggle="tooltip" title="Track adversaries, indicators, and TTPs">YETI</a></li>
+                  <li><a href="https://intelmq.readthedocs.io/" target="_blank" rel="noopener" data-name="IntelMQ" data-toggle="tooltip" title="Automate ingestion and processing of threat data">IntelMQ</a></li>
+                  <li><a href="https://github.com/certtools/intelmq-manager" target="_blank" rel="noopener" data-name="IntelMQ Manager" data-toggle="tooltip" title="Web UI for IntelMQ pipelines and bots">IntelMQ Manager</a></li>
+                  <li><a href="https://github.com/certtools/intelmq-fody" target="_blank" rel="noopener" data-name="IntelMQ Fody" data-toggle="tooltip" title="Frontend for browsing IntelMQ data">IntelMQ Fody</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>Hosted / Community</h4>
+                <ul>
+                  <li><a href="https://xforce.ibmcloud.com/" target="_blank" rel="noopener" data-name="IBM X-Force Exchange" data-toggle="tooltip" title="IOC search, collections, and reports">IBM X-Force Exchange</a></li>
+                  <li><a href="https://talosintelligence.com/" target="_blank" rel="noopener" data-name="Cisco Talos Intelligence" data-toggle="tooltip" title="Reputation center and intel reports">Cisco Talos Intelligence</a></li>
+                  <li><a href="https://community.riskiq.com/" target="_blank" rel="noopener" data-name="RiskIQ Community" data-toggle="tooltip" title="Passive data, trackers, components (free tier)">RiskIQ Community</a></li>
+                  <li><a href="https://maltiverse.com/" target="_blank" rel="noopener" data-name="Maltiverse" data-toggle="tooltip" title="IOC reputation and enrichment platform">Maltiverse</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>Standards & Exchange</h4>
+                <ul>
+                  <li><a href="https://oasis-open.github.io/cti-documentation/" target="_blank" rel="noopener" data-name="STIX and TAXII" data-toggle="tooltip" title="Structured Threat Information eXpression & TAXII transport">STIX & TAXII</a></li>
+                  <li><a href="https://github.com/MISP/misp-modules" target="_blank" rel="noopener" data-name="MISP Modules" data-toggle="tooltip" title="Enrichment, export, and integration modules">MISP Modules</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= DOMAIN / DNS ================= -->
+        <span id="domain-dns" class="section-anchor"></span>
+        <div class="row mb-4 cat" data-cat="domain-dns" data-title="Domain, IP & DNS">
+          <div class="col-md-12">
+            <h3 class="mb-3 cat-title"><span class="icon icon-globe"></span> Domain, IP & DNS</h3>
+            <p class="mb-4">WHOIS, DNS history, passive DNS, hosting, mail hygiene, and ASN intel.</p>
+          </div>
+          <div class="col-md-12">
+            <div class="grid-3">
+              <div class="tool-card">
+                <h4>WHOIS & DNS</h4>
+                <ul>
+                  <li><a href="https://who.is/" target="_blank" rel="noopener" data-name="Who.is" data-toggle="tooltip" title="Simple WHOIS lookups for domains and IPs">Who.is</a></li>
+                  <li><a href="https://viewdns.info/" target="_blank" rel="noopener" data-name="ViewDNS" data-toggle="tooltip" title="DNS toolkit: history, reverse, propagation, etc.">ViewDNS</a></li>
+                  <li><a href="https://dnslytics.com/" target="_blank" rel="noopener" data-name="DNSlytics" data-toggle="tooltip" title="PTR, MX, SPF, ASN and IP tools">DNSlytics</a></li>
+                  <li><a href="https://securitytrails.com/" target="_blank" rel="noopener" data-name="SecurityTrails" data-toggle="tooltip" title="Historical DNS, hosts, and subdomains (free tier)">SecurityTrails</a></li>
+                  <li><a href="https://robtex.com/" target="_blank" rel="noopener" data-name="Robtex" data-toggle="tooltip" title="DNS graphs, shared hosting, and IP relationships">Robtex</a></li>
+                  <li><a href="https://www.whoxy.com/" target="_blank" rel="noopener" data-name="Whoxy" data-toggle="tooltip" title="WHOIS history and reverse WHOIS (limited free)">Whoxy</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>IP Info, ASN & Routing</h4>
+                <ul>
+                  <li><a href="https://ipinfo.io/" target="_blank" rel="noopener" data-name="ipinfo.io" data-toggle="tooltip" title="Ownership, ASN, geolocation, hosting">ipinfo.io</a></li>
+                  <li><a href="https://bgp.he.net/" target="_blank" rel="noopener" data-name="Hurricane Electric BGP" data-toggle="tooltip" title="ASNs, prefixes, peers, and resources">Hurricane Electric BGP</a></li>
+                  <li><a href="https://stat.ripe.net/" target="_blank" rel="noopener" data-name="RIPEstat" data-toggle="tooltip" title="Routing, prefixes, and reputation for IP/ASN (RIPE)">RIPEstat</a></li>
+                  <li><a href="https://radar.cloudflare.com/" target="_blank" rel="noopener" data-name="Cloudflare Radar" data-toggle="tooltip" title="Internet trends, outages, and ASN intel">Cloudflare Radar</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>Passive DNS / Infra / Mail</h4>
+                <ul>
+                  <li><a href="https://passivedns.mnemonic.no/" target="_blank" rel="noopener" data-name="mnemonic PassiveDNS" data-toggle="tooltip" title="Public passive DNS search (historical)">mnemonic PassiveDNS</a></li>
+                  <li><a href="https://dnsdumpster.com/" target="_blank" rel="noopener" data-name="DNSDumpster" data-toggle="tooltip" title="Subdomain discovery and mapping">DNSDumpster</a></li>
+                  <li><a href="https://crt.sh/" target="_blank" rel="noopener" data-name="crt.sh" data-toggle="tooltip" title="Certificate Transparency search (great for subdomains)">crt.sh</a></li>
+                  <li><a href="https://mxtoolbox.com/" target="_blank" rel="noopener" data-name="MXToolbox" data-toggle="tooltip" title="DNS/MX/SPF/DMARC tools and BL checks">MXToolbox</a></li>
+                  <li><a href="https://dnsviz.net/" target="_blank" rel="noopener" data-name="DNSViz" data-toggle="tooltip" title="Visualize and troubleshoot DNSSEC and DNS issues">DNSViz</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= INTERNET SCANNERS ================= -->
+        <span id="internet-scanners" class="section-anchor"></span>
+        <div class="row mb-4 cat" data-cat="internet-scanners" data-title="Internet-Exposed Services & Noise">
+          <div class="col-md-12">
+            <h3 class="mb-3 cat-title"><span class="icon icon-rocket"></span> Internet-Exposed Services & Noise</h3>
+            <p class="mb-4">Find exposed services, fingerprints, and background scanner noise.</p>
+          </div>
+          <div class="col-md-12">
+            <div class="grid-3">
+              <div class="tool-card">
+                <h4>Device Search</h4>
+                <ul>
+                  <li><a href="https://www.shodan.io/" target="_blank" rel="noopener" data-name="Shodan" data-toggle="tooltip" title="Search Internet-connected devices and banners">Shodan</a></li>
+                  <li><a href="https://search.censys.io/" target="_blank" rel="noopener" data-name="Censys" data-toggle="tooltip" title="Scan data for hosts and certificates">Censys</a></li>
+                  <li><a href="https://www.zoomeye.org/" target="_blank" rel="noopener" data-name="ZoomEye" data-toggle="tooltip" title="Global cyberspace search for services and devices">ZoomEye</a></li>
+                  <li><a href="https://www.binaryedge.io/" target="_blank" rel="noopener" data-name="BinaryEdge" data-toggle="tooltip" title="Attack surface and exposure intelligence">BinaryEdge</a></li>
+                  <li><a href="https://fofa.info/" target="_blank" rel="noopener" data-name="FOFA" data-toggle="tooltip" title="Fingerprints of assets and services on the Internet">FOFA</a></li>
+                  <li><a href="https://leakix.net/" target="_blank" rel="noopener" data-name="LeakIX" data-toggle="tooltip" title="Index of misconfigurations and public leaks">LeakIX</a></li>
+                  <li><a href="https://www.onyphe.io/" target="_blank" rel="noopener" data-name="Onyphe" data-toggle="tooltip" title="Cybersecurity data search across multiple sensors">Onyphe</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>Internet Noise & Reputation</h4>
+                <ul>
+                  <li><a href="https://viz.greynoise.io/" target="_blank" rel="noopener" data-name="GreyNoise" data-toggle="tooltip" title="Background scanner noise and benign vs. malicious">GreyNoise</a></li>
+                  <li><a href="https://abuseipdb.com/" target="_blank" rel="noopener" data-name="AbuseIPDB" data-toggle="tooltip" title="Crowdsourced reports of abusive IP addresses">AbuseIPDB</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>Ports, Banners & Dorks</h4>
+                <ul>
+                  <li><a href="https://www.shodan.io/search/facet?query=*&facet=port" target="_blank" rel="noopener" data-name="Shodan Ports" data-toggle="tooltip" title="Shodan port facets to explore exposed services">Shodan Ports</a></li>
+                  <li><a href="https://search.censys.io/hosts" target="_blank" rel="noopener" data-name="Censys Hosts" data-toggle="tooltip" title="Advanced host banner queries and filters">Censys Hosts</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= CERTIFICATES / SSL ================= -->
+        <span id="certificates-ssl" class="section-anchor"></span>
+        <div class="row mb-4 cat" data-cat="certificates-ssl" data-title="Certificates, CT Logs & SSL">
+          <div class="col-md-12">
+            <h3 class="mb-3 cat-title"><span class="icon icon-lock"></span> Certificates, CT Logs & SSL</h3>
+            <p class="mb-4">Hunt subdomains and check TLS health and policies.</p>
+          </div>
+          <div class="col-md-12">
+            <div class="grid-3">
+              <div class="tool-card">
+                <h4>CT & Certificates</h4>
+                <ul>
+                  <li><a href="https://crt.sh/" target="_blank" rel="noopener" data-name="crt.sh" data-toggle="tooltip" title="Certificate Transparency search for domains and orgs">crt.sh</a></li>
+                  <li><a href="https://search.censys.io/certificates" target="_blank" rel="noopener" data-name="Censys Certificates" data-toggle="tooltip" title="Inventory and analyze certificates at scale">Censys Certificates</a></li>
+                  <li><a href="https://certspotter.com/" target="_blank" rel="noopener" data-name="Cert Spotter" data-toggle="tooltip" title="CT monitoring and alerts for your domains">Cert Spotter</a></li>
+                  <li><a href="https://certstream.calidog.io/" target="_blank" rel="noopener" data-name="Certstream" data-toggle="tooltip" title="Real-time stream of CT logs (developers)">Certstream</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>TLS Health</h4>
+                <ul>
+                  <li><a href="https://www.ssllabs.com/ssltest/" target="_blank" rel="noopener" data-name="SSL Labs Server Test" data-toggle="tooltip" title="Deep SSL/TLS configuration test">SSL Labs Server Test</a></li>
+                  <li><a href="https://www.hardenize.com/" target="_blank" rel="noopener" data-name="Hardenize" data-toggle="tooltip" title="Broad HTTPS/TLS and email posture checks">Hardenize</a></li>
+                  <li><a href="https://securityheaders.com/" target="_blank" rel="noopener" data-name="SecurityHeaders" data-toggle="tooltip" title="Analyze HTTP security headers quickly">SecurityHeaders</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>DNS & Policy</h4>
+                <ul>
+                  <li><a href="https://dnsviz.net/" target="_blank" rel="noopener" data-name="DNSViz" data-toggle="tooltip" title="Visualize DNS and DNSSEC deployment issues">DNSViz</a></li>
+                  <li><a href="https://mxtoolbox.com/DMARC.aspx" target="_blank" rel="noopener" data-name="MXToolbox DMARC" data-toggle="tooltip" title="Check DMARC, SPF, and DKIM quickly">DMARC Check</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= MALWARE ================= -->
+        <span id="malware-analysis" class="section-anchor"></span>
+        <div class="row mb-4 cat" data-cat="malware-analysis" data-title="Malware & Sandbox Analysis">
+          <div class="col-md-12">
+            <h3 class="mb-3 cat-title"><span class="icon icon-bug"></span> Malware & Sandbox Analysis</h3>
+            <p class="mb-4">Detonate safely and triage artifacts. <strong>Handle samples only in a lab VM.</strong></p>
+          </div>
+          <div class="col-md-12">
+            <div class="grid-3">
+              <div class="tool-card">
+                <h4>Dynamic Sandboxes</h4>
+                <ul>
+                  <li><a href="https://any.run/" target="_blank" rel="noopener" data-name="ANY.RUN" data-toggle="tooltip" title="Interactive sandbox for files and URLs">ANY.RUN</a></li>
+                  <li><a href="https://www.hybrid-analysis.com/" target="_blank" rel="noopener" data-name="Hybrid Analysis" data-toggle="tooltip" title="Automated dynamic analysis with community reports">Hybrid Analysis</a></li>
+                  <li><a href="https://tria.ge/" target="_blank" rel="noopener" data-name="Hatching Triage" data-toggle="tooltip" title="Fast detonation with tags, configs, and IOCs">Hatching Triage</a></li>
+                  <li><a href="https://www.joesecurity.org/joe-sandbox-cloud-basic" target="_blank" rel="noopener" data-name="Joe Sandbox" data-toggle="tooltip" title="Cloud sandbox with deep behavior analysis (free tier)">Joe Sandbox (free)</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>Static & Family Intel</h4>
+                <ul>
+                  <li><a href="https://www.virustotal.com/" target="_blank" rel="noopener" data-name="VirusTotal" data-toggle="tooltip" title="Multi-AV scan with behavior, relations, and telemetry">VirusTotal</a></li>
+                  <li><a href="https://www.unpac.me/" target="_blank" rel="noopener" data-name="UnpacMe" data-toggle="tooltip" title="Unpack packed samples and view extracted code">UnpacMe</a></li>
+                  <li><a href="https://www.intezer.com/" target="_blank" rel="noopener" data-name="Intezer Analyze" data-toggle="tooltip" title="Code reuse and family genealogy analysis">Intezer Analyze</a></li>
+                  <li><a href="https://cape.contextis.com/" target="_blank" rel="noopener" data-name="CAPE Sandbox" data-toggle="tooltip" title="Config extraction and family identification">CAPE Sandbox</a></li>
+                  <li><a href="https://malpedia.caad.fkie.fraunhofer.de/" target="_blank" rel="noopener" data-name="Malpedia" data-toggle="tooltip" title="Curated malware families, YARA, and references">Malpedia</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>Hash & Sample Lookup</h4>
+                <ul>
+                  <li><a href="https://bazaar.abuse.ch/" target="_blank" rel="noopener" data-name="MalwareBazaar" data-toggle="tooltip" title="Sample hashes and downloads for research">MalwareBazaar</a></li>
+                  <li><a href="https://malshare.com/" target="_blank" rel="noopener" data-name="MalShare" data-toggle="tooltip" title="Community malware repository (registration)">MalShare</a></li>
+                  <li><a href="https://www.virustotal.com/gui/home/search" target="_blank" rel="noopener" data-name="VT Hash Search" data-toggle="tooltip" title="Search by SHA256/MD5/SHA1">VT Hash Search</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= URL ANALYSIS ================= -->
+        <span id="url-analysis" class="section-anchor"></span>
+        <div class="row mb-4 cat" data-cat="url-analysis" data-title="URL & Website Analysis">
+          <div class="col-md-12">
+            <h3 class="mb-3 cat-title"><span class="icon icon-link"></span> URL & Website Analysis</h3>
+            <p class="mb-4">Scan, crawl, capture, and fingerprint web artifacts.</p>
+          </div>
+          <div class="col-md-12">
+            <div class="grid-3">
+              <div class="tool-card">
+                <h4>Scanners & Crawlers</h4>
+                <ul>
+                  <li><a href="https://urlscan.io/" target="_blank" rel="noopener" data-name="urlscan.io" data-toggle="tooltip" title="Crawl URLs: requests, JS, and screenshots">urlscan.io</a></li>
+                  <li><a href="https://sitecheck.sucuri.net/" target="_blank" rel="noopener" data-name="Sucuri SiteCheck" data-toggle="tooltip" title="External site malware/blacklist scan">Sucuri SiteCheck</a></li>
+                  <li><a href="https://transparencyreport.google.com/safe-browsing/search" target="_blank" rel="noopener" data-name="Google Safe Browsing" data-toggle="tooltip" title="URL status against Google blocklists">Google Safe Browsing</a></li>
+                  <li><a href="https://www.urlvoid.com/" target="_blank" rel="noopener" data-name="URLVoid" data-toggle="tooltip" title="Aggregate domain/URL reputation checks">URLVoid</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>History & Capture</h4>
+                <ul>
+                  <li><a href="https://web.archive.org/" target="_blank" rel="noopener" data-name="Wayback Machine" data-toggle="tooltip" title="Historical snapshots of websites">Wayback Machine</a></li>
+                  <li><a href="https://archive.today/" target="_blank" rel="noopener" data-name="archive.today" data-toggle="tooltip" title="Create immutable captures of pages">archive.today</a></li>
+                  <li><a href="https://netograph.io/" target="_blank" rel="noopener" data-name="Netograph" data-toggle="tooltip" title="Track and diff page changes over time">Netograph</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>Headers & Tech</h4>
+                <ul>
+                  <li><a href="https://securityheaders.com/" target="_blank" rel="noopener" data-name="SecurityHeaders" data-toggle="tooltip" title="Analyze HTTP security headers quickly">SecurityHeaders</a></li>
+                  <li><a href="https://builtwith.com/" target="_blank" rel="noopener" data-name="BuiltWith" data-toggle="tooltip" title="Detect tech stacks, analytics, and trackers">BuiltWith</a></li>
+                  <li><a href="https://www.wappalyzer.com/" target="_blank" rel="noopener" data-name="Wappalyzer" data-toggle="tooltip" title="Fingerprint CMS, JS libraries, frameworks">Wappalyzer</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= REPUTATION ================= -->
+        <span id="reputation" class="section-anchor"></span>
+        <div class="row mb-4 cat" data-cat="reputation" data-title="Reputation & Indicator Enrichment">
+          <div class="col-md-12">
+            <h3 class="mb-3 cat-title"><span class="icon icon-star"></span> Reputation & Indicator Enrichment</h3>
+            <p class="mb-4">Cross-check verdicts and enrich context for domains, IPs, and files.</p>
+          </div>
+          <div class="col-md-12">
+            <div class="grid-3">
+              <div class="tool-card">
+                <h4>Reputation Portals</h4>
+                <ul>
+                  <li><a href="https://talosintelligence.com/reputation_center" target="_blank" rel="noopener" data-name="Cisco Talos Reputation" data-toggle="tooltip" title="IP/Domain reputation verdicts and categories">Cisco Talos Reputation</a></li>
+                  <li><a href="https://xforce.ibmcloud.com/" target="_blank" rel="noopener" data-name="IBM X-Force Exchange" data-toggle="tooltip" title="Reputation, whois, DNS, malware details">IBM X-Force Exchange</a></li>
+                  <li><a href="https://www.fortiguard.com/" target="_blank" rel="noopener" data-name="FortiGuard" data-toggle="tooltip" title="Web filter categories and IP reputation">FortiGuard</a></li>
+                  <li><a href="https://metadefender.opswat.com/" target="_blank" rel="noopener" data-name="MetaDefender Cloud" data-toggle="tooltip" title="Multi-scan files/URLs with deep CDR">MetaDefender Cloud</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>Relations & Intel</h4>
+                <ul>
+                  <li><a href="https://www.virustotal.com/" target="_blank" rel="noopener" data-name="VirusTotal" data-toggle="tooltip" title="Relations graph and telemetry across datasets">VirusTotal</a></li>
+                  <li><a href="https://community.riskiq.com/" target="_blank" rel="noopener" data-name="RiskIQ Community" data-toggle="tooltip" title="Trackers, components, and infrastructure mapping">RiskIQ Community</a></li>
+                  <li><a href="https://securitytrails.com/" target="_blank" rel="noopener" data-name="SecurityTrails" data-toggle="tooltip" title="Historical hosts, DNS, and related artifacts">SecurityTrails</a></li>
+                  <li><a href="https://threatcrowd.org/" target="_blank" rel="noopener" data-name="ThreatCrowd" data-toggle="tooltip" title="Crowd-sourced entity relations (legacy but useful)">ThreatCrowd</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>Email/Host Hygiene</h4>
+                <ul>
+                  <li><a href="https://multirbl.valli.org/lookup/" target="_blank" rel="noopener" data-name="MultiRBL" data-toggle="tooltip" title="Check multiple DNSBLs for a host/IP">MultiRBL</a></li>
+                  <li><a href="https://talosintelligence.com/soho" target="_blank" rel="noopener" data-name="Talos Reputation Lookup" data-toggle="tooltip" title="Email/host reputation checks (SOHO)">Talos Email/Host Rep</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= WEB TECH OSINT ================= -->
+        <span id="web-tech-osint" class="section-anchor"></span>
+        <div class="row mb-4 cat" data-cat="web-tech-osint" data-title="Web Tech OSINT">
+          <div class="col-md-12">
+            <h3 class="mb-3 cat-title"><span class="icon icon-cog"></span> Web Tech OSINT (No People OSINT)</h3>
+            <p class="mb-4">Fingerprint stacks and hosting to support investigations.</p>
+          </div>
+          <div class="col-md-12">
+            <div class="grid-3">
+              <div class="tool-card">
+                <h4>Tech Fingerprinting</h4>
+                <ul>
+                  <li><a href="https://builtwith.com/" target="_blank" rel="noopener" data-name="BuiltWith" data-toggle="tooltip" title="Tech stacks, analytics, and trackers">BuiltWith</a></li>
+                  <li><a href="https://www.wappalyzer.com/" target="_blank" rel="noopener" data-name="Wappalyzer" data-toggle="tooltip" title="CMS, frameworks, JS libraries">Wappalyzer</a></li>
+                  <li><a href="https://snyk.io/advisor/" target="_blank" rel="noopener" data-name="Snyk Advisor" data-toggle="tooltip" title="Package intelligence and vulnerabilities">Snyk Advisor</a></li>
+                </ul>
+              </div>
+              <div class="tool-card">
+                <h4>Footprinting & Hosting</h4>
+                <ul>
+                  <li><a href="https://www.netcraft.com/" target="_blank" rel="noopener" data-name="Netcraft" data-toggle="tooltip" title="Site reports and hosting footprint">Netcraft</a></li>
+                  <li><a href="https://www.ssllabs.com/ssltest/" target="_blank" rel="noopener" data-name="SSL Labs" data-toggle="tooltip" title="TLS posture and grade">SSL Labs</a></li>
+                  <li><a href="https://radar.cloudflare.com/" target="_blank" rel="noopener" data-name="Cloudflare Radar" data-toggle="tooltip" title="ASN insights and Internet trends">Cloudflare Radar</a></li>
+                </ul>
+              </div>
+              <div class="tool-card">
+                <h4>Headers & Policies</h4>
+                <ul>
+                  <li><a href="https://securityheaders.com/" target="_blank" rel="noopener" data-name="SecurityHeaders" data-toggle="tooltip" title="Quick HTTP header checks and grades">SecurityHeaders</a></li>
+                  <li><a href="https://observatory.mozilla.org/" target="_blank" rel="noopener" data-name="Mozilla Observatory" data-toggle="tooltip" title="Automated site tests for HTTPS, headers, and TLS">Mozilla Observatory</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= VULNS & EXPLOITS (NEW) ================= -->
+        <span id="vuln-exploit" class="section-anchor"></span>
+        <div class="row mb-4 cat" data-cat="vuln-exploit" data-title="Vulnerabilities & Exploits">
+          <div class="col-md-12">
+            <h3 class="mb-3 cat-title"><span class="icon icon-alert-triangle"></span> Vulnerabilities & Exploits</h3>
+            <p class="mb-4">Track CVEs, KEV, advisories, and public exploits to enrich TI.</p>
+          </div>
+          <div class="col-md-12">
+            <div class="grid-3">
+              <div class="tool-card">
+                <h4>Catalogs & Feeds</h4>
+                <ul>
+                  <li><a href="https://www.cve.org/" target="_blank" rel="noopener" data-name="CVE.org" data-toggle="tooltip" title="Official CVE listings and records">CVE.org</a></li>
+                  <li><a href="https://nvd.nist.gov/vuln" target="_blank" rel="noopener" data-name="NVD" data-toggle="tooltip" title="NIST NVD with CVSS scoring and CPEs">NVD (NIST)</a></li>
+                  <li><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener" data-name="CISA KEV" data-toggle="tooltip" title="Authoritative list of known exploited vulnerabilities">CISA KEV Catalog</a></li>
+                </ul>
+              </div>
+              <div class="tool-card">
+                <h4>Exploits & POCs</h4>
+                <ul>
+                  <li><a href="https://www.exploit-db.com/" target="_blank" rel="noopener" data-name="Exploit DB" data-toggle="tooltip" title="Public exploits, shellcodes, and papers">Exploit-DB</a></li>
+                  <li><a href="https://github.com/nomi-sec/PoC-in-GitHub" target="_blank" rel="noopener" data-name="PoC in GitHub" data-toggle="tooltip" title="Daily GitHub PoCs for CVEs">PoC in GitHub</a></li>
+                  <li><a href="https://packetstormsecurity.com/files/" target="_blank" rel="noopener" data-name="Packet Storm" data-toggle="tooltip" title="Exploits, advisories, and tools">Packet Storm</a></li>
+                </ul>
+              </div>
+              <div class="tool-card">
+                <h4>Advisories</h4>
+                <ul>
+                  <li><a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener" data-name="Microsoft MSRC" data-toggle="tooltip" title="Patch Tuesday and CVE guidance">Microsoft MSRC</a></li>
+                  <li><a href="https://www.redhat.com/en/blog/category/security" target="_blank" rel="noopener" data-name="Red Hat Security" data-toggle="tooltip" title="Linux advisories and guidance">Red Hat Security</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= RANSOMWARE INTEL (NEW) ================= -->
+        <span id="ransomware" class="section-anchor"></span>
+        <div class="row mb-4 cat" data-cat="ransomware" data-title="Ransomware Intel">
+          <div class="col-md-12">
+            <h3 class="mb-3 cat-title"><span class="icon icon-lock"></span> Ransomware Intel</h3>
+            <p class="mb-4">Track groups, leaks, and identifiers to speed incident triage.</p>
+          </div>
+          <div class="col-md-12">
+            <div class="grid-3">
+              <div class="tool-card">
+                <h4>Trackers & Feeds</h4>
+                <ul>
+                  <li><a href="https://ransomware.live/" target="_blank" rel="noopener" data-name="ransomware.live" data-toggle="tooltip" title="Live dashboard of ransomware groups and victims">ransomware.live</a></li>
+                  <li><a href="https://ransomlook.io/" target="_blank" rel="noopener" data-name="RansomLook" data-toggle="tooltip" title="Aggregates ransomware data and leak sites">RansomLook</a></li>
+                </ul>
+              </div>
+              <div class="tool-card">
+                <h4>Identification</h4>
+                <ul>
+                  <li><a href="https://id-ransomware.malwarehunterteam.com/" target="_blank" rel="noopener" data-name="ID Ransomware" data-toggle="tooltip" title="Identify ransomware by note or sample markers">ID Ransomware</a></li>
+                  <li><a href="https://www.nomoreransom.org/en/decryption-tools.html" target="_blank" rel="noopener" data-name="No More Ransom" data-toggle="tooltip" title="Official decryptors for certain ransomware families">No More Ransom</a></li>
+                </ul>
+              </div>
+              <div class="tool-card">
+                <h4>Advisories & Reports</h4>
+                <ul>
+                  <li><a href="https://www.cisa.gov/stopransomware" target="_blank" rel="noopener" data-name="CISA Stop Ransomware" data-toggle="tooltip" title="Guidance, advisories, and TTPs for ransomware">CISA Stop Ransomware</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= UTILITIES ================= -->
+        <span id="utilities" class="section-anchor"></span>
+        <div class="row mb-4 cat" data-cat="utilities" data-title="Analyst Utilities">
+          <div class="col-md-12">
+            <h3 class="mb-3 cat-title"><span class="icon icon-tools"></span> Analyst Utilities</h3>
+            <p class="mb-4">Everyday helpers for decoding, parsing, and quick analysis.</p>
+          </div>
+          <div class="col-md-12">
+            <div class="grid-3">
+              <div class="tool-card">
+                <h4>Decoders & Parsers</h4>
+                <ul>
+                  <li><a href="https://gchq.github.io/CyberChef/" target="_blank" rel="noopener" data-name="CyberChef" data-toggle="tooltip" title="Swiss-army knife for encodings, crypto, and transforms">CyberChef</a></li>
+                  <li><a href="https://www.base64decode.org/" target="_blank" rel="noopener" data-name="Base64 decode/encode" data-toggle="tooltip" title="Quick base64 conversions">Base64 Decode/Encode</a></li>
+                  <li><a href="https://regex101.com/" target="_blank" rel="noopener" data-name="regex101" data-toggle="tooltip" title="Build and test regular expressions">regex101</a></li>
+                  <li><a href="https://www.urlencoder.org/" target="_blank" rel="noopener" data-name="URL Encoder Decoder" data-toggle="tooltip" title="URL encode/decode utility">URL Encoder/Decoder</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>File & Hash Tools</h4>
+                <ul>
+                  <li><a href="https://www.virustotal.com/gui/home/search" target="_blank" rel="noopener" data-name="VT Hash Search" data-toggle="tooltip" title="Search VT by hash, domain, IP, or URL">VT Hash/IOC Search</a></li>
+                  <li><a href="https://www.winitor.com/" target="_blank" rel="noopener" data-name="PEstudio" data-toggle="tooltip" title="Static analysis of Windows PE headers">PEstudio</a></li>
+                  <li><a href="https://pefile.readthedocs.io/" target="_blank" rel="noopener" data-name="pefile" data-toggle="tooltip" title="Python library for parsing PE files">pefile (docs)</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>Network & PCAP</h4>
+                <ul>
+                  <li><a href="https://www.wireshark.org/" target="_blank" rel="noopener" data-name="Wireshark" data-toggle="tooltip" title="Deep packet inspection and protocol analysis">Wireshark</a></li>
+                  <li><a href="https://apackets.com/tools" target="_blank" rel="noopener" data-name="APackets tools" data-toggle="tooltip" title="Small online PCAP utilities and helpers">APackets Tools</a></li>
+                  <li><a href="https://www.tcpdump.org/" target="_blank" rel="noopener" data-name="tcpdump" data-toggle="tooltip" title="CLI packet capture with BPF filters">tcpdump</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= INTEL BLOGS ================= -->
+        <span id="intel-blogs" class="section-anchor"></span>
+        <div class="row mb-4 cat" data-cat="intel-blogs" data-title="Threat Intel Reports & Blogs">
+          <div class="col-md-12">
+            <h3 class="mb-3 cat-title"><span class="icon icon-book"></span> Threat Intel Reports & Blogs</h3>
+            <p class="mb-4">Follow current campaigns, tradecraft, and detections.</p>
+          </div>
+          <div class="col-md-12">
+            <div class="grid-3">
+              <div class="tool-card">
+                <h4>Vendors & Research</h4>
+                <ul>
+                  <li><a href="https://www.mandiant.com/resources/blog" target="_blank" rel="noopener" data-name="Mandiant Blog" data-toggle="tooltip" title="Frontline incident response and intel">Mandiant Blog</a></li>
+                  <li><a href="https://www.paloaltonetworks.com/blog/security-research/" target="_blank" rel="noopener" data-name="Unit 42 (Palo Alto)" data-toggle="tooltip" title="Deep CTI investigations and malware">Unit 42 (Palo Alto)</a></li>
+                  <li><a href="https://www.crowdstrike.com/blog/" target="_blank" rel="noopener" data-name="CrowdStrike Blog" data-toggle="tooltip" title="Threat hunting and actor profiles">CrowdStrike Blog</a></li>
+                  <li><a href="https://www.talosintelligence.com/blog" target="_blank" rel="noopener" data-name="Cisco Talos Blog" data-toggle="tooltip" title="Research, coverage, and case studies">Cisco Talos Blog</a></li>
+                  <li><a href="https://www.microsoft.com/security/blog/" target="_blank" rel="noopener" data-name="Microsoft Security Blog" data-toggle="tooltip" title="Defender telemetry and actor reporting">Microsoft Security Blog</a></li>
+                  <li><a href="https://www.welivesecurity.com/en/" target="_blank" rel="noopener" data-name="ESET WeLiveSecurity" data-toggle="tooltip" title="ESET research, campaigns, and malware">ESET WeLiveSecurity</a></li>
+                  <li><a href="https://research.checkpoint.com/" target="_blank" rel="noopener" data-name="Check Point Research" data-toggle="tooltip" title="Analyst write-ups and threat reports">Check Point Research</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>Practitioner Reads</h4>
+                <ul>
+                  <li><a href="https://thedfirreport.com/" target="_blank" rel="noopener" data-name="The DFIR Report" data-toggle="tooltip" title="Intrusion write-ups with IOCs and detections">The DFIR Report</a></li>
+                  <li><a href="https://www.bleepingcomputer.com/" target="_blank" rel="noopener" data-name="BleepingComputer" data-toggle="tooltip" title="Timely security news and advisories">BleepingComputer</a></li>
+                  <li><a href="https://www.sans.org/blog/" target="_blank" rel="noopener" data-name="SANS Blog" data-toggle="tooltip" title="Applied detection, IR, and forensics content">SANS Blog</a></li>
+                  <li><a href="https://www.reddit.com/r/blueteamsec/" target="_blank" rel="noopener" data-name="r/blueteamsec" data-toggle="tooltip" title="Community curation of blue-team content">r/blueteamsec</a></li>
+                </ul>
+              </div>
+
+              <div class="tool-card">
+                <h4>Advisories</h4>
+                <ul>
+                  <li><a href="https://www.cisa.gov/news-events/cybersecurity-advisories" target="_blank" rel="noopener" data-name="CISA Advisories" data-toggle="tooltip" title="US-CERT alerts and mitigations">CISA Advisories</a></li>
+                  <li><a href="https://msrc.microsoft.com/update-guide" target="_blank" rel="noopener" data-name="Microsoft MSRC" data-toggle="tooltip" title="Microsoft patch guidance and CVEs">Microsoft MSRC</a></li>
+                  <li><a href="https://www.cert.europa.eu/publications" target="_blank" rel="noopener" data-name="CERT-EU Publications" data-toggle="tooltip" title="EU advisories and situational awareness">CERT-EU Publications</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Back to top -->
+        <div class="row mt-4">
+          <div class="col text-center">
+            <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});" class="btn btn-primary">Back to Top</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="ftco-footer ftco-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>&copy;<script>document.write(new Date().getFullYear());</script> John B Joseph. All rights reserved</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts (reuse your site JS stack) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/scrollax.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <!-- Search, Filter, Tooltips, and Live Chip Badges -->
+    <script>
+      (function(){
+        const $ = window.jQuery;
+        const search = document.getElementById('search');
+        const chips = document.getElementById('chips');
+        const cats  = Array.from(document.querySelectorAll('.cat'));
+        const resultCount = document.getElementById('resultCount');
+        let activeCat = 'all';
+
+        // Enable Bootstrap tooltips for all tool links
+        $(function(){ $('[data-toggle="tooltip"]').tooltip({container:'body'}); });
+
+        function normalize(s){ return (s||'').toLowerCase().trim(); }
+
+        function linksInCat(catEl){
+          return Array.from(catEl.querySelectorAll('a[data-name]'));
+        }
+
+        function setBadge(catKey, value){
+          const badge = document.querySelector('.badge[data-badge="'+catKey+'"]');
+          if(badge) badge.textContent = value;
+        }
+
+        function countVisibleLinks(catEl){
+          return linksInCat(catEl).filter(a => !a.parentElement.classList.contains('hidden') && !a.closest('.tool-card').classList.contains('hidden')).length;
+        }
+
+        function totalLinksInCat(catEl){
+          return linksInCat(catEl).length;
+        }
+
+        function updateAllBadges(){
+          // If searching, show counts for filtered results; else show totals
+          const q = normalize(search.value);
+          let all = 0;
+
+          cats.forEach(cat => {
+            const n = q ? countVisibleLinks(cat) : totalLinksInCat(cat);
+            all += n;
+            setBadge(cat.getAttribute('data-cat'), n);
+          });
+          setBadge('all', all);
+        }
+
+        function applyFilter(){
+          const q = normalize(search.value);
+
+          cats.forEach(cat => {
+            const catKey = cat.getAttribute('data-cat');
+            const showCat = (activeCat==='all' || activeCat===catKey);
+            cat.classList.toggle('hidden', !showCat);
+
+            if(!showCat) return;
+
+            const links = linksInCat(cat);
+            // Filter per link
+            links.forEach(a => {
+              const hay = normalize(a.dataset.name + ' ' + a.textContent + ' ' + (a.title || ''));
+              const ok = !q || hay.includes(q);
+              const li = a.parentElement;
+              li.classList.toggle('hidden', !ok);
+            });
+
+            // Hide card if none of its lis are visible
+            cat.querySelectorAll('.tool-card').forEach(card=>{
+              const any = Array.from(card.querySelectorAll('li')).some(li=>!li.classList.contains('hidden'));
+              card.classList.toggle('hidden', !any);
+            });
+          });
+
+          // Update badges and result summary
+          updateAllBadges();
+          const visibleTotal = normalize(search.value) || activeCat!=='all'
+            ? cats.reduce((acc, cat)=> acc + countVisibleLinks(cat), 0)
+            : 0;
+          if(q || activeCat!=='all'){
+            resultCount.textContent = visibleTotal ? `${visibleTotal} result(s)` : 'No results';
+          } else {
+            resultCount.textContent = '';
+          }
+        }
+
+        // Initialize totals on load (before any filtering)
+        updateAllBadges();
+
+        // chips click
+        chips.addEventListener('click', (e)=>{
+          const el = e.target.closest('.chip');
+          if(!el) return;
+          chips.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+          el.classList.add('active');
+          activeCat = el.dataset.chip || 'all';
+          applyFilter();
+          // smooth scroll to top of results
+          const sec = document.querySelector('.ftco-section.pt-4');
+          if(sec) window.scrollTo({ top: sec.offsetTop - 60, behavior:'smooth' });
+        });
+
+        // search typing
+        search.addEventListener('input', applyFilter);
+
+        // initial filter (so badges reflect totals and UI settles)
+        applyFilter();
+      })();
+    </script>
+  </body>
+</html>
