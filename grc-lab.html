@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>GRC Practice Lab – John B Joseph</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Reuse your existing fonts & styles -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/aos.css">
+    <link rel="stylesheet" href="css/ionicons.min.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+      /* Simple lab-specific tweaks – we can expand later */
+      .grc-lab-hero {
+        padding-top: 140px;
+        padding-bottom: 40px;
+      }
+      .grc-tab-buttons .btn {
+        margin-right: 8px;
+        margin-bottom: 8px;
+      }
+      .grc-tab {
+        display: none;
+      }
+      .grc-tab.active {
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+
+    <!-- Same navbar as index.html, but link back to home & highlight Lab -->
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">John B Joseph</a>
+        <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button"
+                data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav"
+                aria-expanded="false" aria-label="Toggle navigation">
+          <span class="oi oi-menu"></span> Menu
+        </button>
+
+        <div class="collapse navbar-collapse" id="ftco-nav">
+          <ul class="navbar-nav nav ml-auto">
+            <li class="nav-item"><a href="index.html#home-section" class="nav-link"><span>Home</span></a></li>
+            <li class="nav-item"><a href="toolkit.html" class="nav-link"><span>Toolkit</span></a></li>
+            <li class="nav-item active"><a href="grc-lab.html" class="nav-link"><span>GRC Practice Lab</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero / Intro -->
+    <section class="ftco-section grc-lab-hero">
+      <div class="container">
+        <div class="row justify-content-center mb-4">
+          <div class="col-md-10 text-center ftco-animate">
+            <h1 class="mb-3">GRC Practice Lab (Beta)</h1>
+            <p class="lead">
+              A free, browser-based sandbox to practice real GRC work – assets, risks, controls, and findings –
+              built by John B Joseph. Data stays in your browser only.
+            </p>
+            <p class="mb-0"><small>
+              Controls are paraphrased and inspired by ISO 27001, NIST CSF, HIPAA, and PCI DSS for educational use.
+              Always refer to the official standards for authoritative text.
+            </small></p>
+          </div>
+        </div>
+
+        <!-- Tab buttons -->
+        <div class="row mb-4">
+          <div class="col-md-12 text-center grc-tab-buttons">
+            <button class="btn btn-primary btn-sm" data-grc-tab="frameworks">Frameworks & Controls</button>
+            <button class="btn btn-outline-light btn-sm" data-grc-tab="assets">Assets</button>
+            <button class="btn btn-outline-light btn-sm" data-grc-tab="risks">Risks</button>
+            <!-- later: Controls, Issues, Dashboard -->
+          </div>
+        </div>
+
+        <!-- Tab: Frameworks -->
+        <div id="tab-frameworks" class="grc-tab active ftco-animate">
+          <h3>Framework Library</h3>
+          <p class="mb-3">
+            Below will show your unified, paraphrased control set once we wire in the JS model.
+          </p>
+          <div id="frameworks-table-placeholder" class="bg-dark p-4 rounded">
+            <p class="mb-0 text-muted">
+              Coming next: interactive table of controls inspired by ISO 27001, NIST CSF, PCI DSS & HIPAA.
+            </p>
+          </div>
+        </div>
+
+        <!-- Tab: Assets -->
+        <div id="tab-assets" class="grc-tab ftco-animate">
+          <h3>Asset Inventory</h3>
+          <p class="mb-3">
+            Here users will add systems, databases, vendors, and data stores that need to be protected.
+          </p>
+          <div class="bg-dark p-4 rounded">
+            <p class="mb-0 text-muted">
+              Next steps: asset form + table + localStorage persistence.
+            </p>
+          </div>
+        </div>
+
+        <!-- Tab: Risks -->
+        <div id="tab-risks" class="grc-tab ftco-animate">
+          <h3>Risk Register</h3>
+          <p class="mb-3">
+            This section will hold likelihood/impact scoring, risk ownership, and mapping to controls.
+          </p>
+          <div class="bg-dark p-4 rounded">
+            <p class="mb-0 text-muted">
+              Next steps: risk form, scoring logic (L × I), and filters.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer class="ftco-footer ftco-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>
+              Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+              All rights reserved
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts (same as index) -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/scrollax.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <!-- Simple tab switcher for now -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const buttons = document.querySelectorAll('[data-grc-tab]');
+        const tabs = {
+          frameworks: document.getElementById('tab-frameworks'),
+          assets: document.getElementById('tab-assets'),
+          risks: document.getElementById('tab-risks')
+        };
+
+        buttons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const target = btn.getAttribute('data-grc-tab');
+
+            // button styling
+            buttons.forEach(b => b.classList.remove('btn-primary'));
+            buttons.forEach(b => b.classList.add('btn-outline-light'));
+            btn.classList.remove('btn-outline-light');
+            btn.classList.add('btn-primary');
+
+            // tab visibility
+            Object.values(tabs).forEach(t => t.classList.remove('active'));
+            tabs[target].classList.add('active');
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
