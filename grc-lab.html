@@ -327,7 +327,7 @@
     <script src="js/scrollax.min.js"></script>
     <script src="js/main.js"></script>
 
-     <!-- Tab switcher + Framework Library logic -->
+   <!-- Tab switcher + Framework Library + Asset logic -->
     <script>
       // --- Unified, paraphrased control set ---
       const FRAMEWORK_CONTROLS = [
@@ -514,8 +514,167 @@
         }
       }
 
+      // --- Asset inventory state ---
+      const ASSET_STORAGE_KEY = 'grc_assets_v1';
+      let assets = [];
+
+      function loadAssets() {
+        try {
+          const raw = localStorage.getItem(ASSET_STORAGE_KEY);
+          assets = raw ? JSON.parse(raw) : [];
+          if (!Array.isArray(assets)) assets = [];
+        } catch (e) {
+          assets = [];
+        }
+      }
+
+      function saveAssets() {
+        try {
+          localStorage.setItem(ASSET_STORAGE_KEY, JSON.stringify(assets));
+        } catch (e) {
+          console.warn('Could not save assets to localStorage', e);
+        }
+      }
+
+      function resetAssetForm() {
+        const form = document.getElementById('asset-form');
+        if (!form) return;
+
+        form.reset();
+        document.getElementById('asset-id').value = '';
+        const submitBtn = document.getElementById('asset-form-submit');
+        if (submitBtn) submitBtn.textContent = 'Save asset';
+      }
+
+      function getSelectedDataTypes() {
+        const checkboxes = document.querySelectorAll('.asset-datatype');
+        const selected = [];
+        checkboxes.forEach(cb => {
+          if (cb.checked) selected.push(cb.value);
+        });
+        return selected;
+      }
+
+      function setSelectedDataTypes(values) {
+        const checkboxes = document.querySelectorAll('.asset-datatype');
+        checkboxes.forEach(cb => {
+          cb.checked = values && values.includes(cb.value);
+        });
+      }
+
+      function handleAssetFormSubmit(event) {
+        event.preventDefault();
+        const idField = document.getElementById('asset-id');
+        const nameField = document.getElementById('asset-name');
+        const typeField = document.getElementById('asset-type');
+        const critField = document.getElementById('asset-criticality');
+        const ownerField = document.getElementById('asset-owner');
+        const notesField = document.getElementById('asset-notes');
+
+        if (!nameField.value.trim() || !typeField.value || !critField.value) {
+          alert('Please fill in name, type, and criticality.');
+          return;
+        }
+
+        const dataTypes = getSelectedDataTypes();
+        const existingId = idField.value;
+
+        if (existingId) {
+          // edit
+          const idx = assets.findIndex(a => a.id === existingId);
+          if (idx !== -1) {
+            assets[idx] = {
+              ...assets[idx],
+              name: nameField.value.trim(),
+              type: typeField.value,
+              criticality: critField.value,
+              owner: ownerField.value.trim(),
+              dataTypes,
+              notes: notesField.value.trim()
+            };
+          }
+        } else {
+          // new
+          const newAsset = {
+            id: 'AST-' + Date.now(),
+            name: nameField.value.trim(),
+            type: typeField.value,
+            criticality: critField.value,
+            owner: ownerField.value.trim(),
+            dataTypes,
+            notes: notesField.value.trim()
+          };
+          assets.push(newAsset);
+        }
+
+        saveAssets();
+        renderAssetsTable();
+        resetAssetForm();
+      }
+
+      function renderAssetsTable() {
+        const tbody = document.getElementById('assets-table-body');
+        const emptyState = document.getElementById('assets-empty-state');
+        const countEl = document.getElementById('assets-count');
+
+        if (!tbody) return;
+
+        tbody.innerHTML = '';
+
+        assets.forEach(asset => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${asset.name}</td>
+            <td>${asset.type}</td>
+            <td>${asset.criticality}</td>
+            <td>${(asset.dataTypes || []).join(', ')}</td>
+            <td>${asset.owner || ''}</td>
+            <td>
+              <button type="button" class="btn btn-sm btn-outline-light mb-1" data-asset-edit="${asset.id}">Edit</button>
+              <button type="button" class="btn btn-sm btn-outline-light mb-1" data-asset-delete="${asset.id}">Del</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        if (emptyState) {
+          emptyState.style.display = assets.length ? 'none' : 'block';
+        }
+        if (countEl) {
+          countEl.textContent = `${assets.length} asset(s)`;
+        }
+      }
+
+      function handleAssetsTableClick(event) {
+        const editId = event.target.getAttribute('data-asset-edit');
+        const deleteId = event.target.getAttribute('data-asset-delete');
+
+        if (editId) {
+          const asset = assets.find(a => a.id === editId);
+          if (!asset) return;
+
+          document.getElementById('asset-id').value = asset.id;
+          document.getElementById('asset-name').value = asset.name;
+          document.getElementById('asset-type').value = asset.type;
+          document.getElementById('asset-criticality').value = asset.criticality;
+          document.getElementById('asset-owner').value = asset.owner || '';
+          document.getElementById('asset-notes').value = asset.notes || '';
+          setSelectedDataTypes(asset.dataTypes || []);
+
+          const submitBtn = document.getElementById('asset-form-submit');
+          if (submitBtn) submitBtn.textContent = 'Update asset';
+        }
+
+        if (deleteId) {
+          if (!confirm('Delete this asset?')) return;
+          assets = assets.filter(a => a.id !== deleteId);
+          saveAssets();
+          renderAssetsTable();
+        }
+      }
+
       document.addEventListener('DOMContentLoaded', function () {
-        // Tab logic
+        // --- Tab logic ---
         const buttons = document.querySelectorAll('[data-grc-tab]');
         const tabs = {
           frameworks: document.getElementById('tab-frameworks'),
@@ -527,19 +686,17 @@
           btn.addEventListener('click', () => {
             const target = btn.getAttribute('data-grc-tab');
 
-            // button styling
             buttons.forEach(b => b.classList.remove('btn-primary'));
             buttons.forEach(b => b.classList.add('btn-outline-light'));
             btn.classList.remove('btn-outline-light');
             btn.classList.add('btn-primary');
 
-            // tab visibility
             Object.values(tabs).forEach(t => t.classList.remove('active'));
             tabs[target].classList.add('active');
           });
         });
 
-        // Framework Library filters
+        // --- Framework Library events ---
         const frameworkFilter = document.getElementById('framework-filter');
         const categoryFilter = document.getElementById('category-filter');
         const searchInput = document.getElementById('framework-search');
@@ -549,9 +706,26 @@
           categoryFilter.addEventListener('change', renderFrameworkControls);
           searchInput.addEventListener('input', renderFrameworkControls);
         }
-
-        // Initial render
         renderFrameworkControls();
+
+        // --- Asset events ---
+        loadAssets();
+        renderAssetsTable();
+
+        const assetForm = document.getElementById('asset-form');
+        if (assetForm) {
+          assetForm.addEventListener('submit', handleAssetFormSubmit);
+        }
+
+        const assetCancel = document.getElementById('asset-form-cancel');
+        if (assetCancel) {
+          assetCancel.addEventListener('click', resetAssetForm);
+        }
+
+        const assetsTableBody = document.getElementById('assets-table-body');
+        if (assetsTableBody) {
+          assetsTableBody.addEventListener('click', handleAssetsTableClick);
+        }
       });
     </script>
   </body>
