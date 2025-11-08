@@ -87,17 +87,70 @@
         </div>
 
         <!-- Tab: Frameworks -->
-        <div id="tab-frameworks" class="grc-tab active ftco-animate">
-          <h3>Framework Library</h3>
-          <p class="mb-3">
-            Below will show your unified, paraphrased control set once we wire in the JS model.
-          </p>
-          <div id="frameworks-table-placeholder" class="bg-dark p-4 rounded">
-            <p class="mb-0 text-muted">
-              Coming next: interactive table of controls inspired by ISO 27001, NIST CSF, PCI DSS & HIPAA.
-            </p>
-          </div>
-        </div>
+       <div id="tab-frameworks" class="grc-tab active ftco-animate">
+  <h3>Framework Library</h3>
+  <p class="mb-3">
+    A unified, paraphrased control set inspired by ISO 27001, NIST CSF, PCI DSS & HIPAA.
+    Use the filters to explore how controls align across frameworks.
+  </p>
+
+  <!-- Filters -->
+  <div class="row mb-3">
+    <div class="col-md-4 mb-2">
+      <label class="text-muted small mb-1">Filter by Framework</label>
+      <select id="framework-filter" class="form-control form-control-sm">
+        <option value="all">All frameworks</option>
+        <option value="ISO 27001">ISO 27001</option>
+        <option value="NIST CSF">NIST CSF</option>
+        <option value="PCI DSS">PCI DSS</option>
+        <option value="HIPAA">HIPAA</option>
+      </select>
+    </div>
+    <div class="col-md-4 mb-2">
+      <label class="text-muted small mb-1">Filter by Category</label>
+      <select id="category-filter" class="form-control form-control-sm">
+        <option value="all">All categories</option>
+        <option value="Access Control">Access Control</option>
+        <option value="Identity & Authentication">Identity & Authentication</option>
+        <option value="Logging & Monitoring">Logging & Monitoring</option>
+        <option value="Encryption & Key Management">Encryption & Key Management</option>
+        <option value="Backup & Recovery">Backup & Recovery</option>
+        <option value="Change Management">Change Management</option>
+        <option value="Vulnerability Management">Vulnerability Management</option>
+        <option value="Incident Response">Incident Response</option>
+        <option value="Vendor Risk">Vendor Risk</option>
+        <option value="Policy & Governance">Policy & Governance</option>
+        <option value="Awareness & Training">Awareness & Training</option>
+      </select>
+    </div>
+    <div class="col-md-4 mb-2">
+      <label class="text-muted small mb-1">Search</label>
+      <input id="framework-search" type="text" class="form-control form-control-sm"
+             placeholder="Search by name or description...">
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-responsive bg-dark p-3 rounded">
+    <table class="table table-dark table-striped table-hover table-sm mb-0">
+      <thead>
+        <tr>
+          <th style="width: 10%;">ID</th>
+          <th style="width: 20%;">Name</th>
+          <th style="width: 18%;">Category</th>
+          <th style="width: 20%;">Based On</th>
+          <th style="width: 32%;">Description</th>
+        </tr>
+      </thead>
+      <tbody id="frameworks-table-body">
+        <!-- rows will be injected by JS -->
+      </tbody>
+    </table>
+    <div class="mt-2 text-right">
+      <small id="frameworks-count" class="text-muted"></small>
+    </div>
+  </div>
+</div>
 
         <!-- Tab: Assets -->
         <div id="tab-assets" class="grc-tab ftco-animate">
