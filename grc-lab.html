@@ -284,17 +284,148 @@
   </div>
 </div>
         <!-- Tab: Risks -->
-        <div id="tab-risks" class="grc-tab ftco-animate">
-          <h3>Risk Register</h3>
-          <p class="mb-3">
-            This section will hold likelihood/impact scoring, risk ownership, and mapping to controls.
-          </p>
-          <div class="bg-dark p-4 rounded">
-            <p class="mb-0 text-muted">
-              Next steps: risk form, scoring logic (L × I), and filters.
-            </p>
+       <div id="tab-risks" class="grc-tab ftco-animate">
+  <h3>Risk Register</h3>
+  <p class="mb-3">
+    Log risks against your assets, score likelihood and impact, and track ownership. Controls and issues
+    will later map to these risks.
+  </p>
+
+  <div class="row">
+    <!-- Form column -->
+    <div class="col-md-5 mb-4">
+      <div class="bg-dark p-3 rounded">
+        <h5 class="mb-3">Add / Edit Risk</h5>
+        <form id="risk-form">
+          <input type="hidden" id="risk-id">
+
+          <div class="form-group">
+            <label for="risk-title" class="text-muted small mb-1">Risk title *</label>
+            <input type="text" id="risk-title" class="form-control form-control-sm"
+                   placeholder="e.g. Unauthorised access to MediCloud app" required>
           </div>
+
+          <div class="form-group">
+            <label for="risk-asset" class="text-muted small mb-1">Asset *</label>
+            <select id="risk-asset" class="form-control form-control-sm" required>
+              <option value="">Select asset...</option>
+              <!-- options injected from assets -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="risk-category" class="text-muted small mb-1">Category *</label>
+            <select id="risk-category" class="form-control form-control-sm" required>
+              <option value="">Select category...</option>
+              <option value="Cybersecurity">Cybersecurity</option>
+              <option value="Compliance">Compliance</option>
+              <option value="Operational">Operational</option>
+              <option value="Privacy">Privacy</option>
+              <option value="Third-Party">Third-Party</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label for="risk-likelihood" class="text-muted small mb-1">Likelihood (1–5) *</label>
+              <select id="risk-likelihood" class="form-control form-control-sm" required>
+                <option value="">Select...</option>
+                <option value="1">1 – Rare</option>
+                <option value="2">2 – Unlikely</option>
+                <option value="3">3 – Possible</option>
+                <option value="4">4 – Likely</option>
+                <option value="5">5 – Almost certain</option>
+              </select>
+            </div>
+            <div class="form-group col-6">
+              <label for="risk-impact" class="text-muted small mb-1">Impact (1–5) *</label>
+              <select id="risk-impact" class="form-control form-control-sm" required>
+                <option value="">Select...</option>
+                <option value="1">1 – Insignificant</option>
+                <option value="2">2 – Minor</option>
+                <option value="3">3 – Moderate</option>
+                <option value="4">4">4 – Major</option>
+                <option value="5">5 – Severe</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="risk-owner" class="text-muted small mb-1">Risk owner (team or role)</label>
+            <input type="text" id="risk-owner" class="form-control form-control-sm"
+                   placeholder="e.g. CISO / Product Owner">
+          </div>
+
+          <div class="form-group">
+            <label for="risk-status" class="text-muted small mb-1">Status *</label>
+            <select id="risk-status" class="form-control form-control-sm" required>
+              <option value="Open">Open</option>
+              <option value="In progress">In progress</option>
+              <option value="Mitigated">Mitigated</option>
+              <option value="Accepted">Accepted</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="risk-notes" class="text-muted small mb-1">Description / Notes</label>
+            <textarea id="risk-notes" class="form-control form-control-sm" rows="2"
+                      placeholder="Describe the scenario, cause, and potential impact."></textarea>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <button type="submit" id="risk-form-submit" class="btn btn-primary btn-sm">
+              Save risk
+            </button>
+            <button type="button" id="risk-form-cancel" class="btn btn-outline-light btn-sm">
+              Clear form
+            </button>
+          </div>
+
+          <small class="text-muted d-block mt-2">
+            Inherent risk score is calculated as Likelihood × Impact. Later we’ll add residual risk based on controls.
+          </small>
+        </form>
+      </div>
+    </div>
+
+    <!-- Table column -->
+    <div class="col-md-7 mb-4">
+      <div class="bg-dark p-3 rounded">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5 class="mb-0">Risks</h5>
+          <small id="risks-count" class="text-muted"></small>
         </div>
+
+        <div class="table-responsive">
+          <table class="table table-dark table-striped table-hover table-sm mb-0">
+            <thead>
+              <tr>
+                <th style="width: 26%;">Title</th>
+                <th style="width: 18%;">Asset</th>
+                <th style="width: 16%;">Category</th>
+                <th style="width: 16%;">Inherent score</th>
+                <th style="width: 14%;">Status</th>
+                <th style="width: 10%;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="risks-table-body">
+              <!-- rows injected by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="risks-empty-state" class="text-muted small mt-2">
+          No risks yet. Add at least one asset first, then log a risk against it.
+        </div>
+
+        <small class="text-muted d-block mt-2">
+          Simple scale: 1–5 × 1–5 → 1–25. We’ll treat 1–5 = Low, 6–12 = Medium, 15+ = High.
+        </small>
+      </div>
+    </div>
+  </div>
+</div>
 
       </div>
     </section>
