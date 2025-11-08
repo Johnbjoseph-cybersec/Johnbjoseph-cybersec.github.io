@@ -458,7 +458,7 @@
     <script src="js/scrollax.min.js"></script>
     <script src="js/main.js"></script>
 
-   <!-- Tab switcher + Framework Library + Asset logic -->
+    <!-- Tab switcher + Framework Library + Asset + Risk logic -->
     <script>
       // --- Unified, paraphrased control set ---
       const FRAMEWORK_CONTROLS = [
@@ -711,7 +711,6 @@
         const existingId = idField.value;
 
         if (existingId) {
-          // edit
           const idx = assets.findIndex(a => a.id === existingId);
           if (idx !== -1) {
             assets[idx] = {
@@ -725,7 +724,6 @@
             };
           }
         } else {
-          // new
           const newAsset = {
             id: 'AST-' + Date.now(),
             name: nameField.value.trim(),
@@ -741,6 +739,25 @@
         saveAssets();
         renderAssetsTable();
         resetAssetForm();
+      }
+
+      function populateRiskAssetOptions() {
+        const select = document.getElementById('risk-asset');
+        if (!select) return;
+
+        const currentValue = select.value;
+        select.innerHTML = '<option value=\"\">Select asset...</option>';
+        assets.forEach(asset => {
+          const opt = document.createElement('option');
+          opt.value = asset.id;
+          opt.textContent = asset.name;
+          select.appendChild(opt);
+        });
+
+        // Try to preserve previous selection if still valid
+        if (currentValue && assets.some(a => a.id === currentValue)) {
+          select.value = currentValue;
+        }
       }
 
       function renderAssetsTable() {
@@ -774,6 +791,9 @@
         if (countEl) {
           countEl.textContent = `${assets.length} asset(s)`;
         }
+
+        // Keep risk asset dropdown in sync
+        populateRiskAssetOptions();
       }
 
       function handleAssetsTableClick(event) {
@@ -804,8 +824,191 @@
         }
       }
 
+      // --- Risk register state ---
+      const RISK_STORAGE_KEY = 'grc_risks_v1';
+      let risks = [];
+
+      function loadRisks() {
+        try {
+          const raw = localStorage.getItem(RISK_STORAGE_KEY);
+          risks = raw ? JSON.parse(raw) : [];
+          if (!Array.isArray(risks)) risks = [];
+        } catch (e) {
+          risks = [];
+        }
+      }
+
+      function saveRisks() {
+        try {
+          localStorage.setItem(RISK_STORAGE_KEY, JSON.stringify(risks));
+        } catch (e) {
+          console.warn('Could not save risks to localStorage', e);
+        }
+      }
+
+      function calcRiskScore(likelihood, impact) {
+        const l = Number(likelihood) || 0;
+        const i = Number(impact) || 0;
+        return l * i;
+      }
+
+      function calcRiskLevel(score) {
+        if (score >= 15) return 'High';
+        if (score >= 6) return 'Medium';
+        if (score > 0) return 'Low';
+        return '-';
+      }
+
+      function resetRiskForm() {
+        const form = document.getElementById('risk-form');
+        if (!form) return;
+
+        form.reset();
+        document.getElementById('risk-id').value = '';
+        const submitBtn = document.getElementById('risk-form-submit');
+        if (submitBtn) submitBtn.textContent = 'Save risk';
+      }
+
+      function handleRiskFormSubmit(event) {
+        event.preventDefault();
+        const idField = document.getElementById('risk-id');
+        const titleField = document.getElementById('risk-title');
+        const assetField = document.getElementById('risk-asset');
+        const categoryField = document.getElementById('risk-category');
+        const likelihoodField = document.getElementById('risk-likelihood');
+        const impactField = document.getElementById('risk-impact');
+        const ownerField = document.getElementById('risk-owner');
+        const statusField = document.getElementById('risk-status');
+        const notesField = document.getElementById('risk-notes');
+
+        if (!titleField.value.trim() || !assetField.value || !categoryField.value ||
+            !likelihoodField.value || !impactField.value || !statusField.value) {
+          alert('Please fill in all required fields.');
+          return;
+        }
+
+        const score = calcRiskScore(likelihoodField.value, impactField.value);
+        const assetId = assetField.value;
+        const asset = assets.find(a => a.id === assetId);
+        const assetName = asset ? asset.name : '';
+
+        const existingId = idField.value;
+
+        if (existingId) {
+          const idx = risks.findIndex(r => r.id === existingId);
+          if (idx !== -1) {
+            risks[idx] = {
+              ...risks[idx],
+              title: titleField.value.trim(),
+              assetId,
+              assetName,
+              category: categoryField.value,
+              likelihood: Number(likelihoodField.value),
+              impact: Number(impactField.value),
+              score,
+              status: statusField.value,
+              owner: ownerField.value.trim(),
+              notes: notesField.value.trim()
+            };
+          }
+        } else {
+          const newRisk = {
+            id: 'RSK-' + Date.now(),
+            title: titleField.value.trim(),
+            assetId,
+            assetName,
+            category: categoryField.value,
+            likelihood: Number(likelihoodField.value),
+            impact: Number(impactField.value),
+            score,
+            status: statusField.value,
+            owner: ownerField.value.trim(),
+            notes: notesField.value.trim()
+          };
+          risks.push(newRisk);
+        }
+
+        saveRisks();
+        renderRisksTable();
+        resetRiskForm();
+      }
+
+      function renderRisksTable() {
+        const tbody = document.getElementById('risks-table-body');
+        const emptyState = document.getElementById('risks-empty-state');
+        const countEl = document.getElementById('risks-count');
+
+        if (!tbody) return;
+
+        tbody.innerHTML = '';
+
+        risks.forEach(risk => {
+          const level = calcRiskLevel(risk.score);
+          let levelBadgeClass = '';
+          if (level === 'High') levelBadgeClass = 'badge-danger';
+          else if (level === 'Medium') levelBadgeClass = 'badge-warning';
+          else if (level === 'Low') levelBadgeClass = 'badge-success';
+
+          const scoreHtml = risk.score
+            ? `<span class="badge ${levelBadgeClass} mr-1">${risk.score}</span><span class="text-muted small">${level}</span>`
+            : '-';
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${risk.title}</td>
+            <td>${risk.assetName || ''}</td>
+            <td>${risk.category}</td>
+            <td>${scoreHtml}</td>
+            <td>${risk.status}</td>
+            <td>
+              <button type="button" class="btn btn-sm btn-outline-light mb-1" data-risk-edit="${risk.id}">Edit</button>
+              <button type="button" class="btn btn-sm btn-outline-light mb-1" data-risk-delete="${risk.id}">Del</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        if (emptyState) {
+          emptyState.style.display = risks.length ? 'none' : 'block';
+        }
+        if (countEl) {
+          countEl.textContent = `${risks.length} risk(s)`;
+        }
+      }
+
+      function handleRisksTableClick(event) {
+        const editId = event.target.getAttribute('data-risk-edit');
+        const deleteId = event.target.getAttribute('data-risk-delete');
+
+        if (editId) {
+          const risk = risks.find(r => r.id === editId);
+          if (!risk) return;
+
+          document.getElementById('risk-id').value = risk.id;
+          document.getElementById('risk-title').value = risk.title;
+          document.getElementById('risk-asset').value = risk.assetId;
+          document.getElementById('risk-category').value = risk.category;
+          document.getElementById('risk-likelihood').value = String(risk.likelihood);
+          document.getElementById('risk-impact').value = String(risk.impact);
+          document.getElementById('risk-owner').value = risk.owner || '';
+          document.getElementById('risk-status').value = risk.status || 'Open';
+          document.getElementById('risk-notes').value = risk.notes || '';
+
+          const submitBtn = document.getElementById('risk-form-submit');
+          if (submitBtn) submitBtn.textContent = 'Update risk';
+        }
+
+        if (deleteId) {
+          if (!confirm('Delete this risk?')) return;
+          risks = risks.filter(r => r.id !== deleteId);
+          saveRisks();
+          renderRisksTable();
+        }
+      }
+
+      // --- DOM ready ---
       document.addEventListener('DOMContentLoaded', function () {
-        // --- Tab logic ---
+        // Tabs
         const buttons = document.querySelectorAll('[data-grc-tab]');
         const tabs = {
           frameworks: document.getElementById('tab-frameworks'),
@@ -827,7 +1030,7 @@
           });
         });
 
-        // --- Framework Library events ---
+        // Framework filters
         const frameworkFilter = document.getElementById('framework-filter');
         const categoryFilter = document.getElementById('category-filter');
         const searchInput = document.getElementById('framework-search');
@@ -839,24 +1042,32 @@
         }
         renderFrameworkControls();
 
-        // --- Asset events ---
+        // Assets
         loadAssets();
         renderAssetsTable();
 
         const assetForm = document.getElementById('asset-form');
-        if (assetForm) {
-          assetForm.addEventListener('submit', handleAssetFormSubmit);
-        }
+        if (assetForm) assetForm.addEventListener('submit', handleAssetFormSubmit);
 
         const assetCancel = document.getElementById('asset-form-cancel');
-        if (assetCancel) {
-          assetCancel.addEventListener('click', resetAssetForm);
-        }
+        if (assetCancel) assetCancel.addEventListener('click', resetAssetForm);
 
         const assetsTableBody = document.getElementById('assets-table-body');
-        if (assetsTableBody) {
-          assetsTableBody.addEventListener('click', handleAssetsTableClick);
-        }
+        if (assetsTableBody) assetsTableBody.addEventListener('click', handleAssetsTableClick);
+
+        // Risks
+        loadRisks();
+        renderRisksTable();
+        populateRiskAssetOptions();
+
+        const riskForm = document.getElementById('risk-form');
+        if (riskForm) riskForm.addEventListener('submit', handleRiskFormSubmit);
+
+        const riskCancel = document.getElementById('risk-form-cancel');
+        if (riskCancel) riskCancel.addEventListener('click', resetRiskForm);
+
+        const risksTableBody = document.getElementById('risks-table-body');
+        if (risksTableBody) risksTableBody.addEventListener('click', handleRisksTableClick);
       });
     </script>
   </body>
