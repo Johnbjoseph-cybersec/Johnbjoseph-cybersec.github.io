@@ -209,9 +209,195 @@
     <script src="js/scrollax.min.js"></script>
     <script src="js/main.js"></script>
 
-    <!-- Simple tab switcher for now -->
+     <!-- Tab switcher + Framework Library logic -->
     <script>
+      // --- Unified, paraphrased control set ---
+      const FRAMEWORK_CONTROLS = [
+        {
+          id: "CTRL-AC-01",
+          name: "Manage user accounts",
+          category: "Access Control",
+          description: "Only approved users receive accounts, and access is removed quickly when people change roles or leave.",
+          frameworks: ["ISO 27001", "NIST CSF"],
+          references: ["ISO 27001 A.9", "NIST PR.AC-1"]
+        },
+        {
+          id: "CTRL-AC-02",
+          name: "Limit privileged access",
+          category: "Identity & Authentication",
+          description: "Privileged roles are tightly controlled, logged, and reviewed on a regular schedule.",
+          frameworks: ["ISO 27001", "NIST CSF", "PCI DSS"],
+          references: ["ISO 27001 A.9.2", "NIST PR.AC-4", "PCI DSS 7"]
+        },
+        {
+          id: "CTRL-AC-03",
+          name: "Strong authentication",
+          category: "Identity & Authentication",
+          description: "Multi-factor authentication is used for admin accounts and remote access to critical systems.",
+          frameworks: ["ISO 27001", "NIST CSF", "PCI DSS", "HIPAA"],
+          references: ["ISO 27001 A.9.4", "NIST PR.AC-7", "PCI DSS 8", "HIPAA 164.312(d)"]
+        },
+        {
+          id: "CTRL-LOG-01",
+          name: "Central activity logging",
+          category: "Logging & Monitoring",
+          description: "Security-relevant events from key systems are collected in a central logging solution.",
+          frameworks: ["ISO 27001", "NIST CSF", "PCI DSS"],
+          references: ["ISO 27001 A.12.4", "NIST DE.AE-1", "PCI DSS 10"]
+        },
+        {
+          id: "CTRL-LOG-02",
+          name: "Regular log review",
+          category: "Logging & Monitoring",
+          description: "Logs for important systems are reviewed, with suspicious events investigated and documented.",
+          frameworks: ["ISO 27001", "NIST CSF", "HIPAA"],
+          references: ["ISO 27001 A.12.4", "NIST DE.CM-1", "HIPAA 164.308(a)(1)"]
+        },
+        {
+          id: "CTRL-ENC-01",
+          name: "Encrypt data at rest",
+          category: "Encryption & Key Management",
+          description: "Sensitive data stored in databases, file systems, and backups is encrypted.",
+          frameworks: ["ISO 27001", "PCI DSS", "HIPAA"],
+          references: ["ISO 27001 A.10", "PCI DSS 3", "HIPAA 164.312(a)(2)(iv)"]
+        },
+        {
+          id: "CTRL-ENC-02",
+          name: "Encrypt data in transit",
+          category: "Encryption & Key Management",
+          description: "Connections carrying sensitive data use secure protocols such as TLS, with weak ciphers disabled.",
+          frameworks: ["ISO 27001", "NIST CSF", "PCI DSS", "HIPAA"],
+          references: ["ISO 27001 A.13", "NIST PR.DS-2", "PCI DSS 4", "HIPAA 164.312(e)(1)"]
+        },
+        {
+          id: "CTRL-BCP-01",
+          name: "Backups & restore testing",
+          category: "Backup & Recovery",
+          description: "Critical systems and data are backed up regularly and restore tests are performed and documented.",
+          frameworks: ["ISO 27001", "NIST CSF"],
+          references: ["ISO 27001 A.12.3", "NIST PR.IP-4"]
+        },
+        {
+          id: "CTRL-CHG-01",
+          name: "Controlled changes",
+          category: "Change Management",
+          description: "Changes to production systems follow an approved process with impact assessment and rollback plans.",
+          frameworks: ["ISO 27001", "NIST CSF"],
+          references: ["ISO 27001 A.12.1", "NIST PR.IP-3"]
+        },
+        {
+          id: "CTRL-CHG-02",
+          name: "Separate environments",
+          category: "Change Management",
+          description: "Development and testing environments are separated from production, with restricted access between them.",
+          frameworks: ["ISO 27001", "PCI DSS"],
+          references: ["ISO 27001 A.12.1.4", "PCI DSS 6.4"]
+        },
+        {
+          id: "CTRL-VULN-01",
+          name: "Vulnerability management",
+          category: "Vulnerability Management",
+          description: "Systems are regularly scanned for vulnerabilities and patches are applied according to defined timelines.",
+          frameworks: ["ISO 27001", "NIST CSF", "PCI DSS"],
+          references: ["ISO 27001 A.12.6", "NIST DE.CM-8", "PCI DSS 11"]
+        },
+        {
+          id: "CTRL-IR-01",
+          name: "Incident response plan",
+          category: "Incident Response",
+          description: "There is a documented incident response plan with clear roles, steps, and communication paths.",
+          frameworks: ["ISO 27001", "NIST CSF", "HIPAA"],
+          references: ["ISO 27001 A.16", "NIST RS.RP-1", "HIPAA 164.308(a)(6)"]
+        },
+        {
+          id: "CTRL-IR-02",
+          name: "Detect and triage events",
+          category: "Incident Response",
+          description: "Security events are detected, triaged, classified, and escalated according to defined procedures.",
+          frameworks: ["ISO 27001", "NIST CSF"],
+          references: ["ISO 27001 A.16", "NIST DE.CM-1"]
+        },
+        {
+          id: "CTRL-VND-01",
+          name: "Vendor due diligence",
+          category: "Vendor Risk",
+          description: "Third-party service providers are assessed for security and privacy risks before onboarding and periodically thereafter.",
+          frameworks: ["ISO 27001", "NIST CSF"],
+          references: ["ISO 27001 A.15", "NIST ID.SC-1"]
+        },
+        {
+          id: "CTRL-VND-02",
+          name: "Data protection in contracts",
+          category: "Vendor Risk",
+          description: "Contracts with vendors include requirements for protecting data, breach notification, and right to audit.",
+          frameworks: ["ISO 27001", "HIPAA"],
+          references: ["ISO 27001 A.15.1.2", "HIPAA 164.308(b)"]
+        },
+        {
+          id: "CTRL-POL-01",
+          name: "Information security policy",
+          category: "Policy & Governance",
+          description: "Management-approved information security policies define expectations, roles, and responsibilities.",
+          frameworks: ["ISO 27001", "NIST CSF"],
+          references: ["ISO 27001 A.5", "NIST ID.GV-1"]
+        },
+        {
+          id: "CTRL-AW-01",
+          name: "Security awareness training",
+          category: "Awareness & Training",
+          description: "Employees receive regular training on security, privacy, phishing, and how to report incidents.",
+          frameworks: ["ISO 27001", "NIST CSF", "HIPAA"],
+          references: ["ISO 27001 A.7.2.2", "NIST PR.AT-1", "HIPAA 164.308(a)(5)"]
+        }
+      ];
+
+      function renderFrameworkControls() {
+        const tbody = document.getElementById('frameworks-table-body');
+        const countEl = document.getElementById('frameworks-count');
+        const frameworkFilter = document.getElementById('framework-filter');
+        const categoryFilter = document.getElementById('category-filter');
+        const searchInput = document.getElementById('framework-search');
+
+        if (!tbody || !frameworkFilter || !categoryFilter || !searchInput) return;
+
+        const frameworkValue = frameworkFilter.value;
+        const categoryValue = categoryFilter.value;
+        const searchValue = searchInput.value.trim().toLowerCase();
+
+        const filtered = FRAMEWORK_CONTROLS.filter(ctrl => {
+          const matchesFramework =
+            frameworkValue === 'all' || ctrl.frameworks.includes(frameworkValue);
+          const matchesCategory =
+            categoryValue === 'all' || ctrl.category === categoryValue;
+          const matchesSearch =
+            !searchValue ||
+            ctrl.name.toLowerCase().includes(searchValue) ||
+            ctrl.description.toLowerCase().includes(searchValue) ||
+            ctrl.id.toLowerCase().includes(searchValue);
+
+          return matchesFramework && matchesCategory && matchesSearch;
+        });
+
+        tbody.innerHTML = '';
+        filtered.forEach(ctrl => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${ctrl.id}</td>
+            <td>${ctrl.name}</td>
+            <td>${ctrl.category}</td>
+            <td>${ctrl.references.join('<br>')}</td>
+            <td>${ctrl.description}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        if (countEl) {
+          countEl.textContent = `${filtered.length} control(s) shown out of ${FRAMEWORK_CONTROLS.length}`;
+        }
+      }
+
       document.addEventListener('DOMContentLoaded', function () {
+        // Tab logic
         const buttons = document.querySelectorAll('[data-grc-tab]');
         const tabs = {
           frameworks: document.getElementById('tab-frameworks'),
@@ -234,6 +420,20 @@
             tabs[target].classList.add('active');
           });
         });
+
+        // Framework Library filters
+        const frameworkFilter = document.getElementById('framework-filter');
+        const categoryFilter = document.getElementById('category-filter');
+        const searchInput = document.getElementById('framework-search');
+
+        if (frameworkFilter && categoryFilter && searchInput) {
+          frameworkFilter.addEventListener('change', renderFrameworkControls);
+          categoryFilter.addEventListener('change', renderFrameworkControls);
+          searchInput.addEventListener('input', renderFrameworkControls);
+        }
+
+        // Initial render
+        renderFrameworkControls();
       });
     </script>
   </body>
