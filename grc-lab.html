@@ -581,7 +581,7 @@
     <script src="js/scrollax.min.js"></script>
     <script src="js/main.js"></script>
 
-    <!-- Tab switcher + Framework Library + Asset + Risk logic -->
+      <!-- Tab switcher + Framework Library + Asset + Risk + Control logic -->
     <script>
       // --- Unified, paraphrased control set ---
       const FRAMEWORK_CONTROLS = [
@@ -795,7 +795,7 @@
         if (!form) return;
 
         form.reset();
-        document.getElementById('asset-id').value = '';
+        document.getElementById('asset-id').).value = '';
         const submitBtn = document.getElementById('asset-form-submit');
         if (submitBtn) submitBtn.textContent = 'Save asset';
       }
@@ -869,7 +869,7 @@
         if (!select) return;
 
         const currentValue = select.value;
-        select.innerHTML = '<option value=\"\">Select asset...</option>';
+        select.innerHTML = '<option value="">Select asset...</option>';
         assets.forEach(asset => {
           const opt = document.createElement('option');
           opt.value = asset.id;
@@ -877,7 +877,6 @@
           select.appendChild(opt);
         });
 
-        // Try to preserve previous selection if still valid
         if (currentValue && assets.some(a => a.id === currentValue)) {
           select.value = currentValue;
         }
@@ -915,7 +914,6 @@
           countEl.textContent = `${assets.length} asset(s)`;
         }
 
-        // Keep risk asset dropdown in sync
         populateRiskAssetOptions();
       }
 
@@ -1097,6 +1095,8 @@
         if (countEl) {
           countEl.textContent = `${risks.length} risk(s)`;
         }
+
+        populateControlRisksOptions();
       }
 
       function handleRisksTableClick(event) {
@@ -1126,6 +1126,221 @@
           risks = risks.filter(r => r.id !== deleteId);
           saveRisks();
           renderRisksTable();
+          removeRiskFromControls(deleteId);
+        }
+      }
+
+      // --- Controls state ---
+      const CONTROL_STORAGE_KEY = 'grc_controls_v1';
+      let controls = [];
+
+      function loadControls() {
+        try {
+          const raw = localStorage.getItem(CONTROL_STORAGE_KEY);
+          controls = raw ? JSON.parse(raw) : [];
+          if (!Array.isArray(controls)) controls = [];
+        } catch (e) {
+          controls = [];
+        }
+      }
+
+      function saveControls() {
+        try {
+          localStorage.setItem(CONTROL_STORAGE_KEY, JSON.stringify(controls));
+        } catch (e) {
+          console.warn('Could not save controls to localStorage', e);
+        }
+      }
+
+      function getMultiSelectValues(selectEl) {
+        const values = [];
+        if (!selectEl) return values;
+        Array.from(selectEl.options).forEach(opt => {
+          if (opt.selected && opt.value) {
+            values.push(opt.value);
+          }
+        });
+        return values;
+      }
+
+      function setMultiSelectValues(selectEl, values) {
+        if (!selectEl) return;
+        const set = new Set(values || []);
+        Array.from(selectEl.options).forEach(opt => {
+          opt.selected = set.has(opt.value);
+        });
+      }
+
+      function populateControlRisksOptions() {
+        const select = document.getElementById('control-risks');
+        if (!select) return;
+
+        const currentValues = getMultiSelectValues(select);
+        select.innerHTML = '';
+
+        risks.forEach(risk => {
+          const opt = document.createElement('option');
+          opt.value = risk.id;
+          opt.textContent = risk.title;
+          select.appendChild(opt);
+        });
+
+        setMultiSelectValues(select, currentValues);
+      }
+
+      function populateControlFrameworksOptions() {
+        const select = document.getElementById('control-frameworks');
+        if (!select) return;
+
+        select.innerHTML = '';
+        FRAMEWORK_CONTROLS.forEach(ctrl => {
+          const opt = document.createElement('option');
+          opt.value = ctrl.id;
+          opt.textContent = `${ctrl.id} – ${ctrl.name}`;
+          select.appendChild(opt);
+        });
+      }
+
+      function resetControlForm() {
+        const form = document.getElementById('control-form');
+        if (!form) return;
+
+        form.reset();
+        document.getElementById('control-id').value = '';
+        const submitBtn = document.getElementById('control-form-submit');
+        if (submitBtn) submitBtn.textContent = 'Save control';
+      }
+
+      function handleControlFormSubmit(event) {
+        event.preventDefault();
+        const idField = document.getElementById('control-id');
+        const nameField = document.getElementById('control-name');
+        const typeField = document.getElementById('control-type');
+        const statusField = document.getElementById('control-status');
+        const ownerField = document.getElementById('control-owner');
+        const descField = document.getElementById('control-description');
+        const risksSelect = document.getElementById('control-risks');
+        const frameworksSelect = document.getElementById('control-frameworks');
+
+        if (!nameField.value.trim() || !typeField.value || !statusField.value) {
+          alert('Please fill in control name, type, and status.');
+          return;
+        }
+
+        const linkedRiskIds = getMultiSelectValues(risksSelect);
+        const linkedFrameworkControlIds = getMultiSelectValues(frameworksSelect);
+        const existingId = idField.value;
+
+        if (existingId) {
+          const idx = controls.findIndex(c => c.id === existingId);
+          if (idx !== -1) {
+            controls[idx] = {
+              ...controls[idx],
+              name: nameField.value.trim(),
+              type: typeField.value,
+              status: statusField.value,
+              owner: ownerField.value.trim(),
+              description: descField.value.trim(),
+              linkedRiskIds,
+              linkedFrameworkControlIds
+            };
+          }
+        } else {
+          const newControl = {
+            id: 'CTL-' + Date.now(),
+            name: nameField.value.trim(),
+            type: typeField.value,
+            status: statusField.value,
+            owner: ownerField.value.trim(),
+            description: descField.value.trim(),
+            linkedRiskIds,
+            linkedFrameworkControlIds
+          };
+          controls.push(newControl);
+        }
+
+        saveControls();
+        renderControlsTable();
+        resetControlForm();
+      }
+
+      function removeRiskFromControls(riskId) {
+        let changed = false;
+        controls.forEach(ctrl => {
+          if (Array.isArray(ctrl.linkedRiskIds) && ctrl.linkedRiskIds.includes(riskId)) {
+            ctrl.linkedRiskIds = ctrl.linkedRiskIds.filter(id => id !== riskId);
+            changed = true;
+          }
+        });
+        if (changed) {
+          saveControls();
+          renderControlsTable();
+        }
+      }
+
+      function renderControlsTable() {
+        const tbody = document.getElementById('controls-table-body');
+        const emptyState = document.getElementById('controls-empty-state');
+        const countEl = document.getElementById('controls-count');
+
+        if (!tbody) return;
+
+        tbody.innerHTML = '';
+
+        controls.forEach(control => {
+          const riskCount = (control.linkedRiskIds || []).length;
+          const fwCount = (control.linkedFrameworkControlIds || []).length;
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${control.name}</td>
+            <td>${control.type}</td>
+            <td>${control.status}</td>
+            <td>${riskCount ? riskCount + ' linked' : '-'}</td>
+            <td>${fwCount ? fwCount + ' mapped' : '-'}</td>
+            <td>
+              <button type="button" class="btn btn-sm btn-outline-light mb-1" data-control-edit="${control.id}">Edit</button>
+              <button type="button" class="btn btn-sm btn-outline-light mb-1" data-control-delete="${control.id}">Del</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        if (emptyState) {
+          emptyState.style.display = controls.length ? 'none' : 'block';
+        }
+        if (countEl) {
+          countEl.textContent = `${controls.length} control(s)`;
+        }
+      }
+
+      function handleControlsTableClick(event) {
+        const editId = event.target.getAttribute('data-control-edit');
+        const deleteId = event.target.getAttribute('data-control-delete');
+
+        if (editId) {
+          const control = controls.find(c => c.id === editId);
+          if (!control) return;
+
+          document.getElementById('control-id').value = control.id;
+          document.getElementById('control-name').value = control.name;
+          document.getElementById('control-type').value = control.type;
+          document.getElementById('control-status').value = control.status;
+          document.getElementById('control-owner').value = control.owner || '';
+          document.getElementById('control-description').value = control.description || '';
+
+          setMultiSelectValues(document.getElementById('control-risks'), control.linkedRiskIds || []);
+          setMultiSelectValues(document.getElementById('control-frameworks'), control.linkedFrameworkControlIds || []);
+
+          const submitBtn = document.getElementById('control-form-submit');
+          if (submitBtn) submitBtn.textContent = 'Update control';
+        }
+
+        if (deleteId) {
+          if (!confirm('Delete this control?')) return;
+          controls = controls.filter(c => c.id !== deleteId);
+          saveControls();
+          renderControlsTable();
         }
       }
 
@@ -1192,6 +1407,21 @@
 
         const risksTableBody = document.getElementById('risks-table-body');
         if (risksTableBody) risksTableBody.addEventListener('click', handleRisksTableClick);
+
+        // Controls
+        loadControls();
+        populateControlFrameworksOptions();
+        populateControlRisksOptions();
+        renderControlsTable();
+
+        const controlForm = document.getElementById('control-form');
+        if (controlForm) controlForm.addEventListener('submit', handleControlFormSubmit);
+
+        const controlCancel = document.getElementById('control-form-cancel');
+        if (controlCancel) controlCancel.addEventListener('click', resetControlForm);
+
+        const controlsTableBody = document.getElementById('controls-table-body');
+        if (controlsTableBody) controlsTableBody.addEventListener('click', handleControlsTableClick);
       });
     </script>
   </body>
