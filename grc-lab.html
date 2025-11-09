@@ -82,6 +82,7 @@
             <button class="btn btn-outline-light btn-sm" data-grc-tab="assets">Assets</button>
             <button class="btn btn-outline-light btn-sm" data-grc-tab="risks">Risks</button>
             <button class="btn btn-outline-light btn-sm" data-grc-tab="controls">Local Controls</button>
+            <button class="btn btn-outline-light btn-sm" data-grc-tab="issues">Issues / Findings</button>
           </div>
         </div>
 
@@ -553,6 +554,142 @@
           </div>
         </div>
 
+        <!-- Tab: Issues / Findings -->
+        <div id="tab-issues" class="grc-tab ftco-animate">
+          <h3>Issues & Findings</h3>
+          <p class="mb-3">
+            Track audit findings, pentest issues, incidents, and other gaps. Link them to assets, risks, and controls.
+          </p>
+
+          <div class="row">
+            <!-- Form column -->
+            <div class="col-md-5 mb-4">
+              <div class="bg-dark p-3 rounded">
+                <h5 class="mb-3">Add / Edit Issue</h5>
+                <form id="issue-form">
+                  <input type="hidden" id="issue-id">
+
+                  <div class="form-group">
+                    <label for="issue-title" class="text-muted small mb-1">Title *</label>
+                    <input type="text" id="issue-title" class="form-control form-control-sm"
+                           placeholder="e.g. Missing MFA for admin users" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="issue-type" class="text-muted small mb-1">Type *</label>
+                    <select id="issue-type" class="form-control form-control-sm" required>
+                      <option value="">Select type...</option>
+                      <option value="Audit">Audit</option>
+                      <option value="Pen test">Pen test</option>
+                      <option value="Incident">Incident</option>
+                      <option value="Risk review">Risk review</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="text-muted small mb-1">Linked objects (optional)</label>
+                    <select id="issue-asset" class="form-control form-control-sm mb-1">
+                      <option value="">Linked asset...</option>
+                    </select>
+                    <select id="issue-risk" class="form-control form-control-sm mb-1">
+                      <option value="">Linked risk...</option>
+                    </select>
+                    <select id="issue-control" class="form-control form-control-sm">
+                      <option value="">Linked control...</option>
+                    </select>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-6">
+                      <label for="issue-severity" class="text-muted small mb-1">Severity *</label>
+                      <select id="issue-severity" class="form-control form-control-sm" required>
+                        <option value="">Select...</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                        <option value="Critical">Critical</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-6">
+                      <label for="issue-status" class="text-muted small mb-1">Status *</label>
+                      <select id="issue-status" class="form-control form-control-sm" required>
+                        <option value="Open">Open</option>
+                        <option value="In progress">In progress</option>
+                        <option value="Resolved">Resolved</option>
+                        <option value="Accepted">Accepted</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-6">
+                      <label for="issue-owner" class="text-muted small mb-1">Owner</label>
+                      <input type="text" id="issue-owner" class="form-control form-control-sm"
+                             placeholder="e.g. Product Owner / Dev Lead">
+                    </div>
+                    <div class="form-group col-6">
+                      <label for="issue-due" class="text-muted small mb-1">Due date</label>
+                      <input type="date" id="issue-due" class="form-control form-control-sm">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="issue-notes" class="text-muted small mb-1">Details / Recommendation</label>
+                    <textarea id="issue-notes" class="form-control form-control-sm" rows="2"
+                              placeholder="Describe the issue, evidence, and recommended remediation."></textarea>
+                  </div>
+
+                  <div class="d-flex justify-content-between align-items-center">
+                    <button type="submit" id="issue-form-submit" class="btn btn-primary btn-sm">
+                      Save issue
+                    </button>
+                    <button type="button" id="issue-form-cancel" class="btn btn-outline-light btn-sm">
+                      Clear form
+                    </button>
+                  </div>
+
+                  <small class="text-muted d-block mt-2">
+                    Issues are stored locally in your browser along with assets, risks, and controls.
+                  </small>
+                </form>
+              </div>
+            </div>
+
+            <!-- Table column -->
+            <div class="col-md-7 mb-4">
+              <div class="bg-dark p-3 rounded">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <h5 class="mb-0">Issues / Findings</h5>
+                  <small id="issues-count" class="text-muted"></small>
+                </div>
+
+                <div class="table-responsive">
+                  <table class="table table-dark table-striped table-hover table-sm mb-0">
+                    <thead>
+                      <tr>
+                        <th style="width: 24%;">Title</th>
+                        <th style="width: 12%;">Type</th>
+                        <th style="width: 14%;">Severity</th>
+                        <th style="width: 16%;">Status</th>
+                        <th style="width: 18%;">Linked to</th>
+                        <th style="width: 16%;">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="issues-table-body">
+                      <!-- rows injected by JS -->
+                    </tbody>
+                  </table>
+                </div>
+
+                <div id="issues-empty-state" class="text-muted small mt-2">
+                  No issues yet. Log your first finding from an audit, pen test, or incident review.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -918,6 +1055,7 @@
         }
 
         populateRiskAssetOptions();
+        populateIssueDropdowns();
       }
 
       function handleAssetsTableClick(event) {
@@ -1100,6 +1238,7 @@
         }
 
         populateControlRisksOptions();
+        populateIssueDropdowns();
       }
 
       function handleRisksTableClick(event) {
@@ -1315,6 +1454,8 @@
         if (countEl) {
           countEl.textContent = `${controls.length} control(s)`;
         }
+
+        populateIssueDropdowns();
       }
 
       function handleControlsTableClick(event) {
@@ -1347,6 +1488,238 @@
         }
       }
 
+      // --- Issues / Findings state ---
+      const ISSUE_STORAGE_KEY = 'grc_issues_v1';
+      let issues = [];
+
+      function loadIssues() {
+        try {
+          const raw = localStorage.getItem(ISSUE_STORAGE_KEY);
+          issues = raw ? JSON.parse(raw) : [];
+          if (!Array.isArray(issues)) issues = [];
+        } catch (e) {
+          issues = [];
+        }
+      }
+
+      function saveIssues() {
+        try {
+          localStorage.setItem(ISSUE_STORAGE_KEY, JSON.stringify(issues));
+        } catch (e) {
+          console.warn('Could not save issues to localStorage', e);
+        }
+      }
+
+      function resetIssueForm() {
+        const form = document.getElementById('issue-form');
+        if (!form) return;
+        form.reset();
+        const idField = document.getElementById('issue-id');
+        if (idField) idField.value = '';
+        const submitBtn = document.getElementById('issue-form-submit');
+        if (submitBtn) submitBtn.textContent = 'Save issue';
+      }
+
+      function populateIssueDropdowns() {
+        const assetSelect = document.getElementById('issue-asset');
+        const riskSelect = document.getElementById('issue-risk');
+        const controlSelect = document.getElementById('issue-control');
+
+        if (assetSelect) {
+          const current = assetSelect.value;
+          assetSelect.innerHTML = '<option value="">Linked asset...</option>';
+          assets.forEach(a => {
+            const opt = document.createElement('option');
+            opt.value = a.id;
+            opt.textContent = a.name;
+            assetSelect.appendChild(opt);
+          });
+          if (current && assets.some(a => a.id === current)) assetSelect.value = current;
+        }
+
+        if (riskSelect) {
+          const current = riskSelect.value;
+          riskSelect.innerHTML = '<option value="">Linked risk...</option>';
+          risks.forEach(r => {
+            const opt = document.createElement('option');
+            opt.value = r.id;
+            opt.textContent = r.title;
+            riskSelect.appendChild(opt);
+          });
+          if (current && risks.some(r => r.id === current)) riskSelect.value = current;
+        }
+
+        if (controlSelect) {
+          const current = controlSelect.value;
+          controlSelect.innerHTML = '<option value="">Linked control...</option>';
+          controls.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.id;
+            opt.textContent = c.name;
+            controlSelect.appendChild(opt);
+          });
+          if (current && controls.some(c => c.id === current)) controlSelect.value = current;
+        }
+      }
+
+      function handleIssueFormSubmit(event) {
+        event.preventDefault();
+        const idField = document.getElementById('issue-id');
+        const titleField = document.getElementById('issue-title');
+        const typeField = document.getElementById('issue-type');
+        const assetField = document.getElementById('issue-asset');
+        const riskField = document.getElementById('issue-risk');
+        const controlField = document.getElementById('issue-control');
+        const severityField = document.getElementById('issue-severity');
+        const statusField = document.getElementById('issue-status');
+        const ownerField = document.getElementById('issue-owner');
+        const dueField = document.getElementById('issue-due');
+        const notesField = document.getElementById('issue-notes');
+
+        if (!titleField.value.trim() || !typeField.value || !severityField.value || !statusField.value) {
+          alert('Please fill in title, type, severity, and status.');
+          return;
+        }
+
+        const assetId = assetField.value || '';
+        const riskId = riskField.value || '';
+        const controlId = controlField.value || '';
+
+        const asset = assets.find(a => a.id === assetId);
+        const risk = risks.find(r => r.id === riskId);
+        const control = controls.find(c => c.id === controlId);
+
+        const linkedLabelParts = [];
+        if (asset) linkedLabelParts.push(`Asset: ${asset.name}`);
+        if (risk) linkedLabelParts.push(`Risk: ${risk.title}`);
+        if (control) linkedLabelParts.push(`Control: ${control.name}`);
+        const linkedSummary = linkedLabelParts.join(' | ');
+
+        const existingId = idField.value;
+
+        if (existingId) {
+          const idx = issues.findIndex(i => i.id === existingId);
+          if (idx !== -1) {
+            issues[idx] = {
+              ...issues[idx],
+              title: titleField.value.trim(),
+              type: typeField.value,
+              severity: severityField.value,
+              status: statusField.value,
+              owner: ownerField.value.trim(),
+              dueDate: dueField.value,
+              notes: notesField.value.trim(),
+              assetId,
+              riskId,
+              controlId,
+              linkedSummary
+            };
+          }
+        } else {
+          const newIssue = {
+            id: 'ISS-' + Date.now(),
+            title: titleField.value.trim(),
+            type: typeField.value,
+            severity: severityField.value,
+            status: statusField.value,
+            owner: ownerField.value.trim(),
+            dueDate: dueField.value,
+            notes: notesField.value.trim(),
+            assetId,
+            riskId,
+            controlId,
+            linkedSummary
+          };
+          issues.push(newIssue);
+        }
+
+        saveIssues();
+        renderIssuesTable();
+        resetIssueForm();
+      }
+
+      function renderIssuesTable() {
+        const tbody = document.getElementById('issues-table-body');
+        const emptyState = document.getElementById('issues-empty-state');
+        const countEl = document.getElementById('issues-count');
+
+        if (!tbody) return;
+
+        tbody.innerHTML = '';
+
+        issues.forEach(issue => {
+          let sevClass = '';
+          if (issue.severity === 'Critical') sevClass = 'badge-danger';
+          else if (issue.severity === 'High') sevClass = 'badge-danger';
+          else if (issue.severity === 'Medium') sevClass = 'badge-warning';
+          else if (issue.severity === 'Low') sevClass = 'badge-success';
+
+          const severityHtml = issue.severity
+            ? `<span class="badge ${sevClass}">${issue.severity}</span>`
+            : '-';
+
+          const linkedText = issue.linkedSummary || '-';
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${issue.title}</td>
+            <td>${issue.type}</td>
+            <td>${severityHtml}</td>
+            <td>${issue.status}</td>
+            <td>${linkedText}</td>
+            <td>
+              <button type="button" class="btn btn-sm btn-outline-light mb-1" data-issue-edit="${issue.id}">Edit</button>
+              <button type="button" class="btn btn-sm btn-outline-light mb-1" data-issue-delete="${issue.id}">Del</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        if (emptyState) {
+          emptyState.style.display = issues.length ? 'none' : 'block';
+        }
+        if (countEl) {
+          countEl.textContent = `${issues.length} issue(s)`;
+        }
+      }
+
+      function handleIssuesTableClick(event) {
+        const editId = event.target.getAttribute('data-issue-edit');
+        const deleteId = event.target.getAttribute('data-issue-delete');
+
+        if (editId) {
+          const issue = issues.find(i => i.id === editId);
+          if (!issue) return;
+
+          document.getElementById('issue-id').value = issue.id;
+          document.getElementById('issue-title').value = issue.title;
+          document.getElementById('issue-type').value = issue.type;
+          document.getElementById('issue-severity').value = issue.severity;
+          document.getElementById('issue-status').value = issue.status;
+          document.getElementById('issue-owner').value = issue.owner || '';
+          document.getElementById('issue-due').value = issue.dueDate || '';
+          document.getElementById('issue-notes').value = issue.notes || '';
+
+          populateIssueDropdowns();
+          const assetField = document.getElementById('issue-asset');
+          const riskField = document.getElementById('issue-risk');
+          const controlField = document.getElementById('issue-control');
+          if (assetField) assetField.value = issue.assetId || '';
+          if (riskField) riskField.value = issue.riskId || '';
+          if (controlField) controlField.value = issue.controlId || '';
+
+          const submitBtn = document.getElementById('issue-form-submit');
+          if (submitBtn) submitBtn.textContent = 'Update issue';
+        }
+
+        if (deleteId) {
+          if (!confirm('Delete this issue?')) return;
+          issues = issues.filter(i => i.id !== deleteId);
+          saveIssues();
+          renderIssuesTable();
+        }
+      }
+
       // --- DOM ready ---
       document.addEventListener('DOMContentLoaded', function () {
         // Tabs
@@ -1355,7 +1728,8 @@
           frameworks: document.getElementById('tab-frameworks'),
           assets: document.getElementById('tab-assets'),
           risks: document.getElementById('tab-risks'),
-          controls: document.getElementById('tab-controls')
+          controls: document.getElementById('tab-controls'),
+          issues: document.getElementById('tab-issues')
         };
 
         buttons.forEach(btn => {
@@ -1368,7 +1742,7 @@
             btn.classList.add('btn-primary');
 
             Object.values(tabs).forEach(t => t.classList.remove('active'));
-            tabs[target].classList.add('active');
+            if (tabs[target]) tabs[target].classList.add('active');
           });
         });
 
@@ -1425,6 +1799,20 @@
 
         const controlsTableBody = document.getElementById('controls-table-body');
         if (controlsTableBody) controlsTableBody.addEventListener('click', handleControlsTableClick);
+
+        // Issues
+        loadIssues();
+        populateIssueDropdowns();
+        renderIssuesTable();
+
+        const issueForm = document.getElementById('issue-form');
+        if (issueForm) issueForm.addEventListener('submit', handleIssueFormSubmit);
+
+        const issueCancel = document.getElementById('issue-form-cancel');
+        if (issueCancel) issueCancel.addEventListener('click', resetIssueForm);
+
+        const issuesTableBody = document.getElementById('issues-table-body');
+        if (issuesTableBody) issuesTableBody.addEventListener('click', handleIssuesTableClick);
       });
     </script>
   </body>
