@@ -293,17 +293,127 @@
 <div id="tab-controls" class="grc-tab ftco-animate">
   <h3>Local Controls (Org Control Library)</h3>
   <p class="mb-3">
-    This section will store your organization-specific controls and map them to both risks and framework
-    requirements. It becomes your bridge between day-to-day tasks and ISO/NIST/PCI/HIPAA language.
+    Define your organization’s specific controls and link them to risks and framework requirements.
+    This becomes your practical bridge between daily security tasks and ISO/NIST/PCI/HIPAA language.
   </p>
 
-  <div class="bg-dark p-4 rounded">
-    <p class="mb-0 text-muted">
-      Coming next: form to add controls, link them to risks and framework controls, and see coverage.
-    </p>
+  <div class="row">
+    <!-- Form column -->
+    <div class="col-md-5 mb-4">
+      <div class="bg-dark p-3 rounded">
+        <h5 class="mb-3">Add / Edit Control</h5>
+        <form id="control-form">
+          <input type="hidden" id="control-id">
+
+          <div class="form-group">
+            <label for="control-name" class="text-muted small mb-1">Control name *</label>
+            <input type="text" id="control-name" class="form-control form-control-sm"
+                   placeholder="e.g. Enforce MFA for admin accounts" required>
+          </div>
+
+          <div class="form-group">
+            <label for="control-type" class="text-muted small mb-1">Type *</label>
+            <select id="control-type" class="form-control form-control-sm" required>
+              <option value="">Select type...</option>
+              <option value="Preventive">Preventive</option>
+              <option value="Detective">Detective</option>
+              <option value="Corrective">Corrective</option>
+              <option value="Administrative">Administrative</option>
+              <option value="Technical">Technical</option>
+              <option value="Physical">Physical</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="control-status" class="text-muted small mb-1">Status *</label>
+            <select id="control-status" class="form-control form-control-sm" required>
+              <option value="In place">In place</option>
+              <option value="Planned">Planned</option>
+              <option value="Not applicable">Not applicable</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="control-owner" class="text-muted small mb-1">Control owner</label>
+            <input type="text" id="control-owner" class="form-control form-control-sm"
+                   placeholder="e.g. DevSecOps, IT Ops, Compliance">
+          </div>
+
+          <div class="form-group">
+            <label for="control-description" class="text-muted small mb-1">Description</label>
+            <textarea id="control-description" class="form-control form-control-sm" rows="2"
+                      placeholder="How is this control implemented? What systems and processes are in scope?"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="text-muted small mb-1">Related risks</label>
+            <select id="control-risks" class="form-control form-control-sm" multiple>
+              <!-- options injected from risks -->
+            </select>
+            <small class="text-muted">
+              Hold Ctrl / Cmd to select multiple. You can leave this empty and map later.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label class="text-muted small mb-1">Related framework controls</label>
+            <select id="control-frameworks" class="form-control form-control-sm" multiple>
+              <!-- options injected from FRAMEWORK_CONTROLS -->
+            </select>
+            <small class="text-muted">
+              This links your local control to ISO/NIST/PCI/HIPAA style requirements.
+            </small>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center">
+            <button type="submit" id="control-form-submit" class="btn btn-primary btn-sm">
+              Save control
+            </button>
+            <button type="button" id="control-form-cancel" class="btn btn-outline-light btn-sm">
+              Clear form
+            </button>
+          </div>
+
+          <small class="text-muted d-block mt-2">
+            Controls are stored locally in your browser along with assets and risks.
+          </small>
+        </form>
+      </div>
+    </div>
+
+    <!-- Table column -->
+    <div class="col-md-7 mb-4">
+      <div class="bg-dark p-3 rounded">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5 class="mb-0">Controls</h5>
+          <small id="controls-count" class="text-muted"></small>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-dark table-striped table-hover table-sm mb-0">
+            <thead>
+              <tr>
+                <th style="width: 26%;">Name</th>
+                <th style="width: 16%;">Type</th>
+                <th style="width: 14%;">Status</th>
+                <th style="width: 22%;">Linked risks</th>
+                <th style="width: 12%;">Frameworks</th>
+                <th style="width: 10%;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="controls-table-body">
+              <!-- rows injected by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="controls-empty-state" class="text-muted small mt-2">
+          No controls yet. Add your first control using the form on the left.
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-         
   <div class="row">
     <!-- Form column -->
     <div class="col-md-5 mb-4">
