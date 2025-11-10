@@ -77,7 +77,7 @@
 
     <!-- Hero / Lab wrapper -->
     <section class="ftco-section grc-lab-hero">
-      <!-- NEW: wrap ALL lab content in this container so margins apply everywhere -->
+      <!-- Wrap ALL lab content so margins apply everywhere -->
       <div class="grc-lab-container container-fluid px-4 px-md-5">
 
         <!-- Hero -->
@@ -96,7 +96,7 @@
         </div>
 
         <!-- Tab buttons -->
-        <div class="row mb-4">
+        <div class="row mb-3">
           <div class="col-md-12 text-center grc-tab-buttons">
             <button class="btn btn-primary btn-sm" data-grc-tab="frameworks">Frameworks & Controls</button>
             <button class="btn btn-outline-light btn-sm" data-grc-tab="assets">Assets</button>
@@ -105,22 +105,20 @@
             <button class="btn btn-outline-light btn-sm" data-grc-tab="issues">Issues / Findings</button>
           </div>
         </div>
-        <!-- Data export / import controls -->
-<div class="row mb-4">
-  <div class="col-md-12 text-center">
-    <button id="btn-export-json" class="btn btn-outline-light btn-sm mr-2">
-      Export lab data (JSON)
-    </button>
 
-    <!-- Styled label wraps the hidden file input -->
-    <label class="btn btn-outline-light btn-sm mb-0">
-      Import lab data (JSON)
-      <input type="file" id="input-import-json" accept="application/json" hidden>
-    </label>
-  </div>
-</div>
+        <!-- Export / Import controls -->
+        <div class="row mb-4">
+          <div class="col-md-12 text-center">
+            <button id="btn-export-json" class="btn btn-outline-light btn-sm mr-2">
+              Export lab data (JSON)
+            </button>
+            <label class="btn btn-outline-light btn-sm mb-0">
+              Import lab data (JSON)
+              <input type="file" id="input-import-json" accept="application/json" hidden>
+            </label>
+          </div>
+        </div>
 
-        
         <!-- Tab: Frameworks -->
         <div id="tab-frameworks" class="grc-tab active ftco-animate">
           <h3>Framework Library</h3>
@@ -1545,6 +1543,103 @@
         }
       }
 
+      // --- Lab snapshot export/import ---
+
+      function getLabSnapshot() {
+        return {
+          assets,
+          risks,
+          controls,
+          issues
+        };
+      }
+
+      function saveAllToLocalStorage() {
+        saveAssets();
+        saveRisks();
+        saveControls();
+        saveIssues();
+      }
+
+      function applyLabSnapshot(snapshot) {
+        if (!snapshot || typeof snapshot !== 'object') {
+          alert('Invalid lab file.');
+          return;
+        }
+
+        const {
+          assets: newAssets = [],
+          risks: newRisks = [],
+          controls: newControls = [],
+          issues: newIssues = []
+        } = snapshot;
+
+        if (!Array.isArray(newAssets) ||
+            !Array.isArray(newRisks) ||
+            !Array.isArray(newControls) ||
+            !Array.isArray(newIssues)) {
+          alert('Lab file is missing required lists.');
+          return;
+        }
+
+        if (!confirm('Importing will replace your current lab data. Continue?')) {
+          return;
+        }
+
+        assets = newAssets;
+        risks = newRisks;
+        controls = newControls;
+        issues = newIssues;
+
+        saveAllToLocalStorage();
+
+        // Re-render all views
+        renderAssetsTable();
+        populateRiskAssetOptions();
+
+        renderRisksTable();
+        populateControlRisksOptions();
+
+        renderControlsTable();
+        populateControlFrameworksOptions();
+
+        populateIssueDropdowns();
+        renderIssuesTable();
+
+        alert('Lab data imported successfully.');
+      }
+
+      function handleExportJson() {
+        const snapshot = getLabSnapshot();
+        const json = JSON.stringify(snapshot, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        const ts = new Date().toISOString().replace(/[:.]/g, '-');
+        a.href = url;
+        a.download = 'grc-lab-' + ts + '.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      function handleImportJsonFile(file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const text = e.target.result;
+            const snapshot = JSON.parse(text);
+            applyLabSnapshot(snapshot);
+          } catch (err) {
+            console.error(err);
+            alert('Could not read lab file. Make sure it is valid JSON.');
+          }
+        };
+        reader.readAsText(file);
+      }
+
       function resetIssueForm() {
         const form = document.getElementById('issue-form');
         if (!form) return;
@@ -1848,6 +1943,23 @@
 
         const issuesTableBody = document.getElementById('issues-table-body');
         if (issuesTableBody) issuesTableBody.addEventListener('click', handleIssuesTableClick);
+
+        // Export / Import JSON
+        const exportBtn = document.getElementById('btn-export-json');
+        if (exportBtn) {
+          exportBtn.addEventListener('click', handleExportJson);
+        }
+
+        const importInput = document.getElementById('input-import-json');
+        if (importInput) {
+          importInput.addEventListener('change', function () {
+            const file = this.files && this.files[0];
+            if (file) {
+              handleImportJsonFile(file);
+              this.value = '';
+            }
+          });
+        }
       });
     </script>
   </body>
