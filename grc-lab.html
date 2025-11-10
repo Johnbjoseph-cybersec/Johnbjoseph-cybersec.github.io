@@ -105,7 +105,22 @@
             <button class="btn btn-outline-light btn-sm" data-grc-tab="issues">Issues / Findings</button>
           </div>
         </div>
+        <!-- Data export / import controls -->
+<div class="row mb-4">
+  <div class="col-md-12 text-center">
+    <button id="btn-export-json" class="btn btn-outline-light btn-sm mr-2">
+      Export lab data (JSON)
+    </button>
 
+    <!-- Styled label wraps the hidden file input -->
+    <label class="btn btn-outline-light btn-sm mb-0">
+      Import lab data (JSON)
+      <input type="file" id="input-import-json" accept="application/json" hidden>
+    </label>
+  </div>
+</div>
+
+        
         <!-- Tab: Frameworks -->
         <div id="tab-frameworks" class="grc-tab active ftco-animate">
           <h3>Framework Library</h3>
