@@ -39,16 +39,30 @@
 
       /* Main GRC Lab container: ~10% margin on left/right */
       .grc-lab-container {
-        width: 80vw;        /* 80% of viewport width */
-        max-width: 1600px;  /* don't get ridiculously wide */
-        margin: 0 auto;     /* center it */
+        width: 80vw;
+        max-width: 1600px;
+        margin: 0 auto;
       }
 
-      /* On smaller screens just use full width */
       @media (max-width: 991.98px) {
         .grc-lab-container {
           width: 100vw;
         }
+      }
+
+      .summary-card-title {
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.7rem;
+      }
+
+      .summary-card-main {
+        font-size: 1.6rem;
+        font-weight: 600;
+      }
+
+      .summary-card-sub {
+        font-size: 0.8rem;
       }
     </style>
   </head>
@@ -77,7 +91,6 @@
 
     <!-- Hero / Lab wrapper -->
     <section class="ftco-section grc-lab-hero">
-      <!-- Wrap ALL lab content so margins apply everywhere -->
       <div class="grc-lab-container container-fluid px-4 px-md-5">
 
         <!-- Hero -->
@@ -106,8 +119,8 @@
           </div>
         </div>
 
-        <!-- Export / Import controls -->
-        <div class="row mb-4">
+        <!-- Export / Import -->
+        <div class="row mb-3">
           <div class="col-md-12 text-center">
             <button id="btn-export-json" class="btn btn-outline-light btn-sm mr-2">
               Export lab data (JSON)
@@ -119,6 +132,38 @@
           </div>
         </div>
 
+        <!-- Summary strip -->
+        <div class="row mb-4" id="lab-summary-row">
+          <div class="col-md-3 mb-2">
+            <div class="bg-dark p-3 rounded h-100">
+              <div class="text-muted summary-card-title mb-1">Assets</div>
+              <div class="summary-card-main mb-1" id="summary-assets-count">0</div>
+              <div class="text-muted summary-card-sub">In scope for your lab</div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-2">
+            <div class="bg-dark p-3 rounded h-100">
+              <div class="text-muted summary-card-title mb-1">Risks</div>
+              <div class="summary-card-main mb-1" id="summary-risks-count">0</div>
+              <div class="text-muted summary-card-sub" id="summary-risks-breakdown">0 high · 0 medium · 0 low</div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-2">
+            <div class="bg-dark p-3 rounded h-100">
+              <div class="text-muted summary-card-title mb-1">Controls</div>
+              <div class="summary-card-main mb-1" id="summary-controls-count">0</div>
+              <div class="text-muted summary-card-sub" id="summary-controls-mapped">0 mapped to frameworks</div>
+            </div>
+          </div>
+          <div class="col-md-3 mb-2">
+            <div class="bg-dark p-3 rounded h-100">
+              <div class="text-muted summary-card-title mb-1">Issues</div>
+              <div class="summary-card-main mb-1" id="summary-issues-open">0</div>
+              <div class="text-muted summary-card-sub" id="summary-issues-overdue">0 overdue remediation items</div>
+            </div>
+          </div>
+        </div>
+
         <!-- Tab: Frameworks -->
         <div id="tab-frameworks" class="grc-tab active ftco-animate">
           <h3>Framework Library</h3>
@@ -127,7 +172,6 @@
             Use the filters to explore how controls align across frameworks.
           </p>
 
-          <!-- Filters -->
           <div class="row mb-3">
             <div class="col-md-4 mb-2">
               <label class="text-muted small mb-1">Filter by Framework</label>
@@ -163,7 +207,6 @@
             </div>
           </div>
 
-          <!-- Table -->
           <div class="table-responsive bg-dark p-3 rounded">
             <table class="table table-dark table-striped table-hover table-sm mb-0">
               <thead>
@@ -175,9 +218,7 @@
                   <th style="width: 32%;">Description</th>
                 </tr>
               </thead>
-              <tbody id="frameworks-table-body">
-                <!-- rows will be injected by JS -->
-              </tbody>
+              <tbody id="frameworks-table-body"></tbody>
             </table>
             <div class="mt-2 text-right">
               <small id="frameworks-count" class="text-muted"></small>
@@ -194,7 +235,6 @@
           </p>
 
           <div class="row">
-            <!-- Form column (≈25% of screen when including outer margins) -->
             <div class="col-lg-4 col-md-5 mb-4">
               <div class="bg-dark p-3 rounded">
                 <h5 class="mb-3">Add / Edit Asset</h5>
@@ -283,7 +323,6 @@
               </div>
             </div>
 
-            <!-- Table column (≈55% of screen when including outer margins) -->
             <div class="col-lg-8 col-md-7 mb-4">
               <div class="bg-dark p-3 rounded">
                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -303,9 +342,7 @@
                         <th style="width: 12%;">Actions</th>
                       </tr>
                     </thead>
-                    <tbody id="assets-table-body">
-                      <!-- rows injected by JS -->
-                    </tbody>
+                    <tbody id="assets-table-body"></tbody>
                   </table>
                 </div>
 
@@ -326,7 +363,6 @@
           </p>
 
           <div class="row">
-            <!-- Form column -->
             <div class="col-lg-4 col-md-5 mb-4">
               <div class="bg-dark p-3 rounded">
                 <h5 class="mb-3">Add / Edit Risk</h5>
@@ -343,7 +379,6 @@
                     <label for="risk-asset" class="text-muted small mb-1">Asset *</label>
                     <select id="risk-asset" class="form-control form-control-sm" required>
                       <option value="">Select asset...</option>
-                      <!-- options injected from assets -->
                     </select>
                   </div>
 
@@ -423,7 +458,6 @@
               </div>
             </div>
 
-            <!-- Table column -->
             <div class="col-lg-8 col-md-7 mb-4">
               <div class="bg-dark p-3 rounded">
                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -438,14 +472,12 @@
                         <th style="width: 26%;">Title</th>
                         <th style="width: 18%;">Asset</th>
                         <th style="width: 16%;">Category</th>
-                        <th style="width: 16%;">Inherent score</th>
-                        <th style="width: 14%;">Status</th>
+                        <th style="width: 20%;">Inherent score</th>
+                        <th style="width: 10%;">Status</th>
                         <th style="width: 10%;">Actions</th>
                       </tr>
                     </thead>
-                    <tbody id="risks-table-body">
-                      <!-- rows injected by JS -->
-                    </tbody>
+                    <tbody id="risks-table-body"></tbody>
                   </table>
                 </div>
 
@@ -455,6 +487,7 @@
 
                 <small class="text-muted d-block mt-2">
                   Simple scale: 1–5 × 1–5 → 1–25. We’ll treat 1–5 = Low, 6–12 = Medium, 15+ = High.
+                  Risks shown with <span class="badge badge-danger">No controls</span> do not yet have mitigating controls linked.
                 </small>
               </div>
             </div>
@@ -470,7 +503,6 @@
           </p>
 
           <div class="row">
-            <!-- Form column -->
             <div class="col-lg-4 col-md-5 mb-4">
               <div class="bg-dark p-3 rounded">
                 <h5 class="mb-3">Add / Edit Control</h5>
@@ -519,9 +551,7 @@
 
                   <div class="form-group">
                     <label class="text-muted small mb-1">Related risks</label>
-                    <select id="control-risks" class="form-control form-control-sm" multiple>
-                      <!-- options injected from risks -->
-                    </select>
+                    <select id="control-risks" class="form-control form-control-sm" multiple></select>
                     <small class="text-muted">
                       Hold Ctrl / Cmd to select multiple. You can leave this empty and map later.
                     </small>
@@ -529,9 +559,7 @@
 
                   <div class="form-group">
                     <label class="text-muted small mb-1">Related framework controls</label>
-                    <select id="control-frameworks" class="form-control form-control-sm" multiple>
-                      <!-- options injected from FRAMEWORK_CONTROLS -->
-                    </select>
+                    <select id="control-frameworks" class="form-control form-control-sm" multiple></select>
                     <small class="text-muted">
                       This links your local control to ISO/NIST/PCI/HIPAA style requirements.
                     </small>
@@ -553,7 +581,6 @@
               </div>
             </div>
 
-            <!-- Table column -->
             <div class="col-lg-8 col-md-7 mb-4">
               <div class="bg-dark p-3 rounded">
                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -573,9 +600,7 @@
                         <th style="width: 10%;">Actions</th>
                       </tr>
                     </thead>
-                    <tbody id="controls-table-body">
-                      <!-- rows injected by JS -->
-                    </tbody>
+                    <tbody id="controls-table-body"></tbody>
                   </table>
                 </div>
 
@@ -595,7 +620,6 @@
           </p>
 
           <div class="row">
-            <!-- Form column -->
             <div class="col-lg-4 col-md-5 mb-4">
               <div class="bg-dark p-3 rounded">
                 <h5 class="mb-3">Add / Edit Issue</h5>
@@ -689,7 +713,6 @@
               </div>
             </div>
 
-            <!-- Table column -->
             <div class="col-lg-8 col-md-7 mb-4">
               <div class="bg-dark p-3 rounded">
                 <div class="d-flex justify-content-between align-items-center mb-2">
@@ -709,21 +732,24 @@
                         <th style="width: 16%;">Actions</th>
                       </tr>
                     </thead>
-                    <tbody id="issues-table-body">
-                      <!-- rows injected by JS -->
-                    </tbody>
+                    <tbody id="issues-table-body"></tbody>
                   </table>
                 </div>
 
                 <div id="issues-empty-state" class="text-muted small mt-2">
                   No issues yet. Log your first finding from an audit, pen test, or incident review.
                 </div>
+
+                <small class="text-muted d-block mt-2">
+                  Issues with a red <span class="badge badge-danger">Overdue</span> badge have a due date in the past
+                  and are still open or in progress.
+                </small>
               </div>
             </div>
           </div>
         </div>
 
-      </div> <!-- /.grc-lab-container -->
+      </div>
     </section>
 
     <footer class="ftco-footer ftco-section">
@@ -739,7 +765,7 @@
       </div>
     </footer>
 
-    <!-- Scripts (same as index) -->
+    <!-- Scripts -->
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -756,144 +782,74 @@
 
     <!-- GRC Lab Logic -->
     <script>
-      // --- Unified, paraphrased control set ---
+      // --- Framework controls ---
       const FRAMEWORK_CONTROLS = [
-        {
-          id: "CTRL-AC-01",
-          name: "Manage user accounts",
-          category: "Access Control",
+        { id: "CTRL-AC-01", name: "Manage user accounts", category: "Access Control",
           description: "Only approved users receive accounts, and access is removed quickly when people change roles or leave.",
-          frameworks: ["ISO 27001", "NIST CSF"],
-          references: ["ISO 27001 A.9", "NIST PR.AC-1"]
-        },
-        {
-          id: "CTRL-AC-02",
-          name: "Limit privileged access",
-          category: "Identity & Authentication",
+          frameworks: ["ISO 27001", "NIST CSF"], references: ["ISO 27001 A.9", "NIST PR.AC-1"] },
+        { id: "CTRL-AC-02", name: "Limit privileged access", category: "Identity & Authentication",
           description: "Privileged roles are tightly controlled, logged, and reviewed on a regular schedule.",
-          frameworks: ["ISO 27001", "NIST CSF", "PCI DSS"],
-          references: ["ISO 27001 A.9.2", "NIST PR.AC-4", "PCI DSS 7"]
-        },
-        {
-          id: "CTRL-AC-03",
-          name: "Strong authentication",
-          category: "Identity & Authentication",
+          frameworks: ["ISO 27001", "NIST CSF", "PCI DSS"], references: ["ISO 27001 A.9.2", "NIST PR.AC-4", "PCI DSS 7"] },
+        { id: "CTRL-AC-03", name: "Strong authentication", category: "Identity & Authentication",
           description: "Multi-factor authentication is used for admin accounts and remote access to critical systems.",
           frameworks: ["ISO 27001", "NIST CSF", "PCI DSS", "HIPAA"],
-          references: ["ISO 27001 A.9.4", "NIST PR.AC-7", "PCI DSS 8", "HIPAA 164.312(d)"]
-        },
-        {
-          id: "CTRL-LOG-01",
-          name: "Central activity logging",
-          category: "Logging & Monitoring",
+          references: ["ISO 27001 A.9.4", "NIST PR.AC-7", "PCI DSS 8", "HIPAA 164.312(d)"] },
+        { id: "CTRL-LOG-01", name: "Central activity logging", category: "Logging & Monitoring",
           description: "Security-relevant events from key systems are collected in a central logging solution.",
           frameworks: ["ISO 27001", "NIST CSF", "PCI DSS"],
-          references: ["ISO 27001 A.12.4", "NIST DE.AE-1", "PCI DSS 10"]
-        },
-        {
-          id: "CTRL-LOG-02",
-          name: "Regular log review",
-          category: "Logging & Monitoring",
+          references: ["ISO 27001 A.12.4", "NIST DE.AE-1", "PCI DSS 10"] },
+        { id: "CTRL-LOG-02", name: "Regular log review", category: "Logging & Monitoring",
           description: "Logs for important systems are reviewed, with suspicious events investigated and documented.",
           frameworks: ["ISO 27001", "NIST CSF", "HIPAA"],
-          references: ["ISO 27001 A.12.4", "NIST DE.CM-1", "HIPAA 164.308(a)(1)"]
-        },
-        {
-          id: "CTRL-ENC-01",
-          name: "Encrypt data at rest",
-          category: "Encryption & Key Management",
+          references: ["ISO 27001 A.12.4", "NIST DE.CM-1", "HIPAA 164.308(a)(1)"] },
+        { id: "CTRL-ENC-01", name: "Encrypt data at rest", category: "Encryption & Key Management",
           description: "Sensitive data stored in databases, file systems, and backups is encrypted.",
           frameworks: ["ISO 27001", "PCI DSS", "HIPAA"],
-          references: ["ISO 27001 A.10", "PCI DSS 3", "HIPAA 164.312(a)(2)(iv)"]
-        },
-        {
-          id: "CTRL-ENC-02",
-          name: "Encrypt data in transit",
-          category: "Encryption & Key Management",
+          references: ["ISO 27001 A.10", "PCI DSS 3", "HIPAA 164.312(a)(2)(iv)"] },
+        { id: "CTRL-ENC-02", name: "Encrypt data in transit", category: "Encryption & Key Management",
           description: "Connections carrying sensitive data use secure protocols such as TLS, with weak ciphers disabled.",
           frameworks: ["ISO 27001", "NIST CSF", "PCI DSS", "HIPAA"],
-          references: ["ISO 27001 A.13", "NIST PR.DS-2", "PCI DSS 4", "HIPAA 164.312(e)(1)"]
-        },
-        {
-          id: "CTRL-BCP-01",
-          name: "Backups & restore testing",
-          category: "Backup & Recovery",
+          references: ["ISO 27001 A.13", "NIST PR.DS-2", "PCI DSS 4", "HIPAA 164.312(e)(1)"] },
+        { id: "CTRL-BCP-01", name: "Backups & restore testing", category: "Backup & Recovery",
           description: "Critical systems and data are backed up regularly and restore tests are performed and documented.",
           frameworks: ["ISO 27001", "NIST CSF"],
-          references: ["ISO 27001 A.12.3", "NIST PR.IP-4"]
-        },
-        {
-          id: "CTRL-CHG-01",
-          name: "Controlled changes",
-          category: "Change Management",
+          references: ["ISO 27001 A.12.3", "NIST PR.IP-4"] },
+        { id: "CTRL-CHG-01", name: "Controlled changes", category: "Change Management",
           description: "Changes to production systems follow an approved process with impact assessment and rollback plans.",
           frameworks: ["ISO 27001", "NIST CSF"],
-          references: ["ISO 27001 A.12.1", "NIST PR.IP-3"]
-        },
-        {
-          id: "CTRL-CHG-02",
-          name: "Separate environments",
-          category: "Change Management",
+          references: ["ISO 27001 A.12.1", "NIST PR.IP-3"] },
+        { id: "CTRL-CHG-02", name: "Separate environments", category: "Change Management",
           description: "Development and testing environments are separated from production, with restricted access between them.",
           frameworks: ["ISO 27001", "PCI DSS"],
-          references: ["ISO 27001 A.12.1.4", "PCI DSS 6.4"]
-        },
-        {
-          id: "CTRL-VULN-01",
-          name: "Vulnerability management",
-          category: "Vulnerability Management",
+          references: ["ISO 27001 A.12.1.4", "PCI DSS 6.4"] },
+        { id: "CTRL-VULN-01", name: "Vulnerability management", category: "Vulnerability Management",
           description: "Systems are regularly scanned for vulnerabilities and patches are applied according to defined timelines.",
           frameworks: ["ISO 27001", "NIST CSF", "PCI DSS"],
-          references: ["ISO 27001 A.12.6", "NIST DE.CM-8", "PCI DSS 11"]
-        },
-        {
-          id: "CTRL-IR-01",
-          name: "Incident response plan",
-          category: "Incident Response",
+          references: ["ISO 27001 A.12.6", "NIST DE.CM-8", "PCI DSS 11"] },
+        { id: "CTRL-IR-01", name: "Incident response plan", category: "Incident Response",
           description: "There is a documented incident response plan with clear roles, steps, and communication paths.",
           frameworks: ["ISO 27001", "NIST CSF", "HIPAA"],
-          references: ["ISO 27001 A.16", "NIST RS.RP-1", "HIPAA 164.308(a)(6)"]
-        },
-        {
-          id: "CTRL-IR-02",
-          name: "Detect and triage events",
-          category: "Incident Response",
+          references: ["ISO 27001 A.16", "NIST RS.RP-1", "HIPAA 164.308(a)(6)"] },
+        { id: "CTRL-IR-02", name: "Detect and triage events", category: "Incident Response",
           description: "Security events are detected, triaged, classified, and escalated according to defined procedures.",
           frameworks: ["ISO 27001", "NIST CSF"],
-          references: ["ISO 27001 A.16", "NIST DE.CM-1"]
-        },
-        {
-          id: "CTRL-VND-01",
-          name: "Vendor due diligence",
-          category: "Vendor Risk",
+          references: ["ISO 27001 A.16", "NIST DE.CM-1"] },
+        { id: "CTRL-VND-01", name: "Vendor due diligence", category: "Vendor Risk",
           description: "Third-party service providers are assessed for security and privacy risks before onboarding and periodically thereafter.",
           frameworks: ["ISO 27001", "NIST CSF"],
-          references: ["ISO 27001 A.15", "NIST ID.SC-1"]
-        },
-        {
-          id: "CTRL-VND-02",
-          name: "Data protection in contracts",
-          category: "Vendor Risk",
+          references: ["ISO 27001 A.15", "NIST ID.SC-1"] },
+        { id: "CTRL-VND-02", name: "Data protection in contracts", category: "Vendor Risk",
           description: "Contracts with vendors include requirements for protecting data, breach notification, and right to audit.",
           frameworks: ["ISO 27001", "HIPAA"],
-          references: ["ISO 27001 A.15.1.2", "HIPAA 164.308(b)"]
-        },
-        {
-          id: "CTRL-POL-01",
-          name: "Information security policy",
-          category: "Policy & Governance",
+          references: ["ISO 27001 A.15.1.2", "HIPAA 164.308(b)"] },
+        { id: "CTRL-POL-01", name: "Information security policy", category: "Policy & Governance",
           description: "Management-approved information security policies define expectations, roles, and responsibilities.",
           frameworks: ["ISO 27001", "NIST CSF"],
-          references: ["ISO 27001 A.5", "NIST ID.GV-1"]
-        },
-        {
-          id: "CTRL-AW-01",
-          name: "Security awareness training",
-          category: "Awareness & Training",
+          references: ["ISO 27001 A.5", "NIST ID.GV-1"] },
+        { id: "CTRL-AW-01", name: "Security awareness training", category: "Awareness & Training",
           description: "Employees receive regular training on security, privacy, phishing, and how to report incidents.",
           frameworks: ["ISO 27001", "NIST CSF", "HIPAA"],
-          references: ["ISO 27001 A.7.2.2", "NIST PR.AT-1", "HIPAA 164.308(a)(5)"]
-        }
+          references: ["ISO 27001 A.7.2.2", "NIST PR.AT-1", "HIPAA 164.308(a)(5)"] }
       ];
 
       function renderFrameworkControls() {
@@ -902,7 +858,6 @@
         const frameworkFilter = document.getElementById('framework-filter');
         const categoryFilter = document.getElementById('category-filter');
         const searchInput = document.getElementById('framework-search');
-
         if (!tbody || !frameworkFilter || !categoryFilter || !searchInput) return;
 
         const frameworkValue = frameworkFilter.value;
@@ -910,16 +865,13 @@
         const searchValue = searchInput.value.trim().toLowerCase();
 
         const filtered = FRAMEWORK_CONTROLS.filter(ctrl => {
-          const matchesFramework =
-            frameworkValue === 'all' || ctrl.frameworks.includes(frameworkValue);
-          const matchesCategory =
-            categoryValue === 'all' || ctrl.category === categoryValue;
+          const matchesFramework = frameworkValue === 'all' || ctrl.frameworks.includes(frameworkValue);
+          const matchesCategory = categoryValue === 'all' || ctrl.category === categoryValue;
           const matchesSearch =
             !searchValue ||
             ctrl.name.toLowerCase().includes(searchValue) ||
             ctrl.description.toLowerCase().includes(searchValue) ||
             ctrl.id.toLowerCase().includes(searchValue);
-
           return matchesFramework && matchesCategory && matchesSearch;
         });
 
@@ -941,9 +893,16 @@
         }
       }
 
-      // --- Asset inventory state ---
+      // --- State + storage keys ---
       const ASSET_STORAGE_KEY = 'grc_assets_v1';
+      const RISK_STORAGE_KEY = 'grc_risks_v1';
+      const CONTROL_STORAGE_KEY = 'grc_controls_v1';
+      const ISSUE_STORAGE_KEY = 'grc_issues_v1';
+
       let assets = [];
+      let risks = [];
+      let controls = [];
+      let issues = [];
 
       function loadAssets() {
         try {
@@ -956,17 +915,131 @@
       }
 
       function saveAssets() {
+        try { localStorage.setItem(ASSET_STORAGE_KEY, JSON.stringify(assets)); }
+        catch (e) { console.warn('Could not save assets', e); }
+      }
+
+      function loadRisks() {
         try {
-          localStorage.setItem(ASSET_STORAGE_KEY, JSON.stringify(assets));
+          const raw = localStorage.getItem(RISK_STORAGE_KEY);
+          risks = raw ? JSON.parse(raw) : [];
+          if (!Array.isArray(risks)) risks = [];
         } catch (e) {
-          console.warn('Could not save assets to localStorage', e);
+          risks = [];
         }
       }
 
+      function saveRisks() {
+        try { localStorage.setItem(RISK_STORAGE_KEY, JSON.stringify(risks)); }
+        catch (e) { console.warn('Could not save risks', e); }
+      }
+
+      function loadControls() {
+        try {
+          const raw = localStorage.getItem(CONTROL_STORAGE_KEY);
+          controls = raw ? JSON.parse(raw) : [];
+          if (!Array.isArray(controls)) controls = [];
+        } catch (e) {
+          controls = [];
+        }
+      }
+
+      function saveControls() {
+        try { localStorage.setItem(CONTROL_STORAGE_KEY, JSON.stringify(controls)); }
+        catch (e) { console.warn('Could not save controls', e); }
+      }
+
+      function loadIssues() {
+        try {
+          const raw = localStorage.getItem(ISSUE_STORAGE_KEY);
+          issues = raw ? JSON.parse(raw) : [];
+          if (!Array.isArray(issues)) issues = [];
+        } catch (e) {
+          issues = [];
+        }
+      }
+
+      function saveIssues() {
+        try { localStorage.setItem(ISSUE_STORAGE_KEY, JSON.stringify(issues)); }
+        catch (e) { console.warn('Could not save issues', e); }
+      }
+
+      function saveAllToLocalStorage() {
+        saveAssets();
+        saveRisks();
+        saveControls();
+        saveIssues();
+      }
+
+      // --- Risk helpers ---
+      function calcRiskScore(likelihood, impact) {
+        const l = Number(likelihood) || 0;
+        const i = Number(impact) || 0;
+        return l * i;
+      }
+
+      function calcRiskLevel(score) {
+        if (score >= 15) return 'High';
+        if (score >= 6) return 'Medium';
+        if (score > 0) return 'Low';
+        return '-';
+      }
+
+      // --- Summary strip ---
+      function renderSummary() {
+        const assetsCountEl = document.getElementById('summary-assets-count');
+        const risksCountEl = document.getElementById('summary-risks-count');
+        const risksBreakdownEl = document.getElementById('summary-risks-breakdown');
+        const controlsCountEl = document.getElementById('summary-controls-count');
+        const controlsMappedEl = document.getElementById('summary-controls-mapped');
+        const issuesOpenEl = document.getElementById('summary-issues-open');
+        const issuesOverdueEl = document.getElementById('summary-issues-overdue');
+
+        if (assetsCountEl) assetsCountEl.textContent = assets.length;
+
+        let high = 0, medium = 0, low = 0;
+        risks.forEach(r => {
+          const level = calcRiskLevel(r.score);
+          if (level === 'High') high++;
+          else if (level === 'Medium') medium++;
+          else if (level === 'Low') low++;
+        });
+        if (risksCountEl) risksCountEl.textContent = risks.length;
+        if (risksBreakdownEl) {
+          risksBreakdownEl.textContent = `${high} high · ${medium} medium · ${low} low`;
+        }
+
+        if (controlsCountEl) controlsCountEl.textContent = controls.length;
+        const mappedToFramework = controls.filter(c =>
+          Array.isArray(c.linkedFrameworkControlIds) && c.linkedFrameworkControlIds.length
+        ).length;
+        if (controlsMappedEl) {
+          controlsMappedEl.textContent = `${mappedToFramework} mapped to frameworks`;
+        }
+
+        const openStatuses = new Set(['Open', 'In progress']);
+        let openCount = 0;
+        let overdueCount = 0;
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        issues.forEach(issue => {
+          const isOpen = openStatuses.has(issue.status);
+          if (isOpen) openCount++;
+          if (isOpen && issue.dueDate) {
+            const due = new Date(issue.dueDate + 'T23:59:59');
+            if (due < today) overdueCount++;
+          }
+        });
+
+        if (issuesOpenEl) issuesOpenEl.textContent = openCount;
+        if (issuesOverdueEl) issuesOverdueEl.textContent = `${overdueCount} overdue remediation items`;
+      }
+
+      // --- Assets ---
       function resetAssetForm() {
         const form = document.getElementById('asset-form');
         if (!form) return;
-
         form.reset();
         document.getElementById('asset-id').value = '';
         const submitBtn = document.getElementById('asset-form-submit');
@@ -976,17 +1049,13 @@
       function getSelectedDataTypes() {
         const checkboxes = document.querySelectorAll('.asset-datatype');
         const selected = [];
-        checkboxes.forEach(cb => {
-          if (cb.checked) selected.push(cb.value);
-        });
+        checkboxes.forEach(cb => { if (cb.checked) selected.push(cb.value); });
         return selected;
       }
 
       function setSelectedDataTypes(values) {
         const checkboxes = document.querySelectorAll('.asset-datatype');
-        checkboxes.forEach(cb => {
-          cb.checked = values && values.includes(cb.value);
-        });
+        checkboxes.forEach(cb => { cb.checked = values && values.includes(cb.value); });
       }
 
       function handleAssetFormSubmit(event) {
@@ -1020,7 +1089,7 @@
             };
           }
         } else {
-          const newAsset = {
+          assets.push({
             id: 'AST-' + Date.now(),
             name: nameField.value.trim(),
             type: typeField.value,
@@ -1028,19 +1097,18 @@
             owner: ownerField.value.trim(),
             dataTypes,
             notes: notesField.value.trim()
-          };
-          assets.push(newAsset);
+          });
         }
 
         saveAssets();
         renderAssetsTable();
         resetAssetForm();
+        renderSummary();
       }
 
       function populateRiskAssetOptions() {
         const select = document.getElementById('risk-asset');
         if (!select) return;
-
         const currentValue = select.value;
         select.innerHTML = '<option value="">Select asset...</option>';
         assets.forEach(asset => {
@@ -1049,7 +1117,6 @@
           opt.textContent = asset.name;
           select.appendChild(opt);
         });
-
         if (currentValue && assets.some(a => a.id === currentValue)) {
           select.value = currentValue;
         }
@@ -1059,11 +1126,9 @@
         const tbody = document.getElementById('assets-table-body');
         const emptyState = document.getElementById('assets-empty-state');
         const countEl = document.getElementById('assets-count');
-
         if (!tbody) return;
 
         tbody.innerHTML = '';
-
         assets.forEach(asset => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
@@ -1080,15 +1145,12 @@
           tbody.appendChild(tr);
         });
 
-        if (emptyState) {
-          emptyState.style.display = assets.length ? 'none' : 'block';
-        }
-        if (countEl) {
-          countEl.textContent = `${assets.length} asset(s)`;
-        }
+        if (emptyState) emptyState.style.display = assets.length ? 'none' : 'block';
+        if (countEl) countEl.textContent = `${assets.length} asset(s)`;
 
         populateRiskAssetOptions();
         populateIssueDropdowns();
+        renderSummary();
       }
 
       function handleAssetsTableClick(event) {
@@ -1098,7 +1160,6 @@
         if (editId) {
           const asset = assets.find(a => a.id === editId);
           if (!asset) return;
-
           document.getElementById('asset-id').value = asset.id;
           document.getElementById('asset-name').value = asset.name;
           document.getElementById('asset-type').value = asset.type;
@@ -1106,7 +1167,6 @@
           document.getElementById('asset-owner').value = asset.owner || '';
           document.getElementById('asset-notes').value = asset.notes || '';
           setSelectedDataTypes(asset.dataTypes || []);
-
           const submitBtn = document.getElementById('asset-form-submit');
           if (submitBtn) submitBtn.textContent = 'Update asset';
         }
@@ -1116,48 +1176,58 @@
           assets = assets.filter(a => a.id !== deleteId);
           saveAssets();
           renderAssetsTable();
+          renderSummary();
         }
       }
 
-      // --- Risk register state ---
-      const RISK_STORAGE_KEY = 'grc_risks_v1';
-      let risks = [];
-
-      function loadRisks() {
-        try {
-          const raw = localStorage.getItem(RISK_STORAGE_KEY);
-          risks = raw ? JSON.parse(raw) : [];
-          if (!Array.isArray(risks)) risks = [];
-        } catch (e) {
-          risks = [];
-        }
+      // --- Controls helpers ---
+      function getMultiSelectValues(selectEl) {
+        const values = [];
+        if (!selectEl) return values;
+        Array.from(selectEl.options).forEach(opt => {
+          if (opt.selected && opt.value) values.push(opt.value);
+        });
+        return values;
       }
 
-      function saveRisks() {
-        try {
-          localStorage.setItem(RISK_STORAGE_KEY, JSON.stringify(risks));
-        } catch (e) {
-          console.warn('Could not save risks to localStorage', e);
-        }
+      function setMultiSelectValues(selectEl, values) {
+        if (!selectEl) return;
+        const set = new Set(values || []);
+        Array.from(selectEl.options).forEach(opt => {
+          opt.selected = set.has(opt.value);
+        });
       }
 
-      function calcRiskScore(likelihood, impact) {
-        const l = Number(likelihood) || 0;
-        const i = Number(impact) || 0;
-        return l * i;
+      function populateControlRisksOptions() {
+        const select = document.getElementById('control-risks');
+        if (!select) return;
+        const currentValues = getMultiSelectValues(select);
+        select.innerHTML = '';
+        risks.forEach(risk => {
+          const opt = document.createElement('option');
+          opt.value = risk.id;
+          opt.textContent = risk.title;
+          select.appendChild(opt);
+        });
+        setMultiSelectValues(select, currentValues);
       }
 
-      function calcRiskLevel(score) {
-        if (score >= 15) return 'High';
-        if (score >= 6) return 'Medium';
-        if (score > 0) return 'Low';
-        return '-';
+      function populateControlFrameworksOptions() {
+        const select = document.getElementById('control-frameworks');
+        if (!select) return;
+        select.innerHTML = '';
+        FRAMEWORK_CONTROLS.forEach(ctrl => {
+          const opt = document.createElement('option');
+          opt.value = ctrl.id;
+          opt.textContent = `${ctrl.id} – ${ctrl.name}`;
+          select.appendChild(opt);
+        });
       }
 
+      // --- Risks ---
       function resetRiskForm() {
         const form = document.getElementById('risk-form');
         if (!form) return;
-
         form.reset();
         document.getElementById('risk-id').value = '';
         const submitBtn = document.getElementById('risk-form-submit');
@@ -1186,7 +1256,6 @@
         const assetId = assetField.value;
         const asset = assets.find(a => a.id === assetId);
         const assetName = asset ? asset.name : '';
-
         const existingId = idField.value;
 
         if (existingId) {
@@ -1207,7 +1276,7 @@
             };
           }
         } else {
-          const newRisk = {
+          risks.push({
             id: 'RSK-' + Date.now(),
             title: titleField.value.trim(),
             assetId,
@@ -1219,24 +1288,36 @@
             status: statusField.value,
             owner: ownerField.value.trim(),
             notes: notesField.value.trim()
-          };
-          risks.push(newRisk);
+          });
         }
 
         saveRisks();
         renderRisksTable();
         resetRiskForm();
+        renderSummary();
+      }
+
+      function removeRiskFromControls(riskId) {
+        let changed = false;
+        controls.forEach(ctrl => {
+          if (Array.isArray(ctrl.linkedRiskIds) && ctrl.linkedRiskIds.includes(riskId)) {
+            ctrl.linkedRiskIds = ctrl.linkedRiskIds.filter(id => id !== riskId);
+            changed = true;
+          }
+        });
+        if (changed) {
+          saveControls();
+          renderControlsTable();
+        }
       }
 
       function renderRisksTable() {
         const tbody = document.getElementById('risks-table-body');
         const emptyState = document.getElementById('risks-empty-state');
         const countEl = document.getElementById('risks-count');
-
         if (!tbody) return;
 
         tbody.innerHTML = '';
-
         risks.forEach(risk => {
           const level = calcRiskLevel(risk.score);
           let levelBadgeClass = '';
@@ -1248,12 +1329,17 @@
             ? `<span class="badge ${levelBadgeClass} mr-1">${risk.score}</span><span class="text-muted small">${level}</span>`
             : '-';
 
+          const hasControl = controls.some(c =>
+            Array.isArray(c.linkedRiskIds) && c.linkedRiskIds.includes(risk.id)
+          );
+          const noControlBadge = hasControl ? '' : ` <span class="badge badge-danger">No controls</span>`;
+
           const tr = document.createElement('tr');
           tr.innerHTML = `
             <td>${risk.title}</td>
             <td>${risk.assetName || ''}</td>
             <td>${risk.category}</td>
-            <td>${scoreHtml}</td>
+            <td>${scoreHtml}${noControlBadge}</td>
             <td>${risk.status}</td>
             <td>
               <button type="button" class="btn btn-sm btn-outline-light mb-1" data-risk-edit="${risk.id}">Edit</button>
@@ -1263,15 +1349,12 @@
           tbody.appendChild(tr);
         });
 
-        if (emptyState) {
-          emptyState.style.display = risks.length ? 'none' : 'block';
-        }
-        if (countEl) {
-          countEl.textContent = `${risks.length} risk(s)`;
-        }
+        if (emptyState) emptyState.style.display = risks.length ? 'none' : 'block';
+        if (countEl) countEl.textContent = `${risks.length} risk(s)`;
 
         populateControlRisksOptions();
         populateIssueDropdowns();
+        renderSummary();
       }
 
       function handleRisksTableClick(event) {
@@ -1281,7 +1364,6 @@
         if (editId) {
           const risk = risks.find(r => r.id === editId);
           if (!risk) return;
-
           document.getElementById('risk-id').value = risk.id;
           document.getElementById('risk-title').value = risk.title;
           document.getElementById('risk-asset').value = risk.assetId;
@@ -1291,7 +1373,6 @@
           document.getElementById('risk-owner').value = risk.owner || '';
           document.getElementById('risk-status').value = risk.status || 'Open';
           document.getElementById('risk-notes').value = risk.notes || '';
-
           const submitBtn = document.getElementById('risk-form-submit');
           if (submitBtn) submitBtn.textContent = 'Update risk';
         }
@@ -1302,84 +1383,14 @@
           saveRisks();
           renderRisksTable();
           removeRiskFromControls(deleteId);
+          renderSummary();
         }
       }
 
-      // --- Controls state ---
-      const CONTROL_STORAGE_KEY = 'grc_controls_v1';
-      let controls = [];
-
-      function loadControls() {
-        try {
-          const raw = localStorage.getItem(CONTROL_STORAGE_KEY);
-          controls = raw ? JSON.parse(raw) : [];
-          if (!Array.isArray(controls)) controls = [];
-        } catch (e) {
-          controls = [];
-        }
-      }
-
-      function saveControls() {
-        try {
-          localStorage.setItem(CONTROL_STORAGE_KEY, JSON.stringify(controls));
-        } catch (e) {
-          console.warn('Could not save controls to localStorage', e);
-        }
-      }
-
-      function getMultiSelectValues(selectEl) {
-        const values = [];
-        if (!selectEl) return values;
-        Array.from(selectEl.options).forEach(opt => {
-          if (opt.selected && opt.value) {
-            values.push(opt.value);
-          }
-        });
-        return values;
-      }
-
-      function setMultiSelectValues(selectEl, values) {
-        if (!selectEl) return;
-        const set = new Set(values || []);
-        Array.from(selectEl.options).forEach(opt => {
-          opt.selected = set.has(opt.value);
-        });
-      }
-
-      function populateControlRisksOptions() {
-        const select = document.getElementById('control-risks');
-        if (!select) return;
-
-        const currentValues = getMultiSelectValues(select);
-        select.innerHTML = '';
-
-        risks.forEach(risk => {
-          const opt = document.createElement('option');
-          opt.value = risk.id;
-          opt.textContent = risk.title;
-          select.appendChild(opt);
-        });
-
-        setMultiSelectValues(select, currentValues);
-      }
-
-      function populateControlFrameworksOptions() {
-        const select = document.getElementById('control-frameworks');
-        if (!select) return;
-
-        select.innerHTML = '';
-        FRAMEWORK_CONTROLS.forEach(ctrl => {
-          const opt = document.createElement('option');
-          opt.value = ctrl.id;
-          opt.textContent = `${ctrl.id} – ${ctrl.name}`;
-          select.appendChild(opt);
-        });
-      }
-
+      // --- Controls ---
       function resetControlForm() {
         const form = document.getElementById('control-form');
         if (!form) return;
-
         form.reset();
         document.getElementById('control-id').value = '';
         const submitBtn = document.getElementById('control-form-submit');
@@ -1421,7 +1432,7 @@
             };
           }
         } else {
-          const newControl = {
+          controls.push({
             id: 'CTL-' + Date.now(),
             name: nameField.value.trim(),
             type: typeField.value,
@@ -1430,42 +1441,25 @@
             description: descField.value.trim(),
             linkedRiskIds,
             linkedFrameworkControlIds
-          };
-          controls.push(newControl);
+          });
         }
 
         saveControls();
         renderControlsTable();
         resetControlForm();
-      }
-
-      function removeRiskFromControls(riskId) {
-        let changed = false;
-        controls.forEach(ctrl => {
-          if (Array.isArray(ctrl.linkedRiskIds) && ctrl.linkedRiskIds.includes(riskId)) {
-            ctrl.linkedRiskIds = ctrl.linkedRiskIds.filter(id => id !== riskId);
-            changed = true;
-          }
-        });
-        if (changed) {
-          saveControls();
-          renderControlsTable();
-        }
+        renderSummary();
       }
 
       function renderControlsTable() {
         const tbody = document.getElementById('controls-table-body');
         const emptyState = document.getElementById('controls-empty-state');
         const countEl = document.getElementById('controls-count');
-
         if (!tbody) return;
 
         tbody.innerHTML = '';
-
         controls.forEach(control => {
           const riskCount = (control.linkedRiskIds || []).length;
           const fwCount = (control.linkedFrameworkControlIds || []).length;
-
           const tr = document.createElement('tr');
           tr.innerHTML = `
             <td>${control.name}</td>
@@ -1481,14 +1475,11 @@
           tbody.appendChild(tr);
         });
 
-        if (emptyState) {
-          emptyState.style.display = controls.length ? 'none' : 'block';
-        }
-        if (countEl) {
-          countEl.textContent = `${controls.length} control(s)`;
-        }
+        if (emptyState) emptyState.style.display = controls.length ? 'none' : 'block';
+        if (countEl) countEl.textContent = `${controls.length} control(s)`;
 
         populateIssueDropdowns();
+        renderSummary();
       }
 
       function handleControlsTableClick(event) {
@@ -1498,17 +1489,14 @@
         if (editId) {
           const control = controls.find(c => c.id === editId);
           if (!control) return;
-
           document.getElementById('control-id').value = control.id;
           document.getElementById('control-name').value = control.name;
           document.getElementById('control-type').value = control.type;
           document.getElementById('control-status').value = control.status;
           document.getElementById('control-owner').value = control.owner || '';
           document.getElementById('control-description').value = control.description || '';
-
           setMultiSelectValues(document.getElementById('control-risks'), control.linkedRiskIds || []);
           setMultiSelectValues(document.getElementById('control-frameworks'), control.linkedFrameworkControlIds || []);
-
           const submitBtn = document.getElementById('control-form-submit');
           if (submitBtn) submitBtn.textContent = 'Update control';
         }
@@ -1518,128 +1506,11 @@
           controls = controls.filter(c => c.id !== deleteId);
           saveControls();
           renderControlsTable();
+          renderSummary();
         }
       }
 
-      // --- Issues / Findings state ---
-      const ISSUE_STORAGE_KEY = 'grc_issues_v1';
-      let issues = [];
-
-      function loadIssues() {
-        try {
-          const raw = localStorage.getItem(ISSUE_STORAGE_KEY);
-          issues = raw ? JSON.parse(raw) : [];
-          if (!Array.isArray(issues)) issues = [];
-        } catch (e) {
-          issues = [];
-        }
-      }
-
-      function saveIssues() {
-        try {
-          localStorage.setItem(ISSUE_STORAGE_KEY, JSON.stringify(issues));
-        } catch (e) {
-          console.warn('Could not save issues to localStorage', e);
-        }
-      }
-
-      // --- Lab snapshot export/import ---
-
-      function getLabSnapshot() {
-        return {
-          assets,
-          risks,
-          controls,
-          issues
-        };
-      }
-
-      function saveAllToLocalStorage() {
-        saveAssets();
-        saveRisks();
-        saveControls();
-        saveIssues();
-      }
-
-      function applyLabSnapshot(snapshot) {
-        if (!snapshot || typeof snapshot !== 'object') {
-          alert('Invalid lab file.');
-          return;
-        }
-
-        const {
-          assets: newAssets = [],
-          risks: newRisks = [],
-          controls: newControls = [],
-          issues: newIssues = []
-        } = snapshot;
-
-        if (!Array.isArray(newAssets) ||
-            !Array.isArray(newRisks) ||
-            !Array.isArray(newControls) ||
-            !Array.isArray(newIssues)) {
-          alert('Lab file is missing required lists.');
-          return;
-        }
-
-        if (!confirm('Importing will replace your current lab data. Continue?')) {
-          return;
-        }
-
-        assets = newAssets;
-        risks = newRisks;
-        controls = newControls;
-        issues = newIssues;
-
-        saveAllToLocalStorage();
-
-        // Re-render all views
-        renderAssetsTable();
-        populateRiskAssetOptions();
-
-        renderRisksTable();
-        populateControlRisksOptions();
-
-        renderControlsTable();
-        populateControlFrameworksOptions();
-
-        populateIssueDropdowns();
-        renderIssuesTable();
-
-        alert('Lab data imported successfully.');
-      }
-
-      function handleExportJson() {
-        const snapshot = getLabSnapshot();
-        const json = JSON.stringify(snapshot, null, 2);
-        const blob = new Blob([json], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement('a');
-        const ts = new Date().toISOString().replace(/[:.]/g, '-');
-        a.href = url;
-        a.download = 'grc-lab-' + ts + '.json';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }
-
-      function handleImportJsonFile(file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          try {
-            const text = e.target.result;
-            const snapshot = JSON.parse(text);
-            applyLabSnapshot(snapshot);
-          } catch (err) {
-            console.error(err);
-            alert('Could not read lab file. Make sure it is valid JSON.');
-          }
-        };
-        reader.readAsText(file);
-      }
-
+      // --- Issues ---
       function resetIssueForm() {
         const form = document.getElementById('issue-form');
         if (!form) return;
@@ -1746,7 +1617,7 @@
             };
           }
         } else {
-          const newIssue = {
+          issues.push({
             id: 'ISS-' + Date.now(),
             title: titleField.value.trim(),
             type: typeField.value,
@@ -1759,34 +1630,44 @@
             riskId,
             controlId,
             linkedSummary
-          };
-          issues.push(newIssue);
+          });
         }
 
         saveIssues();
         renderIssuesTable();
         resetIssueForm();
+        renderSummary();
       }
 
       function renderIssuesTable() {
         const tbody = document.getElementById('issues-table-body');
         const emptyState = document.getElementById('issues-empty-state');
         const countEl = document.getElementById('issues-count');
-
         if (!tbody) return;
 
         tbody.innerHTML = '';
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const openStatuses = new Set(['Open', 'In progress']);
 
         issues.forEach(issue => {
           let sevClass = '';
-          if (issue.severity === 'Critical') sevClass = 'badge-danger';
-          else if (issue.severity === 'High') sevClass = 'badge-danger';
+          if (issue.severity === 'Critical' || issue.severity === 'High') sevClass = 'badge-danger';
           else if (issue.severity === 'Medium') sevClass = 'badge-warning';
           else if (issue.severity === 'Low') sevClass = 'badge-success';
 
           const severityHtml = issue.severity
             ? `<span class="badge ${sevClass}">${issue.severity}</span>`
             : '-';
+
+          const isOpen = openStatuses.has(issue.status);
+          let overdueBadge = '';
+          if (isOpen && issue.dueDate) {
+            const due = new Date(issue.dueDate + 'T23:59:59');
+            if (due < today) {
+              overdueBadge = ' <span class="badge badge-danger">Overdue</span>';
+            }
+          }
 
           const linkedText = issue.linkedSummary || '-';
 
@@ -1795,7 +1676,7 @@
             <td>${issue.title}</td>
             <td>${issue.type}</td>
             <td>${severityHtml}</td>
-            <td>${issue.status}</td>
+            <td>${issue.status}${overdueBadge}</td>
             <td>${linkedText}</td>
             <td>
               <button type="button" class="btn btn-sm btn-outline-light mb-1" data-issue-edit="${issue.id}">Edit</button>
@@ -1805,12 +1686,10 @@
           tbody.appendChild(tr);
         });
 
-        if (emptyState) {
-          emptyState.style.display = issues.length ? 'none' : 'block';
-        }
-        if (countEl) {
-          countEl.textContent = `${issues.length} issue(s)`;
-        }
+        if (emptyState) emptyState.style.display = issues.length ? 'none' : 'block';
+        if (countEl) countEl.textContent = `${issues.length} issue(s)`;
+
+        renderSummary();
       }
 
       function handleIssuesTableClick(event) {
@@ -1847,7 +1726,84 @@
           issues = issues.filter(i => i.id !== deleteId);
           saveIssues();
           renderIssuesTable();
+          renderSummary();
         }
+      }
+
+      // --- Export / Import snapshot ---
+      function getLabSnapshot() {
+        return { assets, risks, controls, issues };
+      }
+
+      function applyLabSnapshot(snapshot) {
+        if (!snapshot || typeof snapshot !== 'object') {
+          alert('Invalid lab file.');
+          return;
+        }
+
+        const {
+          assets: newAssets = [],
+          risks: newRisks = [],
+          controls: newControls = [],
+          issues: newIssues = []
+        } = snapshot;
+
+        if (!Array.isArray(newAssets) ||
+            !Array.isArray(newRisks) ||
+            !Array.isArray(newControls) ||
+            !Array.isArray(newIssues)) {
+          alert('Lab file is missing required lists.');
+          return;
+        }
+
+        if (!confirm('Importing will replace your current lab data. Continue?')) return;
+
+        assets = newAssets;
+        risks = newRisks;
+        controls = newControls;
+        issues = newIssues;
+
+        saveAllToLocalStorage();
+        renderAssetsTable();
+        renderRisksTable();
+        renderControlsTable();
+        renderIssuesTable();
+        populateRiskAssetOptions();
+        populateControlRisksOptions();
+        populateControlFrameworksOptions();
+        populateIssueDropdowns();
+        renderSummary();
+        alert('Lab data imported successfully.');
+      }
+
+      function handleExportJson() {
+        const snapshot = getLabSnapshot();
+        const json = JSON.stringify(snapshot, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const ts = new Date().toISOString().replace(/[:.]/g, '-');
+        a.href = url;
+        a.download = 'grc-lab-' + ts + '.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      function handleImportJsonFile(file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const text = e.target.result;
+            const snapshot = JSON.parse(text);
+            applyLabSnapshot(snapshot);
+          } catch (err) {
+            console.error(err);
+            alert('Could not read lab file. Make sure it is valid JSON.');
+          }
+        };
+        reader.readAsText(file);
       }
 
       // --- DOM ready ---
@@ -1865,22 +1821,18 @@
         buttons.forEach(btn => {
           btn.addEventListener('click', () => {
             const target = btn.getAttribute('data-grc-tab');
-
-            buttons.forEach(b => b.classList.remove('btn-primary'));
-            buttons.forEach(b => b.classList.add('btn-outline-light'));
+            buttons.forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-outline-light'); });
             btn.classList.remove('btn-outline-light');
             btn.classList.add('btn-primary');
-
             Object.values(tabs).forEach(t => t.classList.remove('active'));
             if (tabs[target]) tabs[target].classList.add('active');
           });
         });
 
-        // Framework filters
+        // Frameworks
         const frameworkFilter = document.getElementById('framework-filter');
         const categoryFilter = document.getElementById('category-filter');
         const searchInput = document.getElementById('framework-search');
-
         if (frameworkFilter && categoryFilter && searchInput) {
           frameworkFilter.addEventListener('change', renderFrameworkControls);
           categoryFilter.addEventListener('change', renderFrameworkControls);
@@ -1888,68 +1840,58 @@
         }
         renderFrameworkControls();
 
-        // Assets
+        // Load state
         loadAssets();
-        renderAssetsTable();
+        loadRisks();
+        loadControls();
+        loadIssues();
 
+        // Initial renders
+        renderAssetsTable();
+        renderRisksTable();
+        renderControlsTable();
+        renderIssuesTable();
+        populateRiskAssetOptions();
+        populateControlRisksOptions();
+        populateControlFrameworksOptions();
+        populateIssueDropdowns();
+        renderSummary();
+
+        // Asset events
         const assetForm = document.getElementById('asset-form');
         if (assetForm) assetForm.addEventListener('submit', handleAssetFormSubmit);
-
         const assetCancel = document.getElementById('asset-form-cancel');
-        if (assetCancel) assetCancel.addEventListener('click', resetAssetForm);
-
+        if (assetCancel) assetCancel.addEventListener('click', () => { resetAssetForm(); });
         const assetsTableBody = document.getElementById('assets-table-body');
         if (assetsTableBody) assetsTableBody.addEventListener('click', handleAssetsTableClick);
 
-        // Risks
-        loadRisks();
-        renderRisksTable();
-        populateRiskAssetOptions();
-
+        // Risk events
         const riskForm = document.getElementById('risk-form');
         if (riskForm) riskForm.addEventListener('submit', handleRiskFormSubmit);
-
         const riskCancel = document.getElementById('risk-form-cancel');
-        if (riskCancel) riskCancel.addEventListener('click', resetRiskForm);
-
+        if (riskCancel) riskCancel.addEventListener('click', () => { resetRiskForm(); });
         const risksTableBody = document.getElementById('risks-table-body');
         if (risksTableBody) risksTableBody.addEventListener('click', handleRisksTableClick);
 
-        // Controls
-        loadControls();
-        populateControlFrameworksOptions();
-        populateControlRisksOptions();
-        renderControlsTable();
-
+        // Control events
         const controlForm = document.getElementById('control-form');
         if (controlForm) controlForm.addEventListener('submit', handleControlFormSubmit);
-
         const controlCancel = document.getElementById('control-form-cancel');
-        if (controlCancel) controlCancel.addEventListener('click', resetControlForm);
-
+        if (controlCancel) controlCancel.addEventListener('click', () => { resetControlForm(); });
         const controlsTableBody = document.getElementById('controls-table-body');
         if (controlsTableBody) controlsTableBody.addEventListener('click', handleControlsTableClick);
 
-        // Issues
-        loadIssues();
-        populateIssueDropdowns();
-        renderIssuesTable();
-
+        // Issue events
         const issueForm = document.getElementById('issue-form');
         if (issueForm) issueForm.addEventListener('submit', handleIssueFormSubmit);
-
         const issueCancel = document.getElementById('issue-form-cancel');
-        if (issueCancel) issueCancel.addEventListener('click', resetIssueForm);
-
+        if (issueCancel) issueCancel.addEventListener('click', () => { resetIssueForm(); });
         const issuesTableBody = document.getElementById('issues-table-body');
         if (issuesTableBody) issuesTableBody.addEventListener('click', handleIssuesTableClick);
 
-        // Export / Import JSON
+        // Export / import
         const exportBtn = document.getElementById('btn-export-json');
-        if (exportBtn) {
-          exportBtn.addEventListener('click', handleExportJson);
-        }
-
+        if (exportBtn) exportBtn.addEventListener('click', handleExportJson);
         const importInput = document.getElementById('input-import-json');
         if (importInput) {
           importInput.addEventListener('change', function () {
