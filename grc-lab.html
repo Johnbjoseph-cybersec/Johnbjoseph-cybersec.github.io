@@ -18,27 +18,39 @@
     <link rel="stylesheet" href="css/icomoon.css">
     <link rel="stylesheet" href="css/style.css">
 
-  <style>
-  .grc-lab-hero {
-    padding-top: 140px;
-    padding-bottom: 40px;
-  }
-  .grc-tab-buttons .btn {
-    margin-right: 8px;
-    margin-bottom: 8px;
-  }
-  .grc-tab {
-    display: none;
-  }
-  .grc-tab.active {
-    display: block;
-  }
+    <style>
+      .grc-lab-hero {
+        padding-top: 140px;
+        padding-bottom: 40px;
+      }
 
-  /* Let the GRC Lab use more horizontal space on large screens */
-  .grc-lab-hero .container-fluid {
-    max-width: 1200px;
-  }
-</style>
+      .grc-tab-buttons .btn {
+        margin-right: 8px;
+        margin-bottom: 8px;
+      }
+
+      .grc-tab {
+        display: none;
+      }
+
+      .grc-tab.active {
+        display: block;
+      }
+
+      /* Main GRC Lab container: ~10% margin on left/right */
+      .grc-lab-container {
+        width: 80vw;        /* 80% of viewport width */
+        max-width: 1600px;  /* don't get ridiculously wide */
+        margin: 0 auto;     /* center it */
+      }
+
+      /* On smaller screens just use full width */
+      @media (max-width: 991.98px) {
+        .grc-lab-container {
+          width: 100vw;
+        }
+      }
+    </style>
   </head>
 
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -63,9 +75,12 @@
       </div>
     </nav>
 
-    <!-- Hero / Intro -->
+    <!-- Hero / Lab wrapper -->
     <section class="ftco-section grc-lab-hero">
-      <div class="container-fluid px-4 px-md-5">
+      <!-- NEW: wrap ALL lab content in this container so margins apply everywhere -->
+      <div class="grc-lab-container container-fluid px-4 px-md-5">
+
+        <!-- Hero -->
         <div class="row justify-content-center mb-4">
           <div class="col-md-10 text-center ftco-animate">
             <h1 class="mb-3">GRC Practice Lab (Beta)</h1>
@@ -78,7 +93,6 @@
               Always refer to the official standards for authoritative text.
             </small></p>
           </div>
-        </div>
         </div>
 
         <!-- Tab buttons -->
@@ -167,8 +181,8 @@
           </p>
 
           <div class="row">
-            <!-- Form column -->
-            <div class="col-md-5 mb-4">
+            <!-- Form column (≈25% of screen when including outer margins) -->
+            <div class="col-lg-4 col-md-5 mb-4">
               <div class="bg-dark p-3 rounded">
                 <h5 class="mb-3">Add / Edit Asset</h5>
                 <form id="asset-form">
@@ -256,8 +270,8 @@
               </div>
             </div>
 
-            <!-- Table column -->
-            <div class="col-md-7 mb-4">
+            <!-- Table column (≈55% of screen when including outer margins) -->
+            <div class="col-lg-8 col-md-7 mb-4">
               <div class="bg-dark p-3 rounded">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <h5 class="mb-0">Assets</h5>
@@ -300,7 +314,7 @@
 
           <div class="row">
             <!-- Form column -->
-            <div class="col-md-5 mb-4">
+            <div class="col-lg-4 col-md-5 mb-4">
               <div class="bg-dark p-3 rounded">
                 <h5 class="mb-3">Add / Edit Risk</h5>
                 <form id="risk-form">
@@ -397,7 +411,7 @@
             </div>
 
             <!-- Table column -->
-            <div class="col-md-7 mb-4">
+            <div class="col-lg-8 col-md-7 mb-4">
               <div class="bg-dark p-3 rounded">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <h5 class="mb-0">Risks</h5>
@@ -444,7 +458,7 @@
 
           <div class="row">
             <!-- Form column -->
-            <div class="col-md-5 mb-4">
+            <div class="col-lg-4 col-md-5 mb-4">
               <div class="bg-dark p-3 rounded">
                 <h5 class="mb-3">Add / Edit Control</h5>
                 <form id="control-form">
@@ -527,7 +541,7 @@
             </div>
 
             <!-- Table column -->
-            <div class="col-md-7 mb-4">
+            <div class="col-lg-8 col-md-7 mb-4">
               <div class="bg-dark p-3 rounded">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <h5 class="mb-0">Controls</h5>
@@ -569,7 +583,7 @@
 
           <div class="row">
             <!-- Form column -->
-            <div class="col-md-5 mb-4">
+            <div class="col-lg-4 col-md-5 mb-4">
               <div class="bg-dark p-3 rounded">
                 <h5 class="mb-3">Add / Edit Issue</h5>
                 <form id="issue-form">
@@ -663,7 +677,7 @@
             </div>
 
             <!-- Table column -->
-            <div class="col-md-7 mb-4">
+            <div class="col-lg-8 col-md-7 mb-4">
               <div class="bg-dark p-3 rounded">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                   <h5 class="mb-0">Issues / Findings</h5>
@@ -696,7 +710,7 @@
           </div>
         </div>
 
-      </div>
+      </div> <!-- /.grc-lab-container -->
     </section>
 
     <footer class="ftco-footer ftco-section">
