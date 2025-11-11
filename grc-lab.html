@@ -547,10 +547,11 @@
           <div class="col-md-8 mb-3">
             <div class="dashboard-card p-3 h-100">
               <div class="label mb-1">Scenarios &amp; exports</div>
-              <p class="sub">Export current lab to JSON, import saved scenarios, or reset to blank.</p>
+              <p class="sub">Export current lab to JSON, import saved scenarios, load a demo, or reset to blank.</p>
               <div class="d-flex flex-wrap">
                 <button id="btn-export" class="btn btn-sm btn-primary mr-2 mb-2">Export current data (JSON)</button>
                 <button id="btn-import" class="btn btn-sm btn-outline-light mr-2 mb-2">Import scenario (JSON)</button>
+                <button id="btn-load-demo" class="btn btn-sm btn-outline-info mr-2 mb-2">Load demo: MediCloud scenario</button>
                 <button id="btn-reset" class="btn btn-sm btn-outline-danger mb-2">Reset lab (clear all data)</button>
                 <input type="file" id="file-import" accept="application/json" style="display:none">
               </div>
@@ -1467,7 +1468,7 @@
     }
   });
 
-  // ---------- Export / Import / Reset ----------
+  // ---------- Export / Import / Demo / Reset ----------
   function setImportStatus(msg,err){
     const el=qs('#import-status');
     el.textContent=msg||'';
@@ -1514,6 +1515,214 @@
     };
     reader.onerror=()=>setImportStatus('Failed to read file.',true);
     reader.readAsText(file);
+  }
+
+  function loadDemoScenario(){
+    // Pre-built MediCloud example scenario
+    assets = [
+      {
+        id:"AST-DEMO-APP",
+        name:"MediCloud Web Application",
+        type:"Application",
+        criticality:"High",
+        owner:"Product & Engineering",
+        dataTypes:["PHI","PII"],
+        notes:"Public-facing SaaS application used by clinics to access MediCloud services."
+      },
+      {
+        id:"AST-DEMO-DB",
+        name:"MediCloud Clinical Database",
+        type:"Database",
+        criticality:"High",
+        owner:"Data Platform Team",
+        dataTypes:["PHI"],
+        notes:"Primary clinical data store containing patient records, results and care history."
+      },
+      {
+        id:"AST-DEMO-API",
+        name:"MediCloud Integration APIs",
+        type:"Cloud Service",
+        criticality:"Medium",
+        owner:"Integration & Partnerships",
+        dataTypes:["PHI","Internal data"],
+        notes:"APIs used by partner systems and hospital EHR platforms."
+      }
+    ];
+
+    risks = [
+      {
+        id:"RSK-DEMO-1",
+        title:"Unauthorised access to MediCloud production",
+        assetId:"AST-DEMO-APP",
+        assetName:"MediCloud Web Application",
+        category:"Cybersecurity",
+        likelihood:4,
+        impact:5,
+        score:rScore(4,5),
+        status:"Open",
+        owner:"CISO",
+        notes:"Risk of compromised admin account or weak access controls leading to production compromise."
+      },
+      {
+        id:"RSK-DEMO-2",
+        title:"Compromise of clinical database backups",
+        assetId:"AST-DEMO-DB",
+        assetName:"MediCloud Clinical Database",
+        category:"Privacy",
+        likelihood:3,
+        impact:5,
+        score:rScore(3,5),
+        status:"In progress",
+        owner:"Head of Data Platform",
+        notes:"Backups stored in cloud storage; risk if encryption or access controls are misconfigured."
+      },
+      {
+        id:"RSK-DEMO-3",
+        title:"Vendor outage impacting MediCloud APIs",
+        assetId:"AST-DEMO-API",
+        assetName:"MediCloud Integration APIs",
+        category:"Third-Party",
+        likelihood:3,
+        impact:4,
+        score:rScore(3,4),
+        status:"Open",
+        owner:"Head of Operations",
+        notes:"Availability dependency on upstream cloud and key integration vendors."
+      }
+    ];
+
+    controls = [
+      {
+        id:"CTL-DEMO-SSO",
+        name:"SSO and MFA enforced for staff",
+        type:"Preventive",
+        status:"In place",
+        owner:"Security Engineering",
+        description:"SSO via IdP with MFA for all staff and elevated roles, including production access.",
+        linkedRiskIds:["RSK-DEMO-1"],
+        linkedFrameworkControlIds:["CTRL-AC-02","CTRL-AC-03"]
+      },
+      {
+        id:"CTL-DEMO-LOG",
+        name:"Centralised security logging via SIEM",
+        type:"Detective",
+        status:"In place",
+        owner:"Security Operations",
+        description:"Application, database and infrastructure logs sent to SIEM with basic alerting.",
+        linkedRiskIds:["RSK-DEMO-1","RSK-DEMO-2"],
+        linkedFrameworkControlIds:["CTRL-LOG-01","CTRL-LOG-02"]
+      },
+      {
+        id:"CTL-DEMO-BACKUP",
+        name:"Encrypted backups with restore testing",
+        type:"Corrective",
+        status:"In place",
+        owner:"Data Platform Team",
+        description:"Backups encrypted at rest with KMS; quarterly restore tests documented.",
+        linkedRiskIds:["RSK-DEMO-2"],
+        linkedFrameworkControlIds:["CTRL-ENC-01","CTRL-BCP-01"]
+      },
+      {
+        id:"CTL-DEMO-VENDOR",
+        name:"Vendor due diligence and SLA review",
+        type:"Administrative",
+        status:"Planned",
+        owner:"Vendor Management",
+        description:"Formalised vendor risk assessments and SLA reviews for key cloud and integration vendors.",
+        linkedRiskIds:["RSK-DEMO-3"],
+        linkedFrameworkControlIds:["CTRL-VND-01","CTRL-VND-02"]
+      }
+    ];
+
+    issues = [
+      {
+        id:"ISS-DEMO-1",
+        title:"MFA not enforced for all privileged accounts",
+        type:"Audit",
+        severity:"High",
+        status:"In progress",
+        owner:"Platform Lead",
+        dueDate:"",
+        notes:"Legacy admin accounts still allowed without enforced MFA in some paths.",
+        assetId:"AST-DEMO-APP",
+        riskId:"RSK-DEMO-1",
+        controlId:"CTL-DEMO-SSO",
+        linkedSummary:"Asset: MediCloud Web Application | Risk: Unauthorised access to MediCloud production | Control: SSO and MFA enforced for staff"
+      },
+      {
+        id:"ISS-DEMO-2",
+        title:"Restore test evidence incomplete for Q2",
+        type:"Audit",
+        severity:"Medium",
+        status:"Open",
+        owner:"Data Platform Team",
+        dueDate:"",
+        notes:"Q2 restore test performed but evidence pack and sign-off not fully documented.",
+        assetId:"AST-DEMO-DB",
+        riskId:"RSK-DEMO-2",
+        controlId:"CTL-DEMO-BACKUP",
+        linkedSummary:"Asset: MediCloud Clinical Database | Risk: Compromise of clinical database backups | Control: Encrypted backups with restore testing"
+      },
+      {
+        id:"ISS-DEMO-3",
+        title:"No documented failover plan for core vendor outage",
+        type:"Risk review",
+        severity:"High",
+        status:"Open",
+        owner:"Head of Operations",
+        dueDate:"",
+        notes:"High-level plans exist, but no formally approved and tested failover procedure.",
+        assetId:"AST-DEMO-API",
+        riskId:"RSK-DEMO-3",
+        controlId:"CTL-DEMO-VENDOR",
+        linkedSummary:"Asset: MediCloud Integration APIs | Risk: Vendor outage impacting MediCloud APIs | Control: Vendor due diligence and SLA review"
+      }
+    ];
+
+    treatments = [
+      {
+        id:"TRT-DEMO-1",
+        title:"Roll out enforced SSO and MFA to all staff and partners",
+        riskId:"RSK-DEMO-1",
+        controlId:"CTL-DEMO-SSO",
+        status:"In progress",
+        targetDate:"",
+        owner:"Security Engineering",
+        budget:"3,000 USD",
+        notes:"Expand SSO coverage to all admin and support consoles; remove legacy login paths."
+      },
+      {
+        id:"TRT-DEMO-2",
+        title:"Formalise quarterly backup restore testing playbook",
+        riskId:"RSK-DEMO-2",
+        controlId:"CTL-DEMO-BACKUP",
+        status:"Open",
+        targetDate:"",
+        owner:"Data Platform Team",
+        budget:"",
+        notes:"Standardise evidence capture, sign-off and retention for restore exercises."
+      },
+      {
+        id:"TRT-DEMO-3",
+        title:"Document and test vendor outage runbook",
+        riskId:"RSK-DEMO-3",
+        controlId:"CTL-DEMO-VENDOR",
+        status:"Open",
+        targetDate:"",
+        owner:"Head of Operations",
+        budget:"",
+        notes:"Create and test playbook covering communication, failover and rollback steps."
+      }
+    ];
+
+    save(K.assets,assets);
+    save(K.risks,risks);
+    save(K.controls,controls);
+    save(K.issues,issues);
+    save(K.treats,treatments);
+
+    refreshAll();
+    setImportStatus('Loaded demo MediCloud scenario into this browser (previous lab data was overwritten).',false);
   }
 
   function resetLab(){
@@ -1612,11 +1821,13 @@
 
     // Overall observation
     const highCount=highRisks.length;
-    const covDesc=overall>=80?'strong, with most key controls implemented':
-                  overall>=50?'developing, with several controls implemented but notable gaps remaining':
-                  overall>0?'limited, with many controls still to be implemented':
+    const overallRows=computeGapRows();
+    const ov=overallCoverage(overallRows);
+    const covDesc=ov>=80?'strong, with most key controls implemented':
+                  ov>=50?'developing, with several controls implemented but notable gaps remaining':
+                  ov>0?'limited, with many controls still to be implemented':
                   'minimal, with framework controls largely not implemented yet';
-    let obs=`5. Overall observation\nSeveral high-impact risks have been identified${highCount?` (currently ${highCount} high-rated risk(s))`:''}. Control coverage is ${overall}% and is best described as ${covDesc}. `;
+    let obs=`5. Overall observation\nSeveral high-impact risks have been identified${highCount?` (currently ${highCount} high-rated risk(s))`:''}. Control coverage is ${ov}% and is best described as ${covDesc}. `;
     if(openActions.length){
       obs+=`A formal treatment plan is in place, with ${openActions.length} active remediation action(s) tracked against the risk register.`;
     }else{
@@ -1669,6 +1880,10 @@
     qs('#file-import').addEventListener('change',e=>{
       const file=e.target.files && e.target.files[0];
       if(file) importScenarioFile(file);
+    });
+    qs('#btn-load-demo').addEventListener('click',()=>{
+      if(!confirm('Loading the demo will overwrite current lab data in this browser. Continue?')) return;
+      loadDemoScenario();
     });
     qs('#btn-reset').addEventListener('click',resetLab);
 
