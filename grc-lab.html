@@ -564,8 +564,12 @@
           <div class="col-md-8 mb-3">
             <div class="dashboard-card p-3 h-100">
               <div class="label mb-1">Scenarios &amp; exports</div>
-              <p class="sub">Export current lab to JSON, import saved scenarios, or reset to blank.</p>
+              <p class="sub mb-2">
+                Load the MediCloud starter scenario (overwrites current data), export current lab to JSON,
+                import a saved scenario, or reset to blank.
+              </p>
               <div class="d-flex flex-wrap">
+                <button id="btn-medicloud" class="btn btn-sm btn-warning mr-2 mb-2">Load MediCloud starter (overwrite)</button>
                 <button id="btn-export" class="btn btn-sm btn-primary mr-2 mb-2">Export current data (JSON)</button>
                 <button id="btn-import" class="btn btn-sm btn-outline-light mr-2 mb-2">Import scenario (JSON)</button>
                 <button id="btn-reset" class="btn btn-sm btn-outline-danger mb-2">Reset lab (clear all data)</button>
@@ -667,6 +671,242 @@
       frameworks:["ISO 27001","NIST CSF","HIPAA"], references:["ISO 27001 A.7.2.2","NIST PR.AT-1","HIPAA 164.308(a)(5)"] },
   ];
 
+  // ============ MEDICLOUD STARTER SCENARIO ============
+  const MEDICLOUD_SCENARIO = {
+    version: 1,
+    name: "MediCloud starter",
+    assets: [
+      {
+        id: "AST-MC-APP",
+        name: "MediCloud Web App",
+        type: "Application",
+        criticality: "High",
+        owner: "Product / Engineering",
+        dataTypes: ["PHI", "PII"],
+        notes: "Customer-facing portal for clinics and patients."
+      },
+      {
+        id: "AST-MC-DB",
+        name: "MediCloud Patient DB",
+        type: "Database",
+        criticality: "High",
+        owner: "Data Platform",
+        dataTypes: ["PHI", "PII"],
+        notes: "Primary relational DB storing patient & appointment data."
+      },
+      {
+        id: "AST-MC-AWS",
+        name: "AWS Production Account",
+        type: "Cloud Service",
+        criticality: "High",
+        owner: "Cloud / DevOps",
+        dataTypes: ["Internal data"],
+        notes: "Shared VPC, ECS/EKS, S3, RDS for MediCloud workloads."
+      },
+      {
+        id: "AST-MC-PAY",
+        name: "Payment Gateway Provider",
+        type: "Vendor / Third Party",
+        criticality: "Medium",
+        owner: "Finance / Operations",
+        dataTypes: ["Card data"],
+        notes: "External PSP handling card transactions; PCI scope driver."
+      },
+      {
+        id: "AST-MC-SIEM",
+        name: "Cloud SIEM Platform",
+        type: "Cloud Service",
+        criticality: "Medium",
+        owner: "Security Operations",
+        dataTypes: ["Internal data"],
+        notes: "Aggregates logs from app, infra, and security tools."
+      }
+    ],
+    risks: [
+      {
+        id: "RSK-MC-AUTH",
+        title: "Weak authentication on MediCloud Web App",
+        assetId: "AST-MC-APP",
+        assetName: "MediCloud Web App",
+        category: "Cybersecurity",
+        likelihood: 4,
+        impact: 4,
+        score: 16,
+        status: "Open",
+        owner: "Product Security",
+        notes: "Admin portal still allows password-only login for some users."
+      },
+      {
+        id: "RSK-MC-DB-BREACH",
+        title: "Patient DB breach via exposed services",
+        assetId: "AST-MC-DB",
+        assetName: "MediCloud Patient DB",
+        category: "Privacy",
+        likelihood: 3,
+        impact: 5,
+        score: 15,
+        status: "Open",
+        owner: "Data Platform Lead",
+        notes: "DB accessible from multiple subnets; some legacy apps still have broad access."
+      },
+      {
+        id: "RSK-MC-AWS-MISCFG",
+        title: "AWS production misconfiguration",
+        assetId: "AST-MC-AWS",
+        assetName: "AWS Production Account",
+        category: "Cybersecurity",
+        likelihood: 3,
+        impact: 4,
+        score: 12,
+        status: "In progress",
+        owner: "Head of DevOps",
+        notes: "Overly permissive security groups and IAM roles could lead to compromise."
+      },
+      {
+        id: "RSK-MC-PCI",
+        title: "Card data exposure via payment provider",
+        assetId: "AST-MC-PAY",
+        assetName: "Payment Gateway Provider",
+        category: "Compliance",
+        likelihood: 2,
+        impact: 5,
+        score: 10,
+        status: "Open",
+        owner: "Compliance Manager",
+        notes: "Third-party PCI controls not fully evidenced; contract missing some clauses."
+      },
+      {
+        id: "RSK-MC-LOG",
+        title: "Insufficient log monitoring for MediCloud",
+        assetId: "AST-MC-SIEM",
+        assetName: "Cloud SIEM Platform",
+        category: "Operational",
+        likelihood: 3,
+        impact: 3,
+        score: 9,
+        status: "Open",
+        owner: "Security Operations Lead",
+        notes: "Not all apps forward logs; some alerts not tuned."
+      }
+    ],
+    controls: [
+      {
+        id: "CTL-MC-MFA",
+        name: "MFA for MediCloud admin users",
+        type: "Preventive",
+        status: "In place",
+        owner: "Product Security",
+        description: "All admin users required to use MFA via IdP; enforced for production portal.",
+        linkedRiskIds: ["RSK-MC-AUTH"],
+        linkedFrameworkControlIds: ["CTRL-AC-03"]
+      },
+      {
+        id: "CTL-MC-PASSWORDS",
+        name: "Password policy & SSO for MediCloud",
+        type: "Preventive",
+        status: "Planned",
+        owner: "IT Operations",
+        description: "Move remaining local accounts to central SSO and apply stricter password rules.",
+        linkedRiskIds: ["RSK-MC-AUTH"],
+        linkedFrameworkControlIds: ["CTRL-AC-01", "CTRL-AC-02"]
+      },
+      {
+        id: "CTL-MC-SG",
+        name: "Hardened AWS security groups and IAM",
+        type: "Technical",
+        status: "In place",
+        owner: "Cloud / DevOps",
+        description: "Security groups restricted to least privilege; IAM roles reviewed quarterly.",
+        linkedRiskIds: ["RSK-MC-AWS-MISCFG", "RSK-MC-DB-BREACH"],
+        linkedFrameworkControlIds: ["CTRL-AC-01", "CTRL-ENC-02"]
+      },
+      {
+        id: "CTL-MC-DB-ENC",
+        name: "Database encryption & key management",
+        type: "Technical",
+        status: "In place",
+        owner: "Data Platform",
+        description: "RDS encryption enabled with managed KMS keys; backup copies encrypted.",
+        linkedRiskIds: ["RSK-MC-DB-BREACH"],
+        linkedFrameworkControlIds: ["CTRL-ENC-01"]
+      },
+      {
+        id: "CTL-MC-LOGGING",
+        name: "Centralised logging & SIEM rules",
+        type: "Detective",
+        status: "In place",
+        owner: "Security Operations",
+        description: "App, infra, and security tools send logs to SIEM with basic alert rules.",
+        linkedRiskIds: ["RSK-MC-LOG"],
+        linkedFrameworkControlIds: ["CTRL-LOG-01", "CTRL-LOG-02", "CTRL-IR-02"]
+      },
+      {
+        id: "CTL-MC-IR",
+        name: "Incident response runbooks",
+        type: "Administrative",
+        status: "Planned",
+        owner: "CISO",
+        description: "Create IR runbooks for DB breach, account takeover, and PCI incident.",
+        linkedRiskIds: ["RSK-MC-DB-BREACH", "RSK-MC-PCI"],
+        linkedFrameworkControlIds: ["CTRL-IR-01"]
+      },
+      {
+        id: "CTL-MC-VENDOR",
+        name: "Vendor risk review for payment gateway",
+        type: "Administrative",
+        status: "In place",
+        owner: "Compliance Manager",
+        description: "Annual security questionnaire and contract review for PSP, including PCI AoC.",
+        linkedRiskIds: ["RSK-MC-PCI"],
+        linkedFrameworkControlIds: ["CTRL-VND-01", "CTRL-VND-02"]
+      }
+    ],
+    issues: [
+      {
+        id: "ISS-MC-MFA-GAP",
+        title: "Legacy admin accounts without MFA",
+        type: "Audit",
+        severity: "High",
+        status: "In progress",
+        owner: "Product Security",
+        dueDate: "",
+        notes: "Internal audit found 3 legacy admin accounts still allowed to bypass MFA.",
+        assetId: "AST-MC-APP",
+        riskId: "RSK-MC-AUTH",
+        controlId: "CTL-MC-MFA",
+        linkedSummary: "Asset: MediCloud Web App | Risk: Weak authentication on MediCloud Web App | Control: MFA for MediCloud admin users"
+      },
+      {
+        id: "ISS-MC-DB-NETWORK",
+        title: "Excessive DB network access",
+        type: "Pen test",
+        severity: "Medium",
+        status: "Open",
+        owner: "Data Platform Lead",
+        dueDate: "",
+        notes: "Pen test team could reach DB from non-production bastion due to shared VPC rules.",
+        assetId: "AST-MC-DB",
+        riskId: "RSK-MC-DB-BREACH",
+        controlId: "CTL-MC-SG",
+        linkedSummary: "Asset: MediCloud Patient DB | Risk: Patient DB breach via exposed services | Control: Hardened AWS security groups and IAM"
+      },
+      {
+        id: "ISS-MC-LOG-COVERAGE",
+        title: "Incomplete SIEM coverage for MediCloud",
+        type: "Risk review",
+        severity: "Medium",
+        status: "Open",
+        owner: "Security Operations Lead",
+        dueDate: "",
+        notes: "Some microservices not forwarding logs; limited alerting on auth failures.",
+        assetId: "AST-MC-SIEM",
+        riskId: "RSK-MC-LOG",
+        controlId: "CTL-MC-LOGGING",
+        linkedSummary: "Asset: Cloud SIEM Platform | Risk: Insufficient log monitoring for MediCloud | Control: Centralised logging & SIEM rules"
+      }
+    ]
+  };
+
   // ============ STORAGE ============
   const K = {
     assets: 'grc_assets_v1', risks: 'grc_risks_v1', controls: 'grc_controls_v1', issues: 'grc_issues_v1'
@@ -731,9 +971,21 @@
   }
   function populateIssueDropdowns(){
     const aSel = qs('#issue-asset'), rSel = qs('#issue-risk'), cSel = qs('#issue-control');
-    if(aSel){ const cur=aSel.value; aSel.innerHTML='<option value="">Linked asset...</option>'; assets.forEach(a=>{const o=document.createElement('option');o.value=a.id;o.textContent=a.name;aSel.appendChild(o);}); if(cur&&assets.some(a=>a.id===cur)) aSel.value=cur; }
-    if(rSel){ const cur=rSel.value; rSel.innerHTML='<option value="">Linked risk...</option>'; risks.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.title;rSel.appendChild(o);}); if(cur&&risks.some(r=>r.id===cur)) rSel.value=cur; }
-    if(cSel){ const cur=cSel.value; cSel.innerHTML='<option value="">Linked control...</option>'; controls.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.name;cSel.appendChild(o);}); if(cur&&controls.some(c=>c.id===cur)) cSel.value=cur; }
+    if(aSel){
+      const cur=aSel.value; aSel.innerHTML='<option value="">Linked asset...</option>';
+      assets.forEach(a=>{const o=document.createElement('option');o.value=a.id;o.textContent=a.name;aSel.appendChild(o);});
+      if(cur&&assets.some(a=>a.id===cur)) aSel.value=cur;
+    }
+    if(rSel){
+      const cur=rSel.value; rSel.innerHTML='<option value="">Linked risk...</option>';
+      risks.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.title;rSel.appendChild(o);});
+      if(cur&&risks.some(r=>r.id===cur)) rSel.value=cur;
+    }
+    if(cSel){
+      const cur=cSel.value; cSel.innerHTML='<option value="">Linked control...</option>';
+      controls.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.name;cSel.appendChild(o);});
+      if(cur&&controls.some(c=>c.id===cur)) cSel.value=cur;
+    }
   }
 
   function renderAssetsTable(){
@@ -1058,7 +1310,6 @@
       const st=i.status||''; return st!=='Resolved' && st!=='Accepted' && d<today;
     }).length;
     qs('#dash-overdue').textContent = overdue;
-    // coverage
     const ov = overallCoverage(computeGapRows());
     qs('#dash-coverage').textContent = ov+'%'; updateCoveragePill(ov);
   }
@@ -1073,7 +1324,8 @@
   const canvas = qs('#risk-matrix-canvas'); const ctx = canvas.getContext('2d'); const legend = qs('#matrix-legend');
 
   function residualForRisk(r){
-    // Basic residual: each implemented control linked to the risk reduces likelihood by 1 (cap 2).
+    // Basic residual: each implemented control linked to the risk reduces likelihood by 1 (cap 2),
+    // and at least one preventive/corrective control reduces impact by 1.
     const impl = controls.filter(c => c.status==='In place' && (c.linkedRiskIds||[]).includes(r.id));
     const dropL = Math.min(2, impl.length);
     const dropI = impl.some(c=>c.type==='Preventive' || c.type==='Corrective') ? 1 : 0;
@@ -1093,7 +1345,8 @@
       ctx.beginPath(); ctx.moveTo(off + i*size, off); ctx.lineTo(off + i*size, off+5*size); ctx.stroke();
     }
     // axes labels
-    ctx.font="14px Poppins"; ctx.fillStyle="#aab2bd"; ctx.fillText("Impact →", off+225, off-25);
+    ctx.font="14px Poppins"; ctx.fillStyle="#aab2bd"; ctx.textAlign="left"; ctx.textBaseline="alphabetic";
+    ctx.fillText("Impact →", off+225, off-25);
     ctx.save(); ctx.translate(off-55, off+240); ctx.rotate(-Math.PI/2); ctx.fillText("Likelihood →", 0,0); ctx.restore();
 
     let high=0, med=0, low=0;
@@ -1101,11 +1354,15 @@
       let L=r.likelihood, I=r.impact;
       if(showResidual){ const res = residualForRisk(r); L=res.likelihood; I=res.impact; }
       const score = rScore(L,I);
-      let color = "#27ae60"; if(score>=15) color="#e63946", high++; else if(score>=6) color="#f1c40f", med++; else low++;
+      let color = "#27ae60";
+      if(score>=15){ color="#e63946"; high++; }
+      else if(score>=6){ color="#f1c40f"; med++; }
+      else { low++; }
+
       ctx.beginPath();
       ctx.arc(off + (I-0.5)*size, off + (5-L+0.5)*size, 12, 0, 2*Math.PI);
       ctx.fillStyle=color; ctx.fill();
-      // label small score
+
       ctx.fillStyle="#0c0f12"; ctx.font="bold 12px Poppins"; ctx.textAlign="center"; ctx.textBaseline="middle";
       ctx.fillText(String(score), off + (I-0.5)*size, off + (5-L+0.5)*size);
     });
@@ -1116,7 +1373,7 @@
       <span style="color:#27ae60">Low: ${low}</span>`;
   }
 
-  // ============ SCENARIO EXPORT/IMPORT ============
+  // ============ SCENARIO EXPORT/IMPORT/RESET ============
   function setImportStatus(msg, err){ const el=qs('#import-status'); el.textContent=msg||''; el.style.color=err?'#fca5a5':'#9ca3af'; }
   function exportScenario(){
     const payload = { version:1, exportedAt:new Date().toISOString(), assets, risks, controls, issues };
@@ -1149,6 +1406,19 @@
     localStorage.removeItem(K.assets); localStorage.removeItem(K.risks);
     localStorage.removeItem(K.controls); localStorage.removeItem(K.issues);
     refreshAll(); setImportStatus('Lab reset: all data cleared from this browser.', false);
+  }
+
+  // MediCloud loader
+  function loadMediCloudScenario(){
+    if(!confirm('Load MediCloud starter scenario? This will overwrite current lab data in this browser.')) return;
+    // Deep-copy arrays so user edits don\'t mutate the constant
+    assets  = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.assets));
+    risks   = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.risks));
+    controls= JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.controls));
+    issues  = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.issues));
+    save(K.assets, assets); save(K.risks, risks); save(K.controls, controls); save(K.issues, issues);
+    refreshAll();
+    setImportStatus('Loaded MediCloud starter scenario (current data overwritten).', false);
   }
 
   // ============ TABS ============
@@ -1187,7 +1457,8 @@
     });
     bindTabs(); populateControlFrameworks(); populateControlRisks(); populateRiskAssetOptions(); populateIssueDropdowns();
 
-    // export / import / reset
+    // export / import / reset / MediCloud
+    qs('#btn-medicloud').addEventListener('click', loadMediCloudScenario);
     qs('#btn-export').addEventListener('click', exportScenario);
     qs('#btn-import').addEventListener('click', ()=>{ setImportStatus('',false); const f=qs('#file-import'); f.value=''; f.click(); });
     qs('#file-import').addEventListener('change', e=>{ const file = e.target.files && e.target.files[0]; if(file) importScenarioFile(file); });
