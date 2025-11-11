@@ -246,8 +246,9 @@
       <div id="tab-risks" class="grc-tab ftco-animate">
         <h3>Risk Register</h3>
         <div class="row">
+          <!-- Left: form + settings -->
           <div class="col-lg-4 col-md-5 mb-4">
-            <div class="bg-dark p-3 rounded">
+            <div class="bg-dark p-3 rounded mb-3">
               <h5 class="mb-3">Add / Edit Risk</h5>
               <form id="risk-form">
                 <input type="hidden" id="risk-id">
@@ -305,16 +306,68 @@
                   <button class="btn btn-primary btn-sm" type="submit" id="risk-form-submit">Save risk</button>
                   <button class="btn btn-outline-light btn-sm" type="button" id="risk-form-cancel">Clear</button>
                 </div>
-                <small class="text-muted d-block mt-2">Score = Likelihood × Impact (1–25). High ≥ 15; Medium 6–12; Low 1–5.</small>
+                <small class="text-muted d-block mt-2">
+                  Score = Likelihood × Impact (1–25). High / Medium / Low levels use the configurable thresholds below.
+                </small>
               </form>
             </div>
+
+            <!-- Risk scoring settings -->
+            <div class="bg-dark p-3 rounded">
+              <h6 class="mb-2">Risk scoring settings</h6>
+              <div class="form-row">
+                <div class="form-group col-6">
+                  <label class="text-muted small mb-1">High when score ≥</label>
+                  <input type="number" id="setting-high" class="form-control form-control-sm" min="1" max="25">
+                </div>
+                <div class="form-group col-6">
+                  <label class="text-muted small mb-1">Medium when score ≥</label>
+                  <input type="number" id="setting-medium" class="form-control form-control-sm" min="1" max="25">
+                </div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <button class="btn btn-sm btn-outline-light" id="settings-save">Apply thresholds</button>
+                <small class="text-muted">Default: High ≥ 15, Medium ≥ 6.</small>
+              </div>
+            </div>
           </div>
+
+          <!-- Right: list + filters -->
           <div class="col-lg-8 col-md-7 mb-4">
             <div class="bg-dark p-3 rounded">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="mb-0">Risks</h5>
+              <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap">
+                <h5 class="mb-2 mb-sm-0">Risks</h5>
                 <small id="risks-count" class="text-muted"></small>
               </div>
+
+              <!-- Filters / sort -->
+              <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                <div class="d-flex flex-wrap mb-2">
+                  <select id="risk-filter-status" class="form-control form-control-sm mr-2 mb-2">
+                    <option value="all">Status: All</option>
+                    <option value="Open">Open</option>
+                    <option value="In progress">In progress</option>
+                    <option value="Mitigated">Mitigated</option>
+                    <option value="Accepted">Accepted</option>
+                  </select>
+                  <select id="risk-filter-level" class="form-control form-control-sm mr-2 mb-2">
+                    <option value="all">Level: All</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                  </select>
+                </div>
+                <div class="d-flex flex-wrap mb-2">
+                  <input id="risk-filter-search" class="form-control form-control-sm mr-2 mb-2" placeholder="Search title/asset/category...">
+                  <select id="risk-sort" class="form-control form-control-sm mb-2">
+                    <option value="score-desc">Sort: Score high → low</option>
+                    <option value="score-asc">Sort: Score low → high</option>
+                    <option value="title-asc">Sort: Title A → Z</option>
+                    <option value="title-desc">Sort: Title Z → A</option>
+                  </select>
+                </div>
+              </div>
+
               <div class="table-responsive">
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
@@ -761,6 +814,24 @@
   let issues = load(K.issues);
   let treatments = load(K.treats);
 
+  // ---------- Settings (risk thresholds) ----------
+  const SETTINGS_KEY = 'grc_settings_v1';
+  const defaultSettings = { highMin:15, mediumMin:6 };
+
+  function loadSettings(){
+    try{
+      const raw = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+      if(raw && typeof raw === 'object'){
+        return { ...defaultSettings, ...raw };
+      }
+    }catch(e){}
+    return { ...defaultSettings };
+  }
+  let settings = loadSettings();
+  function saveSettings(){
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  }
+
   // ---------- Helpers ----------
   const qs = s => document.querySelector(s);
   const qsa = s => Array.from(document.querySelectorAll(s));
@@ -775,7 +846,12 @@
     Array.from(sel.options).forEach(o=>o.selected=S.has(o.value));
   };
   const rScore = (l,i)=> (Number(l)||0)*(Number(i)||0);
-  const rLevel = s => s>=15?'High':s>=6?'Medium':s>0?'Low':'-';
+  function rLevel(s){
+    if(!s || typeof s !== 'number') return '-';
+    if(s >= settings.highMin) return 'High';
+    if(s >= settings.mediumMin) return 'Medium';
+    return 'Low';
+  }
 
   // ---------- Framework render ----------
   function renderFrameworkControls(){
@@ -930,16 +1006,53 @@
 
   function renderRisksTable(){
     const tbody=qs('#risks-table-body'), empty=qs('#risks-empty'), count=qs('#risks-count');
+
+    const statusFilter = qs('#risk-filter-status') ? qs('#risk-filter-status').value : 'all';
+    const levelFilter  = qs('#risk-filter-level') ? qs('#risk-filter-level').value  : 'all';
+    const search       = qs('#risk-filter-search') ? qs('#risk-filter-search').value.trim().toLowerCase() : '';
+    const sortVal      = qs('#risk-sort') ? qs('#risk-sort').value : 'score-desc';
+
+    let list = risks.slice();
+
+    // Filters
+    list = list.filter(r=>{
+      const lvl = rLevel(r.score);
+      const stMatch = statusFilter === 'all' || r.status === statusFilter;
+      const lvlMatch = levelFilter === 'all' || lvl === levelFilter;
+      const sMatch = !search ||
+        (r.title && r.title.toLowerCase().includes(search)) ||
+        (r.assetName && r.assetName.toLowerCase().includes(search)) ||
+        (r.category && r.category.toLowerCase().includes(search));
+      return stMatch && lvlMatch && sMatch;
+    });
+
+    // Sort
+    list.sort((a,b)=>{
+      const sa = a.score || 0, sb = b.score || 0;
+      const ta = (a.title||'').toLowerCase();
+      const tb = (b.title||'').toLowerCase();
+      switch(sortVal){
+        case 'score-asc': return sa - sb;
+        case 'title-asc': return ta.localeCompare(tb);
+        case 'title-desc': return tb.localeCompare(ta);
+        case 'score-desc':
+        default: return sb - sa;
+      }
+    });
+
     tbody.innerHTML='';
-    risks.forEach(r=>{
+    list.forEach(r=>{
       const level=rLevel(r.score);
-      const cls = level==='High'?'badge-danger':level==='Medium'?'badge-warning':level==='Low'?'badge-success':'';
+      let badgeClass='';
+      if(level==='High') badgeClass='badge-danger';
+      else if(level==='Medium') badgeClass='badge-warning';
+      else if(level==='Low') badgeClass='badge-success';
       const tr=document.createElement('tr');
       tr.innerHTML=`
         <td>${r.title}</td>
         <td>${r.assetName||''}</td>
         <td>${r.category}</td>
-        <td>${r.score?`<span class="badge ${cls} mr-1">${r.score}</span><span class="text-muted small">${level}</span>`:'-'}</td>
+        <td>${r.score?`<span class="badge ${badgeClass} mr-1">${r.score}</span><span class="text-muted small">${level}</span>`:'-'}</td>
         <td>${r.status}</td>
         <td>
           <button class="btn btn-sm btn-outline-light mb-1" data-re="${r.id}">EDIT</button>
@@ -947,8 +1060,10 @@
         </td>`;
       tbody.appendChild(tr);
     });
+
     empty.style.display=risks.length?'none':'block';
-    count.textContent=`${risks.length} risk(s)`;
+    count.textContent=`${list.length} risk(s) shown of ${risks.length}`;
+
     populateControlRisks();
     populateIssueDropdowns();
     populateTreatmentDropdownRisks();
@@ -1034,6 +1149,30 @@
 
       renderRisksTable();
     }
+  });
+
+  // Apply settings to UI
+  function applySettingsToUI(){
+    const highInput = qs('#setting-high');
+    const medInput  = qs('#setting-medium');
+    if(highInput) highInput.value = settings.highMin;
+    if(medInput)  medInput.value  = settings.mediumMin;
+  }
+
+  qs('#settings-save').addEventListener('click',()=>{
+    const high = Number(qs('#setting-high').value)||0;
+    const med  = Number(qs('#setting-medium').value)||0;
+    if(!(high > 0 && med > 0 && high > med && high <= 25 && med <= 25)){
+      alert('High threshold must be greater than Medium, both between 1 and 25.');
+      return;
+    }
+    settings.highMin = high;
+    settings.mediumMin = med;
+    saveSettings();
+    renderRisksTable();
+    renderDashboard();
+    drawMatrix();
+    generateAuditorSummary();
   });
 
   // ---------- Controls ----------
@@ -1350,10 +1489,12 @@
       let L=r.likelihood, I=r.impact;
       if(showResidual){ const res=residualForRisk(r); L=res.likelihood; I=res.impact; }
       const score=rScore(L,I);
+      const level = rLevel(score);
       let color="#27ae60";
-      if(score>=15){ color="#e63946"; high++; }
-      else if(score>=6){ color="#f1c40f"; med++; }
-      else low++;
+      if(level==='High'){ color="#e63946"; high++; }
+      else if(level==='Medium'){ color="#f1c40f"; med++; }
+      else if(level==='Low'){ color="#27ae60"; low++; }
+      else { color="#95a5a6"; }
       ctx.beginPath();
       ctx.arc(off+(I-0.5)*size,off+(5-L+0.5)*size,12,0,2*Math.PI);
       ctx.fillStyle=color; ctx.fill();
@@ -1479,7 +1620,8 @@
     const payload={
       version:2,
       exportedAt:new Date().toISOString(),
-      assets,risks,controls,issues,treatments
+      assets,risks,controls,issues,treatments,
+      settings
     };
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
     const url=URL.createObjectURL(blob);
@@ -1503,9 +1645,14 @@
         risks  = Array.isArray(data.risks)?data.risks:[];
         controls = Array.isArray(data.controls)?data.controls:[];
         issues = Array.isArray(data.issues)?data.issues:[];
-        treatments = Array.isArray(data.treatments)?data.treatments:[]; // backward compatible
+        treatments = Array.isArray(data.treatments)?data.treatments:[];
+        if(data.settings && typeof data.settings === 'object'){
+          settings = { ...defaultSettings, ...data.settings };
+          saveSettings();
+        }
         save(K.assets,assets); save(K.risks,risks); save(K.controls,controls);
         save(K.issues,issues); save(K.treats,treatments);
+        applySettingsToUI();
         refreshAll();
         setImportStatus(`Imported scenario: ${assets.length} assets, ${risks.length} risks, ${controls.length} controls, ${issues.length} issues, ${treatments.length} actions.`,false);
       }catch(err){
@@ -1715,12 +1862,16 @@
       }
     ];
 
+    settings = { ...defaultSettings }; // demo uses default thresholds
+    saveSettings();
+
     save(K.assets,assets);
     save(K.risks,risks);
     save(K.controls,controls);
     save(K.issues,issues);
     save(K.treats,treatments);
 
+    applySettingsToUI();
     refreshAll();
     setImportStatus('Loaded demo MediCloud scenario into this browser (previous lab data was overwritten).',false);
   }
@@ -1729,6 +1880,9 @@
     if(!confirm('This will clear all assets, risks, controls, issues and treatments in this browser. Continue?')) return;
     assets=[];risks=[];controls=[];issues=[];treatments=[];
     Object.values(K).forEach(k=>localStorage.removeItem(k));
+    settings = { ...defaultSettings };
+    saveSettings();
+    applySettingsToUI();
     refreshAll();
     setImportStatus('Lab reset: all data cleared from this browser.',false);
   }
@@ -1864,6 +2018,16 @@
       el.addEventListener(sel==='#framework-search'?'input':'change',renderFrameworkControls);
     });
 
+    // Risk table filters / sort
+    const rfStatus = qs('#risk-filter-status');
+    const rfLevel  = qs('#risk-filter-level');
+    const rfSearch = qs('#risk-filter-search');
+    const rfSort   = qs('#risk-sort');
+    if(rfStatus) rfStatus.addEventListener('change',renderRisksTable);
+    if(rfLevel)  rfLevel.addEventListener('change',renderRisksTable);
+    if(rfSearch) rfSearch.addEventListener('input',renderRisksTable);
+    if(rfSort)   rfSort.addEventListener('change',renderRisksTable);
+
     bindTabs();
     populateControlFrameworks();
     populateControlRisks();
@@ -1871,6 +2035,7 @@
     populateIssueDropdowns();
     populateTreatmentDropdownRisks();
     populateTreatmentDropdownControls();
+    applySettingsToUI();
 
     qs('#btn-export').addEventListener('click',exportScenario);
     qs('#btn-import').addEventListener('click',()=>{
