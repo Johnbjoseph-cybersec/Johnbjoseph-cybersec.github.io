@@ -98,7 +98,7 @@
       <!-- Header -->
       <div class="row justify-content-center mb-4">
         <div class="col-md-10 text-center ftco-animate">
-          <h1 class="mb-3">GRC Practice Lab (v3.9)</h1>
+          <h1 class="mb-3">GRC Practice Lab (v4.1)</h1>
           <p class="lead">
             Practice frameworks, assets, risks, controls, issues and reporting — all in your browser (data stays local).
           </p>
@@ -420,6 +420,28 @@
                     <option>In place</option><option>Planned</option><option>Not applicable</option>
                   </select>
                 </div>
+
+                <div class="form-group">
+                  <label class="text-muted small mb-1">Effectiveness</label>
+                  <select id="control-effectiveness" class="form-control form-control-sm">
+                    <option>Not tested</option>
+                    <option>Effective</option>
+                    <option>Needs improvement</option>
+                    <option>Not effective</option>
+                  </select>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-6">
+                    <label class="text-muted small mb-1">Last tested</label>
+                    <input type="date" id="control-tested" class="form-control form-control-sm">
+                  </div>
+                  <div class="form-group col-6">
+                    <label class="text-muted small mb-1">Evidence / ref</label>
+                    <input id="control-test-notes" class="form-control form-control-sm" placeholder="Jira / Confluence / ticket ID">
+                  </div>
+                </div>
+
                 <div class="form-group">
                   <label class="text-muted small mb-1">Owner</label>
                   <input id="control-owner" class="form-control form-control-sm" placeholder="DevSecOps / IT Ops / Compliance">
@@ -458,8 +480,13 @@
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
                     <tr>
-                      <th style="width:26%">Name</th><th style="width:16%">Type</th><th style="width:14%">Status</th>
-                      <th style="width:22%">Linked risks</th><th style="width:12%">Frameworks</th><th style="width:10%">Actions</th>
+                      <th style="width:24%">Name</th>
+                      <th style="width:18%">Status / Eff.</th>
+                      <th style="width:12%">Type</th>
+                      <th style="width:16%">Linked risks</th>
+                      <th style="width:12%">Frameworks</th>
+                      <th style="width:10%">Last tested</th>
+                      <th style="width:8%">Actions</th>
                     </tr>
                   </thead>
                   <tbody id="controls-table-body"></tbody>
@@ -566,7 +593,10 @@
       <!-- Gap Analysis -->
       <div id="tab-gap" class="grc-tab ftco-animate">
         <h3>Gap analysis &amp; heatmap</h3>
-        <p class="mb-3">Coverage is based on <b>local controls</b> mapped to framework controls. “In place” = implemented; “Planned” = planned-only.</p>
+        <p class="mb-3">
+          Coverage is based on <b>local controls</b> mapped to framework controls.<br/>
+          “Implemented” = in place &amp; not marked “Not effective”. “Planned only” includes planned and in-place-but-not-effective controls.
+        </p>
         <div class="table-responsive bg-dark p-3 rounded">
           <table class="table table-dark table-striped table-hover table-sm mb-0">
             <thead>
@@ -693,7 +723,9 @@
               <div class="dashboard-card p-3 h-100">
                 <div class="label">Controls</div>
                 <div class="value" id="report-controls">0</div>
-                <div class="sub">Local org controls</div>
+                <div class="sub">
+                  Local controls; <span id="report-controls-untested">0</span> not tested in last 12 months.
+                </div>
               </div>
             </div>
             <div class="col-sm-6 col-md-3 mb-3">
@@ -728,7 +760,7 @@
                   </div>
                 </div>
                 <div class="mt-2 small-muted">
-                  Based on mapped framework controls and local control status.
+                  Based on mapped framework controls and local control status &amp; effectiveness.
                 </div>
               </div>
             </div>
@@ -1034,20 +1066,39 @@
     form.reset(); qs('#control-id').value=''; qs('#control-form-submit').textContent='Save control';
   }
 
+  function isControlImplemented(c){
+    if(c.status !== 'In place') return false;
+    // Only treat as implemented if not explicitly "Not effective"
+    return (c.effectiveness || 'Not tested') !== 'Not effective';
+  }
+  function isControlPlannedOnly(c){
+    if(c.status === 'Planned') return true;
+    // In place but explicitly "Not effective" counts as planned-only (design exists but failing)
+    if(c.status === 'In place' && c.effectiveness === 'Not effective') return true;
+    return false;
+  }
+
   function renderControlsTable(){
     const tbody=qs('#controls-table-body'), empty=qs('#controls-empty'), count=qs('#controls-count');
     if(!tbody || !empty || !count) return;
 
     tbody.innerHTML='';
     controls.forEach(c=>{
-      const rc=(c.linkedRiskIds||[]).length, fw=(c.linkedFrameworkControlIds||[]).length;
+      const rc=(c.linkedRiskIds||[]).length,
+            fw=(c.linkedFrameworkControlIds||[]).length;
+      const eff = c.effectiveness || 'Not tested';
+      const tested = c.lastTested || '-';
       const tr=document.createElement('tr');
       tr.innerHTML=`
         <td>${c.name}</td>
+        <td>
+          ${c.status}
+          <div class="text-muted small">${eff}</div>
+        </td>
         <td>${c.type}</td>
-        <td>${c.status}</td>
         <td>${rc?rc+' linked':'-'}</td>
         <td>${fw?fw+' mapped':'-'}</td>
+        <td>${tested}</td>
         <td>
           <button class="btn btn-sm btn-outline-light mb-1" data-ce="${c.id}">Edit</button>
           <button class="btn btn-sm btn-outline-light mb-1" data-cd="${c.id}">Del</button>
@@ -1103,10 +1154,12 @@
       const row = byCat.get(fc.category); row.total += 1;
       const linked = controls.filter(c=>Array.isArray(c.linkedFrameworkControlIds) && c.linkedFrameworkControlIds.includes(fc.id));
       if(linked.length===0){ row.notImplemented += 1; return; }
-      const hasInPlace = linked.some(c=>c.status==='In place');
-      const hasPlanned = linked.some(c=>c.status==='Planned');
-      if(hasInPlace) row.implemented += 1;
-      else if(hasPlanned) row.plannedOnly += 1;
+
+      const implementedLinked = linked.filter(isControlImplemented);
+      const plannedLinked = linked.filter(isControlPlannedOnly);
+
+      if(implementedLinked.length>0) row.implemented += 1;
+      else if(plannedLinked.length>0) row.plannedOnly += 1;
       else row.notImplemented += 1;
     });
     return Array.from(byCat.values()).sort((a,b)=>a.category.localeCompare(b.category));
@@ -1374,13 +1427,16 @@
       }
     ];
 
-    // Controls
+    // Controls with effectiveness + test dates
     const medControls = [
       {
         id: 'CTL-MED-MFA',
         name: 'MFA on Okta and admin portal',
         type: 'Preventive',
         status: 'In place',
+        effectiveness: 'Effective',
+        lastTested: '2025-05-10',
+        testNotes: 'Quarterly access review & MFA challenge test recorded in JIRA-SEC-101.',
         owner: 'IAM Team',
         description: 'MFA enforced for all privileged accounts and remote admin access via Okta and application-level checks.',
         linkedRiskIds: ['RSK-MED-UNAUTH','RSK-MED-CRED-STUFF'],
@@ -1391,6 +1447,9 @@
         name: 'Centralised logging & alerting',
         type: 'Detective',
         status: 'In place',
+        effectiveness: 'Needs improvement',
+        lastTested: '2025-04-20',
+        testNotes: 'Red team simulation highlighted missing DB logs; improvements tracked under SEC-LOG-22.',
         owner: 'Security Operations',
         description: 'Web, DB and Okta logs forwarded to SIEM with correlation rules for suspicious access.',
         linkedRiskIds: ['RSK-MED-UNAUTH','RSK-MED-DATA-LEAK','RSK-MED-CRED-STUFF'],
@@ -1401,6 +1460,9 @@
         name: 'Daily DB backups & DR testing',
         type: 'Corrective',
         status: 'In place',
+        effectiveness: 'Effective',
+        lastTested: '2025-03-15',
+        testNotes: 'Full restore to DR region completed within RTO in DR-TEST-2025-Q1.',
         owner: 'SRE Team',
         description: 'Automated encrypted backups with quarterly restore tests for RPO/RTO validation.',
         linkedRiskIds: ['RSK-MED-DATA-LEAK','RSK-MED-AVAIL'],
@@ -1411,6 +1473,9 @@
         name: 'Monthly vulnerability scanning',
         type: 'Detective',
         status: 'Planned',
+        effectiveness: 'Not tested',
+        lastTested: '',
+        testNotes: '',
         owner: 'Security Engineering',
         description: 'Monthly authenticated scans across app and DB hosts with tracked remediation.',
         linkedRiskIds: ['RSK-MED-UNAUTH','RSK-MED-DATA-LEAK'],
@@ -1421,6 +1486,9 @@
         name: 'Incident response playbooks',
         type: 'Administrative',
         status: 'Planned',
+        effectiveness: 'Not tested',
+        lastTested: '',
+        testNotes: '',
         owner: 'CISO',
         description: 'Documented runbooks for auth compromise, data exfiltration and large outage scenarios.',
         linkedRiskIds: ['RSK-MED-UNAUTH','RSK-MED-DATA-LEAK','RSK-MED-AVAIL'],
@@ -1527,7 +1595,8 @@
           weakLabel = qs('#report-weakest-label'),
           weakCov = qs('#report-weakest-coverage'),
           riskList = qs('#report-risk-list'),
-          issueList = qs('#report-issue-list');
+          issueList = qs('#report-issue-list'),
+          untestedEl = qs('#report-controls-untested');
 
     if(!aEl || !riskList || !issueList) return;
 
@@ -1551,6 +1620,17 @@
       const st=is.status||''; return st!=='Resolved' && st!=='Accepted' && d<today;
     }).length;
     overdueEl.textContent = overdue;
+
+    // Controls not tested in last 12 months
+    const oneYearMs = 365*24*60*60*1000;
+    const now = new Date();
+    const untested = controls.filter(c=>{
+      if(!c.lastTested) return true;
+      const d = new Date(c.lastTested);
+      if(isNaN(d)) return true;
+      return (now - d) > oneYearMs;
+    }).length;
+    if(untestedEl) untestedEl.textContent = untested;
 
     const rows = computeGapRows();
     const ov = overallCoverage(rows);
@@ -1778,7 +1858,6 @@
           qs('#risk-likelihood').value=String(r.likelihood); qs('#risk-impact').value=String(r.impact);
           qs('#risk-owner').value=r.owner||''; qs('#risk-status').value=r.status||'Open'; qs('#risk-notes').value=r.notes||'';
 
-          // Residual fields: if equal to inherent, show "Same as inherent" (blank), else specific value
           const rl = r.residualLikelihood != null ? r.residualLikelihood : r.likelihood;
           const ri = r.residualImpact != null ? r.residualImpact : r.impact;
           const rlSel = qs('#risk-res-likelihood');
@@ -1826,6 +1905,9 @@
           name,
           type,
           status,
+          effectiveness: qs('#control-effectiveness').value || 'Not tested',
+          lastTested: qs('#control-tested').value,
+          testNotes: qs('#control-test-notes').value.trim(),
           owner: qs('#control-owner').value.trim(),
           description: qs('#control-description').value.trim(),
           linkedRiskIds: getMulti(qs('#control-risks')),
@@ -1847,6 +1929,9 @@
           qs('#control-id').value=c.id; qs('#control-name').value=c.name; qs('#control-type').value=c.type;
           qs('#control-status').value=c.status; qs('#control-owner').value=c.owner||'';
           qs('#control-description').value=c.description||'';
+          qs('#control-effectiveness').value = c.effectiveness || 'Not tested';
+          qs('#control-tested').value = c.lastTested || '';
+          qs('#control-test-notes').value = c.testNotes || '';
           setMulti(qs('#control-risks'), c.linkedRiskIds||[]);
           setMulti(qs('#control-frameworks'), c.linkedFrameworkControlIds||[]);
           qs('#control-form-submit').textContent='Update control';
