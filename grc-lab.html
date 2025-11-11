@@ -283,3 +283,121 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+  // --- Tab Navigation ---
+  const buttons = document.querySelectorAll("[data-grc-tab]");
+  const tabs = document.querySelectorAll(".grc-tab");
+  buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const target = btn.getAttribute("data-grc-tab");
+      buttons.forEach(b => b.classList.replace("btn-primary","btn-outline-light"));
+      btn.classList.replace("btn-outline-light","btn-primary");
+      tabs.forEach(tab => tab.classList.remove("active"));
+      const t = document.getElementById("tab-" + target);
+      if (t) t.classList.add("active");
+    });
+  });
+
+  // --- Data State ---
+  const keys = {
+    assets: "grc_assets_v1",
+    risks: "grc_risks_v1",
+    controls: "grc_controls_v1",
+    issues: "grc_issues_v1",
+  };
+  function load(k){try{return JSON.parse(localStorage.getItem(k))||[]}catch{return[]}}
+  function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
+
+  let assets=load(keys.assets),risks=load(keys.risks),
+      controls=load(keys.controls),issues=load(keys.issues);
+
+  // --- Dashboard Metrics ---
+  function updateDashboard(){
+    document.getElementById("count-assets").textContent=assets.length;
+    document.getElementById("count-risks").textContent=risks.length;
+    document.getElementById("count-controls").textContent=controls.length;
+    document.getElementById("count-issues").textContent=issues.length;
+  }
+  updateDashboard();
+
+  // --- Risk Matrix ---
+  const canvas=document.getElementById("risk-matrix-canvas");
+  const ctx=canvas.getContext("2d");
+  const legend=document.getElementById("matrix-legend");
+  let showResidual=false;
+
+  function drawMatrix(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const size=100, offset=80;
+    ctx.strokeStyle="#444"; ctx.lineWidth=1;
+    ctx.font="12px Poppins"; ctx.fillStyle="#aaa";
+    for(let i=0;i<=5;i++){
+      ctx.beginPath();
+      ctx.moveTo(offset,offset+i*size);
+      ctx.lineTo(offset+5*size,offset+i*size);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(offset+i*size,offset);
+      ctx.lineTo(offset+i*size,offset+5*size);
+      ctx.stroke();
+    }
+    ctx.fillText("Impact →", offset+210, offset-20);
+    ctx.save();
+    ctx.translate(offset-50, offset+230);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText("Likelihood →", 0, 0);
+    ctx.restore();
+
+    // risk data points
+    let high=0,med=0,low=0;
+    risks.forEach(r=>{
+      const l=r.likelihood||1,i=r.impact||1;
+      const score=l*i;
+      let color="#28a745"; if(score>=15) color="#dc3545"; else if(score>=6) color="#ffc107";
+      if(score>=15)high++;else if(score>=6)med++;else low++;
+      ctx.beginPath();
+      ctx.arc(offset+(i-0.5)*size, offset+(5-l+0.5)*size, 10,0,2*Math.PI);
+      ctx.fillStyle=color; ctx.fill();
+    });
+
+    legend.innerHTML=`<b>${risks.length}</b> total risks – 
+      <span style='color:#dc3545'>High: ${high}</span> |
+      <span style='color:#ffc107'>Medium: ${med}</span> |
+      <span style='color:#28a745'>Low: ${low}</span>`;
+  }
+
+  drawMatrix();
+
+  document.getElementById("matrix-toggle-inherent").addEventListener("click",()=>{
+    showResidual=false;
+    document.getElementById("matrix-toggle-inherent").classList.add("btn-primary");
+    document.getElementById("matrix-toggle-residual").classList.remove("btn-primary");
+    drawMatrix();
+  });
+  document.getElementById("matrix-toggle-residual").addEventListener("click",()=>{
+    showResidual=true;
+    document.getElementById("matrix-toggle-residual").classList.add("btn-primary");
+    document.getElementById("matrix-toggle-inherent").classList.remove("btn-primary");
+    drawMatrix(); // currently same view placeholder for residual
+  });
+
+  // --- Export Matrix as PNG ---
+  document.getElementById("matrix-export").addEventListener("click",()=>{
+    const link=document.createElement("a");
+    link.download="risk_matrix.png";
+    link.href=canvas.toDataURL("image/png");
+    link.click();
+  });
+
+  // --- Live updates when returning to Dashboard or Matrix ---
+  document.querySelector("[data-grc-tab='dashboard']").addEventListener("click",updateDashboard);
+  document.querySelector("[data-grc-tab='matrix']").addEventListener("click",()=>{
+    updateDashboard();
+    drawMatrix();
+  });
+
+});
+</script>
+</body>
+</html>
