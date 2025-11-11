@@ -1133,7 +1133,10 @@
       list = list.filter(r => rLevel(r.score) === riskFilterLevel);
     }
 
-    list.sort((a,b)=> riskCompare(a,b,riskSortField) * (riskSortDir === 'asc' ? 1 : -1));
+       list.sort((a,b)=> riskCompare(a,b,riskSortField) * (riskSortDir === 'asc' ? 1 : -1));
+
+    // keep current view for CSV export
+    lastRiskView = list.slice();
 
     tbody.innerHTML='';
     list.forEach(r=>{
