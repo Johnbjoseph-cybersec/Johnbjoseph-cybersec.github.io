@@ -45,9 +45,6 @@
       font-size:.9rem;
       white-space:pre-wrap;
     }
-    th[data-risk-sort]{cursor:pointer;}
-    th[data-risk-sort].sorted-asc::after{content:" ▲";font-size:.7rem;}
-    th[data-risk-sort].sorted-desc::after{content:" ▼";font-size:.7rem;}
   </style>
 </head>
 
@@ -94,7 +91,6 @@
           <button class="btn btn-outline-light btn-sm" data-grc-tab="matrix">Risk Matrix</button>
           <button class="btn btn-outline-light btn-sm" data-grc-tab="treatments">Treatments</button>
           <button class="btn btn-outline-light btn-sm" data-grc-tab="summary">Auditor Summary</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="settings">Settings</button>
         </div>
       </div>
 
@@ -225,13 +221,13 @@
           </div>
           <div class="col-lg-8 col-md-7 mb-4">
             <div class="bg-dark p-3 rounded">
-             <div class="d-flex justify-content-between align-items-center mb-2">
-  <h5 class="mb-0">Assets</h5>
-  <div>
-    <button id="export-assets" class="btn btn-xs btn-outline-light mr-2">Export CSV</button>
-    <small id="assets-count" class="text-muted"></small>
-  </div>
-</div>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">Assets</h5>
+                <div>
+                  <button id="export-assets" class="btn btn-sm btn-outline-light mr-2">Export CSV</button>
+                  <small id="assets-count" class="text-muted"></small>
+                </div>
+              </div>
               <div class="table-responsive">
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
@@ -312,53 +308,86 @@
                   <button class="btn btn-primary btn-sm" type="submit" id="risk-form-submit">Save risk</button>
                   <button class="btn btn-outline-light btn-sm" type="button" id="risk-form-cancel">Clear</button>
                 </div>
-                <small class="text-muted d-block mt-2">
-                  Score = Likelihood × Impact (1–25). High / Medium / Low thresholds are configurable in Settings.
-                </small>
+                <small class="text-muted d-block mt-2">Score = Likelihood × Impact (1–25). High / Medium / Low thresholds are configurable below.</small>
               </form>
             </div>
           </div>
           <div class="col-lg-8 col-md-7 mb-4">
             <div class="bg-dark p-3 rounded">
-             <div class="d-flex justify-content-between align-items-center mb-2">
-  <h5 class="mb-0">Risks</h5>
-  <div>
-    <button id="export-risks" class="btn btn-xs btn-outline-light mr-2">Export CSV</button>
-    <small id="risks-count" class="text-muted"></small>
-  </div>
-</div>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">Risks</h5>
+                <div>
+                  <button id="export-risks" class="btn btn-sm btn-outline-light mr-2">Export CSV</button>
+                  <small id="risks-count" class="text-muted"></small>
+                </div>
+              </div>
 
-              <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
-                <div class="form-inline mb-2">
-                  <label class="text-muted small mr-1">Status</label>
-                  <select id="risk-filter-status" class="form-control form-control-sm mr-2">
-                    <option value="all">All</option>
+              <!-- Filters + sorting -->
+              <div class="row mb-2">
+                <div class="col-md-4 mb-1">
+                  <label class="text-muted small mb-1">Filter by status</label>
+                  <select id="risk-filter-status" class="form-control form-control-sm">
+                    <option value="all">All statuses</option>
                     <option>Open</option>
                     <option>In progress</option>
                     <option>Mitigated</option>
                     <option>Accepted</option>
                   </select>
-                  <label class="text-muted small mr-1">Level</label>
+                </div>
+                <div class="col-md-4 mb-1">
+                  <label class="text-muted small mb-1">Filter by level</label>
                   <select id="risk-filter-level" class="form-control form-control-sm">
-                    <option value="all">All</option>
+                    <option value="all">All levels</option>
                     <option>High</option>
                     <option>Medium</option>
                     <option>Low</option>
                   </select>
                 </div>
-                <small id="risks-filter-pill" class="text-muted mb-2">No filters applied</small>
+                <div class="col-md-4 mb-1">
+                  <label class="text-muted small mb-1">Sort</label>
+                  <div class="d-flex">
+                    <select id="risk-sort-field" class="form-control form-control-sm mr-1">
+                      <option value="score">Score</option>
+                      <option value="title">Title</option>
+                      <option value="asset">Asset</option>
+                      <option value="impact">Impact</option>
+                      <option value="likelihood">Likelihood</option>
+                      <option value="status">Status</option>
+                    </select>
+                    <select id="risk-sort-dir" class="form-control form-control-sm">
+                      <option value="desc">Desc</option>
+                      <option value="asc">Asc</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Threshold settings -->
+              <div class="bg-secondary rounded p-2 mb-2">
+                <div class="d-flex flex-wrap align-items-center">
+                  <span class="small text-light mr-2">
+                    Risk levels:
+                    High ≥
+                    <input id="risk-thres-high" type="number" min="1" max="25"
+                           class="form-control form-control-sm d-inline-block"
+                           style="width:60px;" />
+                    ;
+                    Medium ≥
+                    <input id="risk-thres-med" type="number" min="1" max="25"
+                           class="form-control form-control-sm d-inline-block"
+                           style="width:60px;" />
+                    ; Low below Medium.
+                  </span>
+                  <button id="risk-thres-reset" class="btn btn-sm btn-outline-light ml-auto">Reset</button>
+                </div>
               </div>
 
               <div class="table-responsive">
-                <table id="risks-table" class="table table-dark table-striped table-hover table-sm mb-0">
+                <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
                     <tr>
-                      <th style="width:26%" data-risk-sort="title">Title</th>
-                      <th style="width:18%" data-risk-sort="asset">Asset</th>
-                      <th style="width:16%" data-risk-sort="category">Category</th>
-                      <th style="width:16%" data-risk-sort="score">Inherent</th>
-                      <th style="width:14%" data-risk-sort="status">Status</th>
-                      <th style="width:10%">Actions</th>
+                      <th style="width:26%">Title</th><th style="width:18%">Asset</th><th style="width:16%">Category</th>
+                      <th style="width:16%">Inherent</th><th style="width:14%">Status</th><th style="width:10%">Actions</th>
                     </tr>
                   </thead>
                   <tbody id="risks-table-body"></tbody>
@@ -424,13 +453,13 @@
           </div>
           <div class="col-lg-8 col-md-7 mb-4">
             <div class="bg-dark p-3 rounded">
-             <div class="d-flex justify-content-between align-items-center mb-2">
-  <h5 class="mb-0">Controls</h5>
-  <div>
-    <button id="export-controls" class="btn btn-xs btn-outline-light mr-2">Export CSV</button>
-    <small id="controls-count" class="text-muted"></small>
-  </div>
-</div>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">Controls</h5>
+                <div>
+                  <button id="export-controls" class="btn btn-sm btn-outline-light mr-2">Export CSV</button>
+                  <small id="controls-count" class="text-muted"></small>
+                </div>
+              </div>
               <div class="table-responsive">
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
@@ -513,13 +542,13 @@
           </div>
           <div class="col-lg-8 col-md-7 mb-4">
             <div class="bg-dark p-3 rounded">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-  <h5 class="mb-0">Issues / Findings</h5>
-  <div>
-    <button id="export-issues" class="btn btn-xs btn-outline-light mr-2">Export CSV</button>
-    <small id="issues-count" class="text-muted"></small>
-  </div>
-</div>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">Issues / Findings</h5>
+                <div>
+                  <button id="export-issues" class="btn btn-sm btn-outline-light mr-2">Export CSV</button>
+                  <small id="issues-count" class="text-muted"></small>
+                </div>
+              </div>
               <div class="table-responsive">
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
@@ -608,7 +637,7 @@
       <!-- Risk Matrix -->
       <div id="tab-matrix" class="grc-tab ftco-animate">
         <h3>Risk Matrix (Inherent vs Residual)</h3>
-        <p class="mb-3">Toggle to compare <b>Inherent</b> and a basic calculated <b>Residual</b> (reduced by implemented controls linked to a risk). Matrix thresholds follow your Settings.</p>
+        <p class="mb-3">Toggle to compare <b>Inherent</b> and a basic calculated <b>Residual</b> (reduced by implemented controls linked to a risk).</p>
         <div class="bg-dark p-3 rounded mb-3">
           <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -680,12 +709,12 @@
           <div class="col-lg-8 col-md-7 mb-4">
             <div class="bg-dark p-3 rounded">
               <div class="d-flex justify-content-between align-items-center mb-2">
-  <h5 class="mb-0">Treatment actions</h5>
-  <div>
-    <button id="export-treatments" class="btn btn-xs btn-outline-light mr-2">Export CSV</button>
-    <small id="treat-count" class="text-muted"></small>
-  </div>
-</div>
+                <h5 class="mb-0">Treatment actions</h5>
+                <div>
+                  <button id="export-treatments" class="btn btn-sm btn-outline-light mr-2">Export CSV</button>
+                  <small id="treat-count" class="text-muted"></small>
+                </div>
+              </div>
               <div class="table-responsive">
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
@@ -715,47 +744,6 @@
           </div>
           <textarea id="summary-text" class="form-control" rows="16"></textarea>
           <div class="small-muted mt-2">Tip: Copy–paste this into an audit report, SOC 2 narrative, or ISO 27001 SoA summary.</div>
-        </div>
-      </div>
-
-      <!-- Settings -->
-      <div id="tab-settings" class="grc-tab ftco-animate">
-        <h3>Lab settings</h3>
-        <p class="mb-3 small-muted">
-          Tune how the lab scores risks and draws the matrix. Settings are stored only in this browser and will apply to the dashboard, matrix and summaries.
-        </p>
-        <div class="bg-dark p-3 rounded">
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <h5 class="mb-2">Risk scoring thresholds</h5>
-              <div class="form-group">
-                <label class="text-muted small mb-1">High risk threshold (score ≥)</label>
-                <input type="number" min="1" max="25" id="set-high" class="form-control form-control-sm">
-              </div>
-              <div class="form-group">
-                <label class="text-muted small mb-1">Medium risk threshold (score ≥)</label>
-                <input type="number" min="1" max="25" id="set-med" class="form-control form-control-sm">
-              </div>
-              <small class="small-muted d-block mb-2">Low risk is any score below the medium threshold.</small>
-            </div>
-            <div class="col-md-6 mb-3">
-              <h5 class="mb-2">Risk matrix</h5>
-              <div class="form-group">
-                <label class="text-muted small mb-1">Matrix size</label>
-                <select id="set-matrix" class="form-control form-control-sm">
-                  <option value="5">5×5 (default)</option>
-                  <option value="3">3×3</option>
-                </select>
-              </div>
-              <small class="small-muted d-block mb-2">
-                Likelihood and impact values (1–5) will be scaled to the selected grid when plotting risks.
-              </small>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center mt-2">
-            <button id="set-save" class="btn btn-sm btn-primary">Save settings</button>
-            <small id="set-status" class="small-muted"></small>
-          </div>
         </div>
       </div>
 
@@ -832,14 +820,41 @@
       frameworks:["ISO 27001","NIST CSF","HIPAA"],references:["ISO 27001 A.7.2.2","NIST PR.AT-1","HIPAA 164.308(a)(5)"]}
   ];
 
+  // ---------- Risk configuration (thresholds) ----------
+  const RISK_CFG_KEY = 'grc_risk_cfg_v1';
+  const defaultRiskConfig = { highMin: 15, mediumMin: 6 };
+
+  function loadRiskConfig(){
+    try{
+      const raw = localStorage.getItem(RISK_CFG_KEY);
+      if(!raw) return {...defaultRiskConfig};
+      const parsed = JSON.parse(raw);
+      return {
+        highMin: typeof parsed.highMin === 'number' ? parsed.highMin : defaultRiskConfig.highMin,
+        mediumMin: typeof parsed.mediumMin === 'number' ? parsed.mediumMin : defaultRiskConfig.mediumMin
+      };
+    }catch{
+      return {...defaultRiskConfig};
+    }
+  }
+
+  function saveRiskConfig(cfg){
+    riskConfig = {
+      highMin: Math.max(1, Math.min(25, Number(cfg.highMin) || defaultRiskConfig.highMin)),
+      mediumMin: Math.max(1, Math.min(25, Number(cfg.mediumMin) || defaultRiskConfig.mediumMin))
+    };
+    localStorage.setItem(RISK_CFG_KEY, JSON.stringify(riskConfig));
+  }
+
+  let riskConfig = loadRiskConfig();
+
   // ---------- Storage ----------
   const K = {
     assets:'grc_assets_v1',
     risks:'grc_risks_v1',
     controls:'grc_controls_v1',
     issues:'grc_issues_v1',
-    treats:'grc_treatments_v1',
-    settings:'grc_settings_v1'
+    treats:'grc_treatments_v1'
   };
   const load = k => { try { const v = JSON.parse(localStorage.getItem(k)); return Array.isArray(v)?v:[]; } catch { return []; } };
   const save = (k,v) => localStorage.setItem(k,JSON.stringify(v));
@@ -849,58 +864,6 @@
   let controls = load(K.controls);
   let issues = load(K.issues);
   let treatments = load(K.treats);
-
-  // ---------- Settings (risk thresholds + matrix) ----------
-  function loadSettings(){
-    try{
-      const raw = JSON.parse(localStorage.getItem(K.settings)) || {};
-      return {
-        highThreshold: Number(raw.highThreshold) || 15,
-        medThreshold: Number(raw.medThreshold) || 6,
-        matrixSize: raw.matrixSize === 3 ? 3 : 5
-      };
-    }catch{
-      return { highThreshold:15, medThreshold:6, matrixSize:5 };
-    }
-  }
-  let settings = loadSettings();
-
-  function applySettingsToUI(){
-    const highEl = document.querySelector('#set-high');
-    const medEl = document.querySelector('#set-med');
-    const mxEl = document.querySelector('#set-matrix');
-    if(highEl) highEl.value = settings.highThreshold;
-    if(medEl) medEl.value = settings.medThreshold;
-    if(mxEl) mxEl.value = String(settings.matrixSize || 5);
-  }
-
-  function bindSettings(){
-    const btn = document.querySelector('#set-save');
-    if(!btn) return;
-    applySettingsToUI();
-    btn.addEventListener('click', ()=>{
-      const high = Number(document.querySelector('#set-high').value) || 0;
-      const med  = Number(document.querySelector('#set-med').value) || 0;
-      const mxVal = Number(document.querySelector('#set-matrix').value) === 3 ? 3 : 5;
-      if(high <= med){
-        alert('High threshold must be greater than medium threshold.');
-        return;
-      }
-      settings.highThreshold = high;
-      settings.medThreshold = med;
-      settings.matrixSize = mxVal;
-      localStorage.setItem(K.settings, JSON.stringify(settings));
-      const st = document.querySelector('#set-status');
-      if(st){
-        st.textContent = 'Settings saved. Risk levels and matrix updated.';
-        setTimeout(()=>{ st.textContent=''; }, 3000);
-      }
-      renderRisksTable();
-      renderDashboard();
-      drawMatrix();
-      generateAuditorSummary();
-    });
-  }
 
   // ---------- Helpers ----------
   const qs = s => document.querySelector(s);
@@ -916,14 +879,22 @@
     Array.from(sel.options).forEach(o=>o.selected=S.has(o.value));
   };
   const rScore = (l,i)=> (Number(l)||0)*(Number(i)||0);
-  const rLevel = s => {
-    const hi = settings.highThreshold || 15;
-    const med = settings.medThreshold || 6;
-    if(!s || s <= 0) return '-';
-    if(s >= hi) return 'High';
-    if(s >= med) return 'Medium';
+  function rLevel(s){
+    const score = Number(s)||0;
+    if(score <= 0) return '-';
+    const high = riskConfig.highMin;
+    const med  = riskConfig.mediumMin;
+    if(score >= high) return 'High';
+    if(score >= med)  return 'Medium';
     return 'Low';
-  };
+  }
+
+  // risk view state
+  let riskFilterStatus = 'all';
+  let riskFilterLevel  = 'all';
+  let riskSortField    = 'score';
+  let riskSortDir      = 'desc';
+  let lastRiskView     = [];
 
   // ---------- Framework render ----------
   function renderFrameworkControls(){
@@ -1062,12 +1033,6 @@
   });
 
   // ---------- Risks ----------
-  let riskFilterStatus = 'all';
-  let riskFilterLevel = 'all';
-  let riskSortField = 'title';
-  let riskSortDir = 'asc';
-  let lastRiskView = []; // stores current filtered + sorted risks for CSV export
-
   function resetRiskForm(){
     qs('#risk-form').reset();
     qs('#risk-id').value='';
@@ -1082,50 +1047,25 @@
     setMulti(sel,cur);
   }
 
-  function populateTreatmentDropdownRisks(){
-    const sel=qs('#treat-risk'); if(!sel) return;
-    const cur=sel.value;
-    sel.innerHTML='<option value="">Select risk...</option>';
-    risks.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.title;sel.appendChild(o);});
-    if(cur && risks.some(r=>r.id===cur)) sel.value=cur;
-  }
-
   function riskCompare(a,b,field){
-    let va,vb;
     switch(field){
-      case 'title':   va=(a.title||'').toLowerCase(); vb=(b.title||'').toLowerCase(); break;
-      case 'asset':   va=(a.assetName||'').toLowerCase(); vb=(b.assetName||'').toLowerCase(); break;
-      case 'category':va=(a.category||'').toLowerCase(); vb=(b.category||'').toLowerCase(); break;
-      case 'status':  va=(a.status||'').toLowerCase(); vb=(b.status||'').toLowerCase(); break;
-      case 'score':
-        va = a.score || 0;
-        vb = b.score || 0;
-        break;
+      case 'score':      return (a.score||0)      - (b.score||0);
+      case 'impact':     return (a.impact||0)     - (b.impact||0);
+      case 'likelihood': return (a.likelihood||0) - (b.likelihood||0);
+      case 'status':     return (a.status||'').localeCompare(b.status||'');
+      case 'asset':      return (a.assetName||'').localeCompare(b.assetName||'');
+      case 'title':
       default:
-        va=''; vb=''; 
+        return (a.title||'').localeCompare(b.title||'');
     }
-    if(va<vb) return -1;
-    if(va>vb) return 1;
-    return 0;
-  }
-
-  function updateRiskHeaderSortIndicators(){
-    const ths = qsa('#risks-table thead th[data-risk-sort]');
-    ths.forEach(th=>{
-      th.classList.remove('sorted-asc','sorted-desc');
-      const f = th.getAttribute('data-risk-sort');
-      if(f === riskSortField){
-        th.classList.add(riskSortDir === 'asc' ? 'sorted-asc' : 'sorted-desc');
-      }
-    });
   }
 
   function renderRisksTable(){
     const tbody=qs('#risks-table-body'), empty=qs('#risks-empty'), count=qs('#risks-count');
-    const pill=qs('#risks-filter-pill');
 
     let list = risks.slice();
 
+    // filters
     if(riskFilterStatus !== 'all'){
       list = list.filter(r => (r.status||'') === riskFilterStatus);
     }
@@ -1133,9 +1073,9 @@
       list = list.filter(r => rLevel(r.score) === riskFilterLevel);
     }
 
-       list.sort((a,b)=> riskCompare(a,b,riskSortField) * (riskSortDir === 'asc' ? 1 : -1));
+    // sort
+    list.sort((a,b)=> riskCompare(a,b, riskSortField) * (riskSortDir === 'asc' ? 1 : -1));
 
-    // keep current view for CSV export
     lastRiskView = list.slice();
 
     tbody.innerHTML='';
@@ -1157,17 +1097,10 @@
     });
     empty.style.display=list.length?'none':'block';
     count.textContent=`${list.length} risk(s) shown of ${risks.length}`;
-
-    const parts=[];
-    if(riskFilterStatus!=='all') parts.push(`Status: ${riskFilterStatus}`);
-    if(riskFilterLevel!=='all') parts.push(`Level: ${riskFilterLevel}`);
-    pill.textContent = parts.length ? `Filters: ${parts.join(' | ')}` : 'No filters applied';
-
     populateControlRisks();
     populateIssueDropdowns();
     populateTreatmentDropdownRisks();
     renderDashboard();
-    updateRiskHeaderSortIndicators();
   }
 
   qs('#risk-form').addEventListener('submit',e=>{
@@ -1251,36 +1184,34 @@
     }
   });
 
-  function bindRiskFiltersAndSorting(){
-    const fs = qs('#risk-filter-status');
-    const fl = qs('#risk-filter-level');
-    if(fs){
-      fs.addEventListener('change', ()=>{
-        riskFilterStatus = fs.value;
-        renderRisksTable();
-      });
+  function syncRiskThresholdInputs(){
+    const h = qs('#risk-thres-high');
+    const m = qs('#risk-thres-med');
+    if(!h || !m) return;
+    h.value = riskConfig.highMin;
+    m.value = riskConfig.mediumMin;
+  }
+
+  function applyRiskThresholdInputs(){
+    const h = qs('#risk-thres-high');
+    const m = qs('#risk-thres-med');
+    if(!h || !m) return;
+    let high = Number(h.value) || defaultRiskConfig.highMin;
+    let med  = Number(m.value) || defaultRiskConfig.mediumMin;
+
+    high = Math.max(1, Math.min(25, high));
+    med  = Math.max(1, Math.min(25, med));
+
+    if(high <= med){
+      med = Math.max(1, high - 1);
+      m.value = med;
     }
-    if(fl){
-      fl.addEventListener('change', ()=>{
-        riskFilterLevel = fl.value;
-        renderRisksTable();
-      });
-    }
-    const head = qs('#risks-table thead');
-    if(head){
-      head.addEventListener('click', e=>{
-        const th = e.target.closest('th[data-risk-sort]');
-        if(!th) return;
-        const field = th.getAttribute('data-risk-sort');
-        if(riskSortField === field){
-          riskSortDir = (riskSortDir === 'asc' ? 'desc' : 'asc');
-        }else{
-          riskSortField = field;
-          riskSortDir = 'asc';
-        }
-        renderRisksTable();
-      });
-    }
+
+    saveRiskConfig({ highMin: high, mediumMin: med });
+
+    renderRisksTable();
+    drawMatrix();
+    renderDashboard();
   }
 
   // ---------- Controls ----------
@@ -1582,43 +1513,38 @@
 
   function drawMatrix(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    const grid = settings.matrixSize === 3 ? 3 : 5;
-    const size = grid === 5 ? 110 : 160;
-    const off=90;
+    const size=110, off=90;
     ctx.strokeStyle="#2b3138"; ctx.lineWidth=1;
-    for(let i=0;i<=grid;i++){
-      ctx.beginPath(); ctx.moveTo(off,off+i*size); ctx.lineTo(off+grid*size,off+i*size); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(off+i*size,off); ctx.lineTo(off+i*size,off+grid*size); ctx.stroke();
+    for(let i=0;i<=5;i++){
+      ctx.beginPath(); ctx.moveTo(off,off+i*size); ctx.lineTo(off+5*size,off+i*size); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(off+i*size,off); ctx.lineTo(off+i*size,off+5*size); ctx.stroke();
     }
     ctx.font="14px Poppins"; ctx.fillStyle="#aab2bd";
-    ctx.fillText("Impact →",off + (grid*size)/2 - 40,off-25);
-    ctx.save(); ctx.translate(off-55,off+(grid*size)/2); ctx.rotate(-Math.PI/2); ctx.fillText("Likelihood →",0,0); ctx.restore();
+    ctx.fillText("Impact →",off+225,off-25);
+    ctx.save(); ctx.translate(off-55,off+240); ctx.rotate(-Math.PI/2); ctx.fillText("Likelihood →",0,0); ctx.restore();
 
     let high=0,med=0,low=0;
     risks.forEach(r=>{
       let L=r.likelihood, I=r.impact;
-      if(showResidual){ const res=residualForRisk(r); L=res.likelihood; I=res.impact; }
-      if(!L || !I) return;
+      if(showResidual){
+        const res=residualForRisk(r);
+        L=res.likelihood;
+        I=res.impact;
+      }
       const score=rScore(L,I);
-      const level = rLevel(score);
+      const level=rLevel(score);
+
       let color="#27ae60";
       if(level==='High'){ color="#e63946"; high++; }
       else if(level==='Medium'){ color="#f1c40f"; med++; }
       else if(level==='Low'){ color="#27ae60"; low++; }
 
-      let Lp=L, Ip=I;
-      if(grid!==5){
-        const factor = grid/5;
-        Lp = Math.max(1, Math.min(grid, Math.round(L*factor)));
-        Ip = Math.max(1, Math.min(grid, Math.round(I*factor)));
-      }
-
       ctx.beginPath();
-      ctx.arc(off+(Ip-0.5)*size,off+((grid-Lp)+0.5)*size,12,0,2*Math.PI);
+      ctx.arc(off+(I-0.5)*size,off+(5-L+0.5)*size,12,0,2*Math.PI);
       ctx.fillStyle=color; ctx.fill();
       ctx.fillStyle="#0c0f12"; ctx.font="bold 12px Poppins";
       ctx.textAlign="center"; ctx.textBaseline="middle";
-      ctx.fillText(String(score),off+(Ip-0.5)*size,off+((grid-Lp)+0.5)*size);
+      ctx.fillText(String(score),off+(I-0.5)*size,off+(5-L+0.5)*size);
     });
 
     legend.innerHTML = `<b>${risks.length}</b> risks — 
@@ -1628,6 +1554,13 @@
   }
 
   // ---------- Treatments ----------
+  function populateTreatmentDropdownRisks(){
+    const sel=qs('#treat-risk'); if(!sel) return;
+    const cur=sel.value;
+    sel.innerHTML='<option value="">Select risk...</option>';
+    risks.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.title;sel.appendChild(o);});
+    if(cur && risks.some(r=>r.id===cur)) sel.value=cur;
+  }
   function populateTreatmentDropdownControls(){
     const sel=qs('#treat-control'); if(!sel) return;
     const cur=sel.value;
@@ -1720,37 +1653,31 @@
     }
   });
 
-  // ---------- Export / Import / Demo / Reset ----------
- 
-    // ---------- CSV helpers ----------
-  function csvEscape(value){
-    if(value == null) return '';
-    const s = String(value);
-    if(/[" ,\n]/.test(s)){
+  // ---------- CSV Export helpers ----------
+  function escapeCSVVal(v){
+    if(v==null) return '';
+    const s = String(v);
+    if(/[",\n]/.test(s)){
       return '"' + s.replace(/"/g,'""') + '"';
     }
     return s;
   }
 
   function downloadCSV(filename, rows, columns){
-    if(!rows || !rows.length) {
-      alert('No rows to export.');
-      return;
-    }
-    const header = columns.map(c => csvEscape(c.header)).join(',');
-    const body = rows.map(row=>{
-      return columns.map(c=>{
-        const val = typeof c.value === 'function'
-          ? c.value(row)
-          : row[c.key];
-        return csvEscape(val);
-      }).join(',');
-    }).join('\n');
-    const blob = new Blob([header + '\n' + body], {type:'text/csv;charset=utf-8;'});
+    const header = columns.map(c=>escapeCSVVal(c.header)).join(',');
+    const lines = [header];
+    rows.forEach(r=>{
+      const vals = columns.map(c=>{
+        if(typeof c.value === 'function') return escapeCSVVal(c.value(r));
+        if(c.key) return escapeCSVVal(r[c.key]);
+        return '';
+      });
+      lines.push(vals.join(','));
+    });
+    const blob = new Blob([lines.join('\n')],{type:'text/csv;charset=utf-8;'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
+    a.href=url; a.download=filename;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -1759,123 +1686,75 @@
 
   function exportAssetsCSV(){
     const cols = [
-      {header:'Name', key:'name'},
-      {header:'Type', key:'type'},
+      {header:'Name',        key:'name'},
+      {header:'Type',        key:'type'},
       {header:'Criticality', key:'criticality'},
-      {header:'Data types', value:a=>(a.dataTypes||[]).join('; ')},
-      {header:'Owner', key:'owner'},
-      {header:'Notes', key:'notes'}
+      {header:'Owner',       key:'owner'},
+      {header:'Data types',  value:a=>(a.dataTypes||[]).join('; ')},
+      {header:'Notes',       key:'notes'}
     ];
     downloadCSV('grc_assets.csv', assets, cols);
   }
 
   function exportRisksCSV(){
-    const rows = lastRiskView && lastRiskView.length ? lastRiskView : risks;
+    const rows = (lastRiskView && lastRiskView.length) ? lastRiskView : risks;
     const cols = [
-      {header:'Title', key:'title'},
-      {header:'Asset', value:r=>r.assetName||''},
-      {header:'Category', key:'category'},
-      {header:'Likelihood', key:'likelihood'},
-      {header:'Impact', key:'impact'},
-      {header:'Score', key:'score'},
-      {header:'Level', value:r=>rLevel(r.score)},
-      {header:'Status', key:'status'},
-      {header:'Owner', key:'owner'},
-      {header:'Notes', key:'notes'}
+      {header:'Title',       key:'title'},
+      {header:'Asset',       value:r=>r.assetName||''},
+      {header:'Category',    key:'category'},
+      {header:'Likelihood',  key:'likelihood'},
+      {header:'Impact',      key:'impact'},
+      {header:'Score',       key:'score'},
+      {header:'Level',       value:r=>rLevel(r.score)},
+      {header:'Status',      key:'status'},
+      {header:'Owner',       key:'owner'},
+      {header:'Notes',       key:'notes'}
     ];
     downloadCSV('grc_risks.csv', rows, cols);
   }
 
   function exportControlsCSV(){
     const cols = [
-      {header:'Name', key:'name'},
-      {header:'Type', key:'type'},
-      {header:'Status', key:'status'},
-      {header:'Owner', key:'owner'},
+      {header:'Name',        key:'name'},
+      {header:'Type',        key:'type'},
+      {header:'Status',      key:'status'},
+      {header:'Owner',       key:'owner'},
       {header:'Description', key:'description'},
-      {
-        header:'Linked risks',
-        value:c=>{
-          const ids = c.linkedRiskIds || [];
-          const names = ids.map(id=>{
-            const r = risks.find(x=>x.id===id);
-            return r ? r.title : id;
-          }).filter(Boolean);
-          return names.join('; ');
-        }
-      },
-      {
-        header:'Framework controls',
-        value:c=>{
-          const ids = c.linkedFrameworkControlIds || [];
-          if(!ids.length) return '';
-          return ids.join('; ');
-        }
-      }
+      {header:'Linked risks count',      value:c=>(c.linkedRiskIds||[]).length},
+      {header:'Mapped framework ctrl count', value:c=>(c.linkedFrameworkControlIds||[]).length}
     ];
     downloadCSV('grc_controls.csv', controls, cols);
   }
 
   function exportIssuesCSV(){
     const cols = [
-      {header:'Title', key:'title'},
-      {header:'Type', key:'type'},
+      {header:'Title',    key:'title'},
+      {header:'Type',     key:'type'},
       {header:'Severity', key:'severity'},
-      {header:'Status', key:'status'},
-      {header:'Owner', key:'owner'},
+      {header:'Status',   key:'status'},
+      {header:'Owner',    key:'owner'},
       {header:'Due date', key:'dueDate'},
-      {
-        header:'Linked asset',
-        value:i=>{
-          const a = assets.find(x=>x.id===i.assetId);
-          return a ? a.name : '';
-        }
-      },
-      {
-        header:'Linked risk',
-        value:i=>{
-          const r = risks.find(x=>x.id===i.riskId);
-          return r ? r.title : '';
-        }
-      },
-      {
-        header:'Linked control',
-        value:i=>{
-          const c = controls.find(x=>x.id===i.controlId);
-          return c ? c.name : '';
-        }
-      },
-      {header:'Notes', key:'notes'}
+      {header:'Linked',   key:'linkedSummary'},
+      {header:'Notes',    key:'notes'}
     ];
     downloadCSV('grc_issues.csv', issues, cols);
   }
 
   function exportTreatmentsCSV(){
     const cols = [
-      {header:'Title', key:'title'},
-      {header:'Status', key:'status'},
+      {header:'Title',       key:'title'},
+      {header:'Risk',        value:t=>{ const r=risks.find(x=>x.id===t.riskId); return r?r.title:''; }},
+      {header:'Control',     value:t=>{ const c=controls.find(x=>x.id===t.controlId); return c?c.name:''; }},
+      {header:'Status',      key:'status'},
       {header:'Target date', key:'targetDate'},
-      {header:'Owner', key:'owner'},
-      {header:'Budget', key:'budget'},
-      {
-        header:'Linked risk',
-        value:t=>{
-          const r = risks.find(x=>x.id===t.riskId);
-          return r ? r.title : '';
-        }
-      },
-      {
-        header:'Linked control',
-        value:t=>{
-          const c = controls.find(x=>x.id===t.controlId);
-          return c ? c.name : '';
-        }
-      },
-      {header:'Notes', key:'notes'}
+      {header:'Owner',       key:'owner'},
+      {header:'Budget',      key:'budget'},
+      {header:'Notes',       key:'notes'}
     ];
     downloadCSV('grc_treatments.csv', treatments, cols);
   }
-  
+
+  // ---------- Export / Import / Demo / Reset ----------
   function setImportStatus(msg,err){
     const el=qs('#import-status');
     el.textContent=msg||'';
@@ -1884,9 +1763,8 @@
 
   function exportScenario(){
     const payload={
-      version:3,
+      version:2,
       exportedAt:new Date().toISOString(),
-      settings,
       assets,risks,controls,issues,treatments
     };
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
@@ -1911,15 +1789,7 @@
         risks  = Array.isArray(data.risks)?data.risks:[];
         controls = Array.isArray(data.controls)?data.controls:[];
         issues = Array.isArray(data.issues)?data.issues:[];
-        treatments = Array.isArray(data.treatments)?data.treatments:[];
-        if(data.settings){
-          settings = {
-            highThreshold: Number(data.settings.highThreshold)||15,
-            medThreshold: Number(data.settings.medThreshold)||6,
-            matrixSize: data.settings.matrixSize===3?3:5
-          };
-          localStorage.setItem(K.settings, JSON.stringify(settings));
-        }
+        treatments = Array.isArray(data.treatments)?data.treatments:[]; // backward compatible
         save(K.assets,assets); save(K.risks,risks); save(K.controls,controls);
         save(K.issues,issues); save(K.treats,treatments);
         refreshAll();
@@ -1934,7 +1804,6 @@
   }
 
   function loadDemoScenario(){
-    // Pre-built MediCloud example scenario
     assets = [
       {
         id:"AST-DEMO-APP",
@@ -2142,11 +2011,13 @@
   }
 
   function resetLab(){
-    if(!confirm('This will clear all assets, risks, controls, issues, treatments and settings in this browser. Continue?')) return;
+    if(!confirm('This will clear all assets, risks, controls, issues and treatments in this browser. Continue?')) return;
     assets=[];risks=[];controls=[];issues=[];treatments=[];
     Object.values(K).forEach(k=>localStorage.removeItem(k));
-    settings = loadSettings();
+    localStorage.removeItem(RISK_CFG_KEY);
+    riskConfig = {...defaultRiskConfig};
     refreshAll();
+    syncRiskThresholdInputs();
     setImportStatus('Lab reset: all data cleared from this browser.',false);
   }
 
@@ -2154,7 +2025,7 @@
   function bindTabs(){
     const buttons=qsa('[data-grc-tab]');
     const mapping={};
-    ['frameworks','assets','risks','controls','issues','gap','dashboard','matrix','treatments','summary','settings']
+    ['frameworks','assets','risks','controls','issues','gap','dashboard','matrix','treatments','summary']
       .forEach(id=>mapping[id]=qs('#tab-'+id));
     buttons.forEach(btn=>{
       btn.addEventListener('click',()=>{
@@ -2171,7 +2042,6 @@
         if(tgt==='gap') renderGapTable();
         if(tgt==='matrix') drawMatrix();
         if(tgt==='summary') generateAuditorSummary();
-        if(tgt==='settings') applySettingsToUI();
       });
     });
   }
@@ -2188,14 +2058,12 @@
   function generateAuditorSummary(){
     const lines=[];
 
-    // Scope & assets
     const totalAssets=assets.length;
     const highAssets=assets.filter(a=>a.criticality==='High');
     const assetNames=assets.map(a=>a.name);
     const keyAssets=listPhrase(highAssets.map(a=>a.name),3) || listPhrase(assetNames,3) || 'key information assets';
     lines.push(`1. Scope and context\nThe organisation is using the GRC Practice Lab to model approximately ${totalAssets||'0'} key information assets and services. High-criticality assets currently include ${keyAssets}.`);
 
-    // Risks
     const totalRisks=risks.length;
     const highRisks=risks.filter(r=>rLevel(r.score)==='High');
     const medRisks=risks.filter(r=>rLevel(r.score)==='Medium');
@@ -2210,7 +2078,6 @@
     }
     lines.push(riskPara.trim());
 
-    // Controls & framework coverage
     const rows=computeGapRows();
     const overall=overallCoverage(rows);
     const ctrlCount=controls.length;
@@ -2224,7 +2091,6 @@
     }
     lines.push(ctrlPara.trim());
 
-    // Issues & treatments
     const openIssues=issues.filter(i=>i.status==='Open' || i.status==='In progress');
     const critIssues=issues.filter(i=>i.severity==='Critical' || i.severity==='High');
     const exIssue=openIssues.slice(0,2).map(i=>i.title);
@@ -2237,9 +2103,9 @@
     issuePara+=`The treatment register currently contains ${treatments.length} action item(s), with ${openActions.length} open/in progress and ${closedActions.length} closed.`;
     lines.push(issuePara.trim());
 
-    // Overall observation
     const highCount=highRisks.length;
-    const ov=overall;
+    const overallRows=computeGapRows();
+    const ov=overallCoverage(overallRows);
     const covDesc=ov>=80?'strong, with most key controls implemented':
                   ov>=50?'developing, with several controls implemented but notable gaps remaining':
                   ov>0?'limited, with many controls still to be implemented':
@@ -2271,7 +2137,6 @@
     renderTreatmentsTable();
     drawMatrix();
     generateAuditorSummary();
-    applySettingsToUI();
   }
 
   // ---------- Init ----------
@@ -2283,8 +2148,6 @@
     });
 
     bindTabs();
-    bindSettings();
-    bindRiskFiltersAndSorting();
     populateControlFrameworks();
     populateControlRisks();
     populateRiskAssetOptions();
@@ -2328,6 +2191,64 @@
 
     qs('#summary-refresh').addEventListener('click',generateAuditorSummary);
 
+    // Risk filters & sorting
+    const rfStatus = qs('#risk-filter-status');
+    if(rfStatus){
+      rfStatus.addEventListener('change', ()=>{
+        riskFilterStatus = rfStatus.value;
+        renderRisksTable();
+        drawMatrix();
+        renderDashboard();
+      });
+    }
+
+    const rfLevel = qs('#risk-filter-level');
+    if(rfLevel){
+      rfLevel.addEventListener('change', ()=>{
+        riskFilterLevel = rfLevel.value;
+        renderRisksTable();
+        drawMatrix();
+        renderDashboard();
+      });
+    }
+
+    const rsField = qs('#risk-sort-field');
+    if(rsField){
+      rsField.addEventListener('change', ()=>{
+        riskSortField = rsField.value || 'score';
+        renderRisksTable();
+        drawMatrix();
+      });
+    }
+
+    const rsDir = qs('#risk-sort-dir');
+    if(rsDir){
+      rsDir.addEventListener('change', ()=>{
+        riskSortDir = rsDir.value || 'desc';
+        renderRisksTable();
+        drawMatrix();
+      });
+    }
+
+    // Threshold inputs
+    const thHigh = qs('#risk-thres-high');
+    const thMed  = qs('#risk-thres-med');
+    const thReset = qs('#risk-thres-reset');
+
+    if(thHigh) thHigh.addEventListener('change', applyRiskThresholdInputs);
+    if(thMed)  thMed.addEventListener('change', applyRiskThresholdInputs);
+    if(thReset){
+      thReset.addEventListener('click', ()=>{
+        riskConfig = {...defaultRiskConfig};
+        saveRiskConfig(riskConfig);
+        syncRiskThresholdInputs();
+        renderRisksTable();
+        drawMatrix();
+        renderDashboard();
+      });
+    }
+
+    // CSV buttons
     const btnExpAssets = qs('#export-assets');
     if(btnExpAssets) btnExpAssets.addEventListener('click', exportAssetsCSV);
 
@@ -2342,8 +2263,10 @@
 
     const btnExpTreats = qs('#export-treatments');
     if(btnExpTreats) btnExpTreats.addEventListener('click', exportTreatmentsCSV);
-    
-    
+
+    // sync thresholds into inputs
+    syncRiskThresholdInputs();
+
     refreshAll();
   });
   </script>
