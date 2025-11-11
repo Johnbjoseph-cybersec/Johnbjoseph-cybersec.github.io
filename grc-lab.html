@@ -25,18 +25,22 @@
     .grc-tab{display:none;} .grc-tab.active{display:block;}
     .grc-lab-container{width:80vw;max-width:1600px;margin:0 auto;}
     @media (max-width:991.98px){.grc-lab-container{width:100vw;}}
+
     .dashboard-card{border:1px solid rgba(255,255,255,.06);border-radius:10px;background:#111827;color:#fff;}
     .dashboard-card .label{font-size:.75rem;letter-spacing:.06em;opacity:.7;text-transform:uppercase;}
     .dashboard-card .value{font-size:1.4rem;font-weight:600;}
     .dashboard-card .sub{font-size:.8rem;opacity:.8;}
+
     .heat-cell{color:#fff;font-weight:600;text-align:center;white-space:nowrap;}
     .heat-cell small{display:block;font-weight:400;opacity:.9;}
     .heat-good{background:#1f8f3b;} .heat-medium{background:#a96b1f;}
     .heat-low{background:#8f3b1f;} .heat-none{background:#7a1f1f;}
     .heat-pill{border-radius:999px;padding:4px 10px;font-size:.8rem;display:inline-block;}
+
     #risk-matrix-canvas{background:#0c0f12;border-radius:8px;width:100%;max-width:100%;}
     .table td,.table th{vertical-align:middle;}
     .small-muted{color:#9ca3af;font-size:.85rem;}
+
     textarea#summary-text{
       background:#020617;
       color:#e5e7eb;
@@ -246,9 +250,8 @@
       <div id="tab-risks" class="grc-tab ftco-animate">
         <h3>Risk Register</h3>
         <div class="row">
-          <!-- Left: form + settings -->
           <div class="col-lg-4 col-md-5 mb-4">
-            <div class="bg-dark p-3 rounded mb-3">
+            <div class="bg-dark p-3 rounded">
               <h5 class="mb-3">Add / Edit Risk</h5>
               <form id="risk-form">
                 <input type="hidden" id="risk-id">
@@ -306,74 +309,27 @@
                   <button class="btn btn-primary btn-sm" type="submit" id="risk-form-submit">Save risk</button>
                   <button class="btn btn-outline-light btn-sm" type="button" id="risk-form-cancel">Clear</button>
                 </div>
-                <small class="text-muted d-block mt-2">
-                  Score = Likelihood × Impact (1–25). High / Medium / Low levels use the configurable thresholds below.
-                </small>
+                <small class="text-muted d-block mt-2">Score = Likelihood × Impact (1–25). High ≥ 15; Medium 6–12; Low 1–5.</small>
               </form>
             </div>
-
-            <!-- Risk scoring settings -->
-            <div class="bg-dark p-3 rounded">
-              <h6 class="mb-2">Risk scoring settings</h6>
-              <div class="form-row">
-                <div class="form-group col-6">
-                  <label class="text-muted small mb-1">High when score ≥</label>
-                  <input type="number" id="setting-high" class="form-control form-control-sm" min="1" max="25">
-                </div>
-                <div class="form-group col-6">
-                  <label class="text-muted small mb-1">Medium when score ≥</label>
-                  <input type="number" id="setting-medium" class="form-control form-control-sm" min="1" max="25">
-                </div>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <button class="btn btn-sm btn-outline-light" id="settings-save">Apply thresholds</button>
-                <small class="text-muted">Default: High ≥ 15, Medium ≥ 6.</small>
-              </div>
-            </div>
           </div>
-
-          <!-- Right: list + filters -->
           <div class="col-lg-8 col-md-7 mb-4">
             <div class="bg-dark p-3 rounded">
-              <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap">
-                <h5 class="mb-2 mb-sm-0">Risks</h5>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">Risks</h5>
                 <small id="risks-count" class="text-muted"></small>
               </div>
-
-              <!-- Filters / sort -->
-              <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
-                <div class="d-flex flex-wrap mb-2">
-                  <select id="risk-filter-status" class="form-control form-control-sm mr-2 mb-2">
-                    <option value="all">Status: All</option>
-                    <option value="Open">Open</option>
-                    <option value="In progress">In progress</option>
-                    <option value="Mitigated">Mitigated</option>
-                    <option value="Accepted">Accepted</option>
-                  </select>
-                  <select id="risk-filter-level" class="form-control form-control-sm mr-2 mb-2">
-                    <option value="all">Level: All</option>
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                  </select>
-                </div>
-                <div class="d-flex flex-wrap mb-2">
-                  <input id="risk-filter-search" class="form-control form-control-sm mr-2 mb-2" placeholder="Search title/asset/category...">
-                  <select id="risk-sort" class="form-control form-control-sm mb-2">
-                    <option value="score-desc">Sort: Score high → low</option>
-                    <option value="score-asc">Sort: Score low → high</option>
-                    <option value="title-asc">Sort: Title A → Z</option>
-                    <option value="title-desc">Sort: Title Z → A</option>
-                  </select>
-                </div>
-              </div>
-
               <div class="table-responsive">
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
                     <tr>
-                      <th style="width:26%">Title</th><th style="width:18%">Asset</th><th style="width:16%">Category</th>
-                      <th style="width:16%">Inherent</th><th style="width:14%">Status</th><th style="width:10%">Actions</th>
+                      <th style="width:22%">Title</th>
+                      <th style="width:16%">Asset</th>
+                      <th style="width:14%">Category</th>
+                      <th style="width:14%">Inherent</th>
+                      <th style="width:20%">Treatment progress</th>
+                      <th style="width:8%">Status</th>
+                      <th style="width:6%">Actions</th>
                     </tr>
                   </thead>
                   <tbody id="risks-table-body"></tbody>
@@ -582,7 +538,12 @@
             <div class="dashboard-card p-3 h-100"><div class="label">Controls</div><div class="value" id="dash-controls">0</div><div class="sub">Local org controls</div></div>
           </div>
           <div class="col-sm-6 col-md-3 mb-3">
-            <div class="dashboard-card p-3 h-100"><div class="label">Issues</div><div class="value" id="dash-issues">0</div><div class="sub"><span id="dash-overdue">0</span> overdue</div></div>
+            <div class="dashboard-card p-3 h-100">
+              <div class="label">Issues</div>
+              <div class="value" id="dash-issues">0</div>
+              <div class="sub"><span id="dash-overdue">0</span> overdue</div>
+              <div class="sub mt-1">Avg treatment progress: <span id="dash-treat-progress">0%</span></div>
+            </div>
           </div>
         </div>
 
@@ -675,6 +636,10 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label class="text-muted small mb-1">Progress (%)</label>
+                  <input type="number" id="treat-progress" class="form-control form-control-sm" min="0" max="100" step="5" placeholder="0–100">
+                </div>
+                <div class="form-group">
                   <label class="text-muted small mb-1">Notes</label>
                   <textarea id="treat-notes" class="form-control form-control-sm" rows="2"></textarea>
                 </div>
@@ -696,9 +661,13 @@
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
                     <tr>
-                      <th style="width:28%">Title</th><th style="width:22%">Linked</th>
-                      <th style="width:14%">Status</th><th style="width:16%">Target</th>
-                      <th style="width:8%">Owner</th><th style="width:12%">Actions</th>
+                      <th style="width:26%">Title</th>
+                      <th style="width:22%">Linked</th>
+                      <th style="width:14%">Progress</th>
+                      <th style="width:12%">Status</th>
+                      <th style="width:12%">Target</th>
+                      <th style="width:8%">Owner</th>
+                      <th style="width:6%">Actions</th>
                     </tr>
                   </thead>
                   <tbody id="treat-table-body"></tbody>
@@ -814,24 +783,6 @@
   let issues = load(K.issues);
   let treatments = load(K.treats);
 
-  // ---------- Settings (risk thresholds) ----------
-  const SETTINGS_KEY = 'grc_settings_v1';
-  const defaultSettings = { highMin:15, mediumMin:6 };
-
-  function loadSettings(){
-    try{
-      const raw = JSON.parse(localStorage.getItem(SETTINGS_KEY));
-      if(raw && typeof raw === 'object'){
-        return { ...defaultSettings, ...raw };
-      }
-    }catch(e){}
-    return { ...defaultSettings };
-  }
-  let settings = loadSettings();
-  function saveSettings(){
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-  }
-
   // ---------- Helpers ----------
   const qs = s => document.querySelector(s);
   const qsa = s => Array.from(document.querySelectorAll(s));
@@ -846,12 +797,7 @@
     Array.from(sel.options).forEach(o=>o.selected=S.has(o.value));
   };
   const rScore = (l,i)=> (Number(l)||0)*(Number(i)||0);
-  function rLevel(s){
-    if(!s || typeof s !== 'number') return '-';
-    if(s >= settings.highMin) return 'High';
-    if(s >= settings.mediumMin) return 'Medium';
-    return 'Low';
-  }
+  const rLevel = s => s>=15?'High':s>=6?'Medium':s>0?'Low':'-';
 
   // ---------- Framework render ----------
   function renderFrameworkControls(){
@@ -1004,55 +950,43 @@
     setMulti(sel,cur);
   }
 
+  function riskTreatmentProgress(riskId){
+    const relevant=treatments.filter(t=>t.riskId===riskId);
+    if(!relevant.length) return null;
+    const vals=relevant.map(t=>{
+      const p=typeof t.progress==='number'?t.progress:Number(t.progress)||0;
+      return Math.min(100,Math.max(0,p));
+    });
+    const avg = Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+    const openCount = relevant.filter(t=>t.status==='Open' || t.status==='In progress').length;
+    return {avg,openCount,total:relevant.length};
+  }
+
   function renderRisksTable(){
     const tbody=qs('#risks-table-body'), empty=qs('#risks-empty'), count=qs('#risks-count');
-
-    const statusFilter = qs('#risk-filter-status') ? qs('#risk-filter-status').value : 'all';
-    const levelFilter  = qs('#risk-filter-level') ? qs('#risk-filter-level').value  : 'all';
-    const search       = qs('#risk-filter-search') ? qs('#risk-filter-search').value.trim().toLowerCase() : '';
-    const sortVal      = qs('#risk-sort') ? qs('#risk-sort').value : 'score-desc';
-
-    let list = risks.slice();
-
-    // Filters
-    list = list.filter(r=>{
-      const lvl = rLevel(r.score);
-      const stMatch = statusFilter === 'all' || r.status === statusFilter;
-      const lvlMatch = levelFilter === 'all' || lvl === levelFilter;
-      const sMatch = !search ||
-        (r.title && r.title.toLowerCase().includes(search)) ||
-        (r.assetName && r.assetName.toLowerCase().includes(search)) ||
-        (r.category && r.category.toLowerCase().includes(search));
-      return stMatch && lvlMatch && sMatch;
-    });
-
-    // Sort
-    list.sort((a,b)=>{
-      const sa = a.score || 0, sb = b.score || 0;
-      const ta = (a.title||'').toLowerCase();
-      const tb = (b.title||'').toLowerCase();
-      switch(sortVal){
-        case 'score-asc': return sa - sb;
-        case 'title-asc': return ta.localeCompare(tb);
-        case 'title-desc': return tb.localeCompare(ta);
-        case 'score-desc':
-        default: return sb - sa;
-      }
-    });
-
     tbody.innerHTML='';
-    list.forEach(r=>{
+    risks.forEach(r=>{
       const level=rLevel(r.score);
-      let badgeClass='';
-      if(level==='High') badgeClass='badge-danger';
-      else if(level==='Medium') badgeClass='badge-warning';
-      else if(level==='Low') badgeClass='badge-success';
+      const cls = level==='High'?'badge-danger':level==='Medium'?'badge-warning':level==='Low'?'badge-success':'';
+      const tProg=riskTreatmentProgress(r.id);
+      let treatCell='-';
+      if(tProg){
+        treatCell = `
+          <div class="small">
+            <div class="progress" style="height:6px;background:#111827;">
+              <div class="progress-bar" role="progressbar"
+                   style="width:${tProg.avg}%;background:#22c55e;"></div>
+            </div>
+            <div class="text-muted small mt-1">${tProg.avg}% · ${tProg.openCount}/${tProg.total} open</div>
+          </div>`;
+      }
       const tr=document.createElement('tr');
       tr.innerHTML=`
         <td>${r.title}</td>
         <td>${r.assetName||''}</td>
         <td>${r.category}</td>
-        <td>${r.score?`<span class="badge ${badgeClass} mr-1">${r.score}</span><span class="text-muted small">${level}</span>`:'-'}</td>
+        <td>${r.score?`<span class="badge ${cls} mr-1">${r.score}</span><span class="text-muted small">${level}</span>`:'-'}</td>
+        <td>${treatCell}</td>
         <td>${r.status}</td>
         <td>
           <button class="btn btn-sm btn-outline-light mb-1" data-re="${r.id}">EDIT</button>
@@ -1060,10 +994,8 @@
         </td>`;
       tbody.appendChild(tr);
     });
-
     empty.style.display=risks.length?'none':'block';
-    count.textContent=`${list.length} risk(s) shown of ${risks.length}`;
-
+    count.textContent=`${risks.length} risk(s)`;
     populateControlRisks();
     populateIssueDropdowns();
     populateTreatmentDropdownRisks();
@@ -1149,30 +1081,6 @@
 
       renderRisksTable();
     }
-  });
-
-  // Apply settings to UI
-  function applySettingsToUI(){
-    const highInput = qs('#setting-high');
-    const medInput  = qs('#setting-medium');
-    if(highInput) highInput.value = settings.highMin;
-    if(medInput)  medInput.value  = settings.mediumMin;
-  }
-
-  qs('#settings-save').addEventListener('click',()=>{
-    const high = Number(qs('#setting-high').value)||0;
-    const med  = Number(qs('#setting-medium').value)||0;
-    if(!(high > 0 && med > 0 && high > med && high <= 25 && med <= 25)){
-      alert('High threshold must be greater than Medium, both between 1 and 25.');
-      return;
-    }
-    settings.highMin = high;
-    settings.mediumMin = med;
-    saveSettings();
-    renderRisksTable();
-    renderDashboard();
-    drawMatrix();
-    generateAuditorSummary();
   });
 
   // ---------- Controls ----------
@@ -1427,6 +1335,17 @@
     updateCoveragePill(ov);
   }
 
+  // ---------- Treatment progress stats ----------
+  function treatmentProgressStats(){
+    const active = treatments.filter(t=>t.status==='Open' || t.status==='In progress');
+    const vals = active.map(t=>{
+      const p=typeof t.progress==='number'?t.progress:Number(t.progress)||0;
+      return Math.min(100,Math.max(0,p));
+    });
+    const avg = vals.length ? Math.round(vals.reduce((a,b)=>a+b,0)/vals.length) : 0;
+    return {activeCount:active.length,avg};
+  }
+
   // ---------- Dashboard ----------
   function updateCoveragePill(p){
     const pill=qs('#dash-coverage-pill');
@@ -1436,6 +1355,7 @@
   }
 
   function renderDashboard(){
+    if(!qs('#dash-assets')) return;
     qs('#dash-assets').textContent=assets.length;
     qs('#dash-risks').textContent=risks.length;
     qs('#dash-controls').textContent=controls.length;
@@ -1454,6 +1374,10 @@
     const ov=overallCoverage(computeGapRows());
     qs('#dash-coverage').textContent=ov+'%';
     updateCoveragePill(ov);
+
+    const tStats=treatmentProgressStats();
+    const tpEl=qs('#dash-treat-progress');
+    if(tpEl) tpEl.textContent = tStats.avg+'%';
   }
 
   // ---------- Risk Matrix ----------
@@ -1489,12 +1413,10 @@
       let L=r.likelihood, I=r.impact;
       if(showResidual){ const res=residualForRisk(r); L=res.likelihood; I=res.impact; }
       const score=rScore(L,I);
-      const level = rLevel(score);
       let color="#27ae60";
-      if(level==='High'){ color="#e63946"; high++; }
-      else if(level==='Medium'){ color="#f1c40f"; med++; }
-      else if(level==='Low'){ color="#27ae60"; low++; }
-      else { color="#95a5a6"; }
+      if(score>=15){ color="#e63946"; high++; }
+      else if(score>=6){ color="#f1c40f"; med++; }
+      else low++;
       ctx.beginPath();
       ctx.arc(off+(I-0.5)*size,off+(5-L+0.5)*size,12,0,2*Math.PI);
       ctx.fillStyle=color; ctx.fill();
@@ -1535,10 +1457,19 @@
         risk?`Risk: ${risk.title}`:'',
         ctrl?`Control: ${ctrl.name}`:''
       ].filter(Boolean).join(' | ');
+      const pRaw = typeof t.progress==='number'?t.progress:Number(t.progress)||0;
+      const p = Math.min(100,Math.max(0,pRaw));
+      const progressHtml = `
+        <div class="progress" style="height:6px;background:#111827;">
+          <div class="progress-bar" role="progressbar"
+               style="width:${p}%;background:#22c55e;"></div>
+        </div>
+        <div class="text-muted small mt-1">${p}%</div>`;
       const tr=document.createElement('tr');
       tr.innerHTML=`
         <td>${t.title}</td>
         <td>${linked||'-'}</td>
+        <td>${progressHtml}</td>
         <td>${t.status}</td>
         <td>${t.targetDate||''}</td>
         <td>${t.owner||''}</td>
@@ -1565,6 +1496,7 @@
     const riskId=qs('#treat-risk').value;
     if(!title || !riskId) return alert('Action title and linked risk are required.');
     const controlId=qs('#treat-control').value || '';
+    const progressVal = Number(qs('#treat-progress').value);
     const obj={
       id:id || ('TRT-'+Date.now()),
       title,
@@ -1574,12 +1506,14 @@
       targetDate:qs('#treat-date').value,
       owner:qs('#treat-owner').value.trim(),
       budget:qs('#treat-budget').value.trim(),
-      notes:qs('#treat-notes').value.trim()
+      notes:qs('#treat-notes').value.trim(),
+      progress:isNaN(progressVal)?0:Math.min(100,Math.max(0,progressVal))
     };
     const idx=treatments.findIndex(x=>x.id===obj.id);
     if(idx>-1) treatments[idx]=obj; else treatments.push(obj);
     save(K.treats,treatments);
     renderTreatmentsTable();
+    renderRisksTable(); // update per-risk progress
     resetTreatForm();
   });
   qs('#treat-cancel').addEventListener('click',resetTreatForm);
@@ -1599,6 +1533,7 @@
       qs('#treat-owner').value=t.owner||'';
       qs('#treat-budget').value=t.budget||'';
       qs('#treat-notes').value=t.notes||'';
+      qs('#treat-progress').value = (typeof t.progress==='number' && !isNaN(t.progress)) ? t.progress : '';
       qs('#treat-submit').textContent='Update action';
     }
     if(idD){
@@ -1606,13 +1541,14 @@
       treatments=treatments.filter(x=>x.id!==idD);
       save(K.treats,treatments);
       renderTreatmentsTable();
+      renderRisksTable();
     }
   });
 
   // ---------- Export / Import / Demo / Reset ----------
   function setImportStatus(msg,err){
     const el=qs('#import-status');
-    el.textContent=msg||'';
+    el.textContent=msg||''; if(!el) return;
     el.style.color=err?'#fca5a5':'#9ca3af';
   }
 
@@ -1620,8 +1556,7 @@
     const payload={
       version:2,
       exportedAt:new Date().toISOString(),
-      assets,risks,controls,issues,treatments,
-      settings
+      assets,risks,controls,issues,treatments
     };
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
     const url=URL.createObjectURL(blob);
@@ -1645,14 +1580,9 @@
         risks  = Array.isArray(data.risks)?data.risks:[];
         controls = Array.isArray(data.controls)?data.controls:[];
         issues = Array.isArray(data.issues)?data.issues:[];
-        treatments = Array.isArray(data.treatments)?data.treatments:[];
-        if(data.settings && typeof data.settings === 'object'){
-          settings = { ...defaultSettings, ...data.settings };
-          saveSettings();
-        }
+        treatments = Array.isArray(data.treatments)?data.treatments:[]; // backward compatible
         save(K.assets,assets); save(K.risks,risks); save(K.controls,controls);
         save(K.issues,issues); save(K.treats,treatments);
-        applySettingsToUI();
         refreshAll();
         setImportStatus(`Imported scenario: ${assets.length} assets, ${risks.length} risks, ${controls.length} controls, ${issues.length} issues, ${treatments.length} actions.`,false);
       }catch(err){
@@ -1836,7 +1766,8 @@
         targetDate:"",
         owner:"Security Engineering",
         budget:"3,000 USD",
-        notes:"Expand SSO coverage to all admin and support consoles; remove legacy login paths."
+        notes:"Expand SSO coverage to all admin and support consoles; remove legacy login paths.",
+        progress:40
       },
       {
         id:"TRT-DEMO-2",
@@ -1847,7 +1778,8 @@
         targetDate:"",
         owner:"Data Platform Team",
         budget:"",
-        notes:"Standardise evidence capture, sign-off and retention for restore exercises."
+        notes:"Standardise evidence capture, sign-off and retention for restore exercises.",
+        progress:20
       },
       {
         id:"TRT-DEMO-3",
@@ -1858,12 +1790,10 @@
         targetDate:"",
         owner:"Head of Operations",
         budget:"",
-        notes:"Create and test playbook covering communication, failover and rollback steps."
+        notes:"Create and test playbook covering communication, failover and rollback steps.",
+        progress:10
       }
     ];
-
-    settings = { ...defaultSettings }; // demo uses default thresholds
-    saveSettings();
 
     save(K.assets,assets);
     save(K.risks,risks);
@@ -1871,7 +1801,6 @@
     save(K.issues,issues);
     save(K.treats,treatments);
 
-    applySettingsToUI();
     refreshAll();
     setImportStatus('Loaded demo MediCloud scenario into this browser (previous lab data was overwritten).',false);
   }
@@ -1880,9 +1809,6 @@
     if(!confirm('This will clear all assets, risks, controls, issues and treatments in this browser. Continue?')) return;
     assets=[];risks=[];controls=[];issues=[];treatments=[];
     Object.values(K).forEach(k=>localStorage.removeItem(k));
-    settings = { ...defaultSettings };
-    saveSettings();
-    applySettingsToUI();
     refreshAll();
     setImportStatus('Lab reset: all data cleared from this browser.',false);
   }
@@ -1966,11 +1892,13 @@
     const exIssue=openIssues.slice(0,2).map(i=>i.title);
     const openActions=treatments.filter(t=>t.status==='Open' || t.status==='In progress');
     const closedActions=treatments.filter(t=>t.status==='Closed');
+    const tStats=treatmentProgressStats();
     let issuePara=`4. Issues, findings and action plans\nThere are ${issues.length} issue(s) recorded in the log, of which ${openIssues.length} are open or in progress and ${critIssues.length} are rated high or critical. `;
     if(exIssue.length){
       issuePara+=`Example open items include ${listPhrase(exIssue,2)}. `;
     }
-    issuePara+=`The treatment register currently contains ${treatments.length} action item(s), with ${openActions.length} open/in progress and ${closedActions.length} closed.`;
+    issuePara+=`The treatment register currently contains ${treatments.length} action item(s), with ${openActions.length} open/in progress and ${closedActions.length} closed. `;
+    issuePara+=`Average completion across active treatment actions is approximately ${tStats.avg}%.`;
     lines.push(issuePara.trim());
 
     // Overall observation
@@ -1983,7 +1911,7 @@
                   'minimal, with framework controls largely not implemented yet';
     let obs=`5. Overall observation\nSeveral high-impact risks have been identified${highCount?` (currently ${highCount} high-rated risk(s))`:''}. Control coverage is ${ov}% and is best described as ${covDesc}. `;
     if(openActions.length){
-      obs+=`A formal treatment plan is in place, with ${openActions.length} active remediation action(s) tracked against the risk register.`;
+      obs+=`A formal treatment plan is in place, with ${openActions.length} active remediation action(s) tracked against the risk register and an average completion of ${tStats.avg}% across those actions.`;
     }else{
       obs+=`No active treatment actions are currently recorded against the risk register.`;
     }
@@ -2018,16 +1946,6 @@
       el.addEventListener(sel==='#framework-search'?'input':'change',renderFrameworkControls);
     });
 
-    // Risk table filters / sort
-    const rfStatus = qs('#risk-filter-status');
-    const rfLevel  = qs('#risk-filter-level');
-    const rfSearch = qs('#risk-filter-search');
-    const rfSort   = qs('#risk-sort');
-    if(rfStatus) rfStatus.addEventListener('change',renderRisksTable);
-    if(rfLevel)  rfLevel.addEventListener('change',renderRisksTable);
-    if(rfSearch) rfSearch.addEventListener('input',renderRisksTable);
-    if(rfSort)   rfSort.addEventListener('change',renderRisksTable);
-
     bindTabs();
     populateControlFrameworks();
     populateControlRisks();
@@ -2035,7 +1953,6 @@
     populateIssueDropdowns();
     populateTreatmentDropdownRisks();
     populateTreatmentDropdownControls();
-    applySettingsToUI();
 
     qs('#btn-export').addEventListener('click',exportScenario);
     qs('#btn-import').addEventListener('click',()=>{
