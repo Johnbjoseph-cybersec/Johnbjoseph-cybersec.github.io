@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-  <!-- Theme fonts & CSS -->
+  <!-- Theme CSS from your site -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet"/>
   <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css"/>
   <link rel="stylesheet" href="css/animate.css"/>
@@ -19,41 +19,32 @@
   <link rel="stylesheet" href="css/style.css"/>
 
   <style>
-    /* Make sure theme animations don’t hide content */
-    .ftco-animate { opacity: 1 !important; visibility: visible !important; }
-
-    .grc-lab-hero { padding-top: 140px; padding-bottom: 40px; }
-
-    .grc-tab-buttons .btn{ margin-right:8px; margin-bottom:8px; }
-    .grc-tab{ display:none; }
-    .grc-tab.active{ display:block; }
-
-    .grc-lab-container{ width:80vw; max-width:1600px; margin:0 auto; }
-    @media (max-width: 991.98px){ .grc-lab-container{ width:100vw; } }
-
-    .heat-cell{ color:#fff; font-weight:600; text-align:center; white-space:nowrap; }
-    .heat-cell small{ display:block; font-weight:400; opacity:.9; }
-    .heat-good{ background:#1f8f3b; } .heat-medium{ background:#a96b1f; }
-    .heat-low{ background:#8f3b1f; } .heat-none{ background:#7a1f1f; }
-
-    .heat-pill{ border-radius:999px; padding:4px 10px; font-size:.8rem; display:inline-block; }
-
-    .dashboard-card{
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:10px;
-      background:#111827;
-      color:#fff;
+    .ftco-animate{opacity:1!important;visibility:visible!important;}
+    .grc-lab-hero{padding-top:140px;padding-bottom:40px;}
+    .grc-tab-buttons .btn{margin-right:8px;margin-bottom:8px;}
+    .grc-tab{display:none;} .grc-tab.active{display:block;}
+    .grc-lab-container{width:80vw;max-width:1600px;margin:0 auto;}
+    @media (max-width:991.98px){.grc-lab-container{width:100vw;}}
+    .dashboard-card{border:1px solid rgba(255,255,255,.06);border-radius:10px;background:#111827;color:#fff;}
+    .dashboard-card .label{font-size:.75rem;letter-spacing:.06em;opacity:.7;text-transform:uppercase;}
+    .dashboard-card .value{font-size:1.4rem;font-weight:600;}
+    .dashboard-card .sub{font-size:.8rem;opacity:.8;}
+    .heat-cell{color:#fff;font-weight:600;text-align:center;white-space:nowrap;}
+    .heat-cell small{display:block;font-weight:400;opacity:.9;}
+    .heat-good{background:#1f8f3b;} .heat-medium{background:#a96b1f;}
+    .heat-low{background:#8f3b1f;} .heat-none{background:#7a1f1f;}
+    .heat-pill{border-radius:999px;padding:4px 10px;font-size:.8rem;display:inline-block;}
+    #risk-matrix-canvas{background:#0c0f12;border-radius:8px;width:100%;max-width:100%;}
+    .table td,.table th{vertical-align:middle;}
+    .small-muted{color:#9ca3af;font-size:.85rem;}
+    textarea#summary-text{
+      background:#020617;
+      color:#e5e7eb;
+      border:none;
+      font-family:Menlo,Consolas,monospace;
+      font-size:.9rem;
+      white-space:pre-wrap;
     }
-    .dashboard-card .label{ font-size:.75rem; letter-spacing:.06em; opacity:.7; text-transform:uppercase; }
-    .dashboard-card .value{ font-size:1.4rem; font-weight:600; }
-    .dashboard-card .sub{ font-size:.8rem; opacity:.8; }
-
-    #risk-matrix-canvas{ background:#0c0f12; border-radius:8px; width:100%; max-width:100%; }
-
-    .table td, .table th { vertical-align: middle; }
-    .small-muted{ color:#9ca3af; font-size:.85rem; }
-
-    textarea.form-control{ background:#020617; color:#e5e7eb; border-color:#1f2933; }
   </style>
 </head>
 
@@ -62,9 +53,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
     <div class="container">
       <a class="navbar-brand" href="index.html">John B Joseph</a>
-      <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button"
-        data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav"
-        aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="oi oi-menu"></span> Menu
       </button>
       <div class="collapse navbar-collapse" id="ftco-nav">
@@ -83,10 +72,8 @@
       <!-- Header -->
       <div class="row justify-content-center mb-4">
         <div class="col-md-10 text-center ftco-animate">
-          <h1 class="mb-3">GRC Practice Lab (v3.x)</h1>
-          <p class="lead">
-            Practice frameworks, assets, risks, controls, treatments, issues and reporting — all in your browser (data stays local).
-          </p>
+          <h1 class="mb-3">GRC Practice Lab (v3)</h1>
+          <p class="lead">Practice frameworks, assets, risks, controls, issues, actions and reporting — all in your browser (data stays local).</p>
           <p class="small-muted mb-0">Controls are paraphrased from ISO 27001, NIST CSF, PCI DSS, HIPAA for education only.</p>
         </div>
       </div>
@@ -99,11 +86,11 @@
           <button class="btn btn-outline-light btn-sm" data-grc-tab="risks">Risks</button>
           <button class="btn btn-outline-light btn-sm" data-grc-tab="controls">Local Controls</button>
           <button class="btn btn-outline-light btn-sm" data-grc-tab="issues">Issues / Findings</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="treatments">Treatments / Action Plans</button>
           <button class="btn btn-outline-light btn-sm" data-grc-tab="gap">Gap Analysis</button>
           <button class="btn btn-outline-light btn-sm" data-grc-tab="dashboard">Dashboard</button>
           <button class="btn btn-outline-light btn-sm" data-grc-tab="matrix">Risk Matrix</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="auditor">Auditor Summary</button>
+          <button class="btn btn-outline-light btn-sm" data-grc-tab="treatments">Treatments</button>
+          <button class="btn btn-outline-light btn-sm" data-grc-tab="summary">Auditor Summary</button>
         </div>
       </div>
 
@@ -184,7 +171,8 @@
                     <option value="">Select...</option>
                     <option>Application</option><option>Database</option><option>Server / Host</option>
                     <option>Network / Security Device</option><option>Cloud Service</option>
-                    <option>Vendor / Third Party</option><option>Data Store</option><option>People / Role</option><option>Other</option>
+                    <option>Vendor / Third Party</option><option>Data Store</option>
+                    <option>People / Role</option><option>Other</option>
                   </select>
                 </div>
                 <div class="form-group">
@@ -194,7 +182,6 @@
                     <option>High</option><option>Medium</option><option>Low</option>
                   </select>
                 </div>
-
                 <div class="form-group">
                   <label class="text-muted small mb-1 d-block">Data types</label>
                   <div class="d-flex flex-wrap">
@@ -216,7 +203,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="form-group">
                   <label class="text-muted small mb-1">Owner</label>
                   <input id="asset-owner" class="form-control form-control-sm" placeholder="e.g. DevOps Team / CTO">
@@ -225,7 +211,6 @@
                   <label class="text-muted small mb-1">Notes</label>
                   <textarea id="asset-notes" class="form-control form-control-sm" rows="2" placeholder="Scope, region, integrations..."></textarea>
                 </div>
-
                 <div class="d-flex justify-content-between">
                   <button class="btn btn-primary btn-sm" type="submit" id="asset-form-submit">Save asset</button>
                   <button class="btn btn-outline-light btn-sm" type="button" id="asset-form-cancel">Clear</button>
@@ -234,7 +219,6 @@
               </form>
             </div>
           </div>
-
           <div class="col-lg-8 col-md-7 mb-4">
             <div class="bg-dark p-3 rounded">
               <div class="d-flex justify-content-between align-items-center mb-2">
@@ -285,7 +269,6 @@
                     <option>Privacy</option><option>Third-Party</option><option>Other</option>
                   </select>
                 </div>
-
                 <div class="form-row">
                   <div class="form-group col-6">
                     <label class="text-muted small mb-1">Likelihood (1–5) *</label>
@@ -304,7 +287,6 @@
                     </select>
                   </div>
                 </div>
-
                 <div class="form-group">
                   <label class="text-muted small mb-1">Owner</label>
                   <input id="risk-owner" class="form-control form-control-sm" placeholder="e.g. CISO / Product Owner">
@@ -319,18 +301,14 @@
                   <label class="text-muted small mb-1">Description / Notes</label>
                   <textarea id="risk-notes" class="form-control form-control-sm" rows="2"></textarea>
                 </div>
-
                 <div class="d-flex justify-content-between">
                   <button class="btn btn-primary btn-sm" type="submit" id="risk-form-submit">Save risk</button>
                   <button class="btn btn-outline-light btn-sm" type="button" id="risk-form-cancel">Clear</button>
                 </div>
-                <small class="text-muted d-block mt-2">
-                  Score = Likelihood × Impact (1–25). High ≥ 15; Medium 6–12; Low 1–5.
-                </small>
+                <small class="text-muted d-block mt-2">Score = Likelihood × Impact (1–25). High ≥ 15; Medium 6–12; Low 1–5.</small>
               </form>
             </div>
           </div>
-
           <div class="col-lg-8 col-md-7 mb-4">
             <div class="bg-dark p-3 rounded">
               <div class="d-flex justify-content-between align-items-center mb-2">
@@ -341,8 +319,8 @@
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
                     <tr>
-                      <th style="width:24%">Title</th><th style="width:18%">Asset</th><th style="width:16%">Category</th>
-                      <th style="width:16%">Inherent</th><th style="width:14%">Status</th><th style="width:12%">Actions</th>
+                      <th style="width:26%">Title</th><th style="width:18%">Asset</th><th style="width:16%">Category</th>
+                      <th style="width:16%">Inherent</th><th style="width:14%">Status</th><th style="width:10%">Actions</th>
                     </tr>
                   </thead>
                   <tbody id="risks-table-body"></tbody>
@@ -389,7 +367,6 @@
                   <label class="text-muted small mb-1">Description</label>
                   <textarea id="control-description" class="form-control form-control-sm" rows="2" placeholder="Implementation details"></textarea>
                 </div>
-
                 <div class="form-group">
                   <label class="text-muted small mb-1">Related risks</label>
                   <select id="control-risks" class="form-control form-control-sm" multiple></select>
@@ -399,7 +376,6 @@
                   <label class="text-muted small mb-1">Related framework controls</label>
                   <select id="control-frameworks" class="form-control form-control-sm" multiple></select>
                 </div>
-
                 <div class="d-flex justify-content-between">
                   <button class="btn btn-primary btn-sm" type="submit" id="control-form-submit">Save control</button>
                   <button class="btn btn-outline-light btn-sm" type="button" id="control-form-cancel">Clear</button>
@@ -408,7 +384,6 @@
               </form>
             </div>
           </div>
-
           <div class="col-lg-8 col-md-7 mb-4">
             <div class="bg-dark p-3 rounded">
               <div class="d-flex justify-content-between align-items-center mb-2">
@@ -452,14 +427,12 @@
                     <option>Audit</option><option>Pen test</option><option>Incident</option><option>Risk review</option><option>Other</option>
                   </select>
                 </div>
-
                 <div class="form-group">
                   <label class="text-muted small mb-1">Linked objects (optional)</label>
                   <select id="issue-asset" class="form-control form-control-sm mb-1"><option value="">Linked asset...</option></select>
                   <select id="issue-risk"  class="form-control form-control-sm mb-1"><option value="">Linked risk...</option></select>
                   <select id="issue-control" class="form-control form-control-sm"><option value="">Linked control...</option></select>
                 </div>
-
                 <div class="form-row">
                   <div class="form-group col-6">
                     <label class="text-muted small mb-1">Severity *</label>
@@ -475,7 +448,6 @@
                     </select>
                   </div>
                 </div>
-
                 <div class="form-row">
                   <div class="form-group col-6">
                     <label class="text-muted small mb-1">Owner</label>
@@ -486,12 +458,10 @@
                     <input type="date" id="issue-due" class="form-control form-control-sm">
                   </div>
                 </div>
-
                 <div class="form-group">
                   <label class="text-muted small mb-1">Details / Recommendation</label>
                   <textarea id="issue-notes" class="form-control form-control-sm" rows="2"></textarea>
                 </div>
-
                 <div class="d-flex justify-content-between">
                   <button class="btn btn-primary btn-sm" type="submit" id="issue-form-submit">Save issue</button>
                   <button class="btn btn-outline-light btn-sm" type="button" id="issue-form-cancel">Clear</button>
@@ -500,7 +470,6 @@
               </form>
             </div>
           </div>
-
           <div class="col-lg-8 col-md-7 mb-4">
             <div class="bg-dark p-3 rounded">
               <div class="d-flex justify-content-between align-items-center mb-2">
@@ -524,93 +493,10 @@
         </div>
       </div>
 
-      <!-- Treatments / Action Plans -->
-      <div id="tab-treatments" class="grc-tab ftco-animate">
-        <h3>Treatments &amp; Action Plans</h3>
-        <p class="mb-3">Link concrete actions to risks, assign owners, and track progress.</p>
-        <div class="row">
-          <div class="col-lg-4 col-md-5 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <h5 class="mb-3">Add / Edit Action</h5>
-              <form id="treatment-form">
-                <input type="hidden" id="treatment-id">
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Action title *</label>
-                  <input id="treatment-title" class="form-control form-control-sm" required placeholder="e.g. Implement WAF for MediCloud">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Linked risk *</label>
-                  <select id="treatment-risk" class="form-control form-control-sm" required>
-                    <option value="">Select risk...</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Status *</label>
-                  <select id="treatment-status" class="form-control form-control-sm" required>
-                    <option>Open</option>
-                    <option>In progress</option>
-                    <option>Completed</option>
-                    <option>Accepted</option>
-                  </select>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Owner</label>
-                    <input id="treatment-owner" class="form-control form-control-sm" placeholder="e.g. DevOps Lead">
-                  </div>
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Target date</label>
-                    <input type="date" id="treatment-due" class="form-control form-control-sm">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Notes</label>
-                  <textarea id="treatment-notes" class="form-control form-control-sm" rows="2" placeholder="Outline remediation steps, dependencies, etc."></textarea>
-                </div>
-
-                <div class="d-flex justify-content-between">
-                  <button class="btn btn-primary btn-sm" type="submit" id="treatment-form-submit">Save action</button>
-                  <button class="btn btn-outline-light btn-sm" type="button" id="treatment-form-cancel">Clear</button>
-                </div>
-                <small class="text-muted d-block mt-2">Actions are stored locally with your risks.</small>
-              </form>
-            </div>
-          </div>
-
-          <div class="col-lg-8 col-md-7 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="mb-0">Action plan</h5>
-                <small id="treatments-count" class="text-muted"></small>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-dark table-striped table-hover table-sm mb-0">
-                  <thead>
-                    <tr>
-                      <th style="width:26%">Title</th>
-                      <th style="width:24%">Linked risk</th>
-                      <th style="width:14%">Status</th>
-                      <th style="width:14%">Target date</th>
-                      <th style="width:12%">Owner</th>
-                      <th style="width:10%">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="treatments-table-body"></tbody>
-                </table>
-              </div>
-              <div id="treatments-empty" class="text-muted small mt-2">No actions yet.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <!-- Gap Analysis -->
       <div id="tab-gap" class="grc-tab ftco-animate">
         <h3>Gap analysis &amp; heatmap</h3>
-        <p class="mb-3">
-          Coverage is based on <b>local controls</b> mapped to framework controls.
-          “In place” = implemented; “Planned” = planned-only.
-        </p>
+        <p class="mb-3">Coverage is based on <b>local controls</b> mapped to framework controls. “In place” = implemented; “Planned” = planned-only.</p>
         <div class="table-responsive bg-dark p-3 rounded">
           <table class="table table-dark table-striped table-hover table-sm mb-0">
             <thead>
@@ -634,35 +520,16 @@
         <h3>Dashboard</h3>
         <div class="row">
           <div class="col-sm-6 col-md-3 mb-3">
-            <div class="dashboard-card p-3 h-100">
-              <div class="label">Assets</div>
-              <div class="value" id="dash-assets">0</div>
-              <div class="sub">Tracked in inventory</div>
-            </div>
+            <div class="dashboard-card p-3 h-100"><div class="label">Assets</div><div class="value" id="dash-assets">0</div><div class="sub">Tracked in inventory</div></div>
           </div>
           <div class="col-sm-6 col-md-3 mb-3">
-            <div class="dashboard-card p-3 h-100">
-              <div class="label">Risks</div>
-              <div class="value" id="dash-risks">0</div>
-              <div class="sub">
-                <span id="dash-high">0</span> high risk(s) ·
-                <span id="dash-open-actions">0</span> open action(s)
-              </div>
-            </div>
+            <div class="dashboard-card p-3 h-100"><div class="label">Risks</div><div class="value" id="dash-risks">0</div><div class="sub"><span id="dash-high">0</span> high risk(s)</div></div>
           </div>
           <div class="col-sm-6 col-md-3 mb-3">
-            <div class="dashboard-card p-3 h-100">
-              <div class="label">Controls</div>
-              <div class="value" id="dash-controls">0</div>
-              <div class="sub">Local org controls</div>
-            </div>
+            <div class="dashboard-card p-3 h-100"><div class="label">Controls</div><div class="value" id="dash-controls">0</div><div class="sub">Local org controls</div></div>
           </div>
           <div class="col-sm-6 col-md-3 mb-3">
-            <div class="dashboard-card p-3 h-100">
-              <div class="label">Issues</div>
-              <div class="value" id="dash-issues">0</div>
-              <div class="sub"><span id="dash-overdue">0</span> overdue</div>
-            </div>
+            <div class="dashboard-card p-3 h-100"><div class="label">Issues</div><div class="value" id="dash-issues">0</div><div class="sub"><span id="dash-overdue">0</span> overdue</div></div>
           </div>
         </div>
 
@@ -674,21 +541,16 @@
                 <div class="value"><span id="dash-coverage">0%</span></div>
                 <div class="sub">Implemented local controls mapped to framework controls.</div>
               </div>
-              <div class="mt-2">
-                <span id="dash-coverage-pill" class="heat-pill heat-none">Coverage heat</span>
-              </div>
+              <div class="mt-2"><span id="dash-coverage-pill" class="heat-pill heat-none">Coverage heat</span></div>
             </div>
           </div>
           <div class="col-md-8 mb-3">
             <div class="dashboard-card p-3 h-100">
               <div class="label mb-1">Scenarios &amp; exports</div>
-              <p class="sub mb-3">
-                Export current lab to JSON, import saved scenarios, or start from the built-in MediCloud demo scenario.
-              </p>
+              <p class="sub">Export current lab to JSON, import saved scenarios, or reset to blank.</p>
               <div class="d-flex flex-wrap">
                 <button id="btn-export" class="btn btn-sm btn-primary mr-2 mb-2">Export current data (JSON)</button>
                 <button id="btn-import" class="btn btn-sm btn-outline-light mr-2 mb-2">Import scenario (JSON)</button>
-                <button id="btn-medicloud" class="btn btn-sm btn-success mr-2 mb-2">Load MediCloud demo</button>
                 <button id="btn-reset" class="btn btn-sm btn-outline-danger mb-2">Reset lab (clear all data)</button>
                 <input type="file" id="file-import" accept="application/json" style="display:none">
               </div>
@@ -701,10 +563,7 @@
       <!-- Risk Matrix -->
       <div id="tab-matrix" class="grc-tab ftco-animate">
         <h3>Risk Matrix (Inherent vs Residual)</h3>
-        <p class="mb-3">
-          Toggle to compare <b>Inherent</b> and a basic calculated <b>Residual</b>
-          (reduced by implemented controls linked to a risk).
-        </p>
+        <p class="mb-3">Toggle to compare <b>Inherent</b> and a basic calculated <b>Residual</b> (reduced by implemented controls linked to a risk).</p>
         <div class="bg-dark p-3 rounded mb-3">
           <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -718,21 +577,96 @@
         </div>
       </div>
 
+      <!-- Treatments -->
+      <div id="tab-treatments" class="grc-tab ftco-animate">
+        <h3>Treatments (Mitigation Plan)</h3>
+        <div class="row">
+          <div class="col-lg-4 col-md-5 mb-4">
+            <div class="bg-dark p-3 rounded">
+              <h5 class="mb-3">Add / Edit Treatment</h5>
+              <form id="treat-form">
+                <input type="hidden" id="treat-id">
+                <div class="form-group">
+                  <label class="text-muted small mb-1">Action title *</label>
+                  <input id="treat-title" class="form-control form-control-sm" required placeholder="e.g. Enforce SSO & MFA for admins">
+                </div>
+                <div class="form-group">
+                  <label class="text-muted small mb-1">Linked risk *</label>
+                  <select id="treat-risk" class="form-control form-control-sm" required><option value="">Select risk...</option></select>
+                </div>
+                <div class="form-group">
+                  <label class="text-muted small mb-1">Linked control (optional)</label>
+                  <select id="treat-control" class="form-control form-control-sm"><option value="">Select control...</option></select>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-6">
+                    <label class="text-muted small mb-1">Status *</label>
+                    <select id="treat-status" class="form-control form-control-sm" required>
+                      <option>Open</option><option>In progress</option><option>Closed</option><option>Deferred</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-6">
+                    <label class="text-muted small mb-1">Target date</label>
+                    <input type="date" id="treat-date" class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-6">
+                    <label class="text-muted small mb-1">Owner</label>
+                    <input id="treat-owner" class="form-control form-control-sm" placeholder="e.g. DevOps Lead">
+                  </div>
+                  <div class="form-group col-6">
+                    <label class="text-muted small mb-1">Budget (optional)</label>
+                    <input id="treat-budget" class="form-control form-control-sm" placeholder="e.g. 2,500 USD">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="text-muted small mb-1">Notes</label>
+                  <textarea id="treat-notes" class="form-control form-control-sm" rows="2"></textarea>
+                </div>
+                <div class="d-flex justify-content-between">
+                  <button class="btn btn-primary btn-sm" type="submit" id="treat-submit">Save action</button>
+                  <button class="btn btn-outline-light btn-sm" type="button" id="treat-cancel">Clear</button>
+                </div>
+                <small class="text-muted d-block mt-2">Stored locally. Link actions to risks to show progress in reports.</small>
+              </form>
+            </div>
+          </div>
+          <div class="col-lg-8 col-md-7 mb-4">
+            <div class="bg-dark p-3 rounded">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">Treatment actions</h5>
+                <small id="treat-count" class="text-muted"></small>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-dark table-striped table-hover table-sm mb-0">
+                  <thead>
+                    <tr>
+                      <th style="width:28%">Title</th><th style="width:22%">Linked</th>
+                      <th style="width:14%">Status</th><th style="width:16%">Target</th>
+                      <th style="width:8%">Owner</th><th style="width:12%">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="treat-table-body"></tbody>
+                </table>
+              </div>
+              <div id="treat-empty" class="text-muted small mt-2">No treatment actions yet.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Auditor Summary -->
-      <div id="tab-auditor" class="grc-tab ftco-animate">
+      <div id="tab-summary" class="grc-tab ftco-animate">
         <h3>Auditor-style summary</h3>
-        <p class="mb-3">
-          Automatically generate a narrative you can reuse in audit reports, board decks, or certifications.
-        </p>
-        <div class="bg-dark p-3 rounded">
+        <p class="mb-3">Automatically generate a narrative you can reuse in audit reports, board decks, or certifications.</p>
+        <div class="bg-dark p-3 rounded mb-3">
           <div class="d-flex justify-content-between align-items-center mb-2">
             <span class="small-muted">Summary is generated from your current assets, risks, controls, treatments and issues.</span>
-            <button id="btn-refresh-auditor" class="btn btn-outline-light btn-sm">Refresh summary</button>
+            <button id="summary-refresh" class="btn btn-sm btn-primary">Refresh summary</button>
           </div>
-          <textarea id="auditor-summary-text" class="form-control form-control-sm" rows="12"></textarea>
-          <small class="text-muted d-block mt-2">
-            Tip: You can copy-paste this into an audit report, SOC 2 narrative, or ISO 27001 SoA summary.
-          </small>
+          <textarea id="summary-text" class="form-control" rows="16"></textarea>
+          <div class="small-muted mt-2">Tip: Copy–paste this into an audit report, SOC 2 narrative, or ISO 27001 SoA summary.</div>
         </div>
       </div>
 
@@ -754,895 +688,1011 @@
 
   <!-- GRC Lab App -->
   <script>
-  // ============ FRAMEWORK LIBRARY ============
+  // ---------- Framework library ----------
   const FRAMEWORK_CONTROLS = [
-    { id:"CTRL-AC-01", name:"Manage user accounts", category:"Access Control",
-      description:"Only approved users receive accounts; access removed quickly on role change/leave.",
-      frameworks:["ISO 27001","NIST CSF"], references:["ISO 27001 A.9","NIST PR.AC-1"] },
-    { id:"CTRL-AC-02", name:"Limit privileged access", category:"Identity & Authentication",
-      description:"Privileged roles tightly controlled, logged, and periodically reviewed.",
-      frameworks:["ISO 27001","NIST CSF","PCI DSS"], references:["ISO 27001 A.9.2","NIST PR.AC-4","PCI DSS 7"] },
-    { id:"CTRL-AC-03", name:"Strong authentication", category:"Identity & Authentication",
-      description:"MFA for admin accounts and remote access to critical systems.",
-      frameworks:["ISO 27001","NIST CSF","PCI DSS","HIPAA"], references:["ISO 27001 A.9.4","NIST PR.AC-7","PCI DSS 8","HIPAA 164.312(d)"] },
-    { id:"CTRL-LOG-01", name:"Central activity logging", category:"Logging & Monitoring",
-      description:"Security events from key systems collected centrally.",
-      frameworks:["ISO 27001","NIST CSF","PCI DSS"], references:["ISO 27001 A.12.4","NIST DE.AE-1","PCI DSS 10"] },
-    { id:"CTRL-LOG-02", name:"Regular log review", category:"Logging & Monitoring",
-      description:"Important system logs reviewed; suspicious events investigated.",
-      frameworks:["ISO 27001","NIST CSF","HIPAA"], references:["ISO 27001 A.12.4","NIST DE.CM-1","HIPAA 164.308(a)(1)"] },
-    { id:"CTRL-ENC-01", name:"Encrypt data at rest", category:"Encryption & Key Management",
-      description:"Sensitive data in DBs, file systems, and backups encrypted.",
-      frameworks:["ISO 27001","PCI DSS","HIPAA"], references:["ISO 27001 A.10","PCI DSS 3","HIPAA 164.312(a)(2)(iv)"] },
-    { id:"CTRL-ENC-02", name:"Encrypt data in transit", category:"Encryption & Key Management",
-      description:"TLS for sensitive data with weak ciphers disabled.",
-      frameworks:["ISO 27001","NIST CSF","PCI DSS","HIPAA"], references:["ISO 27001 A.13","NIST PR.DS-2","PCI DSS 4","HIPAA 164.312(e)(1)"] },
-    { id:"CTRL-BCP-01", name:"Backups & restore testing", category:"Backup & Recovery",
-      description:"Critical systems backed up; restore tests performed and documented.",
-      frameworks:["ISO 27001","NIST CSF"], references:["ISO 27001 A.12.3","NIST PR.IP-4"] },
-    { id:"CTRL-CHG-01", name:"Controlled changes", category:"Change Management",
-      description:"Changes follow an approved process with impact assessment and rollback plan.",
-      frameworks:["ISO 27001","NIST CSF"], references:["ISO 27001 A.12.1","NIST PR.IP-3"] },
-    { id:"CTRL-CHG-02", name:"Separate environments", category:"Change Management",
-      description:"Dev/Test separated from Prod with restricted access.",
-      frameworks:["ISO 27001","PCI DSS"], references:["ISO 27001 A.12.1.4","PCI DSS 6.4"] },
-    { id:"CTRL-VULN-01", name:"Vulnerability management", category:"Vulnerability Management",
-      description:"Regular scans; patches applied per timelines.",
-      frameworks:["ISO 27001","NIST CSF","PCI DSS"], references:["ISO 27001 A.12.6","NIST DE.CM-8","PCI DSS 11"] },
-    { id:"CTRL-IR-01", name:"Incident response plan", category:"Incident Response",
-      description:"Documented IR plan with roles, steps, communications.",
-      frameworks:["ISO 27001","NIST CSF","HIPAA"], references:["ISO 27001 A.16","NIST RS.RP-1","HIPAA 164.308(a)(6)"] },
-    { id:"CTRL-IR-02", name:"Detect and triage events", category:"Incident Response",
-      description:"Events detected, triaged, escalated per procedures.",
-      frameworks:["ISO 27001","NIST CSF"], references:["ISO 27001 A.16","NIST DE.CM-1"] },
-    { id:"CTRL-VND-01", name:"Vendor due diligence", category:"Vendor Risk",
-      description:"3rd parties assessed before onboarding and periodically.",
-      frameworks:["ISO 27001","NIST CSF"], references:["ISO 27001 A.15","NIST ID.SC-1"] },
-    { id:"CTRL-VND-02", name:"Data protection in contracts", category:"Vendor Risk",
-      description:"Vendor contracts include data protection, breach notice, right to audit.",
-      frameworks:["ISO 27001","HIPAA"], references:["ISO 27001 A.15.1.2","HIPAA 164.308(b)"] },
-    { id:"CTRL-POL-01", name:"Information security policy", category:"Policy & Governance",
-      description:"Management-approved policies define expectations, roles, responsibilities.",
-      frameworks:["ISO 27001","NIST CSF"], references:["ISO 27001 A.5","NIST ID.GV-1"] },
-    { id:"CTRL-AW-01", name:"Security awareness training", category:"Awareness & Training",
-      description:"Regular training on security, privacy, phishing, reporting incidents.",
-      frameworks:["ISO 27001","NIST CSF","HIPAA"], references:["ISO 27001 A.7.2.2","NIST PR.AT-1","HIPAA 164.308(a)(5)"] },
+    {id:"CTRL-AC-01",name:"Manage user accounts",category:"Access Control",
+      description:"Only approved users receive accounts; access removed quickly on role change or leaving.",
+      frameworks:["ISO 27001","NIST CSF"],references:["ISO 27001 A.9","NIST PR.AC-1"]},
+    {id:"CTRL-AC-02",name:"Limit privileged access",category:"Identity & Authentication",
+      description:"Privileged roles are tightly controlled, logged and periodically reviewed.",
+      frameworks:["ISO 27001","NIST CSF","PCI DSS"],references:["ISO 27001 A.9.2","NIST PR.AC-4","PCI DSS 7"]},
+    {id:"CTRL-AC-03",name:"Strong authentication",category:"Identity & Authentication",
+      description:"Multi-factor authentication is used for admin accounts and remote access to critical systems.",
+      frameworks:["ISO 27001","NIST CSF","PCI DSS","HIPAA"],references:["ISO 27001 A.9.4","NIST PR.AC-7","PCI DSS 8","HIPAA 164.312(d)"]},
+    {id:"CTRL-LOG-01",name:"Central activity logging",category:"Logging & Monitoring",
+      description:"Security events from key systems are collected centrally for correlation and investigation.",
+      frameworks:["ISO 27001","NIST CSF","PCI DSS"],references:["ISO 27001 A.12.4","NIST DE.AE-1","PCI DSS 10"]},
+    {id:"CTRL-LOG-02",name:"Regular log review",category:"Logging & Monitoring",
+      description:"Important system logs are reviewed and suspicious events investigated and documented.",
+      frameworks:["ISO 27001","NIST CSF","HIPAA"],references:["ISO 27001 A.12.4","NIST DE.CM-1","HIPAA 164.308(a)(1)"]},
+    {id:"CTRL-ENC-01",name:"Encrypt data at rest",category:"Encryption & Key Management",
+      description:"Sensitive data in databases, file systems and backups is encrypted using approved algorithms.",
+      frameworks:["ISO 27001","PCI DSS","HIPAA"],references:["ISO 27001 A.10","PCI DSS 3","HIPAA 164.312(a)(2)(iv)"]},
+    {id:"CTRL-ENC-02",name:"Encrypt data in transit",category:"Encryption & Key Management",
+      description:"TLS is enforced for sensitive data in transit; weak ciphers and protocols are disabled.",
+      frameworks:["ISO 27001","NIST CSF","PCI DSS","HIPAA"],references:["ISO 27001 A.13","NIST PR.DS-2","PCI DSS 4","HIPAA 164.312(e)(1)"]},
+    {id:"CTRL-BCP-01",name:"Backups & restore testing",category:"Backup & Recovery",
+      description:"Critical systems are backed up and restore tests are performed and documented.",
+      frameworks:["ISO 27001","NIST CSF"],references:["ISO 27001 A.12.3","NIST PR.IP-4"]},
+    {id:"CTRL-CHG-01",name:"Controlled changes",category:"Change Management",
+      description:"Changes follow an approved process including impact assessment, testing and rollback.",
+      frameworks:["ISO 27001","NIST CSF"],references:["ISO 27001 A.12.1","NIST PR.IP-3"]},
+    {id:"CTRL-CHG-02",name:"Separate environments",category:"Change Management",
+      description:"Development and test environments are separated from production with restricted access.",
+      frameworks:["ISO 27001","PCI DSS"],references:["ISO 27001 A.12.1.4","PCI DSS 6.4"]},
+    {id:"CTRL-VULN-01",name:"Vulnerability management",category:"Vulnerability Management",
+      description:"Regular scans are run; patches and fixes are applied according to defined timelines.",
+      frameworks:["ISO 27001","NIST CSF","PCI DSS"],references:["ISO 27001 A.12.6","NIST DE.CM-8","PCI DSS 11"]},
+    {id:"CTRL-IR-01",name:"Incident response plan",category:"Incident Response",
+      description:"A documented incident response plan defines roles, steps and communications.",
+      frameworks:["ISO 27001","NIST CSF","HIPAA"],references:["ISO 27001 A.16","NIST RS.RP-1","HIPAA 164.308(a)(6)"]},
+    {id:"CTRL-IR-02",name:"Detect and triage events",category:"Incident Response",
+      description:"Events are detected, triaged and escalated based on documented procedures.",
+      frameworks:["ISO 27001","NIST CSF"],references:["ISO 27001 A.16","NIST DE.CM-1"]},
+    {id:"CTRL-VND-01",name:"Vendor due diligence",category:"Vendor Risk",
+      description:"Third parties are assessed before onboarding and periodically thereafter.",
+      frameworks:["ISO 27001","NIST CSF"],references:["ISO 27001 A.15","NIST ID.SC-1"]},
+    {id:"CTRL-VND-02",name:"Data protection in contracts",category:"Vendor Risk",
+      description:"Vendor contracts include data protection clauses, breach notification and audit rights.",
+      frameworks:["ISO 27001","HIPAA"],references:["ISO 27001 A.15.1.2","HIPAA 164.308(b)"]},
+    {id:"CTRL-POL-01",name:"Information security policy",category:"Policy & Governance",
+      description:"Management-approved policies define security objectives, roles and responsibilities.",
+      frameworks:["ISO 27001","NIST CSF"],references:["ISO 27001 A.5","NIST ID.GV-1"]},
+    {id:"CTRL-AW-01",name:"Security awareness training",category:"Awareness & Training",
+      description:"People receive regular training on security, privacy, phishing and incident reporting.",
+      frameworks:["ISO 27001","NIST CSF","HIPAA"],references:["ISO 27001 A.7.2.2","NIST PR.AT-1","HIPAA 164.308(a)(5)"]}
   ];
 
-  // Simple MediCloud starter scenario
-  const MEDICLOUD_SCENARIO = {
-    assets: [
-      { id:"AST-MEDI-WEB", name:"MediCloud Web Application", type:"Application", criticality:"High",
-        owner:"Product / Engineering", dataTypes:["PHI","PII"], notes:"Patient-facing portal hosted in AWS." },
-      { id:"AST-MEDI-DB", name:"MediCloud Patient DB", type:"Database", criticality:"High",
-        owner:"DBA / SRE", dataTypes:["PHI","PII"], notes:"Primary PHI store (RDS)." },
-      { id:"AST-MEDI-IDP", name:"IdP / SSO", type:"Cloud Service", criticality:"High",
-        owner:"Security Engineering", dataTypes:["Internal data"], notes:"Used for workforce SSO + admin MFA." },
-      { id:"AST-MEDI-LOGS", name:"Central Logging Platform", type:"Cloud Service", criticality:"Medium",
-        owner:"SecOps", dataTypes:["Internal data"], notes:"Collects app / infra / security logs." }
-    ],
-    risks: [
-      { id:"RSK-MEDI-001", title:"Unauthorised access to MediCloud production app",
-        assetId:"AST-MEDI-WEB", assetName:"MediCloud Web Application",
-        category:"Cybersecurity", likelihood:4, impact:5, score:20,
-        status:"Open", owner:"CISO", notes:"MFA not enforced for all admins; legacy VPN path still enabled." },
-      { id:"RSK-MEDI-002", title:"Compromise of PHI in patient database",
-        assetId:"AST-MEDI-DB", assetName:"MediCloud Patient DB",
-        category:"Privacy", likelihood:3, impact:5, score:15,
-        status:"In progress", owner:"Data Protection Officer", notes:"Legacy backups unencrypted; DB access model complex." },
-      { id:"RSK-MEDI-003", title:"Gaps in logging and incident detection",
-        assetId:"AST-MEDI-LOGS", assetName:"Central Logging Platform",
-        category:"Cybersecurity", likelihood:3, impact:4, score:12,
-        status:"Open", owner:"SecOps Lead", notes:"Not all production systems forward logs; alert rules incomplete." }
-    ],
-    controls: [
-      { id:"CTL-MEDI-MFA", name:"MFA enforced for workforce IdP", type:"Technical", status:"In place",
-        owner:"Security Engineering", description:"All workforce users require MFA via IdP; high-risk apps tagged as conditional access.",
-        linkedRiskIds:["RSK-MEDI-001"], linkedFrameworkControlIds:["CTRL-AC-03"] },
-      { id:"CTL-MEDI-LOG", name:"Centralised logging for production workloads", type:"Technical", status:"In place",
-        owner:"SecOps", description:"Production workloads send logs to SIEM; retention baseline 365 days.",
-        linkedRiskIds:["RSK-MEDI-003"], linkedFrameworkControlIds:["CTRL-LOG-01","CTRL-LOG-02"] },
-      { id:"CTL-MEDI-BACKUP", name:"Encrypted backups for PHI DB", type:"Technical", status:"Planned",
-        owner:"SRE / DBA", description:"Move historic unencrypted backups to encrypted storage, enforce encryption at rest.",
-        linkedRiskIds:["RSK-MEDI-002"], linkedFrameworkControlIds:["CTRL-ENC-01","CTRL-BCP-01"] }
-    ],
-    issues: [
-      { id:"ISS-MEDI-001", title:"MFA not enforced for legacy VPN", type:"Audit", severity:"High", status:"Open",
-        owner:"Network Team", dueDate:"", notes:"Legacy VPN path bypasses IdP; users can access prod without MFA.",
-        assetId:"AST-MEDI-WEB", riskId:"RSK-MEDI-001", controlId:"CTL-MEDI-MFA",
-        linkedSummary:"Asset: MediCloud Web Application | Risk: Unauthorised access to MediCloud production app | Control: MFA enforced for workforce IdP" },
-      { id:"ISS-MEDI-002", title:"Unencrypted historical DB backups", type:"Pen test", severity:"High", status:"In progress",
-        owner:"SRE / DBA", dueDate:"", notes:"Old snapshots stored without encryption; outside of new baseline.",
-        assetId:"AST-MEDI-DB", riskId:"RSK-MEDI-002", controlId:"CTL-MEDI-BACKUP",
-        linkedSummary:"Asset: MediCloud Patient DB | Risk: Compromise of PHI in patient database | Control: Encrypted backups for PHI DB" }
-    ],
-    treatments: [
-      { id:"TRT-MEDI-001", title:"Decommission legacy VPN and force IdP SSO",
-        riskId:"RSK-MEDI-001", riskTitle:"Unauthorised access to MediCloud production app",
-        status:"In progress", owner:"Network Lead", dueDate:"", notes:"Cutover to IdP-based access only; update runbooks." },
-      { id:"TRT-MEDI-002", title:"Encrypt all historical PHI backups",
-        riskId:"RSK-MEDI-002", riskTitle:"Compromise of PHI in patient database",
-        status:"Open", owner:"SRE / DBA", dueDate:"", notes:"Locate all snapshots, move to encrypted storage; document control." },
-      { id:"TRT-MEDI-003", title:"Onboard remaining prod systems to SIEM",
-        riskId:"RSK-MEDI-003", riskTitle:"Gaps in logging and incident detection",
-        status:"Open", owner:"SecOps Lead", dueDate:"", notes:"Prioritise internet-facing components; add alert rules for auth failures." }
-    ]
-  };
-
-  // ============ STORAGE ============
+  // ---------- Storage ----------
   const K = {
-    assets: 'grc_assets_v1',
-    risks: 'grc_risks_v1',
-    controls: 'grc_controls_v1',
-    issues: 'grc_issues_v1',
-    treatments: 'grc_treatments_v1'
+    assets:'grc_assets_v1',
+    risks:'grc_risks_v1',
+    controls:'grc_controls_v1',
+    issues:'grc_issues_v1',
+    treats:'grc_treatments_v1'
   };
-
-  const load = key => {
-    try { const v = JSON.parse(localStorage.getItem(key)); return Array.isArray(v) ? v : []; }
-    catch { return []; }
-  };
-  const save = (key, val) => { localStorage.setItem(key, JSON.stringify(val)); };
+  const load = k => { try { const v = JSON.parse(localStorage.getItem(k)); return Array.isArray(v)?v:[]; } catch { return []; } };
+  const save = (k,v) => localStorage.setItem(k,JSON.stringify(v));
 
   let assets = load(K.assets);
   let risks = load(K.risks);
   let controls = load(K.controls);
   let issues = load(K.issues);
-  let treatments = load(K.treatments);
+  let treatments = load(K.treats);
 
-  // ============ HELPERS ============
-  const qs  = s => document.querySelector(s);
+  // ---------- Helpers ----------
+  const qs = s => document.querySelector(s);
   const qsa = s => Array.from(document.querySelectorAll(s));
-
   const getMulti = sel => {
-    const v = []; if (!sel) return v;
-    Array.from(sel.options).forEach(o => { if (o.selected && o.value) v.push(o.value); });
+    if(!sel) return [];
+    const v=[]; Array.from(sel.options).forEach(o=>{ if(o.selected && o.value) v.push(o.value); });
     return v;
   };
-  const setMulti = (sel, values) => {
-    if (!sel) return; const S = new Set(values||[]);
-    Array.from(sel.options).forEach(o => o.selected = S.has(o.value));
+  const setMulti = (sel,vals) => {
+    if(!sel) return;
+    const S=new Set(vals||[]);
+    Array.from(sel.options).forEach(o=>o.selected=S.has(o.value));
   };
+  const rScore = (l,i)=> (Number(l)||0)*(Number(i)||0);
+  const rLevel = s => s>=15?'High':s>=6?'Medium':s>0?'Low':'-';
 
-  // ============ FRAMEWORK RENDER ============
+  // ---------- Framework render ----------
   function renderFrameworkControls(){
-    const tbody = qs('#frameworks-table-body');
-    const countEl = qs('#frameworks-count');
-    const f = qs('#framework-filter').value;
-    const c = qs('#category-filter').value;
-    const s = qs('#framework-search').value.trim().toLowerCase();
-
+    const tbody=qs('#frameworks-table-body');
+    const countEl=qs('#frameworks-count');
+    const f=qs('#framework-filter').value;
+    const c=qs('#category-filter').value;
+    const s=(qs('#framework-search').value||'').trim().toLowerCase();
     const filtered = FRAMEWORK_CONTROLS.filter(x=>{
       const okF = f==='all' || x.frameworks.includes(f);
       const okC = c==='all' || x.category===c;
       const okS = !s || x.name.toLowerCase().includes(s) || x.description.toLowerCase().includes(s) || x.id.toLowerCase().includes(s);
       return okF && okC && okS;
     });
-
-    tbody.innerHTML = '';
+    tbody.innerHTML='';
     filtered.forEach(x=>{
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${x.id}</td><td>${x.name}</td><td>${x.category}</td>
-        <td>${x.references.join('<br>')}</td><td>${x.description}</td>`;
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>${x.id}</td>
+        <td>${x.name}</td>
+        <td>${x.category}</td>
+        <td>${x.references.join('<br>')}</td>
+        <td>${x.description}</td>`;
       tbody.appendChild(tr);
     });
-    countEl.textContent = `${filtered.length} control(s) shown of ${FRAMEWORK_CONTROLS.length}`;
+    countEl.textContent=`${filtered.length} control(s) shown of ${FRAMEWORK_CONTROLS.length}`;
   }
 
-  // ============ ASSETS ============
+  // ---------- Assets ----------
   function selectedDataTypes(){ return qsa('.asset-dt').filter(cb=>cb.checked).map(cb=>cb.value); }
-  function setDataTypes(values){ qsa('.asset-dt').forEach(cb => cb.checked = (values||[]).includes(cb.value)); }
+  function setDataTypes(vals){ qsa('.asset-dt').forEach(cb=>cb.checked=(vals||[]).includes(cb.value)); }
 
   function populateRiskAssetOptions(){
-    const sel = qs('#risk-asset'); if(!sel) return;
-    const cur = sel.value; sel.innerHTML = '<option value="">Select asset...</option>';
+    const sel=qs('#risk-asset'); if(!sel) return;
+    const cur=sel.value;
+    sel.innerHTML='<option value="">Select asset...</option>';
     assets.forEach(a=>{ const o=document.createElement('option'); o.value=a.id; o.textContent=a.name; sel.appendChild(o); });
-    if(cur && assets.some(a=>a.id===cur)) sel.value = cur;
+    if(cur && assets.some(a=>a.id===cur)) sel.value=cur;
   }
+
   function populateIssueDropdowns(){
-    const aSel = qs('#issue-asset'), rSel = qs('#issue-risk'), cSel = qs('#issue-control');
+    const aSel=qs('#issue-asset'), rSel=qs('#issue-risk'), cSel=qs('#issue-control');
     if(aSel){
-      const cur=aSel.value; aSel.innerHTML='<option value="">Linked asset...</option>';
+      const cur=aSel.value;
+      aSel.innerHTML='<option value="">Linked asset...</option>';
       assets.forEach(a=>{const o=document.createElement('option');o.value=a.id;o.textContent=a.name;aSel.appendChild(o);});
-      if(cur&&assets.some(a=>a.id===cur)) aSel.value=cur;
+      if(cur && assets.some(a=>a.id===cur)) aSel.value=cur;
     }
     if(rSel){
-      const cur=rSel.value; rSel.innerHTML='<option value="">Linked risk...</option>';
+      const cur=rSel.value;
+      rSel.innerHTML='<option value="">Linked risk...</option>';
       risks.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.title;rSel.appendChild(o);});
-      if(cur&&risks.some(r=>r.id===cur)) rSel.value=cur;
+      if(cur && risks.some(r=>r.id===cur)) rSel.value=cur;
     }
     if(cSel){
-      const cur=cSel.value; cSel.innerHTML='<option value="">Linked control...</option>';
+      const cur=cSel.value;
+      cSel.innerHTML='<option value="">Linked control...</option>';
       controls.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.name;cSel.appendChild(o);});
-      if(cur&&controls.some(c=>c.id===cur)) cSel.value=cur;
+      if(cur && controls.some(c=>c.id===cur)) cSel.value=cur;
     }
-  }
-  function populateTreatmentRiskOptions(){
-    const sel = qs('#treatment-risk'); if(!sel) return;
-    const cur = sel.value; sel.innerHTML = '<option value="">Select risk...</option>';
-    risks.forEach(r=>{ const o=document.createElement('option'); o.value=r.id; o.textContent=r.title; sel.appendChild(o); });
-    if(cur && risks.some(r=>r.id===cur)) sel.value=cur;
   }
 
   function renderAssetsTable(){
-    const tbody = qs('#assets-table-body'), empty = qs('#assets-empty'), count = qs('#assets-count');
+    const tbody=qs('#assets-table-body'), empty=qs('#assets-empty'), count=qs('#assets-count');
     tbody.innerHTML='';
     assets.forEach(a=>{
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${a.name}</td><td>${a.type}</td><td>${a.criticality}</td>
-        <td>${(a.dataTypes||[]).join(', ')}</td><td>${a.owner||''}</td>
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>${a.name}</td>
+        <td>${a.type}</td>
+        <td>${a.criticality}</td>
+        <td>${(a.dataTypes||[]).join(', ')}</td>
+        <td>${a.owner||''}</td>
         <td>
-          <button class="btn btn-sm btn-outline-light mb-1" data-ae="${a.id}">Edit</button>
-          <button class="btn btn-sm btn-outline-light mb-1" data-ad="${a.id}">Del</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-ae="${a.id}">EDIT</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-ad="${a.id}">DEL</button>
         </td>`;
       tbody.appendChild(tr);
     });
-    empty.style.display = assets.length ? 'none':'block';
-    count.textContent = `${assets.length} asset(s)`;
+    empty.style.display = assets.length?'none':'block';
+    count.textContent=`${assets.length} asset(s)`;
     populateRiskAssetOptions();
     populateIssueDropdowns();
     renderDashboard();
   }
 
   function resetAssetForm(){
-    qs('#asset-form').reset(); qs('#asset-id').value=''; qs('#asset-form-submit').textContent='Save asset';
+    qs('#asset-form').reset();
+    qs('#asset-id').value='';
+    qs('#asset-form-submit').textContent='Save asset';
   }
 
-  // ============ RISKS ============
-  const rScore = (l,i)=> (Number(l)||0) * (Number(i)||0);
-  const rLevel = s => s>=15?'High': s>=6?'Medium': s>0?'Low':'-';
+  qs('#asset-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const id=qs('#asset-id').value;
+    const name=qs('#asset-name').value.trim();
+    const type=qs('#asset-type').value;
+    const crit=qs('#asset-criticality').value;
+    if(!name || !type || !crit) return alert('Fill name, type, criticality.');
+    const obj={
+      id: id || ('AST-'+Date.now()),
+      name,
+      type,
+      criticality:crit,
+      owner:qs('#asset-owner').value.trim(),
+      dataTypes:selectedDataTypes(),
+      notes:qs('#asset-notes').value.trim()
+    };
+    const idx=assets.findIndex(x=>x.id===obj.id);
+    if(idx>-1) assets[idx]=obj; else assets.push(obj);
+    save(K.assets,assets);
+    renderAssetsTable();
+    resetAssetForm();
+  });
+  qs('#asset-form-cancel').addEventListener('click',resetAssetForm);
+  qs('#assets-table-body').addEventListener('click',e=>{
+    const idE=e.target.getAttribute('data-ae');
+    const idD=e.target.getAttribute('data-ad');
+    if(idE){
+      const a=assets.find(x=>x.id===idE); if(!a) return;
+      qs('#asset-id').value=a.id;
+      qs('#asset-name').value=a.name;
+      qs('#asset-type').value=a.type;
+      qs('#asset-criticality').value=a.criticality;
+      qs('#asset-owner').value=a.owner||'';
+      qs('#asset-notes').value=a.notes||'';
+      setDataTypes(a.dataTypes||[]);
+      qs('#asset-form-submit').textContent='Update asset';
+    }
+    if(idD){
+      if(!confirm('Delete this asset?')) return;
+      assets=assets.filter(x=>x.id!==idD);
+      save(K.assets,assets);
+      renderAssetsTable();
+    }
+  });
 
-  function resetRiskForm(){ qs('#risk-form').reset(); qs('#risk-id').value=''; qs('#risk-form-submit').textContent='Save risk'; }
+  // ---------- Risks ----------
+  function resetRiskForm(){
+    qs('#risk-form').reset();
+    qs('#risk-id').value='';
+    qs('#risk-form-submit').textContent='Save risk';
+  }
 
   function populateControlRisks(){
     const sel=qs('#control-risks'); if(!sel) return;
     const cur=getMulti(sel);
-    sel.innerHTML=''; risks.forEach(r=>{ const o=document.createElement('option'); o.value=r.id; o.textContent=r.title; sel.appendChild(o); });
-    setMulti(sel, cur);
+    sel.innerHTML='';
+    risks.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.title;sel.appendChild(o);});
+    setMulti(sel,cur);
   }
 
   function renderRisksTable(){
-    const tbody = qs('#risks-table-body'), empty=qs('#risks-empty'), count=qs('#risks-count');
+    const tbody=qs('#risks-table-body'), empty=qs('#risks-empty'), count=qs('#risks-count');
     tbody.innerHTML='';
     risks.forEach(r=>{
-      const level=rLevel(r.score), cls = level==='High'?'badge-danger': level==='Medium'?'badge-warning': level==='Low'?'badge-success':'';
+      const level=rLevel(r.score);
+      const cls = level==='High'?'badge-danger':level==='Medium'?'badge-warning':level==='Low'?'badge-success':'';
       const tr=document.createElement('tr');
       tr.innerHTML=`
-        <td>${r.title}</td><td>${r.assetName||''}</td><td>${r.category}</td>
+        <td>${r.title}</td>
+        <td>${r.assetName||''}</td>
+        <td>${r.category}</td>
         <td>${r.score?`<span class="badge ${cls} mr-1">${r.score}</span><span class="text-muted small">${level}</span>`:'-'}</td>
         <td>${r.status}</td>
         <td>
-          <button class="btn btn-sm btn-outline-light mb-1" data-re="${r.id}">Edit</button>
-          <button class="btn btn-sm btn-outline-light mb-1" data-rd="${r.id}">Del</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-re="${r.id}">EDIT</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-rd="${r.id}">DEL</button>
         </td>`;
       tbody.appendChild(tr);
     });
-    empty.style.display = risks.length?'none':'block';
-    count.textContent = `${risks.length} risk(s)`;
-    populateControlRisks(); populateIssueDropdowns(); populateTreatmentRiskOptions(); renderDashboard();
+    empty.style.display=risks.length?'none':'block';
+    count.textContent=`${risks.length} risk(s)`;
+    populateControlRisks();
+    populateIssueDropdowns();
+    populateTreatmentDropdownRisks();
+    renderDashboard();
   }
 
-  // ============ CONTROLS ============
+  qs('#risk-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const id=qs('#risk-id').value;
+    const title=qs('#risk-title').value.trim();
+    const assetId=qs('#risk-asset').value;
+    const asset=assets.find(a=>a.id===assetId);
+    const category=qs('#risk-category').value;
+    const likelihood=Number(qs('#risk-likelihood').value);
+    const impact=Number(qs('#risk-impact').value);
+    const status=qs('#risk-status').value;
+    if(!title || !assetId || !category || !likelihood || !impact || !status) return alert('Fill all required risk fields.');
+    const obj={
+      id:id || ('RSK-'+Date.now()),
+      title,
+      assetId,
+      assetName:asset?asset.name:'',
+      category,
+      likelihood,
+      impact,
+      score:rScore(likelihood,impact),
+      status,
+      owner:qs('#risk-owner').value.trim(),
+      notes:qs('#risk-notes').value.trim()
+    };
+    const idx=risks.findIndex(x=>x.id===obj.id);
+    if(idx>-1) risks[idx]=obj; else risks.push(obj);
+    save(K.risks,risks);
+    renderRisksTable();
+    resetRiskForm();
+  });
+  qs('#risk-form-cancel').addEventListener('click',resetRiskForm);
+  qs('#risks-table-body').addEventListener('click',e=>{
+    const idE=e.target.getAttribute('data-re');
+    const idD=e.target.getAttribute('data-rd');
+    if(idE){
+      const r=risks.find(x=>x.id===idE); if(!r) return;
+      qs('#risk-id').value=r.id;
+      qs('#risk-title').value=r.title;
+      qs('#risk-asset').value=r.assetId;
+      qs('#risk-category').value=r.category;
+      qs('#risk-likelihood').value=String(r.likelihood);
+      qs('#risk-impact').value=String(r.impact);
+      qs('#risk-owner').value=r.owner||'';
+      qs('#risk-status').value=r.status||'Open';
+      qs('#risk-notes').value=r.notes||'';
+      qs('#risk-form-submit').textContent='Update risk';
+    }
+    if(idD){
+      if(!confirm('Delete this risk?')) return;
+      risks=risks.filter(x=>x.id!==idD);
+      save(K.risks,risks);
+
+      // unlink from controls
+      let changed=false;
+      controls.forEach(c=>{
+        if(Array.isArray(c.linkedRiskIds) && c.linkedRiskIds.includes(idD)){
+          c.linkedRiskIds=c.linkedRiskIds.filter(z=>z!==idD);
+          changed=true;
+        }
+      });
+      if(changed){ save(K.controls,controls); renderControlsTable(); }
+
+      // unlink from issues
+      issues.forEach(i=>{
+        if(i.riskId===idD){
+          i.riskId='';
+          i.linkedSummary=(i.linkedSummary||'').replace(/ *\| *Risk: [^|]+/,'');
+        }
+      });
+      save(K.issues,issues);
+      renderIssuesTable();
+
+      // unlink from treatments
+      treatments.forEach(t=>{ if(t.riskId===idD) t.riskId=''; });
+      save(K.treats,treatments);
+      renderTreatmentsTable();
+
+      renderRisksTable();
+    }
+  });
+
+  // ---------- Controls ----------
   function populateControlFrameworks(){
-    const sel = qs('#control-frameworks'); if(!sel) return;
-    sel.innerHTML=''; FRAMEWORK_CONTROLS.forEach(fc=>{ const o=document.createElement('option'); o.value=fc.id; o.textContent=`${fc.id} – ${fc.name}`; sel.appendChild(o); });
+    const sel=qs('#control-frameworks'); if(!sel) return;
+    sel.innerHTML='';
+    FRAMEWORK_CONTROLS.forEach(fc=>{
+      const o=document.createElement('option');
+      o.value=fc.id;
+      o.textContent=`${fc.id} – ${fc.name}`;
+      sel.appendChild(o);
+    });
   }
-  function resetControlForm(){ qs('#control-form').reset(); qs('#control-id').value=''; qs('#control-form-submit').textContent='Save control'; }
 
   function renderControlsTable(){
     const tbody=qs('#controls-table-body'), empty=qs('#controls-empty'), count=qs('#controls-count');
     tbody.innerHTML='';
     controls.forEach(c=>{
-      const rc=(c.linkedRiskIds||[]).length, fw=(c.linkedFrameworkControlIds||[]).length;
+      const rc=(c.linkedRiskIds||[]).length;
+      const fw=(c.linkedFrameworkControlIds||[]).length;
       const tr=document.createElement('tr');
       tr.innerHTML=`
-        <td>${c.name}</td><td>${c.type}</td><td>${c.status}</td>
-        <td>${rc?rc+' linked':'-'}</td><td>${fw?fw+' mapped':'-'}</td>
+        <td>${c.name}</td>
+        <td>${c.type}</td>
+        <td>${c.status}</td>
+        <td>${rc?rc+' linked':'-'}</td>
+        <td>${fw?fw+' mapped':'-'}</td>
         <td>
-          <button class="btn btn-sm btn-outline-light mb-1" data-ce="${c.id}">Edit</button>
-          <button class="btn btn-sm btn-outline-light mb-1" data-cd="${c.id}">Del</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-ce="${c.id}">EDIT</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-cd="${c.id}">DEL</button>
         </td>`;
       tbody.appendChild(tr);
     });
-    empty.style.display = controls.length?'none':'block';
-    count.textContent = `${controls.length} control(s)`;
-    populateIssueDropdowns(); renderGapTable(); renderDashboard();
+    empty.style.display=controls.length?'none':'block';
+    count.textContent=`${controls.length} control(s)`;
+    populateIssueDropdowns();
+    populateTreatmentDropdownControls();
+    renderGapTable();
+    renderDashboard();
   }
 
-  // ============ ISSUES ============
-  function resetIssueForm(){ qs('#issue-form').reset(); qs('#issue-id').value=''; qs('#issue-form-submit').textContent='Save issue'; }
+  function resetControlForm(){
+    qs('#control-form').reset();
+    qs('#control-id').value='';
+    qs('#control-form-submit').textContent='Save control';
+  }
+
+  qs('#control-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const id=qs('#control-id').value;
+    const name=qs('#control-name').value.trim();
+    const type=qs('#control-type').value;
+    const status=qs('#control-status').value;
+    if(!name || !type || !status) return alert('Fill control name, type, status.');
+    const obj={
+      id:id || ('CTL-'+Date.now()),
+      name,
+      type,
+      status,
+      owner:qs('#control-owner').value.trim(),
+      description:qs('#control-description').value.trim(),
+      linkedRiskIds:getMulti(qs('#control-risks')),
+      linkedFrameworkControlIds:getMulti(qs('#control-frameworks'))
+    };
+    const idx=controls.findIndex(x=>x.id===obj.id);
+    if(idx>-1) controls[idx]=obj; else controls.push(obj);
+    save(K.controls,controls);
+    renderControlsTable();
+    resetControlForm();
+  });
+  qs('#control-form-cancel').addEventListener('click',resetControlForm);
+  qs('#controls-table-body').addEventListener('click',e=>{
+    const idE=e.target.getAttribute('data-ce');
+    const idD=e.target.getAttribute('data-cd');
+    if(idE){
+      const c=controls.find(x=>x.id===idE); if(!c) return;
+      qs('#control-id').value=c.id;
+      qs('#control-name').value=c.name;
+      qs('#control-type').value=c.type;
+      qs('#control-status').value=c.status;
+      qs('#control-owner').value=c.owner||'';
+      qs('#control-description').value=c.description||'';
+      setMulti(qs('#control-risks'),c.linkedRiskIds||[]);
+      setMulti(qs('#control-frameworks'),c.linkedFrameworkControlIds||[]);
+      qs('#control-form-submit').textContent='Update control';
+    }
+    if(idD){
+      if(!confirm('Delete this control?')) return;
+      controls=controls.filter(x=>x.id!==idD);
+      save(K.controls,controls);
+
+      // unlink from issues and treatments
+      issues.forEach(i=>{
+        if(i.controlId===idD){
+          i.controlId='';
+          i.linkedSummary=(i.linkedSummary||'').replace(/ *\| *Control: [^|]+/,'');
+        }
+      });
+      save(K.issues,issues);
+      renderIssuesTable();
+
+      treatments.forEach(t=>{ if(t.controlId===idD) t.controlId=''; });
+      save(K.treats,treatments);
+      renderTreatmentsTable();
+
+      renderControlsTable();
+    }
+  });
+
+  // ---------- Issues ----------
+  function resetIssueForm(){
+    qs('#issue-form').reset();
+    qs('#issue-id').value='';
+    qs('#issue-form-submit').textContent='Save issue';
+  }
 
   function renderIssuesTable(){
-    const tbody = qs('#issues-table-body'), empty=qs('#issues-empty'), count=qs('#issues-count');
+    const tbody=qs('#issues-table-body'), empty=qs('#issues-empty'), count=qs('#issues-count');
     tbody.innerHTML='';
     issues.forEach(i=>{
-      const sev=i.severity||'', cls = sev==='Critical'||sev==='High'?'badge-danger': sev==='Medium'?'badge-warning':'badge-success';
+      const sev=i.severity||'';
+      const cls = sev==='Critical'||sev==='High'?'badge-danger':sev==='Medium'?'badge-warning':'badge-success';
       const tr=document.createElement('tr');
       tr.innerHTML=`
-        <td>${i.title}</td><td>${i.type}</td><td>${sev?`<span class="badge ${cls}">${sev}</span>`:'-'}</td>
-        <td>${i.status}</td><td>${i.linkedSummary||'-'}</td>
+        <td>${i.title}</td>
+        <td>${i.type}</td>
+        <td>${sev?`<span class="badge ${cls}">${sev}</span>`:'-'}</td>
+        <td>${i.status}</td>
+        <td>${i.linkedSummary||'-'}</td>
         <td>
-          <button class="btn btn-sm btn-outline-light mb-1" data-ie="${i.id}">Edit</button>
-          <button class="btn btn-sm btn-outline-light mb-1" data-id="${i.id}">Del</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-ie="${i.id}">EDIT</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-id="${i.id}">DEL</button>
         </td>`;
       tbody.appendChild(tr);
     });
-    empty.style.display = issues.length?'none':'block';
-    count.textContent = `${issues.length} issue(s)`;
+    empty.style.display=issues.length?'none':'block';
+    count.textContent=`${issues.length} issue(s)`;
     renderDashboard();
   }
 
-  // ============ TREATMENTS ============
-  function resetTreatmentForm(){
-    qs('#treatment-form').reset();
-    qs('#treatment-id').value='';
-    qs('#treatment-form-submit').textContent='Save action';
-  }
+  qs('#issue-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const id=qs('#issue-id').value;
+    const title=qs('#issue-title').value.trim();
+    const type=qs('#issue-type').value;
+    const severity=qs('#issue-severity').value;
+    const status=qs('#issue-status').value;
+    if(!title || !type || !severity || !status) return alert('Fill title, type, severity, status.');
+    const assetId=qs('#issue-asset').value||'';
+    const riskId=qs('#issue-risk').value||'';
+    const controlId=qs('#issue-control').value||'';
+    const a=assets.find(x=>x.id===assetId);
+    const r=risks.find(x=>x.id===riskId);
+    const c=controls.find(x=>x.id===controlId);
+    const linkedSummary=[
+      a?`Asset: ${a.name}`:'',
+      r?`Risk: ${r.title}`:'',
+      c?`Control: ${c.name}`:''
+    ].filter(Boolean).join(' | ');
+    const obj={
+      id:id || ('ISS-'+Date.now()),
+      title,
+      type,
+      severity,
+      status,
+      owner:qs('#issue-owner').value.trim(),
+      dueDate:qs('#issue-due').value,
+      notes:qs('#issue-notes').value.trim(),
+      assetId,riskId,controlId,
+      linkedSummary
+    };
+    const idx=issues.findIndex(x=>x.id===obj.id);
+    if(idx>-1) issues[idx]=obj; else issues.push(obj);
+    save(K.issues,issues);
+    renderIssuesTable();
+    resetIssueForm();
+  });
+  qs('#issue-form-cancel').addEventListener('click',resetIssueForm);
+  qs('#issues-table-body').addEventListener('click',e=>{
+    const idE=e.target.getAttribute('data-ie');
+    const idD=e.target.getAttribute('data-id');
+    if(idE){
+      const i=issues.find(x=>x.id===idE); if(!i) return;
+      qs('#issue-id').value=i.id;
+      qs('#issue-title').value=i.title;
+      qs('#issue-type').value=i.type;
+      qs('#issue-severity').value=i.severity;
+      qs('#issue-status').value=i.status;
+      qs('#issue-owner').value=i.owner||'';
+      qs('#issue-due').value=i.dueDate||'';
+      qs('#issue-notes').value=i.notes||'';
+      populateIssueDropdowns();
+      qs('#issue-asset').value=i.assetId||'';
+      qs('#issue-risk').value=i.riskId||'';
+      qs('#issue-control').value=i.controlId||'';
+      qs('#issue-form-submit').textContent='Update issue';
+    }
+    if(idD){
+      if(!confirm('Delete this issue?')) return;
+      issues=issues.filter(x=>x.id!==idD);
+      save(K.issues,issues);
+      renderIssuesTable();
+    }
+  });
 
-  function renderTreatmentsTable(){
-    const tbody = qs('#treatments-table-body'),
-          empty = qs('#treatments-empty'),
-          count = qs('#treatments-count');
-    tbody.innerHTML='';
-    treatments.forEach(t=>{
-      const tr=document.createElement('tr');
-      const status = t.status || 'Open';
-      const cls = status==='Completed'?'badge-success':
-                  status==='In progress'?'badge-warning':
-                  status==='Accepted'?'badge-secondary':'badge-primary';
-      tr.innerHTML=`
-        <td>${t.title}</td>
-        <td>${t.riskTitle || ''}</td>
-        <td><span class="badge ${cls}">${status}</span></td>
-        <td>${t.dueDate || '-'}</td>
-        <td>${t.owner || ''}</td>
-        <td>
-          <button class="btn btn-sm btn-outline-light mb-1" data-te="${t.id}">Edit</button>
-          <button class="btn btn-sm btn-outline-light mb-1" data-td="${t.id}">Del</button>
-        </td>`;
-      tbody.appendChild(tr);
-    });
-    empty.style.display = treatments.length ? 'none' : 'block';
-    count.textContent = `${treatments.length} action(s)`;
-    renderDashboard();
-  }
-
-  // If a risk is deleted, detach from treatments
-  function detachRiskFromTreatments(riskId){
-    let changed=false;
-    treatments.forEach(t=>{
-      if(t.riskId===riskId){
-        t.riskId='';
-        t.riskTitle='(risk deleted)';
-        changed=true;
-      }
-    });
-    if(changed){ save(K.treatments, treatments); renderTreatmentsTable(); }
-  }
-
-  // ============ GAP ANALYSIS ============
-  const heatClass = p => p>=80?'heat-good': p>=50?'heat-medium': p>0?'heat-low':'heat-none';
+  // ---------- Gap analysis ----------
+  const heatClass = p => p>=80?'heat-good':p>=50?'heat-medium':p>0?'heat-low':'heat-none';
 
   function computeGapRows(){
-    const byCat = new Map();
+    const byCat=new Map();
     FRAMEWORK_CONTROLS.forEach(fc=>{
-      if(!byCat.has(fc.category)) byCat.set(fc.category, {category:fc.category,total:0,implemented:0,plannedOnly:0,notImplemented:0});
-      const row = byCat.get(fc.category); row.total += 1;
-      const linked = controls.filter(c=>Array.isArray(c.linkedFrameworkControlIds) && c.linkedFrameworkControlIds.includes(fc.id));
-      if(linked.length===0){ row.notImplemented += 1; return; }
-      const hasInPlace = linked.some(c=>c.status==='In place');
-      const hasPlanned = linked.some(c=>c.status==='Planned');
-      if(hasInPlace) row.implemented += 1;
-      else if(hasPlanned) row.plannedOnly += 1;
-      else row.notImplemented += 1;
+      if(!byCat.has(fc.category)) byCat.set(fc.category,{category:fc.category,total:0,implemented:0,plannedOnly:0,notImplemented:0});
+      const row=byCat.get(fc.category);
+      row.total+=1;
+      const linked=controls.filter(c=>Array.isArray(c.linkedFrameworkControlIds)&&c.linkedFrameworkControlIds.includes(fc.id));
+      if(linked.length===0){ row.notImplemented+=1; return; }
+      const hasInPlace=linked.some(c=>c.status==='In place');
+      const hasPlanned=linked.some(c=>c.status==='Planned');
+      if(hasInPlace) row.implemented+=1;
+      else if(hasPlanned) row.plannedOnly+=1;
+      else row.notImplemented+=1;
     });
     return Array.from(byCat.values()).sort((a,b)=>a.category.localeCompare(b.category));
   }
+
   function overallCoverage(rows){
-    let total=0, imp=0; rows.forEach(r=>{ total+=r.total; imp+=r.implemented; });
-    return total? Math.round((imp/total)*100): 0;
+    let total=0, imp=0;
+    rows.forEach(r=>{total+=r.total;imp+=r.implemented;});
+    return total?Math.round((imp/total)*100):0;
   }
+
   function renderGapTable(){
     const tbody=qs('#gap-table-body'), overall=qs('#gap-overall-coverage');
-    const rows = computeGapRows(); tbody.innerHTML='';
+    const rows=computeGapRows();
+    tbody.innerHTML='';
     rows.forEach(r=>{
-      const pct = r.total? Math.round((r.implemented/r.total)*100):0;
+      const pct=r.total?Math.round((r.implemented/r.total)*100):0;
       const tr=document.createElement('tr');
       tr.innerHTML=`
-        <td>${r.category}</td><td>${r.total}</td><td>${r.implemented} / ${r.total}</td>
-        <td>${r.plannedOnly} / ${r.total}</td><td>${r.notImplemented} / ${r.total}</td>
+        <td>${r.category}</td>
+        <td>${r.total}</td>
+        <td>${r.implemented} / ${r.total}</td>
+        <td>${r.plannedOnly} / ${r.total}</td>
+        <td>${r.notImplemented} / ${r.total}</td>
         <td class="heat-cell ${heatClass(pct)}">${pct}%<small>${r.implemented} of ${r.total} control(s) implemented</small></td>`;
       tbody.appendChild(tr);
     });
-    const ov = overallCoverage(rows);
+    const ov=overallCoverage(rows);
     overall.textContent = rows.length
       ? `Overall implemented coverage: ${ov}% of ${FRAMEWORK_CONTROLS.length} framework control(s).`
       : 'Add local controls and map them to framework controls to see coverage.';
     updateCoveragePill(ov);
   }
 
-  // ============ DASHBOARD ============
+  // ---------- Dashboard ----------
   function updateCoveragePill(p){
-    const pill = qs('#dash-coverage-pill');
+    const pill=qs('#dash-coverage-pill');
     pill.classList.remove('heat-good','heat-medium','heat-low','heat-none');
     pill.classList.add(heatClass(p));
-    pill.textContent = p>=80?'Strong coverage': p>=50?'Moderate coverage': p>0?'Limited coverage':'No implemented coverage yet';
+    pill.textContent = p>=80?'Strong coverage':p>=50?'Moderate coverage':p>0?'Limited coverage':'No implemented coverage yet';
   }
 
   function renderDashboard(){
-    qs('#dash-assets').textContent   = assets.length;
-    qs('#dash-risks').textContent    = risks.length;
-    qs('#dash-controls').textContent = controls.length;
-    qs('#dash-issues').textContent   = issues.length;
-
-    const high = risks.filter(r=>rLevel(r.score)==='High').length;
-    qs('#dash-high').textContent = high;
-
-    const today = new Date();
-    const overdue = issues.filter(i=>{
-      if(!i.dueDate) return false; const d=new Date(i.dueDate); if(isNaN(d)) return false;
-      const st=i.status||''; return st!=='Resolved' && st!=='Accepted' && d<today;
+    qs('#dash-assets').textContent=assets.length;
+    qs('#dash-risks').textContent=risks.length;
+    qs('#dash-controls').textContent=controls.length;
+    qs('#dash-issues').textContent=issues.length;
+    const high=risks.filter(r=>rLevel(r.score)==='High').length;
+    qs('#dash-high').textContent=high;
+    const today=new Date();
+    const overdue=issues.filter(i=>{
+      if(!i.dueDate) return false;
+      const d=new Date(i.dueDate);
+      if(isNaN(d)) return false;
+      const st=i.status||'';
+      return st!=='Resolved' && st!=='Accepted' && d<today;
     }).length;
-    qs('#dash-overdue').textContent = overdue;
-
-    const openActions = treatments.filter(t=>t.status==='Open' || t.status==='In progress').length;
-    qs('#dash-open-actions').textContent = openActions;
-
-    const ov = overallCoverage(computeGapRows());
-    qs('#dash-coverage').textContent = ov+'%';
+    qs('#dash-overdue').textContent=overdue;
+    const ov=overallCoverage(computeGapRows());
+    qs('#dash-coverage').textContent=ov+'%';
     updateCoveragePill(ov);
   }
 
-  // ============ RISK MATRIX ============
-  let showResidual = false;
-  const canvas = document.createElement('canvas');
-  // We'll re-select once DOM is ready
+  // ---------- Risk Matrix ----------
+  let showResidual=false;
+  const canvas=qs('#risk-matrix-canvas');
+  const ctx=canvas.getContext('2d');
+  const legend=qs('#matrix-legend');
 
   function residualForRisk(r){
-    const impl = controls.filter(c => c.status==='In place' && (c.linkedRiskIds||[]).includes(r.id));
-    const dropL = Math.min(2, impl.length);
-    const dropI = impl.some(c=>c.type==='Preventive' || c.type==='Corrective') ? 1 : 0;
+    const impl=controls.filter(c=>c.status==='In place' && (c.linkedRiskIds||[]).includes(r.id));
+    const dropL=Math.min(2,impl.length);
+    const dropI=impl.some(c=>c.type==='Preventive' || c.type==='Corrective')?1:0;
     return {
-      likelihood: Math.max(1, (r.likelihood||1) - dropL),
-      impact: Math.max(1, (r.impact||1) - dropI)
+      likelihood:Math.max(1,(r.likelihood||1)-dropL),
+      impact:Math.max(1,(r.impact||1)-dropI)
     };
   }
 
   function drawMatrix(){
-    const c = qs('#risk-matrix-canvas'); if(!c) return;
-    const ctx = c.getContext('2d');
-    const legend = qs('#matrix-legend');
-    ctx.clearRect(0,0,c.width,c.height);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
     const size=110, off=90;
-
     ctx.strokeStyle="#2b3138"; ctx.lineWidth=1;
     for(let i=0;i<=5;i++){
-      ctx.beginPath(); ctx.moveTo(off, off + i*size); ctx.lineTo(off+5*size, off+i*size); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(off + i*size, off); ctx.lineTo(off + i*size, off+5*size); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(off,off+i*size); ctx.lineTo(off+5*size,off+i*size); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(off+i*size,off); ctx.lineTo(off+i*size,off+5*size); ctx.stroke();
     }
-    ctx.font="14px Poppins"; ctx.fillStyle="#aab2bd"; ctx.fillText("Impact →", off+225, off-25);
-    ctx.save(); ctx.translate(off-55, off+240); ctx.rotate(-Math.PI/2); ctx.fillText("Likelihood →", 0,0); ctx.restore();
+    ctx.font="14px Poppins"; ctx.fillStyle="#aab2bd";
+    ctx.fillText("Impact →",off+225,off-25);
+    ctx.save(); ctx.translate(off-55,off+240); ctx.rotate(-Math.PI/2); ctx.fillText("Likelihood →",0,0); ctx.restore();
 
-    let high=0, med=0, low=0;
+    let high=0,med=0,low=0;
     risks.forEach(r=>{
       let L=r.likelihood, I=r.impact;
-      if(showResidual){ const res = residualForRisk(r); L=res.likelihood; I=res.impact; }
-      const score = rScore(L,I);
-      let color = "#27ae60";
+      if(showResidual){ const res=residualForRisk(r); L=res.likelihood; I=res.impact; }
+      const score=rScore(L,I);
+      let color="#27ae60";
       if(score>=15){ color="#e63946"; high++; }
       else if(score>=6){ color="#f1c40f"; med++; }
       else low++;
-
       ctx.beginPath();
-      ctx.arc(off + (I-0.5)*size, off + (5-L+0.5)*size, 12, 0, 2*Math.PI);
+      ctx.arc(off+(I-0.5)*size,off+(5-L+0.5)*size,12,0,2*Math.PI);
       ctx.fillStyle=color; ctx.fill();
-      ctx.fillStyle="#0c0f12"; ctx.font="bold 12px Poppins"; ctx.textAlign="center"; ctx.textBaseline="middle";
-      ctx.fillText(String(score), off + (I-0.5)*size, off + (5-L+0.5)*size);
+      ctx.fillStyle="#0c0f12"; ctx.font="bold 12px Poppins";
+      ctx.textAlign="center"; ctx.textBaseline="middle";
+      ctx.fillText(String(score),off+(I-0.5)*size,off+(5-L+0.5)*size);
     });
 
-    legend.innerHTML = `<b>${risks.length}</b> risks &nbsp;—&nbsp; 
-      <span style="color:#e63946">High: ${high}</span> &nbsp;|&nbsp;
-      <span style="color:#f1c40f">Medium: ${med}</span> &nbsp;|&nbsp;
+    legend.innerHTML = `<b>${risks.length}</b> risks — 
+      <span style="color:#e63946">High: ${high}</span> |
+      <span style="color:#f1c40f">Medium: ${med}</span> |
       <span style="color:#27ae60">Low: ${low}</span>`;
   }
 
-  // ============ AUDITOR SUMMARY ============
-  function buildAuditorSummary(){
-    const lines = [];
-    lines.push("1. Scope and context");
-    lines.push(`- The organisation is using the GRC Practice Lab to model ${assets.length || 'no'} key information assets and services.`);
-    if(assets.length){
-      const critical = assets.filter(a=>a.criticality==='High').map(a=>a.name);
-      if(critical.length) lines.push(`- High criticality assets include: ${critical.join(', ')}.`);
-    }
-
-    const highRisks = risks.filter(r=>rLevel(r.score)==='High');
-    const medRisks  = risks.filter(r=>rLevel(r.score)==='Medium');
-
-    lines.push("");
-    lines.push("2. Risk posture");
-    lines.push(`- Total documented risks: ${risks.length}.`);
-    lines.push(`- High risks: ${highRisks.length}; Medium risks: ${medRisks.length}.`);
-    if(highRisks.length){
-      lines.push("- Example high risks:");
-      highRisks.slice(0,3).forEach(r=>{
-        lines.push(`  • ${r.title} (asset: ${r.assetName || 'n/a'}, score: ${r.score}).`);
-      });
-    }
-
-    lines.push("");
-    lines.push("3. Control environment and framework coverage");
-    lines.push(`- Local controls defined: ${controls.length}.`);
-    const rows = computeGapRows();
-    const cov  = overallCoverage(rows);
-    lines.push(`- Overall implemented framework coverage: ${cov}% of ${FRAMEWORK_CONTROLS.length} paraphrased framework controls.`);
-    if(rows.length){
-      lines.push("- Coverage by category:");
-      rows.forEach(r=>{
-        const pct = r.total ? Math.round((r.implemented/r.total)*100) : 0;
-        lines.push(`  • ${r.category}: ${pct}% implemented (${r.implemented}/${r.total}).`);
-      });
-    }
-
-    lines.push("");
-    lines.push("4. Issues, findings and action plans");
-    const openIssues = issues.filter(i=>i.status==='Open' || i.status==='In progress');
-    const highIssues = issues.filter(i=>i.severity==='High' || i.severity==='Critical');
-    const openActions = treatments.filter(t=>t.status==='Open' || t.status==='In progress');
-    lines.push(`- Open / in-progress issues: ${openIssues.length} (of ${issues.length} total).`);
-    lines.push(`- High/Critical issues: ${highIssues.length}.`);
-    lines.push(`- Open / in-progress treatment actions: ${openActions.length} (of ${treatments.length} total action items).`);
-
-    if(openActions.length){
-      lines.push("- Sample actions:");
-      openActions.slice(0,3).forEach(t=>{
-        lines.push(`  • ${t.title} (risk: ${t.riskTitle || 'n/a'}, status: ${t.status}, owner: ${t.owner || 'n/a'}).`);
-      });
-    }
-
-    lines.push("");
-    lines.push("5. Overall observation");
-    if(!risks.length && !controls.length){
-      lines.push("- The environment is at a very early stage: no risks or controls have been modelled yet.");
-    } else if(highRisks.length && openActions.length === 0){
-      lines.push("- Several high risks have been identified; however, there are currently no treatment actions logged against them.");
-    } else {
-      lines.push("- A basic but structured risk and control environment is in place, with active remediation tracked via treatment actions.");
-    }
-
-    return lines.join("\\n");
+  // ---------- Treatments ----------
+  function populateTreatmentDropdownRisks(){
+    const sel=qs('#treat-risk'); if(!sel) return;
+    const cur=sel.value;
+    sel.innerHTML='<option value="">Select risk...</option>';
+    risks.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.title;sel.appendChild(o);});
+    if(cur && risks.some(r=>r.id===cur)) sel.value=cur;
+  }
+  function populateTreatmentDropdownControls(){
+    const sel=qs('#treat-control'); if(!sel) return;
+    const cur=sel.value;
+    sel.innerHTML='<option value="">Select control...</option>';
+    controls.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.name;sel.appendChild(o);});
+    if(cur && controls.some(c=>c.id===cur)) sel.value=cur;
   }
 
-  function renderAuditorSummary(){
-    const ta = qs('#auditor-summary-text');
-    if(!ta) return;
-    ta.value = buildAuditorSummary();
+  function renderTreatmentsTable(){
+    const tbody=qs('#treat-table-body'), empty=qs('#treat-empty'), count=qs('#treat-count');
+    tbody.innerHTML='';
+    treatments.forEach(t=>{
+      const risk=risks.find(r=>r.id===t.riskId);
+      const ctrl=controls.find(c=>c.id===t.controlId);
+      const linked=[
+        risk?`Risk: ${risk.title}`:'',
+        ctrl?`Control: ${ctrl.name}`:''
+      ].filter(Boolean).join(' | ');
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>${t.title}</td>
+        <td>${linked||'-'}</td>
+        <td>${t.status}</td>
+        <td>${t.targetDate||''}</td>
+        <td>${t.owner||''}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-light mb-1" data-te="${t.id}">EDIT</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-td="${t.id}">DEL</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+    empty.style.display=treatments.length?'none':'block';
+    count.textContent=`${treatments.length} treatment action(s)`;
   }
 
-  // ============ SCENARIO EXPORT/IMPORT ============
-  function setImportStatus(msg, err){ const el=qs('#import-status'); el.textContent=msg||''; el.style.color=err?'#fca5a5':'#9ca3af'; }
+  function resetTreatForm(){
+    qs('#treat-form').reset();
+    qs('#treat-id').value='';
+    qs('#treat-submit').textContent='Save action';
+  }
+
+  qs('#treat-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const id=qs('#treat-id').value;
+    const title=qs('#treat-title').value.trim();
+    const riskId=qs('#treat-risk').value;
+    if(!title || !riskId) return alert('Action title and linked risk are required.');
+    const controlId=qs('#treat-control').value || '';
+    const obj={
+      id:id || ('TRT-'+Date.now()),
+      title,
+      riskId,
+      controlId,
+      status:qs('#treat-status').value,
+      targetDate:qs('#treat-date').value,
+      owner:qs('#treat-owner').value.trim(),
+      budget:qs('#treat-budget').value.trim(),
+      notes:qs('#treat-notes').value.trim()
+    };
+    const idx=treatments.findIndex(x=>x.id===obj.id);
+    if(idx>-1) treatments[idx]=obj; else treatments.push(obj);
+    save(K.treats,treatments);
+    renderTreatmentsTable();
+    resetTreatForm();
+  });
+  qs('#treat-cancel').addEventListener('click',resetTreatForm);
+  qs('#treat-table-body').addEventListener('click',e=>{
+    const idE=e.target.getAttribute('data-te');
+    const idD=e.target.getAttribute('data-td');
+    if(idE){
+      const t=treatments.find(x=>x.id===idE); if(!t) return;
+      qs('#treat-id').value=t.id;
+      qs('#treat-title').value=t.title;
+      populateTreatmentDropdownRisks();
+      populateTreatmentDropdownControls();
+      qs('#treat-risk').value=t.riskId||'';
+      qs('#treat-control').value=t.controlId||'';
+      qs('#treat-status').value=t.status||'Open';
+      qs('#treat-date').value=t.targetDate||'';
+      qs('#treat-owner').value=t.owner||'';
+      qs('#treat-budget').value=t.budget||'';
+      qs('#treat-notes').value=t.notes||'';
+      qs('#treat-submit').textContent='Update action';
+    }
+    if(idD){
+      if(!confirm('Delete this treatment action?')) return;
+      treatments=treatments.filter(x=>x.id!==idD);
+      save(K.treats,treatments);
+      renderTreatmentsTable();
+    }
+  });
+
+  // ---------- Export / Import / Reset ----------
+  function setImportStatus(msg,err){
+    const el=qs('#import-status');
+    el.textContent=msg||'';
+    el.style.color=err?'#fca5a5':'#9ca3af';
+  }
+
   function exportScenario(){
-    const payload = {
+    const payload={
       version:2,
       exportedAt:new Date().toISOString(),
-      assets, risks, controls, issues, treatments
+      assets,risks,controls,issues,treatments
     };
-    const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
-    const url = URL.createObjectURL(blob); const a=document.createElement('a');
-    a.href=url; a.download=`grc-lab-scenario-${new Date().toISOString().slice(0,10)}.json`; document.body.appendChild(a); a.click();
-    document.body.removeChild(a); URL.revokeObjectURL(url); setImportStatus('Exported current data as JSON.', false);
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download=`grc-lab-scenario-${new Date().toISOString().slice(0,10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    setImportStatus('Exported current data as JSON.',false);
   }
+
   function importScenarioFile(file){
     if(!file) return;
-    const reader = new FileReader();
-    reader.onload = e=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
       try{
-        const data = JSON.parse(e.target.result);
-        assets     = Array.isArray(data.assets)? data.assets: [];
-        risks      = Array.isArray(data.risks)? data.risks: [];
-        controls   = Array.isArray(data.controls)? data.controls: [];
-        issues     = Array.isArray(data.issues)? data.issues: [];
-        treatments = Array.isArray(data.treatments)? data.treatments: [];
-        save(K.assets, assets); save(K.risks, risks); save(K.controls, controls); save(K.issues, issues); save(K.treatments, treatments);
+        const data=JSON.parse(e.target.result);
+        assets = Array.isArray(data.assets)?data.assets:[];
+        risks  = Array.isArray(data.risks)?data.risks:[];
+        controls = Array.isArray(data.controls)?data.controls:[];
+        issues = Array.isArray(data.issues)?data.issues:[];
+        treatments = Array.isArray(data.treatments)?data.treatments:[]; // backward compatible
+        save(K.assets,assets); save(K.risks,risks); save(K.controls,controls);
+        save(K.issues,issues); save(K.treats,treatments);
         refreshAll();
-        setImportStatus(`Imported scenario: ${assets.length} assets, ${risks.length} risks, ${controls.length} controls, ${issues.length} issues, ${treatments.length} treatments.`, false);
-      }catch(err){ console.error(err); setImportStatus('Failed to import scenario. Check JSON file.', true); }
+        setImportStatus(`Imported scenario: ${assets.length} assets, ${risks.length} risks, ${controls.length} controls, ${issues.length} issues, ${treatments.length} actions.`,false);
+      }catch(err){
+        console.error(err);
+        setImportStatus('Failed to import scenario. Check JSON file.',true);
+      }
     };
-    reader.onerror = ()=> setImportStatus('Failed to read file.', true);
+    reader.onerror=()=>setImportStatus('Failed to read file.',true);
     reader.readAsText(file);
   }
+
   function resetLab(){
-    if(!confirm('This will clear all assets, risks, controls, treatments and issues in this browser. Continue?')) return;
-    assets=[]; risks=[]; controls=[]; issues=[]; treatments=[];
-    localStorage.removeItem(K.assets); localStorage.removeItem(K.risks);
-    localStorage.removeItem(K.controls); localStorage.removeItem(K.issues); localStorage.removeItem(K.treatments);
-    refreshAll(); setImportStatus('Lab reset: all data cleared from this browser.', false);
-  }
-
-  function loadMediCloudScenario(){
-    if(!confirm('This will replace your current lab data with the MediCloud demo scenario. Continue?')) return;
-    assets     = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.assets));
-    risks      = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.risks));
-    controls   = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.controls));
-    issues     = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.issues));
-    treatments = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.treatments));
-    save(K.assets, assets); save(K.risks, risks); save(K.controls, controls); save(K.issues, issues); save(K.treatments, treatments);
+    if(!confirm('This will clear all assets, risks, controls, issues and treatments in this browser. Continue?')) return;
+    assets=[];risks=[];controls=[];issues=[];treatments=[];
+    Object.values(K).forEach(k=>localStorage.removeItem(k));
     refreshAll();
-    setImportStatus('Loaded MediCloud demo scenario into this browser.', false);
+    setImportStatus('Lab reset: all data cleared from this browser.',false);
   }
 
-  // ============ TABS ============
+  // ---------- Tabs ----------
   function bindTabs(){
-    const buttons = qsa('[data-grc-tab]');
-    const mapping = {};
-    ['frameworks','assets','risks','controls','issues','treatments','gap','dashboard','matrix','auditor']
-      .forEach(id => mapping[id]=qs('#tab-'+id));
+    const buttons=qsa('[data-grc-tab]');
+    const mapping={};
+    ['frameworks','assets','risks','controls','issues','gap','dashboard','matrix','treatments','summary']
+      .forEach(id=>mapping[id]=qs('#tab-'+id));
     buttons.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        const tgt = btn.getAttribute('data-grc-tab');
-        buttons.forEach(b=>{ b.classList.remove('btn-primary'); b.classList.add('btn-outline-light'); });
-        btn.classList.add('btn-primary'); btn.classList.remove('btn-outline-light');
+      btn.addEventListener('click',()=>{
+        const tgt=btn.getAttribute('data-grc-tab');
+        buttons.forEach(b=>{
+          b.classList.remove('btn-primary');
+          b.classList.add('btn-outline-light');
+        });
+        btn.classList.add('btn-primary');
+        btn.classList.remove('btn-outline-light');
         Object.values(mapping).forEach(el=>el && el.classList.remove('active'));
         if(mapping[tgt]) mapping[tgt].classList.add('active');
-        if(tgt==='dashboard'){ renderDashboard(); }
-        if(tgt==='gap'){ renderGapTable(); }
-        if(tgt==='matrix'){ drawMatrix(); }
-        if(tgt==='auditor'){ renderAuditorSummary(); }
+        if(tgt==='dashboard') renderDashboard();
+        if(tgt==='gap') renderGapTable();
+        if(tgt==='matrix') drawMatrix();
+        if(tgt==='summary') generateAuditorSummary();
       });
     });
   }
 
-  // ============ REFRESH ============
-  function refreshAll(){
-    renderFrameworkControls();
-    renderAssetsTable(); populateRiskAssetOptions();
-    renderRisksTable(); populateControlRisks();
-    populateControlFrameworks(); renderControlsTable();
-    populateIssueDropdowns(); renderIssuesTable();
-    populateTreatmentRiskOptions(); renderTreatmentsTable();
-    renderGapTable(); renderDashboard(); drawMatrix(); renderAuditorSummary();
+  // ---------- Auditor-style Summary ----------
+  function listPhrase(items,max){
+    if(!items || !items.length) return '';
+    const arr=items.slice(0,max);
+    if(arr.length===1) return arr[0];
+    if(arr.length===2) return `${arr[0]} and ${arr[1]}`;
+    return `${arr.slice(0,-1).join(', ')} and ${arr[arr.length-1]}`;
   }
 
-  // ============ INIT ============
-  document.addEventListener('DOMContentLoaded', ()=>{
-    ['#framework-filter','#category-filter','#framework-search'].forEach(sel=>{
-      const el = qs(sel); if(el){ el.addEventListener(sel==='#framework-search'?'input':'change', renderFrameworkControls); }
-    });
+  function generateAuditorSummary(){
+    const lines=[];
 
-    // Assets
-    qs('#asset-form').addEventListener('submit', e=>{
-      e.preventDefault();
-      const id = qs('#asset-id').value;
-      const name = qs('#asset-name').value.trim();
-      const type = qs('#asset-type').value; const criticality = qs('#asset-criticality').value;
-      if(!name || !type || !criticality) return alert('Fill name, type, criticality.');
-      const obj = {
-        id: id || ('AST-'+Date.now()),
-        name, type, criticality,
-        owner: qs('#asset-owner').value.trim(),
-        dataTypes: selectedDataTypes(),
-        notes: qs('#asset-notes').value.trim()
-      };
-      const idx = assets.findIndex(x=>x.id===obj.id);
-      if(idx>-1) assets[idx]=obj; else assets.push(obj);
-      save(K.assets, assets); renderAssetsTable(); resetAssetForm();
-    });
-    qs('#asset-form-cancel').addEventListener('click', resetAssetForm);
-    qs('#assets-table-body').addEventListener('click', e=>{
-      const idE = e.target.getAttribute('data-ae'); const idD = e.target.getAttribute('data-ad');
-      if(idE){
-        const a = assets.find(x=>x.id===idE); if(!a) return;
-        qs('#asset-id').value=a.id; qs('#asset-name').value=a.name; qs('#asset-type').value=a.type;
-        qs('#asset-criticality').value=a.criticality; qs('#asset-owner').value=a.owner||'';
-        qs('#asset-notes').value=a.notes||''; setDataTypes(a.dataTypes||[]);
-        qs('#asset-form-submit').textContent='Update asset';
-      }
-      if(idD){
-        if(!confirm('Delete this asset?')) return;
-        assets = assets.filter(x=>x.id!==idD); save(K.assets, assets); renderAssetsTable();
-      }
-    });
+    // Scope & assets
+    const totalAssets=assets.length;
+    const highAssets=assets.filter(a=>a.criticality==='High');
+    const assetNames=assets.map(a=>a.name);
+    const keyAssets=listPhrase(highAssets.map(a=>a.name),3) || listPhrase(assetNames,3) || 'key information assets';
+    lines.push(`1. Scope and context\nThe organisation is using the GRC Practice Lab to model approximately ${totalAssets||'0'} key information assets and services. High-criticality assets currently include ${keyAssets}.`);
 
     // Risks
-    qs('#risk-form').addEventListener('submit', e=>{
-      e.preventDefault();
-      const id = qs('#risk-id').value;
-      const title = qs('#risk-title').value.trim();
-      const assetId = qs('#risk-asset').value;
-      const asset = assets.find(a=>a.id===assetId);
-      const category = qs('#risk-category').value;
-      const likelihood = Number(qs('#risk-likelihood').value);
-      const impact = Number(qs('#risk-impact').value);
-      const status = qs('#risk-status').value;
-      if(!title || !assetId || !category || !likelihood || !impact || !status) return alert('Fill all required fields.');
-      const obj = {
-        id: id || ('RSK-'+Date.now()),
-        title, assetId, assetName: asset?asset.name:'',
-        category, likelihood, impact, score: rScore(likelihood, impact),
-        status, owner: qs('#risk-owner').value.trim(), notes: qs('#risk-notes').value.trim()
-      };
-      const idx = risks.findIndex(x=>x.id===obj.id);
-      if(idx>-1) risks[idx]=obj; else risks.push(obj);
-      save(K.risks, risks); renderRisksTable(); resetRiskForm();
+    const totalRisks=risks.length;
+    const highRisks=risks.filter(r=>rLevel(r.score)==='High');
+    const medRisks=risks.filter(r=>rLevel(r.score)==='Medium');
+    const exHigh=highRisks.slice(0,2).map(r=>{
+      const assetName=r.assetName ? ` (asset: ${r.assetName})` : '';
+      return `${r.title}${assetName}, score ${r.score}`;
     });
-    qs('#risk-form-cancel').addEventListener('click', resetRiskForm);
-    qs('#risks-table-body').addEventListener('click', e=>{
-      const idE = e.target.getAttribute('data-re'); const idD = e.target.getAttribute('data-rd');
-      if(idE){
-        const r = risks.find(x=>x.id===idE); if(!r) return;
-        qs('#risk-id').value=r.id; qs('#risk-title').value=r.title;
-        qs('#risk-asset').value=r.assetId; qs('#risk-category').value=r.category;
-        qs('#risk-likelihood').value=String(r.likelihood); qs('#risk-impact').value=String(r.impact);
-        qs('#risk-owner').value=r.owner||''; qs('#risk-status').value=r.status||'Open'; qs('#risk-notes').value=r.notes||'';
-        qs('#risk-form-submit').textContent='Update risk';
-      }
-      if(idD){
-        if(!confirm('Delete this risk?')) return;
-        risks = risks.filter(x=>x.id!==idD); save(K.risks, risks);
-        // remove from linked control arrays
-        let changed=false;
-        controls.forEach(c=>{
-          if(Array.isArray(c.linkedRiskIds) && c.linkedRiskIds.includes(idD)){
-            c.linkedRiskIds = c.linkedRiskIds.filter(z=>z!==idD); changed=true;
-          }
-        });
-        if(changed){ save(K.controls, controls); renderControlsTable(); }
-        // unlink from issues
-        issues.forEach(i=>{ if(i.riskId===idD){ i.riskId=''; i.linkedSummary=(i.linkedSummary||'').replace(/ *\| *Risk: [^|]+/,''); }});
-        save(K.issues, issues); renderIssuesTable();
-        detachRiskFromTreatments(idD);
-        renderRisksTable();
-      }
-    });
+    let riskPara=`2. Risk posture\nA total of ${totalRisks||'0'} risks have been documented in the register. `;
+    riskPara+=`High risks: ${highRisks.length}; medium risks: ${medRisks.length}; remaining items are low or informational. `;
+    if(exHigh.length){
+      riskPara+=`Example high risks include ${listPhrase(exHigh,2)}.`;
+    }
+    lines.push(riskPara.trim());
 
-    // Controls
-    qs('#control-form').addEventListener('submit', e=>{
-      e.preventDefault();
-      const id = qs('#control-id').value;
-      const name = qs('#control-name').value.trim();
-      const type = qs('#control-type').value;
-      const status = qs('#control-status').value;
-      if(!name || !type || !status) return alert('Fill control name, type, status.');
-      const obj = {
-        id: id || ('CTL-'+Date.now()),
-        name, type, status,
-        owner: qs('#control-owner').value.trim(),
-        description: qs('#control-description').value.trim(),
-        linkedRiskIds: getMulti(qs('#control-risks')),
-        linkedFrameworkControlIds: getMulti(qs('#control-frameworks'))
-      };
-      const idx = controls.findIndex(x=>x.id===obj.id);
-      if(idx>-1) controls[idx]=obj; else controls.push(obj);
-      save(K.controls, controls); renderControlsTable(); resetControlForm();
+    // Controls & framework coverage
+    const rows=computeGapRows();
+    const overall=overallCoverage(rows);
+    const ctrlCount=controls.length;
+    const catSnippets=rows.slice(0,4).map(r=>{
+      const pct=r.total?Math.round((r.implemented/r.total)*100):0;
+      return `${r.category}: ${pct}% implemented (${r.implemented}/${r.total}).`;
     });
-    qs('#control-form-cancel').addEventListener('click', resetControlForm);
-    qs('#controls-table-body').addEventListener('click', e=>{
-      const idE = e.target.getAttribute('data-ce'); const idD = e.target.getAttribute('data-cd');
-      if(idE){
-        const c = controls.find(x=>x.id===idE); if(!c) return;
-        qs('#control-id').value=c.id; qs('#control-name').value=c.name; qs('#control-type').value=c.type;
-        qs('#control-status').value=c.status; qs('#control-owner').value=c.owner||'';
-        qs('#control-description').value=c.description||'';
-        setMulti(qs('#control-risks'), c.linkedRiskIds||[]); setMulti(qs('#control-frameworks'), c.linkedFrameworkControlIds||[]);
-        qs('#control-form-submit').textContent='Update control';
-      }
-      if(idD){
-        if(!confirm('Delete this control?')) return;
-        controls = controls.filter(x=>x.id!==idD); save(K.controls, controls); renderControlsTable();
-      }
-    });
+    let ctrlPara=`3. Control environment and framework coverage\nLocal controls defined in the lab: ${ctrlCount}. Overall implemented coverage across the paraphrased framework library is approximately ${overall}% of ${FRAMEWORK_CONTROLS.length} controls. `;
+    if(catSnippets.length){
+      ctrlPara+=`Coverage by category (sample): ${catSnippets.join(' ')}`;
+    }
+    lines.push(ctrlPara.trim());
 
-    // Issues
-    qs('#issue-form').addEventListener('submit', e=>{
-      e.preventDefault();
-      const id = qs('#issue-id').value;
-      const title = qs('#issue-title').value.trim();
-      const type = qs('#issue-type').value;
-      const severity = qs('#issue-severity').value;
-      const status = qs('#issue-status').value;
-      if(!title || !type || !severity || !status) return alert('Fill title, type, severity, status.');
-      const assetId = qs('#issue-asset').value || '';
-      const riskId  = qs('#issue-risk').value || '';
-      const controlId = qs('#issue-control').value || '';
-      const a = assets.find(x=>x.id===assetId), r=risks.find(x=>x.id===riskId), c=controls.find(x=>x.id===controlId);
-      const linkedSummary = [a?`Asset: ${a.name}`:'', r?`Risk: ${r.title}`:'', c?`Control: ${c.name}`:''].filter(Boolean).join(' | ');
-      const obj = {
-        id: id || ('ISS-'+Date.now()),
-        title, type, severity, status,
-        owner: qs('#issue-owner').value.trim(),
-        dueDate: qs('#issue-due').value, notes: qs('#issue-notes').value.trim(),
-        assetId, riskId, controlId, linkedSummary
-      };
-      const idx = issues.findIndex(x=>x.id===obj.id);
-      if(idx>-1) issues[idx]=obj; else issues.push(obj);
-      save(K.issues, issues); renderIssuesTable(); resetIssueForm();
-    });
-    qs('#issue-form-cancel').addEventListener('click', resetIssueForm);
-    qs('#issues-table-body').addEventListener('click', e=>{
-      const idE = e.target.getAttribute('data-ie'); const idD = e.target.getAttribute('data-id');
-      if(idE){
-        const i = issues.find(x=>x.id===idE); if(!i) return;
-        qs('#issue-id').value=i.id; qs('#issue-title').value=i.title; qs('#issue-type').value=i.type;
-        qs('#issue-severity').value=i.severity; qs('#issue-status').value=i.status;
-        qs('#issue-owner').value=i.owner||''; qs('#issue-due').value=i.dueDate||''; qs('#issue-notes').value=i.notes||'';
-        populateIssueDropdowns();
-        qs('#issue-asset').value=i.assetId||''; qs('#issue-risk').value=i.riskId||''; qs('#issue-control').value=i.controlId||'';
-        qs('#issue-form-submit').textContent='Update issue';
-      }
-      if(idD){
-        if(!confirm('Delete this issue?')) return;
-        issues = issues.filter(x=>x.id!==idD); save(K.issues, issues); renderIssuesTable();
-      }
-    });
+    // Issues & treatments
+    const openIssues=issues.filter(i=>i.status==='Open' || i.status==='In progress');
+    const critIssues=issues.filter(i=>i.severity==='Critical' || i.severity==='High');
+    const exIssue=openIssues.slice(0,2).map(i=>i.title);
+    const openActions=treatments.filter(t=>t.status==='Open' || t.status==='In progress');
+    const closedActions=treatments.filter(t=>t.status==='Closed');
+    let issuePara=`4. Issues, findings and action plans\nThere are ${issues.length} issue(s) recorded in the log, of which ${openIssues.length} are open or in progress and ${critIssues.length} are rated high or critical. `;
+    if(exIssue.length){
+      issuePara+=`Example open items include ${listPhrase(exIssue,2)}. `;
+    }
+    issuePara+=`The treatment register currently contains ${treatments.length} action item(s), with ${openActions.length} open/in progress and ${closedActions.length} closed.`;
+    lines.push(issuePara.trim());
 
-    // Treatments
-    qs('#treatment-form').addEventListener('submit', e=>{
-      e.preventDefault();
-      const id = qs('#treatment-id').value;
-      const title = qs('#treatment-title').value.trim();
-      const riskId = qs('#treatment-risk').value;
-      const status = qs('#treatment-status').value;
-      if(!title || !riskId || !status) return alert('Fill title, risk and status.');
-      const risk = risks.find(r=>r.id===riskId);
-      const obj = {
-        id: id || ('TRT-'+Date.now()),
-        title,
-        riskId,
-        riskTitle: risk ? risk.title : '',
-        status,
-        owner: qs('#treatment-owner').value.trim(),
-        dueDate: qs('#treatment-due').value,
-        notes: qs('#treatment-notes').value.trim()
-      };
-      const idx = treatments.findIndex(x=>x.id===obj.id);
-      if(idx>-1) treatments[idx]=obj; else treatments.push(obj);
-      save(K.treatments, treatments); renderTreatmentsTable(); resetTreatmentForm();
+    // Overall observation
+    const highCount=highRisks.length;
+    const covDesc=overall>=80?'strong, with most key controls implemented':
+                  overall>=50?'developing, with several controls implemented but notable gaps remaining':
+                  overall>0?'limited, with many controls still to be implemented':
+                  'minimal, with framework controls largely not implemented yet';
+    let obs=`5. Overall observation\nSeveral high-impact risks have been identified${highCount?` (currently ${highCount} high-rated risk(s))`:''}. Control coverage is ${overall}% and is best described as ${covDesc}. `;
+    if(openActions.length){
+      obs+=`A formal treatment plan is in place, with ${openActions.length} active remediation action(s) tracked against the risk register.`;
+    }else{
+      obs+=`No active treatment actions are currently recorded against the risk register.`;
+    }
+    lines.push(obs.trim());
+
+    qs('#summary-text').value = lines.join('\n\n');
+  }
+
+  // ---------- Refresh all ----------
+  function refreshAll(){
+    renderFrameworkControls();
+    renderAssetsTable();
+    renderRisksTable();
+    populateControlFrameworks();
+    renderControlsTable();
+    populateIssueDropdowns();
+    renderIssuesTable();
+    renderGapTable();
+    renderDashboard();
+    populateTreatmentDropdownRisks();
+    populateTreatmentDropdownControls();
+    renderTreatmentsTable();
+    drawMatrix();
+    generateAuditorSummary();
+  }
+
+  // ---------- Init ----------
+  document.addEventListener('DOMContentLoaded',()=>{
+    ['#framework-filter','#category-filter','#framework-search'].forEach(sel=>{
+      const el=qs(sel);
+      if(!el) return;
+      el.addEventListener(sel==='#framework-search'?'input':'change',renderFrameworkControls);
     });
-    qs('#treatment-form-cancel').addEventListener('click', resetTreatmentForm);
-    qs('#treatments-table-body').addEventListener('click', e=>{
-      const idE = e.target.getAttribute('data-te'); const idD = e.target.getAttribute('data-td');
-      if(idE){
-        const t = treatments.find(x=>x.id===idE); if(!t) return;
-        qs('#treatment-id').value=t.id;
-        qs('#treatment-title').value=t.title;
-        populateTreatmentRiskOptions();
-        qs('#treatment-risk').value=t.riskId || '';
-        qs('#treatment-status').value=t.status || 'Open';
-        qs('#treatment-owner').value=t.owner || '';
-        qs('#treatment-due').value=t.dueDate || '';
-        qs('#treatment-notes').value=t.notes || '';
-        qs('#treatment-form-submit').textContent='Update action';
-      }
-      if(idD){
-        if(!confirm('Delete this action?')) return;
-        treatments = treatments.filter(x=>x.id!==idD);
-        save(K.treatments, treatments); renderTreatmentsTable();
-      }
-    });
-
-    // Export / import / reset / MediCloud
-    qs('#btn-export').addEventListener('click', exportScenario);
-    qs('#btn-import').addEventListener('click', ()=>{ setImportStatus('',false); const f=qs('#file-import'); f.value=''; f.click(); });
-    qs('#file-import').addEventListener('change', e=>{ const file = e.target.files && e.target.files[0]; if(file) importScenarioFile(file); });
-    qs('#btn-reset').addEventListener('click', resetLab);
-    qs('#btn-medicloud').addEventListener('click', loadMediCloudScenario);
-
-    // Matrix toggle + export
-    qs('#toggle-inherent').addEventListener('click', ()=>{ showResidual=false; qs('#toggle-inherent').classList.add('btn-primary'); qs('#toggle-residual').classList.remove('btn-primary'); drawMatrix(); });
-    qs('#toggle-residual').addEventListener('click', ()=>{ showResidual=true;  qs('#toggle-residual').classList.add('btn-primary');  qs('#toggle-inherent').classList.remove('btn-primary'); drawMatrix(); });
-    qs('#matrix-export').addEventListener('click', ()=>{ const c=qs('#risk-matrix-canvas'); const a=document.createElement('a'); a.download='risk_matrix.png'; a.href=c.toDataURL('image/png'); a.click(); });
-
-    // Auditor refresh
-    qs('#btn-refresh-auditor').addEventListener('click', renderAuditorSummary);
 
     bindTabs();
     populateControlFrameworks();
     populateControlRisks();
     populateRiskAssetOptions();
     populateIssueDropdowns();
-    populateTreatmentRiskOptions();
+    populateTreatmentDropdownRisks();
+    populateTreatmentDropdownControls();
+
+    qs('#btn-export').addEventListener('click',exportScenario);
+    qs('#btn-import').addEventListener('click',()=>{
+      setImportStatus('',false);
+      const f=qs('#file-import'); f.value=''; f.click();
+    });
+    qs('#file-import').addEventListener('change',e=>{
+      const file=e.target.files && e.target.files[0];
+      if(file) importScenarioFile(file);
+    });
+    qs('#btn-reset').addEventListener('click',resetLab);
+
+    qs('#toggle-inherent').addEventListener('click',()=>{
+      showResidual=false;
+      qs('#toggle-inherent').classList.add('btn-primary');
+      qs('#toggle-residual').classList.remove('btn-primary');
+      drawMatrix();
+    });
+    qs('#toggle-residual').addEventListener('click',()=>{
+      showResidual=true;
+      qs('#toggle-residual').classList.add('btn-primary');
+      qs('#toggle-inherent').classList.remove('btn-primary');
+      drawMatrix();
+    });
+    qs('#matrix-export').addEventListener('click',()=>{
+      const a=document.createElement('a');
+      a.download='risk_matrix.png';
+      a.href=canvas.toDataURL('image/png');
+      a.click();
+    });
+
+    qs('#summary-refresh').addEventListener('click',generateAuditorSummary);
+
     refreshAll();
   });
   </script>
