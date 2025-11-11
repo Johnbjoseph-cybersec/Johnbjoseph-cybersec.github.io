@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 
-  <!-- Your existing fonts & theme CSS -->
+  <!-- Theme fonts & CSS -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet"/>
   <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css"/>
   <link rel="stylesheet" href="css/animate.css"/>
@@ -19,10 +19,11 @@
   <link rel="stylesheet" href="css/style.css"/>
 
   <style>
-    /* Harden against theme animations hiding content */
+    /* Make sure theme animations don’t hide content */
     .ftco-animate { opacity: 1 !important; visibility: visible !important; }
 
     .grc-lab-hero { padding-top: 140px; padding-bottom: 40px; }
+
     .grc-tab-buttons .btn{ margin-right:8px; margin-bottom:8px; }
     .grc-tab{ display:none; }
     .grc-tab.active{ display:block; }
@@ -32,10 +33,8 @@
 
     .heat-cell{ color:#fff; font-weight:600; text-align:center; white-space:nowrap; }
     .heat-cell small{ display:block; font-weight:400; opacity:.9; }
-    .heat-good{ background:#1f8f3b; }
-    .heat-medium{ background:#a96b1f; }
-    .heat-low{ background:#8f3b1f; }
-    .heat-none{ background:#7a1f1f; }
+    .heat-good{ background:#1f8f3b; } .heat-medium{ background:#a96b1f; }
+    .heat-low{ background:#8f3b1f; } .heat-none{ background:#7a1f1f; }
 
     .heat-pill{ border-radius:999px; padding:4px 10px; font-size:.8rem; display:inline-block; }
 
@@ -50,25 +49,11 @@
     .dashboard-card .sub{ font-size:.8rem; opacity:.8; }
 
     #risk-matrix-canvas{ background:#0c0f12; border-radius:8px; width:100%; max-width:100%; }
+
     .table td, .table th { vertical-align: middle; }
     .small-muted{ color:#9ca3af; font-size:.85rem; }
 
-    /* Auditor summary lists */
-    .report-list-title{
-      font-size:.8rem;
-      text-transform:uppercase;
-      letter-spacing:.05em;
-      opacity:.7;
-      margin-bottom:.25rem;
-    }
-    .report-list-item-main{
-      font-size:.9rem;
-      font-weight:500;
-    }
-    .report-list-item-sub{
-      font-size:.8rem;
-      opacity:.8;
-    }
+    textarea.form-control{ background:#020617; color:#e5e7eb; border-color:#1f2933; }
   </style>
 </head>
 
@@ -98,9 +83,9 @@
       <!-- Header -->
       <div class="row justify-content-center mb-4">
         <div class="col-md-10 text-center ftco-animate">
-          <h1 class="mb-3">GRC Practice Lab (v4.1)</h1>
+          <h1 class="mb-3">GRC Practice Lab (v3.x)</h1>
           <p class="lead">
-            Practice frameworks, assets, risks, controls, issues and reporting — all in your browser (data stays local).
+            Practice frameworks, assets, risks, controls, treatments, issues and reporting — all in your browser (data stays local).
           </p>
           <p class="small-muted mb-0">Controls are paraphrased from ISO 27001, NIST CSF, PCI DSS, HIPAA for education only.</p>
         </div>
@@ -114,10 +99,11 @@
           <button class="btn btn-outline-light btn-sm" data-grc-tab="risks">Risks</button>
           <button class="btn btn-outline-light btn-sm" data-grc-tab="controls">Local Controls</button>
           <button class="btn btn-outline-light btn-sm" data-grc-tab="issues">Issues / Findings</button>
+          <button class="btn btn-outline-light btn-sm" data-grc-tab="treatments">Treatments / Action Plans</button>
           <button class="btn btn-outline-light btn-sm" data-grc-tab="gap">Gap Analysis</button>
           <button class="btn btn-outline-light btn-sm" data-grc-tab="dashboard">Dashboard</button>
           <button class="btn btn-outline-light btn-sm" data-grc-tab="matrix">Risk Matrix</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="report">Auditor Summary</button>
+          <button class="btn btn-outline-light btn-sm" data-grc-tab="auditor">Auditor Summary</button>
         </div>
       </div>
 
@@ -300,7 +286,6 @@
                   </select>
                 </div>
 
-                <!-- Inherent -->
                 <div class="form-row">
                   <div class="form-group col-6">
                     <label class="text-muted small mb-1">Likelihood (1–5) *</label>
@@ -314,26 +299,6 @@
                     <label class="text-muted small mb-1">Impact (1–5) *</label>
                     <select id="risk-impact" class="form-control form-control-sm" required>
                       <option value="">Select...</option>
-                      <option value="1">1 – Insignificant</option><option value="2">2 – Minor</option><option value="3">3 – Moderate</option>
-                      <option value="4">4 – Major</option><option value="5">5 – Severe</option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- Residual -->
-                <div class="form-row">
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Residual likelihood (1–5)</label>
-                    <select id="risk-res-likelihood" class="form-control form-control-sm">
-                      <option value="">Same as inherent</option>
-                      <option value="1">1 – Rare</option><option value="2">2 – Unlikely</option><option value="3">3 – Possible</option>
-                      <option value="4">4 – Likely</option><option value="5">5 – Almost certain</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Residual impact (1–5)</label>
-                    <select id="risk-res-impact" class="form-control form-control-sm">
-                      <option value="">Same as inherent</option>
                       <option value="1">1 – Insignificant</option><option value="2">2 – Minor</option><option value="3">3 – Moderate</option>
                       <option value="4">4 – Major</option><option value="5">5 – Severe</option>
                     </select>
@@ -360,7 +325,7 @@
                   <button class="btn btn-outline-light btn-sm" type="button" id="risk-form-cancel">Clear</button>
                 </div>
                 <small class="text-muted d-block mt-2">
-                  Inherent score = Likelihood × Impact (1–25). If residual L/I are left blank, residual = inherent.
+                  Score = Likelihood × Impact (1–25). High ≥ 15; Medium 6–12; Low 1–5.
                 </small>
               </form>
             </div>
@@ -376,12 +341,8 @@
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
                     <tr>
-                      <th style="width:22%">Title</th>
-                      <th style="width:16%">Asset</th>
-                      <th style="width:14%">Category</th>
-                      <th style="width:16%">Inherent</th>
-                      <th style="width:16%">Residual</th>
-                      <th style="width:16%">Status</th>
+                      <th style="width:24%">Title</th><th style="width:18%">Asset</th><th style="width:16%">Category</th>
+                      <th style="width:16%">Inherent</th><th style="width:14%">Status</th><th style="width:12%">Actions</th>
                     </tr>
                   </thead>
                   <tbody id="risks-table-body"></tbody>
@@ -420,28 +381,6 @@
                     <option>In place</option><option>Planned</option><option>Not applicable</option>
                   </select>
                 </div>
-
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Effectiveness</label>
-                  <select id="control-effectiveness" class="form-control form-control-sm">
-                    <option>Not tested</option>
-                    <option>Effective</option>
-                    <option>Needs improvement</option>
-                    <option>Not effective</option>
-                  </select>
-                </div>
-
-                <div class="form-row">
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Last tested</label>
-                    <input type="date" id="control-tested" class="form-control form-control-sm">
-                  </div>
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Evidence / ref</label>
-                    <input id="control-test-notes" class="form-control form-control-sm" placeholder="Jira / Confluence / ticket ID">
-                  </div>
-                </div>
-
                 <div class="form-group">
                   <label class="text-muted small mb-1">Owner</label>
                   <input id="control-owner" class="form-control form-control-sm" placeholder="DevSecOps / IT Ops / Compliance">
@@ -480,13 +419,8 @@
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
                     <tr>
-                      <th style="width:24%">Name</th>
-                      <th style="width:18%">Status / Eff.</th>
-                      <th style="width:12%">Type</th>
-                      <th style="width:16%">Linked risks</th>
-                      <th style="width:12%">Frameworks</th>
-                      <th style="width:10%">Last tested</th>
-                      <th style="width:8%">Actions</th>
+                      <th style="width:26%">Name</th><th style="width:16%">Type</th><th style="width:14%">Status</th>
+                      <th style="width:22%">Linked risks</th><th style="width:12%">Frameworks</th><th style="width:10%">Actions</th>
                     </tr>
                   </thead>
                   <tbody id="controls-table-body"></tbody>
@@ -590,12 +524,92 @@
         </div>
       </div>
 
+      <!-- Treatments / Action Plans -->
+      <div id="tab-treatments" class="grc-tab ftco-animate">
+        <h3>Treatments &amp; Action Plans</h3>
+        <p class="mb-3">Link concrete actions to risks, assign owners, and track progress.</p>
+        <div class="row">
+          <div class="col-lg-4 col-md-5 mb-4">
+            <div class="bg-dark p-3 rounded">
+              <h5 class="mb-3">Add / Edit Action</h5>
+              <form id="treatment-form">
+                <input type="hidden" id="treatment-id">
+                <div class="form-group">
+                  <label class="text-muted small mb-1">Action title *</label>
+                  <input id="treatment-title" class="form-control form-control-sm" required placeholder="e.g. Implement WAF for MediCloud">
+                </div>
+                <div class="form-group">
+                  <label class="text-muted small mb-1">Linked risk *</label>
+                  <select id="treatment-risk" class="form-control form-control-sm" required>
+                    <option value="">Select risk...</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="text-muted small mb-1">Status *</label>
+                  <select id="treatment-status" class="form-control form-control-sm" required>
+                    <option>Open</option>
+                    <option>In progress</option>
+                    <option>Completed</option>
+                    <option>Accepted</option>
+                  </select>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-6">
+                    <label class="text-muted small mb-1">Owner</label>
+                    <input id="treatment-owner" class="form-control form-control-sm" placeholder="e.g. DevOps Lead">
+                  </div>
+                  <div class="form-group col-6">
+                    <label class="text-muted small mb-1">Target date</label>
+                    <input type="date" id="treatment-due" class="form-control form-control-sm">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="text-muted small mb-1">Notes</label>
+                  <textarea id="treatment-notes" class="form-control form-control-sm" rows="2" placeholder="Outline remediation steps, dependencies, etc."></textarea>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                  <button class="btn btn-primary btn-sm" type="submit" id="treatment-form-submit">Save action</button>
+                  <button class="btn btn-outline-light btn-sm" type="button" id="treatment-form-cancel">Clear</button>
+                </div>
+                <small class="text-muted d-block mt-2">Actions are stored locally with your risks.</small>
+              </form>
+            </div>
+          </div>
+
+          <div class="col-lg-8 col-md-7 mb-4">
+            <div class="bg-dark p-3 rounded">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="mb-0">Action plan</h5>
+                <small id="treatments-count" class="text-muted"></small>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-dark table-striped table-hover table-sm mb-0">
+                  <thead>
+                    <tr>
+                      <th style="width:26%">Title</th>
+                      <th style="width:24%">Linked risk</th>
+                      <th style="width:14%">Status</th>
+                      <th style="width:14%">Target date</th>
+                      <th style="width:12%">Owner</th>
+                      <th style="width:10%">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="treatments-table-body"></tbody>
+                </table>
+              </div>
+              <div id="treatments-empty" class="text-muted small mt-2">No actions yet.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Gap Analysis -->
       <div id="tab-gap" class="grc-tab ftco-animate">
         <h3>Gap analysis &amp; heatmap</h3>
         <p class="mb-3">
-          Coverage is based on <b>local controls</b> mapped to framework controls.<br/>
-          “Implemented” = in place &amp; not marked “Not effective”. “Planned only” includes planned and in-place-but-not-effective controls.
+          Coverage is based on <b>local controls</b> mapped to framework controls.
+          “In place” = implemented; “Planned” = planned-only.
         </p>
         <div class="table-responsive bg-dark p-3 rounded">
           <table class="table table-dark table-striped table-hover table-sm mb-0">
@@ -630,7 +644,10 @@
             <div class="dashboard-card p-3 h-100">
               <div class="label">Risks</div>
               <div class="value" id="dash-risks">0</div>
-              <div class="sub"><span id="dash-high">0</span> high (residual)</div>
+              <div class="sub">
+                <span id="dash-high">0</span> high risk(s) ·
+                <span id="dash-open-actions">0</span> open action(s)
+              </div>
             </div>
           </div>
           <div class="col-sm-6 col-md-3 mb-3">
@@ -657,17 +674,21 @@
                 <div class="value"><span id="dash-coverage">0%</span></div>
                 <div class="sub">Implemented local controls mapped to framework controls.</div>
               </div>
-              <div class="mt-2"><span id="dash-coverage-pill" class="heat-pill heat-none">Coverage heat</span></div>
+              <div class="mt-2">
+                <span id="dash-coverage-pill" class="heat-pill heat-none">Coverage heat</span>
+              </div>
             </div>
           </div>
           <div class="col-md-8 mb-3">
             <div class="dashboard-card p-3 h-100">
               <div class="label mb-1">Scenarios &amp; exports</div>
-              <p class="sub">Export current lab to JSON, import saved scenarios, load demo data, or reset to blank.</p>
+              <p class="sub mb-3">
+                Export current lab to JSON, import saved scenarios, or start from the built-in MediCloud demo scenario.
+              </p>
               <div class="d-flex flex-wrap">
                 <button id="btn-export" class="btn btn-sm btn-primary mr-2 mb-2">Export current data (JSON)</button>
                 <button id="btn-import" class="btn btn-sm btn-outline-light mr-2 mb-2">Import scenario (JSON)</button>
-                <button id="btn-demo-medicloud" class="btn btn-sm btn-outline-light mr-2 mb-2">Load MediCloud demo scenario</button>
+                <button id="btn-medicloud" class="btn btn-sm btn-success mr-2 mb-2">Load MediCloud demo</button>
                 <button id="btn-reset" class="btn btn-sm btn-outline-danger mb-2">Reset lab (clear all data)</button>
                 <input type="file" id="file-import" accept="application/json" style="display:none">
               </div>
@@ -680,7 +701,10 @@
       <!-- Risk Matrix -->
       <div id="tab-matrix" class="grc-tab ftco-animate">
         <h3>Risk Matrix (Inherent vs Residual)</h3>
-        <p class="mb-3">Toggle to compare <b>Inherent</b> and <b>Residual</b> using the residual values maintained on each risk.</p>
+        <p class="mb-3">
+          Toggle to compare <b>Inherent</b> and a basic calculated <b>Residual</b>
+          (reduced by implemented controls linked to a risk).
+        </p>
         <div class="bg-dark p-3 rounded mb-3">
           <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -695,101 +719,20 @@
       </div>
 
       <!-- Auditor Summary -->
-      <div id="tab-report" class="grc-tab ftco-animate">
-        <h3>Auditor Summary</h3>
-        <p class="mb-3 small-muted">
-          Read-only snapshot for auditors, exec reviews, and screenshots. Counts, top risks/issues, and weakest coverage area.
-          High risk counts are based on <b>residual</b> scores.
+      <div id="tab-auditor" class="grc-tab ftco-animate">
+        <h3>Auditor-style summary</h3>
+        <p class="mb-3">
+          Automatically generate a narrative you can reuse in audit reports, board decks, or certifications.
         </p>
-
-        <!-- Everything inside this wrapper is what we export as PDF -->
-        <div id="report-content">
-          <div class="row">
-            <div class="col-sm-6 col-md-3 mb-3">
-              <div class="dashboard-card p-3 h-100">
-                <div class="label">Assets</div>
-                <div class="value" id="report-assets">0</div>
-                <div class="sub">In scope</div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-3 mb-3">
-              <div class="dashboard-card p-3 h-100">
-                <div class="label">Risks</div>
-                <div class="value" id="report-risks">0</div>
-                <div class="sub"><span id="report-high">0</span> high (residual)</div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-3 mb-3">
-              <div class="dashboard-card p-3 h-100">
-                <div class="label">Controls</div>
-                <div class="value" id="report-controls">0</div>
-                <div class="sub">
-                  Local controls; <span id="report-controls-untested">0</span> not tested in last 12 months.
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-3 mb-3">
-              <div class="dashboard-card p-3 h-100">
-                <div class="label">Issues</div>
-                <div class="value" id="report-issues">0</div>
-                <div class="sub"><span id="report-overdue">0</span> overdue</div>
-              </div>
-            </div>
+        <div class="bg-dark p-3 rounded">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="small-muted">Summary is generated from your current assets, risks, controls, treatments and issues.</span>
+            <button id="btn-refresh-auditor" class="btn btn-outline-light btn-sm">Refresh summary</button>
           </div>
-
-          <div class="row mt-2">
-            <div class="col-md-4 mb-3">
-              <div class="dashboard-card p-3 h-100 d-flex flex-column justify-content-between">
-                <div>
-                  <div class="label">Framework coverage</div>
-                  <div class="value"><span id="report-coverage">0%</span></div>
-                  <div class="sub">Implemented vs total framework controls.</div>
-                </div>
-                <div class="mt-2">
-                  <span id="report-coverage-pill" class="heat-pill heat-none">Coverage heat</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-8 mb-3">
-              <div class="dashboard-card p-3 h-100 d-flex flex-column justify-content-between">
-                <div>
-                  <div class="label">Weakest coverage area</div>
-                  <div class="value" id="report-weakest-label">-</div>
-                  <div class="sub">
-                    <span id="report-weakest-coverage">0%</span> implemented in that category.
-                  </div>
-                </div>
-                <div class="mt-2 small-muted">
-                  Based on mapped framework controls and local control status &amp; effectiveness.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row mt-3">
-            <div class="col-md-6 mb-3">
-              <div class="dashboard-card p-3 h-100">
-                <div class="report-list-title">Top open high / critical risks (by residual, max 3)</div>
-                <ul class="list-unstyled mb-0" id="report-risk-list">
-                  <!-- injected via JS -->
-                </ul>
-              </div>
-            </div>
-            <div class="col-md-6 mb-3">
-              <div class="dashboard-card p-3 h-100">
-                <div class="report-list-title">Top open issues by severity (max 3)</div>
-                <ul class="list-unstyled mb-0" id="report-issue-list">
-                  <!-- injected via JS -->
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-3 d-flex justify-content-end">
-          <button id="btn-report-pdf" class="btn btn-sm btn-outline-light">
-            Export summary as PDF
-          </button>
+          <textarea id="auditor-summary-text" class="form-control form-control-sm" rows="12"></textarea>
+          <small class="text-muted d-block mt-2">
+            Tip: You can copy-paste this into an audit report, SOC 2 narrative, or ISO 27001 SoA summary.
+          </small>
         </div>
       </div>
 
@@ -804,14 +747,10 @@
     </div>
   </footer>
 
-  <!-- Core scripts (keep these as in your theme) -->
+  <!-- Core scripts -->
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/main.js"></script>
-
-  <!-- PDF helper libraries for Auditor Summary -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <!-- GRC Lab App -->
   <script>
@@ -870,23 +809,89 @@
       frameworks:["ISO 27001","NIST CSF","HIPAA"], references:["ISO 27001 A.7.2.2","NIST PR.AT-1","HIPAA 164.308(a)(5)"] },
   ];
 
+  // Simple MediCloud starter scenario
+  const MEDICLOUD_SCENARIO = {
+    assets: [
+      { id:"AST-MEDI-WEB", name:"MediCloud Web Application", type:"Application", criticality:"High",
+        owner:"Product / Engineering", dataTypes:["PHI","PII"], notes:"Patient-facing portal hosted in AWS." },
+      { id:"AST-MEDI-DB", name:"MediCloud Patient DB", type:"Database", criticality:"High",
+        owner:"DBA / SRE", dataTypes:["PHI","PII"], notes:"Primary PHI store (RDS)." },
+      { id:"AST-MEDI-IDP", name:"IdP / SSO", type:"Cloud Service", criticality:"High",
+        owner:"Security Engineering", dataTypes:["Internal data"], notes:"Used for workforce SSO + admin MFA." },
+      { id:"AST-MEDI-LOGS", name:"Central Logging Platform", type:"Cloud Service", criticality:"Medium",
+        owner:"SecOps", dataTypes:["Internal data"], notes:"Collects app / infra / security logs." }
+    ],
+    risks: [
+      { id:"RSK-MEDI-001", title:"Unauthorised access to MediCloud production app",
+        assetId:"AST-MEDI-WEB", assetName:"MediCloud Web Application",
+        category:"Cybersecurity", likelihood:4, impact:5, score:20,
+        status:"Open", owner:"CISO", notes:"MFA not enforced for all admins; legacy VPN path still enabled." },
+      { id:"RSK-MEDI-002", title:"Compromise of PHI in patient database",
+        assetId:"AST-MEDI-DB", assetName:"MediCloud Patient DB",
+        category:"Privacy", likelihood:3, impact:5, score:15,
+        status:"In progress", owner:"Data Protection Officer", notes:"Legacy backups unencrypted; DB access model complex." },
+      { id:"RSK-MEDI-003", title:"Gaps in logging and incident detection",
+        assetId:"AST-MEDI-LOGS", assetName:"Central Logging Platform",
+        category:"Cybersecurity", likelihood:3, impact:4, score:12,
+        status:"Open", owner:"SecOps Lead", notes:"Not all production systems forward logs; alert rules incomplete." }
+    ],
+    controls: [
+      { id:"CTL-MEDI-MFA", name:"MFA enforced for workforce IdP", type:"Technical", status:"In place",
+        owner:"Security Engineering", description:"All workforce users require MFA via IdP; high-risk apps tagged as conditional access.",
+        linkedRiskIds:["RSK-MEDI-001"], linkedFrameworkControlIds:["CTRL-AC-03"] },
+      { id:"CTL-MEDI-LOG", name:"Centralised logging for production workloads", type:"Technical", status:"In place",
+        owner:"SecOps", description:"Production workloads send logs to SIEM; retention baseline 365 days.",
+        linkedRiskIds:["RSK-MEDI-003"], linkedFrameworkControlIds:["CTRL-LOG-01","CTRL-LOG-02"] },
+      { id:"CTL-MEDI-BACKUP", name:"Encrypted backups for PHI DB", type:"Technical", status:"Planned",
+        owner:"SRE / DBA", description:"Move historic unencrypted backups to encrypted storage, enforce encryption at rest.",
+        linkedRiskIds:["RSK-MEDI-002"], linkedFrameworkControlIds:["CTRL-ENC-01","CTRL-BCP-01"] }
+    ],
+    issues: [
+      { id:"ISS-MEDI-001", title:"MFA not enforced for legacy VPN", type:"Audit", severity:"High", status:"Open",
+        owner:"Network Team", dueDate:"", notes:"Legacy VPN path bypasses IdP; users can access prod without MFA.",
+        assetId:"AST-MEDI-WEB", riskId:"RSK-MEDI-001", controlId:"CTL-MEDI-MFA",
+        linkedSummary:"Asset: MediCloud Web Application | Risk: Unauthorised access to MediCloud production app | Control: MFA enforced for workforce IdP" },
+      { id:"ISS-MEDI-002", title:"Unencrypted historical DB backups", type:"Pen test", severity:"High", status:"In progress",
+        owner:"SRE / DBA", dueDate:"", notes:"Old snapshots stored without encryption; outside of new baseline.",
+        assetId:"AST-MEDI-DB", riskId:"RSK-MEDI-002", controlId:"CTL-MEDI-BACKUP",
+        linkedSummary:"Asset: MediCloud Patient DB | Risk: Compromise of PHI in patient database | Control: Encrypted backups for PHI DB" }
+    ],
+    treatments: [
+      { id:"TRT-MEDI-001", title:"Decommission legacy VPN and force IdP SSO",
+        riskId:"RSK-MEDI-001", riskTitle:"Unauthorised access to MediCloud production app",
+        status:"In progress", owner:"Network Lead", dueDate:"", notes:"Cutover to IdP-based access only; update runbooks." },
+      { id:"TRT-MEDI-002", title:"Encrypt all historical PHI backups",
+        riskId:"RSK-MEDI-002", riskTitle:"Compromise of PHI in patient database",
+        status:"Open", owner:"SRE / DBA", dueDate:"", notes:"Locate all snapshots, move to encrypted storage; document control." },
+      { id:"TRT-MEDI-003", title:"Onboard remaining prod systems to SIEM",
+        riskId:"RSK-MEDI-003", riskTitle:"Gaps in logging and incident detection",
+        status:"Open", owner:"SecOps Lead", dueDate:"", notes:"Prioritise internet-facing components; add alert rules for auth failures." }
+    ]
+  };
+
   // ============ STORAGE ============
   const K = {
     assets: 'grc_assets_v1',
     risks: 'grc_risks_v1',
     controls: 'grc_controls_v1',
-    issues: 'grc_issues_v1'
+    issues: 'grc_issues_v1',
+    treatments: 'grc_treatments_v1'
   };
-  const load = key => { try { const v = JSON.parse(localStorage.getItem(key)); return Array.isArray(v) ? v : []; } catch { return []; } };
+
+  const load = key => {
+    try { const v = JSON.parse(localStorage.getItem(key)); return Array.isArray(v) ? v : []; }
+    catch { return []; }
+  };
   const save = (key, val) => { localStorage.setItem(key, JSON.stringify(val)); };
 
   let assets = load(K.assets);
   let risks = load(K.risks);
   let controls = load(K.controls);
   let issues = load(K.issues);
+  let treatments = load(K.treatments);
 
   // ============ HELPERS ============
-  const qs = s => document.querySelector(s);
+  const qs  = s => document.querySelector(s);
   const qsa = s => Array.from(document.querySelectorAll(s));
 
   const getMulti = sel => {
@@ -903,21 +908,14 @@
   function renderFrameworkControls(){
     const tbody = qs('#frameworks-table-body');
     const countEl = qs('#frameworks-count');
-    const fEl = qs('#framework-filter');
-    const cEl = qs('#category-filter');
-    const sEl = qs('#framework-search');
-    if (!tbody || !countEl || !fEl || !cEl || !sEl) return;
-
-    const f = fEl.value;
-    const c = cEl.value;
-    const s = sEl.value.trim().toLowerCase();
+    const f = qs('#framework-filter').value;
+    const c = qs('#category-filter').value;
+    const s = qs('#framework-search').value.trim().toLowerCase();
 
     const filtered = FRAMEWORK_CONTROLS.filter(x=>{
       const okF = f==='all' || x.frameworks.includes(f);
       const okC = c==='all' || x.category===c;
-      const okS = !s || x.name.toLowerCase().includes(s) ||
-                        x.description.toLowerCase().includes(s) ||
-                        x.id.toLowerCase().includes(s);
+      const okS = !s || x.name.toLowerCase().includes(s) || x.description.toLowerCase().includes(s) || x.id.toLowerCase().includes(s);
       return okF && okC && okS;
     });
 
@@ -925,11 +923,8 @@
     filtered.forEach(x=>{
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td>${x.id}</td>
-        <td>${x.name}</td>
-        <td>${x.category}</td>
-        <td>${x.references.join('<br>')}</td>
-        <td>${x.description}</td>`;
+        <td>${x.id}</td><td>${x.name}</td><td>${x.category}</td>
+        <td>${x.references.join('<br>')}</td><td>${x.description}</td>`;
       tbody.appendChild(tr);
     });
     countEl.textContent = `${filtered.length} control(s) shown of ${FRAMEWORK_CONTROLS.length}`;
@@ -963,20 +958,21 @@
       if(cur&&controls.some(c=>c.id===cur)) cSel.value=cur;
     }
   }
+  function populateTreatmentRiskOptions(){
+    const sel = qs('#treatment-risk'); if(!sel) return;
+    const cur = sel.value; sel.innerHTML = '<option value="">Select risk...</option>';
+    risks.forEach(r=>{ const o=document.createElement('option'); o.value=r.id; o.textContent=r.title; sel.appendChild(o); });
+    if(cur && risks.some(r=>r.id===cur)) sel.value=cur;
+  }
 
   function renderAssetsTable(){
     const tbody = qs('#assets-table-body'), empty = qs('#assets-empty'), count = qs('#assets-count');
-    if(!tbody || !empty || !count) return;
-
     tbody.innerHTML='';
     assets.forEach(a=>{
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td>${a.name}</td>
-        <td>${a.type}</td>
-        <td>${a.criticality}</td>
-        <td>${(a.dataTypes||[]).join(', ')}</td>
-        <td>${a.owner||''}</td>
+        <td>${a.name}</td><td>${a.type}</td><td>${a.criticality}</td>
+        <td>${(a.dataTypes||[]).join(', ')}</td><td>${a.owner||''}</td>
         <td>
           <button class="btn btn-sm btn-outline-light mb-1" data-ae="${a.id}">Edit</button>
           <button class="btn btn-sm btn-outline-light mb-1" data-ad="${a.id}">Del</button>
@@ -991,63 +987,14 @@
   }
 
   function resetAssetForm(){
-    const form = qs('#asset-form');
-    if(!form) return;
-    form.reset(); qs('#asset-id').value=''; qs('#asset-form-submit').textContent='Save asset';
-    setDataTypes([]);
+    qs('#asset-form').reset(); qs('#asset-id').value=''; qs('#asset-form-submit').textContent='Save asset';
   }
 
   // ============ RISKS ============
   const rScore = (l,i)=> (Number(l)||0) * (Number(i)||0);
   const rLevel = s => s>=15?'High': s>=6?'Medium': s>0?'Low':'-';
 
-  function resetRiskForm(){
-    const form = qs('#risk-form'); if(!form) return;
-    form.reset(); qs('#risk-id').value=''; qs('#risk-form-submit').textContent='Save risk';
-  }
-
-  function renderRisksTable(){
-    const tbody = qs('#risks-table-body'), empty=qs('#risks-empty'), count=qs('#risks-count');
-    if(!tbody || !empty || !count) return;
-
-    tbody.innerHTML='';
-    risks.forEach(r=>{
-      const inhLevel = rLevel(r.score);
-      const resScore = r.residualScore != null ? r.residualScore : r.score;
-      const resLevel = rLevel(resScore);
-      const inhCls = inhLevel==='High'?'badge-danger': inhLevel==='Medium'?'badge-warning': inhLevel==='Low'?'badge-success':'';
-      const resCls = resLevel==='High'?'badge-danger': resLevel==='Medium'?'badge-warning': resLevel==='Low'?'badge-success':'';
-
-      const tr=document.createElement('tr');
-      tr.innerHTML=`
-        <td>${r.title}</td>
-        <td>${r.assetName||''}</td>
-        <td>${r.category}</td>
-        <td>
-          ${r.score
-            ? `<span class="badge ${inhCls} mr-1">${r.score}</span><span class="text-muted small">${inhLevel}</span>`
-            : '-'}
-        </td>
-        <td>
-          ${resScore
-            ? `<span class="badge ${resCls} mr-1">${resScore}</span><span class="text-muted small">${resLevel}</span>`
-            : '-'}
-        </td>
-        <td>
-          ${r.status}
-          <div class="mt-1">
-            <button class="btn btn-sm btn-outline-light mb-1" data-re="${r.id}">Edit</button>
-            <button class="btn btn-sm btn-outline-light mb-1" data-rd="${r.id}">Del</button>
-          </div>
-        </td>`;
-      tbody.appendChild(tr);
-    });
-    empty.style.display = risks.length?'none':'block';
-    count.textContent = `${risks.length} risk(s)`;
-    populateControlRisks();
-    populateIssueDropdowns();
-    renderDashboard();
-  }
+  function resetRiskForm(){ qs('#risk-form').reset(); qs('#risk-id').value=''; qs('#risk-form-submit').textContent='Save risk'; }
 
   function populateControlRisks(){
     const sel=qs('#control-risks'); if(!sel) return;
@@ -1056,49 +1003,43 @@
     setMulti(sel, cur);
   }
 
+  function renderRisksTable(){
+    const tbody = qs('#risks-table-body'), empty=qs('#risks-empty'), count=qs('#risks-count');
+    tbody.innerHTML='';
+    risks.forEach(r=>{
+      const level=rLevel(r.score), cls = level==='High'?'badge-danger': level==='Medium'?'badge-warning': level==='Low'?'badge-success':'';
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>${r.title}</td><td>${r.assetName||''}</td><td>${r.category}</td>
+        <td>${r.score?`<span class="badge ${cls} mr-1">${r.score}</span><span class="text-muted small">${level}</span>`:'-'}</td>
+        <td>${r.status}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-light mb-1" data-re="${r.id}">Edit</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-rd="${r.id}">Del</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+    empty.style.display = risks.length?'none':'block';
+    count.textContent = `${risks.length} risk(s)`;
+    populateControlRisks(); populateIssueDropdowns(); populateTreatmentRiskOptions(); renderDashboard();
+  }
+
   // ============ CONTROLS ============
   function populateControlFrameworks(){
     const sel = qs('#control-frameworks'); if(!sel) return;
     sel.innerHTML=''; FRAMEWORK_CONTROLS.forEach(fc=>{ const o=document.createElement('option'); o.value=fc.id; o.textContent=`${fc.id} – ${fc.name}`; sel.appendChild(o); });
   }
-  function resetControlForm(){
-    const form = qs('#control-form'); if(!form) return;
-    form.reset(); qs('#control-id').value=''; qs('#control-form-submit').textContent='Save control';
-  }
-
-  function isControlImplemented(c){
-    if(c.status !== 'In place') return false;
-    // Only treat as implemented if not explicitly "Not effective"
-    return (c.effectiveness || 'Not tested') !== 'Not effective';
-  }
-  function isControlPlannedOnly(c){
-    if(c.status === 'Planned') return true;
-    // In place but explicitly "Not effective" counts as planned-only (design exists but failing)
-    if(c.status === 'In place' && c.effectiveness === 'Not effective') return true;
-    return false;
-  }
+  function resetControlForm(){ qs('#control-form').reset(); qs('#control-id').value=''; qs('#control-form-submit').textContent='Save control'; }
 
   function renderControlsTable(){
     const tbody=qs('#controls-table-body'), empty=qs('#controls-empty'), count=qs('#controls-count');
-    if(!tbody || !empty || !count) return;
-
     tbody.innerHTML='';
     controls.forEach(c=>{
-      const rc=(c.linkedRiskIds||[]).length,
-            fw=(c.linkedFrameworkControlIds||[]).length;
-      const eff = c.effectiveness || 'Not tested';
-      const tested = c.lastTested || '-';
+      const rc=(c.linkedRiskIds||[]).length, fw=(c.linkedFrameworkControlIds||[]).length;
       const tr=document.createElement('tr');
       tr.innerHTML=`
-        <td>${c.name}</td>
-        <td>
-          ${c.status}
-          <div class="text-muted small">${eff}</div>
-        </td>
-        <td>${c.type}</td>
-        <td>${rc?rc+' linked':'-'}</td>
-        <td>${fw?fw+' mapped':'-'}</td>
-        <td>${tested}</td>
+        <td>${c.name}</td><td>${c.type}</td><td>${c.status}</td>
+        <td>${rc?rc+' linked':'-'}</td><td>${fw?fw+' mapped':'-'}</td>
         <td>
           <button class="btn btn-sm btn-outline-light mb-1" data-ce="${c.id}">Edit</button>
           <button class="btn btn-sm btn-outline-light mb-1" data-cd="${c.id}">Del</button>
@@ -1107,32 +1048,21 @@
     });
     empty.style.display = controls.length?'none':'block';
     count.textContent = `${controls.length} control(s)`;
-    populateIssueDropdowns();
-    renderGapTable();
-    renderDashboard();
+    populateIssueDropdowns(); renderGapTable(); renderDashboard();
   }
 
   // ============ ISSUES ============
-  function resetIssueForm(){
-    const form = qs('#issue-form'); if(!form) return;
-    form.reset(); qs('#issue-id').value=''; qs('#issue-form-submit').textContent='Save issue';
-  }
+  function resetIssueForm(){ qs('#issue-form').reset(); qs('#issue-id').value=''; qs('#issue-form-submit').textContent='Save issue'; }
 
   function renderIssuesTable(){
     const tbody = qs('#issues-table-body'), empty=qs('#issues-empty'), count=qs('#issues-count');
-    if(!tbody || !empty || !count) return;
-
     tbody.innerHTML='';
     issues.forEach(i=>{
-      const sev=i.severity||'';
-      const cls = sev==='Critical'||sev==='High'?'badge-danger': sev==='Medium'?'badge-warning':'badge-success';
+      const sev=i.severity||'', cls = sev==='Critical'||sev==='High'?'badge-danger': sev==='Medium'?'badge-warning':'badge-success';
       const tr=document.createElement('tr');
       tr.innerHTML=`
-        <td>${i.title}</td>
-        <td>${i.type}</td>
-        <td>${sev?`<span class="badge ${cls}">${sev}</span>`:'-'}</td>
-        <td>${i.status}</td>
-        <td>${i.linkedSummary||'-'}</td>
+        <td>${i.title}</td><td>${i.type}</td><td>${sev?`<span class="badge ${cls}">${sev}</span>`:'-'}</td>
+        <td>${i.status}</td><td>${i.linkedSummary||'-'}</td>
         <td>
           <button class="btn btn-sm btn-outline-light mb-1" data-ie="${i.id}">Edit</button>
           <button class="btn btn-sm btn-outline-light mb-1" data-id="${i.id}">Del</button>
@@ -1142,6 +1072,54 @@
     empty.style.display = issues.length?'none':'block';
     count.textContent = `${issues.length} issue(s)`;
     renderDashboard();
+  }
+
+  // ============ TREATMENTS ============
+  function resetTreatmentForm(){
+    qs('#treatment-form').reset();
+    qs('#treatment-id').value='';
+    qs('#treatment-form-submit').textContent='Save action';
+  }
+
+  function renderTreatmentsTable(){
+    const tbody = qs('#treatments-table-body'),
+          empty = qs('#treatments-empty'),
+          count = qs('#treatments-count');
+    tbody.innerHTML='';
+    treatments.forEach(t=>{
+      const tr=document.createElement('tr');
+      const status = t.status || 'Open';
+      const cls = status==='Completed'?'badge-success':
+                  status==='In progress'?'badge-warning':
+                  status==='Accepted'?'badge-secondary':'badge-primary';
+      tr.innerHTML=`
+        <td>${t.title}</td>
+        <td>${t.riskTitle || ''}</td>
+        <td><span class="badge ${cls}">${status}</span></td>
+        <td>${t.dueDate || '-'}</td>
+        <td>${t.owner || ''}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-light mb-1" data-te="${t.id}">Edit</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-td="${t.id}">Del</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+    empty.style.display = treatments.length ? 'none' : 'block';
+    count.textContent = `${treatments.length} action(s)`;
+    renderDashboard();
+  }
+
+  // If a risk is deleted, detach from treatments
+  function detachRiskFromTreatments(riskId){
+    let changed=false;
+    treatments.forEach(t=>{
+      if(t.riskId===riskId){
+        t.riskId='';
+        t.riskTitle='(risk deleted)';
+        changed=true;
+      }
+    });
+    if(changed){ save(K.treatments, treatments); renderTreatmentsTable(); }
   }
 
   // ============ GAP ANALYSIS ============
@@ -1154,12 +1132,10 @@
       const row = byCat.get(fc.category); row.total += 1;
       const linked = controls.filter(c=>Array.isArray(c.linkedFrameworkControlIds) && c.linkedFrameworkControlIds.includes(fc.id));
       if(linked.length===0){ row.notImplemented += 1; return; }
-
-      const implementedLinked = linked.filter(isControlImplemented);
-      const plannedLinked = linked.filter(isControlPlannedOnly);
-
-      if(implementedLinked.length>0) row.implemented += 1;
-      else if(plannedLinked.length>0) row.plannedOnly += 1;
+      const hasInPlace = linked.some(c=>c.status==='In place');
+      const hasPlanned = linked.some(c=>c.status==='Planned');
+      if(hasInPlace) row.implemented += 1;
+      else if(hasPlanned) row.plannedOnly += 1;
       else row.notImplemented += 1;
     });
     return Array.from(byCat.values()).sort((a,b)=>a.category.localeCompare(b.category));
@@ -1170,22 +1146,14 @@
   }
   function renderGapTable(){
     const tbody=qs('#gap-table-body'), overall=qs('#gap-overall-coverage');
-    if(!tbody || !overall) return;
-
     const rows = computeGapRows(); tbody.innerHTML='';
     rows.forEach(r=>{
       const pct = r.total? Math.round((r.implemented/r.total)*100):0;
       const tr=document.createElement('tr');
       tr.innerHTML=`
-        <td>${r.category}</td>
-        <td>${r.total}</td>
-        <td>${r.implemented} / ${r.total}</td>
-        <td>${r.plannedOnly} / ${r.total}</td>
-        <td>${r.notImplemented} / ${r.total}</td>
-        <td class="heat-cell ${heatClass(pct)}">
-          ${pct}%
-          <small>${r.implemented} of ${r.total} control(s) implemented</small>
-        </td>`;
+        <td>${r.category}</td><td>${r.total}</td><td>${r.implemented} / ${r.total}</td>
+        <td>${r.plannedOnly} / ${r.total}</td><td>${r.notImplemented} / ${r.total}</td>
+        <td class="heat-cell ${heatClass(pct)}">${pct}%<small>${r.implemented} of ${r.total} control(s) implemented</small></td>`;
       tbody.appendChild(tr);
     });
     const ov = overallCoverage(rows);
@@ -1196,73 +1164,71 @@
   }
 
   // ============ DASHBOARD ============
-  function renderDashboard(){
-    const a = qs('#dash-assets'), r = qs('#dash-risks'), c = qs('#dash-controls'), i = qs('#dash-issues');
-    const highEl = qs('#dash-high'), overdueEl = qs('#dash-overdue');
-    if(a) a.textContent = assets.length;
-    if(r) r.textContent = risks.length;
-    if(c) c.textContent = controls.length;
-    if(i) i.textContent = issues.length;
-
-    // High by residual
-    const high = risks.filter(rk=>{
-      const rs = rk.residualScore != null ? rk.residualScore : rk.score;
-      return rLevel(rs)==='High';
-    }).length;
-    if(highEl) highEl.textContent = high;
-
-    const today = new Date();
-    const overdue = issues.filter(is=>{
-      if(!is.dueDate) return false;
-      const d=new Date(is.dueDate); if(isNaN(d)) return false;
-      const st=is.status||''; return st!=='Resolved' && st!=='Accepted' && d<today;
-    }).length;
-    if(overdueEl) overdueEl.textContent = overdue;
-
-    const ov = overallCoverage(computeGapRows());
-    const covEl = qs('#dash-coverage');
-    if(covEl) covEl.textContent = ov+'%';
-    updateCoveragePill(ov);
-
-    // Keep auditor summary in sync too
-    renderAuditorSummary();
-  }
   function updateCoveragePill(p){
     const pill = qs('#dash-coverage-pill');
-    if(!pill) return;
     pill.classList.remove('heat-good','heat-medium','heat-low','heat-none');
     pill.classList.add(heatClass(p));
     pill.textContent = p>=80?'Strong coverage': p>=50?'Moderate coverage': p>0?'Limited coverage':'No implemented coverage yet';
   }
 
+  function renderDashboard(){
+    qs('#dash-assets').textContent   = assets.length;
+    qs('#dash-risks').textContent    = risks.length;
+    qs('#dash-controls').textContent = controls.length;
+    qs('#dash-issues').textContent   = issues.length;
+
+    const high = risks.filter(r=>rLevel(r.score)==='High').length;
+    qs('#dash-high').textContent = high;
+
+    const today = new Date();
+    const overdue = issues.filter(i=>{
+      if(!i.dueDate) return false; const d=new Date(i.dueDate); if(isNaN(d)) return false;
+      const st=i.status||''; return st!=='Resolved' && st!=='Accepted' && d<today;
+    }).length;
+    qs('#dash-overdue').textContent = overdue;
+
+    const openActions = treatments.filter(t=>t.status==='Open' || t.status==='In progress').length;
+    qs('#dash-open-actions').textContent = openActions;
+
+    const ov = overallCoverage(computeGapRows());
+    qs('#dash-coverage').textContent = ov+'%';
+    updateCoveragePill(ov);
+  }
+
   // ============ RISK MATRIX ============
   let showResidual = false;
-  const canvas = document.getElementById('risk-matrix-canvas');
-  const ctx = canvas ? canvas.getContext('2d') : null;
-  const legend = qs('#matrix-legend');
+  const canvas = document.createElement('canvas');
+  // We'll re-select once DOM is ready
+
+  function residualForRisk(r){
+    const impl = controls.filter(c => c.status==='In place' && (c.linkedRiskIds||[]).includes(r.id));
+    const dropL = Math.min(2, impl.length);
+    const dropI = impl.some(c=>c.type==='Preventive' || c.type==='Corrective') ? 1 : 0;
+    return {
+      likelihood: Math.max(1, (r.likelihood||1) - dropL),
+      impact: Math.max(1, (r.impact||1) - dropI)
+    };
+  }
 
   function drawMatrix(){
-    if(!ctx || !canvas) return;
-    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const c = qs('#risk-matrix-canvas'); if(!c) return;
+    const ctx = c.getContext('2d');
+    const legend = qs('#matrix-legend');
+    ctx.clearRect(0,0,c.width,c.height);
     const size=110, off=90;
+
     ctx.strokeStyle="#2b3138"; ctx.lineWidth=1;
     for(let i=0;i<=5;i++){
       ctx.beginPath(); ctx.moveTo(off, off + i*size); ctx.lineTo(off+5*size, off+i*size); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(off + i*size, off); ctx.lineTo(off + i*size, off+5*size); ctx.stroke();
     }
-    ctx.font="14px Poppins"; ctx.fillStyle="#aab2bd"; ctx.textAlign='left'; ctx.textBaseline='alphabetic';
-    ctx.fillText("Impact →", off+225, off-25);
+    ctx.font="14px Poppins"; ctx.fillStyle="#aab2bd"; ctx.fillText("Impact →", off+225, off-25);
     ctx.save(); ctx.translate(off-55, off+240); ctx.rotate(-Math.PI/2); ctx.fillText("Likelihood →", 0,0); ctx.restore();
 
     let high=0, med=0, low=0;
     risks.forEach(r=>{
-      let L = r.likelihood;
-      let I = r.impact;
-      if(showResidual){
-        const rl = r.residualLikelihood != null ? r.residualLikelihood : r.likelihood;
-        const ri = r.residualImpact != null ? r.residualImpact : r.impact;
-        L = rl; I = ri;
-      }
+      let L=r.likelihood, I=r.impact;
+      if(showResidual){ const res = residualForRisk(r); L=res.likelihood; I=res.impact; }
       const score = rScore(L,I);
       let color = "#27ae60";
       if(score>=15){ color="#e63946"; high++; }
@@ -1276,27 +1242,97 @@
       ctx.fillText(String(score), off + (I-0.5)*size, off + (5-L+0.5)*size);
     });
 
-    if(legend){
-      legend.innerHTML = `<b>${risks.length}</b> risks (${showResidual ? 'residual' : 'inherent'}) &nbsp;—&nbsp; 
-        <span style="color:#e63946">High: ${high}</span> &nbsp;|&nbsp;
-        <span style="color:#f1c40f">Medium: ${med}</span> &nbsp;|&nbsp;
-        <span style="color:#27ae60">Low: ${low}</span>`;
+    legend.innerHTML = `<b>${risks.length}</b> risks &nbsp;—&nbsp; 
+      <span style="color:#e63946">High: ${high}</span> &nbsp;|&nbsp;
+      <span style="color:#f1c40f">Medium: ${med}</span> &nbsp;|&nbsp;
+      <span style="color:#27ae60">Low: ${low}</span>`;
+  }
+
+  // ============ AUDITOR SUMMARY ============
+  function buildAuditorSummary(){
+    const lines = [];
+    lines.push("1. Scope and context");
+    lines.push(`- The organisation is using the GRC Practice Lab to model ${assets.length || 'no'} key information assets and services.`);
+    if(assets.length){
+      const critical = assets.filter(a=>a.criticality==='High').map(a=>a.name);
+      if(critical.length) lines.push(`- High criticality assets include: ${critical.join(', ')}.`);
     }
+
+    const highRisks = risks.filter(r=>rLevel(r.score)==='High');
+    const medRisks  = risks.filter(r=>rLevel(r.score)==='Medium');
+
+    lines.push("");
+    lines.push("2. Risk posture");
+    lines.push(`- Total documented risks: ${risks.length}.`);
+    lines.push(`- High risks: ${highRisks.length}; Medium risks: ${medRisks.length}.`);
+    if(highRisks.length){
+      lines.push("- Example high risks:");
+      highRisks.slice(0,3).forEach(r=>{
+        lines.push(`  • ${r.title} (asset: ${r.assetName || 'n/a'}, score: ${r.score}).`);
+      });
+    }
+
+    lines.push("");
+    lines.push("3. Control environment and framework coverage");
+    lines.push(`- Local controls defined: ${controls.length}.`);
+    const rows = computeGapRows();
+    const cov  = overallCoverage(rows);
+    lines.push(`- Overall implemented framework coverage: ${cov}% of ${FRAMEWORK_CONTROLS.length} paraphrased framework controls.`);
+    if(rows.length){
+      lines.push("- Coverage by category:");
+      rows.forEach(r=>{
+        const pct = r.total ? Math.round((r.implemented/r.total)*100) : 0;
+        lines.push(`  • ${r.category}: ${pct}% implemented (${r.implemented}/${r.total}).`);
+      });
+    }
+
+    lines.push("");
+    lines.push("4. Issues, findings and action plans");
+    const openIssues = issues.filter(i=>i.status==='Open' || i.status==='In progress');
+    const highIssues = issues.filter(i=>i.severity==='High' || i.severity==='Critical');
+    const openActions = treatments.filter(t=>t.status==='Open' || t.status==='In progress');
+    lines.push(`- Open / in-progress issues: ${openIssues.length} (of ${issues.length} total).`);
+    lines.push(`- High/Critical issues: ${highIssues.length}.`);
+    lines.push(`- Open / in-progress treatment actions: ${openActions.length} (of ${treatments.length} total action items).`);
+
+    if(openActions.length){
+      lines.push("- Sample actions:");
+      openActions.slice(0,3).forEach(t=>{
+        lines.push(`  • ${t.title} (risk: ${t.riskTitle || 'n/a'}, status: ${t.status}, owner: ${t.owner || 'n/a'}).`);
+      });
+    }
+
+    lines.push("");
+    lines.push("5. Overall observation");
+    if(!risks.length && !controls.length){
+      lines.push("- The environment is at a very early stage: no risks or controls have been modelled yet.");
+    } else if(highRisks.length && openActions.length === 0){
+      lines.push("- Several high risks have been identified; however, there are currently no treatment actions logged against them.");
+    } else {
+      lines.push("- A basic but structured risk and control environment is in place, with active remediation tracked via treatment actions.");
+    }
+
+    return lines.join("\\n");
+  }
+
+  function renderAuditorSummary(){
+    const ta = qs('#auditor-summary-text');
+    if(!ta) return;
+    ta.value = buildAuditorSummary();
   }
 
   // ============ SCENARIO EXPORT/IMPORT ============
-  function setImportStatus(msg, err){
-    const el=qs('#import-status'); if(!el) return;
-    el.textContent=msg||''; el.style.color=err?'#fca5a5':'#9ca3af';
-  }
+  function setImportStatus(msg, err){ const el=qs('#import-status'); el.textContent=msg||''; el.style.color=err?'#fca5a5':'#9ca3af'; }
   function exportScenario(){
-    const payload = { version:1, exportedAt:new Date().toISOString(), assets, risks, controls, issues };
+    const payload = {
+      version:2,
+      exportedAt:new Date().toISOString(),
+      assets, risks, controls, issues, treatments
+    };
     const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
     const url = URL.createObjectURL(blob); const a=document.createElement('a');
-    a.href=url; a.download=`grc-lab-scenario-${new Date().toISOString().slice(0,10)}.json`;
-    document.body.appendChild(a); a.click();
-    document.body.removeChild(a); URL.revokeObjectURL(url);
-    setImportStatus('Exported current data as JSON.', false);
+    a.href=url; a.download=`grc-lab-scenario-${new Date().toISOString().slice(0,10)}.json`; document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url); setImportStatus('Exported current data as JSON.', false);
   }
   function importScenarioFile(file){
     if(!file) return;
@@ -1304,426 +1340,45 @@
     reader.onload = e=>{
       try{
         const data = JSON.parse(e.target.result);
-        assets = Array.isArray(data.assets)? data.assets: [];
-        risks  = Array.isArray(data.risks)? data.risks: [];
-        controls = Array.isArray(data.controls)? data.controls: [];
-        issues = Array.isArray(data.issues)? data.issues: [];
-        save(K.assets, assets); save(K.risks, risks); save(K.controls, controls); save(K.issues, issues);
+        assets     = Array.isArray(data.assets)? data.assets: [];
+        risks      = Array.isArray(data.risks)? data.risks: [];
+        controls   = Array.isArray(data.controls)? data.controls: [];
+        issues     = Array.isArray(data.issues)? data.issues: [];
+        treatments = Array.isArray(data.treatments)? data.treatments: [];
+        save(K.assets, assets); save(K.risks, risks); save(K.controls, controls); save(K.issues, issues); save(K.treatments, treatments);
         refreshAll();
-        setImportStatus(`Imported scenario: ${assets.length} assets, ${risks.length} risks, ${controls.length} controls, ${issues.length} issues.`, false);
+        setImportStatus(`Imported scenario: ${assets.length} assets, ${risks.length} risks, ${controls.length} controls, ${issues.length} issues, ${treatments.length} treatments.`, false);
       }catch(err){ console.error(err); setImportStatus('Failed to import scenario. Check JSON file.', true); }
     };
     reader.onerror = ()=> setImportStatus('Failed to read file.', true);
     reader.readAsText(file);
   }
   function resetLab(){
-    if(!confirm('This will clear all assets, risks, controls, issues in this browser. Continue?')) return;
-    assets=[]; risks=[]; controls=[]; issues=[];
+    if(!confirm('This will clear all assets, risks, controls, treatments and issues in this browser. Continue?')) return;
+    assets=[]; risks=[]; controls=[]; issues=[]; treatments=[];
     localStorage.removeItem(K.assets); localStorage.removeItem(K.risks);
-    localStorage.removeItem(K.controls); localStorage.removeItem(K.issues);
+    localStorage.removeItem(K.controls); localStorage.removeItem(K.issues); localStorage.removeItem(K.treatments);
     refreshAll(); setImportStatus('Lab reset: all data cleared from this browser.', false);
   }
 
-  // ============ MEDICLOUD DEMO SCENARIO ============
   function loadMediCloudScenario(){
-    if(!confirm('This will REPLACE current lab data with the MediCloud demo scenario. Continue?')) return;
-
-    // Assets
-    const medAssets = [
-      {
-        id: 'AST-MED-APP',
-        name: 'MediCloud Web App',
-        type: 'Application',
-        criticality: 'High',
-        owner: 'Product & Engineering',
-        dataTypes: ['PHI','PII'],
-        notes: 'Customer-facing healthcare SaaS application used by clinics and hospitals.'
-      },
-      {
-        id: 'AST-MED-DB',
-        name: 'MediCloud Patient DB',
-        type: 'Database',
-        criticality: 'High',
-        owner: 'Data Platform Team',
-        dataTypes: ['PHI','PII'],
-        notes: 'Primary relational database storing patient records, appointments, billing data.'
-      },
-      {
-        id: 'AST-MED-IDP',
-        name: 'Okta SSO Tenant',
-        type: 'Cloud Service',
-        criticality: 'Medium',
-        owner: 'IT / IAM',
-        dataTypes: ['PII','Internal data'],
-        notes: 'Central identity provider for internal staff and privileged users.'
-      }
-    ];
-
-    // Risks with residual values
-    const medRisks = [
-      {
-        id: 'RSK-MED-UNAUTH',
-        title: 'Unauthorised access to MediCloud admin portal',
-        assetId: 'AST-MED-APP',
-        assetName: 'MediCloud Web App',
-        category: 'Cybersecurity',
-        likelihood: 4,
-        impact: 4,
-        score: rScore(4,4),            // 16 (High inherent)
-        residualLikelihood: 3,
-        residualImpact: 4,
-        residualScore: rScore(3,4),    // 12 (Medium residual)
-        status: 'Open',
-        owner: 'CISO',
-        notes: 'Brute force, stolen creds or misconfig could give attackers access to PHI and admin capabilities.'
-      },
-      {
-        id: 'RSK-MED-DATA-LEAK',
-        title: 'Data exfiltration from patient database',
-        assetId: 'AST-MED-DB',
-        assetName: 'MediCloud Patient DB',
-        category: 'Privacy',
-        likelihood: 3,
-        impact: 5,
-        score: rScore(3,5),            // 15 (High inherent)
-        residualLikelihood: 2,
-        residualImpact: 5,
-        residualScore: rScore(2,5),    // 10 (Medium residual)
-        status: 'In progress',
-        owner: 'Data Protection Officer',
-        notes: 'Unusual query patterns or misconfigured access could lead to bulk data exfiltration.'
-      },
-      {
-        id: 'RSK-MED-AVAIL',
-        title: 'Unavailability of MediCloud app due to infra failure',
-        assetId: 'AST-MED-APP',
-        assetName: 'MediCloud Web App',
-        category: 'Operational',
-        likelihood: 2,
-        impact: 4,
-        score: rScore(2,4),            // 8 (Medium inherent)
-        residualLikelihood: 2,
-        residualImpact: 3,
-        residualScore: rScore(2,3),    // 6 (Medium residual)
-        status: 'Open',
-        owner: 'SRE Lead',
-        notes: 'Cloud region outage or misconfigured infra could impact clinic operations.'
-      },
-      {
-        id: 'RSK-MED-CRED-STUFF',
-        title: 'Credential stuffing against Okta SSO',
-        assetId: 'AST-MED-IDP',
-        assetName: 'Okta SSO Tenant',
-        category: 'Cybersecurity',
-        likelihood: 3,
-        impact: 3,
-        score: rScore(3,3),            // 9 (Medium inherent)
-        residualLikelihood: 2,
-        residualImpact: 3,
-        residualScore: rScore(2,3),    // 6 (Medium residual)
-        status: 'Mitigated',
-        owner: 'IAM Lead',
-        notes: 'Password reuse by staff could be exploited; partially mitigated by MFA and sign-on policies.'
-      }
-    ];
-
-    // Controls with effectiveness + test dates
-    const medControls = [
-      {
-        id: 'CTL-MED-MFA',
-        name: 'MFA on Okta and admin portal',
-        type: 'Preventive',
-        status: 'In place',
-        effectiveness: 'Effective',
-        lastTested: '2025-05-10',
-        testNotes: 'Quarterly access review & MFA challenge test recorded in JIRA-SEC-101.',
-        owner: 'IAM Team',
-        description: 'MFA enforced for all privileged accounts and remote admin access via Okta and application-level checks.',
-        linkedRiskIds: ['RSK-MED-UNAUTH','RSK-MED-CRED-STUFF'],
-        linkedFrameworkControlIds: ['CTRL-AC-02','CTRL-AC-03']
-      },
-      {
-        id: 'CTL-MED-LOG',
-        name: 'Centralised logging & alerting',
-        type: 'Detective',
-        status: 'In place',
-        effectiveness: 'Needs improvement',
-        lastTested: '2025-04-20',
-        testNotes: 'Red team simulation highlighted missing DB logs; improvements tracked under SEC-LOG-22.',
-        owner: 'Security Operations',
-        description: 'Web, DB and Okta logs forwarded to SIEM with correlation rules for suspicious access.',
-        linkedRiskIds: ['RSK-MED-UNAUTH','RSK-MED-DATA-LEAK','RSK-MED-CRED-STUFF'],
-        linkedFrameworkControlIds: ['CTRL-LOG-01','CTRL-LOG-02']
-      },
-      {
-        id: 'CTL-MED-BACKUP',
-        name: 'Daily DB backups & DR testing',
-        type: 'Corrective',
-        status: 'In place',
-        effectiveness: 'Effective',
-        lastTested: '2025-03-15',
-        testNotes: 'Full restore to DR region completed within RTO in DR-TEST-2025-Q1.',
-        owner: 'SRE Team',
-        description: 'Automated encrypted backups with quarterly restore tests for RPO/RTO validation.',
-        linkedRiskIds: ['RSK-MED-DATA-LEAK','RSK-MED-AVAIL'],
-        linkedFrameworkControlIds: ['CTRL-BCP-01']
-      },
-      {
-        id: 'CTL-MED-VULN',
-        name: 'Monthly vulnerability scanning',
-        type: 'Detective',
-        status: 'Planned',
-        effectiveness: 'Not tested',
-        lastTested: '',
-        testNotes: '',
-        owner: 'Security Engineering',
-        description: 'Monthly authenticated scans across app and DB hosts with tracked remediation.',
-        linkedRiskIds: ['RSK-MED-UNAUTH','RSK-MED-DATA-LEAK'],
-        linkedFrameworkControlIds: ['CTRL-VULN-01']
-      },
-      {
-        id: 'CTL-MED-IR',
-        name: 'Incident response playbooks',
-        type: 'Administrative',
-        status: 'Planned',
-        effectiveness: 'Not tested',
-        lastTested: '',
-        testNotes: '',
-        owner: 'CISO',
-        description: 'Documented runbooks for auth compromise, data exfiltration and large outage scenarios.',
-        linkedRiskIds: ['RSK-MED-UNAUTH','RSK-MED-DATA-LEAK','RSK-MED-AVAIL'],
-        linkedFrameworkControlIds: ['CTRL-IR-01','CTRL-IR-02']
-      }
-    ];
-
-    // Issues
-    const medIssues = [
-      {
-        id: 'ISS-MED-MFA-GAP',
-        title: 'MFA not enforced for support agents',
-        type: 'Audit',
-        severity: 'High',
-        status: 'Open',
-        owner: 'Support Manager',
-        dueDate: '2025-12-31',
-        notes: 'Support team accounts still allowed single-factor login for some workflows. Need policy and rollout.',
-        assetId: 'AST-MED-APP',
-        riskId: 'RSK-MED-UNAUTH',
-        controlId: 'CTL-MED-MFA',
-        linkedSummary: 'Asset: MediCloud Web App | Risk: Unauthorised access to MediCloud admin portal | Control: MFA on Okta and admin portal'
-      },
-      {
-        id: 'ISS-MED-LOG-GAP',
-        title: 'Incomplete logging for DB queries',
-        type: 'Pen test',
-        severity: 'Medium',
-        status: 'In progress',
-        owner: 'DBA Lead',
-        dueDate: '2025-11-30',
-        notes: 'Some privileged DB accounts bypass central logging due to legacy connection string settings.',
-        assetId: 'AST-MED-DB',
-        riskId: 'RSK-MED-DATA-LEAK',
-        controlId: 'CTL-MED-LOG',
-        linkedSummary: 'Asset: MediCloud Patient DB | Risk: Data exfiltration from patient database | Control: Centralised logging & alerting'
-      },
-      {
-        id: 'ISS-MED-DR-TEST',
-        title: 'DR test overdue for patient DB',
-        type: 'Risk review',
-        severity: 'Medium',
-        status: 'Open',
-        owner: 'SRE Lead',
-        dueDate: '2025-10-15',
-        notes: 'Last full DR test was more than 12 months ago; evidence not sufficient for auditors.',
-        assetId: 'AST-MED-DB',
-        riskId: 'RSK-MED-AVAIL',
-        controlId: 'CTL-MED-BACKUP',
-        linkedSummary: 'Asset: MediCloud Patient DB | Risk: Unavailability of MediCloud app due to infra failure | Control: Daily DB backups & DR testing'
-      }
-    ];
-
-    assets = medAssets;
-    risks = medRisks;
-    controls = medControls;
-    issues = medIssues;
-
-    save(K.assets, assets);
-    save(K.risks, risks);
-    save(K.controls, controls);
-    save(K.issues, issues);
-
+    if(!confirm('This will replace your current lab data with the MediCloud demo scenario. Continue?')) return;
+    assets     = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.assets));
+    risks      = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.risks));
+    controls   = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.controls));
+    issues     = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.issues));
+    treatments = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.treatments));
+    save(K.assets, assets); save(K.risks, risks); save(K.controls, controls); save(K.issues, issues); save(K.treatments, treatments);
     refreshAll();
-    setImportStatus('Loaded MediCloud demo scenario: ' +
-      assets.length + ' assets, ' +
-      risks.length + ' risks, ' +
-      controls.length + ' controls, ' +
-      issues.length + ' issues.', false);
-  }
-
-  // ============ AUDITOR SUMMARY ============
-  function severityRank(sev){
-    if(sev==='Critical') return 4;
-    if(sev==='High') return 3;
-    if(sev==='Medium') return 2;
-    if(sev==='Low') return 1;
-    return 0;
-  }
-
-  function getWeakestCategory(){
-    const rows = computeGapRows();
-    if(!rows.length) return null;
-    let worst = null;
-    rows.forEach(r=>{
-      if(!r.total) return;
-      const cov = r.implemented / r.total;
-      if(worst === null || cov < worst.coverage){
-        worst = { category:r.category, coverage: Math.round(cov*100) };
-      }
-    });
-    return worst;
-  }
-
-  function renderAuditorSummary(){
-    const aEl = qs('#report-assets'),
-          rEl = qs('#report-risks'),
-          cEl = qs('#report-controls'),
-          iEl = qs('#report-issues'),
-          highEl = qs('#report-high'),
-          overdueEl = qs('#report-overdue'),
-          covEl = qs('#report-coverage'),
-          covPill = qs('#report-coverage-pill'),
-          weakLabel = qs('#report-weakest-label'),
-          weakCov = qs('#report-weakest-coverage'),
-          riskList = qs('#report-risk-list'),
-          issueList = qs('#report-issue-list'),
-          untestedEl = qs('#report-controls-untested');
-
-    if(!aEl || !riskList || !issueList) return;
-
-    aEl.textContent = assets.length;
-    rEl.textContent = risks.length;
-    cEl.textContent = controls.length;
-    iEl.textContent = issues.length;
-
-    const highCount = risks.filter(r=>{
-      const rs = r.residualScore != null ? r.residualScore : r.score;
-      const lvl = rLevel(rs);
-      const st = r.status || '';
-      return (lvl==='High') && st!=='Mitigated' && st!=='Accepted';
-    }).length;
-    highEl.textContent = highCount;
-
-    const today = new Date();
-    const overdue = issues.filter(is=>{
-      if(!is.dueDate) return false;
-      const d=new Date(is.dueDate); if(isNaN(d)) return false;
-      const st=is.status||''; return st!=='Resolved' && st!=='Accepted' && d<today;
-    }).length;
-    overdueEl.textContent = overdue;
-
-    // Controls not tested in last 12 months
-    const oneYearMs = 365*24*60*60*1000;
-    const now = new Date();
-    const untested = controls.filter(c=>{
-      if(!c.lastTested) return true;
-      const d = new Date(c.lastTested);
-      if(isNaN(d)) return true;
-      return (now - d) > oneYearMs;
-    }).length;
-    if(untestedEl) untestedEl.textContent = untested;
-
-    const rows = computeGapRows();
-    const ov = overallCoverage(rows);
-    covEl.textContent = ov + '%';
-    if(covPill){
-      covPill.classList.remove('heat-good','heat-medium','heat-low','heat-none');
-      covPill.classList.add(heatClass(ov));
-      covPill.textContent = ov>=80?'Strong coverage': ov>=50?'Moderate coverage': ov>0?'Limited coverage':'No implemented coverage yet';
-    }
-
-    const weakest = getWeakestCategory();
-    if(weakest){
-      weakLabel.textContent = weakest.category;
-      weakCov.textContent = weakest.coverage + '%';
-    } else {
-      weakLabel.textContent = '-';
-      weakCov.textContent = '0%';
-    }
-
-    // Top open High/Critical risks by residual
-    const highRisks = risks
-      .filter(r=>{
-        const rs = r.residualScore != null ? r.residualScore : r.score;
-        const lvl = rLevel(rs);
-        const st = r.status || '';
-        return (lvl==='High') && st!=='Mitigated' && st!=='Accepted';
-      })
-      .sort((a,b)=>{
-        const as = a.residualScore != null ? a.residualScore : a.score;
-        const bs = b.residualScore != null ? b.residualScore : b.score;
-        return (bs||0) - (as||0);
-      })
-      .slice(0,3);
-
-    riskList.innerHTML = '';
-    if(!highRisks.length){
-      riskList.innerHTML = '<li class="report-list-item-sub text-muted">No open high residual risks.</li>';
-    } else {
-      highRisks.forEach(r=>{
-        const li = document.createElement('li');
-        li.className = 'mb-2';
-        const assetName = r.assetName || '';
-        const rs = r.residualScore != null ? r.residualScore : r.score;
-        li.innerHTML = `
-          <div class="report-list-item-main">${r.title}</div>
-          <div class="report-list-item-sub">
-            Residual score: ${rs || '-'} (${rLevel(rs)})${assetName ? ' &nbsp;|&nbsp; Asset: ' + assetName : ''} &nbsp;|&nbsp; Status: ${r.status}
-          </div>`;
-        riskList.appendChild(li);
-      });
-    }
-
-    // Top open issues by severity
-    const openIssues = issues
-      .filter(i=>{
-        const st = i.status || '';
-        return st!=='Resolved' && st!=='Accepted';
-      })
-      .sort((a,b)=>{
-        const srDiff = severityRank(b.severity) - severityRank(a.severity);
-        if(srDiff !== 0) return srDiff;
-        const dA = a.dueDate ? new Date(a.dueDate) : null;
-        const dB = b.dueDate ? new Date(b.dueDate) : null;
-        if(dA && dB) return dA - dB;
-        if(dA && !dB) return -1;
-        if(!dA && dB) return 1;
-        return 0;
-      })
-      .slice(0,3);
-
-    issueList.innerHTML = '';
-    if(!openIssues.length){
-      issueList.innerHTML = '<li class="report-list-item-sub text-muted">No open issues.</li>';
-    } else {
-      openIssues.forEach(is=>{
-        const li = document.createElement('li');
-        li.className = 'mb-2';
-        li.innerHTML = `
-          <div class="report-list-item-main">${is.title}</div>
-          <div class="report-list-item-sub">
-            Severity: ${is.severity || '-'} &nbsp;|&nbsp; Status: ${is.status}
-            ${is.dueDate ? '&nbsp;|&nbsp; Due: ' + is.dueDate : ''}
-          </div>`;
-        issueList.appendChild(li);
-      });
-    }
+    setImportStatus('Loaded MediCloud demo scenario into this browser.', false);
   }
 
   // ============ TABS ============
   function bindTabs(){
     const buttons = qsa('[data-grc-tab]');
     const mapping = {};
-    ['frameworks','assets','risks','controls','issues','gap','dashboard','matrix','report'].forEach(id => mapping[id]=qs('#tab-'+id));
+    ['frameworks','assets','risks','controls','issues','treatments','gap','dashboard','matrix','auditor']
+      .forEach(id => mapping[id]=qs('#tab-'+id));
     buttons.forEach(btn=>{
       btn.addEventListener('click', ()=>{
         const tgt = btn.getAttribute('data-grc-tab');
@@ -1734,7 +1389,7 @@
         if(tgt==='dashboard'){ renderDashboard(); }
         if(tgt==='gap'){ renderGapTable(); }
         if(tgt==='matrix'){ drawMatrix(); }
-        if(tgt==='report'){ renderAuditorSummary(); }
+        if(tgt==='auditor'){ renderAuditorSummary(); }
       });
     });
   }
@@ -1746,312 +1401,248 @@
     renderRisksTable(); populateControlRisks();
     populateControlFrameworks(); renderControlsTable();
     populateIssueDropdowns(); renderIssuesTable();
+    populateTreatmentRiskOptions(); renderTreatmentsTable();
     renderGapTable(); renderDashboard(); drawMatrix(); renderAuditorSummary();
   }
 
   // ============ INIT ============
   document.addEventListener('DOMContentLoaded', ()=>{
-    // Framework filters
-    const ff = qs('#framework-filter');
-    const cf = qs('#category-filter');
-    const fs = qs('#framework-search');
-    if(ff) ff.addEventListener('change', renderFrameworkControls);
-    if(cf) cf.addEventListener('change', renderFrameworkControls);
-    if(fs) fs.addEventListener('input', renderFrameworkControls);
+    ['#framework-filter','#category-filter','#framework-search'].forEach(sel=>{
+      const el = qs(sel); if(el){ el.addEventListener(sel==='#framework-search'?'input':'change', renderFrameworkControls); }
+    });
 
-    bindTabs();
-    populateControlFrameworks(); populateControlRisks(); populateRiskAssetOptions(); populateIssueDropdowns();
+    // Assets
+    qs('#asset-form').addEventListener('submit', e=>{
+      e.preventDefault();
+      const id = qs('#asset-id').value;
+      const name = qs('#asset-name').value.trim();
+      const type = qs('#asset-type').value; const criticality = qs('#asset-criticality').value;
+      if(!name || !type || !criticality) return alert('Fill name, type, criticality.');
+      const obj = {
+        id: id || ('AST-'+Date.now()),
+        name, type, criticality,
+        owner: qs('#asset-owner').value.trim(),
+        dataTypes: selectedDataTypes(),
+        notes: qs('#asset-notes').value.trim()
+      };
+      const idx = assets.findIndex(x=>x.id===obj.id);
+      if(idx>-1) assets[idx]=obj; else assets.push(obj);
+      save(K.assets, assets); renderAssetsTable(); resetAssetForm();
+    });
+    qs('#asset-form-cancel').addEventListener('click', resetAssetForm);
+    qs('#assets-table-body').addEventListener('click', e=>{
+      const idE = e.target.getAttribute('data-ae'); const idD = e.target.getAttribute('data-ad');
+      if(idE){
+        const a = assets.find(x=>x.id===idE); if(!a) return;
+        qs('#asset-id').value=a.id; qs('#asset-name').value=a.name; qs('#asset-type').value=a.type;
+        qs('#asset-criticality').value=a.criticality; qs('#asset-owner').value=a.owner||'';
+        qs('#asset-notes').value=a.notes||''; setDataTypes(a.dataTypes||[]);
+        qs('#asset-form-submit').textContent='Update asset';
+      }
+      if(idD){
+        if(!confirm('Delete this asset?')) return;
+        assets = assets.filter(x=>x.id!==idD); save(K.assets, assets); renderAssetsTable();
+      }
+    });
 
-    // Asset handlers
-    const aForm = qs('#asset-form');
-    if(aForm){
-      aForm.addEventListener('submit', e=>{
-        e.preventDefault();
-        const id = qs('#asset-id').value;
-        const name = qs('#asset-name').value.trim();
-        const type = qs('#asset-type').value;
-        const criticality = qs('#asset-criticality').value;
-        if(!name || !type || !criticality) return alert('Fill name, type, criticality.');
-        const obj = {
-          id: id || ('AST-'+Date.now()),
-          name, type, criticality,
-          owner: qs('#asset-owner').value.trim(),
-          dataTypes: selectedDataTypes(),
-          notes: qs('#asset-notes').value.trim()
-        };
-        const idx = assets.findIndex(x=>x.id===obj.id);
-        if(idx>-1) assets[idx]=obj; else assets.push(obj);
-        save(K.assets, assets); renderAssetsTable(); resetAssetForm();
-      });
-    }
-    const aCancel = qs('#asset-form-cancel');
-    if(aCancel) aCancel.addEventListener('click', resetAssetForm);
-    const aTbody = qs('#assets-table-body');
-    if(aTbody){
-      aTbody.addEventListener('click', e=>{
-        const idE = e.target.getAttribute('data-ae'); const idD = e.target.getAttribute('data-ad');
-        if(idE){
-          const a = assets.find(x=>x.id===idE); if(!a) return;
-          qs('#asset-id').value=a.id; qs('#asset-name').value=a.name; qs('#asset-type').value=a.type;
-          qs('#asset-criticality').value=a.criticality; qs('#asset-owner').value=a.owner||'';
-          qs('#asset-notes').value=a.notes||''; setDataTypes(a.dataTypes||[]);
-          qs('#asset-form-submit').textContent='Update asset';
-        }
-        if(idD){
-          if(!confirm('Delete this asset?')) return;
-          assets = assets.filter(x=>x.id!==idD); save(K.assets, assets); renderAssetsTable();
-        }
-      });
-    }
-
-    // Risk handlers
-    const rForm = qs('#risk-form');
-    if(rForm){
-      rForm.addEventListener('submit', e=>{
-        e.preventDefault();
-        const id = qs('#risk-id').value;
-        const title = qs('#risk-title').value.trim();
-        const assetId = qs('#risk-asset').value;
-        const asset = assets.find(a=>a.id===assetId);
-        const category = qs('#risk-category').value;
-        const likelihood = Number(qs('#risk-likelihood').value);
-        const impact = Number(qs('#risk-impact').value);
-        const status = qs('#risk-status').value;
-        if(!title || !assetId || !category || !likelihood || !impact || !status) return alert('Fill all required fields.');
-
-        const resLVal = qs('#risk-res-likelihood').value;
-        const resIVal = qs('#risk-res-impact').value;
-        const residualLikelihood = resLVal ? Number(resLVal) : likelihood;
-        const residualImpact = resIVal ? Number(resIVal) : impact;
-
-        const obj = {
-          id: id || ('RSK-'+Date.now()),
-          title,
-          assetId,
-          assetName: asset ? asset.name : '',
-          category,
-          likelihood,
-          impact,
-          score: rScore(likelihood, impact),
-          residualLikelihood,
-          residualImpact,
-          residualScore: rScore(residualLikelihood, residualImpact),
-          status,
-          owner: qs('#risk-owner').value.trim(),
-          notes: qs('#risk-notes').value.trim()
-        };
-        const idx = risks.findIndex(x=>x.id===obj.id);
-        if(idx>-1) risks[idx]=obj; else risks.push(obj);
-        save(K.risks, risks); renderRisksTable(); resetRiskForm();
-      });
-    }
-    const rCancel = qs('#risk-form-cancel');
-    if(rCancel) rCancel.addEventListener('click', resetRiskForm);
-    const rTbody = qs('#risks-table-body');
-    if(rTbody){
-      rTbody.addEventListener('click', e=>{
-        const idE = e.target.getAttribute('data-re'); const idD = e.target.getAttribute('data-rd');
-        if(idE){
-          const r = risks.find(x=>x.id===idE); if(!r) return;
-          qs('#risk-id').value=r.id; qs('#risk-title').value=r.title;
-          qs('#risk-asset').value=r.assetId; qs('#risk-category').value=r.category;
-          qs('#risk-likelihood').value=String(r.likelihood); qs('#risk-impact').value=String(r.impact);
-          qs('#risk-owner').value=r.owner||''; qs('#risk-status').value=r.status||'Open'; qs('#risk-notes').value=r.notes||'';
-
-          const rl = r.residualLikelihood != null ? r.residualLikelihood : r.likelihood;
-          const ri = r.residualImpact != null ? r.residualImpact : r.impact;
-          const rlSel = qs('#risk-res-likelihood');
-          const riSel = qs('#risk-res-impact');
-          if(rlSel){
-            rlSel.value = (r.residualLikelihood != null && r.residualLikelihood !== r.likelihood) ? String(rl) : '';
+    // Risks
+    qs('#risk-form').addEventListener('submit', e=>{
+      e.preventDefault();
+      const id = qs('#risk-id').value;
+      const title = qs('#risk-title').value.trim();
+      const assetId = qs('#risk-asset').value;
+      const asset = assets.find(a=>a.id===assetId);
+      const category = qs('#risk-category').value;
+      const likelihood = Number(qs('#risk-likelihood').value);
+      const impact = Number(qs('#risk-impact').value);
+      const status = qs('#risk-status').value;
+      if(!title || !assetId || !category || !likelihood || !impact || !status) return alert('Fill all required fields.');
+      const obj = {
+        id: id || ('RSK-'+Date.now()),
+        title, assetId, assetName: asset?asset.name:'',
+        category, likelihood, impact, score: rScore(likelihood, impact),
+        status, owner: qs('#risk-owner').value.trim(), notes: qs('#risk-notes').value.trim()
+      };
+      const idx = risks.findIndex(x=>x.id===obj.id);
+      if(idx>-1) risks[idx]=obj; else risks.push(obj);
+      save(K.risks, risks); renderRisksTable(); resetRiskForm();
+    });
+    qs('#risk-form-cancel').addEventListener('click', resetRiskForm);
+    qs('#risks-table-body').addEventListener('click', e=>{
+      const idE = e.target.getAttribute('data-re'); const idD = e.target.getAttribute('data-rd');
+      if(idE){
+        const r = risks.find(x=>x.id===idE); if(!r) return;
+        qs('#risk-id').value=r.id; qs('#risk-title').value=r.title;
+        qs('#risk-asset').value=r.assetId; qs('#risk-category').value=r.category;
+        qs('#risk-likelihood').value=String(r.likelihood); qs('#risk-impact').value=String(r.impact);
+        qs('#risk-owner').value=r.owner||''; qs('#risk-status').value=r.status||'Open'; qs('#risk-notes').value=r.notes||'';
+        qs('#risk-form-submit').textContent='Update risk';
+      }
+      if(idD){
+        if(!confirm('Delete this risk?')) return;
+        risks = risks.filter(x=>x.id!==idD); save(K.risks, risks);
+        // remove from linked control arrays
+        let changed=false;
+        controls.forEach(c=>{
+          if(Array.isArray(c.linkedRiskIds) && c.linkedRiskIds.includes(idD)){
+            c.linkedRiskIds = c.linkedRiskIds.filter(z=>z!==idD); changed=true;
           }
-          if(riSel){
-            riSel.value = (r.residualImpact != null && r.residualImpact !== r.impact) ? String(ri) : '';
-          }
+        });
+        if(changed){ save(K.controls, controls); renderControlsTable(); }
+        // unlink from issues
+        issues.forEach(i=>{ if(i.riskId===idD){ i.riskId=''; i.linkedSummary=(i.linkedSummary||'').replace(/ *\| *Risk: [^|]+/,''); }});
+        save(K.issues, issues); renderIssuesTable();
+        detachRiskFromTreatments(idD);
+        renderRisksTable();
+      }
+    });
 
-          qs('#risk-form-submit').textContent='Update risk';
-        }
-        if(idD){
-          if(!confirm('Delete this risk?')) return;
-          risks = risks.filter(x=>x.id!==idD); save(K.risks, risks);
-          // remove from controls
-          let changed=false;
-          controls.forEach(c=>{
-            if(Array.isArray(c.linkedRiskIds) && c.linkedRiskIds.includes(idD)){
-              c.linkedRiskIds = c.linkedRiskIds.filter(z=>z!==idD); changed=true;
-            }
-          });
-          if(changed){ save(K.controls, controls); renderControlsTable(); }
-          // unlink from issues
-          issues.forEach(i=>{ if(i.riskId===idD){ i.riskId=''; i.linkedSummary=(i.linkedSummary||'').replace(/ *\| *Risk: [^|]+/,''); }});
-          save(K.issues, issues); renderIssuesTable();
-          renderRisksTable();
-        }
-      });
-    }
+    // Controls
+    qs('#control-form').addEventListener('submit', e=>{
+      e.preventDefault();
+      const id = qs('#control-id').value;
+      const name = qs('#control-name').value.trim();
+      const type = qs('#control-type').value;
+      const status = qs('#control-status').value;
+      if(!name || !type || !status) return alert('Fill control name, type, status.');
+      const obj = {
+        id: id || ('CTL-'+Date.now()),
+        name, type, status,
+        owner: qs('#control-owner').value.trim(),
+        description: qs('#control-description').value.trim(),
+        linkedRiskIds: getMulti(qs('#control-risks')),
+        linkedFrameworkControlIds: getMulti(qs('#control-frameworks'))
+      };
+      const idx = controls.findIndex(x=>x.id===obj.id);
+      if(idx>-1) controls[idx]=obj; else controls.push(obj);
+      save(K.controls, controls); renderControlsTable(); resetControlForm();
+    });
+    qs('#control-form-cancel').addEventListener('click', resetControlForm);
+    qs('#controls-table-body').addEventListener('click', e=>{
+      const idE = e.target.getAttribute('data-ce'); const idD = e.target.getAttribute('data-cd');
+      if(idE){
+        const c = controls.find(x=>x.id===idE); if(!c) return;
+        qs('#control-id').value=c.id; qs('#control-name').value=c.name; qs('#control-type').value=c.type;
+        qs('#control-status').value=c.status; qs('#control-owner').value=c.owner||'';
+        qs('#control-description').value=c.description||'';
+        setMulti(qs('#control-risks'), c.linkedRiskIds||[]); setMulti(qs('#control-frameworks'), c.linkedFrameworkControlIds||[]);
+        qs('#control-form-submit').textContent='Update control';
+      }
+      if(idD){
+        if(!confirm('Delete this control?')) return;
+        controls = controls.filter(x=>x.id!==idD); save(K.controls, controls); renderControlsTable();
+      }
+    });
 
-    // Control handlers
-    const cForm = qs('#control-form');
-    if(cForm){
-      cForm.addEventListener('submit', e=>{
-        e.preventDefault();
-        const id = qs('#control-id').value;
-        const name = qs('#control-name').value.trim();
-        const type = qs('#control-type').value;
-        const status = qs('#control-status').value;
-        if(!name || !type || !status) return alert('Fill control name, type, status.');
-        const obj = {
-          id: id || ('CTL-'+Date.now()),
-          name,
-          type,
-          status,
-          effectiveness: qs('#control-effectiveness').value || 'Not tested',
-          lastTested: qs('#control-tested').value,
-          testNotes: qs('#control-test-notes').value.trim(),
-          owner: qs('#control-owner').value.trim(),
-          description: qs('#control-description').value.trim(),
-          linkedRiskIds: getMulti(qs('#control-risks')),
-          linkedFrameworkControlIds: getMulti(qs('#control-frameworks'))
-        };
-        const idx = controls.findIndex(x=>x.id===obj.id);
-        if(idx>-1) controls[idx]=obj; else controls.push(obj);
-        save(K.controls, controls); renderControlsTable(); resetControlForm();
-      });
-    }
-    const cCancel = qs('#control-form-cancel');
-    if(cCancel) cCancel.addEventListener('click', resetControlForm);
-    const cTbody = qs('#controls-table-body');
-    if(cTbody){
-      cTbody.addEventListener('click', e=>{
-        const idE = e.target.getAttribute('data-ce'); const idD = e.target.getAttribute('data-cd');
-        if(idE){
-          const c = controls.find(x=>x.id===idE); if(!c) return;
-          qs('#control-id').value=c.id; qs('#control-name').value=c.name; qs('#control-type').value=c.type;
-          qs('#control-status').value=c.status; qs('#control-owner').value=c.owner||'';
-          qs('#control-description').value=c.description||'';
-          qs('#control-effectiveness').value = c.effectiveness || 'Not tested';
-          qs('#control-tested').value = c.lastTested || '';
-          qs('#control-test-notes').value = c.testNotes || '';
-          setMulti(qs('#control-risks'), c.linkedRiskIds||[]);
-          setMulti(qs('#control-frameworks'), c.linkedFrameworkControlIds||[]);
-          qs('#control-form-submit').textContent='Update control';
-        }
-        if(idD){
-          if(!confirm('Delete this control?')) return;
-          controls = controls.filter(x=>x.id!==idD); save(K.controls, controls); renderControlsTable();
-        }
-      });
-    }
+    // Issues
+    qs('#issue-form').addEventListener('submit', e=>{
+      e.preventDefault();
+      const id = qs('#issue-id').value;
+      const title = qs('#issue-title').value.trim();
+      const type = qs('#issue-type').value;
+      const severity = qs('#issue-severity').value;
+      const status = qs('#issue-status').value;
+      if(!title || !type || !severity || !status) return alert('Fill title, type, severity, status.');
+      const assetId = qs('#issue-asset').value || '';
+      const riskId  = qs('#issue-risk').value || '';
+      const controlId = qs('#issue-control').value || '';
+      const a = assets.find(x=>x.id===assetId), r=risks.find(x=>x.id===riskId), c=controls.find(x=>x.id===controlId);
+      const linkedSummary = [a?`Asset: ${a.name}`:'', r?`Risk: ${r.title}`:'', c?`Control: ${c.name}`:''].filter(Boolean).join(' | ');
+      const obj = {
+        id: id || ('ISS-'+Date.now()),
+        title, type, severity, status,
+        owner: qs('#issue-owner').value.trim(),
+        dueDate: qs('#issue-due').value, notes: qs('#issue-notes').value.trim(),
+        assetId, riskId, controlId, linkedSummary
+      };
+      const idx = issues.findIndex(x=>x.id===obj.id);
+      if(idx>-1) issues[idx]=obj; else issues.push(obj);
+      save(K.issues, issues); renderIssuesTable(); resetIssueForm();
+    });
+    qs('#issue-form-cancel').addEventListener('click', resetIssueForm);
+    qs('#issues-table-body').addEventListener('click', e=>{
+      const idE = e.target.getAttribute('data-ie'); const idD = e.target.getAttribute('data-id');
+      if(idE){
+        const i = issues.find(x=>x.id===idE); if(!i) return;
+        qs('#issue-id').value=i.id; qs('#issue-title').value=i.title; qs('#issue-type').value=i.type;
+        qs('#issue-severity').value=i.severity; qs('#issue-status').value=i.status;
+        qs('#issue-owner').value=i.owner||''; qs('#issue-due').value=i.dueDate||''; qs('#issue-notes').value=i.notes||'';
+        populateIssueDropdowns();
+        qs('#issue-asset').value=i.assetId||''; qs('#issue-risk').value=i.riskId||''; qs('#issue-control').value=i.controlId||'';
+        qs('#issue-form-submit').textContent='Update issue';
+      }
+      if(idD){
+        if(!confirm('Delete this issue?')) return;
+        issues = issues.filter(x=>x.id!==idD); save(K.issues, issues); renderIssuesTable();
+      }
+    });
 
-    // Issue handlers
-    const iForm = qs('#issue-form');
-    if(iForm){
-      iForm.addEventListener('submit', e=>{
-        e.preventDefault();
-        const id = qs('#issue-id').value;
-        const title = qs('#issue-title').value.trim();
-        const type = qs('#issue-type').value;
-        const severity = qs('#issue-severity').value;
-        const status = qs('#issue-status').value;
-        if(!title || !type || !severity || !status) return alert('Fill title, type, severity, status.');
-        const assetId = qs('#issue-asset').value || '';
-        const riskId  = qs('#issue-risk').value || '';
-        const controlId = qs('#issue-control').value || '';
-        const a = assets.find(x=>x.id===assetId), r=risks.find(x=>x.id===riskId), c=controls.find(x=>x.id===controlId);
-        const linkedSummary = [a?`Asset: ${a.name}`:'', r?`Risk: ${r.title}`:'', c?`Control: ${c.name}`:''].filter(Boolean).join(' | ');
-        const obj = {
-          id: id || ('ISS-'+Date.now()),
-          title, type, severity, status,
-          owner: qs('#issue-owner').value.trim(),
-          dueDate: qs('#issue-due').value,
-          notes: qs('#issue-notes').value.trim(),
-          assetId, riskId, controlId,
-          linkedSummary
-        };
-        const idx = issues.findIndex(x=>x.id===obj.id);
-        if(idx>-1) issues[idx]=obj; else issues.push(obj);
-        save(K.issues, issues); renderIssuesTable(); resetIssueForm();
-      });
-    }
-    const iCancel = qs('#issue-form-cancel');
-    if(iCancel) iCancel.addEventListener('click', resetIssueForm);
-    const iTbody = qs('#issues-table-body');
-    if(iTbody){
-      iTbody.addEventListener('click', e=>{
-        const idE = e.target.getAttribute('data-ie'); const idD = e.target.getAttribute('data-id');
-        if(idE){
-          const i = issues.find(x=>x.id===idE); if(!i) return;
-          qs('#issue-id').value=i.id; qs('#issue-title').value=i.title; qs('#issue-type').value=i.type;
-          qs('#issue-severity').value=i.severity; qs('#issue-status').value=i.status;
-          qs('#issue-owner').value=i.owner||''; qs('#issue-due').value=i.dueDate||''; qs('#issue-notes').value=i.notes||'';
-          populateIssueDropdowns();
-          qs('#issue-asset').value=i.assetId||''; qs('#issue-risk').value=i.riskId||''; qs('#issue-control').value=i.controlId||'';
-          qs('#issue-form-submit').textContent='Update issue';
-        }
-        if(idD){
-          if(!confirm('Delete this issue?')) return;
-          issues = issues.filter(x=>x.id!==idD); save(K.issues, issues); renderIssuesTable();
-        }
-      });
-    }
+    // Treatments
+    qs('#treatment-form').addEventListener('submit', e=>{
+      e.preventDefault();
+      const id = qs('#treatment-id').value;
+      const title = qs('#treatment-title').value.trim();
+      const riskId = qs('#treatment-risk').value;
+      const status = qs('#treatment-status').value;
+      if(!title || !riskId || !status) return alert('Fill title, risk and status.');
+      const risk = risks.find(r=>r.id===riskId);
+      const obj = {
+        id: id || ('TRT-'+Date.now()),
+        title,
+        riskId,
+        riskTitle: risk ? risk.title : '',
+        status,
+        owner: qs('#treatment-owner').value.trim(),
+        dueDate: qs('#treatment-due').value,
+        notes: qs('#treatment-notes').value.trim()
+      };
+      const idx = treatments.findIndex(x=>x.id===obj.id);
+      if(idx>-1) treatments[idx]=obj; else treatments.push(obj);
+      save(K.treatments, treatments); renderTreatmentsTable(); resetTreatmentForm();
+    });
+    qs('#treatment-form-cancel').addEventListener('click', resetTreatmentForm);
+    qs('#treatments-table-body').addEventListener('click', e=>{
+      const idE = e.target.getAttribute('data-te'); const idD = e.target.getAttribute('data-td');
+      if(idE){
+        const t = treatments.find(x=>x.id===idE); if(!t) return;
+        qs('#treatment-id').value=t.id;
+        qs('#treatment-title').value=t.title;
+        populateTreatmentRiskOptions();
+        qs('#treatment-risk').value=t.riskId || '';
+        qs('#treatment-status').value=t.status || 'Open';
+        qs('#treatment-owner').value=t.owner || '';
+        qs('#treatment-due').value=t.dueDate || '';
+        qs('#treatment-notes').value=t.notes || '';
+        qs('#treatment-form-submit').textContent='Update action';
+      }
+      if(idD){
+        if(!confirm('Delete this action?')) return;
+        treatments = treatments.filter(x=>x.id!==idD);
+        save(K.treatments, treatments); renderTreatmentsTable();
+      }
+    });
 
-    // Export / import / reset / demo buttons
-    const btnExport = qs('#btn-export'),
-          btnImport = qs('#btn-import'),
-          fileInput = qs('#file-import'),
-          btnReset=qs('#btn-reset'),
-          btnDemo=qs('#btn-demo-medicloud');
-    if(btnExport) btnExport.addEventListener('click', exportScenario);
-    if(btnImport && fileInput){
-      btnImport.addEventListener('click', ()=>{ setImportStatus('',false); fileInput.value=''; fileInput.click(); });
-      fileInput.addEventListener('change', e=>{ const file = e.target.files && e.target.files[0]; if(file) importScenarioFile(file); });
-    }
-    if(btnReset) btnReset.addEventListener('click', resetLab);
-    if(btnDemo) btnDemo.addEventListener('click', loadMediCloudScenario);
+    // Export / import / reset / MediCloud
+    qs('#btn-export').addEventListener('click', exportScenario);
+    qs('#btn-import').addEventListener('click', ()=>{ setImportStatus('',false); const f=qs('#file-import'); f.value=''; f.click(); });
+    qs('#file-import').addEventListener('change', e=>{ const file = e.target.files && e.target.files[0]; if(file) importScenarioFile(file); });
+    qs('#btn-reset').addEventListener('click', resetLab);
+    qs('#btn-medicloud').addEventListener('click', loadMediCloudScenario);
 
     // Matrix toggle + export
-    const tIn = qs('#toggle-inherent'), tRe = qs('#toggle-residual'), btnMatrix = qs('#matrix-export');
-    if(tIn) tIn.addEventListener('click', ()=>{ showResidual=false; tIn.classList.add('btn-primary'); tRe && tRe.classList.remove('btn-primary'); drawMatrix(); });
-    if(tRe) tRe.addEventListener('click', ()=>{ showResidual=true;  tRe.classList.add('btn-primary'); tIn && tIn.classList.remove('btn-primary'); drawMatrix(); });
-    if(btnMatrix && canvas){
-      btnMatrix.addEventListener('click', ()=>{
-        const link=document.createElement('a');
-        link.download='risk_matrix.png';
-        link.href=canvas.toDataURL('image/png');
-        link.click();
-      });
-    }
+    qs('#toggle-inherent').addEventListener('click', ()=>{ showResidual=false; qs('#toggle-inherent').classList.add('btn-primary'); qs('#toggle-residual').classList.remove('btn-primary'); drawMatrix(); });
+    qs('#toggle-residual').addEventListener('click', ()=>{ showResidual=true;  qs('#toggle-residual').classList.add('btn-primary');  qs('#toggle-inherent').classList.remove('btn-primary'); drawMatrix(); });
+    qs('#matrix-export').addEventListener('click', ()=>{ const c=qs('#risk-matrix-canvas'); const a=document.createElement('a'); a.download='risk_matrix.png'; a.href=c.toDataURL('image/png'); a.click(); });
 
-    // Auditor PDF export
-    const btnReportPdf = qs('#btn-report-pdf');
-    if(btnReportPdf){
-      btnReportPdf.addEventListener('click', ()=>{
-        const container = document.getElementById('report-content');
-        if(!container) return;
-        btnReportPdf.disabled = true;
-        const original = btnReportPdf.textContent;
-        btnReportPdf.textContent = 'Generating...';
-        html2canvas(container, { scale:2, useCORS:true }).then(canvas=>{
-          const imgData = canvas.toDataURL('image/png');
-          const pdf = new window.jspdf.jsPDF('p','mm','a4');
-          const pageWidth = pdf.internal.pageSize.getWidth();
-          const pageHeight = pdf.internal.pageSize.getHeight();
-          const imgWidth = pageWidth - 20;
-          const imgHeight = canvas.height * imgWidth / canvas.width;
-          const finalHeight = imgHeight > pageHeight - 20 ? pageHeight - 20 : imgHeight;
-          pdf.addImage(imgData,'PNG',10,10,imgWidth,finalHeight);
-          pdf.save('grc-auditor-summary.pdf');
-        }).catch(err=>{
-          console.error(err);
-          alert('Failed to generate PDF. Check console for details.');
-        }).finally(()=>{
-          btnReportPdf.disabled = false;
-          btnReportPdf.textContent = original;
-        });
-      });
-    }
+    // Auditor refresh
+    qs('#btn-refresh-auditor').addEventListener('click', renderAuditorSummary);
 
-    // Initial render
+    bindTabs();
+    populateControlFrameworks();
+    populateControlRisks();
+    populateRiskAssetOptions();
+    populateIssueDropdowns();
+    populateTreatmentRiskOptions();
     refreshAll();
   });
   </script>
