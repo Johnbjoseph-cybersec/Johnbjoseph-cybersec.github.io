@@ -98,7 +98,7 @@
       <!-- Header -->
       <div class="row justify-content-center mb-4">
         <div class="col-md-10 text-center ftco-animate">
-          <h1 class="mb-3">GRC Practice Lab (v3.8)</h1>
+          <h1 class="mb-3">GRC Practice Lab (v3.9)</h1>
           <p class="lead">
             Practice frameworks, assets, risks, controls, issues and reporting — all in your browser (data stays local).
           </p>
@@ -300,6 +300,7 @@
                   </select>
                 </div>
 
+                <!-- Inherent -->
                 <div class="form-row">
                   <div class="form-group col-6">
                     <label class="text-muted small mb-1">Likelihood (1–5) *</label>
@@ -313,6 +314,26 @@
                     <label class="text-muted small mb-1">Impact (1–5) *</label>
                     <select id="risk-impact" class="form-control form-control-sm" required>
                       <option value="">Select...</option>
+                      <option value="1">1 – Insignificant</option><option value="2">2 – Minor</option><option value="3">3 – Moderate</option>
+                      <option value="4">4 – Major</option><option value="5">5 – Severe</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Residual -->
+                <div class="form-row">
+                  <div class="form-group col-6">
+                    <label class="text-muted small mb-1">Residual likelihood (1–5)</label>
+                    <select id="risk-res-likelihood" class="form-control form-control-sm">
+                      <option value="">Same as inherent</option>
+                      <option value="1">1 – Rare</option><option value="2">2 – Unlikely</option><option value="3">3 – Possible</option>
+                      <option value="4">4 – Likely</option><option value="5">5 – Almost certain</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-6">
+                    <label class="text-muted small mb-1">Residual impact (1–5)</label>
+                    <select id="risk-res-impact" class="form-control form-control-sm">
+                      <option value="">Same as inherent</option>
                       <option value="1">1 – Insignificant</option><option value="2">2 – Minor</option><option value="3">3 – Moderate</option>
                       <option value="4">4 – Major</option><option value="5">5 – Severe</option>
                     </select>
@@ -338,7 +359,9 @@
                   <button class="btn btn-primary btn-sm" type="submit" id="risk-form-submit">Save risk</button>
                   <button class="btn btn-outline-light btn-sm" type="button" id="risk-form-cancel">Clear</button>
                 </div>
-                <small class="text-muted d-block mt-2">Score = Likelihood × Impact (1–25). High ≥ 15; Medium 6–12; Low 1–5.</small>
+                <small class="text-muted d-block mt-2">
+                  Inherent score = Likelihood × Impact (1–25). If residual L/I are left blank, residual = inherent.
+                </small>
               </form>
             </div>
           </div>
@@ -353,8 +376,12 @@
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
                     <tr>
-                      <th style="width:26%">Title</th><th style="width:18%">Asset</th><th style="width:16%">Category</th>
-                      <th style="width:16%">Inherent</th><th style="width:14%">Status</th><th style="width:10%">Actions</th>
+                      <th style="width:22%">Title</th>
+                      <th style="width:16%">Asset</th>
+                      <th style="width:14%">Category</th>
+                      <th style="width:16%">Inherent</th>
+                      <th style="width:16%">Residual</th>
+                      <th style="width:16%">Status</th>
                     </tr>
                   </thead>
                   <tbody id="risks-table-body"></tbody>
@@ -573,7 +600,7 @@
             <div class="dashboard-card p-3 h-100">
               <div class="label">Risks</div>
               <div class="value" id="dash-risks">0</div>
-              <div class="sub"><span id="dash-high">0</span> high risk(s)</div>
+              <div class="sub"><span id="dash-high">0</span> high (residual)</div>
             </div>
           </div>
           <div class="col-sm-6 col-md-3 mb-3">
@@ -623,7 +650,7 @@
       <!-- Risk Matrix -->
       <div id="tab-matrix" class="grc-tab ftco-animate">
         <h3>Risk Matrix (Inherent vs Residual)</h3>
-        <p class="mb-3">Toggle to compare <b>Inherent</b> and a basic calculated <b>Residual</b> (reduced by implemented controls linked to a risk).</p>
+        <p class="mb-3">Toggle to compare <b>Inherent</b> and <b>Residual</b> using the residual values maintained on each risk.</p>
         <div class="bg-dark p-3 rounded mb-3">
           <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -642,6 +669,7 @@
         <h3>Auditor Summary</h3>
         <p class="mb-3 small-muted">
           Read-only snapshot for auditors, exec reviews, and screenshots. Counts, top risks/issues, and weakest coverage area.
+          High risk counts are based on <b>residual</b> scores.
         </p>
 
         <!-- Everything inside this wrapper is what we export as PDF -->
@@ -658,7 +686,7 @@
               <div class="dashboard-card p-3 h-100">
                 <div class="label">Risks</div>
                 <div class="value" id="report-risks">0</div>
-                <div class="sub"><span id="report-high">0</span> high risk(s)</div>
+                <div class="sub"><span id="report-high">0</span> high (residual)</div>
               </div>
             </div>
             <div class="col-sm-6 col-md-3 mb-3">
@@ -709,7 +737,7 @@
           <div class="row mt-3">
             <div class="col-md-6 mb-3">
               <div class="dashboard-card p-3 h-100">
-                <div class="report-list-title">Top open high / critical risks (max 3)</div>
+                <div class="report-list-title">Top open high / critical risks (by residual, max 3)</div>
                 <ul class="list-unstyled mb-0" id="report-risk-list">
                   <!-- injected via JS -->
                 </ul>
@@ -952,17 +980,33 @@
 
     tbody.innerHTML='';
     risks.forEach(r=>{
-      const level=rLevel(r.score), cls = level==='High'?'badge-danger': level==='Medium'?'badge-warning': level==='Low'?'badge-success':'';
+      const inhLevel = rLevel(r.score);
+      const resScore = r.residualScore != null ? r.residualScore : r.score;
+      const resLevel = rLevel(resScore);
+      const inhCls = inhLevel==='High'?'badge-danger': inhLevel==='Medium'?'badge-warning': inhLevel==='Low'?'badge-success':'';
+      const resCls = resLevel==='High'?'badge-danger': resLevel==='Medium'?'badge-warning': resLevel==='Low'?'badge-success':'';
+
       const tr=document.createElement('tr');
       tr.innerHTML=`
         <td>${r.title}</td>
         <td>${r.assetName||''}</td>
         <td>${r.category}</td>
-        <td>${r.score?`<span class="badge ${cls} mr-1">${r.score}</span><span class="text-muted small">${level}</span>`:'-'}</td>
-        <td>${r.status}</td>
         <td>
-          <button class="btn btn-sm btn-outline-light mb-1" data-re="${r.id}">Edit</button>
-          <button class="btn btn-sm btn-outline-light mb-1" data-rd="${r.id}">Del</button>
+          ${r.score
+            ? `<span class="badge ${inhCls} mr-1">${r.score}</span><span class="text-muted small">${inhLevel}</span>`
+            : '-'}
+        </td>
+        <td>
+          ${resScore
+            ? `<span class="badge ${resCls} mr-1">${resScore}</span><span class="text-muted small">${resLevel}</span>`
+            : '-'}
+        </td>
+        <td>
+          ${r.status}
+          <div class="mt-1">
+            <button class="btn btn-sm btn-outline-light mb-1" data-re="${r.id}">Edit</button>
+            <button class="btn btn-sm btn-outline-light mb-1" data-rd="${r.id}">Del</button>
+          </div>
         </td>`;
       tbody.appendChild(tr);
     });
@@ -1107,7 +1151,11 @@
     if(c) c.textContent = controls.length;
     if(i) i.textContent = issues.length;
 
-    const high = risks.filter(rk=>rLevel(rk.score)==='High').length;
+    // High by residual
+    const high = risks.filter(rk=>{
+      const rs = rk.residualScore != null ? rk.residualScore : rk.score;
+      return rLevel(rs)==='High';
+    }).length;
     if(highEl) highEl.textContent = high;
 
     const today = new Date();
@@ -1140,16 +1188,6 @@
   const ctx = canvas ? canvas.getContext('2d') : null;
   const legend = qs('#matrix-legend');
 
-  function residualForRisk(r){
-    const impl = controls.filter(c => c.status==='In place' && (c.linkedRiskIds||[]).includes(r.id));
-    const dropL = Math.min(2, impl.length);
-    const dropI = impl.some(c=>c.type==='Preventive' || c.type==='Corrective') ? 1 : 0;
-    return {
-      likelihood: Math.max(1, (r.likelihood||1) - dropL),
-      impact: Math.max(1, (r.impact||1) - dropI)
-    };
-  }
-
   function drawMatrix(){
     if(!ctx || !canvas) return;
     ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -1165,8 +1203,13 @@
 
     let high=0, med=0, low=0;
     risks.forEach(r=>{
-      let L=r.likelihood, I=r.impact;
-      if(showResidual){ const res = residualForRisk(r); L=res.likelihood; I=res.impact; }
+      let L = r.likelihood;
+      let I = r.impact;
+      if(showResidual){
+        const rl = r.residualLikelihood != null ? r.residualLikelihood : r.likelihood;
+        const ri = r.residualImpact != null ? r.residualImpact : r.impact;
+        L = rl; I = ri;
+      }
       const score = rScore(L,I);
       let color = "#27ae60";
       if(score>=15){ color="#e63946"; high++; }
@@ -1181,7 +1224,7 @@
     });
 
     if(legend){
-      legend.innerHTML = `<b>${risks.length}</b> risks &nbsp;—&nbsp; 
+      legend.innerHTML = `<b>${risks.length}</b> risks (${showResidual ? 'residual' : 'inherent'}) &nbsp;—&nbsp; 
         <span style="color:#e63946">High: ${high}</span> &nbsp;|&nbsp;
         <span style="color:#f1c40f">Medium: ${med}</span> &nbsp;|&nbsp;
         <span style="color:#27ae60">Low: ${low}</span>`;
@@ -1263,7 +1306,7 @@
       }
     ];
 
-    // Risks
+    // Risks with residual values
     const medRisks = [
       {
         id: 'RSK-MED-UNAUTH',
@@ -1273,7 +1316,10 @@
         category: 'Cybersecurity',
         likelihood: 4,
         impact: 4,
-        score: rScore(4,4),
+        score: rScore(4,4),            // 16 (High inherent)
+        residualLikelihood: 3,
+        residualImpact: 4,
+        residualScore: rScore(3,4),    // 12 (Medium residual)
         status: 'Open',
         owner: 'CISO',
         notes: 'Brute force, stolen creds or misconfig could give attackers access to PHI and admin capabilities.'
@@ -1286,7 +1332,10 @@
         category: 'Privacy',
         likelihood: 3,
         impact: 5,
-        score: rScore(3,5),
+        score: rScore(3,5),            // 15 (High inherent)
+        residualLikelihood: 2,
+        residualImpact: 5,
+        residualScore: rScore(2,5),    // 10 (Medium residual)
         status: 'In progress',
         owner: 'Data Protection Officer',
         notes: 'Unusual query patterns or misconfigured access could lead to bulk data exfiltration.'
@@ -1299,7 +1348,10 @@
         category: 'Operational',
         likelihood: 2,
         impact: 4,
-        score: rScore(2,4),
+        score: rScore(2,4),            // 8 (Medium inherent)
+        residualLikelihood: 2,
+        residualImpact: 3,
+        residualScore: rScore(2,3),    // 6 (Medium residual)
         status: 'Open',
         owner: 'SRE Lead',
         notes: 'Cloud region outage or misconfigured infra could impact clinic operations.'
@@ -1312,7 +1364,10 @@
         category: 'Cybersecurity',
         likelihood: 3,
         impact: 3,
-        score: rScore(3,3),
+        score: rScore(3,3),            // 9 (Medium inherent)
+        residualLikelihood: 2,
+        residualImpact: 3,
+        residualScore: rScore(2,3),    // 6 (Medium residual)
         status: 'Mitigated',
         owner: 'IAM Lead',
         notes: 'Password reuse by staff could be exploited; partially mitigated by MFA and sign-on policies.'
@@ -1481,7 +1536,12 @@
     cEl.textContent = controls.length;
     iEl.textContent = issues.length;
 
-    const highCount = risks.filter(r=>rLevel(r.score)==='High').length;
+    const highCount = risks.filter(r=>{
+      const rs = r.residualScore != null ? r.residualScore : r.score;
+      const lvl = rLevel(rs);
+      const st = r.status || '';
+      return (lvl==='High') && st!=='Mitigated' && st!=='Accepted';
+    }).length;
     highEl.textContent = highCount;
 
     const today = new Date();
@@ -1510,28 +1570,34 @@
       weakCov.textContent = '0%';
     }
 
-    // Top open High/Critical risks
+    // Top open High/Critical risks by residual
     const highRisks = risks
       .filter(r=>{
-        const lvl = rLevel(r.score);
+        const rs = r.residualScore != null ? r.residualScore : r.score;
+        const lvl = rLevel(rs);
         const st = r.status || '';
         return (lvl==='High') && st!=='Mitigated' && st!=='Accepted';
       })
-      .sort((a,b)=> (b.score||0) - (a.score||0))
+      .sort((a,b)=>{
+        const as = a.residualScore != null ? a.residualScore : a.score;
+        const bs = b.residualScore != null ? b.residualScore : b.score;
+        return (bs||0) - (as||0);
+      })
       .slice(0,3);
 
     riskList.innerHTML = '';
     if(!highRisks.length){
-      riskList.innerHTML = '<li class="report-list-item-sub text-muted">No open high risks.</li>';
+      riskList.innerHTML = '<li class="report-list-item-sub text-muted">No open high residual risks.</li>';
     } else {
       highRisks.forEach(r=>{
         const li = document.createElement('li');
         li.className = 'mb-2';
         const assetName = r.assetName || '';
+        const rs = r.residualScore != null ? r.residualScore : r.score;
         li.innerHTML = `
           <div class="report-list-item-main">${r.title}</div>
           <div class="report-list-item-sub">
-            Score: ${r.score || '-'} (${rLevel(r.score)})${assetName ? ' &nbsp;|&nbsp; Asset: ' + assetName : ''} &nbsp;|&nbsp; Status: ${r.status}
+            Residual score: ${rs || '-'} (${rLevel(rs)})${assetName ? ' &nbsp;|&nbsp; Asset: ' + assetName : ''} &nbsp;|&nbsp; Status: ${r.status}
           </div>`;
         riskList.appendChild(li);
       });
@@ -1672,6 +1738,12 @@
         const impact = Number(qs('#risk-impact').value);
         const status = qs('#risk-status').value;
         if(!title || !assetId || !category || !likelihood || !impact || !status) return alert('Fill all required fields.');
+
+        const resLVal = qs('#risk-res-likelihood').value;
+        const resIVal = qs('#risk-res-impact').value;
+        const residualLikelihood = resLVal ? Number(resLVal) : likelihood;
+        const residualImpact = resIVal ? Number(resIVal) : impact;
+
         const obj = {
           id: id || ('RSK-'+Date.now()),
           title,
@@ -1681,6 +1753,9 @@
           likelihood,
           impact,
           score: rScore(likelihood, impact),
+          residualLikelihood,
+          residualImpact,
+          residualScore: rScore(residualLikelihood, residualImpact),
           status,
           owner: qs('#risk-owner').value.trim(),
           notes: qs('#risk-notes').value.trim()
@@ -1702,6 +1777,19 @@
           qs('#risk-asset').value=r.assetId; qs('#risk-category').value=r.category;
           qs('#risk-likelihood').value=String(r.likelihood); qs('#risk-impact').value=String(r.impact);
           qs('#risk-owner').value=r.owner||''; qs('#risk-status').value=r.status||'Open'; qs('#risk-notes').value=r.notes||'';
+
+          // Residual fields: if equal to inherent, show "Same as inherent" (blank), else specific value
+          const rl = r.residualLikelihood != null ? r.residualLikelihood : r.likelihood;
+          const ri = r.residualImpact != null ? r.residualImpact : r.impact;
+          const rlSel = qs('#risk-res-likelihood');
+          const riSel = qs('#risk-res-impact');
+          if(rlSel){
+            rlSel.value = (r.residualLikelihood != null && r.residualLikelihood !== r.likelihood) ? String(rl) : '';
+          }
+          if(riSel){
+            riSel.value = (r.residualImpact != null && r.residualImpact !== r.impact) ? String(ri) : '';
+          }
+
           qs('#risk-form-submit').textContent='Update risk';
         }
         if(idD){
