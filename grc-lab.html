@@ -1066,6 +1066,7 @@
   let riskFilterLevel = 'all';
   let riskSortField = 'title';
   let riskSortDir = 'asc';
+  let lastRiskView = []; // stores current filtered + sorted risks for CSV export
 
   function resetRiskForm(){
     qs('#risk-form').reset();
