@@ -98,7 +98,7 @@
       <!-- Header -->
       <div class="row justify-content-center mb-4">
         <div class="col-md-10 text-center ftco-animate">
-          <h1 class="mb-3">GRC Practice Lab (v3.7)</h1>
+          <h1 class="mb-3">GRC Practice Lab (v3.8)</h1>
           <p class="lead">
             Practice frameworks, assets, risks, controls, issues and reporting — all in your browser (data stays local).
           </p>
@@ -606,10 +606,11 @@
           <div class="col-md-8 mb-3">
             <div class="dashboard-card p-3 h-100">
               <div class="label mb-1">Scenarios &amp; exports</div>
-              <p class="sub">Export current lab to JSON, import saved scenarios, or reset to blank.</p>
+              <p class="sub">Export current lab to JSON, import saved scenarios, load demo data, or reset to blank.</p>
               <div class="d-flex flex-wrap">
                 <button id="btn-export" class="btn btn-sm btn-primary mr-2 mb-2">Export current data (JSON)</button>
                 <button id="btn-import" class="btn btn-sm btn-outline-light mr-2 mb-2">Import scenario (JSON)</button>
+                <button id="btn-demo-medicloud" class="btn btn-sm btn-outline-light mr-2 mb-2">Load MediCloud demo scenario</button>
                 <button id="btn-reset" class="btn btn-sm btn-outline-danger mb-2">Reset lab (clear all data)</button>
                 <input type="file" id="file-import" accept="application/json" style="display:none">
               </div>
@@ -1227,6 +1228,215 @@
     refreshAll(); setImportStatus('Lab reset: all data cleared from this browser.', false);
   }
 
+  // ============ MEDICLOUD DEMO SCENARIO ============
+  function loadMediCloudScenario(){
+    if(!confirm('This will REPLACE current lab data with the MediCloud demo scenario. Continue?')) return;
+
+    // Assets
+    const medAssets = [
+      {
+        id: 'AST-MED-APP',
+        name: 'MediCloud Web App',
+        type: 'Application',
+        criticality: 'High',
+        owner: 'Product & Engineering',
+        dataTypes: ['PHI','PII'],
+        notes: 'Customer-facing healthcare SaaS application used by clinics and hospitals.'
+      },
+      {
+        id: 'AST-MED-DB',
+        name: 'MediCloud Patient DB',
+        type: 'Database',
+        criticality: 'High',
+        owner: 'Data Platform Team',
+        dataTypes: ['PHI','PII'],
+        notes: 'Primary relational database storing patient records, appointments, billing data.'
+      },
+      {
+        id: 'AST-MED-IDP',
+        name: 'Okta SSO Tenant',
+        type: 'Cloud Service',
+        criticality: 'Medium',
+        owner: 'IT / IAM',
+        dataTypes: ['PII','Internal data'],
+        notes: 'Central identity provider for internal staff and privileged users.'
+      }
+    ];
+
+    // Risks
+    const medRisks = [
+      {
+        id: 'RSK-MED-UNAUTH',
+        title: 'Unauthorised access to MediCloud admin portal',
+        assetId: 'AST-MED-APP',
+        assetName: 'MediCloud Web App',
+        category: 'Cybersecurity',
+        likelihood: 4,
+        impact: 4,
+        score: rScore(4,4),
+        status: 'Open',
+        owner: 'CISO',
+        notes: 'Brute force, stolen creds or misconfig could give attackers access to PHI and admin capabilities.'
+      },
+      {
+        id: 'RSK-MED-DATA-LEAK',
+        title: 'Data exfiltration from patient database',
+        assetId: 'AST-MED-DB',
+        assetName: 'MediCloud Patient DB',
+        category: 'Privacy',
+        likelihood: 3,
+        impact: 5,
+        score: rScore(3,5),
+        status: 'In progress',
+        owner: 'Data Protection Officer',
+        notes: 'Unusual query patterns or misconfigured access could lead to bulk data exfiltration.'
+      },
+      {
+        id: 'RSK-MED-AVAIL',
+        title: 'Unavailability of MediCloud app due to infra failure',
+        assetId: 'AST-MED-APP',
+        assetName: 'MediCloud Web App',
+        category: 'Operational',
+        likelihood: 2,
+        impact: 4,
+        score: rScore(2,4),
+        status: 'Open',
+        owner: 'SRE Lead',
+        notes: 'Cloud region outage or misconfigured infra could impact clinic operations.'
+      },
+      {
+        id: 'RSK-MED-CRED-STUFF',
+        title: 'Credential stuffing against Okta SSO',
+        assetId: 'AST-MED-IDP',
+        assetName: 'Okta SSO Tenant',
+        category: 'Cybersecurity',
+        likelihood: 3,
+        impact: 3,
+        score: rScore(3,3),
+        status: 'Mitigated',
+        owner: 'IAM Lead',
+        notes: 'Password reuse by staff could be exploited; partially mitigated by MFA and sign-on policies.'
+      }
+    ];
+
+    // Controls
+    const medControls = [
+      {
+        id: 'CTL-MED-MFA',
+        name: 'MFA on Okta and admin portal',
+        type: 'Preventive',
+        status: 'In place',
+        owner: 'IAM Team',
+        description: 'MFA enforced for all privileged accounts and remote admin access via Okta and application-level checks.',
+        linkedRiskIds: ['RSK-MED-UNAUTH','RSK-MED-CRED-STUFF'],
+        linkedFrameworkControlIds: ['CTRL-AC-02','CTRL-AC-03']
+      },
+      {
+        id: 'CTL-MED-LOG',
+        name: 'Centralised logging & alerting',
+        type: 'Detective',
+        status: 'In place',
+        owner: 'Security Operations',
+        description: 'Web, DB and Okta logs forwarded to SIEM with correlation rules for suspicious access.',
+        linkedRiskIds: ['RSK-MED-UNAUTH','RSK-MED-DATA-LEAK','RSK-MED-CRED-STUFF'],
+        linkedFrameworkControlIds: ['CTRL-LOG-01','CTRL-LOG-02']
+      },
+      {
+        id: 'CTL-MED-BACKUP',
+        name: 'Daily DB backups & DR testing',
+        type: 'Corrective',
+        status: 'In place',
+        owner: 'SRE Team',
+        description: 'Automated encrypted backups with quarterly restore tests for RPO/RTO validation.',
+        linkedRiskIds: ['RSK-MED-DATA-LEAK','RSK-MED-AVAIL'],
+        linkedFrameworkControlIds: ['CTRL-BCP-01']
+      },
+      {
+        id: 'CTL-MED-VULN',
+        name: 'Monthly vulnerability scanning',
+        type: 'Detective',
+        status: 'Planned',
+        owner: 'Security Engineering',
+        description: 'Monthly authenticated scans across app and DB hosts with tracked remediation.',
+        linkedRiskIds: ['RSK-MED-UNAUTH','RSK-MED-DATA-LEAK'],
+        linkedFrameworkControlIds: ['CTRL-VULN-01']
+      },
+      {
+        id: 'CTL-MED-IR',
+        name: 'Incident response playbooks',
+        type: 'Administrative',
+        status: 'Planned',
+        owner: 'CISO',
+        description: 'Documented runbooks for auth compromise, data exfiltration and large outage scenarios.',
+        linkedRiskIds: ['RSK-MED-UNAUTH','RSK-MED-DATA-LEAK','RSK-MED-AVAIL'],
+        linkedFrameworkControlIds: ['CTRL-IR-01','CTRL-IR-02']
+      }
+    ];
+
+    // Issues
+    const medIssues = [
+      {
+        id: 'ISS-MED-MFA-GAP',
+        title: 'MFA not enforced for support agents',
+        type: 'Audit',
+        severity: 'High',
+        status: 'Open',
+        owner: 'Support Manager',
+        dueDate: '2025-12-31',
+        notes: 'Support team accounts still allowed single-factor login for some workflows. Need policy and rollout.',
+        assetId: 'AST-MED-APP',
+        riskId: 'RSK-MED-UNAUTH',
+        controlId: 'CTL-MED-MFA',
+        linkedSummary: 'Asset: MediCloud Web App | Risk: Unauthorised access to MediCloud admin portal | Control: MFA on Okta and admin portal'
+      },
+      {
+        id: 'ISS-MED-LOG-GAP',
+        title: 'Incomplete logging for DB queries',
+        type: 'Pen test',
+        severity: 'Medium',
+        status: 'In progress',
+        owner: 'DBA Lead',
+        dueDate: '2025-11-30',
+        notes: 'Some privileged DB accounts bypass central logging due to legacy connection string settings.',
+        assetId: 'AST-MED-DB',
+        riskId: 'RSK-MED-DATA-LEAK',
+        controlId: 'CTL-MED-LOG',
+        linkedSummary: 'Asset: MediCloud Patient DB | Risk: Data exfiltration from patient database | Control: Centralised logging & alerting'
+      },
+      {
+        id: 'ISS-MED-DR-TEST',
+        title: 'DR test overdue for patient DB',
+        type: 'Risk review',
+        severity: 'Medium',
+        status: 'Open',
+        owner: 'SRE Lead',
+        dueDate: '2025-10-15',
+        notes: 'Last full DR test was more than 12 months ago; evidence not sufficient for auditors.',
+        assetId: 'AST-MED-DB',
+        riskId: 'RSK-MED-AVAIL',
+        controlId: 'CTL-MED-BACKUP',
+        linkedSummary: 'Asset: MediCloud Patient DB | Risk: Unavailability of MediCloud app due to infra failure | Control: Daily DB backups & DR testing'
+      }
+    ];
+
+    assets = medAssets;
+    risks = medRisks;
+    controls = medControls;
+    issues = medIssues;
+
+    save(K.assets, assets);
+    save(K.risks, risks);
+    save(K.controls, controls);
+    save(K.issues, issues);
+
+    refreshAll();
+    setImportStatus('Loaded MediCloud demo scenario: ' +
+      assets.length + ' assets, ' +
+      risks.length + ' risks, ' +
+      controls.length + ' controls, ' +
+      issues.length + ' issues.', false);
+  }
+
   // ============ AUDITOR SUMMARY ============
   function severityRank(sev){
     if(sev==='Critical') return 4;
@@ -1612,15 +1822,19 @@
       });
     }
 
-    // Export / import / reset buttons
-    const btnExport = qs('#btn-export'), btnImport = qs('#btn-import'),
-          fileInput = qs('#file-import'), btnReset=qs('#btn-reset');
+    // Export / import / reset / demo buttons
+    const btnExport = qs('#btn-export'),
+          btnImport = qs('#btn-import'),
+          fileInput = qs('#file-import'),
+          btnReset=qs('#btn-reset'),
+          btnDemo=qs('#btn-demo-medicloud');
     if(btnExport) btnExport.addEventListener('click', exportScenario);
     if(btnImport && fileInput){
       btnImport.addEventListener('click', ()=>{ setImportStatus('',false); fileInput.value=''; fileInput.click(); });
       fileInput.addEventListener('change', e=>{ const file = e.target.files && e.target.files[0]; if(file) importScenarioFile(file); });
     }
     if(btnReset) btnReset.addEventListener('click', resetLab);
+    if(btnDemo) btnDemo.addEventListener('click', loadMediCloudScenario);
 
     // Matrix toggle + export
     const tIn = qs('#toggle-inherent'), tRe = qs('#toggle-residual'), btnMatrix = qs('#matrix-export');
