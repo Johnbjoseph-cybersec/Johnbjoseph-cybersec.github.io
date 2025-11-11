@@ -81,7 +81,7 @@
       <!-- Header -->
       <div class="row justify-content-center mb-4">
         <div class="col-md-10 text-center ftco-animate">
-          <h1 class="mb-3">GRC Practice Lab (v3.5)</h1>
+          <h1 class="mb-3">GRC Practice Lab (v3.6)</h1>
           <p class="lead">
             Practice frameworks, assets, risks, controls, issues and reporting — all in your browser (data stays local).
           </p>
@@ -501,6 +501,41 @@
                 <h5 class="mb-0">Issues / Findings</h5>
                 <small id="issues-count" class="text-muted"></small>
               </div>
+
+              <!-- Issues filters -->
+              <div class="row mb-2">
+                <div class="col-md-3 mb-1">
+                  <label class="text-muted small mb-1">Severity</label>
+                  <select id="issue-filter-severity" class="form-control form-control-sm">
+                    <option value="all">All</option>
+                    <option>Critical</option>
+                    <option>High</option>
+                    <option>Medium</option>
+                    <option>Low</option>
+                  </select>
+                </div>
+                <div class="col-md-3 mb-1">
+                  <label class="text-muted small mb-1">Status</label>
+                  <select id="issue-filter-status" class="form-control form-control-sm">
+                    <option value="all">All</option>
+                    <option>Open</option>
+                    <option>In progress</option>
+                    <option>Resolved</option>
+                    <option>Accepted</option>
+                  </select>
+                </div>
+                <div class="col-md-4 mb-1">
+                  <label class="text-muted small mb-1">Search</label>
+                  <input id="issue-filter-search" class="form-control form-control-sm" placeholder="Search title, notes, linked...">
+                </div>
+                <div class="col-md-2 mb-1 d-flex align-items-end">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="issue-filter-linked">
+                    <label class="custom-control-label small" for="issue-filter-linked">Linked only</label>
+                  </div>
+                </div>
+              </div>
+
               <div class="table-responsive">
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
@@ -1149,7 +1184,35 @@
   function renderIssuesTable(){
     const tbody = qs('#issues-table-body'), empty=qs('#issues-empty'), count=qs('#issues-count');
     tbody.innerHTML='';
-    issues.forEach(i=>{
+
+    const sevFilterEl = qs('#issue-filter-severity');
+    const statusFilterEl = qs('#issue-filter-status');
+    const searchEl = qs('#issue-filter-search');
+    const linkedEl = qs('#issue-filter-linked');
+
+    const sevFilter = sevFilterEl ? sevFilterEl.value : 'all';
+    const statusFilter = statusFilterEl ? statusFilterEl.value : 'all';
+    const search = searchEl ? searchEl.value.trim().toLowerCase() : '';
+    const linkedOnly = linkedEl ? linkedEl.checked : false;
+
+    const filtered = issues.filter(i=>{
+      if(sevFilter !== 'all' && i.severity !== sevFilter) return false;
+      if(statusFilter !== 'all' && i.status !== statusFilter) return false;
+      if(linkedOnly && !(i.assetId || i.riskId || i.controlId)) return false;
+      if(search){
+        const hay = [
+          i.title || '',
+          i.type || '',
+          i.owner || '',
+          i.notes || '',
+          i.linkedSummary || ''
+        ].join(' ').toLowerCase();
+        if(!hay.includes(search)) return false;
+      }
+      return true;
+    });
+
+    filtered.forEach(i=>{
       const sev=i.severity||'', cls = sev==='Critical'||sev==='High'?'badge-danger': sev==='Medium'?'badge-warning':'badge-success';
       const tr=document.createElement('tr');
       tr.innerHTML=`
@@ -1161,8 +1224,13 @@
         </td>`;
       tbody.appendChild(tr);
     });
-    empty.style.display = issues.length?'none':'block';
-    count.textContent = `${issues.length} issue(s)`;
+
+    empty.style.display = filtered.length?'none':'block';
+    if(issues.length){
+      count.textContent = `${filtered.length} issue(s) shown of ${issues.length}`;
+    } else {
+      count.textContent = '0 issue(s)';
+    }
     renderDashboard();
   }
 
@@ -1397,6 +1465,16 @@
       const el = qs(sel); if(el){ el.addEventListener(sel==='#framework-search'?'input':'change', renderFrameworkControls); }
     });
     bindTabs(); populateControlFrameworks(); populateControlRisks(); populateRiskAssetOptions(); populateIssueDropdowns();
+
+    // issues filters listeners
+    const sevF = qs('#issue-filter-severity');
+    if(sevF) sevF.addEventListener('change', renderIssuesTable);
+    const statF = qs('#issue-filter-status');
+    if(statF) statF.addEventListener('change', renderIssuesTable);
+    const searchF = qs('#issue-filter-search');
+    if(searchF) searchF.addEventListener('input', renderIssuesTable);
+    const linkedF = qs('#issue-filter-linked');
+    if(linkedF) linkedF.addEventListener('change', renderIssuesTable);
 
     // export / import / reset / MediCloud
     qs('#btn-export').addEventListener('click', exportScenario);
