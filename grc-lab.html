@@ -52,6 +52,14 @@
     #risk-matrix-canvas{ background:#0c0f12; border-radius:8px; width:100%; max-width:100%; }
     .table td, .table th { vertical-align: middle; }
     .small-muted{ color:#9ca3af; font-size:.85rem; }
+
+    #auditor-summary-text{
+      background:transparent;
+      color:#e5e7eb;
+      white-space:pre-wrap;
+      font-size:.8rem;
+      margin-bottom:0;
+    }
   </style>
 </head>
 
@@ -81,7 +89,7 @@
       <!-- Header -->
       <div class="row justify-content-center mb-4">
         <div class="col-md-10 text-center ftco-animate">
-          <h1 class="mb-3">GRC Practice Lab (v3.6)</h1>
+          <h1 class="mb-3">GRC Practice Lab (v3.7)</h1>
           <p class="lead">
             Practice frameworks, assets, risks, controls, issues and reporting — all in your browser (data stays local).
           </p>
@@ -616,6 +624,19 @@
                 <input type="file" id="file-import" accept="application/json" style="display:none">
               </div>
               <small id="import-status" class="text-muted d-block mt-2"></small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Auditor Snapshot -->
+        <div class="row mt-3">
+          <div class="col-12">
+            <div class="dashboard-card p-3" id="auditor-summary-card">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="label mb-0">Auditor snapshot</div>
+                <button class="btn btn-sm btn-outline-light" id="btn-copy-auditor">Copy summary</button>
+              </div>
+              <pre id="auditor-summary-text"></pre>
             </div>
           </div>
         </div>
@@ -1316,6 +1337,111 @@
     updateCoveragePill(ov);
   }
 
+  // ============ AUDITOR SNAPSHOT ============
+  function buildAuditorSummary(){
+    const totalAssets = assets.length;
+    const totalRisks = risks.length;
+    const highRisks = risks.filter(r=>rLevel(r.score)==='High').length;
+    const totalControls = controls.length;
+    const controlsInPlace = controls.filter(c=>c.status==='In place').length;
+    const controlsPlanned = controls.filter(c=>c.status==='Planned').length;
+    const totalIssues = issues.length;
+    const openIssues = issues.filter(i=> i.status==='Open' || i.status==='In progress').length;
+    const highIssues = issues.filter(i=> i.severity==='High' || i.severity==='Critical').length;
+
+    const rows = computeGapRows();
+    const coverage = overallCoverage(rows);
+    const worstGaps = rows.slice().sort((a,b)=>{
+      const pa = a.total ? a.implemented/a.total : 0;
+      const pb = b.total ? b.implemented/b.total : 0;
+      return pa - pb;
+    }).slice(0,3);
+
+    const topRisks = risks
+      .slice()
+      .filter(r=>r.status!=='Accepted')
+      .sort((a,b)=>(b.score||0)-(a.score||0))
+      .slice(0,3);
+
+    const sevRank = v => v==='Critical'?4 : v==='High'?3 : v==='Medium'?2 : v==='Low'?1 : 0;
+    const topIssues = issues
+      .slice()
+      .filter(i=>i.status!=='Resolved' && i.status!=='Accepted')
+      .sort((a,b)=>{
+        const diff = sevRank(b.severity) - sevRank(a.severity);
+        if(diff) return diff;
+        const da = iDate(a.dueDate);
+        const db = iDate(b.dueDate);
+        return da - db;
+      })
+      .slice(0,3);
+
+    function iDate(d){
+      if(!d) return Infinity;
+      const t = new Date(d).getTime();
+      return isNaN(t)? Infinity : t;
+    }
+
+    let out = '';
+    out += 'GRC snapshot\n';
+    out += '================\n';
+    out += `Assets:   ${totalAssets}\n`;
+    out += `Risks:    ${totalRisks} (High: ${highRisks})\n`;
+    out += `Controls: ${totalControls} (In place: ${controlsInPlace}, Planned: ${controlsPlanned})\n`;
+    out += `Issues:   ${totalIssues} (Open/In progress: ${openIssues}, High/Critical: ${highIssues})\n`;
+
+    out += '\nFramework coverage\n';
+    out += '-----------------\n';
+    if(rows.length){
+      out += `Overall implemented coverage: ${coverage}% of ${FRAMEWORK_CONTROLS.length} framework control(s).\n`;
+      if(worstGaps.length){
+        out += 'Weakest categories:\n';
+        worstGaps.forEach(r=>{
+          const pct = r.total? Math.round((r.implemented/r.total)*100):0;
+          out += ` - ${r.category}: ${pct}% implemented (${r.implemented}/${r.total})\n`;
+        });
+      }
+    } else {
+      out += 'No local controls mapped to framework controls yet.\n';
+    }
+
+    out += '\nTop risks (inherent)\n';
+    out += '--------------------\n';
+    if(topRisks.length){
+      topRisks.forEach((r,idx)=>{
+        out += `${idx+1}. [${r.score||'-'} / ${rLevel(r.score)}] ${r.title}`;
+        if(r.assetName) out += ` (Asset: ${r.assetName})`;
+        out += ` — Status: ${r.status}\n`;
+      });
+    } else {
+      out += 'No risks captured yet.\n';
+    }
+
+    out += '\nTop open issues\n';
+    out += '----------------\n';
+    if(topIssues.length){
+      topIssues.forEach((i,idx)=>{
+        out += `${idx+1}. [${i.severity||'-'}] ${i.title} — Status: ${i.status}`;
+        if(i.dueDate) out += ` (Due: ${i.dueDate})`;
+        if(i.linkedSummary) out += ` — ${i.linkedSummary}`;
+        out += '\n';
+      });
+    } else {
+      out += 'No issues captured yet.\n';
+    }
+
+    out += '\nNotes\n';
+    out += '-----\n';
+    out += 'This snapshot is for practice only; data is stored locally in your browser.';
+    return out;
+  }
+
+  function renderAuditorSummary(){
+    const el = qs('#auditor-summary-text');
+    if(!el) return;
+    el.textContent = buildAuditorSummary();
+  }
+
   // ============ DASHBOARD ============
   function renderDashboard(){
     qs('#dash-assets').textContent = assets.length;
@@ -1331,6 +1457,7 @@
     qs('#dash-overdue').textContent = overdue;
     const ov = overallCoverage(computeGapRows());
     qs('#dash-coverage').textContent = ov+'%'; updateCoveragePill(ov);
+    renderAuditorSummary();
   }
   function updateCoveragePill(p){
     const pill = qs('#dash-coverage-pill'); pill.classList.remove('heat-good','heat-medium','heat-low','heat-none');
@@ -1507,6 +1634,29 @@
     qs('#matrix-export').addEventListener('click', ()=>{
       const a=document.createElement('a'); a.download='risk_matrix.png'; a.href=canvas.toDataURL('image/png'); a.click();
     });
+
+    // Copy auditor snapshot
+    const copyBtn = qs('#btn-copy-auditor');
+    if(copyBtn){
+      copyBtn.addEventListener('click', ()=>{
+        const txt = buildAuditorSummary();
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(txt)
+            .then(()=>setImportStatus('Auditor snapshot copied to clipboard.', false))
+            .catch(()=>setImportStatus('Could not copy to clipboard.', true));
+        } else {
+          // Fallback: select text so user can Ctrl/Cmd+C
+          const pre = qs('#auditor-summary-text');
+          if(pre){
+            const range = document.createRange();
+            range.selectNodeContents(pre);
+            const sel = window.getSelection();
+            sel.removeAllRanges(); sel.addRange(range);
+          }
+          setImportStatus('Select and copy the snapshot from the dashboard.', false);
+        }
+      });
+    }
 
     refreshAll();
   });
