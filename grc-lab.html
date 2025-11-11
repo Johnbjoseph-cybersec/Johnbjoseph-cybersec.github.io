@@ -319,22 +319,43 @@
 
           <div class="col-lg-8 col-md-7 mb-4">
             <div class="bg-dark p-3 rounded">
+              <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                <div class="btn-group btn-group-sm mb-2" role="group">
+                  <button type="button" class="btn btn-primary" data-risk-filter="all">All</button>
+                  <button type="button" class="btn btn-outline-light" data-risk-filter="High">High</button>
+                  <button type="button" class="btn btn-outline-light" data-risk-filter="Medium">Medium</button>
+                  <button type="button" class="btn btn-outline-light" data-risk-filter="Low">Low</button>
+                </div>
+                <div class="mb-2">
+                  <input id="risk-search" class="form-control form-control-sm" placeholder="Search risks...">
+                </div>
+              </div>
+
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <h5 class="mb-0">Risks</h5>
                 <small id="risks-count" class="text-muted"></small>
               </div>
+
               <div class="table-responsive">
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
                     <tr>
-                      <th style="width:26%">Title</th><th style="width:18%">Asset</th><th style="width:16%">Category</th>
-                      <th style="width:16%">Inherent</th><th style="width:14%">Status</th><th style="width:10%">Actions</th>
+                      <th style="width:24%">Title</th>
+                      <th style="width:16%">Asset</th>
+                      <th style="width:14%">Category</th>
+                      <th style="width:14%">Inherent</th>
+                      <th style="width:14%">Residual*</th>
+                      <th style="width:10%">Status</th>
+                      <th style="width:8%">Actions</th>
                     </tr>
                   </thead>
                   <tbody id="risks-table-body"></tbody>
                 </table>
               </div>
               <div id="risks-empty" class="text-muted small mt-2">No risks yet.</div>
+              <div class="text-right mt-1">
+                <small class="text-muted">*Residual is approximated using implemented controls linked to each risk.</small>
+              </div>
             </div>
           </div>
         </div>
@@ -933,6 +954,10 @@
     Array.from(sel.options).forEach(o => o.selected = S.has(o.value));
   };
 
+  // risk filters (for list view)
+  let riskFilterLevel = 'all';
+  let riskSearchTerm = '';
+
   // ============ FRAMEWORK RENDER ============
   function renderFrameworkControls(){
     const tbody = qs('#frameworks-table-body');
@@ -1051,15 +1076,41 @@
   const rLevel = s => s>=15?'High': s>=6?'Medium': s>0?'Low':'-';
 
   function resetRiskForm(){ qs('#risk-form').reset(); qs('#risk-id').value=''; qs('#risk-form-submit').textContent='Save risk'; }
+
   function renderRisksTable(){
     const tbody = qs('#risks-table-body'), empty=qs('#risks-empty'), count=qs('#risks-count');
     tbody.innerHTML='';
-    risks.forEach(r=>{
-      const level=rLevel(r.score), cls = level==='High'?'badge-danger': level==='Medium'?'badge-warning': level==='Low'?'badge-success':'';
+
+    const filtered = risks.filter(r=>{
+      const level = rLevel(r.score);
+      if(riskFilterLevel!=='all' && level!==riskFilterLevel) return false;
+      if(!riskSearchTerm) return true;
+      const hay = [
+        r.title || '',
+        r.assetName || '',
+        r.category || '',
+        r.status || '',
+        (r.owner || '')
+      ].join(' ').toLowerCase();
+      return hay.includes(riskSearchTerm);
+    });
+
+    filtered.forEach(r=>{
+      const level=rLevel(r.score);
+      const cls = level==='High'?'badge-danger': level==='Medium'?'badge-warning': level==='Low'?'badge-success':'';
+
+      const res = residualForRisk(r);
+      const resScore = rScore(res.likelihood, res.impact);
+      const resLevel = rLevel(resScore);
+      const resCls = resLevel==='High'?'badge-danger': resLevel==='Medium'?'badge-warning': resLevel==='Low'?'badge-success':'';
+
       const tr=document.createElement('tr');
       tr.innerHTML=`
-        <td>${r.title}</td><td>${r.assetName||''}</td><td>${r.category}</td>
+        <td>${r.title}</td>
+        <td>${r.assetName||''}</td>
+        <td>${r.category}</td>
         <td>${r.score?`<span class="badge ${cls} mr-1">${r.score}</span><span class="text-muted small">${level}</span>`:'-'}</td>
+        <td>${resScore?`<span class="badge ${resCls} mr-1">${resScore}</span><span class="text-muted small">${resLevel}</span>`:'-'}</td>
         <td>${r.status}</td>
         <td>
           <button class="btn btn-sm btn-outline-light mb-1" data-re="${r.id}">Edit</button>
@@ -1067,8 +1118,9 @@
         </td>`;
       tbody.appendChild(tr);
     });
-    empty.style.display = risks.length?'none':'block';
-    count.textContent = `${risks.length} risk(s)`;
+
+    empty.style.display = filtered.length?'none':'block';
+    count.textContent = `${filtered.length} risk(s) shown of ${risks.length}`;
     populateControlRisks(); populateIssueDropdowns(); renderDashboard();
   }
 
@@ -1411,7 +1463,6 @@
   // MediCloud loader
   function loadMediCloudScenario(){
     if(!confirm('Load MediCloud starter scenario? This will overwrite current lab data in this browser.')) return;
-    // Deep-copy arrays so user edits don\'t mutate the constant
     assets  = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.assets));
     risks   = JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.risks));
     controls= JSON.parse(JSON.stringify(MEDICLOUD_SCENARIO.controls));
@@ -1451,10 +1502,32 @@
 
   // ============ INIT ============
   document.addEventListener('DOMContentLoaded', ()=>{
-    // filters
+    // filters for frameworks
     ['#framework-filter','#category-filter','#framework-search'].forEach(sel=>{
       const el = qs(sel); if(el){ el.addEventListener(sel==='#framework-search'?'input':'change', renderFrameworkControls); }
     });
+
+    // risk filter buttons + search
+    qsa('[data-risk-filter]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        riskFilterLevel = btn.getAttribute('data-risk-filter');
+        qsa('[data-risk-filter]').forEach(b=>{
+          b.classList.remove('btn-primary');
+          b.classList.add('btn-outline-light');
+        });
+        btn.classList.add('btn-primary');
+        btn.classList.remove('btn-outline-light');
+        renderRisksTable();
+      });
+    });
+    const rSearch = qs('#risk-search');
+    if(rSearch){
+      rSearch.addEventListener('input', ()=>{
+        riskSearchTerm = rSearch.value.trim().toLowerCase();
+        renderRisksTable();
+      });
+    }
+
     bindTabs(); populateControlFrameworks(); populateControlRisks(); populateRiskAssetOptions(); populateIssueDropdowns();
 
     // export / import / reset / MediCloud
