@@ -1721,6 +1721,161 @@
   });
 
   // ---------- Export / Import / Demo / Reset ----------
+ 
+    // ---------- CSV helpers ----------
+  function csvEscape(value){
+    if(value == null) return '';
+    const s = String(value);
+    if(/[" ,\n]/.test(s)){
+      return '"' + s.replace(/"/g,'""') + '"';
+    }
+    return s;
+  }
+
+  function downloadCSV(filename, rows, columns){
+    if(!rows || !rows.length) {
+      alert('No rows to export.');
+      return;
+    }
+    const header = columns.map(c => csvEscape(c.header)).join(',');
+    const body = rows.map(row=>{
+      return columns.map(c=>{
+        const val = typeof c.value === 'function'
+          ? c.value(row)
+          : row[c.key];
+        return csvEscape(val);
+      }).join(',');
+    }).join('\n');
+    const blob = new Blob([header + '\n' + body], {type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function exportAssetsCSV(){
+    const cols = [
+      {header:'Name', key:'name'},
+      {header:'Type', key:'type'},
+      {header:'Criticality', key:'criticality'},
+      {header:'Data types', value:a=>(a.dataTypes||[]).join('; ')},
+      {header:'Owner', key:'owner'},
+      {header:'Notes', key:'notes'}
+    ];
+    downloadCSV('grc_assets.csv', assets, cols);
+  }
+
+  function exportRisksCSV(){
+    const rows = lastRiskView && lastRiskView.length ? lastRiskView : risks;
+    const cols = [
+      {header:'Title', key:'title'},
+      {header:'Asset', value:r=>r.assetName||''},
+      {header:'Category', key:'category'},
+      {header:'Likelihood', key:'likelihood'},
+      {header:'Impact', key:'impact'},
+      {header:'Score', key:'score'},
+      {header:'Level', value:r=>rLevel(r.score)},
+      {header:'Status', key:'status'},
+      {header:'Owner', key:'owner'},
+      {header:'Notes', key:'notes'}
+    ];
+    downloadCSV('grc_risks.csv', rows, cols);
+  }
+
+  function exportControlsCSV(){
+    const cols = [
+      {header:'Name', key:'name'},
+      {header:'Type', key:'type'},
+      {header:'Status', key:'status'},
+      {header:'Owner', key:'owner'},
+      {header:'Description', key:'description'},
+      {
+        header:'Linked risks',
+        value:c=>{
+          const ids = c.linkedRiskIds || [];
+          const names = ids.map(id=>{
+            const r = risks.find(x=>x.id===id);
+            return r ? r.title : id;
+          }).filter(Boolean);
+          return names.join('; ');
+        }
+      },
+      {
+        header:'Framework controls',
+        value:c=>{
+          const ids = c.linkedFrameworkControlIds || [];
+          if(!ids.length) return '';
+          return ids.join('; ');
+        }
+      }
+    ];
+    downloadCSV('grc_controls.csv', controls, cols);
+  }
+
+  function exportIssuesCSV(){
+    const cols = [
+      {header:'Title', key:'title'},
+      {header:'Type', key:'type'},
+      {header:'Severity', key:'severity'},
+      {header:'Status', key:'status'},
+      {header:'Owner', key:'owner'},
+      {header:'Due date', key:'dueDate'},
+      {
+        header:'Linked asset',
+        value:i=>{
+          const a = assets.find(x=>x.id===i.assetId);
+          return a ? a.name : '';
+        }
+      },
+      {
+        header:'Linked risk',
+        value:i=>{
+          const r = risks.find(x=>x.id===i.riskId);
+          return r ? r.title : '';
+        }
+      },
+      {
+        header:'Linked control',
+        value:i=>{
+          const c = controls.find(x=>x.id===i.controlId);
+          return c ? c.name : '';
+        }
+      },
+      {header:'Notes', key:'notes'}
+    ];
+    downloadCSV('grc_issues.csv', issues, cols);
+  }
+
+  function exportTreatmentsCSV(){
+    const cols = [
+      {header:'Title', key:'title'},
+      {header:'Status', key:'status'},
+      {header:'Target date', key:'targetDate'},
+      {header:'Owner', key:'owner'},
+      {header:'Budget', key:'budget'},
+      {
+        header:'Linked risk',
+        value:t=>{
+          const r = risks.find(x=>x.id===t.riskId);
+          return r ? r.title : '';
+        }
+      },
+      {
+        header:'Linked control',
+        value:t=>{
+          const c = controls.find(x=>x.id===t.controlId);
+          return c ? c.name : '';
+        }
+      },
+      {header:'Notes', key:'notes'}
+    ];
+    downloadCSV('grc_treatments.csv', treatments, cols);
+  }
+  
   function setImportStatus(msg,err){
     const el=qs('#import-status');
     el.textContent=msg||'';
