@@ -867,6 +867,32 @@
               </div>
             </div>
           </div>
+
+          <!-- Scenario / Export / Import -->
+          <div class="row mt-4">
+            <div class="col-md-8 mb-3">
+              <div class="dashboard-card p-3 h-100">
+                <div class="label text-muted mb-1">Scenarios &amp; exports</div>
+                <p class="sub mb-3">
+                  Save your current lab as a JSON file, load a saved scenario, or reset everything back to a blank lab.
+                  This works with the MediCloud starter data as well.
+                </p>
+                <div class="d-flex flex-wrap">
+                  <button type="button" id="btn-export-json" class="btn btn-sm btn-primary mr-2 mb-2">
+                    Export current data (JSON)
+                  </button>
+                  <button type="button" id="btn-import-json" class="btn btn-sm btn-outline-light mr-2 mb-2">
+                    Import scenario (JSON)
+                  </button>
+                  <button type="button" id="btn-reset-lab" class="btn btn-sm btn-outline-danger mb-2">
+                    Reset lab (clear all data)
+                  </button>
+                  <input type="file" id="import-file" accept="application/json" style="display:none;">
+                </div>
+                <small id="import-status" class="text-muted d-block mt-2"></small>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div> <!-- /.grc-lab-container -->
@@ -1552,6 +1578,7 @@
 
         const linkedRiskIds = getMultiSelectValues(risksSelect);
         const linkedFrameworkControlIds = getMultiSelectValues(frameworksSelect);
+        the
         const existingId = idField.value;
 
         if (existingId) {
@@ -2041,7 +2068,6 @@
         }).length;
         if (overdueEl) overdueEl.textContent = overdue;
 
-        // Framework coverage will be set by renderGapAnalysisTable -> updateDashboardCoverage
         const rows = computeGapAnalysisRows();
         const overall = computeOverallFrameworkCoverage(rows);
         const covEl = document.getElementById('dash-framework-coverage');
@@ -2066,6 +2092,127 @@
           : overallPercent > 0
           ? 'Limited coverage'
           : 'No implemented coverage yet';
+      }
+
+      // --- Scenario Export / Import / Reset ---
+
+      function setImportStatus(message, isError) {
+        const statusEl = document.getElementById('import-status');
+        if (!statusEl) return;
+        statusEl.textContent = message || '';
+        statusEl.style.color = isError ? '#fca5a5' : '#9ca3af';
+      }
+
+      function exportScenario() {
+        const scenario = {
+          version: 1,
+          exportedAt: new Date().toISOString(),
+          assets,
+          risks,
+          controls,
+          issues
+        };
+
+        const json = JSON.stringify(scenario, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        const dateStr = new Date().toISOString().slice(0, 10);
+        a.href = url;
+        a.download = `grc-lab-scenario-${dateStr}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        setImportStatus('Exported current data as JSON.', false);
+      }
+
+      function importScenarioFromFile(file) {
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const text = e.target.result;
+            const data = JSON.parse(text);
+
+            if (typeof data !== 'object' || data === null) {
+              throw new Error('Invalid JSON structure.');
+            }
+
+            assets = Array.isArray(data.assets) ? data.assets : [];
+            risks = Array.isArray(data.risks) ? data.risks : [];
+            controls = Array.isArray(data.controls) ? data.controls : [];
+            issues = Array.isArray(data.issues) ? data.issues : [];
+
+            // Save to localStorage
+            saveAssets();
+            saveRisks();
+            saveControls();
+            saveIssues();
+
+            // Re-render everything
+            renderAssetsTable();
+            renderRisksTable();
+            renderControlsTable();
+            renderIssuesTable();
+            populateRiskAssetOptions();
+            populateControlRisksOptions();
+            populateControlFrameworksOptions();
+            populateIssueDropdowns();
+            renderGapAnalysisTable();
+            renderDashboard();
+
+            setImportStatus(
+              `Imported scenario: ${assets.length} assets, ${risks.length} risks, ${controls.length} controls, ${issues.length} issues.`,
+              false
+            );
+          } catch (err) {
+            console.error('Import error', err);
+            setImportStatus('Failed to import scenario. Please check the JSON file.', true);
+          }
+        };
+
+        reader.onerror = function () {
+          setImportStatus('Failed to read file.', true);
+        };
+
+        reader.readAsText(file);
+      }
+
+      function resetLabData() {
+        if (!confirm('This will clear all assets, risks, controls, and issues stored in your browser. Continue?')) {
+          return;
+        }
+
+        assets = [];
+        risks = [];
+        controls = [];
+        issues = [];
+
+        try {
+          localStorage.removeItem(ASSET_STORAGE_KEY);
+          localStorage.removeItem(RISK_STORAGE_KEY);
+          localStorage.removeItem(CONTROL_STORAGE_KEY);
+          localStorage.removeItem(ISSUE_STORAGE_KEY);
+        } catch (e) {
+          console.warn('Could not clear localStorage', e);
+        }
+
+        renderAssetsTable();
+        renderRisksTable();
+        renderControlsTable();
+        renderIssuesTable();
+        populateRiskAssetOptions();
+        populateControlRisksOptions();
+        populateControlFrameworksOptions();
+        populateIssueDropdowns();
+        renderGapAnalysisTable();
+        renderDashboard();
+
+        setImportStatus('Lab reset: all data cleared from this browser.', false);
       }
 
       // --- DOM ready ---
@@ -2169,6 +2316,35 @@
         // Initial gap analysis & dashboard
         renderGapAnalysisTable();
         renderDashboard();
+
+        // Scenario buttons
+        const exportBtn = document.getElementById('btn-export-json');
+        const importBtn = document.getElementById('btn-import-json');
+        const resetBtn = document.getElementById('btn-reset-lab');
+        const importFileInput = document.getElementById('import-file');
+
+        if (exportBtn) {
+          exportBtn.addEventListener('click', exportScenario);
+        }
+
+        if (importBtn && importFileInput) {
+          importBtn.addEventListener('click', () => {
+            setImportStatus('', false);
+            importFileInput.value = '';
+            importFileInput.click();
+          });
+
+          importFileInput.addEventListener('change', (e) => {
+            const file = e.target.files && e.target.files[0];
+            if (file) {
+              importScenarioFromFile(file);
+            }
+          });
+        }
+
+        if (resetBtn) {
+          resetBtn.addEventListener('click', resetLabData);
+        }
       });
     </script>
   </body>
