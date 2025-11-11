@@ -19,97 +19,46 @@
     <link rel="stylesheet" href="css/style.css" />
 
     <style>
-      .grc-lab-hero {
-        padding-top: 140px;
-        padding-bottom: 40px;
-      }
+      /* --- IMPORTANT: make ftco-animate content visible even without Waypoints/AOS --- */
+      .ftco-animate { opacity: 1 !important; visibility: visible !important; transform: none !important; }
 
-      .grc-tab-buttons .btn {
-        margin-right: 8px;
-        margin-bottom: 8px;
-      }
+      .grc-lab-hero { padding-top: 140px; padding-bottom: 40px; }
+      .grc-tab-buttons .btn { margin-right: 8px; margin-bottom: 8px; }
+      .grc-tab { display: none; }
+      .grc-tab.active { display: block; }
 
-      .grc-tab {
-        display: none;
-      }
-
-      .grc-tab.active {
-        display: block;
-      }
-
-      .grc-lab-container {
-        width: 80vw;
-        max-width: 1600px;
-        margin: 0 auto;
-      }
-
-      @media (max-width: 991.98px) {
-        .grc-lab-container {
-          width: 100vw;
-        }
-      }
+      .grc-lab-container { width: 80vw; max-width: 1600px; margin: 0 auto; }
+      @media (max-width: 991.98px) { .grc-lab-container { width: 100vw; } }
 
       /* Dashboard cards */
       .grc-dashboard-card {
-        background: #1b1b1b;
-        border-radius: 10px;
-        padding: 20px;
-        text-align: center;
-        margin-bottom: 15px;
-        color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        background: #1b1b1b; border-radius: 10px; padding: 20px; text-align: center;
+        margin-bottom: 15px; color: #fff; box-shadow: 0 0 10px rgba(0,0,0,.3);
       }
-      .grc-dashboard-card h2 {
-        font-size: 28px;
-        margin-bottom: 5px;
-      }
-      .grc-dashboard-card p {
-        font-size: 14px;
-        margin: 0;
-        color: #aaa;
-      }
+      .grc-dashboard-card h2 { font-size: 28px; margin-bottom: 5px; }
+      .grc-dashboard-card p { font-size: 14px; margin: 0; color: #aaa; }
 
       /* Risk matrix canvas */
-      #risk-matrix-canvas {
-        background: #111;
-        border-radius: 8px;
-        width: 100%;
-        max-width: 100%;
-      }
+      #risk-matrix-canvas { background: #111; border-radius: 8px; width: 100%; max-width: 100%; }
     </style>
   </head>
 
   <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
     <!-- Navbar -->
-    <nav
-      class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target"
-      id="ftco-navbar"
-    >
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
       <div class="container">
         <a class="navbar-brand" href="index.html">John B Joseph</a>
-        <button
-          class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle"
-          type="button"
-          data-toggle="collapse"
-          data-target="#ftco-nav"
-          aria-controls="ftco-nav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+        <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button"
+                data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav"
+                aria-expanded="false" aria-label="Toggle navigation">
           <span class="oi oi-menu"></span> Menu
         </button>
 
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav nav ml-auto">
-            <li class="nav-item">
-              <a href="index.html#home-section" class="nav-link"><span>Home</span></a>
-            </li>
-            <li class="nav-item">
-              <a href="toolkit.html" class="nav-link"><span>Toolkit</span></a>
-            </li>
-            <li class="nav-item active">
-              <a href="grc-lab.html" class="nav-link"><span>GRC Practice Lab</span></a>
-            </li>
+            <li class="nav-item"><a href="index.html#home-section" class="nav-link"><span>Home</span></a></li>
+            <li class="nav-item"><a href="toolkit.html" class="nav-link"><span>Toolkit</span></a></li>
+            <li class="nav-item active"><a href="grc-lab.html" class="nav-link"><span>GRC Practice Lab</span></a></li>
           </ul>
         </div>
       </div>
@@ -122,8 +71,8 @@
           <div class="col-md-10 text-center ftco-animate">
             <h1 class="mb-3">GRC Practice Lab (v2.7)</h1>
             <p class="lead">
-              A browser-based GRC sandbox for practicing frameworks, risks, controls, and issues.  
-              Built and maintained by <b>John B Joseph</b> — your digital GRC engineering playground.
+              A browser-based GRC sandbox for practicing frameworks, risks, controls, and issues.
+              Built and maintained by <b>John B Joseph</b>.
             </p>
           </div>
         </div>
@@ -131,23 +80,13 @@
         <!-- Tab buttons -->
         <div class="row mb-4">
           <div class="col-md-12 text-center grc-tab-buttons">
-            <button class="btn btn-primary btn-sm" data-grc-tab="frameworks">
-              Frameworks & Controls
-            </button>
+            <button class="btn btn-primary btn-sm" data-grc-tab="frameworks">Frameworks &amp; Controls</button>
             <button class="btn btn-outline-light btn-sm" data-grc-tab="assets">Assets</button>
             <button class="btn btn-outline-light btn-sm" data-grc-tab="risks">Risks</button>
-            <button class="btn btn-outline-light btn-sm" data-grc-tab="controls">
-              Local Controls
-            </button>
-            <button class="btn btn-outline-light btn-sm" data-grc-tab="issues">
-              Issues / Findings
-            </button>
-            <button class="btn btn-outline-light btn-sm" data-grc-tab="dashboard">
-              Dashboard
-            </button>
-            <button class="btn btn-outline-light btn-sm" data-grc-tab="matrix">
-              Risk Matrix
-            </button>
+            <button class="btn btn-outline-light btn-sm" data-grc-tab="controls">Local Controls</button>
+            <button class="btn btn-outline-light btn-sm" data-grc-tab="issues">Issues / Findings</button>
+            <button class="btn btn-outline-light btn-sm" data-grc-tab="dashboard">Dashboard</button>
+            <button class="btn btn-outline-light btn-sm" data-grc-tab="matrix">Risk Matrix</button>
           </div>
         </div>
 
@@ -158,14 +97,12 @@
           <table class="table table-dark table-striped table-sm mb-0">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Framework</th>
-                <th>Description</th>
+                <th>ID</th><th>Name</th><th>Category</th><th>Framework</th><th>Description</th>
               </tr>
             </thead>
-            <tbody id="frameworks-table-body"></tbody>
+            <tbody id="frameworks-table-body">
+              <tr><td colspan="5" class="text-muted">Placeholder — full renderer is in the long build.</td></tr>
+            </tbody>
           </table>
         </div>
 
@@ -194,7 +131,7 @@
         </div>
 
         <div id="tab-issues" class="grc-tab ftco-animate">
-          <h3>Issues & Findings</h3>
+          <h3>Issues &amp; Findings</h3>
           <p>Track findings, link to risks and assets, assign ownership.</p>
           <table class="table table-dark table-striped table-sm mb-0">
             <tbody id="issues-table-body"></tbody>
@@ -205,30 +142,10 @@
         <div id="tab-dashboard" class="grc-tab ftco-animate">
           <h3>Dashboard Overview</h3>
           <div class="row text-center">
-            <div class="col-md-3">
-              <div class="grc-dashboard-card">
-                <h2 id="count-assets">0</h2>
-                <p>Assets</p>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="grc-dashboard-card">
-                <h2 id="count-risks">0</h2>
-                <p>Risks</p>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="grc-dashboard-card">
-                <h2 id="count-controls">0</h2>
-                <p>Controls</p>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="grc-dashboard-card">
-                <h2 id="count-issues">0</h2>
-                <p>Issues</p>
-              </div>
-            </div>
+            <div class="col-md-3"><div class="grc-dashboard-card"><h2 id="count-assets">0</h2><p>Assets</p></div></div>
+            <div class="col-md-3"><div class="grc-dashboard-card"><h2 id="count-risks">0</h2><p>Risks</p></div></div>
+            <div class="col-md-3"><div class="grc-dashboard-card"><h2 id="count-controls">0</h2><p>Controls</p></div></div>
+            <div class="col-md-3"><div class="grc-dashboard-card"><h2 id="count-issues">0</h2><p>Issues</p></div></div>
           </div>
           <div class="text-center mt-4">
             <p class="text-muted small">Dashboard metrics auto-update as you add data.</p>
@@ -238,10 +155,7 @@
         <!-- Risk Matrix Tab -->
         <div id="tab-matrix" class="grc-tab ftco-animate">
           <h3>Risk Matrix (Inherent vs Residual)</h3>
-          <p class="mb-3">
-            Visualize how risks are distributed by likelihood and impact.  
-            Use the toggle to compare <b>Inherent</b> vs <b>Residual</b> Risk.
-          </p>
+          <p class="mb-3">Visualize how risks are distributed by likelihood and impact.</p>
 
           <div class="bg-dark p-3 rounded mb-3">
             <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
@@ -257,10 +171,7 @@
             </div>
 
             <canvas id="risk-matrix-canvas" width="800" height="600"></canvas>
-
-            <div id="matrix-legend" class="mt-3 text-center text-muted small">
-              <!-- summary counts injected here -->
-            </div>
+            <div id="matrix-legend" class="mt-3 text-center text-muted small"></div>
           </div>
         </div>
       </div>
@@ -270,134 +181,110 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12 text-center">
-            <p>
-              Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-              All rights reserved | GRC Practice Lab by John B Joseph
-            </p>
+            <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script>
+               All rights reserved | GRC Practice Lab by John B Joseph</p>
           </div>
         </div>
       </div>
     </footer>
 
-    <!-- Core scripts -->
+    <!-- Core scripts (add Popper; drop main.js to avoid animation deps) -->
     <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
+
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-  // --- Tab Navigation ---
-  const buttons = document.querySelectorAll("[data-grc-tab]");
-  const tabs = document.querySelectorAll(".grc-tab");
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const target = btn.getAttribute("data-grc-tab");
-      buttons.forEach(b => b.classList.replace("btn-primary","btn-outline-light"));
-      btn.classList.replace("btn-outline-light","btn-primary");
-      tabs.forEach(tab => tab.classList.remove("active"));
-      const t = document.getElementById("tab-" + target);
-      if (t) t.classList.add("active");
+    document.addEventListener("DOMContentLoaded", function () {
+      // --- Tab Navigation ---
+      const buttons = document.querySelectorAll("[data-grc-tab]");
+      const tabs = document.querySelectorAll(".grc-tab");
+      buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const target = btn.getAttribute("data-grc-tab");
+          buttons.forEach(b => { b.classList.remove("btn-primary"); b.classList.add("btn-outline-light"); });
+          btn.classList.remove("btn-outline-light"); btn.classList.add("btn-primary");
+          tabs.forEach(tab => tab.classList.remove("active"));
+          const t = document.getElementById("tab-" + target);
+          if (t) t.classList.add("active");
+        });
+      });
+
+      // --- Data State ---
+      const keys = { assets:"grc_assets_v1", risks:"grc_risks_v1", controls:"grc_controls_v1", issues:"grc_issues_v1" };
+      const load = k => { try { return JSON.parse(localStorage.getItem(k)) || []; } catch(_) { return []; } };
+      let assets = load(keys.assets), risks = load(keys.risks), controls = load(keys.controls), issues = load(keys.issues);
+
+      // --- Dashboard Metrics ---
+      function updateDashboard(){
+        const set = (id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
+        set("count-assets", assets.length);
+        set("count-risks", risks.length);
+        set("count-controls", controls.length);
+        set("count-issues", issues.length);
+      }
+      updateDashboard();
+
+      // --- Risk Matrix ---
+      const canvas = document.getElementById("risk-matrix-canvas");
+      const ctx = canvas.getContext("2d");
+      const legend = document.getElementById("matrix-legend");
+      let showResidual = false;
+
+      function drawMatrix(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        const size=100, offset=80;
+
+        // grid
+        ctx.strokeStyle="#444"; ctx.lineWidth=1; ctx.font="12px Poppins"; ctx.fillStyle="#aaa";
+        for(let i=0;i<=5;i++){
+          ctx.beginPath(); ctx.moveTo(offset,offset+i*size); ctx.lineTo(offset+5*size,offset+i*size); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(offset+i*size,offset); ctx.lineTo(offset+i*size,offset+5*size); ctx.stroke();
+        }
+        ctx.fillText("Impact →", offset+210, offset-20);
+        ctx.save(); ctx.translate(offset-50, offset+230); ctx.rotate(-Math.PI/2); ctx.fillText("Likelihood →", 0, 0); ctx.restore();
+
+        let high=0,med=0,low=0;
+        risks.forEach(r=>{
+          const l = Number(r.likelihood)||1, i = Number(r.impact)||1;
+          const score = l*i;
+          let color="#28a745"; if(score>=15) color="#dc3545"; else if(score>=6) color="#ffc107";
+          if(score>=15) high++; else if(score>=6) med++; else low++;
+          ctx.beginPath(); ctx.arc(offset+(i-0.5)*size, offset+(5-l+0.5)*size, 10, 0, 2*Math.PI);
+          ctx.fillStyle = color; ctx.fill();
+        });
+
+        legend.innerHTML = `<b>${risks.length}</b> total risks – 
+          <span style="color:#dc3545">High: ${high}</span> |
+          <span style="color:#ffc107">Medium: ${med}</span> |
+          <span style="color:#28a745">Low: ${low}</span>`;
+      }
+      drawMatrix();
+
+      document.getElementById("matrix-toggle-inherent").addEventListener("click",()=>{
+        showResidual=false;
+        document.getElementById("matrix-toggle-inherent").classList.add("btn-primary");
+        document.getElementById("matrix-toggle-residual").classList.remove("btn-primary");
+        drawMatrix();
+      });
+      document.getElementById("matrix-toggle-residual").addEventListener("click",()=>{
+        showResidual=true;
+        document.getElementById("matrix-toggle-residual").classList.add("btn-primary");
+        document.getElementById("matrix-toggle-inherent").classList.remove("btn-primary");
+        drawMatrix(); // placeholder: same as inherent until residual fields are added
+      });
+
+      // Export PNG
+      document.getElementById("matrix-export").addEventListener("click",()=>{
+        const link=document.createElement("a");
+        link.download="risk_matrix.png";
+        link.href=canvas.toDataURL("image/png");
+        link.click();
+      });
+
+      // Refresh when opening tabs
+      document.querySelector("[data-grc-tab='dashboard']").addEventListener("click",updateDashboard);
+      document.querySelector("[data-grc-tab='matrix']").addEventListener("click",()=>{ updateDashboard(); drawMatrix(); });
     });
-  });
-
-  // --- Data State ---
-  const keys = {
-    assets: "grc_assets_v1",
-    risks: "grc_risks_v1",
-    controls: "grc_controls_v1",
-    issues: "grc_issues_v1",
-  };
-  function load(k){try{return JSON.parse(localStorage.getItem(k))||[]}catch{return[]}}
-  function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
-
-  let assets=load(keys.assets),risks=load(keys.risks),
-      controls=load(keys.controls),issues=load(keys.issues);
-
-  // --- Dashboard Metrics ---
-  function updateDashboard(){
-    document.getElementById("count-assets").textContent=assets.length;
-    document.getElementById("count-risks").textContent=risks.length;
-    document.getElementById("count-controls").textContent=controls.length;
-    document.getElementById("count-issues").textContent=issues.length;
-  }
-  updateDashboard();
-
-  // --- Risk Matrix ---
-  const canvas=document.getElementById("risk-matrix-canvas");
-  const ctx=canvas.getContext("2d");
-  const legend=document.getElementById("matrix-legend");
-  let showResidual=false;
-
-  function drawMatrix(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    const size=100, offset=80;
-    ctx.strokeStyle="#444"; ctx.lineWidth=1;
-    ctx.font="12px Poppins"; ctx.fillStyle="#aaa";
-    for(let i=0;i<=5;i++){
-      ctx.beginPath();
-      ctx.moveTo(offset,offset+i*size);
-      ctx.lineTo(offset+5*size,offset+i*size);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(offset+i*size,offset);
-      ctx.lineTo(offset+i*size,offset+5*size);
-      ctx.stroke();
-    }
-    ctx.fillText("Impact →", offset+210, offset-20);
-    ctx.save();
-    ctx.translate(offset-50, offset+230);
-    ctx.rotate(-Math.PI/2);
-    ctx.fillText("Likelihood →", 0, 0);
-    ctx.restore();
-
-    // risk data points
-    let high=0,med=0,low=0;
-    risks.forEach(r=>{
-      const l=r.likelihood||1,i=r.impact||1;
-      const score=l*i;
-      let color="#28a745"; if(score>=15) color="#dc3545"; else if(score>=6) color="#ffc107";
-      if(score>=15)high++;else if(score>=6)med++;else low++;
-      ctx.beginPath();
-      ctx.arc(offset+(i-0.5)*size, offset+(5-l+0.5)*size, 10,0,2*Math.PI);
-      ctx.fillStyle=color; ctx.fill();
-    });
-
-    legend.innerHTML=`<b>${risks.length}</b> total risks – 
-      <span style='color:#dc3545'>High: ${high}</span> |
-      <span style='color:#ffc107'>Medium: ${med}</span> |
-      <span style='color:#28a745'>Low: ${low}</span>`;
-  }
-
-  drawMatrix();
-
-  document.getElementById("matrix-toggle-inherent").addEventListener("click",()=>{
-    showResidual=false;
-    document.getElementById("matrix-toggle-inherent").classList.add("btn-primary");
-    document.getElementById("matrix-toggle-residual").classList.remove("btn-primary");
-    drawMatrix();
-  });
-  document.getElementById("matrix-toggle-residual").addEventListener("click",()=>{
-    showResidual=true;
-    document.getElementById("matrix-toggle-residual").classList.add("btn-primary");
-    document.getElementById("matrix-toggle-inherent").classList.remove("btn-primary");
-    drawMatrix(); // currently same view placeholder for residual
-  });
-
-  // --- Export Matrix as PNG ---
-  document.getElementById("matrix-export").addEventListener("click",()=>{
-    const link=document.createElement("a");
-    link.download="risk_matrix.png";
-    link.href=canvas.toDataURL("image/png");
-    link.click();
-  });
-
-  // --- Live updates when returning to Dashboard or Matrix ---
-  document.querySelector("[data-grc-tab='dashboard']").addEventListener("click",updateDashboard);
-  document.querySelector("[data-grc-tab='matrix']").addEventListener("click",()=>{
-    updateDashboard();
-    drawMatrix();
-  });
-
-});
-</script>
-</body>
+    </script>
+  </body>
 </html>
