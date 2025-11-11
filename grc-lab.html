@@ -2328,6 +2328,22 @@
 
     qs('#summary-refresh').addEventListener('click',generateAuditorSummary);
 
+    const btnExpAssets = qs('#export-assets');
+    if(btnExpAssets) btnExpAssets.addEventListener('click', exportAssetsCSV);
+
+    const btnExpRisks = qs('#export-risks');
+    if(btnExpRisks) btnExpRisks.addEventListener('click', exportRisksCSV);
+
+    const btnExpControls = qs('#export-controls');
+    if(btnExpControls) btnExpControls.addEventListener('click', exportControlsCSV);
+
+    const btnExpIssues = qs('#export-issues');
+    if(btnExpIssues) btnExpIssues.addEventListener('click', exportIssuesCSV);
+
+    const btnExpTreats = qs('#export-treatments');
+    if(btnExpTreats) btnExpTreats.addEventListener('click', exportTreatmentsCSV);
+    
+    
     refreshAll();
   });
   </script>
