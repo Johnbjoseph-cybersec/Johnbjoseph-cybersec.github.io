@@ -956,7 +956,7 @@
           <p><span class="tooltip">How to use<span class="tooltiptext">View coverage by category. Heatmap shows maturity. Tip: Aim for 80%+ implemented in core areas.</span></span>: Analyze control gaps against frameworks.</p>
         </div>
         <h3>Gap Analysis &amp; Heatmap</h3>
-        <p class="mb-3">Coverage based on local controls mapped to frameworks. Improve by adding/mapping controls.</p>
+        <p class="mb-3">Coverage based on local controls mapped to frameworks. “In place” = implemented; “Planned” = planned-only.</p>
         <div class="table-responsive bg-dark p-3 rounded">
           <table class="table table-dark table-striped table-hover table-sm mb-0">
             <thead>
@@ -981,7 +981,7 @@
         </div>
         <h3>Statement of Applicability (SoA)</h3>
         <p class="mb-3 small-muted">
-          Applicability & implementation against the unified framework library. Edit inline; data local.
+          Applicability & implementation against the unified framework library. Edit rationale/evidence inline; data persists locally.
         </p>
         <div class="bg-dark p-3 rounded mb-2">
           <div class="d-flex justify-content-between align-items-center">
@@ -1285,298 +1285,2124 @@
   <script>
   // ---------- Expanded Framework library (over 200 controls) ----------
   const FRAMEWORK_CONTROLS = [
-    // Original 17
-    {id:"CTRL-AC-01",name:"Manage user accounts",category:"Access Control",
-      description:"Only approved users receive accounts; access removed quickly on role change or leaving.",
-      frameworks:["ISO 27001","NIST CSF"],references:["ISO 27001 A.9","NIST PR.AC-1"]},
-    {id:"CTRL-AC-02",name:"Limit privileged access",category:"Identity & Authentication",
-      description:"Privileged roles are tightly controlled, logged and periodically reviewed.",
-      frameworks:["ISO 27001","NIST CSF","PCI DSS"],references:["ISO 27001 A.9.2","NIST PR.AC-4","PCI DSS 7"]},
-    {id:"CTRL-AC-03",name:"Strong authentication",category:"Identity & Authentication",
-      description:"Multi-factor authentication is used for admin accounts and remote access to critical systems.",
-      frameworks:["ISO 27001","NIST CSF","PCI DSS","HIPAA"],references:["ISO 27001 A.9.4","NIST PR.AC-7","PCI DSS 8","HIPAA 164.312(d)"]},
-    {id:"CTRL-LOG-01",name:"Central activity logging",category:"Logging & Monitoring",
-      description:"Security events from key systems are collected centrally for correlation and investigation.",
-      frameworks:["ISO 27001","NIST CSF","PCI DSS"],references:["ISO 27001 A.12.4","NIST DE.AE-1","PCI DSS 10"]},
-    {id:"CTRL-LOG-02",name:"Regular log review",category:"Logging & Monitoring",
-      description:"Important system logs are reviewed and suspicious events investigated and documented.",
-      frameworks:["ISO 27001","NIST CSF","HIPAA"],references:["ISO 27001 A.12.4","NIST DE.CM-1","HIPAA 164.308(a)(1)"]},
-    {id:"CTRL-ENC-01",name:"Encrypt data at rest",category:"Encryption & Key Management",
-      description:"Sensitive data in databases, file systems and backups is encrypted using approved algorithms.",
-      frameworks:["ISO 27001","PCI DSS","HIPAA"],references:["ISO 27001 A.10","PCI DSS 3","HIPAA 164.312(a)(2)(iv)"]},
-    {id:"CTRL-ENC-02",name:"Encrypt data in transit",category:"Encryption & Key Management",
-      description:"TLS is enforced for sensitive data in transit; weak ciphers and protocols are disabled.",
-      frameworks:["ISO 27001","NIST CSF","PCI DSS","HIPAA"],references:["ISO 27001 A.13","NIST PR.DS-2","PCI DSS 4","HIPAA 164.312(e)(1)"]},
-    {id:"CTRL-BCP-01",name:"Backups & restore testing",category:"Backup & Recovery",
-      description:"Critical systems are backed up and restore tests are performed and documented.",
-      frameworks:["ISO 27001","NIST CSF"],references:["ISO 27001 A.12.3","NIST PR.IP-4"]},
-    {id:"CTRL-CHG-01",name:"Controlled changes",category:"Change Management",
-      description:"Changes follow an approved process including impact assessment, testing and rollback.",
-      frameworks:["ISO 27001","NIST CSF"],references:["ISO 27001 A.12.1","NIST PR.IP-3"]},
-    {id:"CTRL-CHG-02",name:"Separate environments",category:"Change Management",
-      description:"Development and test environments are separated from production with restricted access.",
-      frameworks:["ISO 27001","PCI DSS"],references:["ISO 27001 A.12.1.4","PCI DSS 6.4"]},
-    {id:"CTRL-VULN-01",name:"Vulnerability management",category:"Vulnerability Management",
-      description:"Regular scans are run; patches and fixes are applied according to defined timelines.",
-      frameworks:["ISO 27001","NIST CSF","PCI DSS"],references:["ISO 27001 A.12.6","NIST DE.CM-8","PCI DSS 11"]},
-    {id:"CTRL-IR-01",name:"Incident response plan",category:"Incident Response",
-      description:"A documented incident response plan defines roles, steps and communications.",
-      frameworks:["ISO 27001","NIST CSF","HIPAA"],references:["ISO 27001 A.16","NIST RS.RP-1","HIPAA 164.308(a)(6)"]},
-    {id:"CTRL-IR-02",name:"Detect and triage events",category:"Incident Response",
-      description:"Events are detected, triaged and escalated based on documented procedures.",
-      frameworks:["ISO 27001","NIST CSF"],references:["ISO 27001 A.16","NIST DE.CM-1"]},
-    {id:"CTRL-VND-01",name:"Vendor due diligence",category:"Vendor Risk",
-      description:"Third parties are assessed before onboarding and periodically thereafter.",
-      frameworks:["ISO 27001","NIST CSF"],references:["ISO 27001 A.15","NIST ID.SC-1"]},
-    {id:"CTRL-VND-02",name:"Data protection in contracts",category:"Vendor Risk",
-      description:"Vendor contracts include data protection clauses, breach notification and audit rights.",
-      frameworks:["ISO 27001","HIPAA"],references:["ISO 27001 A.15.1.2","HIPAA 164.308(b)"]},
-    {id:"CTRL-POL-01",name:"Information security policy",category:"Policy & Governance",
-      description:"Management-approved policies define security objectives, roles and responsibilities.",
-      frameworks:["ISO 27001","NIST CSF"],references:["ISO 27001 A.5","NIST ID.GV-1"]},
-    {id:"CTRL-AW-01",name:"Security awareness training",category:"Awareness & Training",
-      description:"People receive regular training on security, privacy, phishing and incident reporting.",
-      frameworks:["ISO 27001","NIST CSF","HIPAA"],references:["ISO 27001 A.7.2.2","NIST PR.AT-1","HIPAA 164.308(a)(5)"]},
-    // Added from ISO 27001:2022 Annex A (paraphrased)
-    {id:"CTRL-ORG-01",name:"Policies for information security",category:"Policy & Governance",
-      description:"Define, approve, communicate and review information security policies.",
+    // From search results, add more
+    // ISO 27001 Annex A
+    {id:"CTRL-5.1",name:"Policies for information security",category:"Organisational Controls",
+      description:"Information security policy and topic-specific policies shall be defined, approved by management, published, communicated to and acknowledged by relevant personnel and relevant interested parties, and reviewed at planned intervals and if significant changes occur.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.1"]},
-    {id:"CTRL-ORG-02",name:"Information security roles and responsibilities",category:"Policy & Governance",
-      description:"Allocate and communicate information security roles.",
+    {id:"CTRL-5.2",name:"Information security roles and responsibilities",category:"Organisational Controls",
+      description:"Information security roles and responsibilities shall be defined and allocated according to the organization needs.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.2"]},
-    {id:"CTRL-ORG-03",name:"Segregation of duties",category:"Access Control",
-      description:"Separate conflicting duties to reduce fraud risk.",
+    {id:"CTRL-5.3",name:"Segregation of duties",category:"Organisational Controls",
+      description:"Conflicting duties and conflicting areas of responsibility shall be segregated.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.3"]},
-    {id:"CTRL-ORG-04",name:"Management responsibilities",category:"Policy & Governance",
-      description:"Management demonstrates support for information security.",
+    {id:"CTRL-5.4",name:"Management responsibilities",category:"Organisational Controls",
+      description:"Management shall require all personnel to apply information security in accordance with the established information security policy, topic-specific policies and procedures of the organization.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.4"]},
-    {id:"CTRL-ORG-05",name:"Contact with authorities",category:"Policy & Governance",
-      description:"Maintain contacts with relevant authorities.",
+    {id:"CTRL-5.5",name:"Contact with authorities",category:"Organisational Controls",
+      description:"The organization shall establish and maintain contact with relevant authorities.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.5"]},
-    {id:"CTRL-ORG-06",name:"Contact with special interest groups",category:"Policy & Governance",
-      description:"Participate in information security forums.",
+    {id:"CTRL-5.6",name:"Contact with special interest groups",category:"Organisational Controls",
+      description:"The organization shall establish and maintain contact with special interest groups or other specialist security forums and professional associations.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.6"]},
-    {id:"CTRL-ORG-07",name:"Threat intelligence",category:"Vulnerability Management",
-      description:"Gather and analyze threat information.",
+    {id:"CTRL-5.7",name:"Threat intelligence",category:"Organisational Controls",
+      description:"Information relating to information security threats shall be collected and analysed to produce threat intelligence.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.7"]},
-    {id:"CTRL-ORG-08",name:"Information security in project management",category:"Policy & Governance",
-      description:"Integrate security in project management.",
+    {id:"CTRL-5.8",name:"Information security in project management",category:"Organisational Controls",
+      description:"Information security shall be integrated into project management.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.8"]},
-    {id:"CTRL-ORG-09",name:"Inventory of information and assets",category:"Asset Management",
-      description:"Maintain asset inventory.",
+    {id:"CTRL-5.9",name:"Inventory of information and other associated assets",category:"Organisational Controls",
+      description:"An inventory of information and other associated assets, including owners, shall be developed and maintained.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.9"]},
-    {id:"CTRL-ORG-10",name:"Acceptable use of assets",category:"Asset Management",
-      description:"Define rules for acceptable use.",
+    {id:"CTRL-5.10",name:"Acceptable use of information and other associated assets",category:"Organisational Controls",
+      description:"Rules for the acceptable use and procedures for handling information and other associated assets shall be identified, documented and implemented.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.10"]},
-    {id:"CTRL-ORG-11",name:"Return of assets",category:"Asset Management",
-      description:"Return assets upon termination.",
+    {id:"CTRL-5.11",name:"Return of assets",category:"Organisational Controls",
+      description:"Personnel and other interested parties as appropriate shall return all the organization's assets in their possession upon change or termination of their employment, contract or agreement.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.11"]},
-    {id:"CTRL-ORG-12",name:"Classification of information",category:"Asset Management",
-      description:"Classify information based on sensitivity.",
+    {id:"CTRL-5.12",name:"Classification of information",category:"Organisational Controls",
+      description:"Information shall be classified according to the information security needs of the organization based on confidentiality, integrity, availability and relevant interested party requirements.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.12"]},
-    {id:"CTRL-ORG-13",name:"Labelling of information",category:"Asset Management",
-      description:"Label information according to classification.",
+    {id:"CTRL-5.13",name:"Labelling of information",category:"Organisational Controls",
+      description:"An appropriate set of procedures for information labelling shall be developed and implemented in accordance with the information classification scheme adopted by the organization.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.13"]},
-    {id:"CTRL-ORG-14",name:"Information transfer",category:"Asset Management",
-      description:"Secure information transfer.",
+    {id:"CTRL-5.14",name:"Information transfer",category:"Organisational Controls",
+      description:"Information transfer rules, procedures, or agreements shall be in place for all types of transfer facilities within the organization and between the organization and other parties.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.14"]},
-    {id:"CTRL-ORG-15",name:"Access control policy",category:"Access Control",
-      description:"Establish access control policy.",
+    {id:"CTRL-5.15",name:"Access control",category:"Organisational Controls",
+      description:"Rules to control physical and logical access to information and other associated assets shall be established and implemented based on business and information security requirements.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.15"]},
-    {id:"CTRL-ORG-16",name:"Identity management",category:"Identity & Authentication",
-      description:"Manage user identities.",
+    {id:"CTRL-5.16",name:"Identity management",category:"Organisational Controls",
+      description:"The full life cycle of identities shall be managed.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.16"]},
-    {id:"CTRL-ORG-17",name:"Authentication information",category:"Identity & Authentication",
-      description:"Protect authentication credentials.",
+    {id:"CTRL-5.17",name:"Authentication information",category:"Organisational Controls",
+      description:"Allocation and management of authentication information shall be controlled by a management process, including advising personnel on appropriate handling of authentication information.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.17"]},
-    {id:"CTRL-ORG-18",name:"Access rights",category:"Access Control",
-      description:"Manage access provisioning and revocation.",
+    {id:"CTRL-5.18",name:"Access rights",category:"Organisational Controls",
+      description:"Access rights to information and other associated assets shall be provisioned, reviewed, modified and removed in accordance with the organization's topic-specific policy on and rules for access control.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.18"]},
-    {id:"CTRL-ORG-19",name:"Information security in supplier relationships",category:"Vendor Risk",
-      description:"Address security in supplier agreements.",
+    {id:"CTRL-5.19",name:"Information security in supplier relationships",category:"Organisational Controls",
+      description:"Processes and procedures shall be defined and implemented to manage the information security risks associated with the use of supplier's products or services.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.19"]},
-    {id:"CTRL-ORG-20",name:"Addressing security within supplier agreements",category:"Vendor Risk",
-      description:"Include security requirements in contracts.",
+    {id:"CTRL-5.20",name:"Addressing information security within supplier agreements",category:"Organisational Controls",
+      description:"Relevant information security requirements shall be established and agreed with each supplier based on the type of supplier relationship.",
       frameworks:["ISO 27001"],references:["ISO 27001 A.5.20"]},
-    // Add more ISO, up to 93, but for brevity, add representative ones
-    // ... (add similar for A.6 People, A.7 Physical, A.8 Technological)
-    // From NIST CSF 2.0
-    {id:"CTRL-GV-OC-01",name:"Organizational context",category:"Policy & Governance",
-      description:"The organizational mission is understood and informs cybersecurity risk management.",
-      frameworks:["NIST CSF"],references:["NIST GV.OC-01"]},
-    {id:"CTRL-GV-OC-02",name:"Stakeholders understood",category:"Policy & Governance",
-      description:"Internal and external stakeholders are understood and their needs considered.",
-      frameworks:["NIST CSF"],references:["NIST GV.OC-02"]},
-    // Add more from NIST tool response, and others
-    {id:"CTRL-ID-AM-01",name:"Hardware inventory",category:"Asset Management",
-      description:"Inventories of hardware managed by the organization are maintained.",
+    {id:"CTRL-5.21",name:"Managing information security in the ICT supply chain",category:"Organisational Controls",
+      description:"Processes and procedures shall be defined and implemented to manage the information security risks associated with the ICT products and services supply chain.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.21"]},
+    {id:"CTRL-5.22",name:"Monitoring, review and change management of supplier services",category:"Organisational Controls",
+      description:"The organization shall regularly monitor, review, evaluate and manage change in supplier information security practices.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.22"]},
+    {id:"CTRL-5.23",name:"Information security for use of cloud services",category:"Organisational Controls",
+      description:"Processes for acquisition, use, management and exit from cloud services shall be established in accordance with the organization's information security requirements.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.23"]},
+    {id:"CTRL-5.24",name:"Information security incident management planning and preparation",category:"Organisational Controls",
+      description:"The organization shall plan and prepare for managing information security incidents by defining, establishing and communicating information security incident management processes, roles and responsibilities.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.24"]},
+    {id:"CTRL-5.25",name:"Assessment and decision on information security events",category:"Organisational Controls",
+      description:"The organization shall assess information security events and decide if they are to be categorised as information security incidents.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.25"]},
+    {id:"CTRL-5.26",name:"Response to information security incidents",category:"Organisational Controls",
+      description:"Information security incidents shall be responded to in accordance with the documented procedures.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.26"]},
+    {id:"CTRL-5.27",name:"Learning from information security incidents",category:"Organisational Controls",
+      description:"Knowledge gained from information security incidents shall be used to strengthen and improve the information security controls.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.27"]},
+    {id:"CTRL-5.28",name:"Collection of evidence",category:"Organisational Controls",
+      description:"The organization shall establish and implement procedures for the identification, collection, acquisition and preservation of evidence related to information security events.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.28"]},
+    {id:"CTRL-5.29",name:"Information security during disruption",category:"Organisational Controls",
+      description:"The organization shall plan how to maintain information security at an appropriate level during disruption.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.29"]},
+    {id:"CTRL-5.30",name:"ICT readiness for business continuity",category:"Organisational Controls",
+      description:"ICT readiness shall be planned, implemented, maintained and tested based on business continuity objectives and continuity requirements.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.30"]},
+    {id:"CTRL-5.31",name:"Legal, statutory, regulatory and contractual requirements",category:"Organisational Controls",
+      description:"Legal, statutory, regulatory and contractual requirements relevant to information security and the organization's approach to meet these requirements shall be identified, documented and kept up to date.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.31"]},
+    {id:"CTRL-5.32",name:"Intellectual property rights",category:"Organisational Controls",
+      description:"The organization shall implement appropriate procedures to protect intellectual property rights.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.32"]},
+    {id:"CTRL-5.33",name:"Protection of records",category:"Organisational Controls",
+      description:"Records shall be protected from loss, destruction, falsification, unauthorized access and unauthorized release.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.33"]},
+    {id:"CTRL-5.34",name:"Privacy and protection of PII",category:"Organisational Controls",
+      description:"The organization shall identify and meet the requirements regarding the preservation of privacy and protection of PII according to applicable laws and regulations and contractual requirements.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.34"]},
+    {id:"CTRL-5.35",name:"Independent review of information security",category:"Organisational Controls",
+      description:"The organization's approach to managing information security and its implementation shall be reviewed independently at planned intervals, or when significant changes occur.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.35"]},
+    {id:"CTRL-5.36",name:"Compliance with security policies and standards",category:"Organisational Controls",
+      description:"Managers shall regularly review the compliance of information processing and procedures within their area of responsibility with the appropriate security policies, standards and any other security requirements.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.36"]},
+    {id:"CTRL-5.37",name:"Documented operating procedures",category:"Organisational Controls",
+      description:"Operating procedures for information processing facilities shall be documented and made available to personnel who need them.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.5.37"]},
+    // A.6 People Controls (8)
+    {id:"CTRL-6.1",name:"Screening",category:"People Controls",
+      description:"Background verification checks on all candidates to become personnel shall be carried out prior to joining the organization and on an ongoing basis taking into consideration applicable laws, regulations and ethics and be proportional to the business requirements, the classification of the information to be accessed and the perceived risks.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.6.1"]},
+    {id:"CTRL-6.2",name:"Terms and conditions of employment",category:"People Controls",
+      description:"Personnel shall agree to terms and conditions of employment, which includes the organization's information security policy and appropriate topic-specific policies.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.6.2"]},
+    {id:"CTRL-6.3",name:"Information security awareness, education and training",category:"People Controls",
+      description:"Personnel of the organization and relevant interested parties shall receive appropriate information security awareness, education and training and regular updates of the organization's information security policy and topic-specific policies, as relevant for their job function.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.6.3"]},
+    {id:"CTRL-6.4",name:"Disciplinary process",category:"People Controls",
+      description:"A disciplinary process shall be formalized and communicated to take actions against personnel and other relevant interested parties who have committed an information security policy violation.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.6.4"]},
+    {id:"CTRL-6.5",name:"Responsibilities after termination or change of employment",category:"People Controls",
+      description:"Information security responsibilities and duties that remain valid after termination or change of employment shall be defined, enforced and communicated to relevant personnel and other interested parties.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.6.5"]},
+    {id:"CTRL-6.6",name:"Confidentiality or non-disclosure agreements",category:"People Controls",
+      description:"Confidentiality or non-disclosure agreements reflecting the organization's needs for the protection of information shall be identified, documented, regularly reviewed and signed by personnel and other relevant interested parties.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.6.6"]},
+    {id:"CTRL-6.7",name:"Remote working",category:"People Controls",
+      description:"Security measures shall be implemented when personnel are working remotely to protect information accessed, processed or stored outside the organization's premises.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.6.7"]},
+    {id:"CTRL-6.8",name:"Information security event reporting",category:"People Controls",
+      description:"The organization shall provide a mechanism for personnel to report observed or suspected information security events through appropriate channels in a timely manner.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.6.8"]},
+    // A.7 Physical Controls (14)
+    {id:"CTRL-7.1",name:"Physical security perimeters",category:"Physical Controls",
+      description:"Security perimeters shall be defined and used to protect areas that contain information and other associated assets.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.7.1"]},
+    {id:"CTRL-7.2",name:"Physical entry",category:"Physical Controls",
+      description:"Secure areas shall be protected by appropriate entry controls and access points.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.7.2"]},
+    {id:"CTRL-7.3",name:"Securing offices, rooms and facilities",category:"Physical Controls",
+      description:"Physical security for offices, rooms and facilities shall be designed and implemented.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.7.3"]},
+    {id:"CTRL-7.4",name:"Physical security monitoring",category:"Physical Controls",
+      description:"Premises shall be continuously monitored for unauthorized physical access.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.7.4"]},
+    {id:"CTRL-7.5",name:"Protecting against physical and environmental threats",category:"Physical Controls",
+      description:"Protection against physical and environmental threats, such as natural disasters and other intentional or accidental physical threats to infrastructure, shall be designed and implemented.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.7.5"]},
+    {id:"CTRL-7.6",name:"Working in secure areas",category:"Physical Controls",
+      description:"Security measures for working in secure areas shall be designed and implemented.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.7.6"]},
+    {id:"CTRL-7.7",name:"Clear desk and clear screen",category:"Physical Controls",
+      description:"Clear desk rules for papers and removable storage media and clear screen rules for information processing facilities shall be defined and appropriately enforced.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.7.7"]},
+    {id:"CTRL-7.8",name:"Equipment siting and protection",category:"Physical Controls",
+      description:"Equipment shall be sited securely and protected against environmental threats.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.7.8"]},
+    {id:"CTRL-7.9",name:"Security of assets off-premises",category:"Physical Controls",
+      description:"Off-premise assets shall be protected.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.7.9"]},
+    {id:"CTRL-7.10",name:"Storage media",category:"Physical Controls",
+      description:"Storage media shall be managed in accordance with the organization's classification scheme and media handling procedures.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.7.10"]},
+    {id:"CTRL-7.11",name:"Supporting utilities",category:"Physical Controls",
+      description:"Information processing facilities shall be protected from power failures and other disruptions caused by failures in supporting utilities.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.7.11"]},
+    {id:"CTRL-7.12",name:"Cabling security",category:"Physical Controls",
+      description:"Cables carrying power, data or supporting information services shall be protected from interception, interference or damage.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.7.12"]},
+    {id:"CTRL-7.13",name:"Equipment maintenance",category:"Physical Controls",
+      description:"Equipment shall be maintained to ensure continued availability and integrity.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.7.13"]},
+    {id:"CTRL-7.14",name:"Secure disposal or re-use of equipment",category:"Physical Controls",
+      description:"Items of equipment containing storage media shall be verified to ensure that any sensitive data and licensed software has been removed or securely overwritten prior to disposal or re-use.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.7.14"]},
+    // A.8 Technological Controls (34)
+    {id:"CTRL-8.1",name:"User endpoint devices",category:"Technological Controls",
+      description:"Information stored on, processed by or accessible via user endpoint devices shall be protected.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.1"]},
+    {id:"CTRL-8.2",name:"Privileged access rights",category:"Technological Controls",
+      description:"The allocation and use of privileged access rights shall be restricted and managed.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.2"]},
+    {id:"CTRL-8.3",name:"Information access restriction",category:"Technological Controls",
+      description:"Access to information and other associated assets shall be restricted in accordance with the established topic-specific policy on access control.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.3"]},
+    {id:"CTRL-8.4",name:"Access to source code",category:"Technological Controls",
+      description:"Read and write access to source code, development tools and software libraries shall be appropriately managed.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.4"]},
+    {id:"CTRL-8.5",name:"Secure authentication",category:"Technological Controls",
+      description:"Secure authentication technologies and procedures shall be implemented based on information access restrictions and the topic-specific policy on access control.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.5"]},
+    {id:"CTRL-8.6",name:"Capacity management",category:"Technological Controls",
+      description:"The use of resources shall be monitored and adjusted in accordance with current and expected capacity requirements.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.6"]},
+    {id:"CTRL-8.7",name:"Protection against malware",category:"Technological Controls",
+      description:"Protection against malware shall be implemented and supported by appropriate user awareness.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.7"]},
+    {id:"CTRL-8.8",name:"Management of technical vulnerabilities",category:"Technological Controls",
+      description:"Information about technical vulnerabilities of information systems in use shall be obtained, the organization's exposure to such vulnerabilities shall be evaluated and appropriate measures shall be taken.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.8"]},
+    {id:"CTRL-8.9",name:"Configuration management",category:"Technological Controls",
+      description:"Configurations, including security configurations, of hardware, software, services and networks shall be established, documented, implemented, monitored and reviewed.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.9"]},
+    {id:"CTRL-8.10",name:"Information deletion",category:"Technological Controls",
+      description:"Information stored in information systems, devices or in any other storage media shall be deleted when no longer required.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.10"]},
+    {id:"CTRL-8.11",name:"Data masking",category:"Technological Controls",
+      description:"Data masking shall be used in accordance with the organization's topic-specific policy on access control and other related topic-specific policies, and business requirements, taking applicable legislation into consideration.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.11"]},
+    {id:"CTRL-8.12",name:"Data leakage prevention",category:"Technological Controls",
+      description:"Data leakage prevention measures shall be applied to systems, networks and any other devices that process, store or transmit sensitive information.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.12"]},
+    {id:"CTRL-8.13",name:"Information backup",category:"Technological Controls",
+      description:"Backup facilities and a defined and documented backup procedure shall be provided to maintain availability and integrity of information.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.13"]},
+    {id:"CTRL-8.14",name:"Redundancy of information processing facilities",category:"Technological Controls",
+      description:"Information processing facilities shall be implemented with redundancy sufficient to meet availability requirements.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.14"]},
+    {id:"CTRL-8.15",name:"Logging",category:"Technological Controls",
+      description:"Logs that record activities, exceptions, faults and other relevant events shall be produced, stored, protected and analysed.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.15"]},
+    {id:"CTRL-8.16",name:"Monitoring activities",category:"Technological Controls",
+      description:"Networks, systems and applications shall be monitored for anomalous behaviour and appropriate actions taken to evaluate potential information security incidents.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.16"]},
+    {id:"CTRL-8.17",name:"Clock synchronization",category:"Technological Controls",
+      description:"The clocks of information processing systems used by the organization shall be synchronized to approved time sources.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.17"]},
+    {id:"CTRL-8.18",name:"Use of privileged utility programs",category:"Technological Controls",
+      description:"The use of utility programs that can be capable of overriding system and application controls shall be restricted and tightly controlled.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.18"]},
+    {id:"CTRL-8.19",name:"Installation of software on operational systems",category:"Technological Controls",
+      description:"Procedures and measures shall be implemented to securely manage software installation on operational systems.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.19"]},
+    {id:"CTRL-8.20",name:"Networks security",category:"Technological Controls",
+      description:"Networks and network devices shall be secured, managed and controlled to protect information in systems and applications.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.20"]},
+    {id:"CTRL-8.21",name:"Security of network services",category:"Technological Controls",
+      description:"Security mechanisms, service levels and service requirements of network services shall be identified, implemented and monitored.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.21"]},
+    {id:"CTRL-8.22",name:"Segregation of networks",category:"Technological Controls",
+      description:"Groups of information services, users and information systems shall be segregated in the organization's networks.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.22"]},
+    {id:"CTRL-8.23",name:"Web filtering",category:"Technological Controls",
+      description:"Access to external websites shall be managed to reduce exposure to malicious content.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.23"]},
+    {id:"CTRL-8.24",name:"Use of cryptography",category:"Technological Controls",
+      description:"Rules for the effective use of cryptography, including cryptographic key management, shall be defined and implemented.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.24"]},
+    {id:"CTRL-8.25",name:"Secure development life cycle",category:"Technological Controls",
+      description:"Rules for the secure development of software and systems shall be established and applied.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.25"]},
+    {id:"CTRL-8.26",name:"Application security requirements",category:"Technological Controls",
+      description:"Information security requirements shall be identified, specified and approved when developing or acquiring applications.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.26"]},
+    {id:"CTRL-8.27",name:"Secure system architecture and engineering principles",category:"Technological Controls",
+      description:"Principles for engineering secure systems shall be established, documented, maintained and applied to any information system development activities.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.27"]},
+    {id:"CTRL-8.28",name:"Secure coding",category:"Technological Controls",
+      description:"Secure coding principles shall be applied to software development.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.28"]},
+    {id:"CTRL-8.29",name:"Security testing in development and acceptance",category:"Technological Controls",
+      description:"Security testing processes shall be defined and implemented in the development life cycle.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.29"]},
+    {id:"CTRL-8.30",name:"Outsourced development",category:"Technological Controls",
+      description:"The organization shall direct, monitor and review the activities related to outsourced system development.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.30"]},
+    {id:"CTRL-8.31",name:"Separation of development, test and production environments",category:"Technological Controls",
+      description:"Development, testing and production environments shall be separated and secured.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.31"]},
+    {id:"CTRL-8.32",name:"Change management",category:"Technological Controls",
+      description:"Changes to information processing facilities and information systems shall be subject to change management procedures.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.32"]},
+    {id:"CTRL-8.33",name:"Test information",category:"Technological Controls",
+      description:"Test information shall be appropriately selected, protected and managed.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.33"]},
+    {id:"CTRL-8.34",name:"Protection of information systems during audit testing",category:"Technological Controls",
+      description:"Audit tests and other assurance activities involving assessment of operational systems shall be planned and agreed between the tester and appropriate management.",
+      frameworks:["ISO 27001"],references:["ISO 27001 A.8.34"]},
+    // Add more from NIST CSF subcategories
+    {id:"CTRL-ID.AM-01",name:"Physical devices and systems inventory",category:"Asset Management",
+      description:"Inventories of physical devices and systems within the organization are maintained.",
       frameworks:["NIST CSF"],references:["NIST ID.AM-01"]},
-    {id:"CTRL-ID-AM-02",name:"Software inventory",category:"Asset Management",
-      description:"Inventories of software, services, and systems are maintained.",
+    {id:"CTRL-ID.AM-02",name:"Software platforms and applications inventory",category:"Asset Management",
+      description:"Inventories of software platforms and applications within the organization are maintained.",
       frameworks:["NIST CSF"],references:["NIST ID.AM-02"]},
-    // ... add more NIST subcategories
-    // From PCI DSS
-    {id:"CTRL-PCI-01",name:"Firewall configuration",category:"Network Security",
-      description:"Install and maintain firewall configuration to protect cardholder data.",
-      frameworks:["PCI DSS"],references:["PCI DSS 1"]},
-    {id:"CTRL-PCI-02",name:"No vendor defaults",category:"Access Control",
-      description:"Do not use vendor-supplied defaults for system passwords and parameters.",
-      frameworks:["PCI DSS"],references:["PCI DSS 2"]},
-    {id:"CTRL-PCI-03",name:"Protect stored data",category:"Encryption & Key Management",
-      description:"Protect stored cardholder data.",
-      frameworks:["PCI DSS"],references:["PCI DSS 3"]},
-    {id:"CTRL-PCI-04",name:"Encrypt transmission",category:"Encryption & Key Management",
-      description:"Encrypt transmission of cardholder data across open networks.",
-      frameworks:["PCI DSS"],references:["PCI DSS 4"]},
-    {id:"CTRL-PCI-05",name:"Anti-malware",category:"Vulnerability Management",
-      description:"Protect systems against malware and update anti-virus.",
-      frameworks:["PCI DSS"],references:["PCI DSS 5"]},
-    {id:"CTRL-PCI-06",name:"Secure systems",category:"Change Management",
-      description:"Develop and maintain secure systems and applications.",
-      frameworks:["PCI DSS"],references:["PCI DSS 6"]},
-    {id:"CTRL-PCI-07",name:"Restrict access",category:"Access Control",
-      description:"Restrict access to cardholder data by business need to know.",
-      frameworks:["PCI DSS"],references:["PCI DSS 7"]},
-    {id:"CTRL-PCI-08",name:"Identify and authenticate",category:"Identity & Authentication",
-      description:"Identify and authenticate access to system components.",
-      frameworks:["PCI DSS"],references:["PCI DSS 8"]},
-    {id:"CTRL-PCI-09",name:"Physical access",category:"Physical Security",
-      description:"Restrict physical access to cardholder data.",
-      frameworks:["PCI DSS"],references:["PCI DSS 9"]},
-    {id:"CTRL-PCI-10",name:"Track and monitor",category:"Logging & Monitoring",
-      description:"Track and monitor all access to network resources and data.",
-      frameworks:["PCI DSS"],references:["PCI DSS 10"]},
-    {id:"CTRL-PCI-11",name:"Test security",category:"Vulnerability Management",
-      description:"Regularly test security systems and processes.",
-      frameworks:["PCI DSS"],references:["PCI DSS 11"]},
-    {id:"CTRL-PCI-12",name:"Security policy",category:"Policy & Governance",
-      description:"Maintain a policy that addresses information security.",
-      frameworks:["PCI DSS"],references:["PCI DSS 12"]},
+    {id:"CTRL-ID.AM-03",name:"Organizational communication and data flows mapping",category:"Asset Management",
+      description:"Organizational communication and data flows are mapped.",
+      frameworks:["NIST CSF"],references:["NIST ID.AM-03"]},
+    {id:"CTRL-ID.AM-04",name:"External information systems catalog",category:"Asset Management",
+      description:"External information systems are catalogued.",
+      frameworks:["NIST CSF"],references:["NIST ID.AM-04"]},
+    {id:"CTRL-ID.AM-05",name:"Resources prioritization",category:"Asset Management",
+      description:"Resources are prioritized based on their classification, criticality, and business value.",
+      frameworks:["NIST CSF"],references:["NIST ID.AM-05"]},
+    {id:"CTRL-ID.AM-06",name:"Cybersecurity roles and responsibilities definition",category:"Asset Management",
+      description:"Cybersecurity roles and responsibilities for the entire workforce and third-party stakeholders are established.",
+      frameworks:["NIST CSF"],references:["NIST ID.AM-06"]},
+    {id:"CTRL-ID.BE-01",name:"Organization's role in supply chain identification",category:"Policy & Governance",
+      description:"The organization's place in critical infrastructure and its sector is identified and communicated.",
+      frameworks:["NIST CSF"],references:["NIST ID.BE-01"]},
+    // Add more NIST...
+    // From PCI DSS v4.0
+    {id:"CTRL-PCI-1.1",name:"Processes for network security controls",category:"Network Security",
+      description:"Processes and mechanisms for installing and maintaining network security controls are defined and understood.",
+      frameworks:["PCI DSS"],references:["PCI DSS 1.1"]},
+    {id:"CTRL-PCI-1.2",name:"Network security controls implementation",category:"Network Security",
+      description:"Network security controls are implemented.",
+      frameworks:["PCI DSS"],references:["PCI DSS 1.2"]},
+    {id:"CTRL-PCI-1.3",name:"Network access restriction",category:"Network Security",
+      description:"Network access to and from the cardholder data environment is restricted.",
+      frameworks:["PCI DSS"],references:["PCI DSS 1.3"]},
+    {id:"CTRL-PCI-1.4",name:"External network access restriction",category:"Network Security",
+      description:"Network access from the internet to and from the cardholder data environment is restricted.",
+      frameworks:["PCI DSS"],references:["PCI DSS 1.4"]},
+    {id:"CTRL-PCI-1.5",name:"Risks from wireless networks",category:"Network Security",
+      description:"Risks to the CDE from computing devices and networks with wireless access technology are managed.",
+      frameworks:["PCI DSS"],references:["PCI DSS 1.5"]},
+    {id:"CTRL-PCI-2.1",name:"Secure configurations processes",category:"Access Control",
+      description:"Processes and mechanisms for applying secure configurations to components are defined and understood.",
+      frameworks:["PCI DSS"],references:["PCI DSS 2.1"]},
+    {id:"CTRL-PCI-2.2",name:"System configuration standards",category:"Access Control",
+      description:"System configuration standards are developed, documented, and implemented.",
+      frameworks:["PCI DSS"],references:["PCI DSS 2.2"]},
+    {id:"CTRL-PCI-2.3",name:"Wireless environment security",category:"Network Security",
+      description:"Wireless environments are configured and managed securely.",
+      frameworks:["PCI DSS"],references:["PCI DSS 2.3"]},
+    {id:"CTRL-PCI-3.1",name:"Processes for protecting stored account data",category:"Encryption & Key Management",
+      description:"Processes and mechanisms for protecting stored account data are defined and understood.",
+      frameworks:["PCI DSS"],references:["PCI DSS 3.1"]},
+    {id:"CTRL-PCI-3.2",name:"Sensitive authentication data storage",category:"Encryption & Key Management",
+      description:"Sensitive authentication data is not stored and PAN is rendered unrecoverable.",
+      frameworks:["PCI DSS"],references:["PCI DSS 3.2"]},
+    {id:"CTRL-PCI-3.3",name:"PAN masking",category:"Encryption & Key Management",
+      description:"Primary account number is masked when displayed.",
+      frameworks:["PCI DSS"],references:["PCI DSS 3.3"]},
+    // Add more PCI...
     // From HIPAA
-    {id:"HIPAA-Admin-1",name:"Risk Assessment and Management",category:"Policy & Governance",
-      description:"Analyze potential risks to ePHI and define security measures.",
-      frameworks:["HIPAA"],references:["HIPAA 164.308(a)(1)"]},
-    {id:"HIPAA-Admin-2",name:"Workforce Training and Awareness",category:"Awareness & Training",
-      description:"Provide ongoing cybersecurity awareness training.",
-      frameworks:["HIPAA"],references:["HIPAA 164.308(a)(5)"]},
-    {id:"HIPAA-Admin-3",name:"Access Management",category:"Access Control",
-      description:"Manage access for temporary staff and third-parties.",
-      frameworks:["HIPAA"],references:["HIPAA 164.308(a)(3)"]},
-    {id:"HIPAA-Admin-4",name:"Security Management",category:"Policy & Governance",
-      description:"Dedicated team for security development and implementation.",
-      frameworks:["HIPAA"],references:["HIPAA 164.308(a)(2)"]},
-    {id:"HIPAA-Phys-1",name:"Access Control Protocols",category:"Physical Security",
-      description:"Secure facilities with key cards, secure doors.",
-      frameworks:["HIPAA"],references:["HIPAA 164.310(a)"]},
-    {id:"HIPAA-Phys-2",name:"Workstation Security",category:"Physical Security",
-      description:"Secure workstations with auto log-off, passwords.",
-      frameworks:["HIPAA"],references:["HIPAA 164.310(b)"]},
-    {id:"HIPAA-Phys-3",name:"Handheld Device Security",category:"Physical Security",
-      description:"Password-protect devices, limit networks.",
-      frameworks:["HIPAA"],references:["HIPAA 164.310(d)"]},
-    {id:"HIPAA-Phys-4",name:"Hardware Inventory",category:"Asset Management",
-      description:"Inventory hardware for maintenance and disposal.",
-      frameworks:["HIPAA"],references:["HIPAA 164.310(d)"]},
-    {id:"HIPAA-Tech-1",name:"Access Control Processes",category:"Access Control",
-      description:"Limit access to authorized, strong passwords, privileges.",
-      frameworks:["HIPAA"],references:["HIPAA 164.312(a)"]},
-    {id:"HIPAA-Tech-2",name:"ePHI Authentication",category:"Identity & Authentication",
-      description:"Verify ePHI integrity to prevent unauthorized changes.",
-      frameworks:["HIPAA"],references:["HIPAA 164.312(c)"]},
-    {id:"HIPAA-Tech-3",name:"Cryptographic Tools",category:"Encryption & Key Management",
-      description:"Use encryption, firewalls for ePHI protection.",
-      frameworks:["HIPAA"],references:["HIPAA 164.312(a)(2)(iv)"]},
-    {id:"HIPAA-Tech-4",name:"Access and Activity Logging",category:"Logging & Monitoring",
-      description:"Log access for threat detection and response.",
-      frameworks:["HIPAA"],references:["HIPAA 164.312(b)"]},
-    // Add SOC2 examples (paraphrased from TSC)
-    {id:"CTRL-SOC-CC-1",name:"Control Environment",category:"Policy & Governance",
-      description:"Demonstrate commitment to integrity and ethical values.",
+    {id:"CTRL-HIPAA-164.308(a)(1)(i)",name:"Security management process",category:"Policy & Governance",
+      description:"Implement policies and procedures to prevent, detect, contain, and correct security violations.",
+      frameworks:["HIPAA"],references:["HIPAA 164.308(a)(1)(i)"]},
+    {id:"CTRL-HIPAA-164.308(a)(1)(ii)(A)",name:"Risk analysis",category:"Policy & Governance",
+      description:"Conduct an accurate and thorough assessment of the potential risks and vulnerabilities to the confidentiality, integrity, and availability of electronic protected health information held by the covered entity.",
+      frameworks:["HIPAA"],references:["HIPAA 164.308(a)(1)(ii)(A)"]},
+    {id:"CTRL-HIPAA-164.308(a)(1)(ii)(B)",name:"Risk management",category:"Policy & Governance",
+      description:"Implement security measures sufficient to reduce risks and vulnerabilities to a reasonable and appropriate level to comply with §164.306(a).",
+      frameworks:["HIPAA"],references:["HIPAA 164.308(a)(1)(ii)(B)"]},
+    {id:"CTRL-HIPAA-164.308(a)(1)(ii)(C)",name:"Sanction policy",category:"Policy & Governance",
+      description:"Apply appropriate sanctions against workforce members who fail to comply with the security policies and procedures of the covered entity.",
+      frameworks:["HIPAA"],references:["HIPAA 164.308(a)(1)(ii)(C)"]},
+    {id:"CTRL-HIPAA-164.308(a)(1)(ii)(D)",name:"Information system activity review",category:"Logging & Monitoring",
+      description:"Implement procedures to regularly review records of information system activity, such as audit logs, access reports, and security incident tracking reports.",
+      frameworks:["HIPAA"],references:["HIPAA 164.308(a)(1)(ii)(D)"]},
+    // Add more HIPAA...
+    // From SOC 2
+    {id:"CTRL-SOC-CC1.1",name:"Commitment to integrity and ethical values",category:"Policy & Governance",
+      description:"The entity demonstrates a commitment to integrity and ethical values.",
       frameworks:["SOC2"],references:["SOC2 CC1.1"]},
-    {id:"CTRL-SOC-CC-2",name:"Board Oversight",category:"Policy & Governance",
-      description:"Board independence and oversight.",
+    {id:"CTRL-SOC-CC1.2",name:"Board independence",category:"Policy & Governance",
+      description:"The board of directors demonstrates independence from management and exercises oversight of the development and performance of internal control.",
       frameworks:["SOC2"],references:["SOC2 CC1.2"]},
-    {id:"CTRL-SOC-A-1",name:"Availability Controls",category:"Backup & Recovery",
-      description:"System capacity monitoring and planning.",
-      frameworks:["SOC2"],references:["SOC2 A1.1"]},
-    // Add more as needed to reach ~200
-    // For brevity, assume expanded list
+    {id:"CTRL-SOC-CC1.3",name:"Management roles and responsibilities",category:"Policy & Governance",
+      description:"Management establishes, with board oversight, structures, reporting lines, and appropriate authorities and responsibilities in the pursuit of objectives.",
+      frameworks:["SOC2"],references:["SOC2 CC1.3"]},
+    {id:"CTRL-SOC-CC1.4",name:"Commitment to competent personnel",category:"Policy & Governance",
+      description:"The entity demonstrates a commitment to attract, develop, and retain competent individuals in alignment with objectives.",
+      frameworks:["SOC2"],references:["SOC2 CC1.4"]},
+    {id:"CTRL-SOC-CC1.5",name:"Accountability",category:"Policy & Governance",
+      description:"The entity holds individuals accountable for their internal control responsibilities in the pursuit of objectives.",
+      frameworks:["SOC2"],references:["SOC2 CC1.5"]},
+    {id:"CTRL-SOC-CC2.1",name:"Risk assessment objectives",category:"Policy & Governance",
+      description:"The entity specifies objectives with sufficient clarity to enable the identification and assessment of risks relating to objectives.",
+      frameworks:["SOC2"],references:["SOC2 CC2.1"]},
+    {id:"CTRL-SOC-CC2.2",name:"Risk identification and assessment",category:"Policy & Governance",
+      description:"The entity identifies risks to the achievement of its objectives across the entity and analyzes risks as a basis for determining how the risks should be managed.",
+      frameworks:["SOC2"],references:["SOC2 CC2.2"]},
+    {id:"CTRL-SOC-CC2.3",name:"Fraud risk",category:"Policy & Governance",
+      description:"The entity considers the potential for fraud in assessing risks to the achievement of objectives.",
+      frameworks:["SOC2"],references:["SOC2 CC2.3"]},
+    {id:"CTRL-SOC-CC2.4",name:"Change management",category:"Change Management",
+      description:"The entity identifies and assesses changes that could significantly impact the system of internal control.",
+      frameworks:["SOC2"],references:["SOC2 CC2.4"]},
+    // Add more SOC2...
   ];
-  // ---------- Risk configuration ----------
-  // (same as before)
+  // ---------- Risk configuration (thresholds) ----------
+  const RISK_CFG_KEY = 'grc_risk_cfg_v1';
+  const defaultRiskConfig = { highMin: 15, mediumMin: 6 };
+  function loadRiskConfig(){
+    try{
+      const raw = localStorage.getItem(RISK_CFG_KEY);
+      if(!raw) return {...defaultRiskConfig};
+      const parsed = JSON.parse(raw);
+      return {
+        highMin: typeof parsed.highMin === 'number' ? parsed.highMin : defaultRiskConfig.highMin,
+        mediumMin: typeof parsed.mediumMin === 'number' ? parsed.mediumMin : defaultRiskConfig.mediumMin
+      };
+    }catch{
+      return {...defaultRiskConfig};
+    }
+  }
+  function saveRiskConfig(cfg){
+    riskConfig = {
+      highMin: Math.max(1, Math.min(25, Number(cfg.highMin) || defaultRiskConfig.highMin)),
+      mediumMin: Math.max(1, Math.min(25, Number(cfg.mediumMin) || defaultRiskConfig.mediumMin))
+    };
+    localStorage.setItem(RISK_CFG_KEY, JSON.stringify(riskConfig));
+  }
+  let riskConfig = loadRiskConfig();
   // ---------- Storage ----------
-  // Add for vendors and incidents
-  K.vendors = 'grc_vendors_v1';
-  K.incidents = 'grc_incidents_v1';
+  const K = {
+    assets:'grc_assets_v1',
+    risks:'grc_risks_v1',
+    controls:'grc_controls_v1',
+    issues:'grc_issues_v1',
+    treats:'grc_treatments_v1',
+    soa:'grc_soa_v1',
+    vendors:'grc_vendors_v1',
+    incidents:'grc_incidents_v1'
+  };
+  const load = k => { try { const v = JSON.parse(localStorage.getItem(k)); return Array.isArray(v)?v:[]; } catch { return []; } };
+  const save = (k,v) => localStorage.setItem(k,JSON.stringify(v));
+  let assets = load(K.assets);
+  let risks = load(K.risks);
+  let controls = load(K.controls);
+  let issues = load(K.issues);
+  let treatments = load(K.treats);
+  let soa = load(K.soa);
   let vendors = load(K.vendors);
   let incidents = load(K.incidents);
   // ---------- Helpers ----------
-  // (same, plus new for vendors/incidents)
-  // Update populate for linked
-  function populateLinkedOptions(selId, type) {
-    const sel = qs(selId);
-    if (!sel) return;
-    sel.innerHTML = '<option value="">Select...</option>';
-    if (type === 'asset') assets.forEach(a => {
-      const o = document.createElement('option');
-      o.value = 'asset-' + a.id;
-      o.textContent = a.name;
-      sel.appendChild(o);
-    });
-    if (type === 'vendor') vendors.forEach(v => {
-      const o = document.createElement('option');
-      o.value = 'vendor-' + v.id;
-      o.textContent = v.name;
-      sel.appendChild(o);
-    });
-    // For risks/issues in treatments
+  const qs = s => document.querySelector(s);
+  const qsa = s => Array.from(document.querySelectorAll(s));
+  const getMulti = sel => {
+    if(!sel) return [];
+    const v = [];
+    Array.from(sel.options).forEach(o => { if(o.selected && o.value) v.push(o.value); });
+    return v;
+  };
+  const setMulti = (sel,vals) => {
+    if(!sel) return;
+    const S = new Set(vals||[]);
+    Array.from(sel.options).forEach(o => o.selected = S.has(o.value));
+  };
+  const rScore = (l,i) => (Number(l)||0)*(Number(i)||0);
+  function rLevel(s){
+    const score = Number(s)||0;
+    if(score <= 0) return '-';
+    const high = riskConfig.highMin;
+    const med = riskConfig.mediumMin;
+    if(score >= high) return 'High';
+    if(score >= med) return 'Medium';
+    return 'Low';
   }
-  // Update render functions for new tabs
-  // For vendors, similar to assets
+  // risk view state
+  let riskFilterStatus = 'all';
+  let riskFilterLevel = 'all';
+  let riskSortField = 'score';
+  let riskSortDir = 'desc';
+  let lastRiskView = [];
+  // Pagination settings
+  const ITEMS_PER_PAGE = 10;
+  function renderPagination(containerId, totalItems, currentPage, renderFunc) {
+    const pagination = qs(`#${containerId}`);
+    if (!pagination) return;
+    pagination.innerHTML = '';
+    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+    for (let i = 1; i <= totalPages; i++) {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.textContent = i;
+      a.href = '#';
+      if (i === currentPage) li.classList.add('active');
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        renderFunc(i);
+      });
+      li.appendChild(a);
+      pagination.appendChild(li);
+    }
+  }
+  // Toast helper
+  function showToast(message, isError = false) {
+    const toast = qs('#toast-container');
+    toast.textContent = message;
+    toast.classList.add('show');
+    if (isError) toast.classList.add('error');
+    setTimeout(() => {
+      toast.classList.remove('show');
+      toast.classList.remove('error');
+    }, 3000);
+  }
+  // ---------- Framework render ----------
+  function renderFrameworkControls(){
+    const tbody = qs('#frameworks-table-body');
+    const countEl = qs('#frameworks-count');
+    const f = qs('#framework-filter').value;
+    const c = qs('#category-filter').value;
+    const s = (qs('#framework-search').value||'').trim().toLowerCase();
+    const filtered = FRAMEWORK_CONTROLS.filter(x => {
+      const okF = f === 'all' || x.frameworks.includes(f);
+      const okC = c === 'all' || x.category === c;
+      const okS = !s || x.name.toLowerCase().includes(s) || x.description.toLowerCase().includes(s) || x.id.toLowerCase().includes(s);
+      return okF && okC && okS;
+    });
+    tbody.innerHTML = '';
+    filtered.forEach(x => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${x.id}</td>
+        <td>${x.name}</td>
+        <td>${x.category}</td>
+        <td>${x.references.join('<br>')}</td>
+        <td>${x.description}</td>`;
+      tbody.appendChild(tr);
+    });
+    countEl.textContent = `${filtered.length} control(s) shown of ${FRAMEWORK_CONTROLS.length}`;
+  }
+  // ---------- Assets ----------
+  let currentAssetsPage = 1;
+  function selectedDataTypes(){ return qsa('.asset-dt').filter(cb=>cb.checked).map(cb=>cb.value); }
+  function setDataTypes(vals){ qsa('.asset-dt').forEach(cb=>cb.checked=(vals||[]).includes(cb.value)); }
+  function populateRiskAssetOptions(){
+    const sel=qs('#risk-linked'); if(!sel) return;
+    const cur=sel.value;
+    sel.innerHTML='<option value="">Select asset or vendor...</option>';
+    assets.forEach(a=>{ const o=document.createElement('option'); o.value='asset-'+a.id; o.textContent=a.name + ' (Asset)'; sel.appendChild(o); });
+    vendors.forEach(v=>{ const o=document.createElement('option'); o.value='vendor-'+v.id; o.textContent=v.name + ' (Vendor)'; sel.appendChild(o); });
+    if(cur && (assets.some(a=> 'asset-'+a.id === cur) || vendors.some(v=> 'vendor-'+v.id === cur))) sel.value=cur;
+  }
+  function populateIssueDropdowns(){
+    const aSel=qs('#issue-asset'), vSel=qs('#issue-vendor'), rSel=qs('#issue-risk'), cSel=qs('#issue-control');
+    if(aSel){
+      const cur=aSel.value;
+      aSel.innerHTML='<option value="">Linked asset...</option>';
+      assets.forEach(a=>{const o=document.createElement('option');o.value=a.id;o.textContent=a.name;aSel.appendChild(o);});
+      if(cur && assets.some(a=>a.id===cur)) aSel.value=cur;
+    }
+    if(vSel){
+      const cur=vSel.value;
+      vSel.innerHTML='<option value="">Linked vendor...</option>';
+      vendors.forEach(v=>{const o=document.createElement('option');o.value=v.id;o.textContent=v.name;vSel.appendChild(o);});
+      if(cur && vendors.some(v=>v.id===cur)) vSel.value=cur;
+    }
+    if(rSel){
+      const cur=rSel.value;
+      rSel.innerHTML='<option value="">Linked risk...</option>';
+      risks.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.title;rSel.appendChild(o);});
+      if(cur && risks.some(r=>r.id===cur)) rSel.value=cur;
+    }
+    if(cSel){
+      const cur=cSel.value;
+      cSel.innerHTML='<option value="">Linked control...</option>';
+      controls.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.name;cSel.appendChild(o);});
+      if(cur && controls.some(c=>c.id===cur)) cSel.value=cur;
+    }
+  }
+  function renderAssetsTable(page = 1){
+    currentAssetsPage = page;
+    const tbody=qs('#assets-table-body'), empty=qs('#assets-empty'), count=qs('#assets-count');
+    tbody.innerHTML='';
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const paginatedAssets = assets.slice(start, end);
+    paginatedAssets.forEach(a=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>${a.name}</td>
+        <td>${a.type}</td>
+        <td>${a.criticality}</td>
+        <td>${(a.dataTypes||[]).join(', ')}</td>
+        <td>${a.owner||''}</td>
+        <td>${a.location||''}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-light mb-1" data-ae="${a.id}">EDIT</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-ad="${a.id}">DEL</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+    empty.style.display = assets.length ? 'none' : 'block';
+    count.textContent = `${assets.length} asset(s)`;
+    renderPagination('assets-pagination', assets.length, page, renderAssetsTable);
+    populateRiskAssetOptions();
+    populateIssueDropdowns();
+    renderDashboard();
+  }
+  function resetAssetForm(){
+    qs('#asset-form').reset();
+    qs('#asset-id').value='';
+    qs('#asset-form-submit').textContent='Save asset';
+  }
+  qs('#asset-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const id=qs('#asset-id').value;
+    const name=qs('#asset-name').value.trim();
+    const type=qs('#asset-type').value;
+    const crit=qs('#asset-criticality').value;
+    if(!name || !type || !crit) return alert('Fill name, type, criticality.');
+    const obj={
+      id: id || ('AST-'+Date.now()),
+      name,
+      type,
+      criticality:crit,
+      owner:qs('#asset-owner').value.trim(),
+      dataTypes:selectedDataTypes(),
+      location:qs('#asset-location').value.trim(),
+      notes:qs('#asset-notes').value.trim()
+    };
+    const idx=assets.findIndex(x=>x.id===obj.id);
+    if(idx>-1) assets[idx]=obj; else assets.push(obj);
+    save(K.assets,assets);
+    renderAssetsTable(currentAssetsPage);
+    resetAssetForm();
+    showToast('Asset saved successfully');
+  });
+  qs('#asset-form-cancel').addEventListener('click',resetAssetForm);
+  qs('#assets-table-body').addEventListener('click',e=>{
+    const idE=e.target.getAttribute('data-ae');
+    const idD=e.target.getAttribute('data-ad');
+    if(idE){
+      const a=assets.find(x=>x.id===idE); if(!a) return;
+      qs('#asset-id').value=a.id;
+      qs('#asset-name').value=a.name;
+      qs('#asset-type').value=a.type;
+      qs('#asset-criticality').value=a.criticality;
+      qs('#asset-owner').value=a.owner||'';
+      qs('#asset-location').value=a.location||'';
+      qs('#asset-notes').value=a.notes||'';
+      setDataTypes(a.dataTypes||[]);
+      qs('#asset-form-submit').textContent='Update asset';
+    }
+    if(idD){
+      if(!confirm('Delete this asset?')) return;
+      assets=assets.filter(x=>x.id!==idD);
+      save(K.assets,assets);
+      // Unlink from risks, issues, incidents, etc.
+      risks.forEach(r => {
+        if (r.linked && r.linked === 'asset-' + idD) r.linked = '';
+      });
+      save(K.risks, risks);
+      renderRisksTable();
+      issues.forEach(i => {
+        if (i.assetId === idD) i.assetId = '';
+      });
+      save(K.issues, issues);
+      renderIssuesTable();
+      incidents.forEach(inc => {
+        if (inc.assetId === idD) inc.assetId = '';
+      });
+      save(K.incidents, incidents);
+      renderIncidentsTable();
+      renderAssetsTable(currentAssetsPage);
+      showToast('Asset deleted');
+    }
+  });
+  // ---------- Vendors ----------
   let currentVendorsPage = 1;
-  function renderVendorsTable(page = 1) {
-    // Similar to assets, adapt fields
-    // ... implement similar to renderAssetsTable
+  function renderVendorsTable(page = 1){
+    currentVendorsPage = page;
+    const tbody=qs('#vendors-table-body'), empty=qs('#vendors-empty'), count=qs('#vendors-count');
+    tbody.innerHTML='';
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const paginatedVendors = vendors.slice(start, end);
+    paginatedVendors.forEach(v=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>${v.name}</td>
+        <td>${v.type}</td>
+        <td>${v.criticality}</td>
+        <td>${v.dataAccess || ''}</td>
+        <td>${v.contract || ''}</td>
+        <td>${v.assessment || ''}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-light mb-1" data-ve="${v.id}">EDIT</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-vd="${v.id}">DEL</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+    empty.style.display = vendors.length ? 'none' : 'block';
+    count.textContent = `${vendors.length} vendor(s)`;
+    renderPagination('vendors-pagination', vendors.length, page, renderVendorsTable);
+    populateRiskAssetOptions();
+    populateIssueDropdowns();
+    renderDashboard();
   }
-  // For incidents, similar to issues
+  function resetVendorForm(){
+    qs('#vendor-form').reset();
+    qs('#vendor-id').value='';
+  }
+  qs('#vendor-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const id=qs('#vendor-id').value;
+    const name=qs('#vendor-name').value.trim();
+    const type=qs('#vendor-type').value;
+    const crit=qs('#vendor-criticality').value;
+    if(!name || !type || !crit) return alert('Fill name, type, criticality.');
+    const obj={
+      id: id || ('VND-'+Date.now()),
+      name,
+      type,
+      criticality:crit,
+      dataAccess:qs('#vendor-data-access').value,
+      contract:qs('#vendor-contract').value,
+      assessment:qs('#vendor-assessment').value,
+      notes:qs('#vendor-notes').value.trim()
+    };
+    const idx=vendors.findIndex(x=>x.id===obj.id);
+    if(idx>-1) vendors[idx]=obj; else vendors.push(obj);
+    save(K.vendors,vendors);
+    renderVendorsTable(currentVendorsPage);
+    resetVendorForm();
+    showToast('Vendor saved successfully');
+  });
+  qs('#vendor-form-cancel').addEventListener('click',resetVendorForm);
+  qs('#vendors-table-body').addEventListener('click',e=>{
+    const idE=e.target.getAttribute('data-ve');
+    const idD=e.target.getAttribute('data-vd');
+    if(idE){
+      const v=vendors.find(x=>x.id===idE); if(!v) return;
+      qs('#vendor-id').value=v.id;
+      qs('#vendor-name').value=v.name;
+      qs('#vendor-type').value=v.type;
+      qs('#vendor-criticality').value=v.criticality;
+      qs('#vendor-data-access').value=v.dataAccess || '';
+      qs('#vendor-contract').value=v.contract || '';
+      qs('#vendor-assessment').value=v.assessment || '';
+      qs('#vendor-notes').value=v.notes || '';
+    }
+    if(idD){
+      if(!confirm('Delete this vendor?')) return;
+      vendors=vendors.filter(x=>x.id!==idD);
+      save(K.vendors,vendors);
+      // Unlink similar to assets
+      risks.forEach(r => {
+        if (r.linked && r.linked === 'vendor-' + idD) r.linked = '';
+      });
+      save(K.risks, risks);
+      renderRisksTable();
+      issues.forEach(i => {
+        if (i.vendorId === idD) i.vendorId = '';
+      });
+      save(K.issues, issues);
+      renderIssuesTable();
+      incidents.forEach(inc => {
+        if (inc.vendorId === idD) inc.vendorId = '';
+      });
+      save(K.incidents, incidents);
+      renderIncidentsTable();
+      renderVendorsTable(currentVendorsPage);
+      showToast('Vendor deleted');
+    }
+  });
+  // ---------- Risks ----------
+  let currentRisksPage = 1;
+  function resetRiskForm(){
+    qs('#risk-form').reset();
+    qs('#risk-id').value='';
+    qs('#risk-form-submit').textContent='Save risk';
+  }
+  function populateControlRisks(){
+    const sel=qs('#control-risks'); if(!sel) return;
+    const cur=getMulti(sel);
+    sel.innerHTML='';
+    risks.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.title;sel.appendChild(o);});
+    setMulti(sel,cur);
+  }
+  function getSoAEntry(fcId){
+    let e = soa.find(x=>x.fcId===fcId);
+    if(!e){
+      e = { fcId: fcId, applicability:'Applicable', implementation:'Auto', owner:'', rationale:'', evidence:'' };
+      soa.push(e);
+    }
+    return e;
+  }
+  function saveSoA(){ save(K.soa, soa); }
+  function riskCompare(a,b,field){
+    switch(field){
+      case 'score': return (a.score||0) - (b.score||0);
+      case 'impact': return (a.impact||0) - (b.impact||0);
+      case 'likelihood': return (a.likelihood||0) - (b.likelihood||0);
+      case 'status': return (a.status||'').localeCompare(b.status||'');
+      case 'asset': return (a.assetName||'').localeCompare(b.assetName||'');
+      case 'title':
+      default:
+        return (a.title||'').localeCompare(b.title||'');
+    }
+  }
+  function renderRisksTable(page = 1){
+    currentRisksPage = page;
+    const tbody=qs('#risks-table-body'), empty=qs('#risks-empty'), count=qs('#risks-count');
+    let list = risks.slice();
+    // filters
+    if(riskFilterStatus !== 'all'){
+      list = list.filter(r => (r.status||'') === riskFilterStatus);
+    }
+    if(riskFilterLevel !== 'all'){
+      list = list.filter(r => rLevel(r.score) === riskFilterLevel);
+    }
+    // sort
+    list.sort((a,b)=> riskCompare(a,b, riskSortField) * (riskSortDir === 'asc' ? 1 : -1));
+    lastRiskView = list.slice();
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const paginatedList = list.slice(start, end);
+    tbody.innerHTML='';
+    paginatedList.forEach(r=>{
+      const level=rLevel(r.score);
+      const cls = level==='High'?'badge-danger':level==='Medium'?'badge-warning':level==='Low'?'badge-success':'';
+      const resScore = rScore(r.resLikelihood, r.resImpact);
+      const resLevel = rLevel(resScore);
+      const resCls = resLevel==='High'?'badge-danger':resLevel==='Medium'?'badge-warning':resLevel==='Low'?'badge-success':'';
+      const linkedName = r.linked ? r.linkedName : '';
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>${r.title}</td>
+        <td>${linkedName||''}</td>
+        <td>${r.category}</td>
+        <td>${r.score?`<span class="badge ${cls} mr-1">${r.score}</span><span class="text-muted small">${level}</span>`:'-'}</td>
+        <td>${resScore?`<span class="badge ${resCls} mr-1">${resScore}</span><span class="text-muted small">${resLevel}</span>`:'-'}</td>
+        <td>${r.status}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-light mb-1" data-re="${r.id}">EDIT</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-rd="${r.id}">DEL</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+    empty.style.display=list.length?'none':'block';
+    count.textContent=`${list.length} risk(s) shown of ${risks.length}`;
+    renderPagination('risks-pagination', list.length, page, renderRisksTable);
+    populateControlRisks();
+    populateIssueDropdowns();
+    populateTreatmentDropdownRisks();
+    renderDashboard();
+  }
+  qs('#risk-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const id=qs('#risk-id').value;
+    const title=qs('#risk-title').value.trim();
+    const linked=qs('#risk-linked').value;
+    let linkedId = '';
+    let linkedName = '';
+    let linkedType = '';
+    if (linked) {
+      [linkedType, linkedId] = linked.split('-');
+      if (linkedType === 'asset') {
+        const asset = assets.find(a => a.id === linkedId);
+        linkedName = asset ? asset.name : '';
+      } else if (linkedType === 'vendor') {
+        const vendor = vendors.find(v => v.id === linkedId);
+        linkedName = vendor ? vendor.name : '';
+      }
+    }
+    const category=qs('#risk-category').value;
+    const likelihood=Number(qs('#risk-likelihood').value);
+    const impact=Number(qs('#risk-impact').value);
+    const resLikelihood = Number(qs('#risk-res-likelihood').value) || likelihood;
+    const resImpact = Number(qs('#risk-res-impact').value) || impact;
+    const status=qs('#risk-status').value;
+    if(!title || !linked || !category || !likelihood || !impact || !status) return alert('Fill all required risk fields.');
+    const obj={
+      id:id || ('RSK-'+Date.now()),
+      title,
+      linked,
+      linkedType,
+      linkedId,
+      linkedName,
+      category,
+      likelihood,
+      impact,
+      score:rScore(likelihood,impact),
+      resLikelihood,
+      resImpact,
+      resScore:rScore(resLikelihood, resImpact),
+      status,
+      owner:qs('#risk-owner').value.trim(),
+      notes:qs('#risk-notes').value.trim()
+    };
+    const idx=risks.findIndex(x=>x.id===obj.id);
+    if(idx>-1) risks[idx]=obj; else risks.push(obj);
+    save(K.risks,risks);
+    renderRisksTable(currentRisksPage);
+    resetRiskForm();
+    showToast('Risk saved successfully');
+  });
+  qs('#risk-form-cancel').addEventListener('click',resetRiskForm);
+  qs('#risks-table-body').addEventListener('click',e=>{
+    const idE=e.target.getAttribute('data-re');
+    const idD=e.target.getAttribute('data-rd');
+    if(idE){
+      const r=risks.find(x=>x.id===idE); if(!r) return;
+      qs('#risk-id').value=r.id;
+      qs('#risk-title').value=r.title;
+      qs('#risk-linked').value=r.linked;
+      qs('#risk-category').value=r.category;
+      qs('#risk-likelihood').value=String(r.likelihood);
+      qs('#risk-impact').value=String(r.impact);
+      qs('#risk-res-likelihood').value=String(r.resLikelihood);
+      qs('#risk-res-impact').value=String(r.resImpact);
+      qs('#risk-owner').value=r.owner||'';
+      qs('#risk-status').value=r.status||'Open';
+      qs('#risk-notes').value=r.notes||'';
+      qs('#risk-form-submit').textContent='Update risk';
+    }
+    if(idD){
+      if(!confirm('Delete this risk?')) return;
+      risks=risks.filter(x=>x.id!==idD);
+      save(K.risks,risks);
+      // unlink from controls
+      let changed=false;
+      controls.forEach(c=>{
+        if(Array.isArray(c.linkedRiskIds) && c.linkedRiskIds.includes(idD)){
+          c.linkedRiskIds=c.linkedRiskIds.filter(z=>z!==idD);
+          changed=true;
+        }
+      });
+      if(changed){ save(K.controls,controls); renderControlsTable(); }
+      // unlink from issues
+      issues.forEach(i=>{
+        if(i.riskId===idD){
+          i.riskId='';
+          i.linkedSummary=(i.linkedSummary||'').replace(/ *\| *Risk: [^|]+/,'');
+        }
+      });
+      save(K.issues,issues);
+      renderIssuesTable();
+      // unlink from incidents
+      incidents.forEach(inc=>{
+        if(inc.riskId===idD){
+          inc.riskId='';
+          inc.linkedSummary=(inc.linkedSummary||'').replace(/ *\| *Risk: [^|]+/,'');
+        }
+      });
+      save(K.incidents,incidents);
+      renderIncidentsTable();
+      // unlink from treatments
+      treatments.forEach(t=>{ if(t.linked === idD) t.linked = ''; });
+      save(K.treats,treatments);
+      renderTreatmentsTable();
+      renderRisksTable(currentRisksPage);
+      showToast('Risk deleted');
+    }
+  });
+  function syncRiskThresholdInputs(){
+    const h = qs('#risk-thres-high');
+    const m = qs('#risk-thres-med');
+    if(!h || !m) return;
+    h.value = riskConfig.highMin;
+    m.value = riskConfig.mediumMin;
+  }
+  function applyRiskThresholdInputs(){
+    const h = qs('#risk-thres-high');
+    const m = qs('#risk-thres-med');
+    if(!h || !m) return;
+    let high = Number(h.value) || defaultRiskConfig.highMin;
+    let med = Number(m.value) || defaultRiskConfig.mediumMin;
+    high = Math.max(1, Math.min(25, high));
+    med = Math.max(1, Math.min(25, med));
+    if(high <= med){
+      med = Math.max(1, high - 1);
+      m.value = med;
+    }
+    saveRiskConfig({ highMin: high, mediumMin: med });
+    renderRisksTable(currentRisksPage);
+    drawMatrix();
+    renderDashboard();
+  }
+  // ---------- Controls ----------
+  let currentControlsPage = 1;
+  function populateControlFrameworks(){
+    const sel=qs('#control-frameworks'); if(!sel) return;
+    sel.innerHTML='';
+    FRAMEWORK_CONTROLS.forEach(fc=>{
+      const o=document.createElement('option');
+      o.value=fc.id;
+      o.textContent=`${fc.id} – ${fc.name}`;
+      sel.appendChild(o);
+    });
+  }
+  function renderControlsTable(page = 1){
+    currentControlsPage = page;
+    const tbody=qs('#controls-table-body'), empty=qs('#controls-empty'), count=qs('#controls-count');
+    tbody.innerHTML='';
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const paginatedControls = controls.slice(start, end);
+    paginatedControls.forEach(c=>{
+      const rc=(c.linkedRiskIds||[]).length;
+      const fw=(c.linkedFrameworkControlIds||[]).length;
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>${c.name}</td>
+        <td>${c.type}</td>
+        <td>${c.status}</td>
+        <td>${rc?rc+' linked':'-'}</td>
+        <td>${fw?fw+' mapped':'-'}</td>
+        <td>${c.evidence || '-'}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-light mb-1" data-ce="${c.id}">EDIT</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-cd="${c.id}">DEL</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+    empty.style.display=controls.length?'none':'block';
+    count.textContent=`${controls.length} control(s)`;
+    renderPagination('controls-pagination', controls.length, page, renderControlsTable);
+    populateIssueDropdowns();
+    populateTreatmentDropdownControls();
+    renderGapTable();
+    renderDashboard();
+    renderSoATable();
+  }
+  function resetControlForm(){
+    qs('#control-form').reset();
+    qs('#control-id').value='';
+    qs('#control-form-submit').textContent='Save control';
+  }
+  qs('#control-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const id=qs('#control-id').value;
+    const name=qs('#control-name').value.trim();
+    const type=qs('#control-type').value;
+    const status=qs('#control-status').value;
+    if(!name || !type || !status) return alert('Fill control name, type, status.');
+    const obj={
+      id:id || ('CTL-'+Date.now()),
+      name,
+      type,
+      status,
+      owner:qs('#control-owner').value.trim(),
+      description:qs('#control-description').value.trim(),
+      linkedRiskIds:getMulti(qs('#control-risks')),
+      linkedFrameworkControlIds:getMulti(qs('#control-frameworks')),
+      evidence:qs('#control-evidence').value.trim()
+    };
+    const idx=controls.findIndex(x=>x.id===obj.id);
+    if(idx>-1) controls[idx]=obj; else controls.push(obj);
+    save(K.controls,controls);
+    renderControlsTable(currentControlsPage);
+    resetControlForm();
+    showToast('Control saved successfully');
+  });
+  qs('#control-form-cancel').addEventListener('click',resetControlForm);
+  qs('#controls-table-body').addEventListener('click',e=>{
+    const idE=e.target.getAttribute('data-ce');
+    const idD=e.target.getAttribute('data-cd');
+    if(idE){
+      const c=controls.find(x=>x.id===idE); if(!c) return;
+      qs('#control-id').value=c.id;
+      qs('#control-name').value=c.name;
+      qs('#control-type').value=c.type;
+      qs('#control-status').value=c.status;
+      qs('#control-owner').value=c.owner||'';
+      qs('#control-description').value=c.description||'';
+      setMulti(qs('#control-risks'),c.linkedRiskIds||[]);
+      setMulti(qs('#control-frameworks'),c.linkedFrameworkControlIds||[]);
+      qs('#control-evidence').value=c.evidence||'';
+      qs('#control-form-submit').textContent='Update control';
+    }
+    if(idD){
+      if(!confirm('Delete this control?')) return;
+      controls=controls.filter(x=>x.id!==idD);
+      save(K.controls,controls);
+      // unlink from issues, incidents, treatments
+      issues.forEach(i=>{
+        if(i.controlId===idD){
+          i.controlId='';
+          i.linkedSummary=(i.linkedSummary||'').replace(/ *\| *Control: [^|]+/,'');
+        }
+      });
+      save(K.issues,issues);
+      renderIssuesTable();
+      incidents.forEach(inc=>{
+        if(inc.controlId===idD){
+          inc.controlId='';
+          inc.linkedSummary=(inc.linkedSummary||'').replace(/ *\| *Control: [^|]+/,'');
+        }
+      });
+      save(K.incidents,incidents);
+      renderIncidentsTable();
+      treatments.forEach(t=>{ if(t.controlId===idD) t.controlId=''; });
+      save(K.treats,treatments);
+      renderTreatmentsTable();
+      renderControlsTable(currentControlsPage);
+      showToast('Control deleted');
+    }
+  });
+  // ---------- Issues ----------
+  let currentIssuesPage = 1;
+  function resetIssueForm(){
+    qs('#issue-form').reset();
+    qs('#issue-id').value='';
+    qs('#issue-form-submit').textContent='Save issue';
+  }
+  function renderIssuesTable(page = 1){
+    currentIssuesPage = page;
+    const tbody=qs('#issues-table-body'), empty=qs('#issues-empty'), count=qs('#issues-count');
+    tbody.innerHTML='';
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const paginatedIssues = issues.slice(start, end);
+    paginatedIssues.forEach(i=>{
+      const sev=i.severity||'';
+      const cls = sev==='Critical'||sev==='High'?'badge-danger':sev==='Medium'?'badge-warning':'badge-success';
+      const linkedSummary = [
+        i.assetId ? `Asset: ${assets.find(a => a.id === i.assetId)?.name || ''}` : '',
+        i.vendorId ? `Vendor: ${vendors.find(v => v.id === i.vendorId)?.name || ''}` : '',
+        i.riskId ? `Risk: ${risks.find(r => r.id === i.riskId)?.title || ''}` : '',
+        i.controlId ? `Control: ${controls.find(c => c.id === i.controlId)?.name || ''}` : ''
+      ].filter(Boolean).join(' | ');
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>${i.title}</td>
+        <td>${i.type}</td>
+        <td>${sev?`<span class="badge ${cls}">${sev}</span>`:'-'}</td>
+        <td>${i.status}</td>
+        <td>${linkedSummary || '-'}</td>
+        <td>${i.dueDate || '-'}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-light mb-1" data-ie="${i.id}">EDIT</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-id="${i.id}">DEL</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+    empty.style.display=issues.length?'none':'block';
+    count.textContent=`${issues.length} issue(s)`;
+    renderPagination('issues-pagination', issues.length, page, renderIssuesTable);
+    renderDashboard();
+  }
+  qs('#issue-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const id=qs('#issue-id').value;
+    const title=qs('#issue-title').value.trim();
+    const type=qs('#issue-type').value;
+    const severity=qs('#issue-severity').value;
+    const status=qs('#issue-status').value;
+    if(!title || !type || !severity || !status) return alert('Fill title, type, severity, status.');
+    const assetId=qs('#issue-asset').value||'';
+    const vendorId=qs('#issue-vendor').value||'';
+    const riskId=qs('#issue-risk').value||'';
+    const controlId=qs('#issue-control').value||'';
+    const linkedSummary = [
+      assetId ? `Asset: ${assets.find(a => a.id === assetId)?.name || ''}` : '',
+      vendorId ? `Vendor: ${vendors.find(v => v.id === vendorId)?.name || ''}` : '',
+      riskId ? `Risk: ${risks.find(r => r.id === riskId)?.title || ''}` : '',
+      controlId ? `Control: ${controls.find(c => c.id === controlId)?.name || ''}` : ''
+    ].filter(Boolean).join(' | ');
+    const obj={
+      id:id || ('ISS-'+Date.now()),
+      title,
+      type,
+      severity,
+      status,
+      owner:qs('#issue-owner').value.trim(),
+      dueDate:qs('#issue-due').value,
+      notes:qs('#issue-notes').value.trim(),
+      assetId,vendorId,riskId,controlId,
+      linkedSummary
+    };
+    const idx=issues.findIndex(x=>x.id===obj.id);
+    if(idx>-1) issues[idx]=obj; else issues.push(obj);
+    save(K.issues,issues);
+    renderIssuesTable(currentIssuesPage);
+    resetIssueForm();
+    showToast('Issue saved successfully');
+  });
+  qs('#issue-form-cancel').addEventListener('click',resetIssueForm);
+  qs('#issues-table-body').addEventListener('click',e=>{
+    const idE=e.target.getAttribute('data-ie');
+    const idD=e.target.getAttribute('data-id');
+    if(idE){
+      const i=issues.find(x=>x.id===idE); if(!i) return;
+      qs('#issue-id').value=i.id;
+      qs('#issue-title').value=i.title;
+      qs('#issue-type').value=i.type;
+      qs('#issue-severity').value=i.severity;
+      qs('#issue-status').value=i.status;
+      qs('#issue-owner').value=i.owner||'';
+      qs('#issue-due').value=i.dueDate||'';
+      qs('#issue-notes').value=i.notes||'';
+      qs('#issue-asset').value=i.assetId||'';
+      qs('#issue-vendor').value=i.vendorId||'';
+      qs('#issue-risk').value=i.riskId||'';
+      qs('#issue-control').value=i.controlId||'';
+      qs('#issue-form-submit').textContent='Update issue';
+    }
+    if(idD){
+      if(!confirm('Delete this issue?')) return;
+      issues=issues.filter(x=>x.id!==idD);
+      save(K.issues,issues);
+      // Unlink from treatments
+      treatments.forEach(t=>{ if(t.linked === idD) t.linked = ''; });
+      save(K.treats,treatments);
+      renderTreatmentsTable();
+      renderIssuesTable(currentIssuesPage);
+      showToast('Issue deleted');
+    }
+  });
+  // ---------- Incidents ----------
   let currentIncidentsPage = 1;
-  function renderIncidentsTable(page = 1) {
-    // Similar to renderIssuesTable
-    // ... implement
+  function resetIncidentForm(){
+    qs('#incident-form').reset();
+    qs('#incident-id').value='';
   }
-  // Update dashboard for new metrics
-  // Update reports for new sections
-  function generateVendorReport(full = true) {
-    let report = full ? '# Vendor Risk Report\n\n' : '';
-    // List vendors with risks
-    // ... implement
+  function renderIncidentsTable(page = 1){
+    currentIncidentsPage = page;
+    const tbody=qs('#incidents-table-body'), empty=qs('#incidents-empty'), count=qs('#incidents-count');
+    tbody.innerHTML='';
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const paginatedIncidents = incidents.slice(start, end);
+    paginatedIncidents.forEach(inc=>{
+      const sev=inc.severity||'';
+      const cls = sev==='Critical'||sev==='High'?'badge-danger':sev==='Medium'?'badge-warning':'badge-success';
+      const linkedSummary = [
+        inc.assetId ? `Asset: ${assets.find(a => a.id === inc.assetId)?.name || ''}` : '',
+        inc.vendorId ? `Vendor: ${vendors.find(v => v.id === inc.vendorId)?.name || ''}` : '',
+        inc.riskId ? `Risk: ${risks.find(r => r.id === inc.riskId)?.title || ''}` : '',
+        inc.controlId ? `Control: ${controls.find(c => c.id === inc.controlId)?.name || ''}` : ''
+      ].filter(Boolean).join(' | ');
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>${inc.title}</td>
+        <td>${inc.type}</td>
+        <td>${sev?`<span class="badge ${cls}">${sev}</span>`:'-'}</td>
+        <td>${inc.status}</td>
+        <td>${inc.detected || '-'}</td>
+        <td>${linkedSummary || '-'}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-light mb-1" data-ince="${inc.id}">EDIT</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-incd="${inc.id}">DEL</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+    empty.style.display=incidents.length?'none':'block';
+    count.textContent=`${incidents.length} incident(s)`;
+    renderPagination('incidents-pagination', incidents.length, page, renderIncidentsTable);
+    renderDashboard();
+  }
+  qs('#incident-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const id=qs('#incident-id').value;
+    const title=qs('#incident-title').value.trim();
+    const type=qs('#incident-type').value;
+    const detected=qs('#incident-detected').value;
+    const severity=qs('#incident-severity').value;
+    const status=qs('#incident-status').value;
+    if(!title || !type || !detected || !severity || !status) return alert('Fill title, type, detected date, severity, status.');
+    const assetId=qs('#incident-asset').value||'';
+    const vendorId=qs('#incident-vendor').value||'';
+    const riskId=qs('#incident-risk').value||'';
+    const controlId=qs('#incident-control').value||'';
+    const linkedSummary = [
+      assetId ? `Asset: ${assets.find(a => a.id === assetId)?.name || ''}` : '',
+      vendorId ? `Vendor: ${vendors.find(v => v.id === vendorId)?.name || ''}` : '',
+      riskId ? `Risk: ${risks.find(r => r.id === riskId)?.title || ''}` : '',
+      controlId ? `Control: ${controls.find(c => c.id === controlId)?.name || ''}` : ''
+    ].filter(Boolean).join(' | ');
+    const obj={
+      id:id || ('INC-'+Date.now()),
+      title,
+      type,
+      detected,
+      severity,
+      status,
+      owner:qs('#incident-owner').value.trim(),
+      notes:qs('#incident-notes').value.trim(),
+      assetId,vendorId,riskId,controlId,
+      linkedSummary
+    };
+    const idx=incidents.findIndex(x=>x.id===obj.id);
+    if(idx>-1) incidents[idx]=obj; else incidents.push(obj);
+    save(K.incidents,incidents);
+    renderIncidentsTable(currentIncidentsPage);
+    resetIncidentForm();
+    showToast('Incident saved successfully');
+  });
+  qs('#incident-form-cancel').addEventListener('click',resetIncidentForm);
+  qs('#incidents-table-body').addEventListener('click',e=>{
+    const idE=e.target.getAttribute('data-ince');
+    const idD=e.target.getAttribute('data-incd');
+    if(idE){
+      const inc=incidents.find(x=>x.id===idE); if(!inc) return;
+      qs('#incident-id').value=inc.id;
+      qs('#incident-title').value=inc.title;
+      qs('#incident-type').value=inc.type;
+      qs('#incident-detected').value=inc.detected;
+      qs('#incident-severity').value=inc.severity;
+      qs('#incident-status').value=inc.status;
+      qs('#incident-owner').value=inc.owner||'';
+      qs('#incident-notes').value=inc.notes||'';
+      qs('#incident-asset').value=inc.assetId||'';
+      qs('#incident-vendor').value=inc.vendorId||'';
+      qs('#incident-risk').value=inc.riskId||'';
+      qs('#incident-control').value=inc.controlId||'';
+    }
+    if(idD){
+      if(!confirm('Delete this incident?')) return;
+      incidents=incidents.filter(x=>x.id!==idD);
+      save(K.incidents,incidents);
+      // Unlink from treatments if needed
+      treatments.forEach(t=>{ if(t.linked === idD) t.linked = ''; });
+      save(K.treats,treatments);
+      renderTreatmentsTable();
+      renderIncidentsTable(currentIncidentsPage);
+      showToast('Incident deleted');
+    }
+  });
+  // ---------- Gap analysis ----------
+  const heatClass = p => p>=80?'heat-good':p>=50?'heat-medium':p>0?'heat-low':'heat-none';
+  function computeGapRows(){
+    const byCat=new Map();
+    FRAMEWORK_CONTROLS.forEach(fc=>{
+      if(!byCat.has(fc.category)) byCat.set(fc.category,{category:fc.category,total:0,implemented:0,plannedOnly:0,notImplemented:0});
+      const row=byCat.get(fc.category);
+      row.total+=1;
+      const linked=controls.filter(c=>Array.isArray(c.linkedFrameworkControlIds)&&c.linkedFrameworkControlIds.includes(fc.id));
+      if(linked.length===0){ row.notImplemented+=1; return; }
+      const hasInPlace=linked.some(c=>c.status==='In place');
+      const hasPlanned=linked.some(c=>c.status==='Planned');
+      if(hasInPlace) row.implemented+=1;
+      else if(hasPlanned) row.plannedOnly+=1;
+      else row.notImplemented+=1;
+    });
+    return Array.from(byCat.values()).sort((a,b)=>a.category.localeCompare(b.category));
+  }
+  function overallCoverage(rows){
+    let total=0, imp=0;
+    rows.forEach(r=>{total+=r.total;imp+=r.implemented;});
+    return total?Math.round((imp/total)*100):0;
+  }
+  function autoImplForFrameworkControl(fcId){
+    const linked = controls.filter(c =>
+      Array.isArray(c.linkedFrameworkControlIds) && c.linkedFrameworkControlIds.includes(fcId)
+    );
+    if(linked.length === 0) return 'Not implemented';
+    const anyInPlace = linked.some(c => c.status === 'In place');
+    const anyPlanned = linked.some(c => c.status === 'Planned');
+    if(anyInPlace) return 'In place';
+    if(anyPlanned) return 'Planned';
+    return 'Not applicable';
+  }
+  function renderGapTable(){
+    const tbody=qs('#gap-table-body'), overall=qs('#gap-overall-coverage');
+    const rows=computeGapRows();
+    tbody.innerHTML='';
+    rows.forEach(r=>{
+      const pct=r.total?Math.round((r.implemented/r.total)*100):0;
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>${r.category}</td>
+        <td>${r.total}</td>
+        <td>${r.implemented} / ${r.total}</td>
+        <td>${r.plannedOnly} / ${r.total}</td>
+        <td>${r.notImplemented} / ${r.total}</td>
+        <td class="heat-cell ${heatClass(pct)}">${pct}%<small>${r.implemented} of ${r.total} control(s) implemented</small></td>`;
+      tbody.appendChild(tr);
+    });
+    const ov=overallCoverage(rows);
+    overall.textContent = rows.length
+      ? `Overall implemented coverage: ${ov}% of ${FRAMEWORK_CONTROLS.length} framework control(s).`
+      : 'Add local controls and map them to framework controls to see coverage.';
+    updateCoveragePill(ov);
+  }
+  // ---------- SoA with filters and bulk edit ----------
+  function renderSoATable(){
+    const tbody = qs('#soa-table-body');
+    const count = qs('#soa-count');
+    if(!tbody || !count) return;
+    const f = qs('#soa-framework-filter') ? qs('#soa-framework-filter').value : 'all';
+    const c = qs('#soa-category-filter') ? qs('#soa-category-filter').value : 'all';
+    const appF = qs('#soa-applicability-filter') ? qs('#soa-applicability-filter').value : 'all';
+    const implF = qs('#soa-implementation-filter') ? qs('#soa-implementation-filter').value : 'all';
+    const filtered = FRAMEWORK_CONTROLS.filter(fc=>{
+      const entry = getSoAEntry(fc.id);
+      const resolvedImpl = entry.implementation === 'Auto' ? autoImplForFrameworkControl(fc.id) : entry.implementation;
+      const okF = f === 'all' || fc.frameworks.includes(f);
+      const okC = c === 'all' || fc.category === c;
+      const okApp = appF === 'all' || entry.applicability === appF;
+      const okImpl = implF === 'all' || resolvedImpl === implF;
+      return okF && okC && okApp && okImpl;
+    });
+    tbody.innerHTML = '';
+    filtered.forEach(fc=>{
+      const entry = getSoAEntry(fc.id);
+      const resolvedImpl = entry.implementation === 'Auto'
+        ? autoImplForFrameworkControl(fc.id)
+        : entry.implementation;
+      const frameworksTxt = (fc.frameworks||[]).join(', ');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="checkbox" class="soa-checkbox" data-soa-id="${fc.id}"></td>
+        <td>${fc.id}</td>
+        <td>${fc.name}</td>
+        <td>${fc.category}</td>
+        <td>${frameworksTxt}</td>
+        <td>
+          <select class="soa-select" data-soa-app="${fc.id}">
+            <option ${entry.applicability==='Applicable'?'selected':''}>Applicable</option>
+            <option ${entry.applicability==='Not Applicable'?'selected':''}>Not Applicable</option>
+          </select>
+        </td>
+        <td>
+          <select class="soa-select" data-soa-impl="${fc.id}">
+            <option ${entry.implementation==='Auto'?'selected':''} value="Auto">Auto (from local controls)</option>
+            <option ${entry.implementation==='In place'?'selected':''}>In place</option>
+            <option ${entry.implementation==='Planned'?'selected':''}>Planned</option>
+            <option ${entry.implementation==='Not implemented'?'selected':''}>Not implemented</option>
+            <option ${entry.implementation==='Not applicable'?'selected':''}>Not applicable</option>
+          </select>
+          <div class="small-muted">Resolved: <b>${resolvedImpl}</b></div>
+        </td>
+        <td><input class="soa-input" data-soa-owner="${fc.id}" placeholder="Owner" value="${entry.owner||''}"></td>
+        <td>
+          <input class="soa-input mb-1" data-soa-rationale="${fc.id}" placeholder="Rationale (why status/applicability)" value="${entry.rationale||''}">
+          <input class="soa-input soa-evidence" data-soa-evidence="${fc.id}" placeholder="Evidence URL(s), comma-separated" value="${entry.evidence||''}">
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+    count.textContent = `${filtered.length} framework control(s) shown of ${FRAMEWORK_CONTROLS.length}`;
+    // Delegate change events for all inputs/selects in table
+    tbody.onchange = (e)=>{
+      const t = e.target;
+      const fcId = t.getAttribute('data-soa-app') || t.getAttribute('data-soa-impl')
+                 || t.getAttribute('data-soa-owner') || t.getAttribute('data-soa-rationale')
+                 || t.getAttribute('data-soa-evidence');
+      if(!fcId) return;
+      const entry = getSoAEntry(fcId);
+      if(t.hasAttribute('data-soa-app')) entry.applicability = t.value;
+      if(t.hasAttribute('data-soa-impl')) entry.implementation = t.value;
+      if(t.hasAttribute('data-soa-owner')) entry.owner = t.value.trim();
+      if(t.hasAttribute('data-soa-rationale')) entry.rationale = t.value.trim();
+      if(t.hasAttribute('data-soa-evidence')) entry.evidence = t.value.trim();
+      saveSoA();
+      // Re-render to refresh the "Resolved" label if impl changed
+      if(t.hasAttribute('data-soa-impl')){
+        renderSoATable();
+      }
+      showToast('SoA entry updated');
+    };
+    // Bulk edit logic
+    const bulkBar = qs('#soa-bulk-bar');
+    const selectAll = qs('#soa-select-all');
+    selectAll.addEventListener('change', (e) => {
+      qsa('.soa-checkbox[data-soa-id]').forEach(cb => cb.checked = e.target.checked);
+      bulkBar.classList.toggle('active', qsa('.soa-checkbox:checked[data-soa-id]').length > 0);
+    });
+    tbody.addEventListener('change', (e) => {
+      if (e.target.classList.contains('soa-checkbox')) {
+        bulkBar.classList.toggle('active', qsa('.soa-checkbox:checked[data-soa-id]').length > 0);
+      }
+    });
+    qs('#bulk-apply').addEventListener('click', () => {
+      const appVal = qs('#bulk-applicability').value;
+      const implVal = qs('#bulk-implementation').value;
+      if (!appVal && !implVal) return alert('Select a value to apply.');
+      qsa('.soa-checkbox:checked[data-soa-id]').forEach(cb => {
+        const fcId = cb.getAttribute('data-soa-id');
+        const entry = getSoAEntry(fcId);
+        if (appVal) entry.applicability = appVal;
+        if (implVal) entry.implementation = implVal;
+      });
+      saveSoA();
+      renderSoATable();
+      qs('#bulk-clear').click();
+      showToast('Bulk edit applied');
+    });
+    qs('#bulk-clear').addEventListener('click', () => {
+      qsa('.soa-checkbox').forEach(cb => cb.checked = false);
+      bulkBar.classList.remove('active');
+    });
+  }
+  // ---------- Dashboard ----------
+  function updateCoveragePill(p){
+    const pill=qs('#dash-coverage-pill');
+    pill.classList.remove('heat-good','heat-medium','heat-low','heat-none');
+    pill.classList.add(heatClass(p));
+    pill.textContent = p>=80?'Strong coverage':p>=50?'Moderate coverage':p>0?'Limited coverage':'No implemented coverage yet';
+  }
+  function renderDashboard(){
+    qs('#dash-assets').textContent=assets.length;
+    qs('#dash-vendors').textContent=vendors.length;
+    qs('#dash-risks').textContent=risks.length;
+    qs('#dash-controls').textContent=controls.filter(c=>c.status === 'In place').length;
+    qs('#dash-issues').textContent=issues.length;
+    qs('#dash-incidents').textContent=incidents.filter(i=>i.status !== 'Closed').length;
+    qs('#dash-treatments').textContent=treatments.filter(t=>t.status === 'In progress').length;
+    const high=risks.filter(r=>rLevel(r.score)==='High').length;
+    qs('#dash-high').textContent=high;
+    const today=new Date();
+    const overdue=issues.filter(i=>{
+      if(!i.dueDate) return false;
+      const d=new Date(i.dueDate);
+      if(isNaN(d)) return false;
+      const st=i.status||'';
+      return st!=='Resolved' && st!=='Accepted' && d<today;
+    }).length;
+    qs('#dash-overdue').textContent=overdue;
+    const ov=overallCoverage(computeGapRows());
+    qs('#dash-coverage').textContent=ov+'%';
+    updateCoveragePill(ov);
+  }
+  // ---------- Risk Matrix ----------
+  let showResidual=false;
+  const canvas=qs('#risk-matrix-canvas');
+  const ctx=canvas.getContext('2d');
+  const legend=qs('#matrix-legend');
+  function residualForRisk(r){
+    const impl=controls.filter(c=>c.status==='In place' && (c.linkedRiskIds||[]).includes(r.id));
+    const dropL=Math.min(2,impl.length);
+    const dropI=impl.some(c=>c.type==='Preventive' || c.type==='Corrective')?1:0;
+    return {
+      likelihood:Math.max(1,(r.likelihood||1)-dropL),
+      impact:Math.max(1,(r.impact||1)-dropI)
+    };
+  }
+  function drawMatrix(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    const size=110, off=90;
+    ctx.strokeStyle="#2b3138"; ctx.lineWidth=1;
+    for(let i=0;i<=5;i++){
+      ctx.beginPath(); ctx.moveTo(off,off+i*size); ctx.lineTo(off+5*size,off+i*size); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(off+i*size,off); ctx.lineTo(off+i*size,off+5*size); ctx.stroke();
+    }
+    ctx.font="14px Poppins"; ctx.fillStyle="#aab2bd";
+    ctx.fillText("Impact →",off+225,off-25);
+    ctx.save(); ctx.translate(off-55,off+240); ctx.rotate(-Math.PI/2); ctx.fillText("Likelihood →",0,0); ctx.restore();
+    let high=0,med=0,low=0;
+    risks.forEach(r=>{
+      let L=r.likelihood, I=r.impact, score=rScore(L,I), level=rLevel(score);
+      if(showResidual){
+        L = r.resLikelihood || L;
+        I = r.resImpact || I;
+        score = rScore(L,I);
+        level = rLevel(score);
+      }
+      let color="#27ae60";
+      if(level==='High'){ color="#e63946"; high++; }
+      else if(level==='Medium'){ color="#f1c40f"; med++; }
+      else if(level==='Low'){ color="#27ae60"; low++; }
+      ctx.beginPath();
+      ctx.arc(off+(I-0.5)*size,off+(5-L+0.5)*size,12,0,2*Math.PI);
+      ctx.fillStyle=color; ctx.fill();
+      ctx.fillStyle="#0c0f12"; ctx.font="bold 12px Poppins";
+      ctx.textAlign="center"; ctx.textBaseline="middle";
+      ctx.fillText(String(score),off+(I-0.5)*size,off+(5-L+0.5)*size);
+    });
+    legend.innerHTML = `<b>${risks.length}</b> risks — 
+      <span style="color:#e63946">High: ${high}</span> |
+      <span style="color:#f1c40f">Medium: ${med}</span> |
+      <span style="color:#27ae60">Low: ${low}</span>`;
+  }
+  // ---------- Treatments ----------
+  let currentTreatmentsPage = 1;
+  function populateTreatmentDropdownLinked(){
+    const sel=qs('#treat-linked'); if(!sel) return;
+    const cur=sel.value;
+    sel.innerHTML='<option value="">Select risk or issue...</option>';
+    risks.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.title + ' (Risk)';sel.appendChild(o);});
+    issues.forEach(i=>{const o=document.createElement('option');o.value=i.id;o.textContent=i.title + ' (Issue)';sel.appendChild(o);});
+    if(cur) sel.value=cur;
+  }
+  function populateTreatmentDropdownControls(){
+    const sel=qs('#treat-control'); if(!sel) return;
+    const cur=sel.value;
+    sel.innerHTML='<option value="">Select control...</option>';
+    controls.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.name;sel.appendChild(o);});
+    if(cur && controls.some(c=>c.id===cur)) sel.value=cur;
+  }
+  function renderTreatmentsTable(page = 1){
+    currentTreatmentsPage = page;
+    const tbody=qs('#treat-table-body'), empty=qs('#treat-empty'), count=qs('#treat-count');
+    tbody.innerHTML='';
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const paginatedTreatments = treatments.slice(start, end);
+    paginatedTreatments.forEach(t=>{
+      let linkedName = '';
+      if (t.linked) {
+        const r = risks.find(x => x.id === t.linked);
+        const i = issues.find(x => x.id === t.linked);
+        linkedName = r ? r.title + ' (Risk)' : i ? i.title + ' (Issue)' : '';
+      }
+      const ctrl=controls.find(c=>c.id===t.controlId);
+      const tr=document.createElement('tr');
+      tr.innerHTML=`
+        <td>${t.title}</td>
+        <td>${linkedName || '-'}</td>
+        <td>${t.status}</td>
+        <td>${t.targetDate||''}</td>
+        <td>${t.owner||''}</td>
+        <td>${t.budget||''}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-light mb-1" data-te="${t.id}">EDIT</button>
+          <button class="btn btn-sm btn-outline-light mb-1" data-td="${t.id}">DEL</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+    empty.style.display=treatments.length?'none':'block';
+    count.textContent=`${treatments.length} treatment action(s)`;
+    renderPagination('treatments-pagination', treatments.length, page, renderTreatmentsTable);
+  }
+  function resetTreatForm(){
+    qs('#treat-form').reset();
+    qs('#treat-id').value='';
+    qs('#treat-submit').textContent='Save action';
+  }
+  qs('#treat-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const id=qs('#treat-id').value;
+    const title=qs('#treat-title').value.trim();
+    const linked=qs('#treat-linked').value;
+    if(!title || !linked) return alert('Action title and linked risk/issue are required.');
+    const controlId=qs('#treat-control').value || '';
+    const obj={
+      id:id || ('TRT-'+Date.now()),
+      title,
+      linked,
+      controlId,
+      status:qs('#treat-status').value,
+      targetDate:qs('#treat-date').value,
+      owner:qs('#treat-owner').value.trim(),
+      budget:qs('#treat-budget').value.trim(),
+      notes:qs('#treat-notes').value.trim()
+    };
+    const idx=treatments.findIndex(x=>x.id===obj.id);
+    if(idx>-1) treatments[idx]=obj; else treatments.push(obj);
+    save(K.treats,treatments);
+    renderTreatmentsTable(currentTreatmentsPage);
+    resetTreatForm();
+    showToast('Treatment saved successfully');
+  });
+  qs('#treat-cancel').addEventListener('click',resetTreatForm);
+  qs('#treat-table-body').addEventListener('click',e=>{
+    const idE=e.target.getAttribute('data-te');
+    const idD=e.target.getAttribute('data-td');
+    if(idE){
+      const t=treatments.find(x=>x.id===idE); if(!t) return;
+      qs('#treat-id').value=t.id;
+      qs('#treat-title').value=t.title;
+      populateTreatmentDropdownLinked();
+      populateTreatmentDropdownControls();
+      qs('#treat-linked').value=t.linked||'';
+      qs('#treat-control').value=t.controlId||'';
+      qs('#treat-status').value=t.status||'Open';
+      qs('#treat-date').value=t.targetDate||'';
+      qs('#treat-owner').value=t.owner||'';
+      qs('#treat-budget').value=t.budget||'';
+      qs('#treat-notes').value=t.notes||'';
+      qs('#treat-submit').textContent='Update action';
+    }
+    if(idD){
+      if(!confirm('Delete this treatment action?')) return;
+      treatments=treatments.filter(x=>x.id!==idD);
+      save(K.treats,treatments);
+      renderTreatmentsTable(currentTreatmentsPage);
+      showToast('Treatment deleted');
+    }
+  });
+  // ---------- CSV Export helpers ----------
+  function escapeCSVVal(v){
+    if(v==null) return '';
+    const s = String(v);
+    if(/[",\n]/.test(s)){
+      return '"' + s.replace(/"/g,'""') + '"';
+    }
+    return s;
+  }
+  function downloadCSV(filename, rows, columns){
+    const header = columns.map(c=>escapeCSVVal(c.header)).join(',');
+    const lines = [header];
+    rows.forEach(r=>{
+      const vals = columns.map(c=>{
+        if(typeof c.value === 'function') return escapeCSVVal(c.value(r));
+        if(c.key) return escapeCSVVal(r[c.key]);
+        return '';
+      });
+      lines.push(vals.join(','));
+    });
+    const blob = new Blob([lines.join('\n')],{type:'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href=url; a.download=filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+  function exportAssetsCSV(){
+    const cols = [
+      {header:'Name', key:'name'},
+      {header:'Type', key:'type'},
+      {header:'Criticality', key:'criticality'},
+      {header:'Owner', key:'owner'},
+      {header:'Data types', value:a=>(a.dataTypes||[]).join('; ')},
+      {header:'Location', key:'location'},
+      {header:'Notes', key:'notes'}
+    ];
+    downloadCSV('grc_assets.csv', assets, cols);
+  }
+  function exportVendorsCSV(){
+    const cols = [
+      {header:'Name', key:'name'},
+      {header:'Type', key:'type'},
+      {header:'Criticality', key:'criticality'},
+      {header:'Data Access', key:'dataAccess'},
+      {header:'Contract Status', key:'contract'},
+      {header:'Last Assessment', key:'assessment'},
+      {header:'Notes', key:'notes'}
+    ];
+    downloadCSV('grc_vendors.csv', vendors, cols);
+  }
+  function exportRisksCSV(){
+    const rows = (lastRiskView && lastRiskView.length) ? lastRiskView : risks;
+    const cols = [
+      {header:'Title', key:'title'},
+      {header:'Linked', value:r=>r.linkedName||''},
+      {header:'Category', key:'category'},
+      {header:'Likelihood', key:'likelihood'},
+      {header:'Impact', key:'impact'},
+      {header:'Score', key:'score'},
+      {header:'Level', value:r=>rLevel(r.score)},
+      {header:'Res Likelihood', key:'resLikelihood'},
+      {header:'Res Impact', key:'resImpact'},
+      {header:'Res Score', key:'resScore'},
+      {header:'Res Level', value:r=>rLevel(r.resScore)},
+      {header:'Status', key:'status'},
+      {header:'Owner', key:'owner'},
+      {header:'Notes', key:'notes'}
+    ];
+    downloadCSV('grc_risks.csv', rows, cols);
+  }
+  function exportControlsCSV(){
+    const cols = [
+      {header:'Name', key:'name'},
+      {header:'Type', key:'type'},
+      {header:'Status', key:'status'},
+      {header:'Owner', key:'owner'},
+      {header:'Description', key:'description'},
+      {header:'Linked risks count', value:c=>(c.linkedRiskIds||[]).length},
+      {header:'Mapped framework ctrl count', value:c=>(c.linkedFrameworkControlIds||[]).length},
+      {header:'Evidence', key:'evidence'}
+    ];
+    downloadCSV('grc_controls.csv', controls, cols);
+  }
+  function exportSoACSV(){
+    const rows = FRAMEWORK_CONTROLS.map(fc=>{
+      const entry = getSoAEntry(fc.id);
+      const resolvedImpl = entry.implementation === 'Auto'
+        ? autoImplForFrameworkControl(fc.id)
+        : entry.implementation;
+      const mapped = controls
+        .filter(c => Array.isArray(c.linkedFrameworkControlIds) && c.linkedFrameworkControlIds.includes(fc.id))
+        .map(c => c.name)
+        .join('; ');
+      return {
+        id: fc.id,
+        name: fc.name,
+        category: fc.category,
+        frameworks: (fc.frameworks||[]).join('; '),
+        applicability: entry.applicability || 'Applicable',
+        implementation_selected: entry.implementation || 'Auto',
+        implementation_resolved: resolvedImpl,
+        mapped_local_controls: mapped,
+        owner: entry.owner || '',
+        rationale: entry.rationale || '',
+        evidence: entry.evidence || ''
+      };
+    });
+    const cols = [
+      {header:'Framework Control ID', key:'id'},
+      {header:'Name', key:'name'},
+      {header:'Category', key:'category'},
+      {header:'Frameworks', key:'frameworks'},
+      {header:'Applicability', key:'applicability'},
+      {header:'Implementation (Selected)', key:'implementation_selected'},
+      {header:'Implementation (Resolved)', key:'implementation_resolved'},
+      {header:'Mapped Local Controls', key:'mapped_local_controls'},
+      {header:'Owner', key:'owner'},
+      {header:'Rationale', key:'rationale'},
+      {header:'Evidence URLs', key:'evidence'}
+    ];
+    downloadCSV('grc_soa.csv', rows, cols);
+  }
+  function exportIssuesCSV(){
+    const cols = [
+      {header:'Title', key:'title'},
+      {header:'Type', key:'type'},
+      {header:'Severity', key:'severity'},
+      {header:'Status', key:'status'},
+      {header:'Owner', key:'owner'},
+      {header:'Due date', key:'dueDate'},
+      {header:'Linked', key:'linkedSummary'},
+      {header:'Notes', key:'notes'}
+    ];
+    downloadCSV('grc_issues.csv', issues, cols);
+  }
+  function exportIncidentsCSV(){
+    const cols = [
+      {header:'Title', key:'title'},
+      {header:'Type', key:'type'},
+      {header:'Detected', key:'detected'},
+      {header:'Severity', key:'severity'},
+      {header:'Status', key:'status'},
+      {header:'Owner', key:'owner'},
+      {header:'Linked', key:'linkedSummary'},
+      {header:'Notes', key:'notes'}
+    ];
+    downloadCSV('grc_incidents.csv', incidents, cols);
+  }
+  function exportTreatmentsCSV(){
+    const cols = [
+      {header:'Title', key:'title'},
+      {header:'Linked', value:t=>{ 
+        const r = risks.find(x => x.id === t.linked);
+        const i = issues.find(x => x.id === t.linked);
+        return r ? r.title + ' (Risk)' : i ? i.title + ' (Issue)' : '';
+      }},
+      {header:'Control', value:t=>{ const c=controls.find(x=>x.id===t.controlId); return c?c.name:''; }},
+      {header:'Status', key:'status'},
+      {header:'Target date', key:'targetDate'},
+      {header:'Owner', key:'owner'},
+      {header:'Budget', key:'budget'},
+      {header:'Notes', key:'notes'}
+    ];
+    downloadCSV('grc_treatments.csv', treatments, cols);
+  }
+  // ---------- Export / Import / Demo / Reset ----------
+  function setImportStatus(msg,err){
+    const el=qs('#import-status');
+    el.textContent=msg||'';
+    el.style.color=err?'#fca5a5':'#9ca3af';
+  }
+  function exportScenario(){
+    const payload={
+      version:4,
+      exportedAt:new Date().toISOString(),
+      assets,risks,controls,issues,treatments,soa,vendors,incidents
+    };
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;
+    a.download=`grc-lab-scenario-${new Date().toISOString().slice(0,10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    setImportStatus('Exported current data as JSON.',false);
+  }
+  function importScenarioFile(file){
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=e=>{
+      try{
+        const data=JSON.parse(e.target.result);
+        assets = Array.isArray(data.assets)?data.assets:[];
+        risks = Array.isArray(data.risks)?data.risks:[];
+        controls = Array.isArray(data.controls)?data.controls:[];
+        issues = Array.isArray(data.issues)?data.issues:[];
+        treatments = Array.isArray(data.treatments)?data.treatments:[];
+        soa = Array.isArray(data.soa)?data.soa:[];
+        vendors = Array.isArray(data.vendors)?data.vendors:[];
+        incidents = Array.isArray(data.incidents)?data.incidents:[];
+        save(K.assets,assets); save(K.risks,risks); save(K.controls,controls);
+        save(K.issues,issues); save(K.treats,treatments); save(K.soa,soa); save(K.vendors,vendors); save(K.incidents,incidents);
+        refreshAll();
+        setImportStatus(`Imported scenario: ${assets.length} assets, ${vendors.length} vendors, ${risks.length} risks, ${controls.length} controls, ${issues.length} issues, ${incidents.length} incidents, ${treatments.length} actions, ${soa.length} SoA entries.`,false);
+      }catch(err){
+        console.error(err);
+        setImportStatus('Failed to import scenario. Check JSON file.',true);
+      }
+    };
+    reader.onerror=()=>setImportStatus('Failed to read file.',true);
+    reader.readAsText(file);
+  }
+  function loadDemoScenario(){
+    // Update with new fields
+    // ... (similar to before, add vendors, incidents)
+    // For example
+    vendors = [
+      {id:"VND-DEMO-AWS",name:"AWS",type:"Cloud Provider",criticality:"High",dataAccess:"Full",contract:"Active",assessment:"2023-01-01",notes:"Cloud hosting"},
+    ];
+    incidents = [
+      {id:"INC-DEMO-1",title:"Suspected breach",type:"Data Breach",detected:"2023-01-01",severity:"High",status:"Investigating",owner:"IR Team",notes:"Investigating logs",assetId:"AST-DEMO-APP",vendorId:"",riskId:"RSK-DEMO-1",controlId:"",linkedSummary:"Asset: MediCloud Web Application | Risk: Unauthorised access to MediCloud production"},
+    ];
+    save(K.vendors,vendors);
+    save(K.incidents,incidents);
+    refreshAll();
+    setImportStatus('Loaded demo MediCloud scenario into this browser (previous lab data was overwritten).',false);
+  }
+  function resetLab(){
+    if(!confirm('This will clear all data in this browser. Continue?')) return;
+    assets=[];risks=[];controls=[];issues=[];treatments=[];soa=[];vendors=[];incidents=[];
+    Object.values(K).forEach(k=>localStorage.removeItem(k));
+    localStorage.removeItem(RISK_CFG_KEY);
+    riskConfig = {...defaultRiskConfig};
+    refreshAll();
+    syncRiskThresholdInputs();
+    setImportStatus('Lab reset: all data cleared from this browser.',false);
+  }
+  // ---------- Tabs ----------
+  function bindTabs(){
+    const buttons=qsa('[data-grc-tab]');
+    const mapping={};
+    ['guidance','frameworks','assets','vendors','risks','controls','issues','incidents','treatments','gap','soa','dashboard','matrix','summary','reports','challenges']
+    .forEach(id=>mapping[id]=qs('#tab-'+id));
+    buttons.forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const tgt=btn.getAttribute('data-grc-tab');
+        buttons.forEach(b=>{
+          b.classList.remove('btn-primary');
+          b.classList.add('btn-outline-light');
+        });
+        btn.classList.add('btn-primary');
+        btn.classList.remove('btn-outline-light');
+        Object.values(mapping).forEach(el=>el && el.classList.remove('active'));
+        if(mapping[tgt]) mapping[tgt].classList.add('active');
+        if(tgt==='dashboard') renderDashboard();
+        if(tgt==='gap') renderGapTable();
+        if(tgt==='matrix') drawMatrix();
+        if(tgt==='summary') generateAuditorSummary();
+        if(tgt==='soa') renderSoATable();
+        if(tgt==='reports') generateReport(); // New
+      });
+    });
+  }
+  // ---------- Auditor-style Summary ----------
+  function listPhrase(items,max){
+    if(!items || !items.length) return '';
+    const arr=items.slice(0,max);
+    if(arr.length===1) return arr[0];
+    if(arr.length===2) return `${arr[0]} and ${arr[1]}`;
+    return `${arr.slice(0,-1).join(', ')} and ${arr[arr.length-1]}`;
+  }
+  function generateAuditorSummary(){
+    const lines=[];
+    const totalAssets=assets.length;
+    const highAssets=assets.filter(a=>a.criticality==='High');
+    const assetNames=assets.map(a=>a.name);
+    const keyAssets=listPhrase(highAssets.map(a=>a.name),3) || listPhrase(assetNames,3) || 'key information assets';
+    lines.push(`# Scope and context\nThe organisation is using the GRC Practice Lab to model approximately ${totalAssets||'0'} key information assets and services. High-criticality assets currently include ${keyAssets}.`);
+    const totalVendors=vendors.length;
+    const highVendors=vendors.filter(v=>v.criticality==='High');
+    lines.push(`There are ${totalVendors} vendors tracked, with ${highVendors.length} high criticality.`);
+    const totalRisks=risks.length;
+    const highRisks=risks.filter(r=>rLevel(r.score)==='High');
+    const medRisks=risks.filter(r=>rLevel(r.score)==='Medium');
+    const exHigh=highRisks.slice(0,2).map(r=>{
+      const linkedName=r.linkedName ? ` (${r.linkedName})` : '';
+      return `${r.title}${linkedName}, score ${r.score}`;
+    });
+    let riskPara=`# Risk posture\nA total of ${totalRisks||'0'} risks have been documented in the register. `;
+    riskPara+=`High risks: ${highRisks.length}; medium risks: ${medRisks.length}; remaining items are low or informational. `;
+    if(exHigh.length){
+      riskPara+=`Example high risks include ${listPhrase(exHigh,2)}.`;
+    }
+    lines.push(riskPara.trim());
+    const rows=computeGapRows();
+    const overall=overallCoverage(rows);
+    const ctrlCount=controls.length;
+    const catSnippets=rows.slice(0,4).map(r=>{
+      const pct=r.total?Math.round((r.implemented/r.total)*100):0;
+      return `${r.category}: ${pct}% implemented (${r.implemented}/${r.total}).`;
+    });
+    let ctrlPara=`# Control environment and framework coverage\nLocal controls defined in the lab: ${ctrlCount}. Overall implemented coverage across the paraphrased framework library is approximately ${overall}% of ${FRAMEWORK_CONTROLS.length} controls. `;
+    if(catSnippets.length){
+      ctrlPara+=`Coverage by category (sample): ${catSnippets.join(' ')}`;
+    }
+    lines.push(ctrlPara.trim());
+    const openIssues=issues.filter(i=>i.status==='Open' || i.status==='In progress');
+    const critIssues=issues.filter(i=>i.severity==='Critical' || i.severity==='High');
+    const exIssue=openIssues.slice(0,2).map(i=>i.title);
+    const openIncidents=incidents.filter(inc=>inc.status !== 'Closed');
+    const critIncidents=incidents.filter(inc=>inc.severity==='Critical' || inc.severity==='High');
+    const openActions=treatments.filter(t=>t.status==='Open' || t.status==='In progress');
+    const closedActions=treatments.filter(t=>t.status==='Closed');
+    let issuePara=`# Issues, findings, incidents and action plans\nThere are ${issues.length} issue(s) recorded in the log, of which ${openIssues.length} are open or in progress and ${critIssues.length} are rated high or critical. `;
+    if(exIssue.length){
+      issuePara+=`Example open items include ${listPhrase(exIssue,2)}. `;
+    }
+    issuePara+=`There are ${incidents.length} incidents, with ${openIncidents.length} open and ${critIncidents.length} critical/high. `;
+    issuePara+=`The treatment register currently contains ${treatments.length} action item(s), with ${openActions.length} open/in progress and ${closedActions.length} closed.`;
+    lines.push(issuePara.trim());
+    const highCount=highRisks.length;
+    const overallRows=computeGapRows();
+    const ov=overallCoverage(overallRows);
+    const covDesc=ov>=80?'strong, with most key controls implemented':
+                  ov>=50?'developing, with several controls implemented but notable gaps remaining':
+                  ov>0?'limited, with many controls still to be implemented':
+                  'minimal, with framework controls largely not implemented yet';
+    let obs=`# Overall observation\nSeveral high-impact risks have been identified${highCount?` (currently ${highCount} high-rated risk(s))`:''}. Control coverage is ${ov}% and is best described as ${covDesc}. `;
+    if(openActions.length){
+      obs+=`A formal treatment plan is in place, with ${openActions.length} active remediation action(s) tracked against the risk register.`;
+    }else{
+      obs+=`No active treatment actions are currently recorded against the risk register.`;
+    }
+    lines.push(obs.trim());
+    qs('#summary-text').value = lines.join('\n\n');
+  }
+  // ---------- Reports ----------
+  function generateReport(){
+    const type = qs('#report-type').value;
+    let content = '';
+    switch(type){
+      case 'full-audit':
+        content = generateFullAuditReport();
+        break;
+      case 'risk-register':
+        content = generateRiskRegisterReport();
+        break;
+      case 'control-coverage':
+        content = generateControlCoverageReport();
+        break;
+      case 'issue-summary':
+        content = generateIssueSummaryReport();
+        break;
+      case 'vendor-report':
+        content = generateVendorReport();
+        break;
+      case 'incident-report':
+        content = generateIncidentReport();
+        break;
+    }
+    qs('#report-text').value = content;
+  }
+  function generateFullAuditReport(){
+    let report = '# Full Audit Report\n\n';
+    report += qs('#summary-text').value; // Include auditor summary
+    report += '\n\n## Risk Register\n' + generateRiskRegisterReport(false);
+    report += '\n\n## Control Coverage\n' + generateControlCoverageReport(false);
+    report += '\n\n## Issue Summary\n' + generateIssueSummaryReport(false);
+    report += '\n\n## Vendor Risk\n' + generateVendorReport(false);
+    report += '\n\n## Incident Log\n' + generateIncidentReport(false);
     return report;
   }
-  function generateIncidentReport(full = true) {
+  function generateRiskRegisterReport(full = true){
+    let report = full ? '# Risk Register Report\n\n' : '';
+    risks.forEach(r => {
+      report += `### ${r.title}\n`;
+      report += `- Linked: ${r.linkedName || '-'}\n`;
+      report += `- Category: ${r.category}\n`;
+      report += `- Inherent Score: ${r.score} (${rLevel(r.score)})\n`;
+      report += `- Residual Score: ${r.resScore} (${rLevel(r.resScore)})\n`;
+      report += `- Status: ${r.status}\n`;
+      report += `- Notes: ${r.notes || '-'}\n\n`;
+    });
+    return report;
+  }
+  function generateControlCoverageReport(full = true){
+    let report = full ? '# Control Coverage Report\n\n' : '';
+    const rows = computeGapRows();
+    rows.forEach(r => {
+      const pct = r.total ? Math.round((r.implemented / r.total) * 100) : 0;
+      report += `### ${r.category}\n`;
+      report += `- Total: ${r.total}\n`;
+      report += `- Implemented: ${r.implemented}\n`;
+      report += `- Planned: ${r.plannedOnly}\n`;
+      report += `- Not Implemented: ${r.notImplemented}\n`;
+      report += `- Coverage: ${pct}%\n\n`;
+    });
+    return report;
+  }
+  function generateIssueSummaryReport(full = true){
+    let report = full ? '# Issue Summary Report\n\n' : '';
+    issues.forEach(i => {
+      report += `### ${i.title}\n`;
+      report += `- Type: ${i.type}\n`;
+      report += `- Severity: ${i.severity}\n`;
+      report += `- Status: ${i.status}\n`;
+      report += `- Linked: ${i.linkedSummary || '-'}\n`;
+      report += `- Due: ${i.dueDate || '-'}\n`;
+      report += `- Notes: ${i.notes || '-'}\n\n`;
+    });
+    return report;
+  }
+  function generateVendorReport(full = true){
+    let report = full ? '# Vendor Risk Report\n\n' : '';
+    vendors.forEach(v => {
+      report += `### ${v.name}\n`;
+      report += `- Type: ${v.type}\n`;
+      report += `- Criticality: ${v.criticality}\n`;
+      report += `- Data Access: ${v.dataAccess || '-'}\n`;
+      report += `- Contract: ${v.contract || '-'}\n`;
+      report += `- Last Assessment: ${v.assessment || '-'}\n`;
+      report += `- Notes: ${v.notes || '-'}\n\n`;
+    });
+    return report;
+  }
+  function generateIncidentReport(full = true){
     let report = full ? '# Incident Log Report\n\n' : '';
-    // List incidents
-    // ... implement
+    incidents.forEach(inc => {
+      report += `### ${inc.title}\n`;
+      report += `- Type: ${inc.type}\n`;
+      report += `- Detected: ${inc.detected}\n`;
+      report += `- Severity: ${inc.severity}\n`;
+      report += `- Status: ${inc.status}\n`;
+      report += `- Linked: ${inc.linkedSummary || '-'}\n`;
+      report += `- Notes: ${inc.notes || '-'}\n\n`;
+    });
+    return report;
   }
-  // Update full audit to include new
-  // Challenge scoring example
-  function scoreChallenge(id) {
-    let score = 0;
-    if (id === 1) {
-      score += assets.length >= 2 ? 1 : 0;
-      score += risks.length >= 5 ? 1 : 0;
-      score += controls.length >= 3 ? 1 : 0;
-      score += overallCoverage(computeGapRows()) >= 60 ? 2 : 0;
-    } // Similar for others
-    qs('#challenge-' + id + '-score').textContent = score + '/5';
+  function downloadMD(filename, content){
+    const blob = new Blob([content], {type:'text/markdown;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
   }
-  // Templates load
-  qs('#load-iso-template').addEventListener('click', () => {
-    // Preload controls mapped to ISO
-    // Example: controls = [{... ISO mapped}]
-    // save, refresh
-    showToast('ISO template loaded');
-  });
-  // Similar for others
+  qs('#report-export-md').addEventListener('click', () => downloadMD('grc_report.md', qs('#report-text').value));
+  qs('#summary-export-md').addEventListener('click', () => downloadMD('auditor_summary.md', qs('#summary-text').value));
   // PDF export
   function generatePDF(content, filename) {
     const { jsPDF } = window.jspdf;
@@ -1585,12 +3411,138 @@
     doc.text(lines, 10, 10);
     doc.save(filename);
   }
-  qs('#summary-export-pdf').addEventListener('click', () => generatePDF(qs('#summary-text').value, 'auditor_summary.pdf'));
   qs('#report-export-pdf').addEventListener('click', () => generatePDF(qs('#report-text').value, 'grc_report.pdf'));
-  // Implement new forms, tables, etc similarly
-  // For brevity, assume code adaptations for new tabs
-  // Refresh all updated
-  refreshAll();
+  qs('#summary-export-pdf').addEventListener('click', () => generatePDF(qs('#summary-text').value, 'auditor_summary.pdf'));
+  // ---------- Refresh all ----------
+  function refreshAll(){
+    renderFrameworkControls();
+    renderAssetsTable();
+    renderVendorsTable();
+    renderRisksTable();
+    populateControlFrameworks();
+    renderControlsTable();
+    populateIssueDropdowns();
+    renderIssuesTable();
+    renderIncidentsTable();
+    renderGapTable();
+    renderDashboard();
+    populateTreatmentDropdownLinked();
+    populateTreatmentDropdownControls();
+    renderTreatmentsTable();
+    drawMatrix();
+    generateAuditorSummary();
+    renderSoATable();
+  }
+  // ---------- Init ----------
+  document.addEventListener('DOMContentLoaded',()=>{
+    ['#framework-filter','#category-filter','#framework-search'].forEach(sel=>{
+      const el=qs(sel);
+      if(!el) return;
+      el.addEventListener(sel==='#framework-search'?'input':'change',renderFrameworkControls);
+    });
+    ['#soa-framework-filter', '#soa-category-filter', '#soa-applicability-filter', '#soa-implementation-filter'].forEach(sel => {
+      const el = qs(sel);
+      if (el) el.addEventListener('change', renderSoATable);
+    });
+    bindTabs();
+    populateControlFrameworks();
+    populateControlRisks();
+    populateRiskAssetOptions();
+    populateIssueDropdowns();
+    populateTreatmentDropdownLinked();
+    populateTreatmentDropdownControls();
+    qs('#btn-export').addEventListener('click',exportScenario);
+    qs('#btn-import').addEventListener('click',()=>{
+      setImportStatus('',false);
+      const f=qs('#file-import'); f.value=''; f.click();
+    });
+    qs('#file-import').addEventListener('change',e=>{
+      const file=e.target.files && e.target.files[0];
+      if(file) importScenarioFile(file);
+    });
+    qs('#btn-load-demo').addEventListener('click',()=>{
+      if(!confirm('Loading the demo will overwrite current lab data in this browser. Continue?')) return;
+      loadDemoScenario();
+    });
+    qs('#btn-reset').addEventListener('click',resetLab);
+    qs('#toggle-inherent').addEventListener('click',()=>{
+      showResidual=false;
+      qs('#toggle-inherent').classList.add('btn-primary');
+      qs('#toggle-residual').classList.remove('btn-primary');
+      drawMatrix();
+    });
+    qs('#toggle-residual').addEventListener('click',()=>{
+      showResidual=true;
+      qs('#toggle-residual').classList.add('btn-primary');
+      qs('#toggle-inherent').classList.remove('btn-primary');
+      drawMatrix();
+    });
+    qs('#matrix-export').addEventListener('click',()=>{
+      const a=document.createElement('a');
+      a.download='risk_matrix.png';
+      a.href=canvas.toDataURL('image/png');
+      a.click();
+    });
+    qs('#summary-refresh').addEventListener('click',generateAuditorSummary);
+    qs('#summary-copy').addEventListener('click', () => {
+      const text = qs('#summary-text');
+      text.select();
+      document.execCommand('copy');
+      showToast('Copied to clipboard');
+    });
+    qs('#generate-report').addEventListener('click', generateReport);
+    qs('#soa-export').addEventListener('click', exportSoACSV);
+    // CSV buttons
+    qs('#export-assets').addEventListener('click', exportAssetsCSV);
+    qs('#export-vendors').addEventListener('click', exportVendorsCSV);
+    qs('#export-risks').addEventListener('click', exportRisksCSV);
+    qs('#export-controls').addEventListener('click', exportControlsCSV);
+    qs('#export-issues').addEventListener('click', exportIssuesCSV);
+    qs('#export-incidents').addEventListener('click', exportIncidentsCSV);
+    qs('#export-treatments').addEventListener('click', exportTreatmentsCSV);
+    // Threshold inputs
+    qs('#risk-thres-high').addEventListener('change', applyRiskThresholdInputs);
+    qs('#risk-thres-med').addEventListener('change', applyRiskThresholdInputs);
+    qs('#risk-thres-reset').addEventListener('click', ()=>{
+      riskConfig = {...defaultRiskConfig};
+      saveRiskConfig(riskConfig);
+      syncRiskThresholdInputs();
+      renderRisksTable();
+      drawMatrix();
+      renderDashboard();
+    });
+    qs('#risk-filter-status').addEventListener('change', ()=>{
+      riskFilterStatus = qs('#risk-filter-status').value;
+      renderRisksTable();
+      drawMatrix();
+      renderDashboard();
+    });
+    qs('#risk-filter-level').addEventListener('change', ()=>{
+      riskFilterLevel = qs('#risk-filter-level').value;
+      renderRisksTable();
+      drawMatrix();
+      renderDashboard();
+    });
+    qs('#risk-filter-category').addEventListener('change', ()=>{
+      riskFilterCategory = qs('#risk-filter-category').value;
+      renderRisksTable();
+      drawMatrix();
+      renderDashboard();
+    });
+    qs('#risk-sort-field').addEventListener('change', ()=>{
+      riskSortField = qs('#risk-sort-field').value || 'score';
+      renderRisksTable();
+      drawMatrix();
+    });
+    qs('#risk-sort-dir').addEventListener('change', ()=>{
+      riskSortDir = qs('#risk-sort-dir').value || 'desc';
+      renderRisksTable();
+      drawMatrix();
+    });
+    // sync thresholds into inputs
+    syncRiskThresholdInputs();
+    refreshAll();
+  });
   </script>
 </body>
 </html>
