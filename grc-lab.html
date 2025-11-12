@@ -1306,6 +1306,7 @@ function saveSoA(){ save(K.soa, soa); }
     populateTreatmentDropdownControls();
     renderGapTable();
     renderDashboard();
+    renderSoATable();
   }
 
   function resetControlForm(){
@@ -2323,6 +2324,7 @@ function exportSoACSV(){
     renderTreatmentsTable();
     drawMatrix();
     generateAuditorSummary();
+    renderSoATable();
   }
 
   // ---------- Init ----------
@@ -2415,6 +2417,8 @@ function exportSoACSV(){
         drawMatrix();
       });
     }
+    const btnSoAExport = qs('#soa-export');
+if(btnSoAExport) btnSoAExport.addEventListener('click', exportSoACSV);
 
     // Threshold inputs
     const thHigh = qs('#risk-thres-high');
