@@ -4,7 +4,6 @@
   <title>GRC Practice Lab – John B Joseph</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-
   <!-- Theme CSS from your site -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet"/>
   <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css"/>
@@ -17,7 +16,6 @@
   <link rel="stylesheet" href="css/flaticon.css"/>
   <link rel="stylesheet" href="css/icomoon.css"/>
   <link rel="stylesheet" href="css/style.css"/>
-
   <style>
     .ftco-animate{opacity:1!important;visibility:visible!important;}
     .grc-lab-hero{padding-top:140px;padding-bottom:40px;}
@@ -49,9 +47,22 @@
       font-size:.9rem;
       white-space:pre-wrap;
     }
+    /* New styles for polish */
+    .toast-message{position:fixed;bottom:20px;right:20px;background:#10b981;color:#fff;padding:10px 20px;border-radius:6px;opacity:0;transition:opacity 0.3s;z-index:1000;}
+    .toast-message.show{opacity:1;}
+    .toast-message.error{background:#ef4444;}
+    .badge-count{background:#3b82f6;color:#fff;padding:2px 6px;border-radius:999px;font-size:0.75rem;margin-left:4px;}
+    /* Pagination */
+    .pagination{display:flex;justify-content:center;list-style:none;padding:0;}
+    .pagination li{margin:0 5px;}
+    .pagination a{color:#fff;text-decoration:none;padding:5px 10px;border:1px solid #1f2937;border-radius:4px;}
+    .pagination .active a{background:#3b82f6;border-color:#3b82f6;}
+    /* Bulk edit for SoA */
+    .bulk-edit-bar{background:#1f2937;padding:10px;border-radius:6px;margin-bottom:10px;display:none;}
+    .bulk-edit-bar.active{display:block;}
+    .soa-checkbox{width:auto;margin:0 auto;display:block;}
   </style>
 </head>
-
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
@@ -69,7 +80,6 @@
       </div>
     </div>
   </nav>
-
   <!-- Lab -->
   <section class="ftco-section grc-lab-hero">
     <div class="grc-lab-container container-fluid px-4 px-md-5">
@@ -81,7 +91,6 @@
           <p class="small-muted mb-0">Controls are paraphrased from ISO 27001, NIST CSF, PCI DSS, HIPAA for education only.</p>
         </div>
       </div>
-
       <!-- Tabs -->
       <div class="row mb-4">
         <div class="col-md-12 text-center grc-tab-buttons">
@@ -96,14 +105,13 @@
           <button class="btn btn-outline-light btn-sm" data-grc-tab="treatments">Treatments</button>
           <button class="btn btn-outline-light btn-sm" data-grc-tab="soa">SoA</button>
           <button class="btn btn-outline-light btn-sm" data-grc-tab="summary">Auditor Summary</button>
+          <button class="btn btn-outline-light btn-sm" data-grc-tab="reports">Reports</button> <!-- New tab for Reports -->
         </div>
       </div>
-
       <!-- Frameworks -->
       <div id="tab-frameworks" class="grc-tab active ftco-animate">
         <h3>Framework Library</h3>
         <p class="mb-3">Filter and review a unified control set aligned to ISO/NIST/PCI/HIPAA.</p>
-
         <div class="row mb-3">
           <div class="col-md-4 mb-2">
             <label class="text-muted small mb-1">Filter by Framework</label>
@@ -137,7 +145,6 @@
             <input id="framework-search" class="form-control form-control-sm" placeholder="Search by name, ID, description...">
           </div>
         </div>
-
         <div class="table-responsive bg-dark p-3 rounded">
           <table class="table table-dark table-striped table-hover table-sm mb-0">
             <thead>
@@ -156,7 +163,6 @@
           </div>
         </div>
       </div>
-
       <!-- Assets -->
       <div id="tab-assets" class="grc-tab ftco-animate">
         <h3>Asset Inventory</h3>
@@ -245,11 +251,11 @@
                 </table>
               </div>
               <div id="assets-empty" class="text-muted small mt-2">No assets yet.</div>
+              <ul class="pagination" id="assets-pagination"></ul> <!-- Pagination -->
             </div>
           </div>
         </div>
       </div>
-
       <!-- Risks -->
       <div id="tab-risks" class="grc-tab ftco-animate">
         <h3>Risk Register</h3>
@@ -326,7 +332,6 @@
                   <small id="risks-count" class="text-muted"></small>
                 </div>
               </div>
-
               <!-- Filters + sorting -->
               <div class="row mb-2">
                 <div class="col-md-4 mb-1">
@@ -366,7 +371,6 @@
                   </div>
                 </div>
               </div>
-
               <!-- Threshold settings -->
               <div class="bg-secondary rounded p-2 mb-2">
                 <div class="d-flex flex-wrap align-items-center">
@@ -386,7 +390,6 @@
                   <button id="risk-thres-reset" class="btn btn-sm btn-outline-light ml-auto">Reset</button>
                 </div>
               </div>
-
               <div class="table-responsive">
                 <table class="table table-dark table-striped table-hover table-sm mb-0">
                   <thead>
@@ -399,11 +402,11 @@
                 </table>
               </div>
               <div id="risks-empty" class="text-muted small mt-2">No risks yet.</div>
+              <ul class="pagination" id="risks-pagination"></ul> <!-- Pagination -->
             </div>
           </div>
         </div>
       </div>
-
       <!-- Local Controls -->
       <div id="tab-controls" class="grc-tab ftco-animate">
         <h3>Local Controls (Org Library)</h3>
@@ -477,11 +480,11 @@
                 </table>
               </div>
               <div id="controls-empty" class="text-muted small mt-2">No controls yet.</div>
+              <ul class="pagination" id="controls-pagination"></ul> <!-- Pagination -->
             </div>
           </div>
         </div>
       </div>
-
       <!-- Issues / Findings -->
       <div id="tab-issues" class="grc-tab ftco-animate">
         <h3>Issues &amp; Findings</h3>
@@ -566,11 +569,11 @@
                 </table>
               </div>
               <div id="issues-empty" class="text-muted small mt-2">No issues yet.</div>
+              <ul class="pagination" id="issues-pagination"></ul> <!-- Pagination -->
             </div>
           </div>
         </div>
       </div>
-
       <!-- Gap Analysis -->
       <div id="tab-gap" class="grc-tab ftco-animate">
         <h3>Gap analysis &amp; heatmap</h3>
@@ -592,7 +595,6 @@
           <div class="mt-2 text-right"><small id="gap-overall-coverage" class="text-muted"></small></div>
         </div>
       </div>
-
       <!-- Dashboard -->
       <div id="tab-dashboard" class="grc-tab ftco-animate">
         <h3>Dashboard</h3>
@@ -610,7 +612,6 @@
             <div class="dashboard-card p-3 h-100"><div class="label">Issues</div><div class="value" id="dash-issues">0</div><div class="sub"><span id="dash-overdue">0</span> overdue</div></div>
           </div>
         </div>
-
         <div class="row mt-2">
           <div class="col-md-4 mb-3">
             <div class="dashboard-card p-3 h-100 d-flex flex-column justify-content-between">
@@ -638,7 +639,6 @@
           </div>
         </div>
       </div>
-
       <!-- Risk Matrix -->
       <div id="tab-matrix" class="grc-tab ftco-animate">
         <h3>Risk Matrix (Inherent vs Residual)</h3>
@@ -655,7 +655,6 @@
           <div id="matrix-legend" class="mt-3 text-center text-muted small"></div>
         </div>
       </div>
-
       <!-- Treatments -->
       <div id="tab-treatments" class="grc-tab ftco-animate">
         <h3>Treatments (Mitigation Plan)</h3>
@@ -733,48 +732,112 @@
                 </table>
               </div>
               <div id="treat-empty" class="text-muted small mt-2">No treatment actions yet.</div>
+              <ul class="pagination" id="treatments-pagination"></ul> <!-- Pagination -->
             </div>
           </div>
         </div>
       </div>
-
-<!-- SoA -->
-<div id="tab-soa" class="grc-tab ftco-animate">
-  <h3>Statement of Applicability (SoA)</h3>
-  <p class="mb-3 small-muted">
-    Applicability & implementation against the unified framework library. Edit rationale/evidence inline; data persists locally.
-  </p>
-
-  <div class="bg-dark p-3 rounded mb-2">
-    <div class="d-flex justify-content-between align-items-center">
-      <div class="small text-muted">
-        <span id="soa-count"></span>
+      <!-- SoA -->
+      <div id="tab-soa" class="grc-tab ftco-animate">
+        <h3>Statement of Applicability (SoA)</h3>
+        <p class="mb-3 small-muted">
+          Applicability & implementation against the unified framework library. Edit rationale/evidence inline; data persists locally.
+        </p>
+        <div class="bg-dark p-3 rounded mb-2">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="small text-muted">
+              <span id="soa-count"></span>
+            </div>
+            <div>
+              <button id="soa-export" class="btn btn-sm btn-outline-light">Export SoA CSV</button>
+            </div>
+          </div>
+        </div>
+        <!-- New filters for SoA -->
+        <div class="row mb-3">
+          <div class="col-md-3 mb-2">
+            <label class="text-muted small mb-1">Filter by Framework</label>
+            <select id="soa-framework-filter" class="form-control form-control-sm">
+              <option value="all">All frameworks</option>
+              <option value="ISO 27001">ISO 27001</option>
+              <option value="NIST CSF">NIST CSF</option>
+              <option value="PCI DSS">PCI DSS</option>
+              <option value="HIPAA">HIPAA</option>
+            </select>
+          </div>
+          <div class="col-md-3 mb-2">
+            <label class="text-muted small mb-1">Filter by Category</label>
+            <select id="soa-category-filter" class="form-control form-control-sm">
+              <option value="all">All categories</option>
+              <option>Access Control</option>
+              <option>Identity &amp; Authentication</option>
+              <option>Logging &amp; Monitoring</option>
+              <option>Encryption &amp; Key Management</option>
+              <option>Backup &amp; Recovery</option>
+              <option>Change Management</option>
+              <option>Vulnerability Management</option>
+              <option>Incident Response</option>
+              <option>Vendor Risk</option>
+              <option>Policy &amp; Governance</option>
+              <option>Awareness &amp; Training</option>
+            </select>
+          </div>
+          <div class="col-md-3 mb-2">
+            <label class="text-muted small mb-1">Filter by Applicability</label>
+            <select id="soa-applicability-filter" class="form-control form-control-sm">
+              <option value="all">All</option>
+              <option>Applicable</option>
+              <option>Not Applicable</option>
+            </select>
+          </div>
+          <div class="col-md-3 mb-2">
+            <label class="text-muted small mb-1">Filter by Implementation</label>
+            <select id="soa-implementation-filter" class="form-control form-control-sm">
+              <option value="all">All</option>
+              <option>In place</option>
+              <option>Planned</option>
+              <option>Not implemented</option>
+              <option>Not applicable</option>
+            </select>
+          </div>
+        </div>
+        <!-- Bulk edit bar -->
+        <div class="bulk-edit-bar" id="soa-bulk-bar">
+          <label class="text-muted small mb-1">Bulk Edit Selected:</label>
+          <select id="bulk-applicability" class="soa-select mr-2">
+            <option value="">Set Applicability...</option>
+            <option>Applicable</option>
+            <option>Not Applicable</option>
+          </select>
+          <select id="bulk-implementation" class="soa-select mr-2">
+            <option value="">Set Implementation...</option>
+            <option>In place</option>
+            <option>Planned</option>
+            <option>Not implemented</option>
+            <option>Not applicable</option>
+          </select>
+          <button id="bulk-apply" class="btn btn-sm btn-primary">Apply</button>
+          <button id="bulk-clear" class="btn btn-sm btn-outline-light ml-2">Clear Selection</button>
+        </div>
+        <div class="table-responsive bg-dark p-3 rounded">
+          <table class="table table-dark table-striped table-hover table-sm mb-0">
+            <thead>
+              <tr>
+                <th style="width:5%"><input type="checkbox" id="soa-select-all" class="soa-checkbox"></th>
+                <th style="width:10%">ID</th>
+                <th style="width:18%">Name</th>
+                <th style="width:14%">Category</th>
+                <th style="width:14%">Frameworks</th>
+                <th style="width:12%">Applicability</th>
+                <th style="width:12%">Implementation</th>
+                <th style="width:10%">Owner</th>
+                <th style="width:20%">Rationale / Evidence</th>
+              </tr>
+            </thead>
+            <tbody id="soa-table-body"></tbody>
+          </table>
+        </div>
       </div>
-      <div>
-        <button id="soa-export" class="btn btn-sm btn-outline-light">Export SoA CSV</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="table-responsive bg-dark p-3 rounded">
-    <table class="table table-dark table-striped table-hover table-sm mb-0">
-      <thead>
-        <tr>
-          <th style="width:10%">ID</th>
-          <th style="width:18%">Name</th>
-          <th style="width:14%">Category</th>
-          <th style="width:14%">Frameworks</th>
-          <th style="width:12%">Applicability</th>
-          <th style="width:12%">Implementation</th>
-          <th style="width:10%">Owner</th>
-          <th style="width:20%">Rationale / Evidence</th>
-        </tr>
-      </thead>
-      <tbody id="soa-table-body"></tbody>
-    </table>
-  </div>
-</div>
-
       
       <!-- Auditor Summary -->
       <div id="tab-summary" class="grc-tab ftco-animate">
@@ -783,16 +846,37 @@
         <div class="bg-dark p-3 rounded mb-3">
           <div class="d-flex justify-content-between align-items-center mb-2">
             <span class="small-muted">Summary is generated from your current assets, risks, controls, treatments and issues.</span>
-            <button id="summary-refresh" class="btn btn-sm btn-primary">Refresh summary</button>
+            <div>
+              <button id="summary-refresh" class="btn btn-sm btn-primary mr-2">Refresh summary</button>
+              <button id="summary-copy" class="btn btn-sm btn-outline-light mr-2">Copy to Clipboard</button>
+              <button id="summary-export-md" class="btn btn-sm btn-outline-light">Export as MD</button>
+            </div>
           </div>
           <textarea id="summary-text" class="form-control" rows="16"></textarea>
           <div class="small-muted mt-2">Tip: Copy–paste this into an audit report, SOC 2 narrative, or ISO 27001 SoA summary.</div>
         </div>
       </div>
-
+      <!-- New Reports Tab -->
+      <div id="tab-reports" class="grc-tab ftco-animate">
+        <h3>Reports</h3>
+        <p class="mb-3">Generate teaching-oriented reports in Markdown format for export.</p>
+        <div class="bg-dark p-3 rounded mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <span class="small-muted">Select report type to generate.</span>
+            <select id="report-type" class="form-control form-control-sm mr-2" style="width:200px;">
+              <option value="full-audit">Full Audit Report</option>
+              <option value="risk-register">Risk Register</option>
+              <option value="control-coverage">Control Coverage</option>
+              <option value="issue-summary">Issue Summary</option>
+            </select>
+            <button id="generate-report" class="btn btn-sm btn-primary">Generate & Export MD</button>
+          </div>
+          <textarea id="report-text" class="form-control" rows="16" readonly></textarea>
+          <div class="small-muted mt-2">Generated report can be copied or exported for teaching purposes.</div>
+        </div>
+      </div>
     </div>
   </section>
-
   <footer class="ftco-footer ftco-section">
     <div class="container">
       <div class="row"><div class="col-md-12 text-center">
@@ -800,12 +884,12 @@
       </div></div>
     </div>
   </footer>
-
+  <!-- Toast container -->
+  <div id="toast-container" class="toast-message"></div>
   <!-- Core scripts -->
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/main.js"></script>
-
   <!-- GRC Lab App -->
   <script>
   // ---------- Framework library ----------
@@ -862,11 +946,9 @@
       description:"People receive regular training on security, privacy, phishing and incident reporting.",
       frameworks:["ISO 27001","NIST CSF","HIPAA"],references:["ISO 27001 A.7.2.2","NIST PR.AT-1","HIPAA 164.308(a)(5)"]}
   ];
-
   // ---------- Risk configuration (thresholds) ----------
   const RISK_CFG_KEY = 'grc_risk_cfg_v1';
   const defaultRiskConfig = { highMin: 15, mediumMin: 6 };
-
   function loadRiskConfig(){
     try{
       const raw = localStorage.getItem(RISK_CFG_KEY);
@@ -880,7 +962,6 @@
       return {...defaultRiskConfig};
     }
   }
-
   function saveRiskConfig(cfg){
     riskConfig = {
       highMin: Math.max(1, Math.min(25, Number(cfg.highMin) || defaultRiskConfig.highMin)),
@@ -888,29 +969,24 @@
     };
     localStorage.setItem(RISK_CFG_KEY, JSON.stringify(riskConfig));
   }
-
   let riskConfig = loadRiskConfig();
-
-// ---------- Storage ----------
-const K = {
-  assets:'grc_assets_v1',
-  risks:'grc_risks_v1',
-  controls:'grc_controls_v1',
-  issues:'grc_issues_v1',
-  treats:'grc_treatments_v1',
-  soa:'grc_soa_v1' // NEW
-};
+  // ---------- Storage ----------
+  const K = {
+    assets:'grc_assets_v1',
+    risks:'grc_risks_v1',
+    controls:'grc_controls_v1',
+    issues:'grc_issues_v1',
+    treats:'grc_treatments_v1',
+    soa:'grc_soa_v1' // NEW
+  };
   const load = k => { try { const v = JSON.parse(localStorage.getItem(k)); return Array.isArray(v)?v:[]; } catch { return []; } };
   const save = (k,v) => localStorage.setItem(k,JSON.stringify(v));
-
   let assets = load(K.assets);
   let risks = load(K.risks);
   let controls = load(K.controls);
   let issues = load(K.issues);
   let treatments = load(K.treats);
   let soa = load(K.soa); // NEW: [{fcId, applicability, implementation, owner, rationale, evidence}]
-
-
   // ---------- Helpers ----------
   const qs = s => document.querySelector(s);
   const qsa = s => Array.from(document.querySelectorAll(s));
@@ -934,14 +1010,44 @@ const K = {
     if(score >= med)  return 'Medium';
     return 'Low';
   }
-
   // risk view state
   let riskFilterStatus = 'all';
   let riskFilterLevel  = 'all';
   let riskSortField    = 'score';
   let riskSortDir      = 'desc';
   let lastRiskView     = [];
-
+  // Pagination settings
+  const ITEMS_PER_PAGE = 10;
+  function renderPagination(containerId, totalItems, currentPage, renderFunc) {
+    const pagination = qs(`#${containerId}`);
+    if (!pagination) return;
+    pagination.innerHTML = '';
+    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+    for (let i = 1; i <= totalPages; i++) {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.textContent = i;
+      a.href = '#';
+      if (i === currentPage) li.classList.add('active');
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        renderFunc(i);
+      });
+      li.appendChild(a);
+      pagination.appendChild(li);
+    }
+  }
+  // Toast helper
+  function showToast(message, isError = false) {
+    const toast = qs('#toast-container');
+    toast.textContent = message;
+    toast.classList.add('show');
+    if (isError) toast.classList.add('error');
+    setTimeout(() => {
+      toast.classList.remove('show');
+      toast.classList.remove('error');
+    }, 3000);
+  }
   // ---------- Framework render ----------
   function renderFrameworkControls(){
     const tbody=qs('#frameworks-table-body');
@@ -968,11 +1074,10 @@ const K = {
     });
     countEl.textContent=`${filtered.length} control(s) shown of ${FRAMEWORK_CONTROLS.length}`;
   }
-
   // ---------- Assets ----------
+  let currentAssetsPage = 1;
   function selectedDataTypes(){ return qsa('.asset-dt').filter(cb=>cb.checked).map(cb=>cb.value); }
   function setDataTypes(vals){ qsa('.asset-dt').forEach(cb=>cb.checked=(vals||[]).includes(cb.value)); }
-
   function populateRiskAssetOptions(){
     const sel=qs('#risk-asset'); if(!sel) return;
     const cur=sel.value;
@@ -980,7 +1085,6 @@ const K = {
     assets.forEach(a=>{ const o=document.createElement('option'); o.value=a.id; o.textContent=a.name; sel.appendChild(o); });
     if(cur && assets.some(a=>a.id===cur)) sel.value=cur;
   }
-
   function populateIssueDropdowns(){
     const aSel=qs('#issue-asset'), rSel=qs('#issue-risk'), cSel=qs('#issue-control');
     if(aSel){
@@ -1002,11 +1106,14 @@ const K = {
       if(cur && controls.some(c=>c.id===cur)) cSel.value=cur;
     }
   }
-
-  function renderAssetsTable(){
+  function renderAssetsTable(page = 1){
+    currentAssetsPage = page;
     const tbody=qs('#assets-table-body'), empty=qs('#assets-empty'), count=qs('#assets-count');
     tbody.innerHTML='';
-    assets.forEach(a=>{
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const paginatedAssets = assets.slice(start, end);
+    paginatedAssets.forEach(a=>{
       const tr=document.createElement('tr');
       tr.innerHTML=`
         <td>${a.name}</td>
@@ -1022,17 +1129,16 @@ const K = {
     });
     empty.style.display = assets.length?'none':'block';
     count.textContent=`${assets.length} asset(s)`;
+    renderPagination('assets-pagination', assets.length, page, renderAssetsTable);
     populateRiskAssetOptions();
     populateIssueDropdowns();
     renderDashboard();
   }
-
   function resetAssetForm(){
     qs('#asset-form').reset();
     qs('#asset-id').value='';
     qs('#asset-form-submit').textContent='Save asset';
   }
-
   qs('#asset-form').addEventListener('submit',e=>{
     e.preventDefault();
     const id=qs('#asset-id').value;
@@ -1052,8 +1158,9 @@ const K = {
     const idx=assets.findIndex(x=>x.id===obj.id);
     if(idx>-1) assets[idx]=obj; else assets.push(obj);
     save(K.assets,assets);
-    renderAssetsTable();
+    renderAssetsTable(currentAssetsPage);
     resetAssetForm();
+    showToast('Asset saved successfully');
   });
   qs('#asset-form-cancel').addEventListener('click',resetAssetForm);
   qs('#assets-table-body').addEventListener('click',e=>{
@@ -1074,17 +1181,17 @@ const K = {
       if(!confirm('Delete this asset?')) return;
       assets=assets.filter(x=>x.id!==idD);
       save(K.assets,assets);
-      renderAssetsTable();
+      renderAssetsTable(currentAssetsPage);
+      showToast('Asset deleted');
     }
   });
-
   // ---------- Risks ----------
+  let currentRisksPage = 1;
   function resetRiskForm(){
     qs('#risk-form').reset();
     qs('#risk-id').value='';
     qs('#risk-form-submit').textContent='Save risk';
   }
-
   function populateControlRisks(){
     const sel=qs('#control-risks'); if(!sel) return;
     const cur=getMulti(sel);
@@ -1092,16 +1199,15 @@ const K = {
     risks.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.title;sel.appendChild(o);});
     setMulti(sel,cur);
   }
-    function getSoAEntry(fcId){
-  let e = soa.find(x=>x.fcId===fcId);
-  if(!e){
-    e = { fcId: fcId, applicability:'Applicable', implementation:'Auto', owner:'', rationale:'', evidence:'' };
-    soa.push(e);
+  function getSoAEntry(fcId){
+    let e = soa.find(x=>x.fcId===fcId);
+    if(!e){
+      e = { fcId: fcId, applicability:'Applicable', implementation:'Auto', owner:'', rationale:'', evidence:'' };
+      soa.push(e);
+    }
+    return e;
   }
-  return e;
-}
-function saveSoA(){ save(K.soa, soa); }
-
+  function saveSoA(){ save(K.soa, soa); }
   function riskCompare(a,b,field){
     switch(field){
       case 'score':      return (a.score||0)      - (b.score||0);
@@ -1114,12 +1220,10 @@ function saveSoA(){ save(K.soa, soa); }
         return (a.title||'').localeCompare(b.title||'');
     }
   }
-
-  function renderRisksTable(){
+  function renderRisksTable(page = 1){
+    currentRisksPage = page;
     const tbody=qs('#risks-table-body'), empty=qs('#risks-empty'), count=qs('#risks-count');
-
     let list = risks.slice();
-
     // filters
     if(riskFilterStatus !== 'all'){
       list = list.filter(r => (r.status||'') === riskFilterStatus);
@@ -1127,14 +1231,14 @@ function saveSoA(){ save(K.soa, soa); }
     if(riskFilterLevel !== 'all'){
       list = list.filter(r => rLevel(r.score) === riskFilterLevel);
     }
-
     // sort
     list.sort((a,b)=> riskCompare(a,b, riskSortField) * (riskSortDir === 'asc' ? 1 : -1));
-
     lastRiskView = list.slice();
-
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const paginatedList = list.slice(start, end);
     tbody.innerHTML='';
-    list.forEach(r=>{
+    paginatedList.forEach(r=>{
       const level=rLevel(r.score);
       const cls = level==='High'?'badge-danger':level==='Medium'?'badge-warning':level==='Low'?'badge-success':'';
       const tr=document.createElement('tr');
@@ -1152,12 +1256,12 @@ function saveSoA(){ save(K.soa, soa); }
     });
     empty.style.display=list.length?'none':'block';
     count.textContent=`${list.length} risk(s) shown of ${risks.length}`;
+    renderPagination('risks-pagination', list.length, page, renderRisksTable);
     populateControlRisks();
     populateIssueDropdowns();
     populateTreatmentDropdownRisks();
     renderDashboard();
   }
-
   qs('#risk-form').addEventListener('submit',e=>{
     e.preventDefault();
     const id=qs('#risk-id').value;
@@ -1185,8 +1289,9 @@ function saveSoA(){ save(K.soa, soa); }
     const idx=risks.findIndex(x=>x.id===obj.id);
     if(idx>-1) risks[idx]=obj; else risks.push(obj);
     save(K.risks,risks);
-    renderRisksTable();
+    renderRisksTable(currentRisksPage);
     resetRiskForm();
+    showToast('Risk saved successfully');
   });
   qs('#risk-form-cancel').addEventListener('click',resetRiskForm);
   qs('#risks-table-body').addEventListener('click',e=>{
@@ -1209,7 +1314,6 @@ function saveSoA(){ save(K.soa, soa); }
       if(!confirm('Delete this risk?')) return;
       risks=risks.filter(x=>x.id!==idD);
       save(K.risks,risks);
-
       // unlink from controls
       let changed=false;
       controls.forEach(c=>{
@@ -1219,7 +1323,6 @@ function saveSoA(){ save(K.soa, soa); }
         }
       });
       if(changed){ save(K.controls,controls); renderControlsTable(); }
-
       // unlink from issues
       issues.forEach(i=>{
         if(i.riskId===idD){
@@ -1229,16 +1332,14 @@ function saveSoA(){ save(K.soa, soa); }
       });
       save(K.issues,issues);
       renderIssuesTable();
-
       // unlink from treatments
       treatments.forEach(t=>{ if(t.riskId===idD) t.riskId=''; });
       save(K.treats,treatments);
       renderTreatmentsTable();
-
-      renderRisksTable();
+      renderRisksTable(currentRisksPage);
+      showToast('Risk deleted');
     }
   });
-
   function syncRiskThresholdInputs(){
     const h = qs('#risk-thres-high');
     const m = qs('#risk-thres-med');
@@ -1246,30 +1347,25 @@ function saveSoA(){ save(K.soa, soa); }
     h.value = riskConfig.highMin;
     m.value = riskConfig.mediumMin;
   }
-
   function applyRiskThresholdInputs(){
     const h = qs('#risk-thres-high');
     const m = qs('#risk-thres-med');
     if(!h || !m) return;
     let high = Number(h.value) || defaultRiskConfig.highMin;
     let med  = Number(m.value) || defaultRiskConfig.mediumMin;
-
     high = Math.max(1, Math.min(25, high));
     med  = Math.max(1, Math.min(25, med));
-
     if(high <= med){
       med = Math.max(1, high - 1);
       m.value = med;
     }
-
     saveRiskConfig({ highMin: high, mediumMin: med });
-
-    renderRisksTable();
+    renderRisksTable(currentRisksPage);
     drawMatrix();
     renderDashboard();
   }
-
   // ---------- Controls ----------
+  let currentControlsPage = 1;
   function populateControlFrameworks(){
     const sel=qs('#control-frameworks'); if(!sel) return;
     sel.innerHTML='';
@@ -1280,11 +1376,14 @@ function saveSoA(){ save(K.soa, soa); }
       sel.appendChild(o);
     });
   }
-
-  function renderControlsTable(){
+  function renderControlsTable(page = 1){
+    currentControlsPage = page;
     const tbody=qs('#controls-table-body'), empty=qs('#controls-empty'), count=qs('#controls-count');
     tbody.innerHTML='';
-    controls.forEach(c=>{
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const paginatedControls = controls.slice(start, end);
+    paginatedControls.forEach(c=>{
       const rc=(c.linkedRiskIds||[]).length;
       const fw=(c.linkedFrameworkControlIds||[]).length;
       const tr=document.createElement('tr');
@@ -1302,19 +1401,18 @@ function saveSoA(){ save(K.soa, soa); }
     });
     empty.style.display=controls.length?'none':'block';
     count.textContent=`${controls.length} control(s)`;
+    renderPagination('controls-pagination', controls.length, page, renderControlsTable);
     populateIssueDropdowns();
     populateTreatmentDropdownControls();
     renderGapTable();
     renderDashboard();
     renderSoATable();
   }
-
   function resetControlForm(){
     qs('#control-form').reset();
     qs('#control-id').value='';
     qs('#control-form-submit').textContent='Save control';
   }
-
   qs('#control-form').addEventListener('submit',e=>{
     e.preventDefault();
     const id=qs('#control-id').value;
@@ -1335,8 +1433,9 @@ function saveSoA(){ save(K.soa, soa); }
     const idx=controls.findIndex(x=>x.id===obj.id);
     if(idx>-1) controls[idx]=obj; else controls.push(obj);
     save(K.controls,controls);
-    renderControlsTable();
+    renderControlsTable(currentControlsPage);
     resetControlForm();
+    showToast('Control saved successfully');
   });
   qs('#control-form-cancel').addEventListener('click',resetControlForm);
   qs('#controls-table-body').addEventListener('click',e=>{
@@ -1358,7 +1457,6 @@ function saveSoA(){ save(K.soa, soa); }
       if(!confirm('Delete this control?')) return;
       controls=controls.filter(x=>x.id!==idD);
       save(K.controls,controls);
-
       // unlink from issues and treatments
       issues.forEach(i=>{
         if(i.controlId===idD){
@@ -1368,26 +1466,28 @@ function saveSoA(){ save(K.soa, soa); }
       });
       save(K.issues,issues);
       renderIssuesTable();
-
       treatments.forEach(t=>{ if(t.controlId===idD) t.controlId=''; });
       save(K.treats,treatments);
       renderTreatmentsTable();
-
-      renderControlsTable();
+      renderControlsTable(currentControlsPage);
+      showToast('Control deleted');
     }
   });
-
   // ---------- Issues ----------
+  let currentIssuesPage = 1;
   function resetIssueForm(){
     qs('#issue-form').reset();
     qs('#issue-id').value='';
     qs('#issue-form-submit').textContent='Save issue';
   }
-
-  function renderIssuesTable(){
+  function renderIssuesTable(page = 1){
+    currentIssuesPage = page;
     const tbody=qs('#issues-table-body'), empty=qs('#issues-empty'), count=qs('#issues-count');
     tbody.innerHTML='';
-    issues.forEach(i=>{
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const paginatedIssues = issues.slice(start, end);
+    paginatedIssues.forEach(i=>{
       const sev=i.severity||'';
       const cls = sev==='Critical'||sev==='High'?'badge-danger':sev==='Medium'?'badge-warning':'badge-success';
       const tr=document.createElement('tr');
@@ -1405,9 +1505,9 @@ function saveSoA(){ save(K.soa, soa); }
     });
     empty.style.display=issues.length?'none':'block';
     count.textContent=`${issues.length} issue(s)`;
+    renderPagination('issues-pagination', issues.length, page, renderIssuesTable);
     renderDashboard();
   }
-
   qs('#issue-form').addEventListener('submit',e=>{
     e.preventDefault();
     const id=qs('#issue-id').value;
@@ -1442,8 +1542,9 @@ function saveSoA(){ save(K.soa, soa); }
     const idx=issues.findIndex(x=>x.id===obj.id);
     if(idx>-1) issues[idx]=obj; else issues.push(obj);
     save(K.issues,issues);
-    renderIssuesTable();
+    renderIssuesTable(currentIssuesPage);
     resetIssueForm();
+    showToast('Issue saved successfully');
   });
   qs('#issue-form-cancel').addEventListener('click',resetIssueForm);
   qs('#issues-table-body').addEventListener('click',e=>{
@@ -1469,13 +1570,12 @@ function saveSoA(){ save(K.soa, soa); }
       if(!confirm('Delete this issue?')) return;
       issues=issues.filter(x=>x.id!==idD);
       save(K.issues,issues);
-      renderIssuesTable();
+      renderIssuesTable(currentIssuesPage);
+      showToast('Issue deleted');
     }
   });
-
   // ---------- Gap analysis ----------
   const heatClass = p => p>=80?'heat-good':p>=50?'heat-medium':p>0?'heat-low':'heat-none';
-
   function computeGapRows(){
     const byCat=new Map();
     FRAMEWORK_CONTROLS.forEach(fc=>{
@@ -1492,25 +1592,22 @@ function saveSoA(){ save(K.soa, soa); }
     });
     return Array.from(byCat.values()).sort((a,b)=>a.category.localeCompare(b.category));
   }
-
   function overallCoverage(rows){
     let total=0, imp=0;
     rows.forEach(r=>{total+=r.total;imp+=r.implemented;});
     return total?Math.round((imp/total)*100):0;
   }
-
   function autoImplForFrameworkControl(fcId){
-  const linked = controls.filter(c =>
-    Array.isArray(c.linkedFrameworkControlIds) && c.linkedFrameworkControlIds.includes(fcId)
-  );
-  if(linked.length === 0) return 'Not implemented';
-  const anyInPlace = linked.some(c => c.status === 'In place');
-  const anyPlanned = linked.some(c => c.status === 'Planned');
-  if(anyInPlace) return 'In place';
-  if(anyPlanned) return 'Planned';
-  return 'Not applicable';
-}
-
+    const linked = controls.filter(c =>
+      Array.isArray(c.linkedFrameworkControlIds) && c.linkedFrameworkControlIds.includes(fcId)
+    );
+    if(linked.length === 0) return 'Not implemented';
+    const anyInPlace = linked.some(c => c.status === 'In place');
+    const anyPlanned = linked.some(c => c.status === 'Planned');
+    if(anyInPlace) return 'In place';
+    if(anyPlanned) return 'Planned';
+    return 'Not applicable';
+  }
   function renderGapTable(){
     const tbody=qs('#gap-table-body'), overall=qs('#gap-overall-coverage');
     const rows=computeGapRows();
@@ -1533,80 +1630,115 @@ function saveSoA(){ save(K.soa, soa); }
       : 'Add local controls and map them to framework controls to see coverage.';
     updateCoveragePill(ov);
   }
-
-    function renderSoATable(){
-  const tbody = qs('#soa-table-body');
-  const count = qs('#soa-count');
-  if(!tbody || !count) return;
-
-  tbody.innerHTML = '';
-
-  FRAMEWORK_CONTROLS.forEach(fc=>{
-    const entry = getSoAEntry(fc.id);
-    const resolvedImpl = entry.implementation === 'Auto'
-      ? autoImplForFrameworkControl(fc.id)
-      : entry.implementation;
-
-    const frameworksTxt = (fc.frameworks||[]).join(', ');
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${fc.id}</td>
-      <td>${fc.name}</td>
-      <td>${fc.category}</td>
-      <td>${frameworksTxt}</td>
-      <td>
-        <select class="soa-select" data-soa-app="${fc.id}">
-          <option ${entry.applicability==='Applicable'?'selected':''}>Applicable</option>
-          <option ${entry.applicability==='Not Applicable'?'selected':''}>Not Applicable</option>
-        </select>
-      </td>
-      <td>
-        <select class="soa-select" data-soa-impl="${fc.id}">
-          <option ${entry.implementation==='Auto'?'selected':''} value="Auto">Auto (from local controls)</option>
-          <option ${entry.implementation==='In place'?'selected':''}>In place</option>
-          <option ${entry.implementation==='Planned'?'selected':''}>Planned</option>
-          <option ${entry.implementation==='Not implemented'?'selected':''}>Not implemented</option>
-          <option ${entry.implementation==='Not applicable'?'selected':''}>Not applicable</option>
-        </select>
-        <div class="small-muted">Resolved: <b>${resolvedImpl}</b></div>
-      </td>
-      <td><input class="soa-input" data-soa-owner="${fc.id}" placeholder="Owner" value="${entry.owner||''}"></td>
-      <td>
-        <input class="soa-input mb-1" data-soa-rationale="${fc.id}" placeholder="Rationale (why status/applicability)" value="${entry.rationale||''}">
-        <input class="soa-input soa-evidence" data-soa-evidence="${fc.id}" placeholder="Evidence URL(s), comma-separated" value="${entry.evidence||''}">
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  count.textContent = `${FRAMEWORK_CONTROLS.length} framework control(s) in SoA`;
-
-  // Delegate change events for all inputs/selects in table
-  tbody.onchange = (e)=>{
-    const t = e.target;
-    const fcId = t.getAttribute('data-soa-app') || t.getAttribute('data-soa-impl')
-               || t.getAttribute('data-soa-owner') || t.getAttribute('data-soa-rationale')
-               || t.getAttribute('data-soa-evidence');
-    if(!fcId) return;
-    const entry = getSoAEntry(fcId);
-
-    if(t.hasAttribute('data-soa-app')) entry.applicability = t.value;
-    if(t.hasAttribute('data-soa-impl')) entry.implementation = t.value;
-    if(t.hasAttribute('data-soa-owner')) entry.owner = t.value.trim();
-    if(t.hasAttribute('data-soa-rationale')) entry.rationale = t.value.trim();
-    if(t.hasAttribute('data-soa-evidence')) entry.evidence = t.value.trim();
-
-    saveSoA();
-
-    // Re-render to refresh the "Resolved" label if impl changed
-    if(t.hasAttribute('data-soa-impl')){
+  // ---------- SoA with filters and bulk edit ----------
+  function renderSoATable(){
+    const tbody = qs('#soa-table-body');
+    const count = qs('#soa-count');
+    if(!tbody || !count) return;
+    const f = qs('#soa-framework-filter') ? qs('#soa-framework-filter').value : 'all';
+    const c = qs('#soa-category-filter') ? qs('#soa-category-filter').value : 'all';
+    const appF = qs('#soa-applicability-filter') ? qs('#soa-applicability-filter').value : 'all';
+    const implF = qs('#soa-implementation-filter') ? qs('#soa-implementation-filter').value : 'all';
+    const filtered = FRAMEWORK_CONTROLS.filter(fc=>{
+      const entry = getSoAEntry(fc.id);
+      const resolvedImpl = entry.implementation === 'Auto' ? autoImplForFrameworkControl(fc.id) : entry.implementation;
+      const okF = f==='all' || fc.frameworks.includes(f);
+      const okC = c==='all' || fc.category === c;
+      const okApp = appF === 'all' || entry.applicability === appF;
+      const okImpl = implF === 'all' || resolvedImpl === implF;
+      return okF && okC && okApp && okImpl;
+    });
+    tbody.innerHTML = '';
+    filtered.forEach(fc=>{
+      const entry = getSoAEntry(fc.id);
+      const resolvedImpl = entry.implementation === 'Auto'
+        ? autoImplForFrameworkControl(fc.id)
+        : entry.implementation;
+      const frameworksTxt = (fc.frameworks||[]).join(', ');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><input type="checkbox" class="soa-checkbox" data-soa-id="${fc.id}"></td>
+        <td>${fc.id}</td>
+        <td>${fc.name}</td>
+        <td>${fc.category}</td>
+        <td>${frameworksTxt}</td>
+        <td>
+          <select class="soa-select" data-soa-app="${fc.id}">
+            <option ${entry.applicability==='Applicable'?'selected':''}>Applicable</option>
+            <option ${entry.applicability==='Not Applicable'?'selected':''}>Not Applicable</option>
+          </select>
+        </td>
+        <td>
+          <select class="soa-select" data-soa-impl="${fc.id}">
+            <option ${entry.implementation==='Auto'?'selected':''} value="Auto">Auto (from local controls)</option>
+            <option ${entry.implementation==='In place'?'selected':''}>In place</option>
+            <option ${entry.implementation==='Planned'?'selected':''}>Planned</option>
+            <option ${entry.implementation==='Not implemented'?'selected':''}>Not implemented</option>
+            <option ${entry.implementation==='Not applicable'?'selected':''}>Not applicable</option>
+          </select>
+          <div class="small-muted">Resolved: <b>${resolvedImpl}</b></div>
+        </td>
+        <td><input class="soa-input" data-soa-owner="${fc.id}" placeholder="Owner" value="${entry.owner||''}"></td>
+        <td>
+          <input class="soa-input mb-1" data-soa-rationale="${fc.id}" placeholder="Rationale (why status/applicability)" value="${entry.rationale||''}">
+          <input class="soa-input soa-evidence" data-soa-evidence="${fc.id}" placeholder="Evidence URL(s), comma-separated" value="${entry.evidence||''}">
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+    count.textContent = `${filtered.length} framework control(s) shown of ${FRAMEWORK_CONTROLS.length}`;
+    // Delegate change events for all inputs/selects in table
+    tbody.onchange = (e)=>{
+      const t = e.target;
+      const fcId = t.getAttribute('data-soa-app') || t.getAttribute('data-soa-impl')
+                 || t.getAttribute('data-soa-owner') || t.getAttribute('data-soa-rationale')
+                 || t.getAttribute('data-soa-evidence');
+      if(!fcId) return;
+      const entry = getSoAEntry(fcId);
+      if(t.hasAttribute('data-soa-app')) entry.applicability = t.value;
+      if(t.hasAttribute('data-soa-impl')) entry.implementation = t.value;
+      if(t.hasAttribute('data-soa-owner')) entry.owner = t.value.trim();
+      if(t.hasAttribute('data-soa-rationale')) entry.rationale = t.value.trim();
+      if(t.hasAttribute('data-soa-evidence')) entry.evidence = t.value.trim();
+      saveSoA();
+      // Re-render to refresh the "Resolved" label if impl changed
+      if(t.hasAttribute('data-soa-impl')){
+        renderSoATable();
+      }
+      showToast('SoA entry updated');
+    };
+    // Bulk edit logic
+    const bulkBar = qs('#soa-bulk-bar');
+    const selectAll = qs('#soa-select-all');
+    selectAll.addEventListener('change', (e) => {
+      qsa('.soa-checkbox[data-soa-id]').forEach(cb => cb.checked = e.target.checked);
+      bulkBar.classList.toggle('active', qsa('.soa-checkbox:checked[data-soa-id]').length > 0);
+    });
+    tbody.addEventListener('change', (e) => {
+      if (e.target.classList.contains('soa-checkbox')) {
+        bulkBar.classList.toggle('active', qsa('.soa-checkbox:checked[data-soa-id]').length > 0);
+      }
+    });
+    qs('#bulk-apply').addEventListener('click', () => {
+      const appVal = qs('#bulk-applicability').value;
+      const implVal = qs('#bulk-implementation').value;
+      if (!appVal && !implVal) return alert('Select a value to apply.');
+      qsa('.soa-checkbox:checked[data-soa-id]').forEach(cb => {
+        const fcId = cb.getAttribute('data-soa-id');
+        const entry = getSoAEntry(fcId);
+        if (appVal) entry.applicability = appVal;
+        if (implVal) entry.implementation = implVal;
+      });
+      saveSoA();
       renderSoATable();
-    }
-  };
-}
-
-
+      qs('#bulk-clear').click();
+      showToast('Bulk edit applied');
+    });
+    qs('#bulk-clear').addEventListener('click', () => {
+      qsa('.soa-checkbox').forEach(cb => cb.checked = false);
+      bulkBar.classList.remove('active');
+    });
+  }
   // ---------- Dashboard ----------
   function updateCoveragePill(p){
     const pill=qs('#dash-coverage-pill');
@@ -1614,7 +1746,6 @@ function saveSoA(){ save(K.soa, soa); }
     pill.classList.add(heatClass(p));
     pill.textContent = p>=80?'Strong coverage':p>=50?'Moderate coverage':p>0?'Limited coverage':'No implemented coverage yet';
   }
-
   function renderDashboard(){
     qs('#dash-assets').textContent=assets.length;
     qs('#dash-risks').textContent=risks.length;
@@ -1635,13 +1766,11 @@ function saveSoA(){ save(K.soa, soa); }
     qs('#dash-coverage').textContent=ov+'%';
     updateCoveragePill(ov);
   }
-
   // ---------- Risk Matrix ----------
   let showResidual=false;
   const canvas=qs('#risk-matrix-canvas');
   const ctx=canvas.getContext('2d');
   const legend=qs('#matrix-legend');
-
   function residualForRisk(r){
     const impl=controls.filter(c=>c.status==='In place' && (c.linkedRiskIds||[]).includes(r.id));
     const dropL=Math.min(2,impl.length);
@@ -1651,7 +1780,6 @@ function saveSoA(){ save(K.soa, soa); }
       impact:Math.max(1,(r.impact||1)-dropI)
     };
   }
-
   function drawMatrix(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     const size=110, off=90;
@@ -1663,7 +1791,6 @@ function saveSoA(){ save(K.soa, soa); }
     ctx.font="14px Poppins"; ctx.fillStyle="#aab2bd";
     ctx.fillText("Impact →",off+225,off-25);
     ctx.save(); ctx.translate(off-55,off+240); ctx.rotate(-Math.PI/2); ctx.fillText("Likelihood →",0,0); ctx.restore();
-
     let high=0,med=0,low=0;
     risks.forEach(r=>{
       let L=r.likelihood, I=r.impact;
@@ -1674,12 +1801,10 @@ function saveSoA(){ save(K.soa, soa); }
       }
       const score=rScore(L,I);
       const level=rLevel(score);
-
       let color="#27ae60";
       if(level==='High'){ color="#e63946"; high++; }
       else if(level==='Medium'){ color="#f1c40f"; med++; }
       else if(level==='Low'){ color="#27ae60"; low++; }
-
       ctx.beginPath();
       ctx.arc(off+(I-0.5)*size,off+(5-L+0.5)*size,12,0,2*Math.PI);
       ctx.fillStyle=color; ctx.fill();
@@ -1687,14 +1812,13 @@ function saveSoA(){ save(K.soa, soa); }
       ctx.textAlign="center"; ctx.textBaseline="middle";
       ctx.fillText(String(score),off+(I-0.5)*size,off+(5-L+0.5)*size);
     });
-
     legend.innerHTML = `<b>${risks.length}</b> risks — 
       <span style="color:#e63946">High: ${high}</span> |
       <span style="color:#f1c40f">Medium: ${med}</span> |
       <span style="color:#27ae60">Low: ${low}</span>`;
   }
-
   // ---------- Treatments ----------
+  let currentTreatmentsPage = 1;
   function populateTreatmentDropdownRisks(){
     const sel=qs('#treat-risk'); if(!sel) return;
     const cur=sel.value;
@@ -1709,11 +1833,14 @@ function saveSoA(){ save(K.soa, soa); }
     controls.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.name;sel.appendChild(o);});
     if(cur && controls.some(c=>c.id===cur)) sel.value=cur;
   }
-
-  function renderTreatmentsTable(){
+  function renderTreatmentsTable(page = 1){
+    currentTreatmentsPage = page;
     const tbody=qs('#treat-table-body'), empty=qs('#treat-empty'), count=qs('#treat-count');
     tbody.innerHTML='';
-    treatments.forEach(t=>{
+    const start = (page - 1) * ITEMS_PER_PAGE;
+    const end = start + ITEMS_PER_PAGE;
+    const paginatedTreatments = treatments.slice(start, end);
+    paginatedTreatments.forEach(t=>{
       const risk=risks.find(r=>r.id===t.riskId);
       const ctrl=controls.find(c=>c.id===t.controlId);
       const linked=[
@@ -1735,14 +1862,13 @@ function saveSoA(){ save(K.soa, soa); }
     });
     empty.style.display=treatments.length?'none':'block';
     count.textContent=`${treatments.length} treatment action(s)`;
+    renderPagination('treatments-pagination', treatments.length, page, renderTreatmentsTable);
   }
-
   function resetTreatForm(){
     qs('#treat-form').reset();
     qs('#treat-id').value='';
     qs('#treat-submit').textContent='Save action';
   }
-
   qs('#treat-form').addEventListener('submit',e=>{
     e.preventDefault();
     const id=qs('#treat-id').value;
@@ -1764,8 +1890,9 @@ function saveSoA(){ save(K.soa, soa); }
     const idx=treatments.findIndex(x=>x.id===obj.id);
     if(idx>-1) treatments[idx]=obj; else treatments.push(obj);
     save(K.treats,treatments);
-    renderTreatmentsTable();
+    renderTreatmentsTable(currentTreatmentsPage);
     resetTreatForm();
+    showToast('Treatment saved successfully');
   });
   qs('#treat-cancel').addEventListener('click',resetTreatForm);
   qs('#treat-table-body').addEventListener('click',e=>{
@@ -1790,10 +1917,10 @@ function saveSoA(){ save(K.soa, soa); }
       if(!confirm('Delete this treatment action?')) return;
       treatments=treatments.filter(x=>x.id!==idD);
       save(K.treats,treatments);
-      renderTreatmentsTable();
+      renderTreatmentsTable(currentTreatmentsPage);
+      showToast('Treatment deleted');
     }
   });
-
   // ---------- CSV Export helpers ----------
   function escapeCSVVal(v){
     if(v==null) return '';
@@ -1803,7 +1930,6 @@ function saveSoA(){ save(K.soa, soa); }
     }
     return s;
   }
-
   function downloadCSV(filename, rows, columns){
     const header = columns.map(c=>escapeCSVVal(c.header)).join(',');
     const lines = [header];
@@ -1824,7 +1950,6 @@ function saveSoA(){ save(K.soa, soa); }
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
-
   function exportAssetsCSV(){
     const cols = [
       {header:'Name',        key:'name'},
@@ -1836,7 +1961,6 @@ function saveSoA(){ save(K.soa, soa); }
     ];
     downloadCSV('grc_assets.csv', assets, cols);
   }
-
   function exportRisksCSV(){
     const rows = (lastRiskView && lastRiskView.length) ? lastRiskView : risks;
     const cols = [
@@ -1853,7 +1977,6 @@ function saveSoA(){ save(K.soa, soa); }
     ];
     downloadCSV('grc_risks.csv', rows, cols);
   }
-
   function exportControlsCSV(){
     const cols = [
       {header:'Name',        key:'name'},
@@ -1866,51 +1989,45 @@ function saveSoA(){ save(K.soa, soa); }
     ];
     downloadCSV('grc_controls.csv', controls, cols);
   }
-
-function exportSoACSV(){
-  const rows = FRAMEWORK_CONTROLS.map(fc=>{
-    const entry = getSoAEntry(fc.id);
-    const resolvedImpl = entry.implementation === 'Auto'
-      ? autoImplForFrameworkControl(fc.id)
-      : entry.implementation;
-
-    const mapped = controls
-      .filter(c => Array.isArray(c.linkedFrameworkControlIds) && c.linkedFrameworkControlIds.includes(fc.id))
-      .map(c => c.name)
-      .join('; ');
-
-    return {
-      id: fc.id,
-      name: fc.name,
-      category: fc.category,
-      frameworks: (fc.frameworks||[]).join('; '),
-      applicability: entry.applicability || 'Applicable',
-      implementation_selected: entry.implementation || 'Auto',
-      implementation_resolved: resolvedImpl,
-      mapped_local_controls: mapped,
-      owner: entry.owner || '',
-      rationale: entry.rationale || '',
-      evidence: entry.evidence || ''
-    };
-  });
-
-  const cols = [
-    {header:'Framework Control ID', key:'id'},
-    {header:'Name', key:'name'},
-    {header:'Category', key:'category'},
-    {header:'Frameworks', key:'frameworks'},
-    {header:'Applicability', key:'applicability'},
-    {header:'Implementation (Selected)', key:'implementation_selected'},
-    {header:'Implementation (Resolved)', key:'implementation_resolved'},
-    {header:'Mapped Local Controls', key:'mapped_local_controls'},
-    {header:'Owner', key:'owner'},
-    {header:'Rationale', key:'rationale'},
-    {header:'Evidence URLs', key:'evidence'}
-  ];
-
-  downloadCSV('grc_soa.csv', rows, cols);
-}
-
+  function exportSoACSV(){
+    const rows = FRAMEWORK_CONTROLS.map(fc=>{
+      const entry = getSoAEntry(fc.id);
+      const resolvedImpl = entry.implementation === 'Auto'
+        ? autoImplForFrameworkControl(fc.id)
+        : entry.implementation;
+      const mapped = controls
+        .filter(c => Array.isArray(c.linkedFrameworkControlIds) && c.linkedFrameworkControlIds.includes(fc.id))
+        .map(c => c.name)
+        .join('; ');
+      return {
+        id: fc.id,
+        name: fc.name,
+        category: fc.category,
+        frameworks: (fc.frameworks||[]).join('; '),
+        applicability: entry.applicability || 'Applicable',
+        implementation_selected: entry.implementation || 'Auto',
+        implementation_resolved: resolvedImpl,
+        mapped_local_controls: mapped,
+        owner: entry.owner || '',
+        rationale: entry.rationale || '',
+        evidence: entry.evidence || ''
+      };
+    });
+    const cols = [
+      {header:'Framework Control ID', key:'id'},
+      {header:'Name', key:'name'},
+      {header:'Category', key:'category'},
+      {header:'Frameworks', key:'frameworks'},
+      {header:'Applicability', key:'applicability'},
+      {header:'Implementation (Selected)', key:'implementation_selected'},
+      {header:'Implementation (Resolved)', key:'implementation_resolved'},
+      {header:'Mapped Local Controls', key:'mapped_local_controls'},
+      {header:'Owner', key:'owner'},
+      {header:'Rationale', key:'rationale'},
+      {header:'Evidence URLs', key:'evidence'}
+    ];
+    downloadCSV('grc_soa.csv', rows, cols);
+  }
     
   function exportIssuesCSV(){
     const cols = [
@@ -1925,7 +2042,6 @@ function exportSoACSV(){
     ];
     downloadCSV('grc_issues.csv', issues, cols);
   }
-
   function exportTreatmentsCSV(){
     const cols = [
       {header:'Title',       key:'title'},
@@ -1939,14 +2055,12 @@ function exportSoACSV(){
     ];
     downloadCSV('grc_treatments.csv', treatments, cols);
   }
-
   // ---------- Export / Import / Demo / Reset ----------
   function setImportStatus(msg,err){
     const el=qs('#import-status');
     el.textContent=msg||'';
     el.style.color=err?'#fca5a5':'#9ca3af';
   }
-
   function exportScenario(){
     const payload={
       version:3,
@@ -1964,7 +2078,6 @@ function exportSoACSV(){
     URL.revokeObjectURL(url);
     setImportStatus('Exported current data as JSON.',false);
   }
-
   function importScenarioFile(file){
     if(!file) return;
     const reader=new FileReader();
@@ -1989,7 +2102,6 @@ function exportSoACSV(){
     reader.onerror=()=>setImportStatus('Failed to read file.',true);
     reader.readAsText(file);
   }
-
   function loadDemoScenario(){
     assets = [
       {
@@ -2020,7 +2132,6 @@ function exportSoACSV(){
         notes:"APIs used by partner systems and hospital EHR platforms."
       }
     ];
-
     risks = [
       {
         id:"RSK-DEMO-1",
@@ -2062,7 +2173,6 @@ function exportSoACSV(){
         notes:"Availability dependency on upstream cloud and key integration vendors."
       }
     ];
-
     controls = [
       {
         id:"CTL-DEMO-SSO",
@@ -2105,7 +2215,6 @@ function exportSoACSV(){
         linkedFrameworkControlIds:["CTRL-VND-01","CTRL-VND-02"]
       }
     ];
-
     issues = [
       {
         id:"ISS-DEMO-1",
@@ -2150,7 +2259,6 @@ function exportSoACSV(){
         linkedSummary:"Asset: MediCloud Integration APIs | Risk: Vendor outage impacting MediCloud APIs | Control: Vendor due diligence and SLA review"
       }
     ];
-
     treatments = [
       {
         id:"TRT-DEMO-1",
@@ -2186,20 +2294,16 @@ function exportSoACSV(){
         notes:"Create and test playbook covering communication, failover and rollback steps."
       }
     ];
-
     soa = [];
-
     save(K.assets,assets);
     save(K.risks,risks);
     save(K.controls,controls);
     save(K.issues,issues);
     save(K.treats,treatments);
     save(K.soa,soa);
-
     refreshAll();
     setImportStatus('Loaded demo MediCloud scenario into this browser (previous lab data was overwritten).',false);
   }
-
   function resetLab(){
     if(!confirm('This will clear all assets, risks, controls, issues and treatments in this browser. Continue?')) return;
     assets=[];risks=[];controls=[];issues=[];treatments=[];soa=[];
@@ -2210,13 +2314,12 @@ function exportSoACSV(){
     syncRiskThresholdInputs();
     setImportStatus('Lab reset: all data cleared from this browser.',false);
   }
-
   // ---------- Tabs ----------
   function bindTabs(){
     const buttons=qsa('[data-grc-tab]');
     const mapping={};
-   ['frameworks','assets','risks','controls','issues','gap','dashboard','matrix','treatments','summary','soa']
-  .forEach(id=>mapping[id]=qs('#tab-'+id));
+    ['frameworks','assets','risks','controls','issues','gap','dashboard','matrix','treatments','summary','soa','reports']
+    .forEach(id=>mapping[id]=qs('#tab-'+id));
     buttons.forEach(btn=>{
       btn.addEventListener('click',()=>{
         const tgt=btn.getAttribute('data-grc-tab');
@@ -2233,10 +2336,10 @@ function exportSoACSV(){
         if(tgt==='matrix') drawMatrix();
         if(tgt==='summary') generateAuditorSummary();
         if(tgt==='soa') renderSoATable();
+        if(tgt==='reports') generateReport(); // New
       });
     });
   }
-
   // ---------- Auditor-style Summary ----------
   function listPhrase(items,max){
     if(!items || !items.length) return '';
@@ -2245,16 +2348,13 @@ function exportSoACSV(){
     if(arr.length===2) return `${arr[0]} and ${arr[1]}`;
     return `${arr.slice(0,-1).join(', ')} and ${arr[arr.length-1]}`;
   }
-
   function generateAuditorSummary(){
     const lines=[];
-
     const totalAssets=assets.length;
     const highAssets=assets.filter(a=>a.criticality==='High');
     const assetNames=assets.map(a=>a.name);
     const keyAssets=listPhrase(highAssets.map(a=>a.name),3) || listPhrase(assetNames,3) || 'key information assets';
-    lines.push(`1. Scope and context\nThe organisation is using the GRC Practice Lab to model approximately ${totalAssets||'0'} key information assets and services. High-criticality assets currently include ${keyAssets}.`);
-
+    lines.push(`# Scope and context\nThe organisation is using the GRC Practice Lab to model approximately ${totalAssets||'0'} key information assets and services. High-criticality assets currently include ${keyAssets}.`);
     const totalRisks=risks.length;
     const highRisks=risks.filter(r=>rLevel(r.score)==='High');
     const medRisks=risks.filter(r=>rLevel(r.score)==='Medium');
@@ -2262,13 +2362,12 @@ function exportSoACSV(){
       const assetName=r.assetName ? ` (asset: ${r.assetName})` : '';
       return `${r.title}${assetName}, score ${r.score}`;
     });
-    let riskPara=`2. Risk posture\nA total of ${totalRisks||'0'} risks have been documented in the register. `;
+    let riskPara=`# Risk posture\nA total of ${totalRisks||'0'} risks have been documented in the register. `;
     riskPara+=`High risks: ${highRisks.length}; medium risks: ${medRisks.length}; remaining items are low or informational. `;
     if(exHigh.length){
       riskPara+=`Example high risks include ${listPhrase(exHigh,2)}.`;
     }
     lines.push(riskPara.trim());
-
     const rows=computeGapRows();
     const overall=overallCoverage(rows);
     const ctrlCount=controls.length;
@@ -2276,24 +2375,22 @@ function exportSoACSV(){
       const pct=r.total?Math.round((r.implemented/r.total)*100):0;
       return `${r.category}: ${pct}% implemented (${r.implemented}/${r.total}).`;
     });
-    let ctrlPara=`3. Control environment and framework coverage\nLocal controls defined in the lab: ${ctrlCount}. Overall implemented coverage across the paraphrased framework library is approximately ${overall}% of ${FRAMEWORK_CONTROLS.length} controls. `;
+    let ctrlPara=`# Control environment and framework coverage\nLocal controls defined in the lab: ${ctrlCount}. Overall implemented coverage across the paraphrased framework library is approximately ${overall}% of ${FRAMEWORK_CONTROLS.length} controls. `;
     if(catSnippets.length){
       ctrlPara+=`Coverage by category (sample): ${catSnippets.join(' ')}`;
     }
     lines.push(ctrlPara.trim());
-
     const openIssues=issues.filter(i=>i.status==='Open' || i.status==='In progress');
     const critIssues=issues.filter(i=>i.severity==='Critical' || i.severity==='High');
     const exIssue=openIssues.slice(0,2).map(i=>i.title);
     const openActions=treatments.filter(t=>t.status==='Open' || t.status==='In progress');
     const closedActions=treatments.filter(t=>t.status==='Closed');
-    let issuePara=`4. Issues, findings and action plans\nThere are ${issues.length} issue(s) recorded in the log, of which ${openIssues.length} are open or in progress and ${critIssues.length} are rated high or critical. `;
+    let issuePara=`# Issues, findings and action plans\nThere are ${issues.length} issue(s) recorded in the log, of which ${openIssues.length} are open or in progress and ${critIssues.length} are rated high or critical. `;
     if(exIssue.length){
       issuePara+=`Example open items include ${listPhrase(exIssue,2)}. `;
     }
     issuePara+=`The treatment register currently contains ${treatments.length} action item(s), with ${openActions.length} open/in progress and ${closedActions.length} closed.`;
     lines.push(issuePara.trim());
-
     const highCount=highRisks.length;
     const overallRows=computeGapRows();
     const ov=overallCoverage(overallRows);
@@ -2301,17 +2398,91 @@ function exportSoACSV(){
                   ov>=50?'developing, with several controls implemented but notable gaps remaining':
                   ov>0?'limited, with many controls still to be implemented':
                   'minimal, with framework controls largely not implemented yet';
-    let obs=`5. Overall observation\nSeveral high-impact risks have been identified${highCount?` (currently ${highCount} high-rated risk(s))`:''}. Control coverage is ${ov}% and is best described as ${covDesc}. `;
+    let obs=`# Overall observation\nSeveral high-impact risks have been identified${highCount?` (currently ${highCount} high-rated risk(s))`:''}. Control coverage is ${ov}% and is best described as ${covDesc}. `;
     if(openActions.length){
-      obs+=`A formal treatment plan is in place, with ${openActions.length} active remediation action(s) tracked against the risk register.`;
+      obs+=`A formal treatment treatment plan is in place, with ${openActions.length} active remediation action(s) tracked against the risk register.`;
     }else{
       obs+=`No active treatment actions are currently recorded against the risk register.`;
     }
     lines.push(obs.trim());
-
     qs('#summary-text').value = lines.join('\n\n');
   }
-
+  // ---------- Reports ----------
+  function generateReport(){
+    const type = qs('#report-type').value;
+    let content = '';
+    switch(type){
+      case 'full-audit':
+        content = generateFullAuditReport();
+        break;
+      case 'risk-register':
+        content = generateRiskRegisterReport();
+        break;
+      case 'control-coverage':
+        content = generateControlCoverageReport();
+        break;
+      case 'issue-summary':
+        content = generateIssueSummaryReport();
+        break;
+    }
+    qs('#report-text').value = content;
+    downloadMD('grc_report.md', content);
+  }
+  function generateFullAuditReport(){
+    let report = '# Full Audit Report\n\n';
+    report += qs('#summary-text').value; // Include auditor summary
+    report += '\n\n## Risk Register\n' + generateRiskRegisterReport(false);
+    report += '\n\n## Control Coverage\n' + generateControlCoverageReport(false);
+    report += '\n\n## Issue Summary\n' + generateIssueSummaryReport(false);
+    return report;
+  }
+  function generateRiskRegisterReport(full = true){
+    let report = full ? '# Risk Register Report\n\n' : '';
+    risks.forEach(r => {
+      report += `### ${r.title}\n`;
+      report += `- Asset: ${r.assetName || '-'}\n`;
+      report += `- Category: ${r.category}\n`;
+      report += `- Score: ${r.score} (${rLevel(r.score)})\n`;
+      report += `- Status: ${r.status}\n`;
+      report += `- Notes: ${r.notes || '-'}\n\n`;
+    });
+    return report;
+  }
+  function generateControlCoverageReport(full = true){
+    let report = full ? '# Control Coverage Report\n\n' : '';
+    const rows = computeGapRows();
+    rows.forEach(r => {
+      const pct = r.total ? Math.round((r.implemented / r.total) * 100) : 0;
+      report += `### ${r.category}\n`;
+      report += `- Total: ${r.total}\n`;
+      report += `- Implemented: ${r.implemented}\n`;
+      report += `- Planned: ${r.plannedOnly}\n`;
+      report += `- Not Implemented: ${r.notImplemented}\n`;
+      report += `- Coverage: ${pct}%\n\n`;
+    });
+    return report;
+  }
+  function generateIssueSummaryReport(full = true){
+    let report = full ? '# Issue Summary Report\n\n' : '';
+    issues.forEach(i => {
+      report += `### ${i.title}\n`;
+      report += `- Type: ${i.type}\n`;
+      report += `- Severity: ${i.severity}\n`;
+      report += `- Status: ${i.status}\n`;
+      report += `- Linked: ${i.linkedSummary || '-'}\n`;
+      report += `- Notes: ${i.notes || '-'}\n\n`;
+    });
+    return report;
+  }
+  function downloadMD(filename, content){
+    const blob = new Blob([content], {type:'text/markdown;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
   // ---------- Refresh all ----------
   function refreshAll(){
     renderFrameworkControls();
@@ -2330,7 +2501,6 @@ function exportSoACSV(){
     generateAuditorSummary();
     renderSoATable();
   }
-
   // ---------- Init ----------
   document.addEventListener('DOMContentLoaded',()=>{
     ['#framework-filter','#category-filter','#framework-search'].forEach(sel=>{
@@ -2338,7 +2508,10 @@ function exportSoACSV(){
       if(!el) return;
       el.addEventListener(sel==='#framework-search'?'input':'change',renderFrameworkControls);
     });
-
+    ['#soa-framework-filter', '#soa-category-filter', '#soa-applicability-filter', '#soa-implementation-filter'].forEach(sel => {
+      const el = qs(sel);
+      if (el) el.addEventListener('change', renderSoATable);
+    });
     bindTabs();
     populateControlFrameworks();
     populateControlRisks();
@@ -2346,7 +2519,6 @@ function exportSoACSV(){
     populateIssueDropdowns();
     populateTreatmentDropdownRisks();
     populateTreatmentDropdownControls();
-
     qs('#btn-export').addEventListener('click',exportScenario);
     qs('#btn-import').addEventListener('click',()=>{
       setImportStatus('',false);
@@ -2361,7 +2533,6 @@ function exportSoACSV(){
       loadDemoScenario();
     });
     qs('#btn-reset').addEventListener('click',resetLab);
-
     qs('#toggle-inherent').addEventListener('click',()=>{
       showResidual=false;
       qs('#toggle-inherent').classList.add('btn-primary');
@@ -2380,87 +2551,59 @@ function exportSoACSV(){
       a.href=canvas.toDataURL('image/png');
       a.click();
     });
-
     qs('#summary-refresh').addEventListener('click',generateAuditorSummary);
-
-    // Risk filters & sorting
-    const rfStatus = qs('#risk-filter-status');
-    if(rfStatus){
-      rfStatus.addEventListener('change', ()=>{
-        riskFilterStatus = rfStatus.value;
-        renderRisksTable();
-        drawMatrix();
-        renderDashboard();
-      });
-    }
-
-    const rfLevel = qs('#risk-filter-level');
-    if(rfLevel){
-      rfLevel.addEventListener('change', ()=>{
-        riskFilterLevel = rfLevel.value;
-        renderRisksTable();
-        drawMatrix();
-        renderDashboard();
-      });
-    }
-
-    const rsField = qs('#risk-sort-field');
-    if(rsField){
-      rsField.addEventListener('change', ()=>{
-        riskSortField = rsField.value || 'score';
-        renderRisksTable();
-        drawMatrix();
-      });
-    }
-
-    const rsDir = qs('#risk-sort-dir');
-    if(rsDir){
-      rsDir.addEventListener('change', ()=>{
-        riskSortDir = rsDir.value || 'desc';
-        renderRisksTable();
-        drawMatrix();
-      });
-    }
-    const btnSoAExport = qs('#soa-export');
-if(btnSoAExport) btnSoAExport.addEventListener('click', exportSoACSV);
-
-    // Threshold inputs
-    const thHigh = qs('#risk-thres-high');
-    const thMed  = qs('#risk-thres-med');
-    const thReset = qs('#risk-thres-reset');
-
-    if(thHigh) thHigh.addEventListener('change', applyRiskThresholdInputs);
-    if(thMed)  thMed.addEventListener('change', applyRiskThresholdInputs);
-    if(thReset){
-      thReset.addEventListener('click', ()=>{
-        riskConfig = {...defaultRiskConfig};
-        saveRiskConfig(riskConfig);
-        syncRiskThresholdInputs();
-        renderRisksTable();
-        drawMatrix();
-        renderDashboard();
-      });
-    }
-
+    qs('#summary-copy').addEventListener('click', () => {
+      const text = qs('#summary-text');
+      text.select();
+      document.execCommand('copy');
+      showToast('Copied to clipboard');
+    });
+    qs('#summary-export-md').addEventListener('click', () => {
+      downloadMD('auditor_summary.md', qs('#summary-text').value);
+    });
+    qs('#generate-report').addEventListener('click', generateReport);
+    qs('#soa-export').addEventListener('click', exportSoACSV);
     // CSV buttons
-    const btnExpAssets = qs('#export-assets');
-    if(btnExpAssets) btnExpAssets.addEventListener('click', exportAssetsCSV);
-
-    const btnExpRisks = qs('#export-risks');
-    if(btnExpRisks) btnExpRisks.addEventListener('click', exportRisksCSV);
-
-    const btnExpControls = qs('#export-controls');
-    if(btnExpControls) btnExpControls.addEventListener('click', exportControlsCSV);
-
-    const btnExpIssues = qs('#export-issues');
-    if(btnExpIssues) btnExpIssues.addEventListener('click', exportIssuesCSV);
-
-    const btnExpTreats = qs('#export-treatments');
-    if(btnExpTreats) btnExpTreats.addEventListener('click', exportTreatmentsCSV);
-
+    qs('#export-assets').addEventListener('click', exportAssetsCSV);
+    qs('#export-risks').addEventListener('click', exportRisksCSV);
+    qs('#export-controls').addEventListener('click', exportControlsCSV);
+    qs('#export-issues').addEventListener('click', exportIssuesCSV);
+    qs('#export-treatments').addEventListener('click', exportTreatmentsCSV);
+    // Threshold inputs
+    qs('#risk-thres-high').addEventListener('change', applyRiskThresholdInputs);
+    qs('#risk-thres-med').addEventListener('change', applyRiskThresholdInputs);
+    qs('#risk-thres-reset').addEventListener('click', ()=>{
+      riskConfig = {...defaultRiskConfig};
+      saveRiskConfig(riskConfig);
+      syncRiskThresholdInputs();
+      renderRisksTable();
+      drawMatrix();
+      renderDashboard();
+    });
+    qs('#risk-filter-status').addEventListener('change', ()=>{
+      riskFilterStatus = qs('#risk-filter-status').value;
+      renderRisksTable();
+      drawMatrix();
+      renderDashboard();
+    });
+    qs('#risk-filter-level').addEventListener('change', ()=>{
+      riskFilterLevel = qs('#risk-filter-level').value;
+      renderRisksTable();
+      drawMatrix();
+      renderDashboard();
+    });
+    qs('#risk-sort-field').addEventListener('change', ()=>{
+      riskSortField = qs('#risk-sort-field').value || 'score';
+      renderRisksTable();
+      drawMatrix();
+    });
+    qs('#risk-sort-dir').addEventListener('change', ()=>{
+      riskSortDir = qs('#risk-sort-dir').value || 'desc';
+      renderRisksTable();
+      drawMatrix();
+    });
     // sync thresholds into inputs
     syncRiskThresholdInputs();
-
     refreshAll();
   });
   </script>
