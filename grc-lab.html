@@ -734,6 +734,44 @@
         </div>
       </div>
 
+<!-- SoA -->
+<div id="tab-soa" class="grc-tab ftco-animate">
+  <h3>Statement of Applicability (SoA)</h3>
+  <p class="mb-3 small-muted">
+    Applicability & implementation against the unified framework library. Edit rationale/evidence inline; data persists locally.
+  </p>
+
+  <div class="bg-dark p-3 rounded mb-2">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="small text-muted">
+        <span id="soa-count"></span>
+      </div>
+      <div>
+        <button id="soa-export" class="btn btn-sm btn-outline-light">Export SoA CSV</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive bg-dark p-3 rounded">
+    <table class="table table-dark table-striped table-hover table-sm mb-0">
+      <thead>
+        <tr>
+          <th style="width:10%">ID</th>
+          <th style="width:18%">Name</th>
+          <th style="width:14%">Category</th>
+          <th style="width:14%">Frameworks</th>
+          <th style="width:12%">Applicability</th>
+          <th style="width:12%">Implementation</th>
+          <th style="width:10%">Owner</th>
+          <th style="width:20%">Rationale / Evidence</th>
+        </tr>
+      </thead>
+      <tbody id="soa-table-body"></tbody>
+    </table>
+  </div>
+</div>
+
+      
       <!-- Auditor Summary -->
       <div id="tab-summary" class="grc-tab ftco-animate">
         <h3>Auditor-style summary</h3>
