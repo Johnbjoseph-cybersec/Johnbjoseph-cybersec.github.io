@@ -38,9 +38,9 @@
     .table td,.table th{vertical-align:middle;}
     .small-muted{color:#9ca3af;font-size:.85rem;}
     .soa-input, .soa-select{background:#0b1220;color:#e5e7eb;border:1px solid #1f2937;width:100%;}
-.soa-input{padding:6px 8px;border-radius:6px;}
-.soa-select{padding:4px 6px;border-radius:6px;}
-.soa-evidence{font-size:.85rem;opacity:.9;}
+    .soa-input{padding:6px 8px;border-radius:6px;}
+    .soa-select{padding:4px 6px;border-radius:6px;}
+    .soa-evidence{font-size:.85rem;opacity:.9;}
     textarea#summary-text{
       background:#020617;
       color:#e5e7eb;
@@ -891,14 +891,15 @@
 
   let riskConfig = loadRiskConfig();
 
-  // ---------- Storage ----------
-  const K = {
-    assets:'grc_assets_v1',
-    risks:'grc_risks_v1',
-    controls:'grc_controls_v1',
-    issues:'grc_issues_v1',
-    treats:'grc_treatments_v1'
-  };
+// ---------- Storage ----------
+const K = {
+  assets:'grc_assets_v1',
+  risks:'grc_risks_v1',
+  controls:'grc_controls_v1',
+  issues:'grc_issues_v1',
+  treats:'grc_treatments_v1',
+  soa:'grc_soa_v1' // NEW
+};
   const load = k => { try { const v = JSON.parse(localStorage.getItem(k)); return Array.isArray(v)?v:[]; } catch { return []; } };
   const save = (k,v) => localStorage.setItem(k,JSON.stringify(v));
 
@@ -907,6 +908,8 @@
   let controls = load(K.controls);
   let issues = load(K.issues);
   let treatments = load(K.treats);
+  let soa = load(K.soa); // NEW: [{fcId, applicability, implementation, owner, rationale, evidence}]
+
 
   // ---------- Helpers ----------
   const qs = s => document.querySelector(s);
@@ -1089,6 +1092,15 @@
     risks.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.title;sel.appendChild(o);});
     setMulti(sel,cur);
   }
+    function getSoAEntry(fcId){
+  let e = soa.find(x=>x.fcId===fcId);
+  if(!e){
+    e = { fcId: fcId, applicability:'Applicable', implementation:'Auto', owner:'', rationale:'', evidence:'' };
+    soa.push(e);
+  }
+  return e;
+}
+function saveSoA(){ save(K.soa, soa); }
 
   function riskCompare(a,b,field){
     switch(field){
@@ -1486,6 +1498,18 @@
     return total?Math.round((imp/total)*100):0;
   }
 
+  function autoImplForFrameworkControl(fcId){
+  const linked = controls.filter(c =>
+    Array.isArray(c.linkedFrameworkControlIds) && c.linkedFrameworkControlIds.includes(fcId)
+  );
+  if(linked.length === 0) return 'Not implemented';
+  const anyInPlace = linked.some(c => c.status === 'In place');
+  const anyPlanned = linked.some(c => c.status === 'Planned');
+  if(anyInPlace) return 'In place';
+  if(anyPlanned) return 'Planned';
+  return 'Not applicable';
+}
+
   function renderGapTable(){
     const tbody=qs('#gap-table-body'), overall=qs('#gap-overall-coverage');
     const rows=computeGapRows();
@@ -1508,6 +1532,79 @@
       : 'Add local controls and map them to framework controls to see coverage.';
     updateCoveragePill(ov);
   }
+
+    function renderSoATable(){
+  const tbody = qs('#soa-table-body');
+  const count = qs('#soa-count');
+  if(!tbody || !count) return;
+
+  tbody.innerHTML = '';
+
+  FRAMEWORK_CONTROLS.forEach(fc=>{
+    const entry = getSoAEntry(fc.id);
+    const resolvedImpl = entry.implementation === 'Auto'
+      ? autoImplForFrameworkControl(fc.id)
+      : entry.implementation;
+
+    const frameworksTxt = (fc.frameworks||[]).join(', ');
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${fc.id}</td>
+      <td>${fc.name}</td>
+      <td>${fc.category}</td>
+      <td>${frameworksTxt}</td>
+      <td>
+        <select class="soa-select" data-soa-app="${fc.id}">
+          <option ${entry.applicability==='Applicable'?'selected':''}>Applicable</option>
+          <option ${entry.applicability==='Not Applicable'?'selected':''}>Not Applicable</option>
+        </select>
+      </td>
+      <td>
+        <select class="soa-select" data-soa-impl="${fc.id}">
+          <option ${entry.implementation==='Auto'?'selected':''} value="Auto">Auto (from local controls)</option>
+          <option ${entry.implementation==='In place'?'selected':''}>In place</option>
+          <option ${entry.implementation==='Planned'?'selected':''}>Planned</option>
+          <option ${entry.implementation==='Not implemented'?'selected':''}>Not implemented</option>
+          <option ${entry.implementation==='Not applicable'?'selected':''}>Not applicable</option>
+        </select>
+        <div class="small-muted">Resolved: <b>${resolvedImpl}</b></div>
+      </td>
+      <td><input class="soa-input" data-soa-owner="${fc.id}" placeholder="Owner" value="${entry.owner||''}"></td>
+      <td>
+        <input class="soa-input mb-1" data-soa-rationale="${fc.id}" placeholder="Rationale (why status/applicability)" value="${entry.rationale||''}">
+        <input class="soa-input soa-evidence" data-soa-evidence="${fc.id}" placeholder="Evidence URL(s), comma-separated" value="${entry.evidence||''}">
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  count.textContent = `${FRAMEWORK_CONTROLS.length} framework control(s) in SoA`;
+
+  // Delegate change events for all inputs/selects in table
+  tbody.onchange = (e)=>{
+    const t = e.target;
+    const fcId = t.getAttribute('data-soa-app') || t.getAttribute('data-soa-impl')
+               || t.getAttribute('data-soa-owner') || t.getAttribute('data-soa-rationale')
+               || t.getAttribute('data-soa-evidence');
+    if(!fcId) return;
+    const entry = getSoAEntry(fcId);
+
+    if(t.hasAttribute('data-soa-app')) entry.applicability = t.value;
+    if(t.hasAttribute('data-soa-impl')) entry.implementation = t.value;
+    if(t.hasAttribute('data-soa-owner')) entry.owner = t.value.trim();
+    if(t.hasAttribute('data-soa-rationale')) entry.rationale = t.value.trim();
+    if(t.hasAttribute('data-soa-evidence')) entry.evidence = t.value.trim();
+
+    saveSoA();
+
+    // Re-render to refresh the "Resolved" label if impl changed
+    if(t.hasAttribute('data-soa-impl')){
+      renderSoATable();
+    }
+  };
+}
+
 
   // ---------- Dashboard ----------
   function updateCoveragePill(p){
@@ -1769,6 +1866,51 @@
     downloadCSV('grc_controls.csv', controls, cols);
   }
 
+function exportSoACSV(){
+  const rows = FRAMEWORK_CONTROLS.map(fc=>{
+    const entry = getSoAEntry(fc.id);
+    const resolvedImpl = entry.implementation === 'Auto'
+      ? autoImplForFrameworkControl(fc.id)
+      : entry.implementation;
+
+    const mapped = controls
+      .filter(c => Array.isArray(c.linkedFrameworkControlIds) && c.linkedFrameworkControlIds.includes(fc.id))
+      .map(c => c.name)
+      .join('; ');
+
+    return {
+      id: fc.id,
+      name: fc.name,
+      category: fc.category,
+      frameworks: (fc.frameworks||[]).join('; '),
+      applicability: entry.applicability || 'Applicable',
+      implementation_selected: entry.implementation || 'Auto',
+      implementation_resolved: resolvedImpl,
+      mapped_local_controls: mapped,
+      owner: entry.owner || '',
+      rationale: entry.rationale || '',
+      evidence: entry.evidence || ''
+    };
+  });
+
+  const cols = [
+    {header:'Framework Control ID', key:'id'},
+    {header:'Name', key:'name'},
+    {header:'Category', key:'category'},
+    {header:'Frameworks', key:'frameworks'},
+    {header:'Applicability', key:'applicability'},
+    {header:'Implementation (Selected)', key:'implementation_selected'},
+    {header:'Implementation (Resolved)', key:'implementation_resolved'},
+    {header:'Mapped Local Controls', key:'mapped_local_controls'},
+    {header:'Owner', key:'owner'},
+    {header:'Rationale', key:'rationale'},
+    {header:'Evidence URLs', key:'evidence'}
+  ];
+
+  downloadCSV('grc_soa.csv', rows, cols);
+}
+
+    
   function exportIssuesCSV(){
     const cols = [
       {header:'Title',    key:'title'},
@@ -2068,8 +2210,8 @@
   function bindTabs(){
     const buttons=qsa('[data-grc-tab]');
     const mapping={};
-    ['frameworks','assets','risks','controls','issues','gap','dashboard','matrix','treatments','summary']
-      .forEach(id=>mapping[id]=qs('#tab-'+id));
+   ['frameworks','assets','risks','controls','issues','gap','dashboard','matrix','treatments','summary','soa']
+  .forEach(id=>mapping[id]=qs('#tab-'+id));
     buttons.forEach(btn=>{
       btn.addEventListener('click',()=>{
         const tgt=btn.getAttribute('data-grc-tab');
@@ -2085,6 +2227,7 @@
         if(tgt==='gap') renderGapTable();
         if(tgt==='matrix') drawMatrix();
         if(tgt==='summary') generateAuditorSummary();
+        if(tgt==='soa') renderSoATable();
       });
     });
   }
