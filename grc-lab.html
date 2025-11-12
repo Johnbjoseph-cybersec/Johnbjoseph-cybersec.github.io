@@ -1949,9 +1949,9 @@ function exportSoACSV(){
 
   function exportScenario(){
     const payload={
-      version:2,
+      version:3,
       exportedAt:new Date().toISOString(),
-      assets,risks,controls,issues,treatments
+      assets,risks,controls,issues,treatments,soa
     };
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
     const url=URL.createObjectURL(blob);
@@ -1975,11 +1975,12 @@ function exportSoACSV(){
         risks  = Array.isArray(data.risks)?data.risks:[];
         controls = Array.isArray(data.controls)?data.controls:[];
         issues = Array.isArray(data.issues)?data.issues:[];
-        treatments = Array.isArray(data.treatments)?data.treatments:[]; // backward compatible
+        treatments = Array.isArray(data.treatments)?data.treatments:[];
+        soa = Array.isArray(data.soa)?data.soa:[];
         save(K.assets,assets); save(K.risks,risks); save(K.controls,controls);
-        save(K.issues,issues); save(K.treats,treatments);
+        save(K.issues,issues); save(K.treats,treatments); save(K.soa,soa);
         refreshAll();
-        setImportStatus(`Imported scenario: ${assets.length} assets, ${risks.length} risks, ${controls.length} controls, ${issues.length} issues, ${treatments.length} actions.`,false);
+        setImportStatus(`Imported scenario: ${assets.length} assets, ${risks.length} risks, ${controls.length} controls, ${issues.length} issues, ${treatments.length} actions, ${soa.length} SoA entries.`,false);
       }catch(err){
         console.error(err);
         setImportStatus('Failed to import scenario. Check JSON file.',true);
@@ -2186,11 +2187,14 @@ function exportSoACSV(){
       }
     ];
 
+    soa = [];
+
     save(K.assets,assets);
     save(K.risks,risks);
     save(K.controls,controls);
     save(K.issues,issues);
     save(K.treats,treatments);
+    save(K.soa,soa);
 
     refreshAll();
     setImportStatus('Loaded demo MediCloud scenario into this browser (previous lab data was overwritten).',false);
@@ -2198,7 +2202,7 @@ function exportSoACSV(){
 
   function resetLab(){
     if(!confirm('This will clear all assets, risks, controls, issues and treatments in this browser. Continue?')) return;
-    assets=[];risks=[];controls=[];issues=[];treatments=[];
+    assets=[];risks=[];controls=[];issues=[];treatments=[];soa=[];
     Object.values(K).forEach(k=>localStorage.removeItem(k));
     localStorage.removeItem(RISK_CFG_KEY);
     riskConfig = {...defaultRiskConfig};
