@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,13 +19,16 @@
   <!-- jsPDF for PDF export -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
+    body { background-color: #0a0e17; color: #e5e7eb; font-family: 'Poppins', sans-serif; }
     .ftco-animate{opacity:1!important;visibility:visible!important;}
-    .grc-lab-hero{padding-top:140px;padding-bottom:40px;}
-    .grc-tab-buttons .btn{margin-right:8px;margin-bottom:8px;}
+    .grc-lab-hero{padding-top:140px;padding-bottom:40px; background: linear-gradient(to bottom, #0a0e17, #1a1f2e);}
+    .grc-tab-buttons .btn{margin-right:8px;margin-bottom:8px; transition: all 0.3s ease;}
+    .grc-tab-buttons .btn:hover { transform: translateY(-2px); }
     .grc-tab{display:none;} .grc-tab.active{display:block;}
-    .grc-lab-container{width:80vw;max-width:1600px;margin:0 auto;}
-    @media (max-width:991.98px){.grc-lab-container{width:100vw;}}
-    .dashboard-card{border:1px solid rgba(255,255,255,.06);border-radius:10px;background:#111827;color:#fff;}
+    .grc-lab-container{width:90vw;max-width:1600px;margin:0 auto; padding: 20px; background: #111827; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);}
+    @media (max-width:991.98px){.grc-lab-container{width:100vw; padding: 10px;}}
+    .dashboard-card{border:1px solid rgba(255,255,255,.06);border-radius:10px;background:#1a1f2e;color:#fff; padding: 15px; transition: all 0.3s ease;}
+    .dashboard-card:hover { transform: translateY(-5px); box-shadow: 0 6px 25px rgba(0,0,0,0.6); }
     .dashboard-card .label{font-size:.75rem;letter-spacing:.06em;opacity:.7;text-transform:uppercase;}
     .dashboard-card .value{font-size:1.4rem;font-weight:600;}
     .dashboard-card .sub{font-size:.8rem;opacity:.8;}
@@ -35,20 +37,25 @@
     .heat-good{background:#1f8f3b;} .heat-medium{background:#a96b1f;}
     .heat-low{background:#8f3b1f;} .heat-none{background:#7a1f1f;}
     .heat-pill{border-radius:999px;padding:4px 10px;font-size:.8rem;display:inline-block;}
-    #risk-matrix-canvas{background:#0c0f12;border-radius:8px;width:100%;max-width:100%;}
-    .table td,.table th{vertical-align:middle;}
+    #risk-matrix-canvas{background:#0c0f12;border-radius:8px;width:100%;max-width:100%; border: 1px solid #2b3138;}
+    .table td,.table th{vertical-align:middle; padding: 12px;}
     .small-muted{color:#9ca3af;font-size:.85rem;}
     .soa-input, .soa-select{background:#0b1220;color:#e5e7eb;border:1px solid #1f2937;width:100%;}
     .soa-input{padding:6px 8px;border-radius:6px;}
     .soa-select{padding:4px 6px;border-radius:6px;}
     .soa-evidence{font-size:.85rem;opacity:.9;}
-    textarea#summary-text{
+    textarea#summary-text, textarea#report-text{
       background:#020617;
       color:#e5e7eb;
       border:none;
       font-family:Menlo,Consolas,monospace;
       font-size:.9rem;
       white-space:pre-wrap;
+      overflow-y: auto;
+      max-height: 600px;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
     }
     /* New styles for polish */
     .toast-message{position:fixed;bottom:20px;right:20px;background:#10b981;color:#fff;padding:10px 20px;border-radius:6px;opacity:0;transition:opacity 0.3s;z-index:1000;}
@@ -58,14 +65,15 @@
     /* Pagination */
     .pagination{display:flex;justify-content:center;list-style:none;padding:0;}
     .pagination li{margin:0 5px;}
-    .pagination a{color:#fff;text-decoration:none;padding:5px 10px;border:1px solid #1f2937;border-radius:4px;}
+    .pagination a{color:#fff;text-decoration:none;padding:5px 10px;border:1px solid #1f2937;border-radius:4px; transition: all 0.3s;}
+    .pagination a:hover { background: #3b82f6; border-color: #3b82f6; }
     .pagination .active a{background:#3b82f6;border-color:#3b82f6;}
     /* Bulk edit for SoA */
     .bulk-edit-bar{background:#1f2937;padding:10px;border-radius:6px;margin-bottom:10px;display:none;}
     .bulk-edit-bar.active{display:block;}
     .soa-checkbox{width:auto;margin:0 auto;display:block;}
     /* Guidance styles */
-    .guidance {background: #1f2937; padding: 15px; border-radius: 8px; margin-bottom: 20px;}
+    .guidance {background: #1f2937; padding: 15px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.4);}
     .guidance ul {list-style-type: decimal; padding-left: 20px;}
     .guidance li {margin-bottom: 10px;}
     /* Tooltips */
@@ -73,9 +81,23 @@
     .tooltip .tooltiptext {visibility: hidden; width: 200px; background-color: #020617; color: #fff; text-align: center; border-radius: 6px; padding: 5px; position: absolute; z-index: 1; bottom: 125%; left: 50%; margin-left: -100px; opacity: 0; transition: opacity 0.3s;}
     .tooltip:hover .tooltiptext {visibility: visible; opacity: 1;}
     /* Challenge mode */
-    .challenge-card {background: #111827; border: 1px solid #1f2937; border-radius: 8px; padding: 15px; margin-bottom: 15px;}
+    .challenge-card {background: #111827; border: 1px solid #1f2937; border-radius: 8px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.4);}
     .challenge-card h4 {margin-top: 0;}
     .challenge-score {color: #10b981; font-weight: bold;}
+    /* Enterprise style enhancements */
+    .navbar { background: #0a0e17 !important; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+    .table { border-radius: 8px; overflow: hidden; }
+    .table thead th { background: #1a1f2e; border-bottom: 2px solid #2b3138; }
+    .table tbody tr:hover { background: #1f2937; }
+    .btn-primary { background: #3b82f6; border-color: #3b82f6; }
+    .btn-primary:hover { background: #2563eb; }
+    .btn-outline-light { border-color: #4b5563; }
+    .btn-outline-light:hover { background: #4b5563; }
+    /* Scrollbar styling */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #0a0e17; }
+    ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
   </style>
 </head>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -110,6 +132,7 @@
       <div class="guidance">
         <h4>Welcome to the GRC Practice Lab</h4>
         <p>This tool is designed for aspiring GRC analysts, students, and professionals to hands-on practice cybersecurity governance, risk, and compliance concepts. Everything runs locally in your browser - no data leaves your device.</p>
+        <p class="small-muted"><strong>Disclaimer:</strong> All controls are paraphrased and intended solely for educational and practice purposes. This lab is not for real-world production use or compliance certification.</p>
         <ul>
           <li><strong>Start here:</strong> Use the tabs below to navigate. Begin with 'Guidance' for step-by-step instructions.</li>
           <li><strong>Learn by doing:</strong> Load templates or demos, add your own data, analyze gaps, generate reports.</li>
@@ -1180,7 +1203,7 @@
           <p><span class="tooltip">How to use<span class="tooltiptext">Auto-generated narrative. Refresh after changes. Copy/export for docs. Tip: Customize in reports tab.</span></span>: Executive summary generator.</p>
         </div>
         <h3>Auditor-style Summary</h3>
-        <p class="mb-3">Generated narrative for reports/decks.</p>
+        <p class="mb-3">Generated narrative narrative for reports/decks.</p>
         <div class="bg-dark p-3 rounded mb-3">
           <div class="d-flex justify-content-between align-items-center mb-2">
             <span class="small-muted">Based on current data.</span>
@@ -1286,7 +1309,6 @@
   <script>
   // ---------- Expanded Framework library (over 200 controls) ----------
   const FRAMEWORK_CONTROLS = [
-    // From search results, add more
     // ISO 27001 Annex A
     {id:"CTRL-5.1",name:"Policies for information security",category:"Organisational Controls",
       description:"Information security policy and topic-specific policies shall be defined, approved by management, published, communicated to and acknowledged by relevant personnel and relevant interested parties, and reviewed at planned intervals and if significant changes occur.",
@@ -1822,29 +1844,78 @@
   }
   function populateIssueDropdowns(){
     const aSel=qs('#issue-asset'), vSel=qs('#issue-vendor'), rSel=qs('#issue-risk'), cSel=qs('#issue-control');
+    const incASel=qs('#incident-asset'), incVSel=qs('#incident-vendor'), incRSel=qs('#incident-risk'), incCSel=qs('#incident-control');
     if(aSel){
-      const cur=aSel.value;
-      aSel.innerHTML='<option value="">Linked asset...</option>';
-      assets.forEach(a=>{const o=document.createElement('option');o.value=a.id;o.textContent=a.name;aSel.appendChild(o);});
-      if(cur && assets.some(a=>a.id===cur)) aSel.value=cur;
+      aSel.innerHTML = '<option value="">Linked asset...</option>';
+      assets.forEach(a => {
+        const o = document.createElement('option');
+        o.value = a.id;
+        o.textContent = a.name;
+        aSel.appendChild(o);
+      });
+    }
+    if(incASel){
+      incASel.innerHTML = '<option value="">Linked asset...</option>';
+      assets.forEach(a => {
+        const o = document.createElement('option');
+        o.value = a.id;
+        o.textContent = a.name;
+        incASel.appendChild(o);
+      });
     }
     if(vSel){
-      const cur=vSel.value;
-      vSel.innerHTML='<option value="">Linked vendor...</option>';
-      vendors.forEach(v=>{const o=document.createElement('option');o.value=v.id;o.textContent=v.name;vSel.appendChild(o);});
-      if(cur && vendors.some(v=>v.id===cur)) vSel.value=cur;
+      vSel.innerHTML = '<option value="">Linked vendor...</option>';
+      vendors.forEach(v => {
+        const o = document.createElement('option');
+        o.value = v.id;
+        o.textContent = v.name;
+        vSel.appendChild(o);
+      });
+    }
+    if(incVSel){
+      incVSel.innerHTML = '<option value="">Linked vendor...</option>';
+      vendors.forEach(v => {
+        const o = document.createElement('option');
+        o.value = v.id;
+        o.textContent = v.name;
+        incVSel.appendChild(o);
+      });
     }
     if(rSel){
-      const cur=rSel.value;
-      rSel.innerHTML='<option value="">Linked risk...</option>';
-      risks.forEach(r=>{const o=document.createElement('option');o.value=r.id;o.textContent=r.title;rSel.appendChild(o);});
-      if(cur && risks.some(r=>r.id===cur)) rSel.value=cur;
+      rSel.innerHTML = '<option value="">Linked risk...</option>';
+      risks.forEach(r => {
+        const o = document.createElement('option');
+        o.value = r.id;
+        o.textContent = r.title;
+        rSel.appendChild(o);
+      });
+    }
+    if(incRSel){
+      incRSel.innerHTML = '<option value="">Linked risk...</option>';
+      risks.forEach(r => {
+        const o = document.createElement('option');
+        o.value = r.id;
+        o.textContent = r.title;
+        incRSel.appendChild(o);
+      });
     }
     if(cSel){
-      const cur=cSel.value;
-      cSel.innerHTML='<option value="">Linked control...</option>';
-      controls.forEach(c=>{const o=document.createElement('option');o.value=c.id;o.textContent=c.name;cSel.appendChild(o);});
-      if(cur && controls.some(c=>c.id===cur)) cSel.value=cur;
+      cSel.innerHTML = '<option value="">Linked control...</option>';
+      controls.forEach(c => {
+        const o = document.createElement('option');
+        o.value = c.id;
+        o.textContent = c.name;
+        cSel.appendChild(o);
+      });
+    }
+    if(incCSel){
+      incCSel.innerHTML = '<option value="">Linked control...</option>';
+      controls.forEach(c => {
+        const o = document.createElement('option');
+        o.value = c.id;
+        o.textContent = c.name;
+        incCSel.appendChild(o);
+      });
     }
   }
   function renderAssetsTable(page = 1){
@@ -2072,7 +2143,7 @@
       case 'impact': return (a.impact||0) - (b.impact||0);
       case 'likelihood': return (a.likelihood||0) - (b.likelihood||0);
       case 'status': return (a.status||'').localeCompare(b.status||'');
-      case 'asset': return (a.assetName||'').localeCompare(b.assetName||'');
+      case 'asset': return (a.linkedName||'').localeCompare(b.linkedName||'');
       case 'title':
       default:
         return (a.title||'').localeCompare(b.title||'');
@@ -2122,7 +2193,7 @@
     renderPagination('risks-pagination', list.length, page, renderRisksTable);
     populateControlRisks();
     populateIssueDropdowns();
-    populateTreatmentDropdownRisks();
+    populateTreatmentDropdownLinked();
     renderDashboard();
   }
   qs('#risk-form').addEventListener('submit',e=>{
@@ -2810,14 +2881,27 @@
   function drawMatrix(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     const size=110, off=90;
+    // Background gradient
+    ctx.fillStyle = 'linear-gradient(to bottom right, #1a1f2e, #0a0e17)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // Grid
     ctx.strokeStyle="#2b3138"; ctx.lineWidth=1;
     for(let i=0;i<=5;i++){
       ctx.beginPath(); ctx.moveTo(off,off+i*size); ctx.lineTo(off+5*size,off+i*size); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(off+i*size,off); ctx.lineTo(off+i*size,off+5*size); ctx.stroke();
     }
-    ctx.font="14px Poppins"; ctx.fillStyle="#aab2bd";
+    // Labels
+    ctx.font="bold 14px Poppins"; ctx.fillStyle="#aab2bd";
+    ctx.textAlign = 'center';
     ctx.fillText("Impact →",off+225,off-25);
     ctx.save(); ctx.translate(off-55,off+240); ctx.rotate(-Math.PI/2); ctx.fillText("Likelihood →",0,0); ctx.restore();
+    // Axis labels
+    const labels = ['1', '2', '3', '4', '5'];
+    labels.forEach((label, idx) => {
+      ctx.fillText(label, off + (idx + 0.5) * size, canvas.height - 60); // Impact
+      ctx.fillText(label, 40, off + (4.5 - idx) * size); // Likelihood (reversed)
+    });
+    // Legend
     let high=0,med=0,low=0;
     risks.forEach(r=>{
       let L=r.likelihood, I=r.impact, score=rScore(L,I), level=rLevel(score);
@@ -2834,11 +2918,14 @@
       ctx.beginPath();
       ctx.arc(off+(I-0.5)*size,off+(5-L+0.5)*size,12,0,2*Math.PI);
       ctx.fillStyle=color; ctx.fill();
-      ctx.fillStyle="#0c0f12"; ctx.font="bold 12px Poppins";
+      ctx.strokeStyle = '#0c0f12';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle="#e5e7eb"; ctx.font="bold 12px Poppins";
       ctx.textAlign="center"; ctx.textBaseline="middle";
       ctx.fillText(String(score),off+(I-0.5)*size,off+(5-L+0.5)*size);
     });
-    legend.innerHTML = `<b>${risks.length}</b> risks — 
+    legend.innerHTML = `<b>${risks.length}</b> risks —
       <span style="color:#e63946">High: ${high}</span> |
       <span style="color:#f1c40f">Medium: ${med}</span> |
       <span style="color:#27ae60">Low: ${low}</span>`;
@@ -2874,7 +2961,6 @@
         const i = issues.find(x => x.id === t.linked);
         linkedName = r ? r.title + ' (Risk)' : i ? i.title + ' (Issue)' : '';
       }
-      const ctrl=controls.find(c=>c.id===t.controlId);
       const tr=document.createElement('tr');
       tr.innerHTML=`
         <td>${t.title}</td>
@@ -3104,7 +3190,7 @@
   function exportTreatmentsCSV(){
     const cols = [
       {header:'Title', key:'title'},
-      {header:'Linked', value:t=>{ 
+      {header:'Linked', value:t=>{
         const r = risks.find(x => x.id === t.linked);
         const i = issues.find(x => x.id === t.linked);
         return r ? r.title + ' (Risk)' : i ? i.title + ' (Issue)' : '';
@@ -3168,19 +3254,164 @@
     reader.readAsText(file);
   }
   function loadDemoScenario(){
-    // Update with new fields
-    // ... (similar to before, add vendors, incidents)
-    // For example
+    assets = [
+      {id:"AST-DEMO-APP",name:"MediCloud Web Application",type:"Application",criticality:"High",dataTypes:["PHI","PII"],owner:"DevOps Team",location:"AWS US-East-1",notes:"Main patient portal app"},
+      {id:"AST-DEMO-DB",name:"MediCloud Database",type:"Database",criticality:"High",dataTypes:["PHI","PII"],owner:"DBA Team",location:"AWS RDS",notes:"Stores patient records"},
+      {id:"AST-DEMO-SERVER",name:"Internal File Server",type:"Server / Host",criticality:"Medium",dataTypes:["Internal data"],owner:"IT Ops",location:"On-prem",notes:"Employee files"}
+    ];
     vendors = [
-      {id:"VND-DEMO-AWS",name:"AWS",type:"Cloud Provider",criticality:"High",dataAccess:"Full",contract:"Active",assessment:"2023-01-01",notes:"Cloud hosting"},
+      {id:"VND-DEMO-AWS",name:"AWS",type:"Cloud Provider",criticality:"High",dataAccess:"Full",contract:"Active",assessment:"2025-01-01",notes:"Cloud hosting for app and DB"},
+      {id:"VND-DEMO-OKTA",name:"Okta",type:"SaaS",criticality:"Medium",dataAccess:"Read",contract:"Active",assessment:"2025-06-01",notes:"Identity management"},
+      {id:"VND-DEMO-SLACK",name:"Slack",type:"SaaS",criticality:"Low",dataAccess:"None",contract:"Active",assessment:"2024-12-01",notes:"Team communication"}
+    ];
+    risks = [
+      {id:"RSK-DEMO-1",title:"Unauthorised access to MediCloud production",linked:"asset-AST-DEMO-APP",linkedType:"asset",linkedId:"AST-DEMO-APP",linkedName:"MediCloud Web Application",category:"Cybersecurity",likelihood:4,impact:5,score:20,resLikelihood:2,resImpact:4,resScore:8,status:"In progress",owner:"CISO",notes:"Potential data breach"},
+      {id:"RSK-DEMO-2",title:"Data leakage from database",linked:"asset-AST-DEMO-DB",linkedType:"asset",linkedId:"AST-DEMO-DB",linkedName:"MediCloud Database",category:"Privacy",likelihood:3,impact:5,score:15,resLikelihood:1,resImpact:5,resScore:5,status:"Open",owner:"DBA",notes:"Sensitive PHI exposure"},
+      {id:"RSK-DEMO-3",title:"Vendor data breach (AWS)",linked:"vendor-VND-DEMO-AWS",linkedType:"vendor",linkedId:"VND-DEMO-AWS",linkedName:"AWS",category:"Third-Party",likelihood:2,impact:5,score:10,resLikelihood:1,resImpact:4,resScore:4,status:"Accepted",owner:"Compliance",notes:"Cloud provider incident"},
+      {id:"RSK-DEMO-4",title:"Insider threat via file server",linked:"asset-AST-DEMO-SERVER",linkedType:"asset",linkedId:"AST-DEMO-SERVER",linkedName:"Internal File Server",category:"Operational",likelihood:3,impact:3,score:9,resLikelihood:2,resImpact:2,resScore:4,status:"Mitigated",owner:"HR",notes:"Employee data access"},
+      {id:"RSK-DEMO-5",title:"Phishing attack on users",linked:"asset-AST-DEMO-APP",linkedType:"asset",linkedId:"AST-DEMO-APP",linkedName:"MediCloud Web Application",category:"Cybersecurity",likelihood:4,impact:4,score:16,resLikelihood:3,resImpact:3,resScore:9,status:"In progress",owner:"Security Team",notes:"User credentials compromise"}
+    ];
+    controls = [
+      {id:"CTL-DEMO-MFA",name:"Multi-factor authentication for admins",type:"Preventive",status:"In place",owner:"DevSecOps",description:"Enforce MFA for all admin accounts",linkedRiskIds:["RSK-DEMO-1","RSK-DEMO-5"],linkedFrameworkControlIds:["CTRL-5.17","CTRL-8.5"],evidence:"Okta dashboard screenshot"},
+      {id:"CTL-DEMO-ENC",name:"Data encryption at rest",type:"Technical",status:"In place",owner:"DBA",description:"Encrypt database with AES-256",linkedRiskIds:["RSK-DEMO-2"],linkedFrameworkControlIds:["CTRL-8.24"],evidence:"AWS RDS config"},
+      {id:"CTL-DEMO-VRA",name:"Vendor risk assessment",type:"Administrative",status:"Planned",owner:"Compliance",description:"Annual vendor reviews",linkedRiskIds:["RSK-DEMO-3"],linkedFrameworkControlIds:["CTRL-5.19","CTRL-5.21"],evidence:"Assessment report template"},
+      {id:"CTL-DEMO-LOG",name:"Centralized logging and monitoring",type:"Detective",status:"In place",owner:"Security Team",description:"SIEM for all systems",linkedRiskIds:["RSK-DEMO-1","RSK-DEMO-4"],linkedFrameworkControlIds:["CTRL-8.15","CTRL-8.16"],evidence:"Splunk setup"},
+      {id:"CTL-DEMO-TRAIN",name:"Security awareness training",type:"Preventive",status:"In place",owner:"HR",description:"Quarterly phishing simulations",linkedRiskIds:["RSK-DEMO-5"],linkedFrameworkControlIds:["CTRL-6.3"],evidence:"Training records"}
+    ];
+    issues = [
+      {id:"ISS-DEMO-1",title:"Missing MFA on dev accounts",type:"Audit",severity:"High",status:"Open",owner:"Dev Lead",dueDate:"2025-12-31",notes:"From internal audit",assetId:"AST-DEMO-APP",vendorId:"",riskId:"RSK-DEMO-1",controlId:"CTL-DEMO-MFA",linkedSummary:"Asset: MediCloud Web Application | Risk: Unauthorised access to MediCloud production | Control: Multi-factor authentication for admins"},
+      {id:"ISS-DEMO-2",title:"Outdated encryption keys",type:"Vulnerability Scan",severity:"Medium",status:"In progress",owner:"DBA",dueDate:"2025-11-15",notes:"Rotate keys",assetId:"AST-DEMO-DB",vendorId:"",riskId:"RSK-DEMO-2",controlId:"",linkedSummary:"Asset: MediCloud Database | Risk: Data leakage from database"},
+      {id:"ISS-DEMO-3",title:"Vendor contract expired",type:"Self-Assessment",severity:"Low",status:"Resolved",owner:"Compliance",dueDate:"2025-10-01",notes:"Renewed",assetId:"",vendorId:"VND-DEMO-SLACK",riskId:"",controlId:"",linkedSummary:"Vendor: Slack"}
     ];
     incidents = [
-      {id:"INC-DEMO-1",title:"Suspected breach",type:"Data Breach",detected:"2023-01-01",severity:"High",status:"Investigating",owner:"IR Team",notes:"Investigating logs",assetId:"AST-DEMO-APP",vendorId:"",riskId:"RSK-DEMO-1",controlId:"",linkedSummary:"Asset: MediCloud Web Application | Risk: Unauthorised access to MediCloud production"},
+      {id:"INC-DEMO-1",title:"Suspected phishing attempt",type:"Phishing",detected:"2025-10-01",severity:"Medium",status:"Contained",owner:"IR Team",notes:"User reported suspicious email",assetId:"AST-DEMO-APP",vendorId:"",riskId:"RSK-DEMO-5",controlId:"CTL-DEMO-TRAIN",linkedSummary:"Asset: MediCloud Web Application | Risk: Phishing attack on users | Control: Security awareness training"},
+      {id:"INC-DEMO-2",title:"Database outage",type:"Denial of Service",detected:"2025-09-15",severity:"High",status:"Recovered",owner:"DBA",notes:"DDoS attack mitigated",assetId:"AST-DEMO-DB",vendorId:"VND-DEMO-AWS",riskId:"RSK-DEMO-2",controlId:"CTL-DEMO-ENC",linkedSummary:"Asset: MediCloud Database | Vendor: AWS | Risk: Data leakage from database | Control: Data encryption at rest"}
     ];
+    treatments = [
+      {id:"TRT-DEMO-1",title:"Implement MFA for all users",linked:"RSK-DEMO-1",controlId:"CTL-DEMO-MFA",status:"In progress",targetDate:"2025-12-01",owner:"DevOps Lead",budget:"1000 USD",notes:"Roll out Okta MFA"},
+      {id:"TRT-DEMO-2",title:"Key rotation procedure",linked:"ISS-DEMO-2",controlId:"",status:"Open",targetDate:"2025-11-30",owner:"DBA",budget:"",notes:"Automate key rotation"},
+      {id:"TRT-DEMO-3",title:"Vendor reassessment",linked:"RSK-DEMO-3",controlId:"CTL-DEMO-VRA",status:"Closed",targetDate:"2025-10-15",owner:"Compliance",budget:"500 USD",notes:"Completed review"}
+    ];
+    soa = FRAMEWORK_CONTROLS.map(fc => ({
+      fcId: fc.id,
+      applicability: 'Applicable',
+      implementation: 'Auto',
+      owner: '',
+      rationale: '',
+      evidence: ''
+    }));
+    save(K.assets,assets);
     save(K.vendors,vendors);
+    save(K.risks,risks);
+    save(K.controls,controls);
+    save(K.issues,issues);
     save(K.incidents,incidents);
+    save(K.treats,treatments);
+    save(K.soa,soa);
     refreshAll();
-    setImportStatus('Loaded demo MediCloud scenario into this browser (previous lab data was overwritten).',false);
+    setImportStatus('Loaded full demo scenario (MediCloud Healthcare App). Explore tabs!',false);
+  }
+  function loadISOTemplate(){
+    // Preload ISO-specific data
+    controls = FRAMEWORK_CONTROLS.filter(fc => fc.frameworks.includes("ISO 27001")).map(fc => ({
+      id: 'CTL-ISO-' + fc.id.split('-')[1],
+      name: fc.name,
+      type: "Technical",
+      status: "Planned",
+      owner: "Security Team",
+      description: fc.description,
+      linkedRiskIds: [],
+      linkedFrameworkControlIds: [fc.id],
+      evidence: ""
+    }));
+    soa = FRAMEWORK_CONTROLS.filter(fc => fc.frameworks.includes("ISO 27001")).map(fc => ({
+      fcId: fc.id,
+      applicability: 'Applicable',
+      implementation: 'Auto',
+      owner: '',
+      rationale: '',
+      evidence: ''
+    }));
+    save(K.controls,controls);
+    save(K.soa,soa);
+    refreshAll();
+    showToast('Loaded ISO 27001 template');
+  }
+  function loadNISTTemplate(){
+    // Similar for NIST
+    controls = FRAMEWORK_CONTROLS.filter(fc => fc.frameworks.includes("NIST CSF")).map(fc => ({
+      id: 'CTL-NIST-' + fc.id.split('-')[1],
+      name: fc.name,
+      type: "Administrative",
+      status: "Planned",
+      owner: "Compliance Team",
+      description: fc.description,
+      linkedRiskIds: [],
+      linkedFrameworkControlIds: [fc.id],
+      evidence: ""
+    }));
+    soa = FRAMEWORK_CONTROLS.filter(fc => fc.frameworks.includes("NIST CSF")).map(fc => ({
+      fcId: fc.id,
+      applicability: 'Applicable',
+      implementation: 'Auto',
+      owner: '',
+      rationale: '',
+      evidence: ''
+    }));
+    save(K.controls,controls);
+    save(K.soa,soa);
+    refreshAll();
+    showToast('Loaded NIST CSF template');
+  }
+  function loadPCITemplate(){
+    controls = FRAMEWORK_CONTROLS.filter(fc => fc.frameworks.includes("PCI DSS")).map(fc => ({
+      id: 'CTL-PCI-' + fc.id.split('-')[1],
+      name: fc.name,
+      type: "Technical",
+      status: "Planned",
+      owner: "PCI Team",
+      description: fc.description,
+      linkedRiskIds: [],
+      linkedFrameworkControlIds: [fc.id],
+      evidence: ""
+    }));
+    soa = FRAMEWORK_CONTROLS.filter(fc => fc.frameworks.includes("PCI DSS")).map(fc => ({
+      fcId: fc.id,
+      applicability: 'Applicable',
+      implementation: 'Auto',
+      owner: '',
+      rationale: '',
+      evidence: ''
+    }));
+    save(K.controls,controls);
+    save(K.soa,soa);
+    refreshAll();
+    showToast('Loaded PCI DSS template');
+  }
+  function loadHIPAATemplate(){
+    controls = FRAMEWORK_CONTROLS.filter(fc => fc.frameworks.includes("HIPAA")).map(fc => ({
+      id: 'CTL-HIPAA-' + fc.id.split('-')[1],
+      name: fc.name,
+      type: "Administrative",
+      status: "Planned",
+      owner: "HIPAA Team",
+      description: fc.description,
+      linkedRiskIds: [],
+      linkedFrameworkControlIds: [fc.id],
+      evidence: ""
+    }));
+    soa = FRAMEWORK_CONTROLS.filter(fc => fc.frameworks.includes("HIPAA")).map(fc => ({
+      fcId: fc.id,
+      applicability: 'Applicable',
+      implementation: 'Auto',
+      owner: '',
+      rationale: '',
+      evidence: ''
+    }));
+    save(K.controls,controls);
+    save(K.soa,soa);
+    refreshAll();
+    showToast('Loaded HIPAA template');
   }
   function resetLab(){
     if(!confirm('This will clear all data in this browser. Continue?')) return;
@@ -3243,7 +3474,7 @@
       const linkedName=r.linkedName ? ` (${r.linkedName})` : '';
       return `${r.title}${linkedName}, score ${r.score}`;
     });
-    let riskPara=`# Risk posture\nA total of ${totalRisks||'0'} risks have been documented in the register. `;
+    let riskPara=`# Risk Register\nA total of ${totalRisks||'0'} risks have been documented in the register. `;
     riskPara+=`High risks: ${highRisks.length}; medium risks: ${medRisks.length}; remaining items are low or informational. `;
     if(exHigh.length){
       riskPara+=`Example high risks include ${listPhrase(exHigh,2)}.`;
@@ -3276,8 +3507,7 @@
     issuePara+=`The treatment register currently contains ${treatments.length} action item(s), with ${openActions.length} open/in progress and ${closedActions.length} closed.`;
     lines.push(issuePara.trim());
     const highCount=highRisks.length;
-    const overallRows=computeGapRows();
-    const ov=overallCoverage(overallRows);
+    const ov=overallCoverage(computeGapRows());
     const covDesc=ov>=80?'strong, with most key controls implemented':
                   ov>=50?'developing, with several controls implemented but notable gaps remaining':
                   ov>0?'limited, with many controls still to be implemented':
@@ -3540,6 +3770,11 @@
       renderRisksTable();
       drawMatrix();
     });
+    // Template buttons
+    qs('#load-iso-template').addEventListener('click', loadISOTemplate);
+    qs('#load-nist-template').addEventListener('click', loadNISTTemplate);
+    qs('#load-pci-template').addEventListener('click', loadPCITemplate);
+    qs('#load-hipaa-template').addEventListener('click', loadHIPAATemplate);
     // sync thresholds into inputs
     syncRiskThresholdInputs();
     refreshAll();
