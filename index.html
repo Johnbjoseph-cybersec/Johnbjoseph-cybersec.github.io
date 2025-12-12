@@ -1,782 +1,382 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>John Bommeraveni Joseph Portfolio</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
-    
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-
-    <link rel="stylesheet" href="css/aos.css">
-
-    <link rel="stylesheet" href="css/ionicons.min.css">
-    
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/icomoon.css">
-    <link rel="stylesheet" href="css/style.css">
-
-
-
-<style>
-
-/*======================================
-//--//-->   ABOUT
-======================================*/
-
-.about-mf .box-shadow-full {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-}
-
-.about-mf .about-img {
-  margin-bottom: 2rem;
-}
-
-.about-mf .about-img img {
-  margin-left: 10px;
-}
-
-
-.skill-mf .progress {
-  /* background-color: #cde1f8; */
-  margin: .5rem 0 1.2rem 0;
-  border-radius: 0;
-  height: .7rem;
-}
-
-.skill-mf .progress .progress-bar {
-  height: .7rem;
-  background-color: #ffbd39;
-}
-
-
-/* Animation styles */
-#typing-animation {
-  position: relative;
-  font-size: 30px;
-  font-weight: bold;
-  color: rgb(255, 255, 255);
-  overflow: hidden;
-  white-space: nowrap;
-  animation: typing 3s steps(20, end) infinite;
-}
-
-#typing-animation:before {
-  content: "";
-  /* position: absolute; */
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 100%;
-  background-color: #ccc;
-  animation: typing-cursor 0.5s ease-in-out infinite;
-}
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes typing-cursor {
-  from {
-    width: 5px;
-  }
-  to {
-    width: 0;
-  }
-}
-
-
-/* project image zoom effect */
-
-.zoom-effect {
-  overflow: hidden;
-  transition: transform 0.3s ease-out;
-}
-
-.zoom-effect:hover {
-  transform: scale(1.1);
-}
-
-
-</style>
-
-
-  </head>
-  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-	  
-	  
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
-	    <div class="container">
-	      <a class="navbar-brand" href="index.html">John B Joseph</a>
-	      <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="oi oi-menu"></span> Menu
-	      </button>
-
-	      <div class="collapse navbar-collapse" id="ftco-nav">
-	        <ul class="navbar-nav nav ml-auto">
-	          <li class="nav-item"><a href="#home-section" class="nav-link"><span>Home</span></a></li>
-	          <li class="nav-item"><a href="#about-section" class="nav-link"><span>About</span></a></li>
-	          <li class="nav-item"><a href="#resume-section" class="nav-link"><span>Resume</span></a></li>
-	          <li class="nav-item"><a href="#Certifications-section" class="nav-link"><span>Certifications</span></a></li>
-              <li class="nav-item"><a href="toolkit.html" class="nav-link"><span>Toolkit</span></a></li>
-				<li class="nav-item"><a href="grc-lab.html" class="nav-link"><span>GRC Practice Lab</span></a></li>
-
-	          <!-- <li class="nav-item"><a href="#contact-section" class="nav-link"><span>Contact</span></a></li> -->
-	        </ul>
-	      </div>
-	    </div>
-	  </nav>
-	  <section id="home-section" class="hero">
-		  <div class="home-slider  owl-carousel">
-	       <div class="slider-item ">
-	      	<div class="overlay"></div>
-	         <div class="container">
-	          <div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end" data-scrollax-parent="true">
-	          	<div class="one-third js-fullheight order-md-last img" style="background-image:url(images/bg_1.png);">
-	          	 <div class="overlay"></div>
-	          	</div>
-		          <div class="one-forth d-flex  align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-		          	<div class="text">
-		          		<span class="subheading">Hello!</span>
-			            <h1 class="mb-4 mt-3">I'm <span>John Bommeraveni Joseph</span></h1>
-
-						<!-- Element to contain animated typing -->
-						<span id="typing-animation"></span>
-
-						<script>
-
-						// Initialize the typing animation
-						const typingAnimationElement = document.getElementById('typing-animation');
-
-						// Create an array of typing text
-						const typingTexts = [
-						'Human Resources Generalist ',
-						'Recruitment Manager  ',
-						'Payroll Administrator   ',
-						];
-
-						// Create a function to display the typing animation for a given text
-						function playTypingAnimation(text) {
-						// Loop through each character and add it to the element
-						for (let i = 0; i < text.length; i++) {
-							setTimeout(() => {
-							typingAnimationElement.textContent += text[i];
-							}, i * 200); // Increase the delay to slow down the typing animation
-						}
-
-						// Once the animation is complete, reset the text and start over
-						setTimeout(() => {
-							typingAnimationElement.textContent = '';
-							playTypingAnimation(typingTexts[(typingTexts.indexOf(text) + 1) % typingTexts.length]);
-						}, text.length * 200);
-						}
-
-						// Start the typing animation loop
-						playTypingAnimation(typingTexts[0]);
-
-						</script>
-
-						<br>
-						<br>
-			            <h2>Aspiring Cybersecurity Analyst with a Passion for Blue Teaming </h2>
-						<!-- <h2 class="d-flex" style="margin-bottom: 0">With over 5 years of experience</h2> -->
-						<!-- <br> -->
-			            <!-- <p><a href="https://www.youtube.com/@RishabhMishraOfficial" class="btn btn-primary py-3 px-4">YouTube</a>  -->
-							<a href="https://tryhackme.com/p/JohnBJoseph" class="btn btn-white btn-outline-white py-3 px-4">My works</a></p>
-		            </div>
-		          </div>
-	        	</div>
-	        </div>
-	      </div>
-		</div>
-    </section>
-
-
-
-    <section class="ftco-about img ftco-section ftco-no-pb" id="about-section">
-    	<div class="container">
-			<div class="row">
-				<div class="row d-flex align-items-stretch">
-				<!-- <div class="row d-flex"> -->
-					<div class="col-md-6 col-lg-5 d-flex">
-						<div class="img-about img d-flex align-items-stretch">
-							<div class="overlay">
-								<div class="row">
-									<div class="col-sm-6 col-md-5">
-									  <div class="about-img">
-										<img src="images/about-me.png" class="img-fluid rounded b-shadow-a" alt="">
-									  </div>
-									</div>
-									<!-- Details next to profile image -->
-									<div class="col-sm-6 col-md-7">
-									  <div class="about-info">
-										<p><span class="title-s">Name: </span> <span>John B Joseph</span></p>
-										<p><span class="title-s">Role: </span> <span>Cybersecurity Analyst </span></p>
-										<p><span class="title-s">Experience: </span> <span>10+ Years in HR </span></p>
-										<p><span class="title-s">Address: </span> <span>Ontario, Canada</span></p>
-									  </div>
-									</div>
-								  </div>
-
-								<div class="skill-mf">
-									<p class="title-s">Skills</p>
-									<span>Networking & Protocols</span> <span class="pull-right">85%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="95" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									
-									<span>Linux & System Security</span> <span class="pull-right">80%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="85" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									
-									<span>Cloud Security (AWS)</span> <span class="pull-right">75%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="90" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									
-									<span>Vulnerability Assessment</span> <span class="pull-right">70%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 70%" aria-valuenow="85" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-									
-									<span>Blue Team Fundamentals</span> <span class="pull-right">80%</span>
-									<div class="progress">
-										<div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0"
-											aria-valuemax="100"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					<div class="col-md-6 col-lg-7 pl-lg-5 pb-5">
-						<div class="row justify-content-start pb-3">
-							<div class="col-md-12 heading-section ftco-animate">
-								
-								<h1 class="big">About</h1>
-								<h2 class="mb-4">About Me</h2>
-								
-								<p>With over 10+ years of experience in HR, recruitment strategy, and IT hiring across North America and India, I’ve led tech hiring across platforms like SAP, Salesforce, and DevOps. But my curiosity for cybersecurity—especially defensive security—has driven me to transition into Blue Teaming.
-
-                                   Now immersed in cybersecurity training, I’m combining real-world people experience with growing technical skills to think like an attacker and defend like an analyst. This site documents my daily efforts and struggles as I pursue mastery in defensive security, network security, and adversarial simulations.</p>
-								<ul class="about-info mt-4 px-md-0 px-2">
-									<li class="d-flex"><span>Profile:</span> <span>Cybersecurity & Blue Teaming - SOC Analyst (Beginner–Intermediate Level)</span></li>
-									<li class="d-flex"><span>Domain:</span> <span>Human Resources, IT Recruitment, Cloud Environments</span></li>
-									<li class="d-flex"><span>Education:</span> <span>Bachelor of Computer Applications</span></li>
-									<li class="d-flex"><span>Language:</span> <span>English, Hindi, Tamil, Telugu</span></li>
-									<li class="d-flex"><span>Tools & Platforms:</span> <span>TryHackMe, Wireshark, Burp Suite, Nmap, Metasploit, Linux (Kali), AWS, GitHub</span></li>
-									<li class="d-flex"><span>Certifications:</span> <span>AWS - Solutions Architect Associate, Cloud Practitioner, TryHackMe - CyberSecurity 101, Jr. Penetration Tester</span></li>
-									<li class="d-flex"><span>Interest:</span> <span>Capture The Flag (CTF) Challenges, Blogging my Cybersecurity Journey, Teaching</span></li>
-									
-								</ul>
-							</div>
-						</div>
-
-
-						<div class="counter-wrap ftco-animate d-flex mt-md-3">
-							<div class="text">
-								<p class="mb-4">
-									<span class="number" data-number="173">0</span> <span>+</span>
-									<span>&nbsp; TRY HACK ME ROOMS COMPLETED</span>
-								</p>
-								<p><a href="https://www.linkedin.com/in/john-bj/" class="btn btn-primary py-3 px-3">LinkedIn</a></p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-    </section>
-
-
-
-	
-    <section class="ftco-section ftco-no-pb" id="resume-section">
-    	<div class="container">
-    		<div class="row justify-content-center pb-5">
-          <div class="col-md-10 heading-section text-center ftco-animate">
-          	<h1 class="big big-2">Resume</h1>
-            <h2 class="mb-4">Resume</h2>
-            <p>Resilient HR & Recruitment Leader turned Aspiring Cybersecurity Analyst with 10+ years of experience bridging people, process, and technology. Proven expertise in IT hiring, compliance, and technical communication — now focused on Blue Team operations, network defense, and ethical hacking. </p>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <title>GRC Made Simple – John B Joseph</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="John B Joseph – ISO 27001 & ISO 42001 Lead Auditor. Cybersecurity, GRC, and AI Governance made simple with labs, projects, and YouTube content." />
+  <link rel="icon" type="image/png" href="assets/img/logo.png" />
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <!-- Navbar -->
+  <header class="border-b border-slate-800 bg-slate-950/90 backdrop-blur sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-2">
+        <!-- Replace src with your logo path -->
+        <img src="assets/img/logo.png" alt="GRC Made Simple Logo" class="h-8 w-8 rounded-full object-cover">
+        <div class="leading-tight">
+          <div class="font-semibold text-sm uppercase tracking-wide text-amber-400">GRC Made Simple</div>
+          <div class="text-xs text-slate-400">John B Joseph</div>
         </div>
-
-		<div class="row">
-			<h1 class="big-4">Experience</h1>
-			<div class="underline"></div>
-		</div>
-		<br>
-		
-		<div class="row">
-				<div class="col-md-6">
-					<div class="resume-wrap ftco-animate">
-						<span class="date">July 2023 - May 2025</span>
-						<h2>Human Resources Generalist</h2>
-						<span class="position">Aspire Food Group</span>
-						<!-- <p class="mt-4">Merkle, a leading CXM and media company with over 10K+ professionals globally. It's a part of Dentsu International.  -->
-							<ul>
-				
-								<li>Administered payroll for over 190 employees, ensuring accuracy in wage calculations, deductions, and tax remittances.</li>
-								<li>Lead recruitment and onboarding initiatives, including job postings, candidate screening, and conducting orientation sessions.</li>
-							</ul>
-						</p>
-					</div>
-
-				</div>
-
-				<div class="col-md-6">
-					<div class="resume-wrap ftco-animate">
-						<span class="date">July 2021 - June 2023</span>
-						<h2>Recruitment Manager</h2>
-						<span class="position">Odiseus Software</span>
-						<!-- <p class="mt-4">iQuanti is a data-driven digital marketing analytics and solutions company, helps top 100 global brands.  -->
-							<ul>
-								<li>Led a team of 12 recruiters, managing full-cycle recruitment for various technical and non-technical positions.</li>
-								<li>Developed talent acquisition strategies, increasing qualified candidates by 40%.</li>
-								<li>Established recruitment processes for offshore offices, enhancing global hiring efficiency.</li>
-							</ul>
-						</p>
-					</div>
-
-				</div>
-
-				<div class="col-md-6">
-					<div class="resume-wrap ftco-animate">
-						<span class="date">September 2019 - June 2021</span>
-						<h2>Recruitment Lead</h2>
-						<span class="position">Platinus Technologies</span>
-						<!-- <p class="mt-4">iQuanti is a data-driven digital marketing analytics and solutions company, helps top 100 global brands.  -->
-							<ul>
-								<li>Collaborated with hiring managers to implement effective recruitment strategies.</li>
-								<li>Conducted interviews and facilitated the hiring process for technical roles.</li>
-								<li>Coordinated with external recruitment vendors to streamline recruitment operations.</li>
-							</ul>
-						</p>
-					</div>
-
-				</div>
-
-				<div class="col-md-6">
-					<div class="resume-wrap ftco-animate">
-						<span class="date">February 2018 - August 2019</span>
-						<h2>Senior Technical Recruiter</h2>
-						<span class="position">AKVARR Inc</span>
-						<!-- <p class="mt-4">iQuanti is a data-driven digital marketing analytics and solutions company, helps top 100 global brands.  -->
-							<ul>
-								<li>Maintained comprehensive recruitment records and confidential employee information.</li>
-								<li>Partnered with senior managers to develop recruitment strategies aligned with business objectives.</li>
-								<li>Built strong relationships with candidates, resulting in successful placements.</li>
-							</ul>
-						</p>
-					</div>
-
-				</div>
-
-				<div class="col-md-6">
-					<div class="resume-wrap ftco-animate">
-						<span class="date">August 2016 - January 2018</span>
-						<h2>Senior Talent Acquistion Specialist</h2>
-						<span class="position">Oasys Technologies Inc</span>
-						<!-- <p class="mt-4">iQuanti is a data-driven digital marketing analytics and solutions company, helps top 100 global brands.  -->
-							<ul>
-								<li>Sourced and recruited consultants for client projects across IT and Non-IT domains.</li>
-								<li>Communicated project details, benefits, and organizational information to potential candidates.</li>
-								<li>Managed end-to-end recruitment processes, from initial sourcing to final placement.</li>
-							</ul>
-						</p>
-					</div>
-
-				</div>
-
-				<div class="col-md-6">
-					<div class="resume-wrap ftco-animate">
-						<span class="date">June 2014 - August 2016</span>
-						<h2>Senior IT Recruiter</h2>
-						<span class="position">I2U Systems Inc</span>
-						<!-- <p class="mt-4">iQuanti is a data-driven digital marketing analytics and solutions company, helps top 100 global brands.  -->
-							<ul>
-								<li>Identified potential candidates for technical roles through various channels, including job portals and social media.</li>
-								<li>Conducted interviews to assess technical skills, qualifications, and cultural fit.</li>
-								<li>Maintained recruitment databases and managed candidate pipelines for ongoing projects.</li>
-							</ul>
-						</p>
-					</div>
-
-				</div>
-			</div>
-
-		<br>
-		<br>
-
-		<div class="row">
-			<h1 class="big-4">Education</h1>
-			<div class="underline"></div>
-		</div>
-		<br>
-		
-			<div class="row">
-    			<div class="col-md-6">
-    				<div class="resume-wrap ftco-animate">
-    					<!-- <span class="date">2014-2018</span> -->
-    					<h2>Bachelor of Computer Applications</h2>
-    					<span class="position">Vikrama Simhapuri University</span>
-    					<p class="mt-4">INDIA</p>
-    				</div>
-    			</div>
-
-    			<div class="col-md-6">
-    				<div class="resume-wrap ftco-animate">
-    					<!-- <span class="date">2012-2013</span> -->
-    					<h2>Business Management</h2>
-    					<span class="position">Fanshawe College</span>
-    					<p class="mt-4">CANADA</p>
-    				</div>
-				</div>
-    		</div>
-
-    		<!-- <div class="row justify-content-center mt-5">
-    			<div class="col-md-6 text-center ftco-animate">
-    				<p><a href="#" class="btn btn-primary py-4 px-5">Download CV</a></p>
-    			</div>
-    		</div> -->
-    	</div>
-    </section>
-
-   
-
-    <section class="ftco-section" id="Certifications-section">
-      <div class="container">
-        <div class="row justify-content-center mb-5 pb-5">
-          <div class="col-md-7 heading-section text-center ftco-animate">
-            <!-- <h1 class="big big-2">Certifications</h1> -->
-            <h2 class="mb-4">Certifications</h2>
-            <p>Below are my key certifications and hands-on cybersecurity training modules</p>
-          </div>
-        </div>
-        <div class="row d-flex">
-          <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry justify-content-end">
-              <a href="https://www.credly.com/badges/d3373a67-985b-4be4-8eda-1af9f000276e/public_url" class="block-20 zoom-effect" style="background-image: url('images/proj_1.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; height: 250px;"> </a>
-              <div class="text mt-3 float-right d-block">
-
-                <h3 class="heading"><a href="https://www.credly.com/badges/d3373a67-985b-4be4-8eda-1af9f000276e/public_url">AWS Certified Cloud Practitioner</a></h3>
-                <p>Demonstrated foundational knowledge of AWS cloud concepts, core services, billing models, and security best practices.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry justify-content-end">
-              <a href="https://www.credly.com/badges/2c030aa6-7235-4c9a-9d35-ac16afafc66d/public_url" class="block-20 zoom-effect" style="background-image: url('images/proj_2.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; height: 250px;"> </a>
-              <div class="text mt-3 float-right d-block">
-
-                <h3 class="heading"><a href="https://www.credly.com/badges/2c030aa6-7235-4c9a-9d35-ac16afafc66d/public_url">Solutions Architect – Associate</a></h3>
-                <p>Successfully validated my ability to design and deploy scalable, highly available systems on Amazon Web Services.
-
-</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry">
-              <a href="https://www.credly.com/badges/beaa0085-378c-4e60-98a2-75b2a6305551/public_url" class="block-20 zoom-effect" style="background-image: url('images/proj_3.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; height: 250px;"> </a>
-              <div class="text mt-3 float-right d-block">
-
-                <h3 class="heading"><a href="https://www.credly.com/badges/beaa0085-378c-4e60-98a2-75b2a6305551/public_url">Introduction to Cybersecurity</a></h3>
-                <p>Gained a strong foundation in core cybersecurity principles, common threats, network security.</p>
-              </div>
-            </div>
-          </div>
-		  <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry">
-              <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-XZSRYHJRAI.pdf" class="block-20 zoom-effect" style="background-image: url('images/proj_4.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; height: 250px;"> </a>
-              <div class="text mt-3 float-right d-block">
-
-                <h3 class="heading"><a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-XZSRYHJRAI.pdf">TryHackMe - CyberSecurity 101</a></h3>
-                <p>Built foundational skills in Linux, Windows, Active Directory & explored offensive and defensive cybersecurity techniques.</p>
-              </div>
-            </div>
-          </div>
-		  <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry">
-              <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-GTZRQ8ULOP.pdf" class="block-20 zoom-effect" style="background-image: url('images/proj_5.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; height: 250px;"> </a>
-              <div class="text mt-3 float-right d-block">
-
-                <h3 class="heading"><a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-GTZRQ8ULOP.pdf">TryHackMe - Jr. Penetration Tester</a></h3>
-                <p>Gained hands-on experience in pentesting, enumeration, exploitation, and industry tools through realistic scenarios.</p>
-              </div>
-            </div>
-          </div>
-					  <div class="col-md-4 d-flex ftco-animate">
-          	<div class="blog-entry">
-              <a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-MOEBCY4OOD.pdf" class="block-20 zoom-effect" style="background-image: url('images/proj_6.jpg'); background-size: contain; background-repeat: no-repeat; background-position: center; height: 250px;"> </a>
-              <div class="text mt-3 float-right d-block">
-
-                <h3 class="heading"><a href="https://tryhackme-certificates.s3-eu-west-1.amazonaws.com/THM-MOEBCY4OOD.pdf">TryHackMe - SOC Level 1</a></h3>
-                <p>Applied practical skills to detect, investigate and mitigate security threats using SIEM tools in real-world cyber attacks.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-	<br>
-		<!-- added justify-content-center to center align the last two projects -->
-		<!-- <div class="row d-flex justify-content-center">  
-			<div class="col-md-4 d-flex ftco-animate">
-				<div class="blog-entry justify-content-end">
-				<a href="https://github.com/rishabhnmishra/sales_forecasting/tree/main" class="block-20 zoom-effect" style="background-image: url('images/proj_4.jpg');">
-				</a>
-				<div class="text mt-3 float-right d-block">
-  
-				  <h3 class="heading"><a href="https://github.com/rishabhnmishra/sales_forecasting/tree/main">Sales Forecast- Time Series Forecasting</a></h3>
-				  <p>Used multiple machine learning models to forecast sales (retail store) and performed time series analysis.</p>
-				</div>
-			  </div>
-			</div>
-			<div class="col-md-4 d-flex ftco-animate">
-				<div class="blog-entry justify-content-end">
-				<a href="https://github.com/rishabhnmishra/customer_segmentation/blob/main/Customer_Segmentation-final.ipynb" class="block-20 zoom-effect" style="background-image: url('images/proj_5.jpg');">
-				</a>
-				<div class="text mt-3 float-right d-block">
-  
-				  <h3 class="heading"><a href="https://github.com/rishabhnmishra/customer_segmentation/blob/main/Customer_Segmentation-final.ipynb">Customer Segmentation using clustering model</a></h3>
-				  <p>Developed a ML model to give various recommendations of financial products &amp; services on target customer groups.</p>
-				</div>
-			  </div>
-			</div>
-		 </div> -->
-	  </div>
-    </section>
-
-<section class="ftco-section" id="toolkit-section">
-  <div class="container">
-    <div class="row justify-content-center mb-5 pb-4">
-      <div class="col-md-8 heading-section text-center ftco-animate">
-        <h2 class="mb-4">My Cybersecurity Toolkit</h2>
-        <p>Curated resources I use for threat intel, blue-team analysis, and investigations.</p>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#about" class="hover:text-amber-300 transition">About</a>
+        <a href="#lab" class="hover:text-amber-300 transition">GRC Practice Lab</a>
+        <a href="#certifications" class="hover:text-amber-300 transition">Certifications</a>
+        <a href="#projects" class="hover:text-amber-300 transition">Projects</a>
+        <a href="terms.html" class="hover:text-amber-300 transition">Terms of Use</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer"
+           class="hidden sm:inline-flex items-center px-3 py-1.5 rounded-full bg-amber-400 text-slate-950 text-xs font-semibold hover:bg-amber-300 transition">
+          🎥 Watch on YouTube
+        </a>
       </div>
     </div>
+  </header>
 
-    <style>
-      /* Toolkit glimpse styles (kept local to avoid breaking other pages) */
-      .tk-card { cursor:pointer; border-radius:16px; padding:24px; transition:transform .2s ease, box-shadow .2s ease; background:#ffffff10; }
-      .tk-card:hover { transform:translateY(-3px); box-shadow:0 10px 24px rgba(0,0,0,.15); }
-      .tk-icon { width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; background:#ffbd39; color:#111; }
-      .tk-icon .icon { font-size:26px; line-height:1; }
-      @media (prefers-color-scheme: dark){ .tk-card{background:#1a1a1a;} }
-    </style>
-
-    <div class="row d-flex justify-content-center">
-      <div class="col-md-4 d-flex ftco-animate" onclick="location.href='toolkit.html#threat-feeds'">
-        <div class="blog-entry text-center tk-card">
-          <div class="tk-icon"><span class="icon-shield"></span></div>
-          <h3 class="heading mb-2">Threat Intel & Feeds</h3>
-          <p class="mb-0">OTX, Pulsedive, ThreatFox, URLHaus, Feodo…</p>
+  <main id="top" class="max-w-6xl mx-auto px-4">
+    <!-- Hero -->
+    <section class="py-10 md:py-16 flex flex-col md:flex-row items-center gap-10">
+      <div class="flex-1">
+        <p class="text-xs font-semibold tracking-[0.2em] text-amber-400 uppercase mb-3">GRC • Cybersecurity • AI</p>
+        <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4">
+          GRC & AI Governance<br class="hidden md:block" />
+          <span class="text-amber-400">explained in simple language.</span>
+        </h1>
+        <p class="text-sm md:text-base text-slate-300 mb-4 max-w-xl">
+          I’m <span class="font-semibold">John B Joseph</span>, an
+          <span class="font-semibold">ISO 27001 & ISO 42001 Lead Auditor</span>
+          focused on cybersecurity, GRC, and AI governance.
+          I create practical labs, real-world projects, and content that make complex frameworks feel simple and usable.
+        </p>
+        <p class="text-xs text-slate-400 mb-6">
+          Built for students, career switchers, and professionals who want to understand governance,
+          risk and compliance without drowning in jargon.
+        </p>
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer"
+             class="inline-flex items-center px-4 py-2 rounded-full bg-amber-400 text-slate-950 text-sm font-semibold hover:bg-amber-300 transition">
+            🎥 Watch GRC Made Simple
+          </a>
+          <a href="#lab"
+             class="inline-flex items-center px-4 py-2 rounded-full border border-slate-700 text-sm hover:border-amber-400 hover:text-amber-300 transition">
+            🧪 Explore GRC Practice Lab
+          </a>
+          <a href="#certifications"
+             class="inline-flex items-center px-4 py-2 rounded-full border border-slate-700 text-sm hover:border-amber-400 hover:text-amber-300 transition">
+            🎓 View Certifications
+          </a>
+        </div>
+        <div class="flex flex-wrap items-center gap-4 text-xs text-slate-400">
+          <span>ISO 27001 & ISO 42001 Lead Auditor</span>
+          <span class="h-1 w-1 rounded-full bg-slate-600"></span>
+          <span>AWS & cloud security</span>
+          <span class="h-1 w-1 rounded-full bg-slate-600"></span>
+          <span>GRC, risk, and audit</span>
         </div>
       </div>
-      <div class="col-md-4 d-flex ftco-animate" onclick="location.href='toolkit.html#domain-dns'">
-        <div class="blog-entry text-center tk-card">
-          <div class="tk-icon"><span class="icon-globe"></span></div>
-          <h3 class="heading mb-2">Domain, IP & DNS</h3>
-          <p class="mb-0">WHOIS, passive DNS, ASN, hosting intel.</p>
+      <div class="flex-1 flex justify-center">
+        <!-- Replace with your photo or lab screenshot -->
+        <div class="relative">
+          <div class="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-amber-400/40 via-slate-900 to-sky-500/40 blur-lg opacity-70"></div>
+          <div class="relative bg-slate-900 border border-slate-800 rounded-3xl p-4 w-full max-w-sm shadow-xl">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="h-10 w-10 rounded-full bg-slate-800 overflow-hidden">
+                <img src="assets/img/john-profile.jpg" alt="John B Joseph" class="h-full w-full object-cover" />
+              </div>
+              <div>
+                <p class="text-sm font-semibold">John B Joseph</p>
+                <p class="text-xs text-slate-400">ISO 27001 & 42001 Lead Auditor</p>
+              </div>
+            </div>
+            <div class="bg-slate-950 rounded-2xl border border-slate-800 p-3 mb-3">
+              <p class="text-xs text-slate-400 mb-1">Current Focus</p>
+              <p class="text-sm font-medium">
+                Governance, Risk & Compliance, ISO 27001, ISO 42001, and AI governance —
+                explained through real labs and projects.
+              </p>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+              <div class="bg-slate-950 rounded-xl border border-slate-800 p-2">
+                <p class="text-[10px] uppercase tracking-wide text-slate-400 mb-1">Content</p>
+                <p class="font-semibold text-amber-300">YouTube: GRC Made Simple</p>
+              </div>
+              <div class="bg-slate-950 rounded-xl border border-slate-800 p-2">
+                <p class="text-[10px] uppercase tracking-wide text-slate-400 mb-1">Lab</p>
+                <p class="font-semibold">GRC Practice Lab</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-     <div class="col-md-4 d-flex ftco-animate" onclick="location.href='toolkit.html#malware-analysis'">
-  <div class="blog-entry text-center tk-card">
-    <div class="tk-icon"><span class="icon-search"></span></div> <!-- this line -->
-    <h3 class="heading mb-2">Malware & URL Analysis</h3>
-    <p class="mb-0">Sandboxes, scanners, artifact triage.</p>
-  </div>
-</div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-10 border-t border-slate-800">
+      <h2 class="text-xl md:text-2xl font-semibold mb-4">About</h2>
+      <div class="grid md:grid-cols-2 gap-8 text-sm md:text-base">
+        <div class="space-y-3 text-slate-300">
+          <p>
+            I started my career in HR, recruitment, and payroll — working closely with people, processes,
+            and compliance obligations. Over time, I realized that everything I enjoyed about that work
+            connected directly to <span class="font-semibold">governance, risk, and controls</span>.
+          </p>
+          <p>
+            Today, I focus on <span class="font-semibold">cybersecurity, GRC, and AI governance</span>:
+            helping organizations and individuals understand frameworks like ISO 27001, ISO 42001,
+            NIST CSF, and SOC 2 in a way that’s practical, visual, and simple enough for real-world use.
+          </p>
+          <p>
+            Through my <span class="font-semibold">GRC Practice Lab</span> and
+            <span class="font-semibold">GRC Made Simple</span> YouTube channel,
+            I share hands-on examples — risk registers, Statements of Applicability, Annex A mappings,
+            vendor assessments, and AI governance scenarios — so learners can
+            <span class="font-semibold">see what good GRC actually looks like.</span>
+          </p>
+        </div>
+        <div class="space-y-3 text-sm text-slate-300">
+          <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4">
+            <h3 class="text-sm font-semibold mb-2 text-amber-300">Focus Areas</h3>
+            <ul class="space-y-1 list-disc list-inside">
+              <li>Information Security Management Systems (ISMS)</li>
+              <li>ISO 27001 & ISO 42001 governance and audits</li>
+              <li>Risk management and Annex A control design</li>
+              <li>AI governance, model risk, and emerging standards</li>
+              <li>Evidence collection, internal audits, and readiness</li>
+            </ul>
+          </div>
+          <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4">
+            <h3 class="text-sm font-semibold mb-2 text-amber-300">Connect</h3>
+            <div class="flex flex-wrap gap-3 text-xs">
+              <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center px-3 py-1.5 rounded-full border border-slate-700 hover:border-amber-400 hover:text-amber-300 transition">
+                🎥 YouTube
+              </a>
+              <a href="https://www.linkedin.com/in/john-bj" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center px-3 py-1.5 rounded-full border border-slate-700 hover:border-amber-400 hover:text-amber-300 transition">
+                💼 LinkedIn
+              </a>
+              <a href="https://github.com/johnbj-cybersec" target="_blank" rel="noopener noreferrer"
+                 class="inline-flex items-center px-3 py-1.5 rounded-full border border-slate-700 hover:border-amber-400 hover:text-amber-300 transition">
+                💻 GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRC Practice Lab -->
+    <section id="lab" class="py-10 border-t border-slate-800">
+      <div class="flex items-center justify-between gap-4 mb-4">
+        <h2 class="text-xl md:text-2xl font-semibold">GRC Practice Lab</h2>
+        <a href="terms.html" class="text-xs text-slate-400 hover:text-amber-300 underline">Terms of Use</a>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 text-sm md:text-base">
+        <div class="space-y-3 text-slate-300">
+          <p>
+            The <span class="font-semibold">GRC Practice Lab</span> is a hands-on environment I use in my content
+            to demonstrate how real governance, risk, and compliance work is done.
+            It includes a fictional company, realistic risks, and full documentation.
+          </p>
+          <p class="text-xs bg-slate-900/70 border border-amber-400/60 rounded-xl p-3 text-amber-100">
+            <span class="font-semibold uppercase text-[10px] tracking-[0.2em] block mb-1">
+              Educational Use Only
+            </span>
+            This lab is built on fictional companies and isolated virtual machines.
+            It is designed purely for education and professional training. No real-world systems, networks,
+            or organizations are accessed or affected. All activities follow legal and ethical guidelines
+            for cybersecurity learning.
+          </p>
+          <ul class="space-y-1 list-disc list-inside">
+            <li>Fictional SaaS company with defined scope</li>
+            <li>Risk register, impact/likelihood scoring, owners</li>
+            <li>Annex A control mapping and SoA examples</li>
+            <li>Vendor risk assessment and due diligence examples</li>
+            <li>AI governance and ISO 42001 scenarios</li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 text-sm">
+            <h3 class="text-sm font-semibold mb-2 text-amber-300">Included Artifacts</h3>
+            <ul class="space-y-1 list-disc list-inside text-slate-300">
+              <li>Risk Register (spreadsheet + views)</li>
+              <li>Statement of Applicability (SoA) sample</li>
+              <li>Annex A controls mapping to a real environment</li>
+              <li>Vendor risk questionnaire and ratings</li>
+              <li>Policy and standard examples (Information Security, Access Control, etc.)</li>
+            </ul>
+          </div>
+          <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 text-xs text-slate-400">
+            <p class="mb-2">
+              A full GitHub version of this lab (with templates and project structure)
+              will be linked here once it’s ready to be shared publicly.
+            </p>
+            <p>
+              Until then, you can follow along through the YouTube walkthroughs and screenshots in my videos.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section id="certifications" class="py-10 border-t border-slate-800">
+      <h2 class="text-xl md:text-2xl font-semibold mb-4">Certifications</h2>
+      <p class="text-sm text-slate-300 mb-4">
+        A selection of certifications and programs across information security, governance, cloud, and cybersecurity.
+      </p>
+
+      <!-- Example grouped layout – replace image src paths / names with your actual badge images -->
+      <div class="space-y-6 text-sm">
+        <!-- ISO & Governance -->
+        <div>
+          <h3 class="text-sm font-semibold text-amber-300 mb-2">ISO, Governance & Compliance</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3 flex flex-col items-center text-center">
+              <img src="assets/certs/iso27001-la.png" alt="ISO 27001 Lead Auditor" class="h-12 mb-2 object-contain">
+              <p class="font-semibold text-xs">ISO 27001 Lead Auditor</p>
+              <p class="text-[11px] text-slate-400">Information Security</p>
+            </div>
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3 flex flex-col items-center text-center">
+              <img src="assets/certs/iso42001-la.png" alt="ISO 42001 Lead Auditor" class="h-12 mb-2 object-contain">
+              <p class="font-semibold text-xs">ISO 42001 Lead Auditor</p>
+              <p class="text-[11px] text-slate-400">AI Management Systems</p>
+            </div>
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3 flex flex-col items-center text-center">
+              <img src="assets/certs/ai-governance.png" alt="AI Governance" class="h-12 mb-2 object-contain">
+              <p class="font-semibold text-xs">AI Governance</p>
+              <p class="text-[11px] text-slate-400">Responsible AI & Risk</p>
+            </div>
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3 flex flex-col items-center text-center">
+              <img src="assets/certs/dspm-fundamentals.png" alt="DSPM Fundamentals" class="h-12 mb-2 object-contain">
+              <p class="font-semibold text-xs">DSPM Fundamentals</p>
+              <p class="text-[11px] text-slate-400">Data Security Posture</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cloud -->
+        <div>
+          <h3 class="text-sm font-semibold text-amber-300 mb-2">Cloud & Architecture</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3 flex flex-col items-center text-center">
+              <img src="assets/certs/aws-cloud-practitioner.png" alt="AWS Cloud Practitioner" class="h-12 mb-2 object-contain">
+              <p class="font-semibold text-xs">AWS Cloud Practitioner</p>
+              <p class="text-[11px] text-slate-400">Cloud Foundations</p>
+            </div>
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3 flex flex-col items-center text-center">
+              <img src="assets/certs/aws-saa.png" alt="AWS Solutions Architect Associate" class="h-12 mb-2 object-contain">
+              <p class="font-semibold text-xs">AWS Solutions Architect – Associate</p>
+              <p class="text-[11px] text-slate-400">Architecture & Security</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cyber & Labs -->
+        <div>
+          <h3 class="text-sm font-semibold text-amber-300 mb-2">Cybersecurity & Labs</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3 flex flex-col items-center text-center">
+              <img src="assets/certs/thm-cyber101.png" alt="TryHackMe Cyber Security 101" class="h-12 mb-2 object-contain">
+              <p class="font-semibold text-xs">TryHackMe Cyber Security 101</p>
+              <p class="text-[11px] text-slate-400">Foundations</p>
+            </div>
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3 flex flex-col items-center text-center">
+              <img src="assets/certs/thm-jr-pentester.png" alt="TryHackMe Jr PenTester" class="h-12 mb-2 object-contain">
+              <p class="font-semibold text-xs">TryHackMe Jr PenTester</p>
+              <p class="text-[11px] text-slate-400">Offensive Basics</p>
+            </div>
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3 flex flex-col items-center text-center">
+              <img src="assets/certs/thm-soc1.png" alt="TryHackMe SOC Level 1" class="h-12 mb-2 object-contain">
+              <p class="font-semibold text-xs">TryHackMe SOC Level 1</p>
+              <p class="text-[11px] text-slate-400">Blue Team</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vulnerability & Professional -->
+        <div>
+          <h3 class="text-sm font-semibold text-amber-300 mb-2">Vulnerability & Professional</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3 flex flex-col items-center text-center">
+              <img src="assets/certs/qualys-vmdr.png" alt="Qualys VMDR" class="h-12 mb-2 object-contain">
+              <p class="font-semibold text-xs">Qualys VMDR</p>
+              <p class="text-[11px] text-slate-400">Vulnerability Management</p>
+            </div>
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3 flex flex-col items-center text-center">
+              <img src="assets/certs/qualys-vmdr-specialist.png" alt="Qualys VMDR Specialist" class="h-12 mb-2 object-contain">
+              <p class="font-semibold text-xs">Qualys VMDR Specialist</p>
+              <p class="text-[11px] text-slate-400">Advanced VMDR</p>
+            </div>
+            <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-3 flex flex-col items-center text-center">
+              <img src="assets/certs/ccep.png" alt="CCEP Educator Professional" class="h-12 mb-2 object-contain">
+              <p class="font-semibold text-xs">Educator Professional (CCEP)</p>
+              <p class="text-[11px] text-slate-400">Cybersecurity Education</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="py-10 border-t border-slate-800">
+      <h2 class="text-xl md:text-2xl font-semibold mb-4">Featured Projects</h2>
+      <div class="grid md:grid-cols-3 gap-6 text-sm">
+        <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 flex flex-col">
+          <h3 class="font-semibold mb-2 text-amber-300">CloudHire GRC Project</h3>
+          <p class="text-slate-300 mb-3">
+            A full GRC portfolio project for a fictional SaaS company:
+            risk register, Annex A mapping, SoA, vendor risk assessment, and governance workflows.
+          </p>
+          <p class="text-xs text-slate-400 mb-3">
+            Demonstrates how to translate ISO 27001 into practical governance and documentation.
+          </p>
+          <span class="mt-auto text-xs text-slate-500">Coming soon to GitHub.</span>
+        </div>
+        <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 flex flex-col">
+          <h3 class="font-semibold mb-2 text-amber-300">ISO 27001 & Annex A Lab</h3>
+          <p class="text-slate-300 mb-3">
+            Live lab mapping Annex A controls to systems, evidence, and risk treatment plans
+            for a simulated environment.
+          </p>
+          <p class="text-xs text-slate-400 mb-3">
+            Used in YouTube videos to show how real control environments are designed and tested.
+          </p>
+          <span class="mt-auto text-xs text-slate-500">Walkthroughs available on YouTube.</span>
+        </div>
+        <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 flex flex-col">
+          <h3 class="font-semibold mb-2 text-amber-300">AI Governance & ISO 42001</h3>
+          <p class="text-slate-300 mb-3">
+            Scenario-based examples of AI system risks, governance structures, and alignment
+            with ISO 42001 for AI management systems.
+          </p>
+          <p class="text-xs text-slate-400 mb-3">
+            Focused on deepfakes, model misuse, and AI decision-making transparency.
+          </p>
+          <span class="mt-auto text-xs text-slate-500">Featured in “ISO 42001 Explained” series.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-8 border-t border-slate-800 bg-slate-950">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+      <p>© <span id="year"></span> GRC Made Simple — John B Joseph. All rights reserved.</p>
+      <div class="flex flex-wrap gap-4">
+        <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer" class="hover:text-amber-300">YouTube</a>
+        <a href="https://www.linkedin.com/in/john-bj" target="_blank" rel="noopener noreferrer" class="hover:text-amber-300">LinkedIn</a>
+        <a href="https://github.com/johnbj-cybersec" target="_blank" rel="noopener noreferrer" class="hover:text-amber-300">GitHub</a>
+        <a href="terms.html" class="hover:text-amber-300">Terms of Use</a>
+      </div>
     </div>
-
-    <div class="row justify-content-center mt-5">
-      <div class="col-md-6 text-center">
-        <p><a href="toolkit.html" class="btn btn-primary py-3 px-5">Explore Full Toolkit</a></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-	  
-	<section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img" id="section-counter">
-      <div class="container">
-		<div class="row d-md-flex align-items-center">
-          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-            <div class="block-18">
-              <div class="text">
-                <strong class="number" data-number="27">0</strong>
-                <span>TRYHACKME BADGES</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-            <div class="block-18">
-              <div class="text">
-                <strong class="number" data-number="173">0</strong>
-                <span>ROOMS COMPLETED</span>
-              </div>
-            </div>
-          </div>
-          <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-            <div class="block-18">
-              <div class="text">
-                <strong class="number" data-number="16727">0</strong>
-                <span>GLOBAL RANK</span>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
-            <div class="block-18">
-              <div class="text">
-                <strong class="number" data-number="500">0</strong>
-                <span>Cups of coffee</span>
-              </div>
-            </div>
-          </div> -->
-        </div>
-      </div>
-	
-	  <div class="ftco-section ftco-hireme img margin-top" style="background-image: url(images/bg_1.jpg)">
-			<!-- <div class="container"> -->
-				<div class="row justify-content-center">
-					<div class="col-md-7 ftco-animate text-center">
-						<h2>Join the journey - <span> Follow my blogs  </span> </h2>
-						<div class="heading"> <h4> I love solving TryHackMe challenges and learning something new every day in cybersecurity.
-
- </h4>
-						<br>
-						<p><a href="https://hashnode.com/@john-cybersec" class="btn btn-primary py-3 px-5">Hashnode</a></p>
-						</div>
-					</div>
-				</div>
-			<!-- </div> -->
-		</div>
-	</section>
-
-
-
-    <!-- <section class="ftco-section contact-section ftco-no-pb" id="contact-section">
-      <div class="container">
-      	<div class="row justify-content-center mb-5 pb-3">
-          <div class="col-md-7 heading-section text-center ftco-animate">
-            <h1 class="big big-2">Contact</h1>
-            <h2 class="mb-4">Contact Me</h2>
-            <p>Below are the details to reach out to me!</p>
-          </div>
-        </div>
-
-        <div class="row d-flex contact-info mb-5">
-          <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-          	<div class="align-self-stretch box p-4 text-center">
-          		<div class="icon d-flex align-items-center justify-content-center">
-          			<span class="icon-map-signs"></span>
-          		</div>
-          		<h3 class="mb-4">Address</h3>
-	            <p>Ontario, Canada</p>
-	          </div>
-          </div>
-          <!-- <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-          	<div class="align-self-stretch box p-4 text-center">
-          		<div class="icon d-flex align-items-center justify-content-center">
-          			<span class="icon-phone2"></span>
-          		</div>
-          		<h3 class="mb-4">Contact Number</h3>
-	            <p><a href="tel://0101010101">+ 0 101 0101 101</a></p>
-	          </div>
-          </div> -->
-          <!-- <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-          	<div class="align-self-stretch box p-4 text-center">
-          		<div class="icon d-flex align-items-center justify-content-center">
-          			<span class="icon-paper-plane"></span>
-          		</div>
-          		<h3 class="mb-4">Email Address</h3>
-	            <p><a href="mailto:info@yoursite.com">conctact@domainname.com</a></p>
-	          </div>
-          </div>
-          <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-          	<div class="align-self-stretch box p-4 text-center">
-          		<div class="icon d-flex align-items-center justify-content-center">
-          			<span class="icon-globe"></span>
-          		</div>
-          		<h3 class="mb-4">Download Resume</h3>
-	            <p><a href="#">resumelink</a></p>
-	          </div>
-          </div> -->
-
-		  <!-- <div class="container">
-			<br>
-			<br>
-			<div class="row justify-content-center">
-				<div class="col-md-7 ftco-animate text-center">
-					<h2>Have a<span> Question?  </span> <a href="https://forms.gle/uLaTShUKXraAvHJ77" class="btn btn-primary py-3 px-5">Click Here</a> </h2>
-				</div>
-			</div>
-				<br>
-					<ul class="ftco-footer-social list-unstyled d-flex justify-content-center align-items-center mb-0">
-					  <li class="ftco-animate normal-txt">Find me on  </li>
-					  <li class="ftco-animate"><a href="https://www.youtube.com/@RishabhMishraOfficial"><span class="icon-youtube"></span></a></li>
-					  <li class="ftco-animate"><a href="https://www.linkedin.com/in/rishabhnmishra/"><span class="icon-linkedin"></span></a></li>  
-					  <li class="ftco-animate"><a href="https://twitter.com/rishabhnmishra"><span class="icon-twitter"></span></a></li>
-					  <li class="ftco-animate"><a href="https://twitter.com/rishabhnmishra"><span class="icon-facebook"></span></a></li>
-				      <li class="ftco-animate"><a href="https://www.instagram.com/rishabhnmishra/"><span class="icon-instagram"></span></a></li>
-					</ul>
-				<br>
-		   </div> -->
-   </div>
- </section> -->
-
-
- 
-	
-    <footer class="ftco-footer ftco-section">
-		<div class="container">
-		  <div class="row">
-			<div class="col-md-12 text-center">
-  
-			  <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-	Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
-	<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-			</div>
-		  </div>
-		</div>
-	  </footer>
-
-
-  <!-- loader -->
-  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-
-
-  <script src="js/jquery.min.js"></script>
-  <script src="js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/jquery.easing.1.3.js"></script>
-  <script src="js/jquery.waypoints.min.js"></script>
-  <script src="js/jquery.stellar.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
-  <script src="js/jquery.animateNumber.min.js"></script>
-  <script src="js/scrollax.min.js"></script>
-  
-  <script src="js/main.js"></script>
-    
-  </body>
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </footer>
+</body>
 </html>
