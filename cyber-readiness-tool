@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAE-Aligned Cyber Readiness & GRC Assessment Tool</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f8f9fa; color: #333; }
+        .header { background-color: #007bff; color: white; padding: 40px; text-align: center; border-bottom: 5px solid #0056b3; }
+        .header h1 { font-size: 2.8rem; margin-bottom: 10px; }
+        .header p { font-size: 1.3rem; }
+        .container { max-width: 1200px; }
+        .intro { margin: 30px 0; padding: 25px; background-color: #e9ecef; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .intro ul { list-style-type: disc; margin-left: 25px; font-size: 1.1rem; }
+        .domain-section { margin-bottom: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; }
+        .domain-section .card-header { background-color: #007bff; color: white; font-weight: bold; }
+        .question { margin-bottom: 25px; padding: 20px; background-color: white; border-radius: 8px; border: 1px solid #dee2e6; }
+        .form-check-inline { margin-right: 15px; }
+        .results { display: none; margin-top: 60px; padding: 30px; background-color: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .score-bar { margin-bottom: 20px; }
+        .gap-item { margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-left: 5px solid #dc3545; border-radius: 5px; }
+        .recommendation { margin-top: 30px; padding: 20px; background-color: #f0f9ff; border-left: 5px solid #007bff; border-radius: 5px; }
+        #radarChart { max-width: 600px; margin: 30px auto; }
+        .export-btn { margin-top: 30px; }
+        footer { text-align: center; padding: 20px; background-color: #007bff; color: white; margin-top: 50px; }
+        footer a { color: #fff; text-decoration: underline; }
+        @media print {
+            .no-print { display: none; }
+            .results { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>UAE-Aligned Cyber Readiness & GRC Assessment Tool</h1>
+        <p>A browser-based tool for assessing cybersecurity maturity, aligned with NIST CSF 2.0, ISO 27001:2022, and UAE IA V2 (2025) standards.</p>
+    </div>
+    <div class="container">
+        <div class="intro">
+            <h3>Welcome</h3>
+            <p>This tool helps organizations evaluate their cyber readiness using NIST CSF functions, with mappings to ISO 27001 clauses and Annex A controls, as well as UAE Information Assurance Standard V2 families and CSC policies. Toggle UAE mappings for region-specific insights.</p>
+            <ul>
+                <li>Answer questions on a 0-4 maturity scale.</li>
+                <li>Get instant scores, gaps, recommendations, and framework mappings.</li>
+                <li>Export results as JSON or PDF for professional reports.</li>
+                <li>Designed for quick assessments, compliant with UAE cybersecurity requirements.</li>
+            </ul>
+            <p><strong>Note:</strong> Mappings are based on standard alignments; consult official documents for full compliance.</p>
+        </div>
+        <form id="assessmentForm">
+            <div class="mb-4">
+                <label class="form-check-label">
+                    <input type="checkbox" id="uaeToggle" class="form-check-input" checked> Include UAE IA V2 & CSC mappings
+                </label>
+            </div>
+            <div id="domainsContainer"></div>
+            <button type="submit" class="btn btn-primary btn-lg">Submit Assessment</button>
+        </form>
+        <div class="results" id="resultsSection">
+            <h2>Assessment Results</h2>
+            <div id="dashboard">
+                <h3>Overall Maturity Score</h3>
+                <div class="progress mb-3" id="overallScoreBar" style="height: 30px;"></div>
+                <h3>Domain Scores</h3>
+                <div id="domainScores"></div>
+                <h3>Maturity Radar</h3>
+                <canvas id="radarChart"></canvas>
+            </div>
+            <div id="topGaps" class="mt-5">
+                <h3>Top Gaps</h3>
+                <div id="gapsList"></div>
+            </div>
+            <div id="recommendations" class="mt-5">
+                <h3>Recommendations / Next Actions</h3>
+                <div id="recsList"></div>
+            </div>
+            <div class="export-btn no-print">
+                <button class="btn btn-secondary me-2" onclick="downloadJSON()">Download JSON</button>
+                <button class="btn btn-secondary me-2" onclick="exportPDF()">Export PDF</button>
+                <button class="btn btn-secondary" onclick="window.print()">Print</button>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>Developed by [Your Name] | <a href="https://github.com/yourusername/yourrepo">View on GitHub</a> | Updated January 2026</p>
+    </footer>
+
+    <script>
+        const domains = [
+            {
+                name: 'Govern',
+                purpose: 'Set strategy, policies, and oversight for cybersecurity risk.',
+                questions: [
+                    { id: 'g1', text: 'Has the organization established and maintained an information security policy approved by top management?', mappings: { isoClause: ['5.1', '5.2'], annexA: ['5.1'], uaeIA: ['M1'], uaeCSC: ['M1'] } },
+                    { id: 'g2', text: 'Are information security roles, responsibilities, and authorities defined and allocated?', mappings: { isoClause: ['5.3'], annexA: ['5.2', '5.3'], uaeIA: ['M1'], uaeCSC: ['M1'] } },
+                    { id: 'g3', text: 'Does the organization conduct regular information security risk assessments?', mappings: { isoClause: ['6.1.2'], annexA: ['5.7', '5.8'], uaeIA: ['M2'], uaeCSC: ['M2'] } },
+                    { id: 'g4', text: 'Is there a process for continual improvement of the information security management system?', mappings: { isoClause: ['10.2'], annexA: ['5.35', '5.36'], uaeIA: ['M6'], uaeCSC: ['M6'] } }
+                ]
+            },
+            {
+                name: 'Identify',
+                purpose: 'Understand assets, risks, and environment.',
+                questions: [
+                    { id: 'i1', text: 'Does the organization maintain an inventory of assets?', mappings: { isoClause: ['4.2'], annexA: ['5.9'], uaeIA: ['T1'], uaeCSC: ['T1'] } },
+                    { id: 'i2', text: 'Has the organization identified internal and external issues relevant to its ISMS?', mappings: { isoClause: ['4.1'], annexA: ['5.1'], uaeIA: ['M2'], uaeCSC: ['M2'] } },
+                    { id: 'i3', text: 'Are information security risks related to suppliers identified?', mappings: { isoClause: ['6.1.2'], annexA: ['5.19', '5.20'], uaeIA: ['T6'], uaeCSC: ['T6'] } },
+                    { id: 'i4', text: 'Does the organization classify information based on its value and sensitivity?', mappings: { isoClause: ['8.2.1'], annexA: ['5.12', '5.13'], uaeIA: ['T1'], uaeCSC: ['T1'] } }
+                ]
+            },
+            {
+                name: 'Protect',
+                purpose: 'Implement safeguards to limit impact.',
+                questions: [
+                    { id: 'p1', text: 'Are access controls implemented to protect information assets?', mappings: { isoClause: ['9.2'], annexA: ['5.15', '8.2', '8.3'], uaeIA: ['T5'], uaeCSC: ['T5'] } },
+                    { id: 'p2', text: 'Is employee awareness and training on information security conducted regularly?', mappings: { isoClause: ['7.2.2'], annexA: ['6.3'], uaeIA: ['M3'], uaeCSC: ['M3'] } },
+                    { id: 'p3', text: 'Are physical security measures in place to protect facilities?', mappings: { isoClause: ['9.1'], annexA: ['7.1', '7.2', '7.3'], uaeIA: ['T2'], uaeCSC: ['T2'] } },
+                    { id: 'p4', text: 'Is cryptography used where necessary to protect information?', mappings: { isoClause: ['8.1'], annexA: ['8.24'], uaeIA: ['T4'], uaeCSC: ['T4'] } }
+                ]
+            },
+            {
+                name: 'Detect',
+                purpose: 'Discover cybersecurity events quickly.',
+                questions: [
+                    { id: 'd1', text: 'Are monitoring and logging activities implemented for detection of anomalies?', mappings: { isoClause: ['9.1'], annexA: ['8.15', '8.16'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
+                    { id: 'd2', text: 'Is vulnerability management process in place?', mappings: { isoClause: ['8.1'], annexA: ['8.8'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
+                    { id: 'd3', text: 'Are information security events assessed and classified?', mappings: { isoClause: ['9.1'], annexA: ['5.25'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
+                    { id: 'd4', text: 'Is threat intelligence gathered and used?', mappings: { isoClause: ['5.1'], annexA: ['5.7'], uaeIA: ['M2'], uaeCSC: ['M2'] } }
+                ]
+            },
+            {
+                name: 'Respond',
+                purpose: 'Contain and mitigate incidents.',
+                questions: [
+                    { id: 'r1', text: 'Is there an information security incident response plan?', mappings: { isoClause: ['6.1.3'], annexA: ['5.24', '5.26'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
+                    { id: 'r2', text: 'Are incidents reported and responded to in a timely manner?', mappings: { isoClause: ['9.1'], annexA: ['5.26', '6.8'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
+                    { id: 'r3', text: 'Is evidence collected for incidents?', mappings: { isoClause: ['9.1'], annexA: ['5.28'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
+                    { id: 'r4', text: 'Are lessons learned from incidents documented?', mappings: { isoClause: ['10.1'], annexA: ['5.27'], uaeIA: ['M6'], uaeCSC: ['M6'] } }
+                ]
+            },
+            {
+                name: 'Recover',
+                purpose: 'Restore operations and improve resilience.',
+                questions: [
+                    { id: 'rc1', text: 'Are business continuity plans established and tested?', mappings: { isoClause: ['8.3'], annexA: ['5.29', '5.30'], uaeIA: ['T9'], uaeCSC: ['T9'] } },
+                    { id: 'rc2', text: 'Are backups performed and tested regularly?', mappings: { isoClause: ['8.3'], annexA: ['8.13'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
+                    { id: 'rc3', text: 'Is there a process for recovery from disruptions?', mappings: { isoClause: ['8.3'], annexA: ['5.29'], uaeIA: ['T9'], uaeCSC: ['T9'] } },
+                    { id: 'rc4', text: 'Are redundancy measures in place for critical systems?', mappings: { isoClause: ['8.1'], annexA: ['8.14'], uaeIA: ['T3'], uaeCSC: ['T3'] } }
+                ]
+            }
+        ];
+
+        const scoreLabels = ['Not Started (0)', 'Initial (1)', 'Developing (2)', 'Managed (3)', 'Optimized (4)'];
+
+        // Generate form
+        const domainsContainer = document.getElementById('domainsContainer');
+        domains.forEach(domain => {
+            const domainDiv = document.createElement('div');
+            domainDiv.className = 'domain-section card';
+            domainDiv.innerHTML = `<div class="card-header"><h4>${domain.name}</h4><p class="text-white-50">${domain.purpose}</p></div><div class="card-body">`;
+            domain.questions.forEach(q => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question';
+                qDiv.innerHTML = `<p><strong>${q.text}</strong></p>`;
+                scoreLabels.forEach((label, index) => {
+                    qDiv.innerHTML += `
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="${q.id}" id="${q.id}-${index}" value="${index}">
+                            <label class="form-check-label" for="${q.id}-${index}">${label}</label>
+                        </div>`;
+                });
+                domainDiv.querySelector('.card-body').appendChild(qDiv);
+            });
+            domainDiv.innerHTML += `</div>`;
+            domainsContainer.appendChild(domainDiv);
+        });
+
+        // Handle submit
+        document.getElementById('assessmentForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const uaeEnabled = document.getElementById('uaeToggle').checked;
+            const scores = {};
+            let totalScore = 0;
+            let questionCount = 0;
+            const domainScores = {};
+            const domainLabels = [];
+            const domainData = [];
+            const gaps = [];
+
+            domains.forEach(domain => {
+                let domainTotal = 0;
+                let domainCount = 0;
+                domainLabels.push(domain.name);
+                domain.questions.forEach(q => {
+                    const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+                    if (selected) {
+                        const score = parseInt(selected.value);
+                        scores[q.id] = { text: q.text, score, mappings: q.mappings };
+                        domainTotal += score;
+                        domainCount++;
+                        totalScore += score;
+                        questionCount++;
+                        gaps.push({ ...scores[q.id], domain: domain.name });
+                    }
+                });
+                if (domainCount > 0) {
+                    const avg = (domainTotal / domainCount).toFixed(2);
+                    domainScores[domain.name] = avg;
+                    domainData.push(avg);
+                }
+            });
+
+            const overallScore = questionCount > 0 ? (totalScore / questionCount).toFixed(2) : 0;
+
+            // Sort gaps by score ascending
+            gaps.sort((a, b) => a.score - b.score);
+            const topGaps = gaps.slice(0, 10); // Top 10 lowest for more detail
+
+            // Display results
+            const resultsSection = document.getElementById('resultsSection');
+            resultsSection.style.display = 'block';
+
+            // Overall score
+            const overallBar = document.getElementById('overallScoreBar');
+            overallBar.innerHTML = `<div class="progress-bar bg-success" role="progressbar" style="width: ${(overallScore / 4 * 100)}%;" aria-valuenow="${overallScore}" aria-valuemin="0" aria-valuemax="4">${overallScore} / 4</div>`;
+
+            // Domain scores
+            const domainScoresDiv = document.getElementById('domainScores');
+            domainScoresDiv.innerHTML = '';
+            for (const [name, score] of Object.entries(domainScores)) {
+                domainScoresDiv.innerHTML += `
+                    <div class="score-bar">
+                        <strong>${name}: ${score} / 4</strong>
+                        <div class="progress" style="height: 20px;">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: ${(score / 4 * 100)}%;" aria-valuenow="${score}" aria-valuemin="0" aria-valuemax="4"></div>
+                        </div>
+                    </div>`;
+            }
+
+            // Radar chart
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: domainLabels,
+                    datasets: [{
+                        label: 'Maturity Score',
+                        data: domainData,
+                        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                        borderColor: 'rgba(0, 123, 255, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 4,
+                            ticks: { stepSize: 1 }
+                        }
+                    }
+                }
+            });
+
+            // Top gaps
+            const gapsList = document.getElementById('gapsList');
+            gapsList.innerHTML = '';
+            topGaps.forEach(gap => {
+                let mappingsStr = `ISO 27001 Clause: ${gap.mappings.isoClause.join(', ')}<br>Annex A: ${gap.mappings.annexA.join(', ')}`;
+                if (uaeEnabled) {
+                    mappingsStr += `<br>UAE IA V2: ${gap.mappings.uaeIA.join(', ')}<br>UAE CSC: ${gap.mappings.uaeCSC.join(', ')}`;
+                }
+                gapsList.innerHTML += `<div class="gap-item"><strong>${gap.text}</strong> (Domain: ${gap.domain})<br>Score: ${gap.score}/4<br><small>Mappings: ${mappingsStr}</small></div>`;
+            });
+
+            // Recommendations
+            const recsList = document.getElementById('recsList');
+            recsList.innerHTML = '';
+            topGaps.forEach(gap => {
+                let rec = 'To address this gap: ';
+                if (gap.score === 0) {
+                    rec += 'Initiate basic planning and policy development aligned with the mapped controls.';
+                } else if (gap.score === 1) {
+                    rec += 'Build initial implementations and assign responsibilities.';
+                } else if (gap.score === 2) {
+                    rec += 'Develop processes with documentation and training.';
+                } else if (gap.score === 3) {
+                    rec += 'Manage and monitor for effectiveness.';
+                } else {
+                    rec += 'Optimize with automation and integration.';
+                }
+                rec += ' Refer to ISO 27001 and UAE IA V2 guidelines for detailed implementation.';
+                recsList.innerHTML += `<div class="recommendation"><strong>${gap.text}</strong><p>${rec}</p></div>`;
+            });
+
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        function downloadJSON() {
+            const data = {
+                overallScore: document.querySelector('#overallScoreBar .progress-bar').textContent,
+                domainScores: {},
+                gaps: [],
+                recommendations: []
+            };
+            document.querySelectorAll('#domainScores .score-bar strong').forEach(el => {
+                const [name, score] = el.textContent.split(': ');
+                data.domainScores[name] = score;
+            });
+            document.querySelectorAll('#gapsList .gap-item').forEach(el => {
+                data.gaps.push(el.innerHTML.replace(/<br>/g, '\n'));
+            });
+            document.querySelectorAll('#recsList .recommendation').forEach(el => {
+                data.recommendations.push(el.innerHTML.replace(/<br>/g, '\n').replace(/<p>/g, '').replace(/<\/p>/g, ''));
+            });
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'cyber_readiness_results.json';
+            a.click();
+        }
+
+        async function exportPDF() {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const element = document.getElementById('resultsSection');
+            const canvas = await html2canvas(element, { scale: 2, useCORS: true });
+            const imgData = canvas.toDataURL('image/png');
+            const imgWidth = 190;
+            const pageHeight = 295;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 10;
+
+            pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight + 10;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            pdf.save('cyber_readiness_report.pdf');
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
