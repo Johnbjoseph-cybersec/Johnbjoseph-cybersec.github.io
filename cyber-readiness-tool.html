@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Optional: icons -->
+  <!-- Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
 
   <style>
@@ -154,12 +154,11 @@
       overflow:hidden;
       position:relative;
     }
-    .card .inner{ padding: 22px 22px 18px; }
+    .card .inner{ padding: 22px 22px 18px; position:relative; z-index:1; }
     .glow{
-      position:absolute; inset:-1px;
+      position:absolute; inset:-1px; z-index:0; pointer-events:none;
       background: radial-gradient(700px 380px at 20% 15%, rgba(124,58,237,.20), transparent 55%),
                   radial-gradient(650px 360px at 90% 30%, rgba(34,211,238,.14), transparent 55%);
-      pointer-events:none;
       opacity:.95;
     }
     .heroTitle{
@@ -1202,7 +1201,8 @@ function renderToggles(){
       renderToggles();
       const badge = document.getElementById("modeBadge");
       badge.textContent = modeBadgeText();
-      document.getElementById("badgeFrameworks")?.textContent = currentFrameworkLabel();
+      const _bf = document.getElementById("badgeFrameworks");
+      if (_bf) _bf.textContent = currentFrameworkLabel();
       toast("Updated mappings", currentFrameworkLabel());
       // re-render question chips & results if visible
       if(state.view === "questions") renderQuestions(state.activeDomain);
@@ -1244,8 +1244,8 @@ function switchView(which){
   if(which === "domains") setStep(1);
   if(which === "questions") setStep(2);
   if(which === "results") setStep(3);
-  // topbar results badge
-  document.getElementById("badgeFrameworks")?.textContent = currentFrameworkLabel();
+  const _bf = document.getElementById("badgeFrameworks");
+  if (_bf) _bf.textContent = currentFrameworkLabel();
 }
 
 function renderDomains(){
@@ -1680,9 +1680,9 @@ function init(){
   renderToggles();
   renderDomains();
   updateAnsweredBadge();
-  document.getElementById("modeBadge").textContent = modeBadgeText();
+  const _bf = document.getElementById("badgeFrameworks");
+  if (_bf) _bf.textContent = currentFrameworkLabel();
   bindTopControls();
-  document.getElementById("badgeFrameworks")?.textContent = currentFrameworkLabel();
   setStep(1);
 }
 
@@ -1691,4 +1691,3 @@ init();
 
 </body>
 </html>
-
