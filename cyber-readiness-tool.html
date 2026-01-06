@@ -1,6 +1,4 @@
-from pathlib import Path, PurePosixPath
-
-html = r"""<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
@@ -1693,7 +1691,5 @@ init();
 
 </body>
 </html>
-"""
-out_path = Path("/mnt/data/cyber-readiness-enterprise.html")
 out_path.write_text(html, encoding="utf-8")
 str(out_path)
