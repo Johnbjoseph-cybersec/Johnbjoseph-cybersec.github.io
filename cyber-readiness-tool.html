@@ -1,457 +1,1699 @@
-<!DOCTYPE html>
+from pathlib import Path, PurePosixPath
+
+html = r"""<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UAE-Aligned Enterprise Cyber Readiness & GRC Assessment Tool</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7fa; color: #2c3e50; }
-        .header { background: linear-gradient(135deg, #007bff, #0056b3); color: white; padding: 60px 20px; text-align: center; border-bottom: 8px solid #004085; }
-        .header h1 { font-size: 3rem; margin-bottom: 15px; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
-        .header p { font-size: 1.4rem; max-width: 800px; margin: 0 auto; }
-        .container { max-width: 1100px; padding: 40px 20px; }
-        .intro { background-color: white; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); padding: 40px; margin-bottom: 50px; }
-        .intro h2 { color: #007bff; margin-bottom: 20px; }
-        .intro ul { list-style-type: none; padding-left: 0; }
-        .intro li { margin-bottom: 15px; font-size: 1.1rem; position: relative; padding-left: 30px; }
-        .intro li::before { content: '✓'; position: absolute; left: 0; color: #28a745; font-weight: bold; }
-        #progressContainer { position: fixed; top: 20px; right: 20px; z-index: 1000; }
-        .progress-circle { width: 80px; height: 80px; transform: rotate(-90deg); }
-        .progress-circle-bg { fill: none; stroke: #e9ecef; stroke-width: 8; }
-        .progress-circle-fg { fill: none; stroke: #007bff; stroke-width: 8; stroke-dasharray: 251; stroke-dashoffset: 251; transition: stroke-dashoffset 0.5s ease; }
-        .progress-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(90deg); font-size: 1.2rem; font-weight: bold; color: #007bff; }
-        .step { display: none; }
-        .step.active { display: block; }
-        .domain-section { background-color: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 40px; }
-        .domain-section .card-header { background: linear-gradient(135deg, #007bff, #0062cc); color: white; padding: 20px; border-top-left-radius: 12px; border-top-right-radius: 12px; }
-        .question { padding: 20px; border-bottom: 1px solid #dee2e6; }
-        .question:last-child { border-bottom: none; }
-        .question p { font-weight: 600; margin-bottom: 15px; }
-        .form-check-inline { margin-right: 20px; }
-        .form-check-input:checked { background-color: #007bff; border-color: #007bff; }
-        .navigation { display: flex; justify-content: space-between; margin-top: 30px; }
-        #analyzing { display: none; text-align: center; padding: 100px 0; }
-        #analyzing .spinner-border { width: 60px; height: 60px; border-width: 5px; }
-        .results { display: none; }
-        .result-section { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
-        .result-section.visible { opacity: 1; transform: translateY(0); }
-        .dashboard-card { background-color: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 30px; margin-bottom: 40px; }
-        .gap-item { background-color: #f8f9fa; border-left: 6px solid #dc3545; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
-        .recommendation { background-color: #f0f9ff; border-left: 6px solid #007bff; padding: 20px; margin-bottom: 20px; border-radius: 8px; }
-        #radarChart { max-width: 500px; margin: 30px auto; }
-        footer { text-align: center; padding: 30px; background: linear-gradient(135deg, #007bff, #0056b3); color: white; margin-top: 60px; font-size: 1rem; }
-        footer a { color: #ffffff; text-decoration: underline; }
-        @media (max-width: 768px) { .header h1 { font-size: 2.2rem; } .header p { font-size: 1.1rem; } }
-    </style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Cyber Readiness & GRC Assessment — Enterprise UI (Static)</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Optional: icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+
+  <style>
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1226;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.085);
+      --stroke: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.62);
+      --muted2: rgba(255,255,255,.44);
+      --brand:#7C3AED;
+      --brand2:#22D3EE;
+      --good:#34D399;
+      --warn:#FBBF24;
+      --bad:#FB7185;
+      --shadow: 0 24px 70px rgba(0,0,0,.55);
+      --shadow2: 0 14px 40px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 26px;
+      --ease: cubic-bezier(.2,.8,.2,1);
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: radial-gradient(1200px 800px at 20% 10%, rgba(124,58,237,.28), transparent 60%),
+                  radial-gradient(900px 600px at 80% 20%, rgba(34,211,238,.18), transparent 55%),
+                  radial-gradient(800px 600px at 50% 90%, rgba(251,113,133,.12), transparent 55%),
+                  linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    /* Subtle animated grid */
+    .gridfx{
+      position:fixed; inset:0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.045) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(800px 600px at 50% 20%, black 35%, transparent 85%);
+      pointer-events:none;
+      opacity:.55;
+      animation: drift 14s var(--ease) infinite alternate;
+    }
+    @keyframes drift{ from{ transform: translate3d(0,0,0); } to{ transform: translate3d(0,-14px,0);} }
+
+    /* Floating orbs */
+    .orb{
+      position:fixed; width:520px; height:520px; border-radius:999px;
+      filter: blur(18px);
+      opacity:.55;
+      pointer-events:none;
+      mix-blend-mode: screen;
+      animation: float 9s var(--ease) infinite alternate;
+    }
+    .orb.one{ left:-140px; top:-140px; background: radial-gradient(circle at 35% 30%, rgba(124,58,237,.75), transparent 55%); }
+    .orb.two{ right:-180px; top:80px; background: radial-gradient(circle at 40% 35%, rgba(34,211,238,.55), transparent 60%); animation-duration: 11s;}
+    .orb.three{ left:40%; bottom:-220px; background: radial-gradient(circle at 45% 45%, rgba(251,113,133,.45), transparent 62%); animation-duration: 13s;}
+    @keyframes float { from{ transform: translate3d(0,0,0) scale(1); } to{ transform: translate3d(0,24px,0) scale(1.02);} }
+
+    .wrap{ max-width: 1200px; margin: 0 auto; padding: 28px 18px 60px; position:relative; }
+
+    /* Top nav */
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      position:sticky; top:0; z-index:50;
+      padding: 14px 12px;
+      margin: -8px -6px 18px;
+      border-radius: var(--radius2);
+      background: rgba(10,14,26,.62);
+      border: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 32px rgba(0,0,0,.35);
+    }
+
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      user-select:none;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background: conic-gradient(from 210deg, rgba(124,58,237,.9), rgba(34,211,238,.9), rgba(251,113,133,.7), rgba(124,58,237,.9));
+      box-shadow: 0 12px 26px rgba(124,58,237,.25);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo:after{
+      content:""; position:absolute; inset:-40%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 60%);
+      transform: rotate(18deg);
+    }
+    .brand h1{
+      font-size: 14px; margin:0; letter-spacing:.2px; line-height:1.05;
+    }
+    .brand .sub{ font-size: 12px; color: var(--muted); margin-top:2px; }
+
+    .actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
+    .pill{
+      display:flex; align-items:center; gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      color: var(--text);
+      cursor:pointer;
+      transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);
+      user-select:none;
+    }
+    .pill:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.16);}
+    .pill:active{ transform: translateY(0px) scale(.99); }
+    .pill .hint{ color: var(--muted); font-size:12px; }
+    .pill.primary{
+      background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 20px 55px rgba(124,58,237,.25);
+    }
+
+    /* Hero */
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      margin-top: 10px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){
+      .hero{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(12px);
+      overflow:hidden;
+      position:relative;
+    }
+    .card .inner{ padding: 22px 22px 18px; }
+    .glow{
+      position:absolute; inset:-1px;
+      background: radial-gradient(700px 380px at 20% 15%, rgba(124,58,237,.20), transparent 55%),
+                  radial-gradient(650px 360px at 90% 30%, rgba(34,211,238,.14), transparent 55%);
+      pointer-events:none;
+      opacity:.95;
+    }
+    .heroTitle{
+      font-size: 34px;
+      margin: 0 0 8px;
+      letter-spacing: -.4px;
+      line-height: 1.12;
+    }
+    .heroTitle .grad{
+      background: linear-gradient(90deg, rgba(255,255,255,.95), rgba(34,211,238,.85), rgba(124,58,237,.95));
+      -webkit-background-clip: text;
+      background-clip:text;
+      color: transparent;
+    }
+    .heroP{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .chiprow{ display:flex; gap:8px; flex-wrap:wrap; margin-top: 14px; }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.86);
+      font-size: 12px;
+    }
+    .chip i{ opacity:.9; }
+
+    .metaGrid{
+      display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px;
+      margin-top: 14px;
+    }
+    @media (max-width: 520px){ .metaGrid{ grid-template-columns: 1fr; } }
+    .meta{
+      padding: 12px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.09);
+    }
+    .meta .k{ color: var(--muted2); font-size: 12px; }
+    .meta .v{ margin-top: 6px; font-weight: 700; letter-spacing:.2px; }
+
+    /* Framework toggles (enterprise looking) */
+    .togglePanel{
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .togglePanel .head{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+    }
+    .togglePanel h3{ margin:0; font-size: 14px; letter-spacing:.2px; }
+    .togglePanel p{ margin: 4px 0 0; color: var(--muted); font-size: 12.5px; line-height:1.45; }
+    .toggles{
+      display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px;
+    }
+    @media (max-width: 520px){ .toggles{ grid-template-columns: 1fr; } }
+
+    .togg{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding: 12px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.09);
+      transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
+    }
+    .togg:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.075); }
+    .togg .l{ display:flex; flex-direction:column; gap:2px; }
+    .togg .l .a{ font-weight:700; font-size: 13px; }
+    .togg .l .b{ color: var(--muted); font-size: 12px; }
+
+    .switch{
+      width: 48px; height: 28px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      position:relative;
+      cursor:pointer;
+      transition: background .18s var(--ease), border-color .18s var(--ease);
+      flex:0 0 auto;
+    }
+    .switch:before{
+      content:""; position:absolute; top:50%; left:3px; transform: translateY(-50%);
+      width: 22px; height: 22px; border-radius: 999px;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 10px 22px rgba(0,0,0,.35);
+      transition: transform .18s var(--ease), background .18s var(--ease);
+    }
+    .switch.on{
+      background: linear-gradient(135deg, rgba(124,58,237,.85), rgba(34,211,238,.55));
+      border-color: rgba(255,255,255,.16);
+    }
+    .switch.on:before{ transform: translate(20px, -50%); background: rgba(255,255,255,.96); }
+
+    /* Stepper */
+    .stepper{
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    }
+    .stepper .left{ display:flex; align-items:center; gap:12px; }
+    .badge{
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      font-size: 12px;
+      color: rgba(255,255,255,.88);
+    }
+    .progressWrap{
+      width: 320px; max-width: 100%;
+      height: 10px; border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+    }
+    .progressBar{
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
+      border-radius: 999px;
+      transition: width .35s var(--ease);
+    }
+
+    /* Pages / transitions */
+    .page{
+      margin-top: 16px;
+      position:relative;
+    }
+    .view{
+      display:none;
+      transform: translateY(10px);
+      opacity: 0;
+      transition: opacity .35s var(--ease), transform .35s var(--ease);
+    }
+    .view.active{
+      display:block;
+      transform: translateY(0px);
+      opacity: 1;
+    }
+
+    /* Domain tiles */
+    .domainGrid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+    @media (max-width: 980px){ .domainGrid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media (max-width: 620px){ .domainGrid{ grid-template-columns: 1fr; } }
+    .tile{
+      padding: 16px 16px;
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.10);
+      cursor:pointer;
+      transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
+      position:relative;
+      overflow:hidden;
+      min-height: 140px;
+    }
+    .tile:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.075); }
+    .tile:active{ transform: translateY(0px) scale(.99); }
+    .tile .t{ font-weight:800; font-size: 16px; letter-spacing:.2px; }
+    .tile .p{ margin-top: 6px; color: var(--muted); font-size: 13px; line-height:1.45;}
+    .tile .foot{
+      margin-top: 12px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      color: var(--muted2); font-size:12px;
+    }
+    .tile .spark{
+      position:absolute; inset:-50%;
+      background: radial-gradient(circle at 30% 30%, rgba(34,211,238,.12), transparent 55%),
+                  radial-gradient(circle at 70% 40%, rgba(124,58,237,.14), transparent 56%);
+      transform: rotate(12deg);
+      opacity:.9;
+      pointer-events:none;
+    }
+
+    /* Question cards */
+    .qHead{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+      margin-bottom: 10px;
+    }
+    .qHead .left{ display:flex; flex-direction:column; gap:6px; }
+    .qTitle{ font-size: 18px; font-weight: 800; letter-spacing: -.2px; margin:0; }
+    .qSub{ margin:0; color: var(--muted); font-size: 13px; line-height:1.45; }
+    .qCard{
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.10);
+      padding: 16px 16px;
+      box-shadow: 0 10px 28px rgba(0,0,0,.22);
+      margin-top: 12px;
+    }
+
+    .qList{ display:grid; gap: 12px; margin-top: 12px; }
+    .cap{
+      border-radius: 18px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      padding: 14px;
+      transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
+      position:relative;
+      overflow:hidden;
+    }
+    .cap:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.07); }
+    .cap .capTop{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+    }
+    .cap .capName{ font-weight: 750; letter-spacing:.1px; line-height:1.35; }
+    .cap .capHint{ margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height:1.45; }
+
+    .scorePills{ display:flex; gap:6px; flex-wrap:wrap; margin-top: 12px;}
+    .scorePills button{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.85);
+      padding: 8px 10px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-size: 12px;
+      transition: transform .14s var(--ease), background .14s var(--ease), border-color .14s var(--ease);
+      user-select:none;
+    }
+    .scorePills button:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.18); }
+    .scorePills button.active{
+      background: linear-gradient(135deg, rgba(124,58,237,.88), rgba(34,211,238,.55));
+      border-color: rgba(255,255,255,.16);
+    }
+
+    .row2{ display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; margin-top: 12px;}
+    .mini{
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .mapChips{ display:flex; gap:6px; flex-wrap:wrap; margin-top: 10px;}
+    .mapChips .m{
+      font-size: 11px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.85);
+    }
+    .m.iso{ border-color: rgba(34,211,238,.22); }
+    .m.uae{ border-color: rgba(124,58,237,.24); }
+
+    details.evidence{
+      margin-top: 10px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.09);
+      padding: 10px 10px;
+    }
+    details.evidence summary{
+      cursor:pointer;
+      color: rgba(255,255,255,.88);
+      font-weight: 650;
+      list-style:none;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      user-select:none;
+    }
+    details.evidence summary::-webkit-details-marker{ display:none; }
+    details.evidence p{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height:1.55;
+    }
+
+    /* Footer controls for question view */
+    .navRow{
+      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      margin-top: 14px;
+    }
+    .btn{
+      padding: 11px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.9);
+      cursor:pointer;
+      transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);
+      user-select:none;
+      display:inline-flex; align-items:center; gap:10px;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.18); }
+    .btn:active{ transform: translateY(0px) scale(.99); }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
+      border-color: rgba(255,255,255,.16);
+      box-shadow: 0 18px 46px rgba(124,58,237,.24);
+    }
+    .btn.danger{
+      background: rgba(251,113,133,.12);
+      border-color: rgba(251,113,133,.22);
+    }
+    .btn.small{ padding: 9px 12px; border-radius: 12px; font-size: 13px; }
+
+    /* Results */
+    .resultsGrid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    @media (max-width: 980px){ .resultsGrid{ grid-template-columns: 1fr; } }
+
+    .kpiRow{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:10px; margin-top: 10px; }
+    @media (max-width: 780px){ .kpiRow{ grid-template-columns: 1fr; } }
+    .kpi{
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.10);
+      position:relative;
+      overflow:hidden;
+    }
+    .kpi .k{ color: var(--muted2); font-size: 12px;}
+    .kpi .v{ margin-top: 8px; font-size: 22px; font-weight: 850; letter-spacing:-.3px;}
+    .kpi .s{ margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height:1.45;}
+    .kpi .shine{
+      position:absolute; inset:-40%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.10), transparent 55%);
+      transform: rotate(10deg);
+      opacity:.9;
+      pointer-events:none;
+    }
+
+    .bars{ margin-top: 12px; display:grid; gap: 10px; }
+    .bar{
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .bar .top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .bar .name{ font-weight: 800; }
+    .bar .val{ color: rgba(255,255,255,.86); font-weight: 800; font-size: 13px; }
+    .track{
+      margin-top: 10px;
+      height: 10px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 999px;
+      overflow:hidden;
+    }
+    .fill{
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
+      border-radius: 999px;
+      transition: width .5s var(--ease);
+    }
+
+    .gapList{ display:grid; gap:10px; margin-top: 10px; }
+    .gap{
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      display:flex; gap:12px; align-items:flex-start; justify-content:space-between;
+    }
+    .gap .l{ display:flex; flex-direction:column; gap:6px; }
+    .gap .t{ font-weight: 800; line-height:1.35; }
+    .gap .meta{ color: var(--muted); font-size: 12.5px; line-height:1.45; }
+    .sev{
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-weight: 850;
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+      min-width: 92px;
+      text-align:center;
+      user-select:none;
+    }
+    .sev.bad{ background: rgba(251,113,133,.16); border-color: rgba(251,113,133,.22); }
+    .sev.warn{ background: rgba(251,191,36,.14); border-color: rgba(251,191,36,.22); }
+    .sev.good{ background: rgba(52,211,153,.14); border-color: rgba(52,211,153,.22); }
+
+    .roadmap{
+      margin-top: 12px;
+      display:grid;
+      gap: 10px;
+    }
+    .phase{
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .phase .ph{ display:flex; align-items:center; justify-content:space-between; gap:10px;}
+    .phase .ph .name{ font-weight: 900; }
+    .phase ul{
+      margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 12.5px; line-height:1.55;
+    }
+
+    /* Toast */
+    .toast{
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(10,14,26,.72);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 18px 50px rgba(0,0,0,.5);
+      backdrop-filter: blur(12px);
+      color: rgba(255,255,255,.92);
+      max-width: 360px;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events:none;
+      transition: opacity .25s var(--ease), transform .25s var(--ease);
+      z-index: 80;
+    }
+    .toast.show{ opacity: 1; transform: translateY(0px); }
+    .toast .small{ color: var(--muted); font-size: 12px; margin-top: 2px; }
+
+    /* Print */
+    @media print{
+      body{ background: white; color: #111; }
+      .gridfx,.orb,.topbar,.no-print{ display:none !important; }
+      .card{ background: white !important; border: 1px solid #ddd !important; box-shadow:none !important; }
+      .view{ display:block !important; opacity:1 !important; transform:none !important; }
+      .wrap{ max-width: 900px; }
+      .chip,.badge,.sev{ border: 1px solid #ddd !important; background: #f7f7f7 !important; color:#111 !important; }
+      .fill{ background: #333 !important; }
+    }
+  </style>
 </head>
+
 <body>
-    <div class="header">
-        <h1>Enterprise Cyber Readiness & GRC Assessment Tool</h1>
-        <p>Aligned with NIST CSF 2.0, ISO 27001:2022, and UAE IA Standard V2 (2025) for comprehensive, UAE-focused cybersecurity maturity evaluation.</p>
+  <div class="gridfx"></div>
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+  <div class="orb three"></div>
+
+  <div class="wrap">
+    <div class="topbar no-print">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Cyber Readiness & GRC Assessment</h1>
+          <div class="sub">Enterprise-grade experience • static deployment • ISO + UAE toggle</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <div class="pill" id="pillStatus" title="Saved locally in your browser">
+          <i class="ph ph-cloud-check"></i>
+          <div>
+            <div style="font-weight:800;font-size:12px;line-height:1.1">Auto-saved</div>
+            <div class="hint" id="saveHint">0 / 18 answered</div>
+          </div>
+        </div>
+
+        <div class="pill" id="btnExportJson"><i class="ph ph-download-simple"></i><span style="font-weight:800;font-size:13px">Export JSON</span></div>
+        <div class="pill" id="btnPrint"><i class="ph ph-printer"></i><span style="font-weight:800;font-size:13px">Print / PDF</span></div>
+        <div class="pill danger" id="btnReset"><i class="ph ph-broom"></i><span style="font-weight:800;font-size:13px">Reset</span></div>
+        <div class="pill primary" id="btnGoResults"><i class="ph ph-chart-line-up"></i><span style="font-weight:900;font-size:13px">Results</span></div>
+      </div>
     </div>
-    <div class="container">
-        <div id="introSection" class="intro">
-            <h2>Welcome to the Assessment</h2>
-            <p>This enterprise-grade tool evaluates your organization's cybersecurity maturity across NIST CSF 2.0 functions, providing actionable insights mapped to ISO 27001:2022 and UAE IA V2 standards. Ideal for UAE entities seeking compliance and resilience.</p>
-            <h3>What to Expect</h3>
-            <ul>
-                <li>Sequential domains: You'll assess one NIST CSF domain at a time (Govern, Identify, Protect, Detect, Respond, Recover).</li>
-                <li>Maturity scoring: Rate each practice from 0 (Not Started) to 4 (Optimized).</li>
-                <li>Real-time progress: A circular indicator tracks your completion percentage as you answer.</li>
-                <li>Analysis phase: After finishing, the tool analyzes your responses for 5-10 seconds.</li>
-                <li>Detailed results: View an executive dashboard, top gaps with framework mappings, and tailored recommendations, revealed progressively for clarity.</li>
-                <li>Exports: Download JSON or generate a professional PDF report.</li>
-            </ul>
-            <p><strong>Note:</strong> This assessment is for informational purposes; consult experts for formal audits.</p>
-            <div class="mb-4">
-                <label for="orgName" class="form-label">Organization Name (for personalized report):</label>
-                <input type="text" id="orgName" class="form-control" placeholder="Enter your organization name">
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="card">
+        <div class="glow"></div>
+        <div class="inner">
+          <h2 class="heroTitle"><span class="grad">UAE‑Aligned Cyber Readiness</span> that feels like a platform, not a form.</h2>
+          <p class="heroP">
+            A cinematic, enterprise-style readiness experience with real GRC outputs: maturity score, top gaps,
+            a 30/60/90 roadmap, and framework mappings (ISO 27001 clauses + Annex A, with optional UAE IA / CSC layer).
+          </p>
+
+          <div class="chiprow">
+            <span class="chip"><i class="ph ph-shield-check"></i> ISO 27001 Clause + Annex A mapping</span>
+            <span class="chip"><i class="ph ph-map-trifold"></i> Optional UAE layer (IA / CSC)</span>
+            <span class="chip"><i class="ph ph-sparkle"></i> Micro-interactions + transitions</span>
+            <span class="chip"><i class="ph ph-download"></i> Export JSON + Print to PDF</span>
+          </div>
+
+          <div class="metaGrid">
+            <div class="meta">
+              <div class="k">Assessment style</div>
+              <div class="v">Capability-based (0–4)</div>
             </div>
-            <button id="startAssessment" class="btn btn-primary btn-lg">Start Assessment</button>
+            <div class="meta">
+              <div class="k">Time to complete</div>
+              <div class="v">~6–10 minutes</div>
+            </div>
+          </div>
+
+          <div class="stepper">
+            <div class="left">
+              <span class="badge" id="stepBadge">Step 1/3 • Choose domain</span>
+              <div class="progressWrap" aria-label="progress">
+                <div class="progressBar" id="progressBar"></div>
+              </div>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn primary" id="btnStart"><i class="ph ph-play"></i>Start Assessment</button>
+              <button class="btn" id="btnDemo"><i class="ph ph-magic-wand"></i>Load Demo Data</button>
+            </div>
+          </div>
         </div>
-        <div id="assessmentSection" style="display: none;">
-            <div class="mb-4">
-                <label class="form-check-label">
-                    <input type="checkbox" id="uaeToggle" class="form-check-input" checked> Include UAE IA V2 & CSC mappings
-                </label>
+      </div>
+
+      <div class="card">
+        <div class="glow"></div>
+        <div class="inner togglePanel">
+          <div class="head">
+            <div>
+              <h3>Mapping Layers</h3>
+              <p>Turn on UAE mode only when you want region-specific mapping chips and report sections.</p>
             </div>
-            <form id="assessmentForm"></form>
-            <div class="navigation">
-                <button id="prevStep" class="btn btn-secondary" disabled>Previous</button>
-                <button id="nextStep" class="btn btn-primary">Next</button>
-            </div>
+            <div class="badge" id="modeBadge">ISO Mode</div>
+          </div>
+
+          <div class="toggles" id="toggles"></div>
+
+          <div style="margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height:1.55">
+            <b>Tip:</b> In interviews, keep ISO toggles ON by default. Turn UAE IA/CSC ON when tailoring to GCC roles.
+          </div>
         </div>
-        <div id="analyzing" style="display: none;">
-            <div class="spinner-border text-primary" role="status"></div>
-            <h3 class="mt-3">Analyzing your responses...</h3>
-        </div>
-        <div class="results" id="resultsSection" style="display: none;">
-            <div id="dashboard" class="result-section dashboard-card">
-                <h2>Executive Dashboard</h2>
-                <p>Your overall maturity score reflects the average across all domains. Higher scores indicate optimized practices.</p>
-                <h3>Overall Maturity Score</h3>
-                <div class="progress mb-4" id="overallScoreBar" style="height: 40px; background-color: #e9ecef;"></div>
-                <h3>Domain Scores</h3>
-                <div id="domainScores"></div>
-                <h3>Maturity Radar Chart</h3>
-                <canvas id="radarChart"></canvas>
-            </div>
-            <div id="topGaps" class="result-section dashboard-card">
-                <h2>Top Gaps Analysis</h2>
-                <p>These are the areas with the lowest scores, prioritized for improvement. Each includes framework mappings for compliance guidance.</p>
-                <div id="gapsList"></div>
-            </div>
-            <div id="recommendations" class="result-section dashboard-card">
-                <h2>Actionable Recommendations & Roadmap</h2>
-                <p>Based on your gaps, here are tailored next steps to enhance maturity, aligned with best practices.</p>
-                <div id="recsList"></div>
-            </div>
-            <div class="export-btn">
-                <button class="btn btn-secondary me-2" onclick="downloadJSON()">Download JSON</button>
-                <button class="btn btn-secondary me-2" onclick="exportPDF()">Export PDF</button>
-                <button class="btn btn-secondary" onclick="window.print()">Print</button>
-            </div>
-        </div>
+      </div>
     </div>
-    <div id="progressContainer" style="display: none;">
-        <svg class="progress-circle">
-            <circle class="progress-circle-bg" cx="40" cy="40" r="36"></circle>
-            <circle class="progress-circle-fg" cx="40" cy="40" r="36"></circle>
-        </svg>
-        <div class="progress-text">0%</div>
+
+    <!-- PAGES -->
+    <div class="page">
+
+      <!-- View A: Domain Picker -->
+      <div class="view active" id="viewDomains">
+        <div class="card">
+          <div class="glow"></div>
+          <div class="inner">
+            <div class="qHead">
+              <div class="left">
+                <h3 class="qTitle">Choose a domain</h3>
+                <p class="qSub">Each domain contains a handful of high-signal capabilities. Score honestly—this tool surfaces a real remediation roadmap.</p>
+              </div>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn small" id="btnBackHome"><i class="ph ph-house"></i>Home</button>
+                <button class="btn small" id="btnQuickResults"><i class="ph ph-chart-line"></i>Jump to Results</button>
+              </div>
+            </div>
+
+            <div class="domainGrid" id="domainGrid"></div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- View B: Domain Questions -->
+      <div class="view" id="viewQuestions">
+        <div class="card">
+          <div class="glow"></div>
+          <div class="inner" id="questionsInner">
+            <!-- populated -->
+          </div>
+        </div>
+      </div>
+
+      <!-- View C: Results -->
+      <div class="view" id="viewResults">
+        <div class="card">
+          <div class="glow"></div>
+          <div class="inner">
+            <div class="qHead">
+              <div class="left">
+                <h3 class="qTitle">Executive Results</h3>
+                <p class="qSub">This is intentionally “boardroom friendly”. Use it for interviews, proposals, and portfolio demos.</p>
+              </div>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn small" id="btnBackDomains"><i class="ph ph-arrow-left"></i>Domains</button>
+                <button class="btn small primary" id="btnSaveReport"><i class="ph ph-file-pdf"></i>Print / Save PDF</button>
+              </div>
+            </div>
+
+            <div class="resultsGrid">
+              <div>
+                <div class="kpiRow">
+                  <div class="kpi">
+                    <div class="shine"></div>
+                    <div class="k">Overall maturity</div>
+                    <div class="v" id="kpiOverall">0.00 / 4</div>
+                    <div class="s" id="kpiLabel">Not started</div>
+                  </div>
+                  <div class="kpi">
+                    <div class="shine"></div>
+                    <div class="k">Most improved impact</div>
+                    <div class="v" id="kpiFocus">—</div>
+                    <div class="s">Where you get fastest risk reduction</div>
+                  </div>
+                  <div class="kpi">
+                    <div class="shine"></div>
+                    <div class="k">Assessment coverage</div>
+                    <div class="v" id="kpiCoverage">0 / 18</div>
+                    <div class="s">Auto-saved to your browser</div>
+                  </div>
+                </div>
+
+                <div class="qCard" style="margin-top: 12px;">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+                    <div>
+                      <div style="font-weight:900; font-size: 14px;">Domain breakdown</div>
+                      <div style="color: var(--muted); font-size: 12.5px; margin-top: 4px;">Scores are averages (0–4). Use this view as a maturity heat map in conversation.</div>
+                    </div>
+                    <div class="badge" id="badgeFrameworks">ISO 27001 • Annex A</div>
+                  </div>
+                  <div class="bars" id="bars"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="qCard">
+                  <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                    <div>
+                      <div style="font-weight:900; font-size: 14px;">Top gaps (highest risk signal)</div>
+                      <div style="color: var(--muted); font-size: 12.5px; margin-top: 4px;">Lowest scoring capabilities, with mappings based on your toggles.</div>
+                    </div>
+                    <div class="badge" id="badgeGaps">Top 6</div>
+                  </div>
+                  <div class="gapList" id="gapList"></div>
+                </div>
+
+                <div class="qCard">
+                  <div style="font-weight:900; font-size: 14px;">30 / 60 / 90 roadmap</div>
+                  <div style="color: var(--muted); font-size: 12.5px; margin-top: 4px;">Auto-generated from your gaps. Perfect for interviews and client proposals.</div>
+                  <div class="roadmap" id="roadmap"></div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 14px; color: var(--muted); font-size: 12.5px; line-height:1.55">
+              Disclaimer: This is a high-level readiness indicator, not a formal certification audit. Use it to prioritize controls, evidence, and a practical implementation plan.
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <footer>
-        <p>Developed by [Your Name] | <a href="https://github.com/yourusername/yourrepo">View on GitHub</a> | Updated January 2026</p>
-    </footer>
 
-    <script>
-        const domains = [
-            {
-                name: 'Govern',
-                purpose: 'Set strategy, policies, and oversight for cybersecurity risk.',
-                questions: [
-                    { id: 'g1', text: 'Has the organization established a cybersecurity strategy aligned with business objectives?', mappings: { isoClause: ['5.1'], annexA: ['5.1'], uaeIA: ['M1'], uaeCSC: ['M1'] } },
-                    { id: 'g2', text: 'Are cybersecurity roles and responsibilities clearly defined across the organization?', mappings: { isoClause: ['5.3'], annexA: ['5.2', '5.3'], uaeIA: ['M1'], uaeCSC: ['M1'] } },
-                    { id: 'g3', text: 'Is there a process for managing cybersecurity risks at the enterprise level?', mappings: { isoClause: ['6.1'], annexA: ['5.7', '5.8'], uaeIA: ['M2'], uaeCSC: ['M2'] } },
-                    { id: 'g4', text: 'Does leadership regularly review and approve cybersecurity policies?', mappings: { isoClause: ['5.2'], annexA: ['5.1'], uaeIA: ['M1'], uaeCSC: ['M1'] } },
-                    { id: 'g5', text: 'Is there oversight for supply chain cybersecurity risks?', mappings: { isoClause: ['5.1'], annexA: ['5.19'], uaeIA: ['T6'], uaeCSC: ['T6'] } },
-                    { id: 'g6', text: 'Is cybersecurity integrated into enterprise risk management?', mappings: { isoClause: ['6.1'], annexA: ['5.8'], uaeIA: ['M2'], uaeCSC: ['M2'] } },
-                    { id: 'g7', text: 'Are cybersecurity outcomes defined and prioritized?', mappings: { isoClause: ['6.2'], annexA: ['5.1'], uaeIA: ['M1'], uaeCSC: ['M1'] } }
-                ]
-            },
-            {
-                name: 'Identify',
-                purpose: 'Understand assets, risks, and environment.',
-                questions: [
-                    { id: 'i1', text: 'Is there a comprehensive asset inventory including hardware, software, and data?', mappings: { isoClause: ['4.2'], annexA: ['5.9'], uaeIA: ['T1'], uaeCSC: ['T1'] } },
-                    { id: 'i2', text: 'Are regular risk assessments conducted to identify threats and vulnerabilities?', mappings: { isoClause: ['6.1.2'], annexA: ['5.8'], uaeIA: ['M2'], uaeCSC: ['M2'] } },
-                    { id: 'i3', text: 'Has the organization identified its critical business processes and dependencies?', mappings: { isoClause: ['4.1'], annexA: ['5.1'], uaeIA: ['M1'], uaeCSC: ['M1'] } },
-                    { id: 'i4', text: 'Is information classified based on sensitivity and criticality?', mappings: { isoClause: ['8.2.1'], annexA: ['5.12'], uaeIA: ['T1'], uaeCSC: ['T1'] } },
-                    { id: 'i5', text: 'Are supply chain risks assessed for third-party vendors?', mappings: { isoClause: ['6.1.2'], annexA: ['5.20'], uaeIA: ['T6'], uaeCSC: ['T6'] } },
-                    { id: 'i6', text: 'Is the organizational context reviewed for changes in risks?', mappings: { isoClause: ['4.1'], annexA: ['5.1'], uaeIA: ['M1'], uaeCSC: ['M1'] } },
-                    { id: 'i7', text: 'Are data flows and interdependencies mapped?', mappings: { isoClause: ['4.2'], annexA: ['5.9'], uaeIA: ['T1'], uaeCSC: ['T1'] } }
-                ]
-            },
-            {
-                name: 'Protect',
-                purpose: 'Implement safeguards to limit impact.',
-                questions: [
-                    { id: 'p1', text: 'Are identity and access management controls implemented with least privilege?', mappings: { isoClause: ['9.2'], annexA: ['5.15', '8.2'], uaeIA: ['T5'], uaeCSC: ['T5'] } },
-                    { id: 'p2', text: 'Is ongoing cybersecurity awareness training provided to all employees?', mappings: { isoClause: ['7.2.2'], annexA: ['6.3'], uaeIA: ['M3'], uaeCSC: ['M3'] } },
-                    { id: 'p3', text: 'Are physical security controls in place for critical facilities?', mappings: { isoClause: ['9.1'], annexA: ['7.1'], uaeIA: ['T2'], uaeCSC: ['T2'] } },
-                    { id: 'p4', text: 'Is data encryption used for sensitive information at rest and in transit?', mappings: { isoClause: ['8.1'], annexA: ['8.24'], uaeIA: ['T4'], uaeCSC: ['T4'] } },
-                    { id: 'p5', text: 'Are secure development practices integrated into software lifecycle?', mappings: { isoClause: ['8.3'], annexA: ['8.25'], uaeIA: ['T7'], uaeCSC: ['T7'] } },
-                    { id: 'p6', text: 'Is network security implemented with segmentation and firewalls?', mappings: { isoClause: ['8.1'], annexA: ['8.20'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
-                    { id: 'p7', text: 'Are endpoint protection measures in place?', mappings: { isoClause: ['8.1'], annexA: ['8.1'], uaeIA: ['T5'], uaeCSC: ['T5'] } }
-                ]
-            },
-            {
-                name: 'Detect',
-                purpose: 'Discover cybersecurity events quickly.',
-                questions: [
-                    { id: 'd1', text: 'Is continuous monitoring implemented for networks and systems?', mappings: { isoClause: ['9.1'], annexA: ['8.16'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
-                    { id: 'd2', text: 'Are vulnerability scanning and penetration testing performed regularly?', mappings: { isoClause: ['8.1'], annexA: ['8.8'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
-                    { id: 'd3', text: 'Is anomaly detection used to identify potential security events?', mappings: { isoClause: ['9.1'], annexA: ['8.15'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
-                    { id: 'd4', text: 'Does the organization use threat intelligence to enhance detection?', mappings: { isoClause: ['5.1'], annexA: ['5.7'], uaeIA: ['M2'], uaeCSC: ['M2'] } },
-                    { id: 'd5', text: 'Are logging and alerting mechanisms configured for critical assets?', mappings: { isoClause: ['9.1'], annexA: ['8.15'], uaeIA: ['T9'], uaeCSC: ['T9'] } },
-                    { id: 'd6', text: 'Is SIEM or similar tool used for event correlation?', mappings: { isoClause: ['9.1'], annexA: ['8.16'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
-                    { id: 'd7', text: 'Are detection processes tested for effectiveness?', mappings: { isoClause: ['9.2'], annexA: ['8.8'], uaeIA: ['T3'], uaeCSC: ['T3'] } }
-                ]
-            },
-            {
-                name: 'Respond',
-                purpose: 'Contain and mitigate incidents.',
-                questions: [
-                    { id: 'r1', text: 'Is there a documented incident response plan tested regularly?', mappings: { isoClause: ['6.1.3'], annexA: ['5.26'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
-                    { id: 'r2', text: 'Are incident response teams trained and roles defined?', mappings: { isoClause: ['7.2'], annexA: ['6.3', '5.24'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
-                    { id: 'r3', text: 'Is there a process for classifying and prioritizing incidents?', mappings: { isoClause: ['9.1'], annexA: ['5.25'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
-                    { id: 'r4', text: 'Are communication protocols established for incident reporting?', mappings: { isoClause: ['7.4'], annexA: ['6.8'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
-                    { id: 'r5', text: 'Is digital forensics capability available for evidence collection?', mappings: { isoClause: ['9.1'], annexA: ['5.28'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
-                    { id: 'r6', text: 'Are response activities coordinated with external parties?', mappings: { isoClause: ['6.1.3'], annexA: ['5.26'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
-                    { id: 'r7', text: 'Is there a process for incident escalation?', mappings: { isoClause: ['5.3'], annexA: ['5.24'], uaeIA: ['T8'], uaeCSC: ['T8'] } }
-                ]
-            },
-            {
-                name: 'Recover',
-                purpose: 'Restore operations and improve resilience.',
-                questions: [
-                    { id: 'rc1', text: 'Are business continuity and disaster recovery plans in place?', mappings: { isoClause: ['8.3'], annexA: ['5.29'], uaeIA: ['T9'], uaeCSC: ['T9'] } },
-                    { id: 'rc2', text: 'Are regular backups performed and restoration tested?', mappings: { isoClause: ['8.3'], annexA: ['8.13'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
-                    { id: 'rc3', text: 'Is there a process for post-incident review and lessons learned?', mappings: { isoClause: ['10.1'], annexA: ['5.27'], uaeIA: ['M6'], uaeCSC: ['M6'] } },
-                    { id: 'rc4', text: 'Are redundant systems implemented for high-availability?', mappings: { isoClause: ['8.1'], annexA: ['8.14'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
-                    { id: 'rc5', text: 'Does the organization have crisis communication plans?', mappings: { isoClause: ['7.4'], annexA: ['5.30'], uaeIA: ['T9'], uaeCSC: ['T9'] } },
-                    { id: 'rc6', text: 'Are recovery objectives defined (RTO/RPO)?', mappings: { isoClause: ['8.3'], annexA: ['5.29'], uaeIA: ['T9'], uaeCSC: ['T9'] } },
-                    { id: 'rc7', text: 'Is resilience built into system design?', mappings: { isoClause: ['8.1'], annexA: ['8.14'], uaeIA: ['T3'], uaeCSC: ['T3'] } }
-                ]
-            }
-        ];
+    <div class="toast" id="toast"></div>
+  </div>
 
-        const scoreLabels = ['Not Started (0)', 'Initial (1)', 'Developing (2)', 'Managed (3)', 'Optimized (4)'];
-        let currentStep = 0;
-        const totalQuestions = domains.reduce((sum, d) => sum + d.questions.length, 0);
-        let answeredCount = 0;
+<script>
+/**
+ * Enterprise-style static readiness tool (single-file).
+ * - Avoids Google-Form vibe: capability cards + cinematic transitions + micro-interactions.
+ * - ISO 27001 + Annex A mapping chips, optional UAE IA/CSC layer toggles.
+ * - Auto-save, export JSON, print/PDF.
+ *
+ * This file is intentionally “static deployable” to GitHub Pages.
+ */
 
-        // Generate steps
-        const form = document.getElementById('assessmentForm');
-        domains.forEach((domain, index) => {
-            const stepDiv = document.createElement('div');
-            stepDiv.className = `step ${index === 0 ? 'active' : ''}`;
-            stepDiv.id = `step-${index}`;
-            const domainDiv = document.createElement('div');
-            domainDiv.className = 'domain-section card';
-            domainDiv.innerHTML = `<div class="card-header"><h4>${domain.name}</h4><p>${domain.purpose}</p></div><div class="card-body">`;
-            domain.questions.forEach(q => {
-                const qDiv = document.createElement('div');
-                qDiv.className = 'question';
-                qDiv.innerHTML = `<p>${q.text}</p>`;
-                scoreLabels.forEach((label, i) => {
-                    qDiv.innerHTML += `
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input score-radio" type="radio" name="${q.id}" id="${q.id}-${i}" value="${i}">
-                            <label class="form-check-label" for="${q.id}-${i}">${label}</label>
-                        </div>`;
-                });
-                domainDiv.querySelector('.card-body').appendChild(qDiv);
-            });
-            domainDiv.innerHTML += `</div>`;
-            stepDiv.appendChild(domainDiv);
-            form.appendChild(stepDiv);
-        });
+const STORAGE_KEY = "cr_enterprise_v1_answers";
+const TOGGLES_KEY = "cr_enterprise_v1_toggles";
 
-        // Progress update
-        function updateProgress() {
-            answeredCount = document.querySelectorAll('.score-radio:checked').length;
-            const percent = Math.round((answeredCount / totalQuestions) * 100);
-            const offset = 251 - (251 * percent / 100);
-            document.querySelector('.progress-circle-fg').style.strokeDashoffset = offset;
-            document.querySelector('.progress-text').textContent = `${percent}%`;
-        }
+const FRAMEWORKS = [
+  { key: "ISO_CLAUSE", label: "ISO 27001 Clauses", desc: "Clauses 4–10 mapping", defaultOn: true, kind: "iso" },
+  { key: "ISO_ANNEXA", label: "ISO 27001 Annex A", desc: "Annex A:2022 controls", defaultOn: true, kind: "iso" },
+  { key: "UAE_IA", label: "UAE IA", desc: "Regional IA alignment layer", defaultOn: false, kind: "uae" },
+  { key: "UAE_CSC", label: "UAE CSC", desc: "CSC policy alignment layer", defaultOn: false, kind: "uae" },
+];
 
-        // Event listeners
-        document.querySelectorAll('.score-radio').forEach(radio => {
-            radio.addEventListener('change', updateProgress);
-        });
+const SCALE = [
+  { v:0, label:"Not started", short:"0" },
+  { v:1, label:"Initial", short:"1" },
+  { v:2, label:"Developing", short:"2" },
+  { v:3, label:"Managed", short:"3" },
+  { v:4, label:"Optimized", short:"4" },
+];
 
-        document.getElementById('startAssessment').addEventListener('click', () => {
-            document.getElementById('introSection').style.display = 'none';
-            document.getElementById('assessmentSection').style.display = 'block';
-            document.getElementById('progressContainer').style.display = 'block';
-            updateProgress();
-        });
+const DOMAINS = [
+  {
+    key: "Govern",
+    purpose: "Oversight, policy, risk ownership, and ISMS improvement.",
+    questions: [
+      {
+        id:"g1",
+        title:"Leadership‑approved security policy",
+        hint:"Is there a documented information security policy approved by top management and reviewed?",
+        evidence:"Policy document + approval record + review cadence + communication proof (email/intranet).",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"5.1–5.3" },
+          { fw:"ISO_ANNEXA", ref:"A.5.1, A.5.2" },
+          { fw:"UAE_IA", ref:"IA: Governance & Policy (map family)" },
+          { fw:"UAE_CSC", ref:"CSC: Governance policy set (map)" },
+        ]
+      },
+      {
+        id:"g2",
+        title:"Roles, responsibilities & accountability",
+        hint:"Are security roles defined (CISO/owner), with clear RACI and authorities?",
+        evidence:"RACI matrix + job descriptions + committee minutes + org chart.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"5.3, 7.1–7.3" },
+          { fw:"ISO_ANNEXA", ref:"A.5.2, A.6.1" },
+          { fw:"UAE_IA", ref:"IA: Governance (roles/oversight)" },
+          { fw:"UAE_CSC", ref:"CSC: Program governance guidance" },
+        ]
+      },
+      {
+        id:"g3",
+        title:"Risk assessment & treatment in motion",
+        hint:"Do you run regular risk assessments, treatments, and track them in a risk register?",
+        evidence:"Risk register + risk methodology + treatment plan + review meeting notes.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"6.1.2–6.1.3" },
+          { fw:"ISO_ANNEXA", ref:"A.5.4, A.5.7, A.5.8" },
+          { fw:"UAE_IA", ref:"IA: Risk management family" },
+          { fw:"UAE_CSC", ref:"CSC: Risk governance" },
+        ]
+      },
+    ]
+  },
+  {
+    key: "Identify",
+    purpose: "Asset visibility, context, supplier risk, and data classification.",
+    questions: [
+      {
+        id:"i1",
+        title:"Asset inventory you can trust",
+        hint:"Do you maintain an accurate inventory of devices, servers, cloud resources and SaaS?",
+        evidence:"CMDB/asset list + ownership + classification + last updated + discovery tool output.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"4.1–4.4" },
+          { fw:"ISO_ANNEXA", ref:"A.5.9, A.5.10" },
+          { fw:"UAE_IA", ref:"IA: Asset management" },
+          { fw:"UAE_CSC", ref:"CSC: Asset visibility controls" },
+        ]
+      },
+      {
+        id:"i2",
+        title:"Supplier / third‑party security risk",
+        hint:"Is third-party security assessed before onboarding and monitored through the lifecycle?",
+        evidence:"Vendor due diligence checklist + contract clauses + SOC reports + periodic reviews.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"6.1.2, 8.1" },
+          { fw:"ISO_ANNEXA", ref:"A.5.19, A.5.20, A.5.21" },
+          { fw:"UAE_IA", ref:"IA: Third‑party risk family" },
+          { fw:"UAE_CSC", ref:"CSC: Supplier security guidance" },
+        ]
+      },
+      {
+        id:"i3",
+        title:"Information classification & handling",
+        hint:"Is data classified (PII/confidential/public) with rules for storage, access and sharing?",
+        evidence:"Classification policy + data labels + handling procedures + training evidence.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"8.2" },
+          { fw:"ISO_ANNEXA", ref:"A.5.12, A.5.13, A.5.14" },
+          { fw:"UAE_IA", ref:"IA: Data classification & protection" },
+          { fw:"UAE_CSC", ref:"CSC: Data governance controls" },
+        ]
+      },
+    ]
+  },
+  {
+    key: "Protect",
+    purpose: "Access control, awareness, physical safeguards, cryptography.",
+    questions: [
+      {
+        id:"p1",
+        title:"Access control with MFA for crown jewels",
+        hint:"Is MFA enforced for email/VPN/admin? Are privileged accounts controlled and reviewed?",
+        evidence:"MFA enforcement report + PAM config + access reviews + joiner/mover/leaver process.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"6.1.3, 8.1" },
+          { fw:"ISO_ANNEXA", ref:"A.5.15, A.5.16, A.5.17" },
+          { fw:"UAE_IA", ref:"IA: Identity & access controls" },
+          { fw:"UAE_CSC", ref:"CSC: IAM policy controls" },
+        ]
+      },
+      {
+        id:"p2",
+        title:"Awareness that changes behavior",
+        hint:"Is security awareness training continuous, measured, and tied to real threats?",
+        evidence:"Training logs + phishing simulation stats + policy acknowledgements + KPIs.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"7.2–7.3" },
+          { fw:"ISO_ANNEXA", ref:"A.6.3" },
+          { fw:"UAE_IA", ref:"IA: Awareness family" },
+          { fw:"UAE_CSC", ref:"CSC: Awareness guidance" },
+        ]
+      },
+      {
+        id:"p3",
+        title:"Crypto & key management",
+        hint:"Is encryption used appropriately (at rest/in transit) with key management controls?",
+        evidence:"TLS configs + storage encryption + key rotation + KMS policies + exceptions register.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"8.1" },
+          { fw:"ISO_ANNEXA", ref:"A.8.24, A.8.25" },
+          { fw:"UAE_IA", ref:"IA: Cryptography family" },
+          { fw:"UAE_CSC", ref:"CSC: Cryptographic controls" },
+        ]
+      },
+    ]
+  },
+  {
+    key: "Detect",
+    purpose: "Logging/monitoring, vulnerability management, threat intel use.",
+    questions: [
+      {
+        id:"d1",
+        title:"Centralized logging & meaningful alerts",
+        hint:"Are key systems logging to a central platform with alerting and review cadence?",
+        evidence:"SIEM/Wazuh/Sentinel dashboard screenshots + log sources list + alert response SLAs.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"9.1" },
+          { fw:"ISO_ANNEXA", ref:"A.8.15, A.8.16" },
+          { fw:"UAE_IA", ref:"IA: Monitoring & logging family" },
+          { fw:"UAE_CSC", ref:"CSC: Monitoring controls" },
+        ]
+      },
+      {
+        id:"d2",
+        title:"Vulnerability management rhythm",
+        hint:"Are vulnerabilities discovered, prioritized, remediated, and verified on a schedule?",
+        evidence:"Scan reports + remediation tickets + SLA policy + exception process + trend metrics.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"8.1" },
+          { fw:"ISO_ANNEXA", ref:"A.8.8, A.8.9" },
+          { fw:"UAE_IA", ref:"IA: Vulnerability management family" },
+          { fw:"UAE_CSC", ref:"CSC: Vulnerability controls" },
+        ]
+      },
+      {
+        id:"d3",
+        title:"Threat intelligence in practice",
+        hint:"Is threat intel collected and converted into detections, hardening, or controls?",
+        evidence:"Intel sources + detection rules updates + blocklists + lessons learned entries.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"5.1, 9.1" },
+          { fw:"ISO_ANNEXA", ref:"A.5.7, A.8.7" },
+          { fw:"UAE_IA", ref:"IA: Threat intelligence family" },
+          { fw:"UAE_CSC", ref:"CSC: Threat intel programs" },
+        ]
+      },
+    ]
+  },
+  {
+    key: "Respond",
+    purpose: "IR plan, reporting, evidence, lessons learned.",
+    questions: [
+      {
+        id:"r1",
+        title:"Incident response plan & comms",
+        hint:"Do you have an IR plan with roles, escalation, and internal/external comms templates?",
+        evidence:"IR playbook + contact lists + comms templates + escalation matrix + tabletop records.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"6.1.3, 8.1, 9.1" },
+          { fw:"ISO_ANNEXA", ref:"A.5.24–A.5.27" },
+          { fw:"UAE_IA", ref:"IA: Incident management family" },
+          { fw:"UAE_CSC", ref:"CSC: Incident response guidance" },
+        ]
+      },
+      {
+        id:"r2",
+        title:"Evidence handling & forensics readiness",
+        hint:"Can you collect/retain evidence legally and consistently during incidents?",
+        evidence:"Log retention policy + evidence handling SOP + chain-of-custody template + storage location.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"7.5, 9.1" },
+          { fw:"ISO_ANNEXA", ref:"A.5.28" },
+          { fw:"UAE_IA", ref:"IA: Forensics/evidence family" },
+          { fw:"UAE_CSC", ref:"CSC: Forensics policy" },
+        ]
+      },
+      {
+        id:"r3",
+        title:"Post‑incident improvement loop",
+        hint:"Do you document lessons learned and convert them into control improvements?",
+        evidence:"Postmortems + actions register + control updates + KPI trend improvement.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"10.1–10.2" },
+          { fw:"ISO_ANNEXA", ref:"A.5.27, A.5.36" },
+          { fw:"UAE_IA", ref:"IA: Continuous improvement family" },
+          { fw:"UAE_CSC", ref:"CSC: Improvement guidance" },
+        ]
+      },
+    ]
+  },
+  {
+    key: "Recover",
+    purpose: "Backups, restore testing, BC/DR readiness, redundancy.",
+    questions: [
+      {
+        id:"rc1",
+        title:"Backups with restore testing",
+        hint:"Are backups performed AND restore-tested routinely (not just “backup jobs succeeded”)?",
+        evidence:"Backup policy + restore test results + RPO/RTO targets + offsite/immutable config.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"8.3" },
+          { fw:"ISO_ANNEXA", ref:"A.8.13" },
+          { fw:"UAE_IA", ref:"IA: Backup & resilience family" },
+          { fw:"UAE_CSC", ref:"CSC: Resilience policy" },
+        ]
+      },
+      {
+        id:"rc2",
+        title:"BCP/DR plan you can execute",
+        hint:"Is there a tested BCP/DR plan covering people/process/technology and dependencies?",
+        evidence:"BCP/DR docs + test reports + recovery runbooks + dependency maps.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"8.3, 9.1" },
+          { fw:"ISO_ANNEXA", ref:"A.5.29, A.5.30" },
+          { fw:"UAE_IA", ref:"IA: Business continuity family" },
+          { fw:"UAE_CSC", ref:"CSC: Continuity guidance" },
+        ]
+      },
+      {
+        id:"rc3",
+        title:"Redundancy for critical services",
+        hint:"Are critical systems architected with redundancy to meet RTO/RPO and availability targets?",
+        evidence:"Architecture diagrams + HA configs + failover tests + SLA commitments.",
+        mappings:[
+          { fw:"ISO_CLAUSE", ref:"8.1, 8.3" },
+          { fw:"ISO_ANNEXA", ref:"A.8.14" },
+          { fw:"UAE_IA", ref:"IA: Availability & resilience family" },
+          { fw:"UAE_CSC", ref:"CSC: Availability controls" },
+        ]
+      },
+    ]
+  },
+];
 
-        document.getElementById('prevStep').addEventListener('click', () => {
-            if (currentStep > 0) {
-                document.getElementById(`step-${currentStep}`).classList.remove('active');
-                currentStep--;
-                document.getElementById(`step-${currentStep}`).classList.add('active');
-                document.getElementById('prevStep').disabled = currentStep === 0;
-                document.getElementById('nextStep').textContent = currentStep === domains.length - 1 ? 'Submit' : 'Next';
-            }
-        });
+const state = {
+  org: { name: null, assessor: null, industry: null },
+  toggles: loadToggles(),
+  answers: loadAnswers(),
+  view: "domains",
+  activeDomain: null,
+};
 
-        document.getElementById('nextStep').addEventListener('click', e => {
-            e.preventDefault();
-            const currentQuestions = document.getElementById(`step-${currentStep}`).querySelectorAll('.score-radio');
-            const answeredInStep = Array.from(currentQuestions).filter(r => r.checked).length;
-            if (answeredInStep < domains[currentStep].questions.length) {
-                alert('Please answer all questions in this domain before proceeding.');
-                return;
-            }
-            if (currentStep < domains.length - 1) {
-                document.getElementById(`step-${currentStep}`).classList.remove('active');
-                currentStep++;
-                document.getElementById(`step-${currentStep}`).classList.add('active');
-                document.getElementById('prevStep').disabled = false;
-                document.getElementById('nextStep').textContent = currentStep === domains.length - 1 ? 'Submit' : 'Next';
-            } else {
-                // Submit
-                processSubmission();
-            }
-        });
+function loadToggles(){
+  try{
+    const raw = localStorage.getItem(TOGGLES_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  const t = {};
+  for(const f of FRAMEWORKS) t[f.key] = f.defaultOn;
+  return t;
+}
+function saveToggles(){
+  localStorage.setItem(TOGGLES_KEY, JSON.stringify(state.toggles));
+}
+function loadAnswers(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return {};
+}
+function saveAnswers(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state.answers));
+  updateAnsweredBadge();
+}
+function toast(title, subtitle=""){
+  const el = document.getElementById("toast");
+  el.innerHTML = `<div style="font-weight:900">${escapeHtml(title)}</div>` + (subtitle? `<div class="small">${escapeHtml(subtitle)}</div>`:"");
+  el.classList.add("show");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(()=> el.classList.remove("show"), 2400);
+}
 
-        function processSubmission() {
-            document.getElementById('assessmentSection').style.display = 'none';
-            document.getElementById('progressContainer').style.display = 'none';
-            document.getElementById('analyzing').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('analyzing').style.display = 'none';
-                calculateAndDisplayResults();
-            }, Math.random() * (10000 - 5000) + 5000); // 5-10 seconds
-        }
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
-        function calculateAndDisplayResults() {
-            const uaeEnabled = document.getElementById('uaeToggle').checked;
-            const orgName = document.getElementById('orgName').value || 'Your Organization';
-            const scores = {};
-            let totalScore = 0;
-            let questionCount = 0;
-            const domainScores = {};
-            const domainLabels = [];
-            const domainData = [];
-            const gaps = [];
+function clamp(v){ v = Number(v); if(Number.isNaN(v)) return 0; return Math.max(0, Math.min(4, Math.round(v))); }
 
-            domains.forEach(domain => {
-                let domainTotal = 0;
-                let domainCount = 0;
-                domainLabels.push(domain.name);
-                domain.questions.forEach(q => {
-                    const selected = document.querySelector(`input[name="${q.id}"]:checked`);
-                    if (selected) {
-                        const score = parseInt(selected.value);
-                        scores[q.id] = { text: q.text, score, mappings: q.mappings };
-                        domainTotal += score;
-                        domainCount++;
-                        totalScore += score;
-                        questionCount++;
-                        gaps.push({ ...scores[q.id], domain: domain.name });
-                    }
-                });
-                if (domainCount > 0) {
-                    const avg = (domainTotal / domainCount).toFixed(2);
-                    domainScores[domain.name] = avg;
-                    domainData.push(avg);
-                }
-            });
+function visibleMappings(mappings){
+  return (mappings || []).filter(m => state.toggles[m.fw]);
+}
 
-            const overallScore = questionCount > 0 ? (totalScore / questionCount).toFixed(2) : 0;
+function answeredCount(){
+  return Object.keys(state.answers).length;
+}
 
-            gaps.sort((a, b) => a.score - b.score);
-            const topGaps = gaps.slice(0, 10);
+function allQuestionIds(){
+  const ids = [];
+  for(const d of DOMAINS) for(const q of d.questions) ids.push(q.id);
+  return ids;
+}
 
-            const resultsSection = document.getElementById('resultsSection');
-            resultsSection.style.display = 'block';
-            resultsSection.insertAdjacentHTML('afterbegin', `<h3 class="text-center mb-4">${orgName} Cybersecurity Maturity Report</h3><p class="text-center text-muted">Generated on ${new Date().toLocaleDateString()}</p>`);
+function updateAnsweredBadge(){
+  const total = allQuestionIds().length;
+  const done = answeredCount();
+  const hint = document.getElementById("saveHint");
+  if(hint) hint.textContent = `${done} / ${total} answered`;
+}
 
-            const overallBar = document.getElementById('overallScoreBar');
-            overallBar.innerHTML = `<div class="progress-bar bg-success" style="width: ${(overallScore / 4 * 100)}%; font-size: 1.2rem;">${overallScore} / 4</div>`;
+function currentFrameworkLabel(){
+  const iso = [];
+  if(state.toggles.ISO_CLAUSE) iso.push("ISO 27001");
+  if(state.toggles.ISO_ANNEXA) iso.push("Annex A");
+  const uae = [];
+  if(state.toggles.UAE_IA) uae.push("UAE IA");
+  if(state.toggles.UAE_CSC) uae.push("UAE CSC");
+  const left = iso.length ? iso.join(" • ") : "No ISO mapping";
+  const right = uae.length ? (" + " + uae.join(" • ")) : "";
+  return left + right;
+}
 
-            const domainScoresDiv = document.getElementById('domainScores');
-            domainScoresDiv.innerHTML = '';
-            for (const [name, score] of Object.entries(domainScores)) {
-                domainScoresDiv.innerHTML += `
-                    <div class="score-bar mb-3">
-                        <strong>${name}: ${score} / 4</strong>
-                        <div class="progress" style="height: 25px;">
-                            <div class="progress-bar bg-info" style="width: ${(score / 4 * 100)}%;"></div>
-                        </div>
-                    </div>`;
-            }
+function modeBadgeText(){
+  const uaeOn = !!(state.toggles.UAE_IA || state.toggles.UAE_CSC);
+  return uaeOn ? "UAE Mode" : "ISO Mode";
+}
 
-            const ctx = document.getElementById('radarChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'radar',
-                data: { labels: domainLabels, datasets: [{ label: 'Maturity Score', data: domainData, backgroundColor: 'rgba(0, 123, 255, 0.2)', borderColor: 'rgba(0, 123, 255, 1)', borderWidth: 2 }] },
-                options: { scales: { r: { beginAtZero: true, max: 4, ticks: { stepSize: 1 } } } }
-            });
+function renderToggles(){
+  const root = document.getElementById("toggles");
+  root.innerHTML = "";
+  for(const f of FRAMEWORKS){
+    const row = document.createElement("div");
+    row.className = "togg";
+    const sw = document.createElement("div");
+    sw.className = "switch" + (state.toggles[f.key] ? " on" : "");
+    sw.setAttribute("role","switch");
+    sw.setAttribute("aria-checked", state.toggles[f.key] ? "true" : "false");
 
-            const gapsList = document.getElementById('gapsList');
-            gapsList.innerHTML = '';
-            topGaps.forEach(gap => {
-                let mappingsStr = `ISO 27001 Clause: ${gap.mappings.isoClause.join(', ')}<br>Annex A: ${gap.mappings.annexA.join(', ')}`;
-                if (uaeEnabled) {
-                    mappingsStr += `<br>UAE IA V2: ${gap.mappings.uaeIA.join(', ')}<br>UAE CSC: ${gap.mappings.uaeCSC.join(', ')}`;
-                }
-                gapsList.innerHTML += `<div class="gap-item"><strong>${gap.text}</strong> (Domain: ${gap.domain})<br>Score: ${gap.score}/4<br><small>${mappingsStr}</small></div>`;
-            });
+    sw.addEventListener("click", ()=>{
+      state.toggles[f.key] = !state.toggles[f.key];
+      saveToggles();
+      renderToggles();
+      const badge = document.getElementById("modeBadge");
+      badge.textContent = modeBadgeText();
+      document.getElementById("badgeFrameworks")?.textContent = currentFrameworkLabel();
+      toast("Updated mappings", currentFrameworkLabel());
+      // re-render question chips & results if visible
+      if(state.view === "questions") renderQuestions(state.activeDomain);
+      if(state.view === "results") renderResults();
+    });
 
-            const recsList = document.getElementById('recsList');
-            recsList.innerHTML = '';
-            topGaps.forEach(gap => {
-                let rec = `For this gap (score ${gap.score}): `;
-                if (gap.score <= 1) rec += 'Begin with foundational policies and initial implementations. Start by documenting current state and planning basic controls.';
-                else if (gap.score === 2) rec += 'Develop structured processes and documentation. Implement training and basic monitoring.';
-                else if (gap.score === 3) rec += 'Enhance management and monitoring for consistency. Introduce metrics and regular reviews.';
-                else rec += 'Optimize with advanced automation and integration. Aim for proactive and predictive capabilities.';
-                rec += ' Align actions with mapped standards for compliance. Estimated effort: ${gap.score < 2 ? 'High' : gap.score < 3 ? 'Medium' : 'Low'}.';
-                recsList.innerHTML += `<div class="recommendation"><strong>${gap.text}</strong><p>${rec}</p></div>`;
-            });
+    row.innerHTML = `
+      <div class="l">
+        <div class="a">${escapeHtml(f.label)}</div>
+        <div class="b">${escapeHtml(f.desc)}</div>
+      </div>
+    `;
+    row.appendChild(sw);
+    root.appendChild(row);
+  }
+  document.getElementById("modeBadge").textContent = modeBadgeText();
+}
 
-            // Reveal sections one by one
-            const sections = document.querySelectorAll('.result-section');
-            sections.forEach((section, index) => {
-                setTimeout(() => {
-                    section.classList.add('visible');
-                }, index * 1500);
-            });
+function setStep(stepIndex){
+  // stepIndex: 1 domains, 2 questions, 3 results
+  const badge = document.getElementById("stepBadge");
+  const bar = document.getElementById("progressBar");
+  const map = {1:"Step 1/3 • Choose domain", 2:"Step 2/3 • Score capabilities", 3:"Step 3/3 • Executive results"};
+  badge.textContent = map[stepIndex] || "Step";
+  const pct = stepIndex === 1 ? 25 : stepIndex === 2 ? 65 : 100;
+  bar.style.width = pct + "%";
+}
 
-            resultsSection.scrollIntoView({ behavior: 'smooth' });
-        }
+function switchView(which){
+  const views = { domains: "viewDomains", questions:"viewQuestions", results:"viewResults" };
+  for(const k of Object.keys(views)){
+    const el = document.getElementById(views[k]);
+    if(el) el.classList.remove("active");
+  }
+  state.view = which;
+  const el = document.getElementById(views[which]);
+  el.classList.add("active");
+  // stepper
+  if(which === "domains") setStep(1);
+  if(which === "questions") setStep(2);
+  if(which === "results") setStep(3);
+  // topbar results badge
+  document.getElementById("badgeFrameworks")?.textContent = currentFrameworkLabel();
+}
 
-        function downloadJSON() {
-            const data = {
-                orgName: document.getElementById('orgName').value || 'Your Organization',
-                overallScore: document.querySelector('#overallScoreBar .progress-bar').textContent,
-                domainScores: {},
-                gaps: [],
-                recommendations: []
-            };
-            document.querySelectorAll('#domainScores .score-bar strong').forEach(el => {
-                const [name, score] = el.textContent.split(': ');
-                data.domainScores[name] = score;
-            });
-            document.querySelectorAll('#gapsList .gap-item').forEach(el => {
-                data.gaps.push(el.innerText);
-            });
-            document.querySelectorAll('#recsList .recommendation').forEach(el => {
-                data.recommendations.push(el.innerText);
-            });
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'cyber_readiness_results.json';
-            a.click();
-        }
+function renderDomains(){
+  const grid = document.getElementById("domainGrid");
+  grid.innerHTML = "";
+  for(const d of DOMAINS){
+    const tile = document.createElement("div");
+    tile.className = "tile";
+    const done = d.questions.filter(q => state.answers[q.id] !== undefined).length;
+    tile.innerHTML = `
+      <div class="spark"></div>
+      <div class="t">${escapeHtml(d.key)}</div>
+      <div class="p">${escapeHtml(d.purpose)}</div>
+      <div class="foot">
+        <span>${done} / ${d.questions.length} scored</span>
+        <span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-arrow-right"></i> Open</span>
+      </div>
+    `;
+    tile.addEventListener("click", ()=>{
+      state.activeDomain = d.key;
+      renderQuestions(d.key);
+      switchView("questions");
+      toast(d.key, "Score capabilities (0–4). Evidence hints included.");
+    });
+    grid.appendChild(tile);
+  }
+}
 
-        async function exportPDF() {
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const element = document.getElementById('resultsSection');
-            const canvas = await html2canvas(element, { scale: 2, useCORS: true, logging: false });
-            const imgData = canvas.toDataURL('image/png');
-            const imgWidth = 190;
-            const pageHeight = 295;
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-            let heightLeft = imgHeight;
-            let positionY = 10;
+function maturityLabel(score){
+  if(score < 0.8) return "Not started";
+  if(score < 1.6) return "Initial";
+  if(score < 2.4) return "Developing";
+  if(score < 3.2) return "Managed";
+  return "Optimized";
+}
 
-            pdf.addImage(imgData, 'PNG', 10, positionY, imgWidth, imgHeight);
-            heightLeft -= pageHeight - positionY;
+function domainAverages(){
+  const avgs = {};
+  for(const d of DOMAINS){
+    let sum = 0, count = 0;
+    for(const q of d.questions){
+      if(state.answers[q.id] !== undefined){
+        sum += clamp(state.answers[q.id]);
+        count += 1;
+      }
+    }
+    avgs[d.key] = count ? +(sum / count).toFixed(2) : 0;
+  }
+  return avgs;
+}
 
-            while (heightLeft > 0) {
-                pdf.addPage();
-                positionY = heightLeft - imgHeight;
-                pdf.addImage(imgData, 'PNG', 10, positionY, imgWidth, imgHeight);
-                heightLeft -= pageHeight;
-            }
+function overallAverage(){
+  const ids = allQuestionIds();
+  let sum = 0, count = 0;
+  for(const id of ids){
+    if(state.answers[id] !== undefined){
+      sum += clamp(state.answers[id]);
+      count += 1;
+    }
+  }
+  return count ? +(sum / count).toFixed(2) : 0;
+}
 
-            pdf.save('cyber_readiness_report.pdf');
-        }
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+function topGaps(n=6){
+  const items = [];
+  for(const d of DOMAINS){
+    for(const q of d.questions){
+      const s = state.answers[q.id] !== undefined ? clamp(state.answers[q.id]) : 0;
+      items.push({ domain: d.key, ...q, score: s });
+    }
+  }
+  items.sort((a,b)=> a.score - b.score);
+  return items.slice(0,n);
+}
+
+function severity(score){
+  if(score <= 1) return {cls:"bad", label:"High gap"};
+  if(score === 2) return {cls:"warn", label:"Medium gap"};
+  return {cls:"good", label:"Low gap"};
+}
+
+function roadmapFromGaps(gaps){
+  // Simple, interview-friendly: 30 quick wins, 60 process, 90 optimize
+  const phase = (name, desc, bullets)=> ({name, desc, bullets});
+  const bullets30 = [];
+  const bullets60 = [];
+  const bullets90 = [];
+
+  for(const g of gaps){
+    if(g.score <= 1){
+      bullets30.push(`${g.title}: create baseline policy/process + collect minimum evidence.`);
+      bullets60.push(`${g.title}: implement control + assign ownership + define SLAs/metrics.`);
+      bullets90.push(`${g.title}: automate monitoring + measure effectiveness + improve continuously.`);
+    }else if(g.score === 2){
+      bullets30.push(`${g.title}: define SOP and close obvious gaps.`);
+      bullets60.push(`${g.title}: expand coverage + train stakeholders + start KPI tracking.`);
+      bullets90.push(`${g.title}: integrate with SIEM/ITSM + periodic control testing.`);
+    }else{
+      bullets30.push(`${g.title}: validate and document existing practice.`);
+      bullets60.push(`${g.title}: standardize and tighten evidence collection.`);
+      bullets90.push(`${g.title}: optimize and benchmark against peers.`);
+    }
+  }
+
+  return [
+    phase("30 Days — Stabilize", "Get control owners, minimum evidence, and quick wins.", uniq(bullets30).slice(0,6)),
+    phase("60 Days — Implement", "Build repeatable processes and close medium gaps.", uniq(bullets60).slice(0,6)),
+    phase("90 Days — Optimize", "Automation, continuous improvement, and audit readiness.", uniq(bullets90).slice(0,6)),
+  ];
+}
+
+function uniq(arr){
+  const out = [];
+  const s = new Set();
+  for(const a of arr){
+    const k = a.toLowerCase();
+    if(!s.has(k)){ s.add(k); out.push(a); }
+  }
+  return out;
+}
+
+function renderQuestions(domainKey){
+  const dom = DOMAINS.find(d => d.key === domainKey);
+  const root = document.getElementById("questionsInner");
+  if(!dom){ root.innerHTML = ""; return; }
+
+  const answered = dom.questions.filter(q => state.answers[q.id] !== undefined).length;
+  root.innerHTML = `
+    <div class="qHead">
+      <div class="left">
+        <h3 class="qTitle">${escapeHtml(dom.key)} — Capabilities</h3>
+        <p class="qSub">${escapeHtml(dom.purpose)} • ${answered}/${dom.questions.length} scored</p>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <span class="badge">${escapeHtml(currentFrameworkLabel())}</span>
+        <button class="btn small" id="btnBackDomains2"><i class="ph ph-squares-four"></i>Domains</button>
+        <button class="btn small primary" id="btnToResults"><i class="ph ph-chart-line-up"></i>View Results</button>
+      </div>
+    </div>
+
+    <div class="qList" id="qList"></div>
+
+    <div class="navRow">
+      <button class="btn" id="btnPrevDomain"><i class="ph ph-arrow-left"></i>Prev domain</button>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn danger" id="btnClearDomain"><i class="ph ph-trash"></i>Clear domain scores</button>
+        <button class="btn primary" id="btnNextDomain">Next domain<i class="ph ph-arrow-right"></i></button>
+      </div>
+    </div>
+  `;
+
+  const qList = root.querySelector("#qList");
+
+  for(const q of dom.questions){
+    const cap = document.createElement("div");
+    cap.className = "cap";
+    const score = state.answers[q.id] !== undefined ? clamp(state.answers[q.id]) : null;
+
+    const visMaps = visibleMappings(q.mappings);
+    const mapHtml = visMaps.length
+      ? `<div class="mapChips">${
+          visMaps.map(m=>{
+            const kind = (m.fw.startsWith("UAE")) ? "uae" : "iso";
+            const label =
+              m.fw === "ISO_CLAUSE" ? "ISO Clause" :
+              m.fw === "ISO_ANNEXA" ? "Annex A" :
+              m.fw === "UAE_IA" ? "UAE IA" : "UAE CSC";
+            return `<span class="m ${kind}">${escapeHtml(label)}: ${escapeHtml(m.ref)}</span>`;
+          }).join("")
+        }</div>`
+      : `<div class="mapChips"><span class="m iso">Mappings hidden — enable a layer above</span></div>`;
+
+    cap.innerHTML = `
+      <div class="capTop">
+        <div style="max-width: 880px;">
+          <div class="capName">${escapeHtml(q.title)}</div>
+          <div class="capHint">${escapeHtml(q.hint)}</div>
+        </div>
+        <div class="mini">${score === null ? "Not scored" : ("Score: " + score + " • " + SCALE[score].label)}</div>
+      </div>
+
+      <div class="scorePills" role="radiogroup" aria-label="score ${escapeHtml(q.title)}">
+        ${SCALE.map(s=> `<button data-q="${q.id}" data-v="${s.v}" class="${(score===s.v) ? "active":""}">${s.label}</button>`).join("")}
+      </div>
+
+      ${mapHtml}
+
+      <details class="evidence">
+        <summary>
+          <span>Evidence that proves this (what an auditor/recruiter expects)</span>
+          <span style="color: var(--muted); font-size:12px;">Expand</span>
+        </summary>
+        <p>${escapeHtml(q.evidence)}</p>
+      </details>
+    `;
+
+    cap.querySelectorAll("button[data-q]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const id = btn.getAttribute("data-q");
+        const v = clamp(btn.getAttribute("data-v"));
+        state.answers[id] = v;
+        saveAnswers();
+        // animate selection
+        cap.animate([{transform:"translateY(0px)"},{transform:"translateY(-2px)"},{transform:"translateY(0px)"}], {duration: 260, easing: "cubic-bezier(.2,.8,.2,1)"});
+        toast("Saved", `${q.title} → ${v} (${SCALE[v].label})`);
+        renderQuestions(domainKey); // rerender to update pill states + badges
+        renderDomains(); // update domain tiles
+      });
+    });
+
+    qList.appendChild(cap);
+  }
+
+  // nav buttons
+  root.querySelector("#btnBackDomains2").addEventListener("click", ()=>{ switchView("domains"); renderDomains(); });
+  root.querySelector("#btnToResults").addEventListener("click", ()=>{ switchView("results"); renderResults(); });
+
+  const idx = DOMAINS.findIndex(d => d.key === domainKey);
+  root.querySelector("#btnPrevDomain").addEventListener("click", ()=>{
+    const prev = DOMAINS[(idx - 1 + DOMAINS.length) % DOMAINS.length].key;
+    state.activeDomain = prev;
+    renderQuestions(prev);
+    toast(prev, "Previous domain");
+  });
+  root.querySelector("#btnNextDomain").addEventListener("click", ()=>{
+    const next = DOMAINS[(idx + 1) % DOMAINS.length].key;
+    state.activeDomain = next;
+    renderQuestions(next);
+    toast(next, "Next domain");
+  });
+
+  root.querySelector("#btnClearDomain").addEventListener("click", ()=>{
+    for(const q of dom.questions) delete state.answers[q.id];
+    saveAnswers();
+    renderQuestions(domainKey);
+    renderDomains();
+    toast("Cleared", `${dom.key} scores removed`);
+  });
+}
+
+function renderResults(){
+  updateAnsweredBadge();
+
+  const total = allQuestionIds().length;
+  const done = answeredCount();
+  const overall = overallAverage();
+  const avgs = domainAverages();
+  const label = maturityLabel(overall);
+
+  // KPIs
+  document.getElementById("kpiOverall").textContent = `${overall.toFixed(2)} / 4`;
+  document.getElementById("kpiLabel").textContent = label;
+  document.getElementById("kpiCoverage").textContent = `${done} / ${total}`;
+
+  // Focus suggestion: lowest domain avg
+  let focus = "—";
+  let min = 999;
+  for(const [k,v] of Object.entries(avgs)){
+    if(v < min){ min = v; focus = k; }
+  }
+  document.getElementById("kpiFocus").textContent = focus;
+
+  // Framework badge
+  const fwLabel = currentFrameworkLabel();
+  const badge = document.getElementById("badgeFrameworks");
+  if(badge) badge.textContent = fwLabel;
+
+  // Bars
+  const bars = document.getElementById("bars");
+  bars.innerHTML = "";
+  for(const d of DOMAINS){
+    const v = avgs[d.key] ?? 0;
+    const bar = document.createElement("div");
+    bar.className = "bar";
+    bar.innerHTML = `
+      <div class="top">
+        <div class="name">${escapeHtml(d.key)}</div>
+        <div class="val">${v.toFixed(2)} / 4</div>
+      </div>
+      <div class="track"><div class="fill" style="width:${(v/4)*100}%"></div></div>
+    `;
+    bars.appendChild(bar);
+  }
+
+  // Gaps
+  const gaps = topGaps(6);
+  const gapList = document.getElementById("gapList");
+  gapList.innerHTML = "";
+  for(const g of gaps){
+    const sev = severity(g.score);
+    const maps = visibleMappings(g.mappings);
+    const mapText = maps.length
+      ? maps.map(m => {
+          const label =
+            m.fw === "ISO_CLAUSE" ? "ISO Clause" :
+            m.fw === "ISO_ANNEXA" ? "Annex A" :
+            m.fw === "UAE_IA" ? "UAE IA" : "UAE CSC";
+          return `${label} ${m.ref}`;
+        }).join(" • ")
+      : "Mappings hidden (enable a layer)";
+
+    const item = document.createElement("div");
+    item.className = "gap";
+    item.innerHTML = `
+      <div class="l">
+        <div class="t">${escapeHtml(g.title)}</div>
+        <div class="meta">${escapeHtml(g.domain)} • ${escapeHtml(mapText)}</div>
+      </div>
+      <div class="sev ${sev.cls}">${sev.label}</div>
+    `;
+    item.addEventListener("click", ()=>{
+      state.activeDomain = g.domain;
+      renderQuestions(g.domain);
+      switchView("questions");
+      toast("Jumped to gap", g.title);
+    });
+    gapList.appendChild(item);
+  }
+
+  // Roadmap
+  const rm = roadmapFromGaps(gaps);
+  const roadmap = document.getElementById("roadmap");
+  roadmap.innerHTML = "";
+  for(const p of rm){
+    const div = document.createElement("div");
+    div.className = "phase";
+    div.innerHTML = `
+      <div class="ph">
+        <div class="name">${escapeHtml(p.name)}</div>
+        <div class="badge">${escapeHtml(p.desc)}</div>
+      </div>
+      <ul>${p.bullets.map(b=> `<li>${escapeHtml(b)}</li>`).join("")}</ul>
+    `;
+    roadmap.appendChild(div);
+  }
+}
+
+function exportJSON(){
+  const payload = {
+    tool: "Cyber Readiness & GRC Assessment (Enterprise Static)",
+    version: "1.0.0-enterprise",
+    generatedAt: new Date().toISOString(),
+    frameworkToggles: state.toggles,
+    summary: {
+      overall: overallAverage(),
+      maturity: maturityLabel(overallAverage()),
+      coverage: { answered: answeredCount(), total: allQuestionIds().length },
+      domainAverages: domainAverages(),
+    },
+    answers: state.answers,
+    topGaps: topGaps(10).map(g => ({
+      id: g.id,
+      domain: g.domain,
+      title: g.title,
+      score: g.score,
+      evidence: g.evidence,
+      mappings: visibleMappings(g.mappings),
+    })),
+  };
+
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "cyber-readiness-enterprise-results.json";
+  a.click();
+  setTimeout(()=> URL.revokeObjectURL(url), 600);
+  toast("Exported", "JSON downloaded");
+}
+
+function resetAll(){
+  if(!confirm("Reset all answers and settings?")) return;
+  state.answers = {};
+  state.toggles = (()=>{ const t={}; for(const f of FRAMEWORKS) t[f.key]=f.defaultOn; return t; })();
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(TOGGLES_KEY);
+  renderToggles();
+  renderDomains();
+  updateAnsweredBadge();
+  toast("Reset complete", "All data cleared");
+}
+
+function loadDemo(){
+  // deterministic demo to make UI look “alive”
+  const ids = allQuestionIds();
+  for(let i=0;i<ids.length;i++){
+    state.answers[ids[i]] = (i % 5); // 0..4
+  }
+  saveAnswers();
+  renderDomains();
+  toast("Demo loaded", "Scores populated for showcase");
+}
+
+function bindTopControls(){
+  document.getElementById("btnExportJson").addEventListener("click", exportJSON);
+  document.getElementById("btnPrint").addEventListener("click", ()=> window.print());
+  document.getElementById("btnReset").addEventListener("click", resetAll);
+  document.getElementById("btnGoResults").addEventListener("click", ()=>{
+    switchView("results");
+    renderResults();
+    toast("Results", "Executive view generated");
+  });
+
+  document.getElementById("btnStart").addEventListener("click", ()=>{
+    switchView("domains");
+    renderDomains();
+    toast("Started", "Pick a domain to begin");
+  });
+
+  document.getElementById("btnDemo").addEventListener("click", loadDemo);
+
+  document.getElementById("btnBackHome").addEventListener("click", ()=>{
+    // smooth scroll to top and keep domains view
+    switchView("domains");
+    window.scrollTo({top:0, behavior:"smooth"});
+  });
+
+  document.getElementById("btnQuickResults").addEventListener("click", ()=>{
+    switchView("results");
+    renderResults();
+  });
+
+  document.getElementById("btnBackDomains").addEventListener("click", ()=>{
+    switchView("domains");
+    renderDomains();
+  });
+
+  document.getElementById("btnSaveReport").addEventListener("click", ()=> window.print());
+}
+
+function init(){
+  renderToggles();
+  renderDomains();
+  updateAnsweredBadge();
+  document.getElementById("modeBadge").textContent = modeBadgeText();
+  bindTopControls();
+  document.getElementById("badgeFrameworks")?.textContent = currentFrameworkLabel();
+  setStep(1);
+}
+
+init();
+</script>
+
 </body>
 </html>
+"""
+out_path = Path("/mnt/data/cyber-readiness-enterprise.html")
+out_path.write_text(html, encoding="utf-8")
+str(out_path)
