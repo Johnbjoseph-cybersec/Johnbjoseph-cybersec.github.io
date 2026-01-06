@@ -85,11 +85,11 @@
                 <button id="nextStep" class="btn btn-primary">Next</button>
             </div>
         </div>
-        <div id="analyzing">
+        <div id="analyzing" style="display: none;">
             <div class="spinner-border text-primary" role="status"></div>
             <h3 class="mt-3">Analyzing your responses...</h3>
         </div>
-        <div class="results" id="resultsSection">
+        <div class="results" id="resultsSection" style="display: none;">
             <div id="dashboard" class="result-section dashboard-card">
                 <h2>Executive Dashboard</h2>
                 <p>Your overall maturity score reflects the average across all domains. Higher scores indicate optimized practices.</p>
@@ -138,7 +138,9 @@
                     { id: 'g2', text: 'Are cybersecurity roles and responsibilities clearly defined across the organization?', mappings: { isoClause: ['5.3'], annexA: ['5.2', '5.3'], uaeIA: ['M1'], uaeCSC: ['M1'] } },
                     { id: 'g3', text: 'Is there a process for managing cybersecurity risks at the enterprise level?', mappings: { isoClause: ['6.1'], annexA: ['5.7', '5.8'], uaeIA: ['M2'], uaeCSC: ['M2'] } },
                     { id: 'g4', text: 'Does leadership regularly review and approve cybersecurity policies?', mappings: { isoClause: ['5.2'], annexA: ['5.1'], uaeIA: ['M1'], uaeCSC: ['M1'] } },
-                    { id: 'g5', text: 'Is there oversight for supply chain cybersecurity risks?', mappings: { isoClause: ['5.1'], annexA: ['5.19'], uaeIA: ['T6'], uaeCSC: ['T6'] } }
+                    { id: 'g5', text: 'Is there oversight for supply chain cybersecurity risks?', mappings: { isoClause: ['5.1'], annexA: ['5.19'], uaeIA: ['T6'], uaeCSC: ['T6'] } },
+                    { id: 'g6', text: 'Is cybersecurity integrated into enterprise risk management?', mappings: { isoClause: ['6.1'], annexA: ['5.8'], uaeIA: ['M2'], uaeCSC: ['M2'] } },
+                    { id: 'g7', text: 'Are cybersecurity outcomes defined and prioritized?', mappings: { isoClause: ['6.2'], annexA: ['5.1'], uaeIA: ['M1'], uaeCSC: ['M1'] } }
                 ]
             },
             {
@@ -149,7 +151,9 @@
                     { id: 'i2', text: 'Are regular risk assessments conducted to identify threats and vulnerabilities?', mappings: { isoClause: ['6.1.2'], annexA: ['5.8'], uaeIA: ['M2'], uaeCSC: ['M2'] } },
                     { id: 'i3', text: 'Has the organization identified its critical business processes and dependencies?', mappings: { isoClause: ['4.1'], annexA: ['5.1'], uaeIA: ['M1'], uaeCSC: ['M1'] } },
                     { id: 'i4', text: 'Is information classified based on sensitivity and criticality?', mappings: { isoClause: ['8.2.1'], annexA: ['5.12'], uaeIA: ['T1'], uaeCSC: ['T1'] } },
-                    { id: 'i5', text: 'Are supply chain risks assessed for third-party vendors?', mappings: { isoClause: ['6.1.2'], annexA: ['5.20'], uaeIA: ['T6'], uaeCSC: ['T6'] } }
+                    { id: 'i5', text: 'Are supply chain risks assessed for third-party vendors?', mappings: { isoClause: ['6.1.2'], annexA: ['5.20'], uaeIA: ['T6'], uaeCSC: ['T6'] } },
+                    { id: 'i6', text: 'Is the organizational context reviewed for changes in risks?', mappings: { isoClause: ['4.1'], annexA: ['5.1'], uaeIA: ['M1'], uaeCSC: ['M1'] } },
+                    { id: 'i7', text: 'Are data flows and interdependencies mapped?', mappings: { isoClause: ['4.2'], annexA: ['5.9'], uaeIA: ['T1'], uaeCSC: ['T1'] } }
                 ]
             },
             {
@@ -160,7 +164,9 @@
                     { id: 'p2', text: 'Is ongoing cybersecurity awareness training provided to all employees?', mappings: { isoClause: ['7.2.2'], annexA: ['6.3'], uaeIA: ['M3'], uaeCSC: ['M3'] } },
                     { id: 'p3', text: 'Are physical security controls in place for critical facilities?', mappings: { isoClause: ['9.1'], annexA: ['7.1'], uaeIA: ['T2'], uaeCSC: ['T2'] } },
                     { id: 'p4', text: 'Is data encryption used for sensitive information at rest and in transit?', mappings: { isoClause: ['8.1'], annexA: ['8.24'], uaeIA: ['T4'], uaeCSC: ['T4'] } },
-                    { id: 'p5', text: 'Are secure development practices integrated into software lifecycle?', mappings: { isoClause: ['8.3'], annexA: ['8.25'], uaeIA: ['T7'], uaeCSC: ['T7'] } }
+                    { id: 'p5', text: 'Are secure development practices integrated into software lifecycle?', mappings: { isoClause: ['8.3'], annexA: ['8.25'], uaeIA: ['T7'], uaeCSC: ['T7'] } },
+                    { id: 'p6', text: 'Is network security implemented with segmentation and firewalls?', mappings: { isoClause: ['8.1'], annexA: ['8.20'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
+                    { id: 'p7', text: 'Are endpoint protection measures in place?', mappings: { isoClause: ['8.1'], annexA: ['8.1'], uaeIA: ['T5'], uaeCSC: ['T5'] } }
                 ]
             },
             {
@@ -171,7 +177,9 @@
                     { id: 'd2', text: 'Are vulnerability scanning and penetration testing performed regularly?', mappings: { isoClause: ['8.1'], annexA: ['8.8'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
                     { id: 'd3', text: 'Is anomaly detection used to identify potential security events?', mappings: { isoClause: ['9.1'], annexA: ['8.15'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
                     { id: 'd4', text: 'Does the organization use threat intelligence to enhance detection?', mappings: { isoClause: ['5.1'], annexA: ['5.7'], uaeIA: ['M2'], uaeCSC: ['M2'] } },
-                    { id: 'd5', text: 'Are logging and alerting mechanisms configured for critical assets?', mappings: { isoClause: ['9.1'], annexA: ['8.15'], uaeIA: ['T9'], uaeCSC: ['T9'] } }
+                    { id: 'd5', text: 'Are logging and alerting mechanisms configured for critical assets?', mappings: { isoClause: ['9.1'], annexA: ['8.15'], uaeIA: ['T9'], uaeCSC: ['T9'] } },
+                    { id: 'd6', text: 'Is SIEM or similar tool used for event correlation?', mappings: { isoClause: ['9.1'], annexA: ['8.16'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
+                    { id: 'd7', text: 'Are detection processes tested for effectiveness?', mappings: { isoClause: ['9.2'], annexA: ['8.8'], uaeIA: ['T3'], uaeCSC: ['T3'] } }
                 ]
             },
             {
@@ -182,7 +190,9 @@
                     { id: 'r2', text: 'Are incident response teams trained and roles defined?', mappings: { isoClause: ['7.2'], annexA: ['6.3', '5.24'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
                     { id: 'r3', text: 'Is there a process for classifying and prioritizing incidents?', mappings: { isoClause: ['9.1'], annexA: ['5.25'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
                     { id: 'r4', text: 'Are communication protocols established for incident reporting?', mappings: { isoClause: ['7.4'], annexA: ['6.8'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
-                    { id: 'r5', text: 'Is digital forensics capability available for evidence collection?', mappings: { isoClause: ['9.1'], annexA: ['5.28'], uaeIA: ['T8'], uaeCSC: ['T8'] } }
+                    { id: 'r5', text: 'Is digital forensics capability available for evidence collection?', mappings: { isoClause: ['9.1'], annexA: ['5.28'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
+                    { id: 'r6', text: 'Are response activities coordinated with external parties?', mappings: { isoClause: ['6.1.3'], annexA: ['5.26'], uaeIA: ['T8'], uaeCSC: ['T8'] } },
+                    { id: 'r7', text: 'Is there a process for incident escalation?', mappings: { isoClause: ['5.3'], annexA: ['5.24'], uaeIA: ['T8'], uaeCSC: ['T8'] } }
                 ]
             },
             {
@@ -193,7 +203,9 @@
                     { id: 'rc2', text: 'Are regular backups performed and restoration tested?', mappings: { isoClause: ['8.3'], annexA: ['8.13'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
                     { id: 'rc3', text: 'Is there a process for post-incident review and lessons learned?', mappings: { isoClause: ['10.1'], annexA: ['5.27'], uaeIA: ['M6'], uaeCSC: ['M6'] } },
                     { id: 'rc4', text: 'Are redundant systems implemented for high-availability?', mappings: { isoClause: ['8.1'], annexA: ['8.14'], uaeIA: ['T3'], uaeCSC: ['T3'] } },
-                    { id: 'rc5', text: 'Does the organization have crisis communication plans?', mappings: { isoClause: ['7.4'], annexA: ['5.30'], uaeIA: ['T9'], uaeCSC: ['T9'] } }
+                    { id: 'rc5', text: 'Does the organization have crisis communication plans?', mappings: { isoClause: ['7.4'], annexA: ['5.30'], uaeIA: ['T9'], uaeCSC: ['T9'] } },
+                    { id: 'rc6', text: 'Are recovery objectives defined (RTO/RPO)?', mappings: { isoClause: ['8.3'], annexA: ['5.29'], uaeIA: ['T9'], uaeCSC: ['T9'] } },
+                    { id: 'rc7', text: 'Is resilience built into system design?', mappings: { isoClause: ['8.1'], annexA: ['8.14'], uaeIA: ['T3'], uaeCSC: ['T3'] } }
                 ]
             }
         ];
@@ -240,7 +252,7 @@
         }
 
         // Event listeners
-        document.querySelectorAll('.score-radio').forEach radio => {
+        document.querySelectorAll('.score-radio').forEach(radio => {
             radio.addEventListener('change', updateProgress);
         });
 
@@ -288,7 +300,7 @@
             setTimeout(() => {
                 document.getElementById('analyzing').style.display = 'none';
                 calculateAndDisplayResults();
-            }, 7000); // 7 seconds
+            }, Math.random() * (10000 - 5000) + 5000); // 5-10 seconds
         }
 
         function calculateAndDisplayResults() {
@@ -332,7 +344,7 @@
 
             const resultsSection = document.getElementById('resultsSection');
             resultsSection.style.display = 'block';
-            resultsSection.insertAdjacentHTML('afterbegin', `<h3 class="text-center mb-4">${orgName} Cybersecurity Maturity Report</h3>`);
+            resultsSection.insertAdjacentHTML('afterbegin', `<h3 class="text-center mb-4">${orgName} Cybersecurity Maturity Report</h3><p class="text-center text-muted">Generated on ${new Date().toLocaleDateString()}</p>`);
 
             const overallBar = document.getElementById('overallScoreBar');
             overallBar.innerHTML = `<div class="progress-bar bg-success" style="width: ${(overallScore / 4 * 100)}%; font-size: 1.2rem;">${overallScore} / 4</div>`;
@@ -370,11 +382,11 @@
             recsList.innerHTML = '';
             topGaps.forEach(gap => {
                 let rec = `For this gap (score ${gap.score}): `;
-                if (gap.score <= 1) rec += 'Begin with foundational policies and initial implementations.';
-                else if (gap.score === 2) rec += 'Develop structured processes and documentation.';
-                else if (gap.score === 3) rec += 'Enhance management and monitoring for consistency.';
-                else rec += 'Optimize with advanced automation and integration.';
-                rec += ' Align actions with mapped standards for compliance.';
+                if (gap.score <= 1) rec += 'Begin with foundational policies and initial implementations. Start by documenting current state and planning basic controls.';
+                else if (gap.score === 2) rec += 'Develop structured processes and documentation. Implement training and basic monitoring.';
+                else if (gap.score === 3) rec += 'Enhance management and monitoring for consistency. Introduce metrics and regular reviews.';
+                else rec += 'Optimize with advanced automation and integration. Aim for proactive and predictive capabilities.';
+                rec += ' Align actions with mapped standards for compliance. Estimated effort: ${gap.score < 2 ? 'High' : gap.score < 3 ? 'Medium' : 'Low'}.';
                 recsList.innerHTML += `<div class="recommendation"><strong>${gap.text}</strong><p>${rec}</p></div>`;
             });
 
@@ -423,12 +435,12 @@
             const imgData = canvas.toDataURL('image/png');
             const imgWidth = 190;
             const pageHeight = 295;
-            let imgHeight = (canvas.height * imgWidth) / canvas.width;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
             let heightLeft = imgHeight;
             let positionY = 10;
 
             pdf.addImage(imgData, 'PNG', 10, positionY, imgWidth, imgHeight);
-            heightLeft -= pageHeight - 20;
+            heightLeft -= pageHeight - positionY;
 
             while (heightLeft > 0) {
                 pdf.addPage();
