@@ -2015,13 +2015,15 @@ function renderResults(){
 function analyzeAndShowResults(){
   const overlay = document.getElementById("analyzeOverlay");
   const fill = document.getElementById("anFill");
+
   overlay.classList.add("show");
   overlay.setAttribute("aria-hidden","false");
   fill.style.width = "0%";
-  setTimeout(()=> fill.style.width = "30%", 150);
-  setTimeout(()=> fill.style.width = "65%", 1700);
-  setTimeout(()=> fill.style.width = "88%", 3800);
-  setTimeout(()=> fill.style.width = "100%", 5600);
+
+  setTimeout(()=> fill.style.width = "25%", 200);
+  setTimeout(()=> fill.style.width = "55%", 1600);
+  setTimeout(()=> fill.style.width = "80%", 3400);
+  setTimeout(()=> fill.style.width = "100%", 4800);
 
   setTimeout(()=>{
     overlay.classList.remove("show");
@@ -2029,7 +2031,7 @@ function analyzeAndShowResults(){
     switchView("results");
     renderResults();
     revealResults();
-  }, 6000);
+  }, 5000);
 }
 
 /* ---------- Export + Print ---------- */
