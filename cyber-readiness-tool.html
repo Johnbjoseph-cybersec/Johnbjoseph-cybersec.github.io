@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,7 +11,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <!-- Optional: icons -->
   <style>
+
+
     :root{
       --bg0:#070A12;
       --bg1:#0B1226;
@@ -141,11 +145,15 @@
       align-items: stretch;
       width: 100%;
     }
+    /* Keep hero full-width like the sections below */
     .hero > .card{ width: 100%; }
+    /* Only stack on small screens */
     @media (max-width: 760px){
       .hero{ grid-template-columns: 1fr; }
     }
-    .hero > .card:last-child{ flex: 1 1 auto; max-width: none; }
+    
+
+.hero > .card:last-child{ flex: 1 1 auto; max-width: none; }
 
     .card{
       background: var(--card);
@@ -161,6 +169,7 @@
       position:absolute; inset:-1px; z-index:0; pointer-events:none;
       background: radial-gradient(700px 380px at 20% 15%, rgba(124,58,237,.20), transparent 55%),
                   radial-gradient(650px 360px at 90% 30%, rgba(34,211,238,.14), transparent 55%);
+      pointer-events:none;
       opacity:.95;
     }
     .heroTitle{
@@ -192,6 +201,7 @@
       color: rgba(255,255,255,.86);
       font-size: 12px;
     }
+    .chip i{ opacity:.9; }
 
     .metaGrid{
       display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px;
@@ -207,12 +217,18 @@
     .meta .k{ color: var(--muted2); font-size: 12px; }
     .meta .v{ margin-top: 6px; font-weight: 700; letter-spacing:.2px; }
 
-    /* Framework toggles */
-    .togglePanel{ display:flex; flex-direction:column; gap:10px; }
-    .togglePanel .head{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+    /* Framework toggles (enterprise looking) */
+    .togglePanel{
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .togglePanel .head{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+    }
     .togglePanel h3{ margin:0; font-size: 14px; letter-spacing:.2px; }
     .togglePanel p{ margin: 4px 0 0; color: var(--muted); font-size: 12.5px; line-height:1.45; }
-    .toggles{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px; }
+    .toggles{
+      display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px;
+    }
     @media (max-width: 520px){ .toggles{ grid-template-columns: 1fr; } }
 
     .togg{
@@ -260,7 +276,7 @@
       border: 1px solid rgba(255,255,255,.10);
       display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
     }
-    .stepper .left{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .stepper .left{ display:flex; align-items:center; gap:12px; }
     .badge{
       padding: 8px 10px;
       border-radius: 999px;
@@ -284,8 +300,11 @@
       transition: width .35s var(--ease);
     }
 
-    /* Pages */
-    .page{ margin-top: 16px; position:relative; }
+    /* Pages / transitions */
+    .page{
+      margin-top: 16px;
+      position:relative;
+    }
     .view{
       display:none;
       transform: translateY(10px);
@@ -340,7 +359,6 @@
     .qHead{
       display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
       margin-bottom: 10px;
-      flex-wrap:wrap;
     }
     .qHead .left{ display:flex; flex-direction:column; gap:6px; }
     .qTitle{ font-size: 18px; font-weight: 800; letter-spacing: -.2px; margin:0; }
@@ -367,7 +385,6 @@
     .cap:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.07); }
     .cap .capTop{
       display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
-      flex-wrap:wrap;
     }
     .cap .capName{ font-weight: 750; letter-spacing:.1px; line-height:1.35; }
     .cap .capHint{ margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height:1.45; }
@@ -390,6 +407,7 @@
       border-color: rgba(255,255,255,.16);
     }
 
+    .row2{ display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; margin-top: 12px;}
     .mini{
       padding: 8px 10px;
       border-radius: 14px;
@@ -436,7 +454,7 @@
       line-height:1.55;
     }
 
-    /* Buttons */
+    /* Footer controls for question view */
     .navRow{
       display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
       margin-top: 14px;
@@ -465,18 +483,17 @@
     }
     .btn.small{ padding: 9px 12px; border-radius: 12px; font-size: 13px; }
 
+    
     /* Visualizations */
     .vizGrid{ display:grid; grid-template-columns: 1fr 1.2fr; gap: 12px; margin-top: 12px; }
     @media (max-width: 780px){ .vizGrid{ grid-template-columns: 1fr; } }
     .vizCard{ padding: 12px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); }
     .vizTitle{ font-weight:900; font-size: 13px; margin-bottom: 10px; }
-    .donutWrap{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+    .donutWrap{ display:flex; align-items:center; gap:14px; }
     .donutTrack{ fill:none; stroke: rgba(255,255,255,.12); stroke-width: 12; }
-    .donutFill{
-      fill:none; stroke: rgba(34,211,238,.85); stroke-width: 12; stroke-linecap: round;
-      transform: rotate(-90deg); transform-origin: 60px 60px; stroke-dasharray: 276.46; stroke-dashoffset: 276.46;
-      transition: stroke-dashoffset .8s var(--ease);
-    }
+    .donutFill{ fill:none; stroke: rgba(34,211,238,.85); stroke-width: 12; stroke-linecap: round;
+                transform: rotate(-90deg); transform-origin: 60px 60px; stroke-dasharray: 276.46; stroke-dashoffset: 276.46;
+                transition: stroke-dashoffset .8s var(--ease); }
     .donutText .donutVal{ font-weight: 900; font-size: 22px; letter-spacing:-.2px; }
     .donutText .donutSub{ color: var(--muted); font-size: 12px; margin-top: 2px; }
     .radar{ width: 100%; height: 180px; }
@@ -487,16 +504,46 @@
     /* Completion ring */
     .ring{ display:flex; align-items:center; gap:10px; }
     .ringTrack{ fill:none; stroke: rgba(255,255,255,.12); stroke-width: 6; }
-    .ringFill{
-      fill:none; stroke: rgba(34,211,238,.85); stroke-width: 6; stroke-linecap: round;
-      transform: rotate(-90deg); transform-origin: 22px 22px; stroke-dasharray: 113.10; stroke-dashoffset: 113.10;
-      transition: stroke-dashoffset .45s var(--ease);
-    }
+    .ringFill{ fill:none; stroke: rgba(34,211,238,.85); stroke-width: 6; stroke-linecap: round;
+               transform: rotate(-90deg); transform-origin: 22px 22px; stroke-dasharray: 113.10; stroke-dashoffset: 113.10;
+               transition: stroke-dashoffset .45s var(--ease); }
     .ringText{ font-weight:900; font-size: 12px; color: rgba(255,255,255,.86); margin-left: -6px; min-width: 36px; }
+
+    /* Analyzing overlay */
+    .analyzeOverlay{
+      position: fixed; inset:0; z-index: 120;
+      display:none;
+      align-items:center; justify-content:center;
+      background: rgba(5,8,16,.72);
+      backdrop-filter: blur(10px);
+    }
+    .analyzeOverlay.show{ display:flex; }
+    .analyzeCard{
+      width: min(520px, calc(100% - 28px));
+      border-radius: 22px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 30px 90px rgba(0,0,0,.55);
+      padding: 18px 18px 16px;
+      text-align:center;
+    }
+    .spinner{
+      width: 46px; height: 46px; border-radius: 999px;
+      border: 4px solid rgba(255,255,255,.18);
+      border-top-color: rgba(34,211,238,.85);
+      margin: 6px auto 12px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin{ to{ transform: rotate(360deg); } }
+    .anTitle{ font-weight: 900; font-size: 16px; }
+    .anSub{ margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height:1.45; }
+    .anBar{ margin-top: 12px; height: 10px; border-radius: 999px; overflow:hidden; background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.12); }
+    .anFill{ height:100%; width:0%; background: linear-gradient(90deg, rgba(124,58,237,.92), rgba(34,211,238,.65)); transition: width .35s var(--ease); }
 
     /* Progressive reveal */
     .reveal{ opacity:0; transform: translateY(10px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
     .reveal.on{ opacity:1; transform: translateY(0); }
+
 
     /* Results */
     .resultsGrid{
@@ -561,7 +608,6 @@
       background: rgba(255,255,255,.05);
       border: 1px solid rgba(255,255,255,.10);
       display:flex; gap:12px; align-items:flex-start; justify-content:space-between;
-      cursor:pointer;
     }
     .gap .l{ display:flex; flex-direction:column; gap:6px; }
     .gap .t{ font-weight: 800; line-height:1.35; }
@@ -581,97 +627,22 @@
     .sev.warn{ background: rgba(251,191,36,.14); border-color: rgba(251,191,36,.22); }
     .sev.good{ background: rgba(52,211,153,.14); border-color: rgba(52,211,153,.22); }
 
-    .roadmap{ margin-top: 12px; display:grid; gap: 10px; }
+    .roadmap{
+      margin-top: 12px;
+      display:grid;
+      gap: 10px;
+    }
     .phase{
       padding: 12px;
       border-radius: 18px;
       background: rgba(255,255,255,.05);
       border: 1px solid rgba(255,255,255,.10);
     }
-    .phase .ph{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+    .phase .ph{ display:flex; align-items:center; justify-content:space-between; gap:10px;}
     .phase .ph .name{ font-weight: 900; }
-    .phase ul{ margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 12.5px; line-height:1.55; }
-
-    /* Executive Insights */
-    .insPanel{
-      margin-top: 10px;
-      border-radius: 18px;
-      background: rgba(10, 60, 70, .18);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 12px;
+    .phase ul{
+      margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 12.5px; line-height:1.55;
     }
-    .insK{ color: var(--muted2); font-size: 12px; margin-bottom: 6px; }
-    .insHeadline{ font-weight: 900; font-size: 13px; line-height: 1.45; }
-    .insBody{ margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height: 1.55; }
-    .segbar{
-      margin-top: 10px;
-      height: 12px;
-      border-radius: 999px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.08);
-      display: flex;
-    }
-    .seg{ height: 100%; width: 0%; transition: width .45s var(--ease); }
-    .seg.bad{ background: rgba(251,113,133,.88); }
-    .seg.warn{ background: rgba(251,191,36,.85); }
-    .seg.good{ background: rgba(52,211,153,.85); }
-
-    .legendRow{
-      margin-top: 8px;
-      display:flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items:center;
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .dot{
-      width: 10px; height: 10px; border-radius: 999px;
-      display:inline-block; margin-right: 6px;
-      border: 1px solid rgba(255,255,255,.14);
-    }
-    .dot.bad{ background: rgba(251,113,133,.88); }
-    .dot.warn{ background: rgba(251,191,36,.85); }
-    .dot.good{ background: rgba(52,211,153,.85); }
-    .actionList{
-      margin: 10px 0 0;
-      padding-left: 18px;
-      color: var(--muted);
-      font-size: 12.5px;
-      line-height: 1.55;
-    }
-
-    /* Analyzing overlay */
-    .analyzeOverlay{
-      position: fixed; inset:0; z-index: 120;
-      display:none;
-      align-items:center; justify-content:center;
-      background: rgba(5,8,16,.72);
-      backdrop-filter: blur(10px);
-    }
-    .analyzeOverlay.show{ display:flex; }
-    .analyzeCard{
-      width: min(520px, calc(100% - 28px));
-      border-radius: 22px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.14);
-      box-shadow: 0 30px 90px rgba(0,0,0,.55);
-      padding: 18px 18px 16px;
-      text-align:center;
-    }
-    .spinner{
-      width: 46px; height: 46px; border-radius: 999px;
-      border: 4px solid rgba(255,255,255,.18);
-      border-top-color: rgba(34,211,238,.85);
-      margin: 6px auto 12px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin{ to{ transform: rotate(360deg); } }
-    .anTitle{ font-weight: 900; font-size: 16px; }
-    .anSub{ margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height:1.45; }
-    .anBar{ margin-top: 12px; height: 10px; border-radius: 999px; overflow:hidden; background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.12); }
-    .anFill{ height:100%; width:0%; background: linear-gradient(90deg, rgba(124,58,237,.92), rgba(34,211,238,.65)); transition: width .35s var(--ease); }
 
     /* Toast */
     .toast{
@@ -696,6 +667,8 @@
     .toast .small{ color: var(--muted); font-size: 12px; margin-top: 2px; }
 
     /* Print */
+    
+    
     body.print-report{
       background: white !important;
       color: #111 !important;
@@ -756,7 +729,10 @@
       .radarGrid path, .radarGrid line, .radarGrid circle{ stroke:#d7d7d7 !important; }
       a{ color:#111 !important; text-decoration:none !important; }
     }
-  </style>
+
+  
+
+</style>
 </head>
 
 <body>
@@ -777,16 +753,17 @@
 
       <div class="actions">
         <div class="pill" id="pillStatus" title="Saved locally in your browser">
+          <i class="ph ph-cloud-check"></i>
           <div>
             <div style="font-weight:800;font-size:12px;line-height:1.1">Auto-saved</div>
             <div class="hint" id="saveHint">0 / 18 answered</div>
           </div>
         </div>
 
-        <div class="pill" id="btnExportJson"><span style="font-weight:800;font-size:13px">Export JSON</span></div>
-        <div class="pill" id="btnPrint"><span style="font-weight:800;font-size:13px">Print / PDF</span></div>
-        <div class="pill danger" id="btnReset"><span style="font-weight:800;font-size:13px">Reset</span></div>
-        <div class="pill primary" id="btnGoResults"><span style="font-weight:900;font-size:13px">Results</span></div>
+        <div class="pill" id="btnExportJson"><i class="ph ph-download-simple"></i><span style="font-weight:800;font-size:13px">Export JSON</span></div>
+        <div class="pill" id="btnPrint"><i class="ph ph-printer"></i><span style="font-weight:800;font-size:13px">Print / PDF</span></div>
+        <div class="pill danger" id="btnReset"><i class="ph ph-broom"></i><span style="font-weight:800;font-size:13px">Reset</span></div>
+        <div class="pill primary" id="btnGoResults"><i class="ph ph-chart-line-up"></i><span style="font-weight:900;font-size:13px">Results</span></div>
       </div>
     </div>
 
@@ -800,12 +777,14 @@
             A structured cyber readiness assessment that produces practical governance outputs: an overall maturity score, domain breakdown, top gaps, and a prioritized 30/60/90-day improvement roadmap. Mapping chips support ISO/IEC 27001 clauses (4–10) and Annex A controls, with an optional UAE alignment layer.
           </p>
 
+          
           <div class="chiprow">
             <span class="chip">ISO/IEC 27001 clauses (4–10)</span>
             <span class="chip">ISO/IEC 27001:2022 Annex A mapping</span>
             <span class="chip">Optional UAE alignment layer</span>
             <span class="chip">Export JSON • Print/PDF report</span>
           </div>
+
 
           <div class="metaGrid">
             <div class="meta">
@@ -827,10 +806,11 @@
             </div>
           </div>
 
+
           <div class="stepper">
             <div class="left">
               <span class="badge" id="stepBadge">Step 1/3 • Choose domain</span>
-
+              
               <div class="progressWrap" aria-label="progress">
                 <div class="progressBar" id="progressBar"></div>
               </div>
@@ -841,15 +821,16 @@
                 </svg>
                 <div class="ringText" id="ringText">0%</div>
               </div>
-            </div>
+
+              </div>
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <button class="btn primary" id="btnStart">Start Assessment</button>
-              <button class="btn" id="btnDemo">Load Demo Data</button>
+              <button class="btn primary" id="btnStart"><i class="ph ph-play"></i>Start Assessment</button>
+              <button class="btn" id="btnDemo"><i class="ph ph-magic-wand"></i>Load Demo Data</button>
             </div>
 
-            <div style="margin-top: 12px; color: var(--muted); font-size: 12.5px; line-height:1.55">
-              Disclaimer: This is a high-level readiness indicator, not a formal certification audit. Use it to prioritize controls, evidence, and a practical implementation plan.
-            </div>
+          <div style="margin-top: 12px; color: var(--muted); font-size: 12.5px; line-height:1.55">
+            Disclaimer: This is a high-level readiness indicator, not a formal certification audit. Use it to prioritize controls, evidence, and a practical implementation plan.
+          </div>
           </div>
         </div>
       </div>
@@ -866,7 +847,6 @@
           </div>
 
           <div class="toggles" id="toggles"></div>
-
           <div style="margin-top: 10px; display:grid; gap:10px;">
             <div class="meta">
               <div class="k">Report outputs</div>
@@ -880,6 +860,8 @@
             </div>
           </div>
 
+
+          
         </div>
       </div>
     </div>
@@ -898,8 +880,8 @@
                 <p class="qSub">Each domain contains a handful of high-signal capabilities. Score honestly—this tool surfaces a real remediation roadmap.</p>
               </div>
               <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                <button class="btn small" id="btnBackHome">Home</button>
-                <button class="btn small" id="btnQuickResults">Jump to Results</button>
+                <button class="btn small" id="btnBackHome"><i class="ph ph-house"></i>Home</button>
+                <button class="btn small" id="btnQuickResults"><i class="ph ph-chart-line"></i>Jump to Results</button>
               </div>
             </div>
 
@@ -913,7 +895,9 @@
       <div class="view" id="viewQuestions">
         <div class="card">
           <div class="glow"></div>
-          <div class="inner" id="questionsInner"></div>
+          <div class="inner" id="questionsInner">
+            <!-- populated -->
+          </div>
         </div>
       </div>
 
@@ -928,8 +912,8 @@
                 <p class="qSub">This is intentionally “boardroom friendly”. Use it for interviews, proposals, and portfolio demos.</p>
               </div>
               <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                <button class="btn small" id="btnBackDomains">Domains</button>
-                <button class="btn small primary" id="btnSaveReport">Print / Save PDF</button>
+                <button class="btn small" id="btnBackDomains"><i class="ph ph-arrow-left"></i>Domains</button>
+                <button class="btn small primary" id="btnSaveReport"><i class="ph ph-file-pdf"></i>Print / Save PDF</button>
               </div>
             </div>
 
@@ -990,6 +974,7 @@
                   </div>
                 </div>
 
+
                 <div class="qCard" style="margin-top: 12px;">
                   <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
                     <div>
@@ -1003,45 +988,6 @@
               </div>
 
               <div>
-                <div class="qCard reveal" id="resExec">
-                  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px;">
-                    <div>
-                      <div style="font-weight:900; font-size: 14px;">Executive Insights</div>
-                      <div style="color: var(--muted); font-size: 12.5px; margin-top: 4px;">
-                        Enterprise-style highlights generated from your scores (updates live).
-                      </div>
-                    </div>
-                    <div class="badge" id="execLive">Live • 0/18</div>
-                  </div>
-
-                  <div class="insPanel">
-                    <div class="insK">What to tell leadership</div>
-                    <div class="insHeadline" id="execHeadline">—</div>
-                    <div class="insBody" id="execBody">—</div>
-                  </div>
-
-                  <div class="insPanel">
-                    <div class="insK">Risk signal distribution (Top gaps)</div>
-                    <div class="segbar" aria-label="Risk distribution bar">
-                      <div class="seg bad" id="segHigh"></div>
-                      <div class="seg warn" id="segMed"></div>
-                      <div class="seg good" id="segLow"></div>
-                    </div>
-
-                    <div class="legendRow" aria-label="Risk distribution legend">
-                      <span><span class="dot bad"></span>High: <b id="countHigh">0</b></span>
-                      <span><span class="dot warn"></span>Medium: <b id="countMed">0</b></span>
-                      <span><span class="dot good"></span>Low: <b id="countLow">0</b></span>
-                    </div>
-                  </div>
-
-                  <div class="insPanel">
-                    <div class="insK">Next best actions</div>
-                    <div style="font-weight:900; font-size: 13px; margin-top: 2px;">Do these to increase maturity fastest</div>
-                    <ul class="actionList" id="execActions"></ul>
-                  </div>
-                </div>
-
                 <div class="qCard reveal" id="resBlock3">
                   <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
                     <div>
@@ -1082,12 +1028,15 @@
     </div>
   </div>
 
+
 <script>
 /**
  * Enterprise-style static readiness tool (single-file).
- * - Capability cards + transitions + micro-interactions.
+ * - Avoids Google-Form vibe: capability cards + cinematic transitions + micro-interactions.
  * - ISO 27001 + Annex A mapping chips, optional UAE IA/CSC layer toggles.
  * - Auto-save, export JSON, print/PDF.
+ *
+ * This file is intentionally “static deployable” to GitHub Pages.
  */
 
 const STORAGE_KEY = "cr_enterprise_v1_answers";
@@ -1115,7 +1064,7 @@ const DOMAINS = [
     questions: [
       {
         id:"g1",
-        title:"Leadership-approved security policy",
+        title:"Leadership‑approved security policy",
         hint:"Is there a documented information security policy approved by top management and reviewed?",
         evidence:"Policy document + approval record + review cadence + communication proof (email/intranet).",
         mappings:[
@@ -1169,13 +1118,13 @@ const DOMAINS = [
       },
       {
         id:"i2",
-        title:"Supplier / third-party security risk",
+        title:"Supplier / third‑party security risk",
         hint:"Is third-party security assessed before onboarding and monitored through the lifecycle?",
         evidence:"Vendor due diligence checklist + contract clauses + SOC reports + periodic reviews.",
         mappings:[
           { fw:"ISO_CLAUSE", ref:"6.1.2, 8.1" },
           { fw:"ISO_ANNEXA", ref:"A.5.19, A.5.20, A.5.21" },
-          { fw:"UAE_IA", ref:"IA: Third-party risk family" },
+          { fw:"UAE_IA", ref:"IA: Third‑party risk family" },
           { fw:"UAE_CSC", ref:"CSC: Supplier security guidance" },
         ]
       },
@@ -1307,7 +1256,7 @@ const DOMAINS = [
       },
       {
         id:"r3",
-        title:"Post-incident improvement loop",
+        title:"Post‑incident improvement loop",
         hint:"Do you document lessons learned and convert them into control improvements?",
         evidence:"Postmortems + actions register + control updates + KPI trend improvement.",
         mappings:[
@@ -1364,13 +1313,13 @@ const DOMAINS = [
 ];
 
 const state = {
+  org: { name: null, assessor: null, industry: null },
   toggles: loadToggles(),
   answers: loadAnswers(),
   view: "domains",
   activeDomain: null,
 };
 
-/* ---------- Storage ---------- */
 function loadToggles(){
   try{
     const raw = localStorage.getItem(TOGGLES_KEY);
@@ -1394,30 +1343,6 @@ function saveAnswers(){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state.answers));
   updateAnsweredBadge();
 }
-function hardReset(){
-  localStorage.removeItem(STORAGE_KEY);
-  localStorage.removeItem(TOGGLES_KEY);
-  state.answers = {};
-  state.toggles = loadToggles();
-  state.view = "domains";
-  state.activeDomain = null;
-}
-
-/* ---------- Helpers ---------- */
-function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-function clamp(v){ v = Number(v); if(Number.isNaN(v)) return 0; return Math.max(0, Math.min(4, Math.round(v))); }
-
-function visibleMappings(mappings){
-  return (mappings || []).filter(m => state.toggles[m.fw]);
-}
-function allQuestionIds(){
-  const ids = [];
-  for(const d of DOMAINS) for(const q of d.questions) ids.push(q.id);
-  return ids;
-}
-function answeredCount(){ return Object.keys(state.answers).length; }
-function isComplete(){ return answeredCount() >= allQuestionIds().length; }
-
 function toast(title, subtitle=""){
   const el = document.getElementById("toast");
   el.innerHTML = `<div style="font-weight:900">${escapeHtml(title)}</div>` + (subtitle? `<div class="small">${escapeHtml(subtitle)}</div>`:"");
@@ -1426,43 +1351,26 @@ function toast(title, subtitle=""){
   toast._t = setTimeout(()=> el.classList.remove("show"), 2400);
 }
 
-/* ---------- UI State ---------- */
-function currentFrameworkLabel(){
-  const iso = [];
-  if(state.toggles.ISO_CLAUSE) iso.push("ISO 27001");
-  if(state.toggles.ISO_ANNEXA) iso.push("Annex A");
-  const uae = [];
-  if(state.toggles.UAE_IA) uae.push("UAE IA");
-  if(state.toggles.UAE_CSC) uae.push("UAE CSC");
-  const left = iso.length ? iso.join(" • ") : "No ISO mapping";
-  const right = uae.length ? (" + " + uae.join(" • ")) : "";
-  return left + right;
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+function clamp(v){ v = Number(v); if(Number.isNaN(v)) return 0; return Math.max(0, Math.min(4, Math.round(v))); }
+
+function visibleMappings(mappings){
+  return (mappings || []).filter(m => state.toggles[m.fw]);
 }
-function modeBadgeText(){
-  const uaeOn = !!(state.toggles.UAE_IA || state.toggles.UAE_CSC);
-  return uaeOn ? "UAE Mode" : "ISO Mode";
+
+function isComplete(){
+  return answeredCount() >= allQuestionIds().length;
 }
-function setStep(stepIndex){
-  const badge = document.getElementById("stepBadge");
-  const bar = document.getElementById("progressBar");
-  const map = {1:"Step 1/3 • Choose domain", 2:"Step 2/3 • Score capabilities", 3:"Step 3/3 • Executive results"};
-  badge.textContent = map[stepIndex] || "Step";
-  const pct = stepIndex === 1 ? 25 : stepIndex === 2 ? 65 : 100;
-  bar.style.width = pct + "%";
+
+function answeredCount(){
+  return Object.keys(state.answers).length;
 }
-function switchView(which){
-  const views = { domains: "viewDomains", questions:"viewQuestions", results:"viewResults" };
-  for(const k of Object.keys(views)){
-    const el = document.getElementById(views[k]);
-    if(el) el.classList.remove("active");
-  }
-  state.view = which;
-  document.getElementById(views[which]).classList.add("active");
-  if(which === "domains") setStep(1);
-  if(which === "questions") setStep(2);
-  if(which === "results") setStep(3);
-  const bf = document.getElementById("badgeFrameworks");
-  if(bf) bf.textContent = currentFrameworkLabel();
+
+function allQuestionIds(){
+  const ids = [];
+  for(const d of DOMAINS) for(const q of d.questions) ids.push(q.id);
+  return ids;
 }
 
 function updateAnsweredBadge(){
@@ -1474,7 +1382,6 @@ function updateAnsweredBadge(){
   const pct = total ? Math.round((done/total)*100) : 0;
   const ringText = document.getElementById("ringText");
   if(ringText) ringText.textContent = `${pct}%`;
-
   const ring = document.getElementById("ringFill");
   if(ring){
     const C = 2 * Math.PI * 18;
@@ -1492,42 +1399,124 @@ function updateAnsweredBadge(){
   }
 }
 
-/* ---------- Render Toggles ---------- */
+function currentFrameworkLabel(){
+  const iso = [];
+  if(state.toggles.ISO_CLAUSE) iso.push("ISO 27001");
+  if(state.toggles.ISO_ANNEXA) iso.push("Annex A");
+  const uae = [];
+  if(state.toggles.UAE_IA) uae.push("UAE IA");
+  if(state.toggles.UAE_CSC) uae.push("UAE CSC");
+  const left = iso.length ? iso.join(" • ") : "No ISO mapping";
+  const right = uae.length ? (" + " + uae.join(" • ")) : "";
+  return left + right;
+}
+
+function modeBadgeText(){
+  const uaeOn = !!(state.toggles.UAE_IA || state.toggles.UAE_CSC);
+  return uaeOn ? "UAE Mode" : "ISO Mode";
+}
+
 function renderToggles(){
   const root = document.getElementById("toggles");
   root.innerHTML = "";
   for(const f of FRAMEWORKS){
     const row = document.createElement("div");
     row.className = "togg";
-
-    const left = document.createElement("div");
-    left.className = "l";
-    left.innerHTML = `<div class="a">${escapeHtml(f.label)}</div><div class="b">${escapeHtml(f.desc)}</div>`;
-
     const sw = document.createElement("div");
     sw.className = "switch" + (state.toggles[f.key] ? " on" : "");
     sw.setAttribute("role","switch");
     sw.setAttribute("aria-checked", state.toggles[f.key] ? "true" : "false");
+
     sw.addEventListener("click", ()=>{
       state.toggles[f.key] = !state.toggles[f.key];
       saveToggles();
       renderToggles();
-      document.getElementById("modeBadge").textContent = modeBadgeText();
-      const bf = document.getElementById("badgeFrameworks");
-      if(bf) bf.textContent = currentFrameworkLabel();
+      const badge = document.getElementById("modeBadge");
+      badge.textContent = modeBadgeText();
+      const _bf = document.getElementById("badgeFrameworks");
+      if (_bf) _bf.textContent = currentFrameworkLabel();
       toast("Updated mappings", currentFrameworkLabel());
+      // re-render question chips & results if visible
       if(state.view === "questions") renderQuestions(state.activeDomain);
       if(state.view === "results") renderResults();
     });
 
-    row.appendChild(left);
+    row.innerHTML = `
+      <div class="l">
+        <div class="a">${escapeHtml(f.label)}</div>
+        <div class="b">${escapeHtml(f.desc)}</div>
+      </div>
+    `;
     row.appendChild(sw);
     root.appendChild(row);
   }
   document.getElementById("modeBadge").textContent = modeBadgeText();
 }
 
-/* ---------- Domain List ---------- */
+function setStep(stepIndex){
+  // stepIndex: 1 domains, 2 questions, 3 results
+  const badge = document.getElementById("stepBadge");
+  const bar = document.getElementById("progressBar");
+  const map = {1:"Step 1/3 • Choose domain", 2:"Step 2/3 • Score capabilities", 3:"Step 3/3 • Executive results"};
+  badge.textContent = map[stepIndex] || "Step";
+  const pct = stepIndex === 1 ? 25 : stepIndex === 2 ? 65 : 100;
+  bar.style.width = pct + "%";
+}
+
+function switchView(which){
+  const views = { domains: "viewDomains", questions:"viewQuestions", results:"viewResults" };
+  for(const k of Object.keys(views)){
+    const el = document.getElementById(views[k]);
+    if(el) el.classList.remove("active");
+  }
+  state.view = which;
+  const el = document.getElementById(views[which]);
+  el.classList.add("active");
+  // stepper
+  if(which === "domains") setStep(1);
+  if(which === "questions") setStep(2);
+  if(which === "results") setStep(3);
+      const _bf = document.getElementById("badgeFrameworks");
+      if (_bf) _bf.textContent = currentFrameworkLabel();
+  (() => { const __el = document.getElementById("badgeFrameworks"); if (__el) __el.textContent = currentFrameworkLabel(); })();
+}
+
+
+function analyzeAndShowResults(){
+  const overlay = document.getElementById("analyzeOverlay");
+  const fill = document.getElementById("anFill");
+  if(overlay){
+    overlay.classList.add("show");
+    overlay.setAttribute("aria-hidden","false");
+  }
+  if(fill){
+    fill.style.width = "0%";
+    setTimeout(()=> fill.style.width = "30%", 150);
+    setTimeout(()=> fill.style.width = "65%", 1700);
+    setTimeout(()=> fill.style.width = "88%", 3800);
+    setTimeout(()=> fill.style.width = "100%", 5600);
+  }
+  setTimeout(()=>{
+    if(overlay){
+      overlay.classList.remove("show");
+      overlay.setAttribute("aria-hidden","true");
+    }
+    switchView("results");
+    renderResults();
+    revealResults();
+  }, 6000);
+}
+
+function revealResults(){
+  const ids = ["resBlock1","resBlock2","resBlock3","resBlock4"];
+  ids.forEach((id, i)=>{
+    const el = document.getElementById(id);
+    if(el){
+      el.classList.remove("on");
+      setTimeout(()=> el.classList.add("on"), 250 + i*450);
+    }
+  });
+}
 function renderDomains(){
   const grid = document.getElementById("domainGrid");
   grid.innerHTML = "";
@@ -1541,7 +1530,7 @@ function renderDomains(){
       <div class="p">${escapeHtml(d.purpose)}</div>
       <div class="foot">
         <span>${done} / ${d.questions.length} scored</span>
-        <span style="display:flex;align-items:center;gap:8px;">Open</span>
+        <span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-arrow-right"></i> Open</span>
       </div>
     `;
     tile.addEventListener("click", ()=>{
@@ -1554,7 +1543,99 @@ function renderDomains(){
   }
 }
 
-/* ---------- Questions ---------- */
+function maturityLabel(score){
+  if(score < 0.8) return "Not started";
+  if(score < 1.6) return "Initial";
+  if(score < 2.4) return "Developing";
+  if(score < 3.2) return "Managed";
+  return "Optimized";
+}
+
+function domainAverages(){
+  const avgs = {};
+  for(const d of DOMAINS){
+    let sum = 0, count = 0;
+    for(const q of d.questions){
+      if(state.answers[q.id] !== undefined){
+        sum += clamp(state.answers[q.id]);
+        count += 1;
+      }
+    }
+    avgs[d.key] = count ? +(sum / count).toFixed(2) : 0;
+  }
+  return avgs;
+}
+
+function overallAverage(){
+  const ids = allQuestionIds();
+  let sum = 0, count = 0;
+  for(const id of ids){
+    if(state.answers[id] !== undefined){
+      sum += clamp(state.answers[id]);
+      count += 1;
+    }
+  }
+  return count ? +(sum / count).toFixed(2) : 0;
+}
+
+function topGaps(n=6){
+  const items = [];
+  for(const d of DOMAINS){
+    for(const q of d.questions){
+      const s = state.answers[q.id] !== undefined ? clamp(state.answers[q.id]) : 0;
+      items.push({ domain: d.key, ...q, score: s });
+    }
+  }
+  items.sort((a,b)=> a.score - b.score);
+  return items.slice(0,n);
+}
+
+function severity(score){
+  if(score <= 1) return {cls:"bad", label:"High gap"};
+  if(score === 2) return {cls:"warn", label:"Medium gap"};
+  return {cls:"good", label:"Low gap"};
+}
+
+function roadmapFromGaps(gaps){
+  // Simple, interview-friendly: 30 quick wins, 60 process, 90 optimize
+  const phase = (name, desc, bullets)=> ({name, desc, bullets});
+  const bullets30 = [];
+  const bullets60 = [];
+  const bullets90 = [];
+
+  for(const g of gaps){
+    if(g.score <= 1){
+      bullets30.push(`${g.title}: create baseline policy/process + collect minimum evidence.`);
+      bullets60.push(`${g.title}: implement control + assign ownership + define SLAs/metrics.`);
+      bullets90.push(`${g.title}: automate monitoring + measure effectiveness + improve continuously.`);
+    }else if(g.score === 2){
+      bullets30.push(`${g.title}: define SOP and close obvious gaps.`);
+      bullets60.push(`${g.title}: expand coverage + train stakeholders + start KPI tracking.`);
+      bullets90.push(`${g.title}: integrate with SIEM/ITSM + periodic control testing.`);
+    }else{
+      bullets30.push(`${g.title}: validate and document existing practice.`);
+      bullets60.push(`${g.title}: standardize and tighten evidence collection.`);
+      bullets90.push(`${g.title}: optimize and benchmark against peers.`);
+    }
+  }
+
+  return [
+    phase("30 Days — Stabilize", "Get control owners, minimum evidence, and quick wins.", uniq(bullets30).slice(0,6)),
+    phase("60 Days — Implement", "Build repeatable processes and close medium gaps.", uniq(bullets60).slice(0,6)),
+    phase("90 Days — Optimize", "Automation, continuous improvement, and audit readiness.", uniq(bullets90).slice(0,6)),
+  ];
+}
+
+function uniq(arr){
+  const out = [];
+  const s = new Set();
+  for(const a of arr){
+    const k = a.toLowerCase();
+    if(!s.has(k)){ s.add(k); out.push(a); }
+  }
+  return out;
+}
+
 function renderQuestions(domainKey){
   const dom = DOMAINS.find(d => d.key === domainKey);
   const root = document.getElementById("questionsInner");
@@ -1569,18 +1650,18 @@ function renderQuestions(domainKey){
       </div>
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
         <span class="badge">${escapeHtml(currentFrameworkLabel())}</span>
-        <button class="btn small" id="btnBackDomains2">Domains</button>
-        <button class="btn small primary" id="btnToResults">View Results</button>
+        <button class="btn small" id="btnBackDomains2"><i class="ph ph-squares-four"></i>Domains</button>
+        <button class="btn small primary" id="btnToResults"><i class="ph ph-chart-line-up"></i>View Results</button>
       </div>
     </div>
 
     <div class="qList" id="qList"></div>
 
     <div class="navRow">
-      <button class="btn" id="btnPrevDomain">Prev domain</button>
+      <button class="btn" id="btnPrevDomain"><i class="ph ph-arrow-left"></i>Prev domain</button>
       <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button class="btn danger" id="btnClearDomain">Clear domain scores</button>
-        <button class="btn primary" id="btnNextDomain">Next domain</button>
+        <button class="btn danger" id="btnClearDomain"><i class="ph ph-trash"></i>Clear domain scores</button>
+        <button class="btn primary" id="btnNextDomain">Next domain<i class="ph ph-arrow-right"></i></button>
       </div>
     </div>
   `;
@@ -1616,7 +1697,7 @@ function renderQuestions(domainKey){
       </div>
 
       <div class="scorePills" role="radiogroup" aria-label="score ${escapeHtml(q.title)}">
-        ${SCALE.map(s=> `<button data-q="${q.id}" data-v="${s.v}" class="${(score===s.v) ? "active":""}">${escapeHtml(s.label)}</button>`).join("")}
+        ${SCALE.map(s=> `<button data-q="${q.id}" data-v="${s.v}" class="${(score===s.v) ? "active":""}">${s.label}</button>`).join("")}
       </div>
 
       ${mapHtml}
@@ -1636,21 +1717,20 @@ function renderQuestions(domainKey){
         const v = clamp(btn.getAttribute("data-v"));
         state.answers[id] = v;
         saveAnswers();
-        cap.animate(
-          [{transform:"translateY(0px)"},{transform:"translateY(-2px)"},{transform:"translateY(0px)"}],
-          {duration: 260, easing: "cubic-bezier(.2,.8,.2,1)"}
-        );
+        // animate selection
+        cap.animate([{transform:"translateY(0px)"},{transform:"translateY(-2px)"},{transform:"translateY(0px)"}], {duration: 260, easing: "cubic-bezier(.2,.8,.2,1)"});
         toast("Saved", `${q.title} → ${v} (${SCALE[v].label})`);
-        renderQuestions(domainKey);
-        renderDomains();
+        renderQuestions(domainKey); // rerender to update pill states + badges
+        renderDomains(); // update domain tiles
       });
     });
 
     qList.appendChild(cap);
   }
 
+  // nav buttons
   root.querySelector("#btnBackDomains2").addEventListener("click", ()=>{ switchView("domains"); renderDomains(); });
-  root.querySelector("#btnToResults").addEventListener("click", ()=>{ switchView("results"); renderResults(); revealResults(); });
+  root.querySelector("#btnToResults").addEventListener("click", ()=>{ switchView("results"); renderResults(); });
 
   const idx = DOMAINS.findIndex(d => d.key === domainKey);
   root.querySelector("#btnPrevDomain").addEventListener("click", ()=>{
@@ -1673,187 +1753,6 @@ function renderQuestions(domainKey){
     renderDomains();
     toast("Cleared", `${dom.key} scores removed`);
   });
-
-  updateAnsweredBadge();
-}
-
-/* ---------- Scoring ---------- */
-function domainAverages(){
-  const avgs = {};
-  for(const d of DOMAINS){
-    let sum = 0, count = 0;
-    for(const q of d.questions){
-      if(state.answers[q.id] !== undefined){
-        sum += clamp(state.answers[q.id]);
-        count += 1;
-      }
-    }
-    avgs[d.key] = count ? +(sum / count).toFixed(2) : 0;
-  }
-  return avgs;
-}
-function overallAverage(){
-  const ids = allQuestionIds();
-  let sum = 0, count = 0;
-  for(const id of ids){
-    if(state.answers[id] !== undefined){
-      sum += clamp(state.answers[id]);
-      count += 1;
-    }
-  }
-  return count ? +(sum / count).toFixed(2) : 0;
-}
-function maturityLabel(score){
-  if(score < 0.8) return "Not started";
-  if(score < 1.6) return "Initial";
-  if(score < 2.4) return "Developing";
-  if(score < 3.2) return "Managed";
-  return "Optimized";
-}
-function topGaps(n=6){
-  const items = [];
-  for(const d of DOMAINS){
-    for(const q of d.questions){
-      const s = state.answers[q.id] !== undefined ? clamp(state.answers[q.id]) : 0;
-      items.push({ domain: d.key, ...q, score: s });
-    }
-  }
-  items.sort((a,b)=> a.score - b.score);
-  return items.slice(0,n);
-}
-function severity(score){
-  if(score <= 1) return {cls:"bad", label:"High gap"};
-  if(score === 2) return {cls:"warn", label:"Medium gap"};
-  return {cls:"good", label:"Low gap"};
-}
-function uniq(arr){
-  const out = [];
-  const s = new Set();
-  for(const a of arr){
-    const k = a.toLowerCase();
-    if(!s.has(k)){ s.add(k); out.push(a); }
-  }
-  return out;
-}
-function roadmapFromGaps(gaps){
-  const bullets30 = [];
-  const bullets60 = [];
-  const bullets90 = [];
-
-  for(const g of gaps){
-    if(g.score <= 1){
-      bullets30.push(`${g.title}: create baseline policy/process + collect minimum evidence.`);
-      bullets60.push(`${g.title}: implement control + assign ownership + define SLAs/metrics.`);
-      bullets90.push(`${g.title}: automate monitoring + measure effectiveness + improve continuously.`);
-    }else if(g.score === 2){
-      bullets30.push(`${g.title}: define SOP and close obvious gaps.`);
-      bullets60.push(`${g.title}: expand coverage + train stakeholders + start KPI tracking.`);
-      bullets90.push(`${g.title}: integrate with SIEM/ITSM + periodic control testing.`);
-    }else{
-      bullets30.push(`${g.title}: validate and document existing practice.`);
-      bullets60.push(`${g.title}: standardize and tighten evidence collection.`);
-      bullets90.push(`${g.title}: optimize and benchmark against peers.`);
-    }
-  }
-
-  return [
-    {name:"30 Days — Stabilize", desc:"Get control owners, minimum evidence, and quick wins.", bullets: uniq(bullets30).slice(0,6)},
-    {name:"60 Days — Implement", desc:"Build repeatable processes and close medium gaps.", bullets: uniq(bullets60).slice(0,6)},
-    {name:"90 Days — Optimize", desc:"Automation, continuous improvement, and audit readiness.", bullets: uniq(bullets90).slice(0,6)},
-  ];
-}
-
-/* ---------- Results + Charts ---------- */
-function updateVisuals(){
-  // Donut
-  const overall = overallAverage();
-  const pct = Math.max(0, Math.min(100, Math.round((overall/4) * 100)));
-  const donutFill = document.getElementById("donutFill");
-  const donutVal = document.getElementById("donutVal");
-  if(donutVal) donutVal.textContent = `${pct}%`;
-  if(donutFill){
-    const C = 2 * Math.PI * 44; // r=44 => 276.46
-    donutFill.style.strokeDasharray = C.toFixed(2);
-    donutFill.style.strokeDashoffset = (C * (1 - pct/100)).toFixed(2);
-  }
-
-  // Radar
-  const avgs = domainAverages();
-  const labels = DOMAINS.map(d => d.key);
-  const values = labels.map(k => (avgs[k] ?? 0));
-
-  drawRadar(labels, values);
-}
-function drawRadar(labels, values){
-  const grid = document.getElementById("radarGrid");
-  const poly = document.getElementById("radarPoly");
-  const lab = document.getElementById("radarLabels");
-  if(!grid || !poly || !lab) return;
-
-  grid.innerHTML = "";
-  lab.innerHTML = "";
-
-  const cx = 130, cy = 90;
-  const R = 62; // fits inside 260x180
-  const rings = 4;
-  const N = labels.length;
-
-  // Rings
-  for(let r=1; r<=rings; r++){
-    const rr = (R/rings)*r;
-    const c = document.createElementNS("http://www.w3.org/2000/svg","circle");
-    c.setAttribute("cx", cx);
-    c.setAttribute("cy", cy);
-    c.setAttribute("r", rr);
-    grid.appendChild(c);
-  }
-
-  // Axes + labels
-  for(let i=0; i<N; i++){
-    const ang = (-Math.PI/2) + (i*(2*Math.PI/N));
-    const x = cx + R*Math.cos(ang);
-    const y = cy + R*Math.sin(ang);
-
-    const line = document.createElementNS("http://www.w3.org/2000/svg","line");
-    line.setAttribute("x1", cx); line.setAttribute("y1", cy);
-    line.setAttribute("x2", x);  line.setAttribute("y2", y);
-    grid.appendChild(line);
-
-    const tx = cx + (R+16)*Math.cos(ang);
-    const ty = cy + (R+16)*Math.sin(ang);
-
-    const t = document.createElementNS("http://www.w3.org/2000/svg","text");
-    t.setAttribute("x", tx);
-    t.setAttribute("y", ty);
-    t.setAttribute("text-anchor", (Math.cos(ang) > 0.25) ? "start" : (Math.cos(ang) < -0.25) ? "end" : "middle");
-    t.setAttribute("dominant-baseline","middle");
-    t.textContent = labels[i];
-    lab.appendChild(t);
-  }
-
-  // Polygon points (normalize 0..4)
-  const pts = [];
-  for(let i=0; i<N; i++){
-    const v = Math.max(0, Math.min(4, Number(values[i] ?? 0)));
-    const k = v/4; // 0..1
-    const ang = (-Math.PI/2) + (i*(2*Math.PI/N));
-    const x = cx + (R*k)*Math.cos(ang);
-    const y = cy + (R*k)*Math.sin(ang);
-    pts.push([x,y]);
-  }
-  const d = pts.map((p, i)=> (i===0 ? `M ${p[0].toFixed(1)} ${p[1].toFixed(1)}` : `L ${p[0].toFixed(1)} ${p[1].toFixed(1)}`)).join(" ") + " Z";
-  poly.setAttribute("d", d);
-}
-
-function revealResults(){
-  const ids = ["resBlock1","resBlock2","resExec","resBlock3","resBlock4"];
-  ids.forEach((id, i)=>{
-    const el = document.getElementById(id);
-    if(el){
-      el.classList.remove("on");
-      setTimeout(()=> el.classList.add("on"), 250 + i*450);
-    }
-  });
 }
 
 function renderResults(){
@@ -1865,10 +1764,12 @@ function renderResults(){
   const avgs = domainAverages();
   const label = maturityLabel(overall);
 
+  // KPIs
   document.getElementById("kpiOverall").textContent = `${overall.toFixed(2)} / 4`;
   document.getElementById("kpiLabel").textContent = label;
   document.getElementById("kpiCoverage").textContent = `${done} / ${total}`;
 
+  // Focus suggestion: lowest domain avg
   let focus = "—";
   let min = 999;
   for(const [k,v] of Object.entries(avgs)){
@@ -1876,8 +1777,10 @@ function renderResults(){
   }
   document.getElementById("kpiFocus").textContent = focus;
 
-  const bf = document.getElementById("badgeFrameworks");
-  if(bf) bf.textContent = currentFrameworkLabel();
+  // Framework badge
+  const fwLabel = currentFrameworkLabel();
+  const badge = document.getElementById("badgeFrameworks");
+  if(badge) badge.textContent = fwLabel;
 
   // Bars
   const bars = document.getElementById("bars");
@@ -1934,6 +1837,8 @@ function renderResults(){
   // Roadmap
   const rm = roadmapFromGaps(gaps);
   const roadmap = document.getElementById("roadmap");
+  // Update charts
+  updateVisuals();
   roadmap.innerHTML = "";
   for(const p of rm){
     const div = document.createElement("div");
@@ -1947,94 +1852,8 @@ function renderResults(){
     `;
     roadmap.appendChild(div);
   }
-
-  // Executive Insights (right)
-  const pct = Math.round((overall/4) * 100);
-
-  let strongest = "—", weakest = "—";
-  let maxV = -1, minV2 = 999;
-  for(const [k,v] of Object.entries(avgs)){
-    if(v > maxV){ maxV = v; strongest = k; }
-    if(v < minV2){ minV2 = v; weakest = k; }
-  }
-
-  const top = gaps;
-  const high = top.filter(g => g.score <= 1).length;
-  const med  = top.filter(g => g.score === 2).length;
-  const low  = top.filter(g => g.score >= 3).length;
-  const totalTop = Math.max(1, top.length);
-
-  const execLive = document.getElementById("execLive");
-  if(execLive) execLive.textContent = `Live • ${done}/${total}`;
-
-  const execHeadline = document.getElementById("execHeadline");
-  if(execHeadline){
-    execHeadline.innerHTML =
-      `Overall posture: <b>${escapeHtml(label)}</b> (${pct}%). ` +
-      `Strongest domain: <b>${escapeHtml(strongest)}</b>. ` +
-      `Biggest exposure: <b>${escapeHtml(weakest)}</b>.`;
-  }
-
-  const execBody = document.getElementById("execBody");
-  if(execBody){
-    const driver = top[0]?.title ? `Primary risk driver: “${top[0].title}”.` : "Primary risk driver: top gaps in the lowest scoring controls.";
-    execBody.textContent =
-      `${driver} Focus domain: ${weakest} for fastest risk reduction and audit readiness.`;
-  }
-
-  const segHigh = document.getElementById("segHigh");
-  const segMed  = document.getElementById("segMed");
-  const segLow  = document.getElementById("segLow");
-  if(segHigh) segHigh.style.width = `${(high/totalTop)*100}%`;
-  if(segMed)  segMed.style.width  = `${(med/totalTop)*100}%`;
-  if(segLow)  segLow.style.width  = `${(low/totalTop)*100}%`;
-
-  const countHigh = document.getElementById("countHigh");
-  const countMed  = document.getElementById("countMed");
-  const countLow  = document.getElementById("countLow");
-  if(countHigh) countHigh.textContent = String(high);
-  if(countMed)  countMed.textContent  = String(med);
-  if(countLow)  countLow.textContent  = String(low);
-
-  const execActions = document.getElementById("execActions");
-  if(execActions){
-    const topGap = top[0]?.title || "top gap control";
-    const actions = [
-      `Close “${topGap}” with a minimum evidence pack (policy/SOP + owner + review cadence).`,
-      `Run a 30-day sprint in ${weakest}: assign owners, define SLAs, and track evidence in one place.`,
-      `Export JSON + Print PDF to reuse the report as an interview/portfolio artifact.`
-    ];
-    execActions.innerHTML = actions.map(a => `<li>${escapeHtml(a)}</li>`).join("");
-  }
-
-  // Charts
-  updateVisuals();
 }
 
-/* ---------- Analyze Overlay Flow ---------- */
-function analyzeAndShowResults(){
-  const overlay = document.getElementById("analyzeOverlay");
-  const fill = document.getElementById("anFill");
-
-  overlay.classList.add("show");
-  overlay.setAttribute("aria-hidden","false");
-  fill.style.width = "0%";
-
-  setTimeout(()=> fill.style.width = "25%", 200);
-  setTimeout(()=> fill.style.width = "55%", 1600);
-  setTimeout(()=> fill.style.width = "80%", 3400);
-  setTimeout(()=> fill.style.width = "100%", 4800);
-
-  setTimeout(()=>{
-    overlay.classList.remove("show");
-    overlay.setAttribute("aria-hidden","true");
-    switchView("results");
-    renderResults();
-    revealResults();
-  }, 5000);
-}
-
-/* ---------- Export + Print ---------- */
 function exportJSON(){
   const payload = {
     tool: "Cyber Readiness & GRC Assessment (Enterprise Static)",
@@ -2062,126 +1881,215 @@ function exportJSON(){
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "cyber-readiness-assessment.json";
-  document.body.appendChild(a);
+  a.download = "cyber-readiness-enterprise-results.json";
   a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-  toast("Exported JSON", "Saved to your downloads");
+  setTimeout(()=> URL.revokeObjectURL(url), 600);
+  toast("Exported", "JSON downloaded");
 }
 
-function printReport(){
-  // For clean PDF output
-  document.body.classList.add("print-report");
-  setTimeout(()=>{
-    window.print();
-    setTimeout(()=> document.body.classList.remove("print-report"), 400);
-  }, 50);
-}
-
-/* ---------- Demo Data ---------- */
-function loadDemoData(){
-  // Looks realistic and produces good results visuals
-  const demo = {
-    g1: 2, g2: 2, g3: 1,
-    i1: 2, i2: 1, i3: 2,
-    p1: 2, p2: 3, p3: 2,
-    d1: 1, d2: 2, d3: 1,
-    r1: 2, r2: 1, r3: 2,
-    rc1: 2, rc2: 1, rc3: 2
-  };
-  state.answers = demo;
-  saveAnswers();
-  renderDomains();
-  toast("Demo loaded", "You can edit scores and see results update live");
-}
-
-/* ---------- Wiring ---------- */
-function wire(){
+function resetAll(){
+  if(!confirm("Reset all answers and settings?")) return;
+  state.answers = {};
+  state.toggles = (()=>{ const t={}; for(const f of FRAMEWORKS) t[f.key]=f.defaultOn; return t; })();
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(TOGGLES_KEY);
   renderToggles();
   renderDomains();
   updateAnsweredBadge();
-  document.getElementById("modeBadge").textContent = modeBadgeText();
+  toast("Reset complete", "All data cleared");
+}
 
-  // Buttons
+function loadDemo(){
+  // deterministic demo to make UI look “alive”
+  const ids = allQuestionIds();
+  for(let i=0;i<ids.length;i++){
+    state.answers[ids[i]] = (i % 5); // 0..4
+  }
+  saveAnswers();
+  renderDomains();
+  toast("Demo loaded", "Scores populated for showcase");
+}
+
+function bindTopControls(){
+  document.getElementById("btnExportJson").addEventListener("click", exportJSON);
+  document.getElementById("btnPrint").addEventListener("click", ()=> {
+    // Report-mode print: switch to results, render, then print with high-contrast styles
+    switchView("results");
+    renderResults();
+    document.body.classList.add("print-report");
+    window.scrollTo(0,0);
+    setTimeout(()=> {
+      window.print();
+      // Remove after print (some browsers don't fire afterprint consistently for file://)
+      setTimeout(()=> document.body.classList.remove("print-report"), 800);
+    }, 250);
+  });
+document.getElementById("btnReset").addEventListener("click", resetAll);
+  document.getElementById("btnGoResults").addEventListener("click", ()=>{
+    switchView("results");
+    renderResults();
+    toast("Results", "Executive view generated");
+  });
+
   document.getElementById("btnStart").addEventListener("click", ()=>{
     switchView("domains");
     renderDomains();
-    toast("Start", "Pick a domain to begin scoring");
+    toast("Started", "Pick a domain to begin");
   });
 
-  document.getElementById("btnDemo").addEventListener("click", ()=>{
-    loadDemoData();
-    switchView("results");
-    renderResults();
-    revealResults();
-  });
+  document.getElementById("btnDemo").addEventListener("click", loadDemo);
 
   document.getElementById("btnBackHome").addEventListener("click", ()=>{
+    // smooth scroll to top and keep domains view
+    switchView("domains");
     window.scrollTo({top:0, behavior:"smooth"});
-    toast("Home", "You're at the starting section");
   });
 
   document.getElementById("btnQuickResults").addEventListener("click", ()=>{
     switchView("results");
     renderResults();
-    revealResults();
-    toast("Results", "Live executive view");
   });
 
-  document.getElementById("btnGoResults").addEventListener("click", ()=>{
+  document.getElementById("btnBackDomains").addEventListener("click", ()=>{
+    switchView("domains");
+    renderDomains();
+  });
+
+  document.getElementById("btnSaveReport").addEventListener("click", ()=> {
+    // Report-mode print: switch to results, render, then print with high-contrast styles
+    switchView("results");
+    renderResults();
+    document.body.classList.add("print-report");
+    window.scrollTo(0,0);
+    setTimeout(()=> {
+      window.print();
+      // Remove after print (some browsers don't fire afterprint consistently for file://)
+      setTimeout(()=> document.body.classList.remove("print-report"), 800);
+    }, 250);
+  });
+}
+
+function init(){
+  renderToggles();
+  renderDomains();
+  updateAnsweredBadge();
+      const _bf = document.getElementById("badgeFrameworks");
+      if (_bf) _bf.textContent = currentFrameworkLabel();
+  bindTopControls();
+  (() => { const __el = document.getElementById("badgeFrameworks"); if (__el) __el.textContent = currentFrameworkLabel(); })();
+  setStep(1);
+}
+
+init();
+
+function updateVisuals(){
+  // Donut: overall maturity (0-4 -> 0-100%)
+  const overall = overallAverage();
+  const pct = Math.round((overall/4) * 100);
+
+  const donutVal = document.getElementById("donutVal");
+  if(donutVal) donutVal.textContent = `${pct}%`;
+
+  const donutFill = document.getElementById("donutFill");
+  if(donutFill){
+    const C = 2 * Math.PI * 44; // r=44
+    donutFill.style.strokeDasharray = C.toFixed(2);
+    donutFill.style.strokeDashoffset = (C * (1 - pct/100)).toFixed(2);
+  }
+
+  // Radar: domain averages (0-4)
+  const avgs = domainAverages();
+  const order = ["Govern","Identify","Protect","Detect","Respond","Recover"];
+  const values = order.map(k => (avgs[k] ?? 0));
+  buildRadar(order, values);
+}
+
+function buildRadar(labels, values){
+  const grid = document.getElementById("radarGrid");
+  const poly = document.getElementById("radarPoly");
+  const labs = document.getElementById("radarLabels");
+  if(!grid || !poly || !labs) return;
+
+  // Clear
+  grid.innerHTML = "";
+  labs.innerHTML = "";
+
+  const cx = 130, cy = 90;
+  const maxR = 70;
+  const N = labels.length;
+
+  // Grid rings (4)
+  for(let r=1; r<=4; r++){
+    const rr = (maxR * r/4);
+    const c = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", rr);
+    grid.appendChild(c);
+  }
+
+  // Axes + label positions
+  for(let i=0; i<N; i++){
+    const a = (-Math.PI/2) + (2*Math.PI*i/N);
+    const x = cx + maxR*Math.cos(a);
+    const y = cy + maxR*Math.sin(a);
+
+    const line = document.createElementNS("http://www.w3.org/2000/svg","line");
+    line.setAttribute("x1", cx); line.setAttribute("y1", cy);
+    line.setAttribute("x2", x);  line.setAttribute("y2", y);
+    grid.appendChild(line);
+
+    const tx = cx + (maxR+18)*Math.cos(a);
+    const ty = cy + (maxR+18)*Math.sin(a);
+
+    const t = document.createElementNS("http://www.w3.org/2000/svg","text");
+    t.textContent = labels[i];
+    t.setAttribute("x", tx);
+    t.setAttribute("y", ty);
+    t.setAttribute("text-anchor", tx < cx ? "end" : (Math.abs(tx-cx) < 6 ? "middle" : "start"));
+    t.setAttribute("dominant-baseline", ty < cy ? "ideographic" : "hanging");
+    labs.appendChild(t);
+  }
+
+  // Polygon
+  const pts = values.map((v,i)=>{
+    const nv = Math.max(0, Math.min(4, v))/4;
+    const a = (-Math.PI/2) + (2*Math.PI*i/N);
+    const rr = maxR * nv;
+    return [cx + rr*Math.cos(a), cy + rr*Math.sin(a)];
+  });
+
+  const d = "M " + pts.map(p=> `${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(" L ") + " Z";
+  poly.setAttribute("d", d);
+}
+
+
+/* v1.2 pro additions */
+(function wireAnalyzeButtons(){
+  const go = document.getElementById("btnGoResults");
+  const quick = document.getElementById("btnQuickResults");
+  const to = document.getElementById("btnToResults");
+  const backDomains = document.getElementById("btnBackDomains");
+  const saveReport = document.getElementById("btnSaveReport");
+
+  function handle(){
     if(isComplete()){
       analyzeAndShowResults();
     }else{
       switchView("results");
       renderResults();
       revealResults();
-      toast("Partial results", "Complete all questions for the full analysis flow");
+      toast("Partial results", "Score all capabilities to generate the full report.");
     }
-  });
-
-  document.getElementById("btnBackDomains").addEventListener("click", ()=>{
-    switchView("domains");
-    renderDomains();
-    toast("Domains", "Choose another domain");
-  });
-
-  document.getElementById("btnSaveReport").addEventListener("click", ()=>{
-    switchView("results");
-    renderResults();
-    revealResults();
-    printReport();
-  });
-
-  document.getElementById("btnExportJson").addEventListener("click", ()=>{
-    exportJSON();
-  });
-
-  document.getElementById("btnPrint").addEventListener("click", ()=>{
-    switchView("results");
-    renderResults();
-    revealResults();
-    printReport();
-  });
-
-  document.getElementById("btnReset").addEventListener("click", ()=>{
-    const ok = confirm("Reset all scores and toggles? This clears local saved data.");
-    if(!ok) return;
-    hardReset();
-    renderToggles();
-    renderDomains();
-    switchView("domains");
-    updateAnsweredBadge();
-    toast("Reset complete", "Local saved state cleared");
-  });
-
-  // Initial: if user has data, show a helpful toast
-  if(answeredCount() > 0){
-    toast("Loaded saved progress", `${answeredCount()} answers restored`);
   }
-}
 
-wire();
+  if(go) go.addEventListener("click", handle);
+  if(quick) quick.addEventListener("click", handle);
+  if(to) to.addEventListener("click", handle);
+
+  // Ensure print triggers readable PDF (we use print CSS)
+  if(saveReport) saveReport.addEventListener("click", ()=> window.print());
+})();
+
 </script>
+
 </body>
 </html>
