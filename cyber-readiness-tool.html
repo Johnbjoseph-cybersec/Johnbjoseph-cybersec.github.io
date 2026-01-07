@@ -4,12 +4,11 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Cyber Readiness Assessment Tool</title>
-
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+  <!-- Optional: icons -->
   <style>
     :root{
       --bg0:#070A12;
@@ -33,274 +32,106 @@
     }
     *{ box-sizing: border-box; }
     html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(1200px 800px at 20% 10%, rgba(124,58,237,.28), transparent 60%),
-        radial-gradient(900px 600px at 80% 20%, rgba(34,211,238,.18), transparent 55%),
-        radial-gradient(800px 600px at 50% 90%, rgba(251,113,133,.12), transparent 55%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      overflow-x:hidden;
-    }
-
+    body{ margin:0; font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color: var(--text); background: radial-gradient(1200px 800px at 20% 10%, rgba(124,58,237,.28), transparent 60%), radial-gradient(900px 600px at 80% 20%, rgba(34,211,238,.18), transparent 55%), radial-gradient(800px 600px at 50% 90%, rgba(251,113,133,.12), transparent 55%), linear-gradient(180deg, var(--bg0), var(--bg1)); overflow-x:hidden; }
     /* Subtle animated grid */
-    .gridfx{
-      position:fixed; inset:0;
-      background-image:
-        linear-gradient(to right, rgba(255,255,255,.045) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,.045) 1px, transparent 1px);
-      background-size: 42px 42px;
-      mask-image: radial-gradient(800px 600px at 50% 20%, black 35%, transparent 85%);
-      pointer-events:none;
-      opacity:.55;
-      animation: drift 14s var(--ease) infinite alternate;
-    }
+    .gridfx{ position:fixed; inset:0; background-image: linear-gradient(to right, rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.045) 1px, transparent 1px); background-size: 42px 42px; mask-image: radial-gradient(800px 600px at 50% 20%, black 35%, transparent 85%); pointer-events:none; opacity:.55; animation: drift 14s var(--ease) infinite alternate; }
     @keyframes drift{ from{ transform: translate3d(0,0,0); } to{ transform: translate3d(0,-14px,0);} }
-
     /* Floating orbs */
-    .orb{
-      position:fixed; width:520px; height:520px;
-      border-radius:999px;
-      filter: blur(18px);
-      opacity:.55;
-      pointer-events:none;
-      mix-blend-mode: screen;
-      animation: float 9s var(--ease) infinite alternate;
-    }
+    .orb{ position:fixed; width:520px; height:520px; border-radius:999px; filter: blur(18px); opacity:.55; pointer-events:none; mix-blend-mode: screen; animation: float 9s var(--ease) infinite alternate; }
     .orb.one{ left:-140px; top:-140px; background: radial-gradient(circle at 35% 30%, rgba(124,58,237,.75), transparent 55%); }
     .orb.two{ right:-180px; top:80px; background: radial-gradient(circle at 40% 35%, rgba(34,211,238,.55), transparent 60%); animation-duration: 11s;}
     .orb.three{ left:40%; bottom:-220px; background: radial-gradient(circle at 45% 45%, rgba(251,113,133,.45), transparent 62%); animation-duration: 13s;}
     @keyframes float { from{ transform: translate3d(0,0,0) scale(1); } to{ transform: translate3d(0,24px,0) scale(1.02);} }
-
     .wrap{ max-width: 1200px; margin: 0 auto; padding: 28px 18px 60px; position:relative; }
     i.ph{display:none !important;}
-
     /* Top nav */
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between; gap:14px;
-      position:sticky; top:0; z-index:50;
-      padding: 14px 12px;
-      margin: -8px -6px 18px;
-      border-radius: var(--radius2);
-      background: rgba(10,14,26,.62);
-      border: 1px solid rgba(255,255,255,.10);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 32px rgba(0,0,0,.35);
-    }
+    .topbar{ display:flex; align-items:center; justify-content:space-between; gap:14px; position:sticky; top:0; z-index:50; padding: 14px 12px; margin: -8px -6px 18px; border-radius: var(--radius2); background: rgba(10,14,26,.62); border: 1px solid rgba(255,255,255,.10); backdrop-filter: blur(12px); box-shadow: 0 10px 32px rgba(0,0,0,.35); }
     .brand{ display:flex; align-items:center; gap:10px; user-select:none; }
-    .logo{
-      width:38px; height:38px; border-radius:12px;
-      background: conic-gradient(from 210deg, rgba(124,58,237,.9), rgba(34,211,238,.9), rgba(251,113,133,.7), rgba(124,58,237,.9));
-      box-shadow: 0 12px 26px rgba(124,58,237,.25);
-      position:relative; overflow:hidden;
-    }
-    .logo:after{
-      content:""; position:absolute; inset:-40%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 60%);
-      transform: rotate(18deg);
-    }
+    .logo{ width:38px; height:38px; border-radius:12px; background: conic-gradient(from 210deg, rgba(124,58,237,.9), rgba(34,211,238,.9), rgba(251,113,133,.7), rgba(124,58,237,.9)); box-shadow: 0 12px 26px rgba(124,58,237,.25); position:relative; overflow:hidden; }
+    .logo:after{ content:""; position:absolute; inset:-40%; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 60%); transform: rotate(18deg); }
     .brand h1{ font-size: 14px; margin:0; letter-spacing:.2px; line-height:1.05; }
     .brand .sub{ font-size: 12px; color: var(--muted); margin-top:2px; }
-
     .actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
-    .pill{
-      display:flex; align-items:center; gap:8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      color: var(--text);
-      cursor:pointer;
-      transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);
-      user-select:none;
-    }
+    .pill{ display:flex; align-items:center; gap:8px; padding: 10px 12px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10); color: var(--text); cursor:pointer; transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease); user-select:none; }
     .pill:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.16);}
     .pill:active{ transform: translateY(0px) scale(.99); }
     .pill .hint{ color: var(--muted); font-size:12px; }
-    .pill.primary{
-      background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 20px 55px rgba(124,58,237,.25);
-    }
-
+    .pill.primary{ background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65)); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 20px 55px rgba(124,58,237,.25); }
     /* Hero */
     .hero{ display:grid; grid-template-columns: 1.2fr 0.8fr; gap: 18px; margin-top: 10px; align-items: stretch; width: 100%; }
+    /* Keep hero full-width like the sections below */
     .hero > .card{ width: 100%; }
+    /* Only stack on small screens */
     @media (max-width: 760px){ .hero{ grid-template-columns: 1fr; } }
     .hero > .card:last-child{ flex: 1 1 auto; max-width: none; }
-
-    .card{
-      background: var(--card);
-      border: 1px solid var(--stroke);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow2);
-      backdrop-filter: blur(12px);
-      overflow:hidden;
-      position:relative;
-    }
+    .card{ background: var(--card); border: 1px solid var(--stroke); border-radius: var(--radius2); box-shadow: var(--shadow2); backdrop-filter: blur(12px); overflow:hidden; position:relative; }
     .card .inner{ padding: 22px 22px 18px; position:relative; z-index:1; }
-    .glow{
-      position:absolute; inset:-1px; z-index:0; pointer-events:none;
-      background:
-        radial-gradient(700px 380px at 20% 15%, rgba(124,58,237,.20), transparent 55%),
-        radial-gradient(650px 360px at 90% 30%, rgba(34,211,238,.14), transparent 55%);
-      opacity:.95;
-    }
-
+    .glow{ position:absolute; inset:-1px; z-index:0; pointer-events:none; background: radial-gradient(700px 380px at 20% 15%, rgba(124,58,237,.20), transparent 55%), radial-gradient(650px 360px at 90% 30%, rgba(34,211,238,.14), transparent 55%); pointer-events:none; opacity:.95; }
     .heroTitle{ font-size: 34px; margin: 0 0 8px; letter-spacing: -.4px; line-height: 1.12; }
-    .heroTitle .grad{
-      background: linear-gradient(90deg, rgba(255,255,255,.95), rgba(34,211,238,.85), rgba(124,58,237,.95));
-      -webkit-background-clip: text; background-clip:text; color: transparent;
-    }
+    .heroTitle .grad{ background: linear-gradient(90deg, rgba(255,255,255,.95), rgba(34,211,238,.85), rgba(124,58,237,.95)); -webkit-background-clip: text; background-clip:text; color: transparent; }
     .heroP{ margin: 0 0 14px; color: var(--muted); font-size: 14px; line-height: 1.55; }
-
     .chiprow{ display:flex; gap:8px; flex-wrap:wrap; margin-top: 14px; }
     .chip{ display:inline-flex; align-items:center; gap:8px; padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10); color: rgba(255,255,255,.86); font-size: 12px; }
+    .chip i{ opacity:.9; }
     .metaGrid{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px; margin-top: 14px; }
     @media (max-width: 520px){ .metaGrid{ grid-template-columns: 1fr; } }
     .meta{ padding: 12px 12px; border-radius: 16px; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.09); }
     .meta .k{ color: var(--muted2); font-size: 12px; }
     .meta .v{ margin-top: 6px; font-weight: 700; letter-spacing:.2px; }
-
-    /* Framework toggles */
+    /* Framework toggles (enterprise looking) */
     .togglePanel{ display:flex; flex-direction:column; gap:10px; }
     .togglePanel .head{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
     .togglePanel h3{ margin:0; font-size: 14px; letter-spacing:.2px; }
     .togglePanel p{ margin: 4px 0 0; color: var(--muted); font-size: 12.5px; line-height:1.45; }
     .toggles{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px; }
     @media (max-width: 520px){ .toggles{ grid-template-columns: 1fr; } }
-    .togg{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      padding: 12px 12px; border-radius: 16px;
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.09);
-      transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
-    }
+    .togg{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding: 12px 12px; border-radius: 16px; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.09); transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease); }
     .togg:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.075); }
     .togg .l{ display:flex; flex-direction:column; gap:2px; }
     .togg .l .a{ font-weight:700; font-size: 13px; }
     .togg .l .b{ color: var(--muted); font-size: 12px; }
-    .switch{
-      width: 48px; height: 28px;
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 999px;
-      position:relative;
-      cursor:pointer;
-      transition: background .18s var(--ease), border-color .18s var(--ease);
-      flex:0 0 auto;
-    }
-    .switch:before{
-      content:""; position:absolute; top:50%; left:3px; transform: translateY(-50%);
-      width: 22px; height: 22px; border-radius: 999px;
-      background: rgba(255,255,255,.92);
-      box-shadow: 0 10px 22px rgba(0,0,0,.35);
-      transition: transform .18s var(--ease), background .18s var(--ease);
-    }
+    .switch{ width: 48px; height: 28px; background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.12); border-radius: 999px; position:relative; cursor:pointer; transition: background .18s var(--ease), border-color .18s var(--ease); flex:0 0 auto; }
+    .switch:before{ content:""; position:absolute; top:50%; left:3px; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 999px; background: rgba(255,255,255,.92); box-shadow: 0 10px 22px rgba(0,0,0,.35); transition: transform .18s var(--ease), background .18s var(--ease); }
     .switch.on{ background: linear-gradient(135deg, rgba(124,58,237,.85), rgba(34,211,238,.55)); border-color: rgba(255,255,255,.16); }
     .switch.on:before{ transform: translate(20px, -50%); background: rgba(255,255,255,.96); }
-
     /* Stepper */
-    .stepper{
-      margin-top: 18px; padding: 14px 16px;
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.10);
-      display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
-    }
+    .stepper{ margin-top: 18px; padding: 14px 16px; border-radius: var(--radius2); background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
     .stepper .left{ display:flex; align-items:center; gap:12px; }
-    .badge{
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      font-size: 12px;
-      color: rgba(255,255,255,.88);
-    }
-    .progressWrap{
-      width: 320px; max-width: 100%;
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.10);
-      overflow:hidden;
-    }
-    .progressBar{
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
-      border-radius: 999px;
-      transition: width .35s var(--ease);
-    }
-
+    .badge{ padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10); font-size: 12px; color: rgba(255,255,255,.88); }
+    .progressWrap{ width: 320px; max-width: 100%; height: 10px; border-radius: 999px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.10); overflow:hidden; }
+    .progressBar{ height: 100%; width: 0%; background: linear-gradient(90deg, rgba(124,58,237,.92), rgba(34,211,238,.65)); border-radius: 999px; transition: width .35s var(--ease); }
     /* Pages / transitions */
     .page{ margin-top: 16px; position:relative; }
     .view{ display:none; transform: translateY(10px); opacity: 0; transition: opacity .35s var(--ease), transform .35s var(--ease); }
     .view.active{ display:block; transform: translateY(0px); opacity: 1; }
-
     /* Domain tiles */
     .domainGrid{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-top: 10px; }
     @media (max-width: 980px){ .domainGrid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
     @media (max-width: 620px){ .domainGrid{ grid-template-columns: 1fr; } }
-    .tile{
-      padding: 16px 16px;
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.10);
-      cursor:pointer;
-      transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
-      position:relative; overflow:hidden;
-      min-height: 140px;
-    }
+    .tile{ padding: 16px 16px; border-radius: var(--radius2); background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.10); cursor:pointer; transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease); position:relative; overflow:hidden; min-height: 140px; }
     .tile:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.075); }
     .tile:active{ transform: translateY(0px) scale(.99); }
     .tile .t{ font-weight:800; font-size: 16px; letter-spacing:.2px; }
     .tile .p{ margin-top: 6px; color: var(--muted); font-size: 13px; line-height:1.45;}
     .tile .foot{ margin-top: 12px; display:flex; align-items:center; justify-content:space-between; gap:10px; color: var(--muted2); font-size:12px; }
     .tile .spark{ position:absolute; inset:-50%; background: radial-gradient(circle at 30% 30%, rgba(34,211,238,.12), transparent 55%), radial-gradient(circle at 70% 40%, rgba(124,58,237,.14), transparent 56%); transform: rotate(12deg); opacity:.9; pointer-events:none; }
-
     /* Question cards */
     .qHead{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom: 10px; }
     .qHead .left{ display:flex; flex-direction:column; gap:6px; }
     .qTitle{ font-size: 18px; font-weight: 800; letter-spacing: -.2px; margin:0; }
     .qSub{ margin:0; color: var(--muted); font-size: 13px; line-height:1.45; }
-    .qCard{
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 16px 16px;
-      box-shadow: 0 10px 28px rgba(0,0,0,.22);
-      margin-top: 12px;
-    }
+    .qCard{ border-radius: var(--radius2); background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.10); padding: 16px 16px; box-shadow: 0 10px 28px rgba(0,0,0,.22); margin-top: 12px; }
     .qList{ display:grid; gap: 12px; margin-top: 12px; }
-    .cap{
-      border-radius: 18px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 14px;
-      transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
-      position:relative; overflow:hidden;
-    }
+    .cap{ border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); padding: 14px; transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease); position:relative; overflow:hidden; }
     .cap:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.07); }
     .cap .capTop{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
     .cap .capName{ font-weight: 750; letter-spacing:.1px; line-height:1.35; }
     .cap .capHint{ margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height:1.45; }
     .scorePills{ display:flex; gap:6px; flex-wrap:wrap; margin-top: 12px;}
-    .scorePills button{
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.85);
-      padding: 8px 10px;
-      border-radius: 999px;
-      cursor:pointer;
-      font-size: 12px;
-      transition: transform .14s var(--ease), background .14s var(--ease), border-color .14s var(--ease);
-      user-select:none;
-    }
+    .scorePills button{ border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); color: rgba(255,255,255,.85); padding: 8px 10px; border-radius: 999px; cursor:pointer; font-size: 12px; transition: transform .14s var(--ease), background .14s var(--ease), border-color .14s var(--ease); user-select:none; }
     .scorePills button:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.18); }
     .scorePills button.active{ background: linear-gradient(135deg, rgba(124,58,237,.88), rgba(34,211,238,.55)); border-color: rgba(255,255,255,.16); }
+    .row2{ display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; margin-top: 12px;}
     .mini{ padding: 8px 10px; border-radius: 14px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); color: var(--muted); font-size: 12px; }
     .mapChips{ display:flex; gap:6px; flex-wrap:wrap; margin-top: 10px;}
     .mapChips .m{ font-size: 11px; padding: 6px 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); color: rgba(255,255,255,.85); }
@@ -310,26 +141,14 @@
     details.evidence summary{ cursor:pointer; color: rgba(255,255,255,.88); font-weight: 650; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:10px; user-select:none; }
     details.evidence summary::-webkit-details-marker{ display:none; }
     details.evidence p{ margin: 10px 0 0; color: var(--muted); font-size: 12.5px; line-height:1.55; }
-
     /* Footer controls for question view */
     .navRow{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top: 14px; }
-    .btn{
-      padding: 11px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.9);
-      cursor:pointer;
-      transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);
-      user-select:none;
-      display:inline-flex; align-items:center; gap:10px;
-    }
+    .btn{ padding: 11px 14px; border-radius: 14px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); color: rgba(255,255,255,.9); cursor:pointer; transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease); user-select:none; display:inline-flex; align-items:center; gap:10px; }
     .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.18); }
     .btn:active{ transform: translateY(0px) scale(.99); }
     .btn.primary{ background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65)); border-color: rgba(255,255,255,.16); box-shadow: 0 18px 46px rgba(124,58,237,.24); }
     .btn.danger{ background: rgba(251,113,133,.12); border-color: rgba(251,113,133,.22); }
     .btn.small{ padding: 9px 12px; border-radius: 12px; font-size: 13px; }
-
     /* Visualizations */
     .vizGrid{ display:grid; grid-template-columns: 1fr 1.2fr; gap: 12px; margin-top: 12px; }
     @media (max-width: 780px){ .vizGrid{ grid-template-columns: 1fr; } }
@@ -344,14 +163,11 @@
     .radarGrid path, .radarGrid line, .radarGrid circle{ stroke: rgba(255,255,255,.12); fill:none; }
     .radarPoly{ fill: rgba(124,58,237,.18); stroke: rgba(124,58,237,.85); stroke-width: 2; }
     .radarLabels text{ fill: rgba(255,255,255,.80); font-size: 11px; }
-    .radarHint{ color: var(--muted); font-size: 12px; margin-top: 6px; }
-
     /* Completion ring */
     .ring{ display:flex; align-items:center; gap:10px; }
     .ringTrack{ fill:none; stroke: rgba(255,255,255,.12); stroke-width: 6; }
     .ringFill{ fill:none; stroke: rgba(34,211,238,.85); stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 22px 22px; stroke-dasharray: 113.10; stroke-dashoffset: 113.10; transition: stroke-dashoffset .45s var(--ease); }
     .ringText{ font-weight:900; font-size: 12px; color: rgba(255,255,255,.86); margin-left: -6px; min-width: 36px; }
-
     /* Analyzing overlay */
     .analyzeOverlay{ position: fixed; inset:0; z-index: 120; display:none; align-items:center; justify-content:center; background: rgba(5,8,16,.72); backdrop-filter: blur(10px); }
     .analyzeOverlay.show{ display:flex; }
@@ -362,28 +178,19 @@
     .anSub{ margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height:1.45; }
     .anBar{ margin-top: 12px; height: 10px; border-radius: 999px; overflow:hidden; background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.12); }
     .anFill{ height:100%; width:0%; background: linear-gradient(90deg, rgba(124,58,237,.92), rgba(34,211,238,.65)); transition: width .35s var(--ease); }
-
     /* Progressive reveal */
     .reveal{ opacity:0; transform: translateY(10px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
     .reveal.on{ opacity:1; transform: translateY(0); }
-
     /* Results */
     .resultsGrid{ display:grid; grid-template-columns: 1.1fr .9fr; gap: 12px; margin-top: 10px; }
     @media (max-width: 980px){ .resultsGrid{ grid-template-columns: 1fr; } }
-
     .kpiRow{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:10px; margin-top: 10px; }
     @media (max-width: 780px){ .kpiRow{ grid-template-columns: 1fr; } }
-    .kpi{
-      padding: 14px; border-radius: 18px;
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.10);
-      position:relative; overflow:hidden;
-    }
+    .kpi{ padding: 14px; border-radius: 18px; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.10); position:relative; overflow:hidden; }
     .kpi .k{ color: var(--muted2); font-size: 12px;}
     .kpi .v{ margin-top: 8px; font-size: 22px; font-weight: 850; letter-spacing:-.3px;}
     .kpi .s{ margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height:1.45;}
     .kpi .shine{ position:absolute; inset:-40%; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.10), transparent 55%); transform: rotate(10deg); opacity:.9; pointer-events:none; }
-
     .bars{ margin-top: 12px; display:grid; gap: 10px; }
     .bar{ padding: 12px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); }
     .bar .top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
@@ -391,9 +198,8 @@
     .bar .val{ color: rgba(255,255,255,.86); font-weight: 800; font-size: 13px; }
     .track{ margin-top: 10px; height: 10px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.10); border-radius: 999px; overflow:hidden; }
     .fill{ height: 100%; width: 0%; background: linear-gradient(90deg, rgba(124,58,237,.92), rgba(34,211,238,.65)); border-radius: 999px; transition: width .5s var(--ease); }
-
     .gapList{ display:grid; gap:10px; margin-top: 10px; }
-    .gap{ padding: 12px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); display:flex; gap:12px; align-items:flex-start; justify-content:space-between; cursor:pointer; }
+    .gap{ padding: 12px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); display:flex; gap:12px; align-items:flex-start; justify-content:space-between; }
     .gap .l{ display:flex; flex-direction:column; gap:6px; }
     .gap .t{ font-weight: 800; line-height:1.35; }
     .gap .meta{ color: var(--muted); font-size: 12.5px; line-height:1.45; }
@@ -401,31 +207,15 @@
     .sev.bad{ background: rgba(251,113,133,.16); border-color: rgba(251,113,133,.22); }
     .sev.warn{ background: rgba(251,191,36,.14); border-color: rgba(251,191,36,.22); }
     .sev.good{ background: rgba(52,211,153,.14); border-color: rgba(52,211,153,.22); }
-
     .roadmap{ margin-top: 12px; display:grid; gap: 10px; }
     .phase{ padding: 12px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); }
     .phase .ph{ display:flex; align-items:center; justify-content:space-between; gap:10px;}
     .phase .ph .name{ font-weight: 900; }
     .phase ul{ margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 12.5px; line-height:1.55; }
-
     /* Toast */
-    .toast{
-      position: fixed; right: 18px; bottom: 18px;
-      padding: 12px 14px; border-radius: 16px;
-      background: rgba(10,14,26,.72);
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 18px 50px rgba(0,0,0,.5);
-      backdrop-filter: blur(12px);
-      color: rgba(255,255,255,.92);
-      max-width: 360px;
-      opacity: 0; transform: translateY(10px);
-      pointer-events:none;
-      transition: opacity .25s var(--ease), transform .25s var(--ease);
-      z-index: 80;
-    }
+    .toast{ position: fixed; right: 18px; bottom: 18px; padding: 12px 14px; border-radius: 16px; background: rgba(10,14,26,.72); border: 1px solid rgba(255,255,255,.12); box-shadow: 0 18px 50px rgba(0,0,0,.5); backdrop-filter: blur(12px); color: rgba(255,255,255,.92); max-width: 360px; opacity: 0; transform: translateY(10px); pointer-events:none; transition: opacity .25s var(--ease), transform .25s var(--ease); z-index: 80; }
     .toast.show{ opacity: 1; transform: translateY(0px); }
     .toast .small{ color: var(--muted); font-size: 12px; margin-top: 2px; }
-
     /* Print */
     body.print-report{ background: white !important; color: #111 !important; }
     body.print-report .gridfx, body.print-report .orb, body.print-report .topbar, body.print-report .hero, body.print-report #viewDomains, body.print-report #viewQuestions, body.print-report .no-print{ display:none !important; }
@@ -436,50 +226,14 @@
     body.print-report .k, body.print-report .qSub, body.print-report .meta, body.print-report .s, body.print-report li{ color:#333 !important; }
     body.print-report h1, body.print-report h2, body.print-report h3, body.print-report .qTitle, body.print-report .v, body.print-report .name, body.print-report .t{ color:#111 !important; }
     body.print-report .badge, body.print-report .sev{ color:#111 !important; background:#f6f6f6 !important; border-color:#ddd !important; }
-
-    @media print{
-      *{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      body{ background: #ffffff !important; color: #111 !important; }
-      .gridfx,.orb,.topbar,.no-print{ display:none !important; }
-      .wrap{ max-width: 920px !important; padding: 0 !important; }
-
-      .card, .qCard, .kpi, .bar, .gap, .phase, .tile, .cap, details.evidence{
-        background: #ffffff !important;
-        border: 1px solid #d7d7d7 !important;
-        box-shadow:none !important;
-      }
-      .glow, .shine, .spark{ display:none !important; }
-      .view{ display:block !important; opacity:1 !important; transform:none !important; }
-
-      body, .inner, .qTitle, .heroTitle, .heroP, .qSub, .k, .v, .s, .meta, .chip, .badge, .bar .name, .bar .val, .gap .t, .gap .meta, .phase, .phase ul, .radarHint{
-        color: #111 !important;
-      }
-      .heroP, .qSub, .k, .s, .gap .meta, .phase ul, .radarHint{ color:#222 !important; }
-      .chip,.badge,.sev{
-        border: 1px solid #cfcfcf !important;
-        background: #f4f4f4 !important;
-        color:#111 !important;
-      }
-      .track{ background:#f0f0f0 !important; border-color:#d7d7d7 !important; }
-      .fill{ background: #111 !important; }
-      .donutTrack, .ringTrack{ stroke:#d7d7d7 !important; }
-      .donutFill, .ringFill, .radarPoly{ stroke: #111 !important; }
-      .radarPoly{ fill: #e9e9e9 !important; }
-      .radarGrid path, .radarGrid line, .radarGrid circle{ stroke:#d7d7d7 !important; }
-      a{ color:#111 !important; text-decoration:none !important; }
-
-      /* ✅ Added: avoid awkward page split for Executive Insights */
-      #execInsights{ page-break-inside: avoid; break-inside: avoid; }
-    }
+    @media print{ *{ -webkit-print-color-adjust: exact; print-color-adjust: exact; } body{ background: #ffffff !important; color: #111 !important; } .gridfx,.orb,.topbar,.no-print{ display:none !important; } .wrap{ max-width: 920px !important; padding: 0 !important; } .card, .qCard, .kpi, .bar, .gap, .phase, .tile, .cap, details.evidence{ background: #ffffff !important; border: 1px solid #d7d7d7 !important; box-shadow:none !important; } .glow, .shine, .spark{ display:none !important; } .view{ display:block !important; opacity:1 !important; transform:none !important; } body, .inner, .qTitle, .heroTitle, .heroP, .qSub, .k, .v, .s, .meta, .chip, .badge, .bar .name, .bar .val, .gap .t, .gap .meta, .phase, .phase ul, .radarHint{ color: #111 !important; } .heroP, .qSub, .k, .s, .gap .meta, .phase ul, .radarHint{ color:#222 !important; } .chip,.badge,.sev{ border: 1px solid #cfcfcf !important; background: #f4f4f4 !important; color:#111 !important; } .track{ background:#f0f0f0 !important; border-color:#d7d7d7 !important; } .fill{ background: #111 !important; } .donutTrack, .ringTrack{ stroke:#d7d7d7 !important; } .donutFill, .ringFill, .radarPoly{ stroke: #111 !important; } .radarPoly{ fill: #e9e9e9 !important; } .radarGrid path, .radarGrid line, .radarGrid circle{ stroke:#d7d7d7 !important; } a{ color:#111 !important; text-decoration:none !important; } }
   </style>
 </head>
-
 <body>
   <div class="gridfx"></div>
   <div class="orb one"></div>
   <div class="orb two"></div>
   <div class="orb three"></div>
-
   <div class="wrap">
     <div class="topbar no-print">
       <div class="brand">
@@ -503,25 +257,19 @@
         <div class="pill primary" id="btnGoResults"><i class="ph ph-chart-line-up"></i><span style="font-weight:900;font-size:13px">Results</span></div>
       </div>
     </div>
-
     <!-- HERO -->
     <div class="hero">
       <div class="card">
         <div class="glow"></div>
         <div class="inner">
           <h2 class="heroTitle"><span class="grad">Cyber Readiness Assessment Tool</span></h2>
-          <p class="heroP">
-            A structured cyber readiness assessment that produces practical governance outputs: an overall maturity score,
-            domain breakdown, top gaps, and a prioritized 30/60/90-day improvement roadmap. Mapping chips support ISO/IEC
-            27001 clauses (4–10) and Annex A controls, with an optional UAE alignment layer.
-          </p>
+          <p class="heroP"> A structured cyber readiness assessment that produces practical governance outputs: an overall maturity score, domain breakdown, top gaps, and a prioritized 30/60/90-day improvement roadmap. Mapping chips support ISO/IEC 27001 clauses (4–10) and Annex A controls, with an optional UAE alignment layer. </p>
           <div class="chiprow">
             <span class="chip">ISO/IEC 27001 clauses (4–10)</span>
             <span class="chip">ISO/IEC 27001:2022 Annex A mapping</span>
             <span class="chip">Optional UAE alignment layer</span>
             <span class="chip">Export JSON • Print/PDF report</span>
           </div>
-
           <div class="metaGrid">
             <div class="meta">
               <div class="k">Assessment style</div>
@@ -532,17 +280,10 @@
               <div class="v">~6–10 minutes</div>
             </div>
           </div>
-
           <div class="qCard" style="margin-top: 14px;">
             <div style="font-weight:900; font-size: 14px;">What to expect</div>
-            <div style="color: var(--muted); font-size: 12.5px; margin-top: 6px; line-height:1.55">
-              1) Select a domain and score each capability from 0–4 based on current practice.<br/>
-              2) The completion ring updates as you score capabilities.<br/>
-              3) When all capabilities are scored, the tool analyzes your inputs and presents results progressively:
-              maturity, domain analysis, top gaps, and a 30/60/90-day roadmap.
-            </div>
+            <div style="color: var(--muted); font-size: 12.5px; margin-top: 6px; line-height:1.55"> 1) Select a domain and score each capability from 0–4 based on current practice.<br/> 2) The completion ring updates as you score capabilities.<br/> 3) When all capabilities are scored, the tool analyzes your inputs and presents results progressively: maturity, domain analysis, top gaps, and a 30/60/90-day roadmap. </div>
           </div>
-
           <div class="stepper">
             <div class="left">
               <span class="badge" id="stepBadge">Step 1/3 • Choose domain</span>
@@ -561,14 +302,10 @@
               <button class="btn primary" id="btnStart"><i class="ph ph-play"></i>Start Assessment</button>
               <button class="btn" id="btnDemo"><i class="ph ph-magic-wand"></i>Load Demo Data</button>
             </div>
-            <div style="margin-top: 12px; color: var(--muted); font-size: 12.5px; line-height:1.55">
-              Disclaimer: This is a high-level readiness indicator, not a formal certification audit. Use it to prioritize
-              controls, evidence, and a practical implementation plan.
-            </div>
+            <div style="margin-top: 12px; color: var(--muted); font-size: 12.5px; line-height:1.55"> Disclaimer: This is a high-level readiness indicator, not a formal certification audit. Use it to prioritize controls, evidence, and a practical implementation plan. </div>
           </div>
         </div>
       </div>
-
       <div class="card">
         <div class="glow"></div>
         <div class="inner togglePanel">
@@ -595,7 +332,6 @@
         </div>
       </div>
     </div>
-
     <!-- PAGES -->
     <div class="page">
       <!-- View A: Domain Picker -->
@@ -617,15 +353,15 @@
           </div>
         </div>
       </div>
-
       <!-- View B: Domain Questions -->
       <div class="view" id="viewQuestions">
         <div class="card">
           <div class="glow"></div>
-          <div class="inner" id="questionsInner"></div>
+          <div class="inner" id="questionsInner">
+            <!-- populated -->
+          </div>
         </div>
       </div>
-
       <!-- View C: Results -->
       <div class="view" id="viewResults">
         <div class="card">
@@ -641,7 +377,6 @@
                 <button class="btn small primary" id="btnSaveReport"><i class="ph ph-file-pdf"></i>Print / Save PDF</button>
               </div>
             </div>
-
             <div class="resultsGrid reveal" id="resBlock1">
               <div>
                 <div class="kpiRow">
@@ -664,7 +399,6 @@
                     <div class="s">Completion status</div>
                   </div>
                 </div>
-
                 <div class="qCard reveal" id="resBlock2" style="margin-top: 12px;">
                   <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
                     <div>
@@ -673,7 +407,6 @@
                     </div>
                     <div class="badge" id="badgeVisual">Updated</div>
                   </div>
-
                   <div class="vizGrid">
                     <div class="vizCard">
                       <div class="vizTitle">Overall maturity</div>
@@ -688,7 +421,6 @@
                         </div>
                       </div>
                     </div>
-
                     <div class="vizCard">
                       <div class="vizTitle">Domain radar</div>
                       <svg viewBox="0 0 260 180" class="radar" role="img" aria-label="Domain radar chart">
@@ -700,7 +432,6 @@
                     </div>
                   </div>
                 </div>
-
                 <div class="qCard" style="margin-top: 12px;">
                   <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
                     <div>
@@ -713,34 +444,31 @@
                   </div>
                   <div class="bars" id="bars"></div>
                 </div>
+<div class="qCard" id="execInsights" style="margin-top: 12px;">
+  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+    <div>
+      <div style="font-weight:900; font-size: 14px;">Executive Insights</div>
+      <div style="color: var(--muted); font-size: 12.5px; margin-top: 4px;">
+        Board-ready interpretation of your current cyber posture.
+      </div>
+    </div>
+    <div class="badge" id="execInsightBadge">Auto-generated</div>
+  </div>
 
-                <!-- ✅ Updated: add reveal class so it animates with the rest -->
-                <div class="qCard reveal" id="execInsights" style="margin-top: 12px;">
-                  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-                    <div>
-                      <div style="font-weight:900; font-size: 14px;">Executive Insights</div>
-                      <div style="color: var(--muted); font-size: 12.5px; margin-top: 4px;">
-                        Board-ready interpretation of your current cyber posture.
-                      </div>
-                    </div>
-                    <div class="badge" id="execInsightBadge">Auto-generated</div>
-                  </div>
+  <div style="margin-top: 10px;">
+    <div style="font-weight:800; font-size: 13px; line-height:1.45;" id="execInsightHeadline">—</div>
+    <div style="margin-top:6px; color: var(--muted); font-size: 12.5px; line-height:1.55;" id="execInsightBody">—</div>
+  </div>
 
-                  <div style="margin-top: 10px;">
-                    <div style="font-weight:800; font-size: 13px; line-height:1.45;" id="execInsightHeadline">—</div>
-                    <div style="margin-top:6px; color: var(--muted); font-size: 12.5px; line-height:1.55;" id="execInsightBody">—</div>
-                  </div>
-
-                  <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,.12);">
-                    <div style="font-weight:800; font-size: 12.5px; margin-bottom:6px;">
-                      What leadership should focus on next
-                    </div>
-                    <ul style="margin:0; padding-left:18px; color: var(--muted); font-size:12.5px; line-height:1.55;"
-                        id="execInsightActions"></ul>
-                  </div>
-                </div>
+  <div style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed rgba(255,255,255,.12);">
+    <div style="font-weight:800; font-size: 12.5px; margin-bottom:6px;">
+      What leadership should focus on next
+    </div>
+    <ul style="margin:0; padding-left:18px; color: var(--muted); font-size:12.5px; line-height:1.55;"
+        id="execInsightActions"></ul>
+  </div>
+</div>
               </div>
-
               <div>
                 <div class="qCard reveal" id="resBlock3">
                   <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
@@ -752,7 +480,6 @@
                   </div>
                   <div class="gapList" id="gapList"></div>
                 </div>
-
                 <div class="qCard reveal" id="resBlock4">
                   <div style="font-weight:900; font-size: 14px;">30 / 60 / 90 roadmap</div>
                   <div style="color: var(--muted); font-size: 12.5px; margin-top: 4px;">Auto-generated from your gaps to support planning and prioritization.</div>
@@ -760,18 +487,13 @@
                 </div>
               </div>
             </div>
-
-            <div style="margin-top: 14px; color: var(--muted); font-size: 12.5px; line-height:1.55">
-              Disclaimer: This is a high-level readiness indicator, not a formal certification audit. Use it to prioritize controls, evidence, and a practical implementation plan.
-            </div>
+            <div style="margin-top: 14px; color: var(--muted); font-size: 12.5px; line-height:1.55"> Disclaimer: This is a high-level readiness indicator, not a formal certification audit. Use it to prioritize controls, evidence, and a practical implementation plan. </div>
           </div>
         </div>
       </div>
     </div>
-
     <div class="toast" id="toast"></div>
   </div>
-
   <div class="analyzeOverlay" id="analyzeOverlay" aria-hidden="true">
     <div class="analyzeCard">
       <div class="spinner"></div>
@@ -780,8 +502,16 @@
       <div class="anBar"><div class="anFill" id="anFill"></div></div>
     </div>
   </div>
-
   <script>
+    /**
+     * Enterprise-style static readiness tool (single-file).
+     * - Avoids Google-Form vibe: capability cards + cinematic transitions + micro-interactions.
+     * - ISO 27001 + Annex A mapping chips, optional UAE IA/CSC layer toggles.
+     * - Auto-save, export JSON, print/PDF.
+     *
+     * This file is intentionally “static deployable” to GitHub Pages.
+     */
+
     const STORAGE_KEY = "cr_enterprise_v1_answers";
     const TOGGLES_KEY = "cr_enterprise_v1_toggles";
 
@@ -802,7 +532,7 @@
 
     const DOMAINS = [
       { key: "Govern", purpose: "Oversight, policy, risk ownership, and ISMS improvement.", questions: [
-        { id:"g1", title:"Leadership-approved security policy", hint:"Is there a documented information security policy approved by top management and reviewed?", evidence:"Policy document + approval record + review cadence + communication proof (email/intranet).", mappings:[
+        { id:"g1", title:"Leadership‑approved security policy", hint:"Is there a documented information security policy approved by top management and reviewed?", evidence:"Policy document + approval record + review cadence + communication proof (email/intranet).", mappings:[
           { fw:"ISO_CLAUSE", ref:"5.1–5.3" },
           { fw:"ISO_ANNEXA", ref:"A.5.1, A.5.2" },
           { fw:"UAE_IA", ref:"IA: Governance & Policy (map family)" },
@@ -828,10 +558,10 @@
           { fw:"UAE_IA", ref:"IA: Asset management" },
           { fw:"UAE_CSC", ref:"CSC: Asset visibility controls" },
         ] },
-        { id:"i2", title:"Supplier / third-party security risk", hint:"Is third-party security assessed before onboarding and monitored through the lifecycle?", evidence:"Vendor due diligence checklist + contract clauses + SOC reports + periodic reviews.", mappings:[
+        { id:"i2", title:"Supplier / third‑party security risk", hint:"Is third-party security assessed before onboarding and monitored through the lifecycle?", evidence:"Vendor due diligence checklist + contract clauses + SOC reports + periodic reviews.", mappings:[
           { fw:"ISO_CLAUSE", ref:"6.1.2, 8.1" },
           { fw:"ISO_ANNEXA", ref:"A.5.19, A.5.20, A.5.21" },
-          { fw:"UAE_IA", ref:"IA: Third-party risk family" },
+          { fw:"UAE_IA", ref:"IA: Third‑party risk family" },
           { fw:"UAE_CSC", ref:"CSC: Supplier security guidance" },
         ] },
         { id:"i3", title:"Information classification & handling", hint:"Is data classified (PII/confidential/public) with rules for storage, access and sharing?", evidence:"Classification policy + data labels + handling procedures + training evidence.", mappings:[
@@ -894,7 +624,7 @@
           { fw:"UAE_IA", ref:"IA: Forensics/evidence family" },
           { fw:"UAE_CSC", ref:"CSC: Forensics policy" },
         ] },
-        { id:"r3", title:"Post-incident improvement loop", hint:"Do you document lessons learned and convert them into control improvements?", evidence:"Postmortems + actions register + control updates + KPI trend improvement.", mappings:[
+        { id:"r3", title:"Post‑incident improvement loop", hint:"Do you document lessons learned and convert them into control improvements?", evidence:"Postmortems + actions register + control updates + KPI trend improvement.", mappings:[
           { fw:"ISO_CLAUSE", ref:"10.1–10.2" },
           { fw:"ISO_ANNEXA", ref:"A.5.27, A.5.36" },
           { fw:"UAE_IA", ref:"IA: Continuous improvement family" },
@@ -935,12 +665,16 @@
       try{ const raw = localStorage.getItem(TOGGLES_KEY); if(raw) return JSON.parse(raw); }catch(e){}
       const t = {}; for(const f of FRAMEWORKS) t[f.key] = f.defaultOn; return t;
     }
-    function saveToggles(){ localStorage.setItem(TOGGLES_KEY, JSON.stringify(state.toggles)); }
+
+    function saveToggles(){
+      localStorage.setItem(TOGGLES_KEY, JSON.stringify(state.toggles));
+    }
 
     function loadAnswers(){
       try{ const raw = localStorage.getItem(STORAGE_KEY); if(raw) return JSON.parse(raw); }catch(e){}
       return {};
     }
+
     function saveAnswers(){
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state.answers));
       updateAnsweredBadge();
@@ -967,8 +701,13 @@
       return (mappings || []).filter(m => state.toggles[m.fw]);
     }
 
-    function isComplete(){ return answeredCount() >= allQuestionIds().length; }
-    function answeredCount(){ return Object.keys(state.answers).length; }
+    function isComplete(){
+      return answeredCount() >= allQuestionIds().length;
+    }
+
+    function answeredCount(){
+      return Object.keys(state.answers).length;
+    }
 
     function allQuestionIds(){
       const ids = [];
@@ -981,18 +720,15 @@
       const done = answeredCount();
       const hint = document.getElementById("saveHint");
       if(hint) hint.textContent = `${done} / ${total} answered`;
-
       const pct = total ? Math.round((done/total)*100) : 0;
       const ringText = document.getElementById("ringText");
       if(ringText) ringText.textContent = `${pct}%`;
-
       const ring = document.getElementById("ringFill");
       if(ring){
         const C = 2 * Math.PI * 18;
         ring.style.strokeDasharray = C.toFixed(2);
         ring.style.strokeDashoffset = (C * (1 - pct/100)).toFixed(2);
       }
-
       if(state.view === "questions"){
         const bar = document.getElementById("progressBar");
         if(bar){
@@ -1026,8 +762,7 @@
         const row = document.createElement("div"); row.className = "togg";
         const sw = document.createElement("div");
         sw.className = "switch" + (state.toggles[f.key] ? " on" : "");
-        sw.setAttribute("role","switch");
-        sw.setAttribute("aria-checked", state.toggles[f.key] ? "true" : "false");
+        sw.setAttribute("role","switch"); sw.setAttribute("aria-checked", state.toggles[f.key] ? "true" : "false");
         sw.addEventListener("click", ()=>{
           state.toggles[f.key] = !state.toggles[f.key];
           saveToggles();
@@ -1035,6 +770,7 @@
           const badge = document.getElementById("modeBadge"); badge.textContent = modeBadgeText();
           const _bf = document.getElementById("badgeFrameworks"); if (_bf) _bf.textContent = currentFrameworkLabel();
           toast("Updated mappings", currentFrameworkLabel());
+          // re-render question chips & results if visible
           if(state.view === "questions") renderQuestions(state.activeDomain);
           if(state.view === "results") renderResults();
         });
@@ -1051,6 +787,7 @@
     }
 
     function setStep(stepIndex){
+      // stepIndex: 1 domains, 2 questions, 3 results
       const badge = document.getElementById("stepBadge");
       const bar = document.getElementById("progressBar");
       const map = {1:"Step 1/3 • Choose domain", 2:"Step 2/3 • Score capabilities", 3:"Step 3/3 • Executive results"};
@@ -1066,10 +803,12 @@
       }
       state.view = which;
       const el = document.getElementById(views[which]); el.classList.add("active");
+      // stepper
       if(which === "domains") setStep(1);
       if(which === "questions") setStep(2);
       if(which === "results") setStep(3);
       const _bf = document.getElementById("badgeFrameworks"); if (_bf) _bf.textContent = currentFrameworkLabel();
+      (() => { const __el = document.getElementById("badgeFrameworks"); if (__el) __el.textContent = currentFrameworkLabel(); })();
     }
 
     function analyzeAndShowResults(){
@@ -1089,12 +828,10 @@
       }, 6000);
     }
 
-    /* ✅ Updated: include execInsights in reveal sequence */
     function revealResults(){
-      const ids = ["resBlock1","resBlock2","execInsights","resBlock3","resBlock4"];
+      const ids = ["resBlock1","resBlock2","resBlock3","resBlock4"];
       ids.forEach((id, i)=>{
-        const el = document.getElementById(id);
-        if(el){
+        const el = document.getElementById(id); if(el){
           el.classList.remove("on");
           setTimeout(()=> el.classList.add("on"), 250 + i*450);
         }
@@ -1178,19 +915,9 @@
       return {cls:"good", label:"Low gap"};
     }
 
-    function uniq(arr){
-      const out = []; const s = new Set();
-      for(const a of arr){
-        const k = a.toLowerCase();
-        if(!s.has(k)){ s.add(k); out.push(a); }
-      }
-      return out;
-    }
-
     function roadmapFromGaps(gaps){
-      // ✅ Fixed: remove duplicate param name bug
-      const phase = (title, desc, bullets)=> ({name: title, desc, bullets});
-
+      // Simple, interview-friendly: 30 quick wins, 60 process, 90 optimize
+      const phase = (name, desc, bullets)=> ({name, desc, bullets});
       const bullets30 = [];
       const bullets60 = [];
       const bullets90 = [];
@@ -1209,12 +936,20 @@
           bullets90.push(`${g.title}: optimize and benchmark against peers.`);
         }
       }
-
       return [
         phase("30 Days — Stabilize", "Get control owners, minimum evidence, and quick wins.", uniq(bullets30).slice(0,6)),
         phase("60 Days — Implement", "Build repeatable processes and close medium gaps.", uniq(bullets60).slice(0,6)),
         phase("90 Days — Optimize", "Automation, continuous improvement, and audit readiness.", uniq(bullets90).slice(0,6)),
       ];
+    }
+
+    function uniq(arr){
+      const out = []; const s = new Set();
+      for(const a of arr){
+        const k = a.toLowerCase();
+        if(!s.has(k)){ s.add(k); out.push(a); }
+      }
+      return out;
     }
 
     function buildExecutiveInsights(){
@@ -1250,7 +985,6 @@
       const dom = DOMAINS.find(d => d.key === domainKey);
       const root = document.getElementById("questionsInner");
       if(!dom){ root.innerHTML = ""; return; }
-
       const answered = dom.questions.filter(q => state.answers[q.id] !== undefined).length;
       root.innerHTML = `
         <div class="qHead">
@@ -1273,13 +1007,11 @@
           </div>
         </div>
       `;
-
       const qList = root.querySelector("#qList");
       for(const q of dom.questions){
         const cap = document.createElement("div"); cap.className = "cap";
         const score = state.answers[q.id] !== undefined ? clamp(state.answers[q.id]) : null;
         const visMaps = visibleMappings(q.mappings);
-
         const mapHtml = visMaps.length ? `
           <div class="mapChips">${
             visMaps.map(m=>{
@@ -1289,7 +1021,6 @@
             }).join("")
           }</div>
         ` : `<div class="mapChips"><span class="m iso">Mappings hidden — enable a layer above</span></div>`;
-
         cap.innerHTML = `
           <div class="capTop">
             <div style="max-width: 880px;">
@@ -1310,26 +1041,24 @@
             <p>${escapeHtml(q.evidence)}</p>
           </details>
         `;
-
         cap.querySelectorAll("button[data-q]").forEach(btn=>{
           btn.addEventListener("click", ()=>{
             const id = btn.getAttribute("data-q");
             const v = clamp(btn.getAttribute("data-v"));
             state.answers[id] = v;
             saveAnswers();
+            // animate selection
             cap.animate([{transform:"translateY(0px)"},{transform:"translateY(-2px)"},{transform:"translateY(0px)"}], {duration: 260, easing: "cubic-bezier(.2,.8,.2,1)"});
             toast("Saved", `${q.title} → ${v} (${SCALE[v].label})`);
-            renderQuestions(domainKey);
-            renderDomains();
+            renderQuestions(domainKey); // rerender to update pill states + badges
+            renderDomains(); // update domain tiles
           });
         });
-
         qList.appendChild(cap);
       }
-
+      // nav buttons
       root.querySelector("#btnBackDomains2").addEventListener("click", ()=>{ switchView("domains"); });
       root.querySelector("#btnToResults").addEventListener("click", ()=>{ switchView("results"); renderResults(); });
-
       const idx = DOMAINS.findIndex(d => d.key === domainKey);
       root.querySelector("#btnPrevDomain").addEventListener("click", ()=>{
         const prev = DOMAINS[(idx - 1 + DOMAINS.length) % DOMAINS.length].key;
@@ -1346,73 +1075,6 @@
       });
     }
 
-    function updateVisuals(){
-      const overall = overallAverage();
-      const pct = Math.round((overall/4) * 100);
-
-      const donutVal = document.getElementById("donutVal");
-      if(donutVal) donutVal.textContent = `${pct}%`;
-
-      const donutFill = document.getElementById("donutFill");
-      if(donutFill){
-        const C = 2 * Math.PI * 44; // r=44
-        donutFill.style.strokeDasharray = C.toFixed(2);
-        donutFill.style.strokeDashoffset = (C * (1 - pct/100)).toFixed(2);
-      }
-
-      const avgs = domainAverages();
-      const order = ["Govern","Identify","Protect","Detect","Respond","Recover"];
-      const values = order.map(k => (avgs[k] ?? 0));
-      buildRadar(order, values);
-    }
-
-    function buildRadar(labels, values){
-      const grid = document.getElementById("radarGrid");
-      const poly = document.getElementById("radarPoly");
-      const labs = document.getElementById("radarLabels");
-      if(!grid || !poly || !labs) return;
-
-      grid.innerHTML = ""; labs.innerHTML = "";
-      const cx = 130, cy = 90; const maxR = 70; const N = labels.length;
-
-      for(let r=1; r<=4; r++){
-        const rr = (maxR * r/4);
-        const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", rr);
-        grid.appendChild(c);
-      }
-
-      for(let i=0; i<N; i++){
-        const a = (-Math.PI/2) + (2*Math.PI*i/N);
-        const x = cx + maxR*Math.cos(a);
-        const y = cy + maxR*Math.sin(a);
-
-        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        line.setAttribute("x1", cx); line.setAttribute("y1", cy); line.setAttribute("x2", x); line.setAttribute("y2", y);
-        grid.appendChild(line);
-
-        const tx = cx + (maxR+18)*Math.cos(a);
-        const ty = cy + (maxR+18)*Math.sin(a);
-
-        const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        t.textContent = labels[i];
-        t.setAttribute("x", tx); t.setAttribute("y", ty);
-        t.setAttribute("text-anchor", tx < cx ? "end" : (Math.abs(tx-cx) < 6 ? "middle" : "start"));
-        t.setAttribute("dominant-baseline", ty < cy ? "ideographic" : "hanging");
-        labs.appendChild(t);
-      }
-
-      const pts = values.map((v,i)=>{
-        const nv = Math.max(0, Math.min(4, v))/4;
-        const a = (-Math.PI/2) + (2*Math.PI*i/N);
-        const rr = maxR * nv;
-        return [cx + rr*Math.cos(a), cy + rr*Math.sin(a)];
-      });
-
-      const d = "M " + pts.map(p=> `${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(" L ") + " Z";
-      poly.setAttribute("d", d);
-    }
-
     function renderResults(){
       updateAnsweredBadge();
       const total = allQuestionIds().length;
@@ -1421,20 +1083,24 @@
       const avgs = domainAverages();
       const label = maturityLabel(overall);
 
+      // KPIs
       document.getElementById("kpiOverall").textContent = `${overall.toFixed(2)} / 4`;
       document.getElementById("kpiLabel").textContent = label;
       document.getElementById("kpiCoverage").textContent = `${done} / ${total}`;
 
+      // Focus suggestion: lowest domain avg
       let focus = "—"; let min = 999;
       for(const [k,v] of Object.entries(avgs)){
         if(v < min){ min = v; focus = k; }
       }
       document.getElementById("kpiFocus").textContent = focus;
 
+      // Framework badge
       const fwLabel = currentFrameworkLabel();
       const badge = document.getElementById("badgeFrameworks");
       if(badge) badge.textContent = fwLabel;
 
+      // Bars
       const bars = document.getElementById("bars"); bars.innerHTML = "";
       for(const d of DOMAINS){
         const v = avgs[d.key] ?? 0;
@@ -1449,6 +1115,7 @@
         bars.appendChild(bar);
       }
 
+      // Gaps
       const gaps = topGaps(6);
       const gapList = document.getElementById("gapList"); gapList.innerHTML = "";
       for(const g of gaps){
@@ -1458,7 +1125,6 @@
           const label = m.fw === "ISO_CLAUSE" ? "ISO Clause" : m.fw === "ISO_ANNEXA" ? "Annex A" : m.fw === "UAE_IA" ? "UAE IA" : "UAE CSC";
           return `${label} ${m.ref}`;
         }).join(" • ") : "Mappings hidden (enable a layer)";
-
         const item = document.createElement("div"); item.className = "gap";
         item.innerHTML = `
           <div class="l">
@@ -1476,8 +1142,12 @@
         gapList.appendChild(item);
       }
 
+      // Roadmap
       const rm = roadmapFromGaps(gaps);
       const roadmap = document.getElementById("roadmap");
+
+      // Update charts
+      updateVisuals();
       roadmap.innerHTML = "";
       for(const p of rm){
         const div = document.createElement("div"); div.className = "phase";
@@ -1490,24 +1160,21 @@
         `;
         roadmap.appendChild(div);
       }
+  // Executive Insights (below Domain Breakdown)
+  const insight = buildExecutiveInsights();
 
-      updateVisuals();
+  const h = document.getElementById("execInsightHeadline");
+  const b = document.getElementById("execInsightBody");
+  const a = document.getElementById("execInsightActions");
 
-      // Executive Insights
-      const insight = buildExecutiveInsights();
-      const h = document.getElementById("execInsightHeadline");
-      const b = document.getElementById("execInsightBody");
-      const a = document.getElementById("execInsightActions");
-      const ib = document.getElementById("execInsightBadge");
+  if(h) h.textContent = insight.headline;
+  if(b) b.textContent = insight.body;
 
-      if(h) h.textContent = insight.headline;
-      if(b) b.textContent = insight.body;
-      if(a){
-        a.innerHTML = insight.actions.map(x => `<li>${escapeHtml(x)}</li>`).join("");
-      }
-
-      // ✅ Added: dynamic badge (Final/Partial)
-      if(ib) ib.textContent = isComplete() ? "Final" : "Partial";
+  if(a){
+    a.innerHTML = insight.actions
+      .map(x => `<li>${escapeHtml(x)}</li>`)
+      .join("");
+  }
     }
 
     function exportJSON(){
@@ -1550,9 +1217,10 @@
     }
 
     function loadDemo(){
+      // deterministic demo to make UI look “alive”
       const ids = allQuestionIds();
       for(let i=0;i<ids.length;i++){
-        state.answers[ids[i]] = (i % 5);
+        state.answers[ids[i]] = (i % 5); // 0..4
       }
       saveAnswers(); renderDomains();
       toast("Demo loaded", "Scores populated for showcase");
@@ -1560,33 +1228,33 @@
 
     function bindTopControls(){
       document.getElementById("btnExportJson").addEventListener("click", exportJSON);
-
       document.getElementById("btnPrint").addEventListener("click", ()=> {
+        // Report-mode print: switch to results, render, then print with high-contrast styles
         switchView("results"); renderResults();
         document.body.classList.add("print-report");
         window.scrollTo(0,0);
         setTimeout(()=> {
           window.print();
+          // Remove after print (some browsers don't fire afterprint consistently for file://)
           setTimeout(()=> document.body.classList.remove("print-report"), 800);
         }, 250);
       });
-
       document.getElementById("btnReset").addEventListener("click", resetAll);
       document.getElementById("btnGoResults").addEventListener("click", ()=>{ switchView("results"); renderResults(); toast("Results", "Executive view generated"); });
       document.getElementById("btnStart").addEventListener("click", ()=>{ switchView("domains"); renderDomains(); toast("Started", "Pick a domain to begin"); });
       document.getElementById("btnDemo").addEventListener("click", loadDemo);
-
-      document.getElementById("btnBackHome").addEventListener("click", ()=>{ switchView("domains"); window.scrollTo({top:0, behavior:"smooth"}); });
+      document.getElementById("btnBackHome").addEventListener("click", ()=>{ // smooth scroll to top and keep domains view
+        switchView("domains"); window.scrollTo({top:0, behavior:"smooth"});
+      });
       document.getElementById("btnQuickResults").addEventListener("click", ()=>{ switchView("results"); renderResults(); });
-
       document.getElementById("btnBackDomains").addEventListener("click", ()=>{ switchView("domains"); renderDomains(); });
-
-      document.getElementById("btnSaveReport").addEventListener("click", ()=> {
+      document.getElementById("btnSaveReport").addEventListener("click", ()=> { // Report-mode print: switch to results, render, then print with high-contrast styles
         switchView("results"); renderResults();
         document.body.classList.add("print-report");
         window.scrollTo(0,0);
         setTimeout(()=> {
           window.print();
+          // Remove after print (some browsers don't fire afterprint consistently for file://)
           setTimeout(()=> document.body.classList.remove("print-report"), 800);
         }, 250);
       });
@@ -1598,16 +1266,80 @@
       updateAnsweredBadge();
       const _bf = document.getElementById("badgeFrameworks"); if (_bf) _bf.textContent = currentFrameworkLabel();
       bindTopControls();
+      (() => { const __el = document.getElementById("badgeFrameworks"); if (__el) __el.textContent = currentFrameworkLabel(); })();
       setStep(1);
     }
 
     init();
+
+    function updateVisuals(){
+      // Donut: overall maturity (0-4 -> 0-100%)
+      const overall = overallAverage();
+      const pct = Math.round((overall/4) * 100);
+      const donutVal = document.getElementById("donutVal"); if(donutVal) donutVal.textContent = `${pct}%`;
+      const donutFill = document.getElementById("donutFill");
+      if(donutFill){
+        const C = 2 * Math.PI * 44; // r=44
+        donutFill.style.strokeDasharray = C.toFixed(2);
+        donutFill.style.strokeDashoffset = (C * (1 - pct/100)).toFixed(2);
+      }
+
+      // Radar: domain averages (0-4)
+      const avgs = domainAverages();
+      const order = ["Govern","Identify","Protect","Detect","Respond","Recover"];
+      const values = order.map(k => (avgs[k] ?? 0));
+      buildRadar(order, values);
+    }
+
+    function buildRadar(labels, values){
+      const grid = document.getElementById("radarGrid");
+      const poly = document.getElementById("radarPoly");
+      const labs = document.getElementById("radarLabels");
+      if(!grid || !poly || !labs) return;
+      // Clear
+      grid.innerHTML = ""; labs.innerHTML = "";
+      const cx = 130, cy = 90; const maxR = 70; const N = labels.length;
+      // Grid rings (4)
+      for(let r=1; r<=4; r++){
+        const rr = (maxR * r/4);
+        const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", rr);
+        grid.appendChild(c);
+      }
+      // Axes + label positions
+      for(let i=0; i<N; i++){
+        const a = (-Math.PI/2) + (2*Math.PI*i/N);
+        const x = cx + maxR*Math.cos(a);
+        const y = cy + maxR*Math.sin(a);
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", cx); line.setAttribute("y1", cy); line.setAttribute("x2", x); line.setAttribute("y2", y);
+        grid.appendChild(line);
+        const tx = cx + (maxR+18)*Math.cos(a);
+        const ty = cy + (maxR+18)*Math.sin(a);
+        const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t.textContent = labels[i];
+        t.setAttribute("x", tx); t.setAttribute("y", ty);
+        t.setAttribute("text-anchor", tx < cx ? "end" : (Math.abs(tx-cx) < 6 ? "middle" : "start"));
+        t.setAttribute("dominant-baseline", ty < cy ? "ideographic" : "hanging");
+        labs.appendChild(t);
+      }
+      // Polygon
+      const pts = values.map((v,i)=>{
+        const nv = Math.max(0, Math.min(4, v))/4;
+        const a = (-Math.PI/2) + (2*Math.PI*i/N);
+        const rr = maxR * nv;
+        return [cx + rr*Math.cos(a), cy + rr*Math.sin(a)];
+      });
+      const d = "M " + pts.map(p=> `${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(" L ") + " Z";
+      poly.setAttribute("d", d);
+    }
 
     /* v1.2 pro additions */
     (function wireAnalyzeButtons(){
       const go = document.getElementById("btnGoResults");
       const quick = document.getElementById("btnQuickResults");
       const to = document.getElementById("btnToResults");
+      const backDomains = document.getElementById("btnBackDomains");
       const saveReport = document.getElementById("btnSaveReport");
 
       function handle(){
@@ -1622,7 +1354,7 @@
       if(go) go.addEventListener("click", handle);
       if(quick) quick.addEventListener("click", handle);
       if(to) to.addEventListener("click", handle);
-
+      // Ensure print triggers readable PDF (we use print CSS)
       if(saveReport) saveReport.addEventListener("click", ()=> window.print());
     })();
   </script>
