@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>GRC Made Simple – John B Joseph</title>
+  <title>John Bommeraveni Joseph, CCEP – Cybersecurity, GRC & AI Governance Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="GRC Made Simple by John B Joseph – ISO 27001 & ISO 42001 Lead Auditor. A polished GRC practice lab + cyber readiness tool for modern security programs." />
+  <meta name="description" content="Portfolio of John Bommeraveni Joseph (CCEP) — Cybersecurity, GRC & AI Governance. ISO/IEC 27001 & 42001 Lead Auditor. Explore my GRC Lab, Cyber Readiness Tool, and GRC Made Simple (YouTube)." />
   <link rel="icon" type="image/png" href="assets/img/logo.png" />
 
-  <!-- Fonts (match Cyber Readiness Tool look) -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -44,7 +44,6 @@
       overflow-x:hidden;
     }
 
-    /* Subtle animated grid */
     .gridfx{
       position:fixed; inset:0;
       background-image:
@@ -58,7 +57,6 @@
     }
     @keyframes drift{ from{ transform: translate3d(0,0,0);} to{ transform: translate3d(0,-14px,0);} }
 
-    /* Floating orbs */
     .orb{
       position:fixed; width:520px; height:520px; border-radius:999px;
       filter: blur(18px); opacity:.55; pointer-events:none;
@@ -72,7 +70,6 @@
 
     .wrap{ max-width: 1200px; margin: 0 auto; padding: 28px 18px 70px; position:relative; }
 
-    /* Top nav (match Cyber Readiness Tool style) */
     .topbar{
       display:flex; align-items:center; justify-content:space-between; gap:14px;
       position:sticky; top:0; z-index:50;
@@ -122,7 +119,6 @@
     }
     .pill.muted{ color: rgba(255,255,255,.88); }
 
-    /* Cards + sections */
     .card{
       background: var(--card);
       border: 1px solid var(--stroke);
@@ -168,6 +164,7 @@
       color: transparent;
     }
     .heroP{ margin: 0 0 14px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
     .chiprow{ display:flex; gap:8px; flex-wrap:wrap; margin-top: 10px; }
     .chip{
       display:inline-flex; align-items:center; gap:8px;
@@ -222,7 +219,7 @@
       border: 1px solid rgba(255,255,255,.10);
       cursor:pointer;
       transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
-      position:relative; overflow:hidden; min-height: 140px;
+      position:relative; overflow:hidden; min-height: 155px;
       text-decoration:none;
       display:block;
       color: var(--text);
@@ -242,7 +239,29 @@
       pointer-events:none;
     }
 
-    /* Footer */
+    .list{
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      display:grid;
+      gap:8px;
+    }
+    .li{
+      display:flex; gap:10px; align-items:flex-start;
+      padding: 10px 10px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px; margin-top:4px;
+      background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
+      box-shadow: 0 10px 24px rgba(124,58,237,.20);
+      flex:0 0 auto;
+    }
+    .li b{ font-weight:900; }
+    .li span{ color: var(--muted); font-size: 13px; line-height:1.55; }
+
     .footer{
       margin-top: 18px;
       border-radius: var(--radius2);
@@ -260,8 +279,26 @@
     }
     .footer a:hover{ color: rgba(255,255,255,.98); border-bottom-color: rgba(255,255,255,.35); }
 
-    /* Small helper */
     .small{ font-size: 12.5px; color: var(--muted); line-height:1.55; }
+
+    /* Image helpers */
+    .avatar{
+      width:86px; height:86px; border-radius:24px; overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 12px 26px rgba(0,0,0,.25);
+      flex:0 0 auto;
+    }
+    .avatar img{ width:100%; height:100%; object-fit:cover; }
+    .brandLogoMini{
+      width:34px; height:34px; border-radius:12px; overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 10px 22px rgba(0,0,0,.22);
+      flex:0 0 auto;
+    }
+    .brandLogoMini img{ width:100%; height:100%; object-fit:cover; }
   </style>
 </head>
 
@@ -275,10 +312,14 @@
     <!-- NAV -->
     <header class="topbar">
       <a class="brandRow" href="index.html" style="text-decoration:none;color:inherit;">
+        <!-- OPTIONAL LOGO IMAGE:
+          If you want your GRC Made Simple logo here, replace the .logo div with:
+          <div class="brandLogoMini"><img src="assets/img/logo.png" alt="GRC Made Simple logo"></div>
+        -->
         <div class="logo" aria-hidden="true"></div>
         <div>
-          <div class="brandTitle">GRC Made Simple</div>
-          <div class="brandSub">by John B Joseph • ISO 27001 & ISO 42001 Lead Auditor</div>
+          <div class="brandTitle">John Bommeraveni Joseph, CCEP</div>
+          <div class="brandSub">Cybersecurity • GRC • AI Governance • ISO/IEC 27001 & 42001 Lead Auditor</div>
         </div>
       </a>
 
@@ -288,104 +329,141 @@
         <a class="pill muted" href="grc-lab.html">GRC Lab</a>
         <a class="pill primary" href="cyber-readiness-tool.html">Cyber Readiness Tool</a>
         <a class="pill muted" href="terms.html">Terms</a>
-        <a class="pill muted" href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer" title="Watch on YouTube">
-          YouTube
-        </a>
+        <a class="pill muted" href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer">YouTube</a>
       </nav>
     </header>
 
     <!-- HERO -->
     <section class="hero">
+      <!-- LEFT: Personal narrative + CTA -->
       <div class="card">
         <div class="glow"></div>
         <div class="inner">
-          <h1 class="heroTitle"><span class="grad">GRC Made Simple</span></h1>
+          <h1 class="heroTitle">
+            I build <span class="grad">governance you can prove</span> — not just policies you can write.
+          </h1>
+
           <p class="heroP">
-            A clean, enterprise-style GRC portfolio and practice environment — built like a real security program.
-            Explore the GRC Lab and run the Cyber Readiness Assessment to generate board-ready outputs.
+            I’m <b>John Bommeraveni Joseph (CCEP)</b> — a <b>Cybersecurity, GRC & AI Governance</b> professional and
+            <b>ISO/IEC 27001 & ISO/IEC 42001 Lead Auditor</b>.
+          </p>
+
+          <p class="heroP">
+            After <b>10+ years in HR & Recruitment</b> (including HR Generalist and Recruitment leadership roles),
+            I transitioned into cybersecurity with a focus on <b>risk, compliance, data privacy</b>, and
+            <b>evidence-driven security programs</b>.
           </p>
 
           <div class="chiprow">
-            <span class="chip">ISO/IEC 27001 aligned</span>
-            <span class="chip">ISO/IEC 42001 AI governance</span>
-            <span class="chip">Evidence-first approach</span>
-            <span class="chip">Portfolio-ready outputs</span>
+            <span class="chip">ISO/IEC 27001 • 42001</span>
+            <span class="chip">NIST CSF</span>
+            <span class="chip">SOC 2 • PCI DSS • HIPAA (working knowledge)</span>
+            <span class="chip">Data Privacy</span>
+            <span class="chip">AWS (Cloud Practitioner + SAA)</span>
           </div>
 
           <div class="metaGrid">
             <div class="meta">
-              <div class="k">Focus</div>
-              <div class="v">GRC • Cybersecurity • AI Governance</div>
+              <div class="k">What I’m targeting</div>
+              <div class="v">GRC Analyst • Risk & Compliance • AI Governance</div>
             </div>
             <div class="meta">
-              <div class="k">What you get</div>
-              <div class="v">Dashboards • Artifacts • Board-ready narratives</div>
+              <div class="k">How I work</div>
+              <div class="v">Risk → Controls → Evidence → Reporting (clean & audit-ready)</div>
             </div>
           </div>
 
           <div class="ctaRow">
-            <a class="btn primary" href="grc-lab.html">Open GRC Lab</a>
-            <a class="btn" href="cyber-readiness-tool.html">Run Cyber Readiness Tool</a>
-            <a class="btn" href="terms.html">Terms of Use</a>
+            <a class="btn primary" href="grc-lab.html">Explore my GRC Lab</a>
+            <a class="btn" href="cyber-readiness-tool.html">Use my Cyber Readiness Tool</a>
+            <a class="btn" href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer">Watch GRC Made Simple</a>
           </div>
 
           <p class="small" style="margin-top:12px;">
-            Disclaimer: This portfolio and lab are educational and demonstration-focused. No production systems or real client data are used.
+            If you’re a hiring manager: this site is designed to show <b>how I think</b>, how I document, and how I turn
+            frameworks into <b>real, reviewable evidence</b>.
           </p>
         </div>
       </div>
 
-      <!-- Profile Card (same vibe as tool: glassy, muted, enterprise) -->
+      <!-- RIGHT: Profile card + highlights -->
       <div class="card">
         <div class="glow"></div>
         <div class="inner">
           <div style="display:flex; gap:14px; align-items:center;">
-            <div style="width:84px;height:84px;border-radius:22px; overflow:hidden; border:1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.06); box-shadow: 0 12px 26px rgba(0,0,0,.25); flex:0 0 auto;">
-              <img src="assets/img/profile.png" alt="John B Joseph" style="width:100%;height:100%;object-fit:cover;">
+            <!-- PROFILE IMAGE LOCATION:
+              Replace this file with your best headshot:
+              assets/img/profile.png
+            -->
+            <div class="avatar">
+              <img src="assets/img/profile.png" alt="John Bommeraveni Joseph headshot">
             </div>
             <div>
-              <div style="font-weight:900; font-size:16px; letter-spacing:-.2px;">John B Joseph</div>
+              <div style="font-weight:900; font-size:16px; letter-spacing:-.2px;">John Bommeraveni Joseph, CCEP</div>
               <div class="small" style="margin-top:4px;">
-                ISO 27001 & ISO 42001 Lead Auditor<br>
-                Cybersecurity • GRC • AI Governance
+                Certified Cybersecurity, GRC & AI Governance Professional<br>
+                ISO/IEC 27001 & 42001 Lead Auditor
               </div>
             </div>
           </div>
 
           <div class="meta" style="margin-top: 14px;">
-            <div class="k">What this site shows</div>
-            <div class="v" style="font-size:14px; font-weight:800; margin-top:6px;">
-              How a real GRC program looks when treated as a product
+            <div class="k">What you’ll find on this portfolio</div>
+            <div class="v" style="font-size:14px; font-weight:900; margin-top:6px;">
+              Practical work samples, tools, and proof of execution
             </div>
             <div class="small" style="margin-top:6px;">
-              Risks → controls → evidence → reporting — presented in an internal-portal style format.
+              Not a “nice-looking site” — a place where you can review my approach to governance, risk, controls, and reporting.
             </div>
           </div>
+
+          <ul class="list">
+            <li class="li">
+              <div class="dot"></div>
+              <div><span><b>GRC Lab:</b> a simulated security program for a fictional SaaS company (risk register, SoA logic, evidence workflow).</span></div>
+            </li>
+            <li class="li">
+              <div class="dot"></div>
+              <div><span><b>Cyber Readiness Tool:</b> assess maturity (0–4) and generate executive-ready insights + priority actions.</span></div>
+            </li>
+            <li class="li">
+              <div class="dot"></div>
+              <div><span><b>YouTube:</b> I teach ISO 27001, ISO 42001, NIST CSF, risk, compliance, and career growth — in simple language.</span></div>
+            </li>
+          </ul>
 
           <div class="chiprow" style="margin-top:12px;">
             <a class="chip" href="https://www.linkedin.com/in/john-bj" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a class="chip" href="https://github.com/johnbj-cybersec" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a class="chip" href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer">YouTube</a>
+            <a class="chip" href="terms.html">Terms</a>
+          </div>
+
+          <!-- OPTIONAL: mini certifications strip (NO IMAGES REQUIRED) -->
+          <div class="meta" style="margin-top:12px;">
+            <div class="k">Core credentials (selected)</div>
+            <div class="small" style="margin-top:6px;">
+              ISO/IEC 27001:2022 Lead Auditor • ISO/IEC 42001:2023 Lead Auditor • CCEP • IBM GRC & Data Privacy • Securiti PrivacyOps / AI Security & Governance • Qualys VMDR
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- QUICK LINKS (updated, removed Toolkit/Certifications) -->
+    <!-- QUICK LINKS -->
     <section class="section">
       <div class="card">
         <div class="glow"></div>
         <div class="inner">
           <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;">
             <div>
-              <div style="font-weight:900; font-size:16px; letter-spacing:-.2px;">Explore</div>
+              <div style="font-weight:900; font-size:16px; letter-spacing:-.2px;">Featured work</div>
               <div class="small" style="margin-top:4px;">
-                Choose a section. Everything is designed to feel enterprise-grade and portfolio-ready.
+                Start here — these are the pages hiring managers can review in minutes.
               </div>
             </div>
             <div class="meta" style="padding:10px 12px;">
-              <div class="k">Navigation</div>
-              <div class="v" style="font-size:13px;">Home • GRC Lab • Cyber Readiness Tool • Terms</div>
+              <div class="k">Best use</div>
+              <div class="v" style="font-size:13px;">Open → scan → ask me about the reasoning and evidence</div>
             </div>
           </div>
 
@@ -394,10 +472,10 @@
               <div class="spark"></div>
               <div class="t">GRC Lab</div>
               <div class="p">
-                A simulated GRC environment for a fictional SaaS company — showing how risks, controls, and evidence fit together in practice.
+                A realistic practice environment that demonstrates how I structure governance artifacts and connect risks to controls and evidence.
               </div>
               <div class="foot">
-                <span>Artifacts • SoA • Annex A mapping</span>
+                <span>Risk register • SoA logic • Evidence workflow</span>
                 <span>Open →</span>
               </div>
             </a>
@@ -406,24 +484,58 @@
               <div class="spark"></div>
               <div class="t">Cyber Readiness Tool</div>
               <div class="p">
-                Run a capability-based assessment (0–4). Get executive results, top gaps, and a 30/60/90 roadmap — exportable to PDF/JSON.
+                An assessment you can run quickly to produce executive insights, top gaps, and a prioritized action plan — built for repeat use.
               </div>
               <div class="foot">
-                <span>Board-ready • Interview-ready</span>
+                <span>Executive-ready • PDF/JSON export (in tool)</span>
                 <span>Run →</span>
               </div>
             </a>
           </div>
 
-          <div class="meta" style="margin-top:12px;">
-            <div class="k">Tip</div>
-            <div class="v" style="font-size:14px; font-weight:800;">
-              For interviews: run the assessment → export PDF → tell your story using “Top gaps” + roadmap.
-            </div>
-            <div class="small" style="margin-top:6px;">
-              This gives employers a clean narrative: baseline → risk signals → prioritized plan → measurable improvement.
+          <div class="grid2" style="margin-top:12px;">
+            <a class="tile" href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer">
+              <div class="spark"></div>
+              <div class="t">GRC Made Simple (YouTube)</div>
+              <div class="p">
+                My weekly channel where I simplify ISO 27001, ISO 42001, NIST CSF, risk, compliance, and practical career guidance.
+              </div>
+              <div class="foot">
+                <span><!-- OPTIONAL LOGO IMAGE LOCATION:
+                  If you want, replace the spark-only look with an icon by using:
+                  <img src="assets/img/logo.png" ...>
+                -->Practical videos • No fluff</span>
+                <span>Watch →</span>
+              </div>
+            </a>
+
+            <div class="tile" style="cursor:default;">
+              <div class="spark"></div>
+              <div class="t">What I bring from HR → Cyber</div>
+              <div class="p">
+                Stakeholder management, documentation discipline, process ownership, and the ability to turn ambiguous requirements into clear workflows —
+                all applied now to GRC and security programs.
+              </div>
+              <div class="foot">
+                <span>Communication • Process • Execution</span>
+                <span>Portfolio narrative</span>
+              </div>
             </div>
           </div>
+
+          <div class="meta" style="margin-top:12px;">
+            <div class="k">For interviews</div>
+            <div class="v" style="font-size:14px; font-weight:900;">
+              Run the Cyber Readiness Tool → export results → use “Top gaps” + the roadmap as your story.
+            </div>
+            <div class="small" style="margin-top:6px;">
+              It shows how you baseline a program, prioritize by risk, and communicate clearly to leadership — without hiding behind buzzwords.
+            </div>
+          </div>
+
+          <p class="small" style="margin-top:12px;">
+            Educational use only. No confidential or client data is used anywhere on this site.
+          </p>
         </div>
       </div>
     </section>
@@ -432,10 +544,12 @@
     <footer class="footer">
       <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
         <div style="font-weight:800; font-size:13px;">
-          © <span id="year"></span> GRC Made Simple — John B Joseph.
+          © <span id="year"></span> John Bommeraveni Joseph.
         </div>
         <div style="display:flex; gap:12px; flex-wrap:wrap; font-size:12.5px;">
-          <a href="terms.html">Terms of Use</a>
+          <a href="terms.html">Terms</a>
+          <a href="cyber-readiness-tool.html">Cyber Readiness Tool</a>
+          <a href="grc-lab.html">GRC Lab</a>
           <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer">YouTube</a>
           <a href="https://www.linkedin.com/in/john-bj" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a href="https://github.com/johnbj-cybersec" target="_blank" rel="noopener noreferrer">GitHub</a>
@@ -447,5 +561,21 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+
+  <!--
+    WHERE TO ADD IMAGES (quick guide)
+
+    1) Profile picture (already wired):
+       - File: assets/img/profile.png
+       - Used in: <img src="assets/img/profile.png" ...>
+
+    2) GRC Made Simple logo in the navbar (optional):
+       - Replace the <div class="logo"></div> block with:
+         <div class="brandLogoMini"><img src="assets/img/logo.png" alt="GRC Made Simple logo"></div>
+
+    3) Certifications images:
+       - Not required on index.html (keeps it clean + hiring-manager friendly).
+       - If you later want a small “Credentials” section with badges, tell me and I’ll add a minimal strip without clutter.
+  -->
 </body>
 </html>
