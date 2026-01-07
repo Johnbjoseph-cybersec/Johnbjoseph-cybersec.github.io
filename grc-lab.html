@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -153,24 +154,451 @@
   }
 </style>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1226;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.085);
+      --stroke: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.62);
+      --muted2: rgba(255,255,255,.44);
+      --brand:#7C3AED;
+      --brand2:#22D3EE;
+      --shadow: 0 24px 70px rgba(0,0,0,.55);
+      --shadow2: 0 14px 40px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 26px;
+      --ease: cubic-bezier(.2,.8,.2,1);
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(124,58,237,.28), transparent 60%),
+        radial-gradient(900px 600px at 80% 20%, rgba(34,211,238,.18), transparent 55%),
+        radial-gradient(800px 600px at 50% 90%, rgba(251,113,133,.12), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    .gridfx{
+      position:fixed; inset:0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.045) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(800px 600px at 50% 20%, black 35%, transparent 85%);
+      pointer-events:none;
+      opacity:.55;
+      animation: drift 14s var(--ease) infinite alternate;
+    }
+    @keyframes drift{ from{ transform: translate3d(0,0,0);} to{ transform: translate3d(0,-14px,0);} }
+
+    .orb{
+      position:fixed; width:520px; height:520px; border-radius:999px;
+      filter: blur(18px); opacity:.55; pointer-events:none;
+      mix-blend-mode: screen;
+      animation: float 9s var(--ease) infinite alternate;
+    }
+    .orb.one{ left:-140px; top:-140px; background: radial-gradient(circle at 35% 30%, rgba(124,58,237,.75), transparent 55%); }
+    .orb.two{ right:-180px; top:80px; background: radial-gradient(circle at 40% 35%, rgba(34,211,238,.55), transparent 60%); animation-duration: 11s; }
+    .orb.three{ left:40%; bottom:-220px; background: radial-gradient(circle at 45% 45%, rgba(251,113,133,.45), transparent 62%); animation-duration: 13s; }
+    @keyframes float { from{ transform: translate3d(0,0,0) scale(1);} to{ transform: translate3d(0,24px,0) scale(1.02);} }
+
+    .wrap{ max-width: 1200px; margin: 0 auto; padding: 28px 18px 70px; position:relative; }
+
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between; gap:14px;
+      position:sticky; top:0; z-index:50;
+      padding: 14px 12px; margin: -8px -6px 18px;
+      border-radius: var(--radius2);
+      background: rgba(10,14,26,.62);
+      border: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 32px rgba(0,0,0,.35);
+    }
+    .brandRow{ display:flex; align-items:center; gap:10px; user-select:none; min-width: 240px; }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background: conic-gradient(from 210deg, rgba(124,58,237,.9), rgba(34,211,238,.9), rgba(251,113,133,.7), rgba(124,58,237,.9));
+      box-shadow: 0 12px 26px rgba(124,58,237,.25);
+      position:relative; overflow:hidden;
+    }
+    .logo:after{
+      content:""; position:absolute; inset:-40%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 60%);
+      transform: rotate(18deg);
+    }
+    .brandTitle{ margin:0; font-size:14px; letter-spacing:.2px; line-height:1.05; font-weight:800; }
+    .brandSub{ margin-top:2px; font-size:12px; color: var(--muted); }
+
+    .navlinks{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
+    .pill{
+      display:flex; align-items:center; gap:8px;
+      padding: 10px 12px; border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      color: var(--text);
+      cursor:pointer;
+      transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);
+      user-select:none;
+      text-decoration:none;
+      font-weight:800;
+      font-size:13px;
+      line-height:1;
+    }
+    .pill:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.16); }
+    .pill:active{ transform: translateY(0px) scale(.99); }
+    .pill.primary{
+      background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 20px 55px rgba(124,58,237,.25);
+    }
+    .pill.muted{ color: rgba(255,255,255,.88); }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow2);
+      backdrop-filter: blur(12px);
+      overflow:hidden;
+      position:relative;
+    }
+    .glow{
+      position:absolute; inset:-1px; z-index:0; pointer-events:none;
+      background:
+        radial-gradient(700px 380px at 20% 15%, rgba(124,58,237,.20), transparent 55%),
+        radial-gradient(650px 360px at 90% 30%, rgba(34,211,238,.14), transparent 55%);
+      opacity:.95;
+    }
+    .inner{ padding: 22px 22px 18px; position:relative; z-index:1; }
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 16px;
+      align-items: stretch;
+      width: 100%;
+      margin-top: 10px;
+    }
+    @media (max-width: 860px){
+      .hero{ grid-template-columns: 1fr; }
+      .brandRow{ min-width: auto; }
+    }
+
+    .heroTitle{
+      font-size: 34px;
+      margin: 0 0 8px;
+      letter-spacing: -.4px;
+      line-height: 1.12;
+      font-weight: 900;
+    }
+    .heroTitle .grad{
+      background: linear-gradient(90deg, rgba(255,255,255,.95), rgba(34,211,238,.85), rgba(124,58,237,.95));
+      -webkit-background-clip: text;
+      background-clip:text;
+      color: transparent;
+    }
+    .heroP{ margin: 0 0 14px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+    .chiprow{ display:flex; gap:8px; flex-wrap:wrap; margin-top: 10px; }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 10px; border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.86);
+      font-size: 12px;
+      text-decoration:none;
+    }
+
+    .metaGrid{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px; margin-top: 14px; }
+    @media (max-width: 520px){ .metaGrid{ grid-template-columns: 1fr; } }
+
+    .meta{
+      padding: 12px 12px; border-radius: 16px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.09);
+    }
+    .meta .k{ color: var(--muted2); font-size: 12px; }
+    .meta .v{ margin-top: 6px; font-weight: 800; letter-spacing:.2px; }
+
+    .ctaRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
+    .btn{
+      padding: 11px 14px; border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.9);
+      cursor:pointer;
+      transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);
+      user-select:none;
+      display:inline-flex; align-items:center; gap:10px;
+      text-decoration:none;
+      font-weight: 900;
+      font-size: 13px;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.18); }
+    .btn:active{ transform: translateY(0px) scale(.99); }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
+      border-color: rgba(255,255,255,.16);
+      box-shadow: 0 18px 46px rgba(124,58,237,.24);
+    }
+
+    .section{ margin-top: 16px; }
+    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+    @media (max-width: 860px){ .grid2{ grid-template-columns: 1fr; } }
+
+    .tile{
+      padding: 16px 16px; border-radius: var(--radius2);
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.10);
+      cursor:pointer;
+      transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
+      position:relative; overflow:hidden; min-height: 155px;
+      text-decoration:none;
+      display:block;
+      color: var(--text);
+    }
+    .tile:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.075); }
+    .tile:active{ transform: translateY(0px) scale(.99); }
+    .tile .t{ font-weight:900; font-size: 16px; letter-spacing:.2px; }
+    .tile .p{ margin-top: 6px; color: var(--muted); font-size: 13px; line-height:1.55; }
+    .tile .foot{ margin-top: 12px; display:flex; align-items:center; justify-content:space-between; gap:10px; color: var(--muted2); font-size:12px; }
+    .tile .spark{
+      position:absolute; inset:-50%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(34,211,238,.12), transparent 55%),
+        radial-gradient(circle at 70% 40%, rgba(124,58,237,.14), transparent 56%);
+      transform: rotate(12deg);
+      opacity:.9;
+      pointer-events:none;
+    }
+
+    .list{
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+      display:grid;
+      gap:8px;
+    }
+    .li{
+      display:flex; gap:10px; align-items:flex-start;
+      padding: 10px 10px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px; margin-top:4px;
+      background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
+      box-shadow: 0 10px 24px rgba(124,58,237,.20);
+      flex:0 0 auto;
+    }
+    .li b{ font-weight:900; }
+    .li span{ color: var(--muted); font-size: 13px; line-height:1.55; }
+
+    .footer{
+      margin-top: 18px;
+      border-radius: var(--radius2);
+      background: rgba(10,14,26,.45);
+      border: 1px solid rgba(255,255,255,.10);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 14px 40px rgba(0,0,0,.35);
+      padding: 16px 18px;
+      color: rgba(255,255,255,.86);
+    }
+    .footer a{
+      color: rgba(255,255,255,.86);
+      text-decoration:none;
+      border-bottom: 1px solid rgba(255,255,255,.18);
+    }
+    .footer a:hover{ color: rgba(255,255,255,.98); border-bottom-color: rgba(255,255,255,.35); }
+
+    .small{ font-size: 12.5px; color: var(--muted); line-height:1.55; }
+
+    /* Image helpers */
+    .avatar{
+      width:86px; height:86px; border-radius:24px; overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 12px 26px rgba(0,0,0,.25);
+      flex:0 0 auto;
+    }
+    .avatar img{ width:100%; height:100%; object-fit:cover; }
+    .brandLogoMini{
+      width:34px; height:34px; border-radius:12px; overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 10px 22px rgba(0,0,0,.22);
+      flex:0 0 auto;
+    }
+    .brandLogoMini img{ width:100%; height:100%; object-fit:cover; }
+  
+</style>
+<style>
+/* --- Make the lab page match the portfolio (index) aesthetic, without changing functionality --- */
+:root{
+  --bg0:#070A12;
+  --bg1:#0B1226;
+  --card: rgba(255,255,255,.06);
+  --card2: rgba(255,255,255,.085);
+  --stroke: rgba(255,255,255,.10);
+  --text: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.62);
+  --muted2: rgba(255,255,255,.44);
+  --shadow: 0 18px 50px rgba(0,0,0,.55);
+  --shadow2: 0 10px 30px rgba(0,0,0,.45);
+  --radius: 22px;
+  --radius2: 16px;
+  --primary1:#7B61FF;
+  --primary2:#00D4FF;
+}
+
+/* Bootstrap page spacing + typography */
+body{ color: var(--text) !important; }
+main.wrap{ max-width: 1200px; margin: 90px auto 56px; padding: 0 18px; }
+@media (max-width: 720px){ main.wrap{ margin-top: 110px; } }
+
+/* Ensure Bootstrap containers don't fight the portfolio spacing */
+.container, .container-fluid{ padding-left: 0 !important; padding-right: 0 !important; }
+
+/* Headings */
+h1,h2,h3,h4,h5{ color: var(--text) !important; }
+
+/* Generic panels/cards */
+.card, .panel, .well, .modal-content{
+  background: var(--card) !important;
+  border: 1px solid var(--stroke) !important;
+  border-radius: var(--radius2) !important;
+  box-shadow: var(--shadow2) !important;
+  color: var(--text) !important;
+}
+.card-header, .panel-heading, .modal-header{
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03)) !important;
+  border-bottom: 1px solid var(--stroke) !important;
+  border-top-left-radius: var(--radius2) !important;
+  border-top-right-radius: var(--radius2) !important;
+}
+
+/* Inputs */
+input, select, textarea{
+  background: rgba(255,255,255,.06) !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+  color: var(--text) !important;
+  border-radius: 12px !important;
+}
+input::placeholder, textarea::placeholder{ color: rgba(255,255,255,.45) !important; }
+
+/* Buttons */
+.btn{
+  border-radius: 14px !important;
+  border: 1px solid rgba(255,255,255,.14) !important;
+}
+.btn-primary, .btn-success{
+  border: none !important;
+  background: linear-gradient(90deg, var(--primary1), var(--primary2)) !important;
+  color: #06111d !important;
+  font-weight: 800 !important;
+}
+.btn-outline-primary, .btn-secondary, .btn-default{
+  background: rgba(255,255,255,.06) !important;
+  color: var(--text) !important;
+}
+.btn:hover{ filter: brightness(1.05); transform: translateY(-1px); }
+
+/* Tabs -> pill bar */
+.nav-tabs{
+  border: none !important;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  margin-bottom: 16px;
+}
+.nav-tabs .nav-item{ margin-bottom: 0 !important; }
+.nav-tabs .nav-link{
+  border: 1px solid rgba(255,255,255,.14) !important;
+  background: rgba(255,255,255,.05) !important;
+  color: rgba(255,255,255,.75) !important;
+  border-radius: 999px !important;
+  padding: 6px 10px !important;
+  font-size: 12px !important;
+  line-height: 1.1 !important;
+}
+.nav-tabs .nav-link:hover{ color: var(--text) !important; }
+.nav-tabs .nav-link.active{
+  background: linear-gradient(90deg, rgba(123,97,255,.85), rgba(0,212,255,.80)) !important;
+  color: #06111d !important;
+  font-weight: 800 !important;
+  border-color: transparent !important;
+}
+
+/* Tables */
+.table, table{ color: var(--text) !important; }
+.table thead th, table thead th{
+  border-bottom: 1px solid var(--stroke) !important;
+  color: rgba(255,255,255,.88) !important;
+}
+.table td, .table th, table td, table th{
+  border-top: 1px solid rgba(255,255,255,.10) !important;
+}
+.table-striped tbody tr:nth-of-type(odd){
+  background: rgba(255,255,255,.03) !important;
+}
+
+/* Alerts / badges */
+.alert{
+  background: rgba(255,255,255,.05) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  color: rgba(255,255,255,.86) !important;
+  border-radius: 16px !important;
+}
+.badge, .label{
+  border-radius: 999px !important;
+}
+
+/* Make any fixed header spacing safe */
+.topbar{ position: fixed; top: 10px; left: 50%; transform: translateX(-50%); width: min(1200px, calc(100% - 24px)); z-index: 9999; }
+</style>
+
 </head>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">John B Joseph</a>
-      <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="oi oi-menu"></span> Menu
-      </button>
-      <div class="collapse navbar-collapse" id="ftco-nav">
-        <ul class="navbar-nav nav ml-auto">
-          <li class="nav-item"><a href="index.html#home-section" class="nav-link"><span>Home</span></a></li>
-          <li class="nav-item"><a href="toolkit.html" class="nav-link"><span>Toolkit</span></a></li>
-          <li class="nav-item active"><a href="grc-lab.html" class="nav-link"><span>GRC Practice Lab</span></a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <header class="topbar">
+      <a class="brandRow" href="index.html" style="text-decoration:none;color:inherit;">
+        <!-- OPTIONAL LOGO IMAGE:
+          If you want your GRC Made Simple logo here, replace the .logo div with:
+          <div class="brandLogoMini"><img src="assets/img/logo.png" alt="GRC Made Simple logo"></div>
+        -->
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div class="brandTitle">John Bommeraveni Joseph</div>
+          <div class="brandSub">Cybersecurity • GRC • AI Governance • ISO/IEC 27001 & 42001 Lead Auditor</div>
+        </div>
+      </a>
+
+      <!-- Only: Home, GRC Lab, Cyber Readiness Tool, Terms -->
+      <nav class="navlinks" aria-label="Primary navigation">
+        <a class="pill muted" href="index.html">Home</a>
+        <a class="pill primary" href="grc-lab.html" aria-current="page">GRC Lab</a>
+        <a class="pill muted" href="cyber-readiness-tool.html">Cyber Readiness Tool</a>
+        <a class="pill muted" href="terms.html">Terms</a>
+        <a class="pill muted" href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer">YouTube</a>
+      </nav>
+    </header>
+<main class=\"wrap\">
   <!-- Lab -->
   <section class="ftco-section grc-lab-hero">
     <div class="grc-lab-container container-fluid px-4 px-md-5">
@@ -178,7 +606,17 @@
       <div class="row justify-content-center mb-4">
         <div class="col-md-10 text-center ftco-animate">
           <h1 class="mb-3">GRC Practice Lab (v4 - Enhanced Edition)</h1>
-          <p class="lead">Practice frameworks, assets, risks, controls, issues, actions, vendors, incidents and reporting — all in your browser (data stays local). Built by a 21+ year GRC veteran to empower the next generation.</p>
+
+<div class="card" style="padding:14px 16px; margin: 14px 0 14px;">
+  <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+    <span class="pill primary" style="padding:6px 10px; font-size:12px;">Educational use only</span>
+    <span style="color: rgba(255,255,255,.72); font-size: 12px;">
+      All controls are paraphrased and provided for practice & portfolio demonstration — not for production use, certification, or legal compliance.
+    </span>
+  </div>
+</div>
+
+          <p class="lead">Practice frameworks, assets, risks, controls, issues, actions, vendors, incidents and reporting — all in your browser (data stays local). </p>
           <p class="small-muted mb-0">Controls are paraphrased from ISO 27001:2022, NIST CSF 2.0, PCI DSS v4.0, HIPAA, SOC 2 for education only. Now with over 200 controls, challenge mode, templates, guidance, and PDF exports.</p>
         </div>
       </div>
@@ -235,7 +673,7 @@
             <li><strong>11. Generate Reports:</strong> Create summaries, exports for management.</li>
             <li><strong>12. Challenge Mode:</strong> Test skills with scenarios, get scores.</li>
           </ul>
-          <h4>Best Practices from 21+ Years Experience</h4>
+          <h4></h4>
           <p>GRC isn't checkboxes - it's about enabling business securely. Prioritize high-impact risks. Involve stakeholders. Review regularly. Use this lab to simulate real scenarios before production.</p>
           <p>Pro Tips:</p>
           <ul>
@@ -3767,5 +4205,7 @@
     refreshAll();
   });
   </script>
+
+</main>
 </body>
 </html>
