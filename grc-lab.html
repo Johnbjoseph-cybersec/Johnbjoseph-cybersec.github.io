@@ -1,27 +1,30 @@
 
 
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <title>GRC Practice Lab – John Bommeraveni Joseph</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-  <!-- Theme CSS from your site -->
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap rel="stylesheet"/>
-  <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css"/>
-  <link rel="stylesheet" href="css/animate.css"/>
-  <link rel="stylesheet" href="css/owl.carousel.min.css"/>
-  <link rel="stylesheet" href="css/owl.theme.default.min.css"/>
-  <link rel="stylesheet" href="css/magnific-popup.css"/>
-  <link rel="stylesheet" href="css/aos.css"/>
-  <link rel="stylesheet" href="css/ionicons.min.css"/>
-  <link rel="stylesheet" href="css/flaticon.css"/>
-  <link rel="stylesheet" href="css/icomoon.css"/>
-  <link rel="stylesheet" href="css/style.css"/>
-  <!-- jsPDF for PDF export -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <style>
-    body { background-color: #0a0e17; color: #e5e7eb; font-family: 'Poppins', sans-serif; }
+<title>GRC Practice Lab – John Bommeraveni Joseph</title>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+<!-- Theme CSS from your site -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="css/open-iconic-bootstrap.min.css" rel="stylesheet"/>
+<link href="css/animate.css" rel="stylesheet"/>
+<link href="css/owl.carousel.min.css" rel="stylesheet"/>
+<link href="css/owl.theme.default.min.css" rel="stylesheet"/>
+<link href="css/magnific-popup.css" rel="stylesheet"/>
+<link href="css/aos.css" rel="stylesheet"/>
+<link href="css/ionicons.min.css" rel="stylesheet"/>
+<link href="css/flaticon.css" rel="stylesheet"/>
+<link href="css/icomoon.css" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
+<!-- jsPDF for PDF export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+    body { background-color: #0a0e17; color: #e5e7eb; font-family: 'Manrope', sans-serif; }
     .ftco-animate{opacity:1!important;visibility:visible!important;}
     .grc-lab-hero{padding-top:26px;padding-bottom:40px; background: linear-gradient(to bottom, #0a0e17, #1a1f2e);}
     .grc-tab-buttons .btn{margin-right:8px;margin-bottom:8px; transition: all 0.3s ease;}
@@ -274,8 +277,62 @@
     }
     .soa-textarea.soa-evidence{ min-height: 56px; }
 
+    /* === SoA Premium Responsive Fix (no horizontal scroll on desktop) === */
+    #tab-soa .table-responsive{ overflow-x: visible; }
+    #tab-soa table{ width:100%; table-layout:fixed; }
+    #tab-soa th, #tab-soa td{
+      white-space: normal !important;
+      word-break: break-word;
+      vertical-align: top;
+    }
+    #tab-soa thead th{ position: sticky; top: 0; background: rgba(10,14,26,.92); backdrop-filter: blur(10px); z-index: 2; }
+    /* tighten typography to fit qcard style */
+    #tab-soa .table{ font-size: 12px; }
+    #tab-soa .table th{ font-size: 12px; }
+    #tab-soa .soa-textarea{ font-size: 12px; line-height:1.45; min-height: 64px; }
+    #tab-soa .soa-textarea.soa-evidence{ min-height: 56px; }
+    /* column widths (override inline styles safely using nth-child) */
+    #tab-soa table th:nth-child(1), #tab-soa table td:nth-child(1){ width: 44px !important; }
+    #tab-soa table th:nth-child(2), #tab-soa table td:nth-child(2){ width: 70px !important; }
+    #tab-soa table th:nth-child(3), #tab-soa table td:nth-child(3){ width: 220px !important; }
+    #tab-soa table th:nth-child(4), #tab-soa table td:nth-child(4){ width: 140px !important; }
+    #tab-soa table th:nth-child(5), #tab-soa table td:nth-child(5){ width: 150px !important; }
+    #tab-soa table th:nth-child(6), #tab-soa table td:nth-child(6){ width: 120px !important; }
+    #tab-soa table th:nth-child(7), #tab-soa table td:nth-child(7){ width: 140px !important; }
+    #tab-soa table th:nth-child(8), #tab-soa table td:nth-child(8){ width: 120px !important; }
+    #tab-soa table th:nth-child(9), #tab-soa table td:nth-child(9){ width: auto !important; }
+
+    /* Mobile: stack rows into cards (no sideways scroll) */
+    @media (max-width: 860px){
+      #tab-soa .table-responsive{ overflow-x: hidden; }
+      #tab-soa table, #tab-soa thead, #tab-soa tbody, #tab-soa th, #tab-soa td, #tab-soa tr{ display:block; width:100%; }
+      #tab-soa thead{ display:none; }
+      #tab-soa tr{
+        background: rgba(255,255,255,.04);
+        border: 1px solid rgba(255,255,255,.10);
+        border-radius: 18px;
+        padding: 10px 10px;
+        margin-bottom: 10px;
+      }
+      #tab-soa td{
+        border: none !important;
+        padding: 8px 8px !important;
+        display:flex;
+        gap:10px;
+      }
+      #tab-soa td:before{
+        content: attr(data-label);
+        flex: 0 0 42%;
+        color: rgba(255,255,255,.72);
+        font-weight: 800;
+        font-size: 12px;
+      }
+      #tab-soa td > *{ flex: 1 1 auto; min-width: 0; }
+      #tab-soa td:nth-child(1):before{ content: "Select"; }
+    }
+
     /* SoA column width (make it actually usable) */
-    #tab-soa .table{ min-width: 1100px; }
+    #tab-soa .table{ width:100%; min-width:0; table-layout:fixed; }
     #tab-soa th:last-child{ width: 34% !important; }
     #tab-soa td:last-child{ min-width: 360px; }
 
@@ -284,7 +341,7 @@
       display:flex;
       flex-wrap:wrap;
       gap:10px;
-      justify-content:center;
+      justify-content:flex-start;
       align-items:center;
       margin: 12px 0 4px;
     }
@@ -309,1208 +366,1701 @@
 
     /* Tighten page spacing */
     .grc-lab-hero{ background: transparent !important; padding-bottom: 40px; }
+
+/* ===== UI/UX FIX PACK (v1) — layout, responsiveness, spacing, states ===== */
+:root{
+  --ux-gap: 12px;
+  --ux-card: rgba(255,255,255,.055);
+  --ux-stroke: rgba(255,255,255,.10);
+  --ux-stroke2: rgba(255,255,255,.14);
+  --ux-muted: rgba(255,255,255,.72);
+  --ux-muted2: rgba(255,255,255,.55);
+}
+
+/* Typography + contrast */
+.text-muted, .small-muted{ color: var(--ux-muted) !important; }
+.lead{ color: rgba(255,255,255,.82) !important; }
+h1,h2,h3,h4,h5{ color: rgba(255,255,255,.94) !important; }
+
+/* Container — prevent accidental horizontal bleed */
+.grc-lab-container{ overflow: hidden; }
+@media (max-width: 991.98px){
+  .grc-lab-container{ border-radius: 20px !important; }
+}
+
+/* Tabs (navigation overflow) */
+.grc-tab-buttons{
+  padding: 8px 6px 10px !important;
+  border-radius: 18px !important;
+  background: rgba(255,255,255,.04) !important;
+  border: 1px solid rgba(255,255,255,.08) !important;
+}
+.grc-tab-buttons::before,
+.grc-tab-buttons::after{
+  content:"";
+  position: sticky;
+  top: 0;
+  width: 18px;
+  flex: 0 0 18px;
+  height: 100%;
+  pointer-events:none;
+  z-index: 1;
+}
+.grc-tab-buttons::before{ left: 0; background: linear-gradient(90deg, rgba(7,10,18,.95), rgba(7,10,18,0)); }
+.grc-tab-buttons::after{ right: 0; background: linear-gradient(270deg, rgba(7,10,18,.95), rgba(7,10,18,0)); }
+.grc-tab-buttons .btn{ flex: 0 0 auto; }
+
+/* Form spacing consistency */
+.form-group{ margin-bottom: .75rem !important; }
+.form-row{ margin-left: -6px !important; margin-right: -6px !important; }
+.form-row > .form-group, .form-row > .col-6{ padding-left: 6px !important; padding-right: 6px !important; }
+label{ margin-bottom: .35rem !important; }
+textarea.form-control{ min-height: 90px; }
+textarea.form-control.form-control-sm{ min-height: 84px; }
+input.form-control, select.form-control, textarea.form-control{ line-height: 1.35 !important; }
+
+/* Edit mode visual distinction (form state) */
+form.is-editing{
+  outline: 2px solid rgba(34,211,238,.22);
+  box-shadow: 0 0 0 4px rgba(34,211,238,.10);
+  border-radius: 14px;
+  padding: 10px;
+}
+form.is-editing .editBadge{
+  display:inline-flex !important;
+}
+.editBadge{
+  display:none;
+  align-items:center;
+  gap:8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(34,211,238,.14);
+  border: 1px solid rgba(34,211,238,.25);
+  color: rgba(255,255,255,.92);
+  font-weight: 850;
+  font-size: 12px;
+}
+
+/* Filter sections (organization) */
+.filterBar{
+  display:flex;
+  flex-wrap:wrap;
+  gap: var(--ux-gap);
+  align-items:flex-end;
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+}
+.filterBar .col-md-3, .filterBar .col-md-4{ margin-bottom: 0 !important; }
+.filterBar .form-control{ min-width: 180px; }
+@media (max-width: 767.98px){
+  .filterBar{ gap: 10px; }
+  .filterBar .form-control{ min-width: 100%; }
+}
+
+/* Tables (responsiveness + action alignment) */
+.table-responsive{
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.08);
+}
+.table{ margin-bottom: 0 !important; }
+.table thead th{ white-space: nowrap; }
+.table td{ vertical-align: middle !important; }
+.table .actionsCell{
+  display:flex;
+  justify-content:flex-end;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.table td:last-child .btn{
+  margin: 2px 0 !important;
+}
+.table td:last-child{
+  text-align:right;
+}
+@media (max-width: 991.98px){
+  .table{ min-width: 980px; } /* enables horizontal scroll instead of squishing */
+}
+
+/* Empty states */
+.emptyState{
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px dashed rgba(255,255,255,.14);
+  color: rgba(255,255,255,.72);
+  font-size: 12.5px;
+}
+
+/* Multi-select readability (Local Controls issue) */
+select.form-control[multiple]{
+  min-height: 210px !important;
+  padding: 10px !important;
+}
+select.form-control[multiple] option{ padding: 6px 8px; }
+
+/* SoA notes/evidence usability */
+.soa-input, .soa-select{ min-height: 38px; }
+.soa-notes{
+  width:100%;
+  min-height: 78px;
+  resize: vertical;
+  background: #0b1220;
+  color: #e5e7eb;
+  border: 1px solid #1f2937;
+  border-radius: 10px;
+  padding: 8px 10px;
+  line-height: 1.35;
+}
+#tab-soa .table{ min-width: 1200px; }
+#tab-soa th:last-child{ width: 36% !important; }
+#tab-soa td:last-child{ min-width: 420px; }
+
+/* Loading overlay */
+#uiBusyOverlay{
+  position: fixed;
+  inset: 0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background: rgba(5,8,16,.72);
+  backdrop-filter: blur(10px);
+  z-index: 2000;
+}
+#uiBusyOverlay.show{ display:flex; }
+#uiBusyOverlay .card{
+  width: min(520px, calc(100% - 28px));
+  border-radius: 22px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 30px 90px rgba(0,0,0,.55);
+  padding: 18px 18px 16px;
+  text-align:center;
+}
+#uiBusyOverlay .spinner{
+  width: 46px; height: 46px;
+  border-radius: 999px;
+  border: 4px solid rgba(255,255,255,.18);
+  border-top-color: rgba(34,211,238,.85);
+  margin: 6px auto 12px;
+  animation: spin 1s linear infinite;
+}
+
+
+
+/* ===== UI FIX PACK v2 (forms horizontal + bigger textareas) ===== */
+:root{
+  --grc-gap: 12px;
+}
+
+/* Bigger report editors */
+#summary-text, #report-text{
+  width: 100% !important;
+  min-height: 420px !important;
+  line-height: 1.55 !important;
+}
+
+/* Make key report sections feel like "qcards" and fill container */
+#tab-summary .bg-dark, #tab-reports .bg-dark{
+  border: 1px solid rgba(255,255,255,.10) !important;
+  border-radius: 18px !important;
+}
+
+/* Horizontal add/edit forms (2-column on desktop, 1-column on mobile) */
+.grc-form-grid{
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: var(--grc-gap) !important;
+}
+@media (min-width: 992px){
+  .grc-form-grid{
+    grid-template-columns: 1fr 1fr !important;
+    align-items: start !important;
+  }
+}
+.grc-form-grid .form-group{ margin-bottom: 0 !important; }
+.grc-span-2{ grid-column: 1 / -1 !important; }
+
+/* Ensure selects/textareas never clip and labels align */
+.grc-form-grid label{ display:block; margin-bottom: 6px !important; }
+.grc-form-grid .form-control{ width: 100% !important; }
+
+/* Multi-select readability (related risks / controls) */
+select[multiple].form-control, select[multiple].form-control-sm{
+  min-height: 180px !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+select[multiple] option{
+  padding: 6px 10px !important;
+  line-height: 1.35 !important;
+}
+
+/* Button rows inside forms occupy full width */
+.grc-form-grid .grc-actions{
+  display:flex !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+
+/* ===== UI FIX: show ALL tab buttons (wrap, no horizontal scrolling) ===== */
+.grc-tab-buttons{
+  flex-wrap: wrap !important;
+  overflow-x: visible !important;
+  justify-content: flex-start !important;
+}
+.grc-tab-buttons::before,
+.grc-tab-buttons::after{ display:none !important; }
+.grc-tab-buttons .btn{
+  padding: 9px 12px !important;
+  font-size: 12.5px !important;
+  margin-bottom: 6px !important;
+}
+/* Ensure tab row doesn't push content */
+.grc-tab-buttons{ max-height: none !important; }
+
+/* ===== UI FIX: SoA table (no horizontal scroll; responsive card layout on small screens) ===== */
+#tab-soa .table{ min-width: 0 !important; width: 100% !important; table-layout: fixed !important; }
+#tab-soa th, #tab-soa td{ white-space: normal !important; word-break: break-word; }
+#tab-soa td:nth-child(2){ width: 7% !important; }     /* ID */
+#tab-soa td:nth-child(3){ width: 18% !important; }    /* Name */
+#tab-soa td:nth-child(4){ width: 12% !important; }    /* Category */
+#tab-soa td:nth-child(5){ width: 12% !important; }    /* Frameworks */
+#tab-soa td:nth-child(6){ width: 10% !important; }    /* Applicability */
+#tab-soa td:nth-child(7){ width: 14% !important; }    /* Implementation */
+#tab-soa td:nth-child(8){ width: 10% !important; }    /* Owner */
+#tab-soa td:nth-child(9){ width: 17% !important; }    /* Rationale/Evidence */
+#tab-soa td:last-child{ min-width: 0 !important; }
+#tab-soa .soa-textarea{ min-height: 92px !important; }
+#tab-soa .soa-textarea.soa-evidence{ min-height: 74px !important; }
+
+/* Make the SoA table container handle overflow gracefully (should not be needed on desktop) */
+#tab-soa .table-responsive{ overflow-x: visible !important; }
+
+/* Mobile: transform table into stacked cards */
+@media (max-width: 900px){
+  #tab-soa table, #tab-soa thead, #tab-soa tbody, #tab-soa th, #tab-soa td, #tab-soa tr{
+    display:block !important;
+    width:100% !important;
+  }
+  #tab-soa thead{ display:none !important; }
+  #tab-soa tr{
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 18px;
+    padding: 10px 10px;
+    margin-bottom: 10px;
+  }
+  #tab-soa td{
+    border: none !important;
+    padding: 8px 6px !important;
+  }
+  #tab-soa td:before{
+    content: attr(data-label);
+    display:block;
+    font-size: 11px;
+    color: rgba(255,255,255,.62);
+    font-weight: 800;
+    letter-spacing:.12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  #tab-soa td:first-child{ padding-top: 4px !important; }
+  #tab-soa td:nth-child(1)::before{ content:"Select"; }
+  #tab-soa td:nth-child(1){ display:flex !important; align-items:center; gap:10px; }
+  #tab-soa td:nth-child(1) input{ transform: scale(1.1); }
+  #tab-soa td:nth-child(2),
+  #tab-soa td:nth-child(3){ }
+}
+
+/* ===== UI FIX: Multi-select option readability ===== */
+select[multiple]{ min-height: 220px !important; }
+select[multiple] option{ padding: 8px 10px !important; line-height: 1.35 !important; }
+
+
+/* ===== Premium UI Patch v3.2 (safe, non-breaking) ===== */
+
+/* Make filter rows horizontal and consistent */
+.grc-filter-row{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap: 10px !important;
+  align-items:flex-end !important;
+}
+.grc-filter-row > *{ flex: 1 1 220px !important; max-width: 320px; }
+.grc-filter-row label{ margin-bottom: 6px !important; }
+@media (max-width: 520px){
+  .grc-filter-row > *{ flex: 1 1 100% !important; max-width:none !important; }
+}
+
+/* Stronger form grid: 2-column desktop, 1-column mobile */
+.grc-form-grid{
+  display:grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 12px !important;
+}
+@media (min-width: 992px){
+  .grc-form-grid{ grid-template-columns: 1fr 1fr !important; }
+}
+.grc-form-grid .form-row{ display: contents !important; }
+.grc-form-grid .form-group{ margin-bottom: 0 !important; }
+.grc-form-grid .form-group.full,
+.grc-form-grid .grc-span-2{ grid-column: 1 / -1 !important; }
+.grc-form-grid .d-flex.justify-content-between{ grid-column: 1 / -1 !important; }
+.grc-form-grid textarea.form-control{ min-height: 90px !important; }
+.grc-form-grid select[multiple]{ min-height: 220px !important; }
+
+/* Checkbox groups (data types) look clean */
+.grc-check-row{
+  display:flex; flex-wrap:wrap; gap:10px;
+  padding: 10px 10px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.09);
+}
+.grc-check-row .custom-control{ margin-right: 10px !important; }
+
+/* Dashboard premium */
+#tab-dashboard .dashboard-card{
+  background: rgba(255,255,255,.06) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 14px 40px rgba(0,0,0,.25) !important;
+}
+#tab-dashboard .dashboard-card .value{
+  font-size: 1.8rem !important;
+  letter-spacing: -.3px;
+}
+#tab-dashboard .dashboard-card .sub{
+  color: rgba(255,255,255,.72) !important;
+}
+#tab-dashboard .dashboard-card:hover{
+  transform: translateY(-3px) !important;
+}
+
+/* Risk matrix container */
+#risk-matrix-canvas{
+  background: rgba(2,6,23,.55) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  border-radius: 18px !important;
+  box-shadow: inset 0 0 18px rgba(0,0,0,.35);
+}
+
+/* Challenge mode premium */
+.challenge-card{
+  background: rgba(255,255,255,.055) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 14px 40px rgba(0,0,0,.22) !important;
+}
+.challenge-card .challenge-score{
+  background: rgba(16,185,129,.12);
+  border: 1px solid rgba(16,185,129,.25);
+  padding: 4px 10px;
+  border-radius: 999px;
+  display:inline-block;
+}
+
+/* SoA: keep readable without horizontal scroll on desktop */
+#tab-soa .table-responsive{ overflow-x: auto !important; }
+#tab-soa table{ width: 100% !important; min-width: 980px !important; table-layout: fixed !important; }
+#tab-soa th, #tab-soa td{ white-space: normal !important; word-break: break-word; }
+#tab-soa td:last-child{ min-width: 420px !important; }
+#tab-soa .soa-textarea{ min-height: 110px !important; }
+#tab-soa .soa-textarea.soa-evidence{ min-height: 84px !important; }
+
+/* Mobile: stack SoA rows (keeps content usable) */
+@media (max-width: 900px){
+  #tab-soa table{ min-width: 0 !important; }
+  #tab-soa table, #tab-soa thead, #tab-soa tbody, #tab-soa th, #tab-soa td, #tab-soa tr{
+    display:block !important;
+    width:100% !important;
+  }
+  #tab-soa thead{ display:none !important; }
+  #tab-soa tr{
+    background: rgba(255,255,255,.045);
+    border: 1px solid rgba(255,255,255,.10);
+    border-radius: 18px;
+    padding: 10px 10px;
+    margin-bottom: 10px;
+  }
+  #tab-soa td{ border: none !important; padding: 8px 6px !important; }
+  #tab-soa td:before{
+    content: attr(data-label);
+    display:block;
+    font-size: 11px;
+    color: rgba(255,255,255,.62);
+    font-weight: 800;
+    letter-spacing:.12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+}
+
+/* Tables: improve action button alignment */
+.table td .btn{ white-space: nowrap; }
+.table td:last-child{ text-align: right; }
+
+
+/* ======================
+   Dashboard premium grid
+   (no framework required)
+   ====================== */
+.dashboard-kpi-row{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+.dashboard-kpi-row > div{
+  margin:0 !important;
+  padding:0 !important;
+}
+.dashboard-card{
+  border-radius: 18px;
+  background: rgba(255,255,255,.055);
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 10px 28px rgba(0,0,0,.22);
+  padding: 14px;
+  height: 100%;
+}
+.dashboard-card .label{
+  color: rgba(255,255,255,.70);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .2px;
+}
+.dashboard-card .value{
+  margin-top: 8px;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -.3px;
+  color: rgba(255,255,255,.92);
+}
+.dashboard-card .sub{
+  margin-top: 6px;
+  color: rgba(255,255,255,.58);
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+@media (max-width: 520px){
+  .dashboard-card{ padding: 12px; }
+  .dashboard-card .value{ font-size: 22px; }
+}
+
 </style>
 </head>
-<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-  <div class="gridfx"></div>
-  <div class="orb one"></div>
-  <div class="orb two"></div>
-  <div class="orb three"></div>
-
-  <div class="wrap">
-    <header class="topbar">
-      <a class="brandRow" href="index.html" style="text-decoration:none;color:inherit;">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <div class="brandTitle">John Bommeraveni Joseph</div>
-          <div class="brandSub">Cybersecurity • GRC • AI Governance • ISO/IEC 27001 &amp; 42001 Lead Auditor</div>
-        </div>
-      </a>
-
-      <nav class="navlinks" aria-label="Primary navigation">
-        <a class="pill muted" href="index.html">Home</a>
-        <a class="pill primary" href="grc-lab.html" aria-current="page">GRC Lab</a>
-        <a class="pill muted" href="cyber-readiness-tool.html">Cyber Readiness Tool</a>
-        <a class="pill muted" href="terms.html">Terms</a>
-        <a class="pill muted" href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer">YouTube</a>
-      </nav>
-    </header>
-
-  <!-- Lab -->
-  <section class="ftco-section grc-lab-hero">
-    <div class="grc-lab-container container-fluid px-4 px-md-5">
-      <!-- Header -->
-      <div class="row justify-content-center mb-4">
-        <div class="col-md-10 text-center ftco-animate">
-          <h1 class="mb-3">GRC Practice Lab (v4 - Enhanced Edition)</h1>
-          <div class="eduBanner"><span class="eduPill">Educational use only</span><span class="eduText">All controls are paraphrased and provided for practice &amp; portfolio demonstration — not for production use, certification, or legal compliance.</span></div>
-          <p class="lead">Practice frameworks, assets, risks, controls, issues, actions, vendors, incidents and reporting — all in your browser (data stays local). </p>
-          <p class="small-muted mb-0">Controls are paraphrased from ISO 27001:2022, NIST CSF 2.0, PCI DSS v4.0, HIPAA, SOC 2 for education only. Now with over 200 controls, challenge mode, templates, guidance, and PDF exports.</p>
-        </div>
+<body data-offset="300" data-spy="scroll" data-target=".site-navbar-target">
+<div aria-hidden="true" id="uiBusyOverlay">
+<div class="card">
+<div class="spinner"></div>
+<div style="font-weight:900;font-size:16px;">Working…</div>
+<div style="margin-top:6px;color:rgba(255,255,255,.72);font-size:12.5px;line-height:1.45;">
+        Generating output / updating view. This may take a moment.
       </div>
-      <!-- Guidance Overview -->
-      <div class="guidance">
-        <h4>Welcome to the GRC Practice Lab</h4>
-        <p>This tool is designed for aspiring GRC analysts, students, and professionals to hands-on practice cybersecurity governance, risk, and compliance concepts. Everything runs locally in your browser - no data leaves your device.</p>
-        <p class="small-muted"><strong>Disclaimer:</strong> All controls are paraphrased and intended solely for educational and practice purposes. This lab is not for real-world production use or compliance certification.</p>
-        <ul>
-          <li><strong>Start here:</strong> Use the tabs below to navigate. Begin with 'Guidance' for step-by-step instructions.</li>
-          <li><strong>Learn by doing:</strong> Load templates or demos, add your own data, analyze gaps, generate reports.</li>
-          <li><strong>Challenge yourself:</strong> Try Challenge Mode for scored scenarios to test your skills.</li>
-          <li><strong>Tips:</strong> Hover over tooltips for help. Export data anytime. Reset if needed.</li>
-          </ul>
-      </div>
-      <!-- Tabs -->
-      <div class="row mb-4">
-        <div class="col-md-12 text-center grc-tab-buttons">
-          <button class="btn btn-primary btn-sm" data-grc-tab="guidance">Guidance</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="frameworks">Frameworks &amp; Controls</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="assets">Assets</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="vendors">Vendors</button> <!-- New -->
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="risks">Risks</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="controls">Local Controls</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="issues">Issues / Findings</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="incidents">Incidents</button> <!-- New -->
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="treatments">Treatments</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="gap">Gap Analysis</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="soa">SoA</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="dashboard">Dashboard</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="matrix">Risk Matrix</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="summary">Auditor Summary</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="reports">Reports</button>
-          <button class="btn btn-outline-light btn-sm" data-grc-tab="challenges">Challenge Mode</button> <!-- New -->
-        </div>
-      </div>
-      <!-- Guidance Tab -->
-      <div id="tab-guidance" class="grc-tab active ftco-animate">
-        <h3>GRC Practice Lab Guidance</h3>
-        <div class="guidance">
-          <h4>Step-by-Step Guide</h4>
-          <ul>
-            <li><strong>1. Learn Frameworks:</strong> Review standard controls in Frameworks tab. Use to understand what good looks like.</li>
-            <li><strong>2. Inventory Assets:</strong> Add your organization's key assets (systems, data, etc). Classify criticality and data types.</li>
-            <li><strong>3. Manage Vendors:</strong> Track third-parties, assess risks, contracts.</li>
-            <li><strong>4. Identify Risks:</strong> For each asset/vendor, add risks with likelihood/impact. Use matrix to visualize.</li>
-            <li><strong>5. Implement Controls:</strong> Add local controls, map to frameworks and risks. Aim for coverage.</li>
-            <li><strong>6. Log Issues/Findings:</strong> From audits or tests, add issues linked to objects.</li>
-            <li><strong>7. Report Incidents:</strong> Log security incidents, link to response.</li>
-            <li><strong>8. Plan Treatments:</strong> Add actions to mitigate risks/issues. Track progress.</li>
-            <li><strong>9. Assess Compliance:</strong> Use Gap Analysis and SoA to check against standards.</li>
-            <li><strong>10. Monitor Dashboard:</strong> View metrics, heatmaps.</li>
-            <li><strong>11. Generate Reports:</strong> Create summaries, exports for management.</li>
-            <li><strong>12. Challenge Mode:</strong> Test skills with scenarios, get scores.</li>
-          </ul>
-          </div>
-      </div>
-      <!-- Frameworks -->
-      <div id="tab-frameworks" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">Browse and filter controls from major standards. Use these to map your local controls for compliance. Tip: Search for specific topics like 'access'.</span></span>: Review unified library. Over 200 controls from ISO, NIST, PCI, HIPAA, SOC2.</p>
-        </div>
-        <h3>Framework Library</h3>
-        <p class="mb-3">Filter and review a unified control set aligned to ISO/NIST/PCI/HIPAA/SOC2.</p>
-        <div class="row mb-3">
-          <div class="col-md-4 mb-2">
-            <label class="text-muted small mb-1">Filter by Framework</label>
-            <select id="framework-filter" class="form-control form-control-sm">
-              <option value="all">All frameworks</option>
-              <option value="ISO 27001">ISO 27001</option>
-              <option value="NIST CSF">NIST CSF</option>
-              <option value="PCI DSS">PCI DSS</option>
-              <option value="HIPAA">HIPAA</option>
-              <option value="SOC2">SOC 2</option> <!-- New -->
-            </select>
-          </div>
-          <div class="col-md-4 mb-2">
-            <label class="text-muted small mb-1">Filter by Category</label>
-            <select id="category-filter" class="form-control form-control-sm">
-              <option value="all">All categories</option>
-              <option>Access Control</option>
-              <option>Identity &amp; Authentication</option>
-              <option>Logging &amp; Monitoring</option>
-              <option>Encryption &amp; Key Management</option>
-              <option>Backup &amp; Recovery</option>
-              <option>Change Management</option>
-              <option>Vulnerability Management</option>
-              <option>Incident Response</option>
-              <option>Vendor Risk</option>
-              <option>Policy &amp; Governance</option>
-              <option>Awareness &amp; Training</option>
-              <option>Physical Security</option> <!-- New -->
-              <option>Network Security</option> <!-- New -->
-              <option>Asset Management</option> <!-- New -->
-            </select>
-          </div>
-          <div class="col-md-4 mb-2">
-            <label class="text-muted small mb-1">Search</label>
-            <input id="framework-search" class="form-control form-control-sm" placeholder="Search by name, ID, description...">
-          </div>
-        </div>
-        <div class="table-responsive bg-dark p-3 rounded">
-          <table class="table table-dark table-striped table-hover table-sm mb-0">
-            <thead>
-              <tr>
-                <th style="width:10%">ID</th>
-                <th style="width:20%">Name</th>
-                <th style="width:18%">Category</th>
-                <th style="width:20%">Based On</th>
-                <th style="width:32%">Description</th>
-              </tr>
-            </thead>
-            <tbody id="frameworks-table-body"></tbody>
-          </table>
-          <div class="mt-2 text-right">
-            <small id="frameworks-count" class="text-muted"></small>
-          </div>
-        </div>
-      </div>
-      <!-- Assets -->
-      <div id="tab-assets" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">Add key assets like apps, databases, servers. Classify criticality and data. Link to risks later. Tip: Start with high-critical assets handling sensitive data.</span></span>: Build your asset inventory. Essential for risk assessment.</p>
-        </div>
-        <h3>Asset Inventory</h3>
-        <div class="row">
-          <div class="col-lg-4 col-md-5 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <h5 class="mb-3">Add / Edit Asset</h5>
-              <form id="asset-form">
-                <input type="hidden" id="asset-id">
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Name *</label>
-                  <input id="asset-name" class="form-control form-control-sm" required placeholder="e.g. MediCloud Web App">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Type *</label>
-                  <select id="asset-type" class="form-control form-control-sm" required>
-                    <option value="">Select...</option>
-                    <option>Application</option><option>Database</option><option>Server / Host</option>
-                    <option>Network / Security Device</option><option>Cloud Service</option>
-                    <option>Vendor / Third Party</option><option>Data Store</option>
-                    <option>People / Role</option><option>Other</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Business criticality *</label>
-                  <select id="asset-criticality" class="form-control form-control-sm" required>
-                    <option value="">Select level...</option>
-                    <option>High</option><option>Medium</option><option>Low</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1 d-block">Data types</label>
-                  <div class="d-flex flex-wrap">
-                    <div class="custom-control custom-checkbox mr-3 mb-1">
-                      <input type="checkbox" class="custom-control-input asset-dt" id="dt-phi" value="PHI">
-                      <label class="custom-control-label" for="dt-phi">PHI</label>
-                    </div>
-                    <div class="custom-control custom-checkbox mr-3 mb-1">
-                      <input type="checkbox" class="custom-control-input asset-dt" id="dt-pii" value="PII">
-                      <label class="custom-control-label" for="dt-pii">PII</label>
-                    </div>
-                    <div class="custom-control custom-checkbox mr-3 mb-1">
-                      <input type="checkbox" class="custom-control-input asset-dt" id="dt-pan" value="Card data">
-                      <label class="custom-control-label" for="dt-pan">Card data</label>
-                    </div>
-                    <div class="custom-control custom-checkbox mr-3 mb-1">
-                      <input type="checkbox" class="custom-control-input asset-dt" id="dt-int" value="Internal data">
-                      <label class="custom-control-label" for="dt-int">Internal data</label>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Owner</label>
-                  <input id="asset-owner" class="form-control form-control-sm" placeholder="e.g. DevOps Team / CTO">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Location / Scope</label> <!-- New field -->
-                  <input id="asset-location" class="form-control form-control-sm" placeholder="e.g. AWS US-East-1, In-scope for PCI">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Notes</label>
-                  <textarea id="asset-notes" class="form-control form-control-sm" rows="2" placeholder="Scope, region, integrations..."></textarea>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <button class="btn btn-primary btn-sm" type="submit" id="asset-form-submit">Save asset</button>
-                  <button class="btn btn-outline-light btn-sm" type="button" id="asset-form-cancel">Clear</button>
-                </div>
-                <small class="text-muted d-block mt-2">Stored locally in your browser.</small>
-              </form>
-            </div>
-          </div>
-          <div class="col-lg-8 col-md-7 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="mb-0">Assets</h5>
-                <div>
-                  <button id="export-assets" class="btn btn-sm btn-outline-light mr-2">Export CSV</button>
-                  <small id="assets-count" class="text-muted"></small>
-                </div>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-dark table-striped table-hover table-sm mb-0">
-                  <thead>
-                    <tr>
-                      <th style="width:20%">Name</th><th style="width:14%">Type</th><th style="width:12%">Criticality</th>
-                      <th style="width:18%">Data types</th><th style="width:14%">Owner</th><th style="width:12%">Location</th><th style="width:10%">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="assets-table-body"></tbody>
-                </table>
-              </div>
-              <div id="assets-empty" class="text-muted small mt-2">No assets yet. Add some to start risk assessment.</div>
-              <ul class="pagination" id="assets-pagination"></ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- New Vendors Tab -->
-      <div id="tab-vendors" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">Track third-party vendors. Assess risks, contracts. Link to assets/risks. Tip: Prioritize critical vendors handling sensitive data.</span></span>: Manage vendor relationships for third-party risk.</p>
-        </div>
-        <h3>Vendor Management</h3>
-        <div class="row">
-          <div class="col-lg-4 col-md-5 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <h5 class="mb-3">Add / Edit Vendor</h5>
-              <form id="vendor-form">
-                <input type="hidden" id="vendor-id">
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Name *</label>
-                  <input id="vendor-name" class="form-control form-control-sm" required placeholder="e.g. AWS">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Type *</label>
-                  <select id="vendor-type" class="form-control form-control-sm" required>
-                    <option value="">Select...</option>
-                    <option>Cloud Provider</option><option>SaaS</option><option>Outsourcing</option><option>Hardware</option><option>Other</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Criticality *</label>
-                  <select id="vendor-criticality" class="form-control form-control-sm" required>
-                    <option value="">Select...</option>
-                    <option>High</option><option>Medium</option><option>Low</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Data Access</label>
-                  <select id="vendor-data-access" class="form-control form-control-sm">
-                    <option>None</option><option>Read</option><option>Read/Write</option><option>Full</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Contract Status</label>
-                  <select id="vendor-contract" class="form-control form-control-sm">
-                    <option>Active</option><option>Pending</option><option>Expired</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Last Assessment</label>
-                  <input type="date" id="vendor-assessment" class="form-control form-control-sm">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Notes</label>
-                  <textarea id="vendor-notes" class="form-control form-control-sm" rows="2" placeholder="Services, SLAs, risks..."></textarea>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <button class="btn btn-primary btn-sm" type="submit">Save vendor</button>
-                  <button class="btn btn-outline-light btn-sm" type="button" id="vendor-form-cancel">Clear</button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div class="col-lg-8 col-md-7 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="mb-0">Vendors</h5>
-                <div>
-                  <button id="export-vendors" class="btn btn-sm btn-outline-light mr-2">Export CSV</button>
-                  <small id="vendors-count" class="text-muted"></small>
-                </div>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-dark table-striped table-hover table-sm mb-0">
-                  <thead>
-                    <tr>
-                      <th style="width:20%">Name</th><th style="width:15%">Type</th><th style="width:12%">Criticality</th>
-                      <th style="width:15%">Data Access</th><th style="width:15%">Contract</th><th style="width:15%">Last Assessment</th><th style="width:8%">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="vendors-table-body"></tbody>
-                </table>
-              </div>
-              <div id="vendors-empty" class="text-muted small mt-2">No vendors yet. Add third-parties to assess supply chain risks.</div>
-              <ul class="pagination" id="vendors-pagination"></ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Risks -->
-      <div id="tab-risks" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">Add risks linked to assets/vendors. Score likelihood/impact. Use thresholds to categorize. Tip: Focus on top risks (high score, open status).</span></span>: Build risk register. Link to assets/vendors for context.</p>
-        </div>
-        <h3>Risk Register</h3>
-        <div class="row">
-          <div class="col-lg-4 col-md-5 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <h5 class="mb-3">Add / Edit Risk</h5>
-              <form id="risk-form">
-                <input type="hidden" id="risk-id">
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Title *</label>
-                  <input id="risk-title" class="form-control form-control-sm" required placeholder="e.g. Unauthorised access to app">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Linked Asset/Vendor *</label>
-                  <select id="risk-linked" class="form-control form-control-sm" required> <!-- Updated to link asset or vendor -->
-                    <option value="">Select...</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Category *</label>
-                  <select id="risk-category" class="form-control form-control-sm" required>
-                    <option value="">Select...</option>
-                    <option>Cybersecurity</option><option>Compliance</option><option>Operational</option>
-                    <option>Privacy</option><option>Third-Party</option><option>Financial</option><option>Reputational</option><option>Other</option>
-                  </select>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Likelihood (1–5) *</label>
-                    <select id="risk-likelihood" class="form-control form-control-sm" required>
-                      <option value="">Select...</option>
-                      <option value="1">1 – Rare</option><option value="2">2 – Unlikely</option><option value="3">3 – Possible</option>
-                      <option value="4">4 – Likely</option><option value="5">5 – Almost certain</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Impact (1–5) *</label>
-                    <select id="risk-impact" class="form-control form-control-sm" required>
-                      <option value="">Select...</option>
-                      <option value="1">1 – Insignificant</option><option value="2">2 – Minor</option><option value="3">3 – Moderate</option>
-                      <option value="4">4 – Major</option><option value="5">5 – Severe</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Residual Likelihood</label>
-                    <select id="risk-res-likelihood" class="form-control form-control-sm">
-                      <option value="">Select...</option>
-                      <option value="1">1 – Rare</option><option value="2">2 – Unlikely</option><option value="3">3 – Possible</option>
-                      <option value="4">4 – Likely</option><option value="5">5 – Almost certain</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Residual Impact</label>
-                    <select id="risk-res-impact" class="form-control form-control-sm">
-                      <option value="">Select...</option>
-                      <option value="1">1 – Insignificant</option><option value="2">2 – Minor</option><option value="3">3 – Moderate</option>
-                      <option value="4">4 – Major</option><option value="5">5 – Severe</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Owner</label>
-                  <input id="risk-owner" class="form-control form-control-sm" placeholder="e.g. CISO / Product Owner">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Status *</label>
-                  <select id="risk-status" class="form-control form-control-sm" required>
-                    <option>Open</option><option>In progress</option><option>Mitigated</option><option>Accepted</option><option>Avoided</option><option>Transferred</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Description / Notes</label>
-                  <textarea id="risk-notes" class="form-control form-control-sm" rows="2"></textarea>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <button class="btn btn-primary btn-sm" type="submit" id="risk-form-submit">Save risk</button>
-                  <button class="btn btn-outline-light btn-sm" type="button" id="risk-form-cancel">Clear</button>
-                </div>
-                <small class="text-muted d-block mt-2">Score = Likelihood × Impact (1–25). Residual after controls. High / Medium / Low thresholds configurable.</small>
-              </form>
-            </div>
-          </div>
-          <div class="col-lg-8 col-md-7 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="mb-0">Risks</h5>
-                <div>
-                  <button id="export-risks" class="btn btn-sm btn-outline-light mr-2">Export CSV</button>
-                  <small id="risks-count" class="text-muted"></small>
-                </div>
-              </div>
-              <!-- Filters + sorting -->
-              <div class="row mb-2">
-                <div class="col-md-3 mb-1">
-                  <label class="text-muted small mb-1">Filter by status</label>
-                  <select id="risk-filter-status" class="form-control form-control-sm">
-                    <option value="all">All statuses</option>
-                    <option>Open</option>
-                    <option>In progress</option>
-                    <option>Mitigated</option>
-                    <option>Accepted</option>
-                    <option>Avoided</option>
-                    <option>Transferred</option>
-                  </select>
-                </div>
-                <div class="col-md-3 mb-1">
-                  <label class="text-muted small mb-1">Filter by level</label>
-                  <select id="risk-filter-level" class="form-control form-control-sm">
-                    <option value="all">All levels</option>
-                    <option>High</option>
-                    <option>Medium</option>
-                    <option>Low</option>
-                  </select>
-                </div>
-                <div class="col-md-3 mb-1">
-                  <label class="text-muted small mb-1">Filter by category</label>
-                  <select id="risk-filter-category" class="form-control form-control-sm">
-                    <option value="all">All</option>
-                    <option>Cybersecurity</option><option>Compliance</option><option>Operational</option>
-                    <option>Privacy</option><option>Third-Party</option><option>Financial</option><option>Reputational</option><option>Other</option>
-                  </select>
-                </div>
-                <div class="col-md-3 mb-1">
-                  <label class="text-muted small mb-1">Sort</label>
-                  <div class="d-flex">
-                    <select id="risk-sort-field" class="form-control form-control-sm mr-1">
-                      <option value="score">Score</option>
-                      <option value="title">Title</option>
-                      <option value="asset">Linked</option>
-                      <option value="impact">Impact</option>
-                      <option value="likelihood">Likelihood</option>
-                      <option value="status">Status</option>
-                    </select>
-                    <select id="risk-sort-dir" class="form-control form-control-sm">
-                      <option value="desc">Desc</option>
-                      <option value="asc">Asc</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <!-- Threshold settings -->
-              <div class="bg-secondary rounded p-2 mb-2">
-                <div class="d-flex flex-wrap align-items-center">
-                  <span class="small text-light mr-2">
-                    Risk levels: High ≥ <input id="risk-thres-high" type="number" min="1" max="25" class="form-control form-control-sm d-inline-block" style="width:60px;" /> ; Medium ≥ <input id="risk-thres-med" type="number" min="1" max="25" class="form-control form-control-sm d-inline-block" style="width:60px;" /> ; Low below Medium.
-                  </span>
-                  <button id="risk-thres-reset" class="btn btn-sm btn-outline-light ml-auto">Reset</button>
-                </div>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-dark table-striped table-hover table-sm mb-0">
-                  <thead>
-                    <tr>
-                      <th style="width:24%">Title</th><th style="width:16%">Linked</th><th style="width:14%">Category</th>
-                      <th style="width:14%">Inherent</th><th style="width:14%">Residual</th><th style="width:12%">Status</th><th style="width:6%">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="risks-table-body"></tbody>
-                </table>
-              </div>
-              <div id="risks-empty" class="text-muted small mt-2">No risks yet. Add some based on assets.</div>
-              <ul class="pagination" id="risks-pagination"></ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Local Controls -->
-      <div id="tab-controls" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">Add your organization's controls. Map to frameworks and risks. Set status to track implementation. Tip: Use 'In place' for operating controls, 'Planned' for gaps.</span></span>: Build control library. Map to standards for compliance.</p>
-        </div>
-        <h3>Local Controls (Org Library)</h3>
-        <div class="row">
-          <div class="col-lg-4 col-md-5 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <h5 class="mb-3">Add / Edit Control</h5>
-              <form id="control-form">
-                <input type="hidden" id="control-id">
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Control name *</label>
-                  <input id="control-name" class="form-control form-control-sm" required placeholder="e.g. Enforce MFA for admins">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Type *</label>
-                  <select id="control-type" class="form-control form-control-sm" required>
-                    <option value="">Select...</option>
-                    <option>Preventive</option><option>Detective</option><option>Corrective</option>
-                    <option>Administrative</option><option>Technical</option><option>Physical</option>
-                    <option>Compensating</option> <!-- New -->
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Status *</label>
-                  <select id="control-status" class="form-control form-control-sm" required>
-                    <option>In place</option><option>Planned</option><option>Not applicable</option><option>Ineffective</option> <!-- New -->
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Owner</label>
-                  <input id="control-owner" class="form-control form-control-sm" placeholder="DevSecOps / IT Ops / Compliance">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Description</label>
-                  <textarea id="control-description" class="form-control form-control-sm" rows="2" placeholder="Implementation details, evidence..."></textarea>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Related risks</label>
-                  <select id="control-risks" class="form-control form-control-sm" multiple></select>
-                  <small class="text-muted">Hold Ctrl/Cmd to multi-select.</small>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Related framework controls</label>
-                  <select id="control-frameworks" class="form-control form-control-sm" multiple></select>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Evidence</label>
-                  <input id="control-evidence" class="form-control form-control-sm" placeholder="Links to docs, screenshots...">
-                </div>
-                <div class="d-flex justify-content-between">
-                  <button class="btn btn-primary btn-sm" type="submit" id="control-form-submit">Save control</button>
-                  <button class="btn btn-outline-light btn-sm" type="button" id="control-form-cancel">Clear</button>
-                </div>
-                <small class="text-muted d-block mt-2">Stored locally. Map to frameworks for gap analysis.</small>
-              </form>
-            </div>
-          </div>
-          <div class="col-lg-8 col-md-7 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="mb-0">Controls</h5>
-                <div>
-                  <button id="export-controls" class="btn btn-sm btn-outline-light mr-2">Export CSV</button>
-                  <small id="controls-count" class="text-muted"></small>
-                </div>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-dark table-striped table-hover table-sm mb-0">
-                  <thead>
-                    <tr>
-                      <th style="width:24%">Name</th><th style="width:14%">Type</th><th style="width:12%">Status</th>
-                      <th style="width:18%">Linked risks</th><th style="width:14%">Frameworks</th><th style="width:18%">Evidence</th><th style="width:10%">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="controls-table-body"></tbody>
-                </table>
-              </div>
-              <div id="controls-empty" class="text-muted small mt-2">No controls yet. Add and map to frameworks.</div>
-              <ul class="pagination" id="controls-pagination"></ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Issues / Findings -->
-      <div id="tab-issues" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">Log findings from audits, tests, reviews. Link to objects. Set severity/status. Tip: Use for gap remediation tracking.</span></span>: Track audit findings and gaps.</p>
-        </div>
-        <h3>Issues &amp; Findings</h3>
-        <div class="row">
-          <div class="col-lg-4 col-md-5 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <h5 class="mb-3">Add / Edit Issue</h5>
-              <form id="issue-form">
-                <input type="hidden" id="issue-id">
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Title *</label>
-                  <input id="issue-title" class="form-control form-control-sm" required placeholder="e.g. Missing MFA for admins">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Type *</label>
-                  <select id="issue-type" class="form-control form-control-sm" required>
-                    <option value="">Select...</option>
-                    <option>Audit</option><option>Pen test</option><option>Vulnerability Scan</option><option>Self-Assessment</option><option>Risk review</option><option>Other</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Linked objects (optional)</label>
-                  <select id="issue-asset" class="form-control form-control-sm mb-1"><option value="">Linked asset...</option></select>
-                  <select id="issue-vendor" class="form-control form-control-sm mb-1"><option value="">Linked vendor...</option></select> <!-- New -->
-                  <select id="issue-risk" class="form-control form-control-sm mb-1"><option value="">Linked risk...</option></select>
-                  <select id="issue-control" class="form-control form-control-sm"><option value="">Linked control...</option></select>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Severity *</label>
-                    <select id="issue-severity" class="form-control form-control-sm" required>
-                      <option value="">Select...</option>
-                      <option>Low</option><option>Medium</option><option>High</option><option>Critical</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Status *</label>
-                    <select id="issue-status" class="form-control form-control-sm" required>
-                      <option>Open</option><option>In progress</option><option>Resolved</option><option>Accepted</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Owner</label>
-                    <input id="issue-owner" class="form-control form-control-sm" placeholder="e.g. Dev Lead">
-                  </div>
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Due date</label>
-                    <input type="date" id="issue-due" class="form-control form-control-sm">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Details / Recommendation</label>
-                  <textarea id="issue-notes" class="form-control form-control-sm" rows="2"></textarea>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <button class="btn btn-primary btn-sm" type="submit" id="issue-form-submit">Save issue</button>
-                  <button class="btn btn-outline-light btn-sm" type="button" id="issue-form-cancel">Clear</button>
-                </div>
-                <small class="text-muted d-block mt-2">Stored locally in your browser.</small>
-              </form>
-            </div>
-          </div>
-          <div class="col-lg-8 col-md-7 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="mb-0">Issues / Findings</h5>
-                <div>
-                  <button id="export-issues" class="btn btn-sm btn-outline-light mr-2">Export CSV</button>
-                  <small id="issues-count" class="text-muted"></small>
-                </div>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-dark table-striped table-hover table-sm mb-0">
-                  <thead>
-                    <tr>
-                      <th style="width:22%">Title</th><th style="width:10%">Type</th><th style="width:12%">Severity</th>
-                      <th style="width:12%">Status</th><th style="width:20%">Linked to</th><th style="width:12%">Due</th><th style="width:12%">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="issues-table-body"></tbody>
-                </table>
-              </div>
-              <div id="issues-empty" class="text-muted small mt-2">No issues yet.</div>
-              <ul class="pagination" id="issues-pagination"></ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- New Incidents Tab -->
-      <div id="tab-incidents" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">Log security incidents. Classify severity, status. Link to risks/controls. Tip: Use for response practice and lessons learned.</span></span>: Track and respond to incidents.</p>
-        </div>
-        <h3>Incident Management</h3>
-        <div class="row">
-          <div class="col-lg-4 col-md-5 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <h5 class="mb-3">Add / Edit Incident</h5>
-              <form id="incident-form">
-                <input type="hidden" id="incident-id">
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Title *</label>
-                  <input id="incident-title" class="form-control form-control-sm" required placeholder="e.g. Data Breach Suspicion">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Type *</label>
-                  <select id="incident-type" class="form-control form-control-sm" required>
-                    <option value="">Select...</option>
-                    <option>Data Breach</option><option>Phishing</option><option>Malware</option><option>Insider Threat</option><option>Denial of Service</option><option>Other</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Detected Date *</label>
-                  <input type="date" id="incident-detected" class="form-control form-control-sm" required>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Linked objects (optional)</label>
-                  <select id="incident-asset" class="form-control form-control-sm mb-1"><option value="">Linked asset...</option></select>
-                  <select id="incident-vendor" class="form-control form-control-sm mb-1"><option value="">Linked vendor...</option></select>
-                  <select id="incident-risk" class="form-control form-control-sm mb-1"><option value="">Linked risk...</option></select>
-                  <select id="incident-control" class="form-control form-control-sm"><option value="">Linked control...</option></select>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Severity *</label>
-                    <select id="incident-severity" class="form-control form-control-sm" required>
-                      <option value="">Select...</option>
-                      <option>Low</option><option>Medium</option><option>High</option><option>Critical</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Status *</label>
-                    <select id="incident-status" class="form-control form-control-sm" required>
-                      <option>Detected</option><option>Investigating</option><option>Contained</option><option>Recovered</option><option>Closed</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Owner</label>
-                  <input id="incident-owner" class="form-control form-control-sm" placeholder="e.g. Incident Response Team">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Details / Response</label>
-                  <textarea id="incident-notes" class="form-control form-control-sm" rows="3" placeholder="What happened, root cause, lessons learned..."></textarea>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <button class="btn btn-primary btn-sm" type="submit">Save incident</button>
-                  <button class="btn btn-outline-light btn-sm" type="button" id="incident-form-cancel">Clear</button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div class="col-lg-8 col-md-7 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="mb-0">Incidents</h5>
-                <div>
-                  <button id="export-incidents" class="btn btn-sm btn-outline-light mr-2">Export CSV</button>
-                  <small id="incidents-count" class="text-muted"></small>
-                </div>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-dark table-striped table-hover table-sm mb-0">
-                  <thead>
-                    <tr>
-                      <th style="width:22%">Title</th><th style="width:10%">Type</th><th style="width:12%">Severity</th>
-                      <th style="width:12%">Status</th><th style="width:16%">Detected</th><th style="width:20%">Linked to</th><th style="width:8%">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="incidents-table-body"></tbody>
-                </table>
-              </div>
-              <div id="incidents-empty" class="text-muted small mt-2">No incidents yet. Log when they occur for practice.</div>
-              <ul class="pagination" id="incidents-pagination"></ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Treatments -->
-      <div id="tab-treatments" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">Add mitigation actions for risks/issues. Link to controls. Track status/target. Tip: Use for risk treatment plans.</span></span>: Plan and track remediations.</p>
-        </div>
-        <h3>Treatments (Mitigation Plan)</h3>
-        <div class="row">
-          <div class="col-lg-4 col-md-5 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <h5 class="mb-3">Add / Edit Treatment</h5>
-              <form id="treat-form">
-                <input type="hidden" id="treat-id">
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Action title *</label>
-                  <input id="treat-title" class="form-control form-control-sm" required placeholder="e.g. Enforce SSO & MFA for admins">
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Linked risk/issue *</label>
-                  <select id="treat-linked" class="form-control form-control-sm" required><option value="">Select...</option></select> <!-- Updated -->
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Linked control (optional)</label>
-                  <select id="treat-control" class="form-control form-control-sm"><option value="">Select control...</option></select>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Status *</label>
-                    <select id="treat-status" class="form-control form-control-sm" required>
-                      <option>Open</option><option>In progress</option><option>Closed</option><option>Deferred</option>
-                    </select>
-                  </div>
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Target date</label>
-                    <input type="date" id="treat-date" class="form-control form-control-sm">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Owner</label>
-                    <input id="treat-owner" class="form-control form-control-sm" placeholder="e.g. DevOps Lead">
-                  </div>
-                  <div class="form-group col-6">
-                    <label class="text-muted small mb-1">Budget (optional)</label>
-                    <input id="treat-budget" class="form-control form-control-sm" placeholder="e.g. 2,500 USD">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="text-muted small mb-1">Notes</label>
-                  <textarea id="treat-notes" class="form-control form-control-sm" rows="2"></textarea>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <button class="btn btn-primary btn-sm" type="submit" id="treat-submit">Save action</button>
-                  <button class="btn btn-outline-light btn-sm" type="button" id="treat-cancel">Clear</button>
-                </div>
-                <small class="text-muted d-block mt-2">Stored locally. Link to risks/issues for tracking.</small>
-              </form>
-            </div>
-          </div>
-          <div class="col-lg-8 col-md-7 mb-4">
-            <div class="bg-dark p-3 rounded">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <h5 class="mb-0">Treatment actions</h5>
-                <div>
-                  <button id="export-treatments" class="btn btn-sm btn-outline-light mr-2">Export CSV</button>
-                  <small id="treat-count" class="text-muted"></small>
-                </div>
-              </div>
-              <div class="table-responsive">
-                <table class="table table-dark table-striped table-hover table-sm mb-0">
-                  <thead>
-                    <tr>
-                      <th style="width:26%">Title</th><th style="width:20%">Linked</th>
-                      <th style="width:12%">Status</th><th style="width:14%">Target</th>
-                      <th style="width:10%">Owner</th><th style="width:10%">Budget</th><th style="width:8%">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody id="treat-table-body"></tbody>
-                </table>
-              </div>
-              <div id="treat-empty" class="text-muted small mt-2">No treatment actions yet.</div>
-              <ul class="pagination" id="treatments-pagination"></ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Gap Analysis -->
-      <div id="tab-gap" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">View coverage by category. Heatmap shows maturity. Tip: Aim for 80%+ implemented in core areas.</span></span>: Analyze control gaps against frameworks.</p>
-        </div>
-        <h3>Gap Analysis &amp; Heatmap</h3>
-        <p class="mb-3">Coverage based on local controls mapped to frameworks. “In place” = implemented; “Planned” = planned-only.</p>
-        <div class="table-responsive bg-dark p-3 rounded">
-          <table class="table table-dark table-striped table-hover table-sm mb-0">
-            <thead>
-              <tr>
-                <th style="width:24%">Category</th>
-                <th style="width:12%">Total controls</th>
-                <th style="width:16%">Implemented</th>
-                <th style="width:16%">Planned only</th>
-                <th style="width:16%">Not implemented</th>
-                <th style="width:16%">Heatmap</th>
-              </tr>
-            </thead>
-            <tbody id="gap-table-body"></tbody>
-          </table>
-          <div class="mt-2 text-right"><small id="gap-overall-coverage" class="text-muted"></small></div>
-        </div>
-      </div>
-      <!-- SoA -->
-      <div id="tab-soa" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">Set applicability and implementation for each control. Use bulk edit for efficiency. Add rationale/evidence for audits. Tip: 'Auto' uses local controls mapping.</span></span>: Document Statement of Applicability for ISO-like compliance.</p>
-        </div>
-        <h3>Statement of Applicability (SoA)</h3>
-        <p class="mb-3 small-muted"> Applicability & implementation against the unified framework library. Edit rationale/evidence inline; data persists locally. </p>
-        <div class="bg-dark p-3 rounded mb-2">
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="small text-muted">
-              <span id="soa-count"></span>
-            </div>
-            <div>
-              <button id="soa-export" class="btn btn-sm btn-outline-light">Export SoA CSV</button>
-            </div>
-          </div>
-        </div>
-        <!-- Filters for SoA -->
-        <div class="row mb-3">
-          <div class="col-md-3 mb-2">
-            <label class="text-muted small mb-1">Filter by Framework</label>
-            <select id="soa-framework-filter" class="form-control form-control-sm">
-              <option value="all">All frameworks</option>
-              <option value="ISO 27001">ISO 27001</option>
-              <option value="NIST CSF">NIST CSF</option>
-              <option value="PCI DSS">PCI DSS</option>
-              <option value="HIPAA">HIPAA</option>
-              <option value="SOC2">SOC 2</option>
-            </select>
-          </div>
-          <div class="col-md-3 mb-2">
-            <label class="text-muted small mb-1">Filter by Category</label>
-            <select id="soa-category-filter" class="form-control form-control-sm">
-              <option value="all">All categories</option>
-              <!-- Categories from expanded list -->
-              <option>Access Control</option>
-              <option>Identity & Authentication</option>
-              <option>Logging & Monitoring</option>
-              <option>Encryption & Key Management</option>
-              <option>Backup & Recovery</option>
-              <option>Change Management</option>
-              <option>Vulnerability Management</option>
-              <option>Incident Response</option>
-              <option>Vendor Risk</option>
-              <option>Policy & Governance</option>
-              <option>Awareness & Training</option>
-              <option>Physical Security</option>
-              <option>Network Security</option>
-              <option>Asset Management</option>
-            </select>
-          </div>
-          <div class="col-md-3 mb-2">
-            <label class="text-muted small mb-1">Filter by Applicability</label>
-            <select id="soa-applicability-filter" class="form-control form-control-sm">
-              <option value="all">All</option>
-              <option>Applicable</option>
-              <option>Not Applicable</option>
-            </select>
-          </div>
-          <div class="col-md-3 mb-2">
-            <label class="text-muted small mb-1">Filter by Implementation</label>
-            <select id="soa-implementation-filter" class="form-control form-control-sm">
-              <option value="all">All</option>
-              <option>In place</option>
-              <option>Planned</option>
-              <option>Not implemented</option>
-              <option>Not applicable</option>
-            </select>
-          </div>
-        </div>
-        <!-- Bulk edit bar -->
-        <div class="bulk-edit-bar" id="soa-bulk-bar">
-          <label class="text-muted small mb-1">Bulk Edit Selected:</label>
-          <select id="bulk-applicability" class="soa-select mr-2">
-            <option value="">Set Applicability...</option>
-            <option>Applicable</option>
-            <option>Not Applicable</option>
-          </select>
-          <select id="bulk-implementation" class="soa-select mr-2">
-            <option value="">Set Implementation...</option>
-            <option>In place</option>
-            <option>Planned</option>
-            <option>Not implemented</option>
-            <option>Not applicable</option>
-          </select>
-          <button id="bulk-apply" class="btn btn-sm btn-primary">Apply</button>
-          <button id="bulk-clear" class="btn btn-sm btn-outline-light ml-2">Clear Selection</button>
-        </div>
-        <div class="table-responsive bg-dark p-3 rounded">
-          <table class="table table-dark table-striped table-hover table-sm mb-0">
-            <thead>
-              <tr>
-                <th style="width:5%"><input type="checkbox" id="soa-select-all" class="soa-checkbox"></th>
-                <th style="width:10%">ID</th>
-                <th style="width:18%">Name</th>
-                <th style="width:14%">Category</th>
-                <th style="width:14%">Frameworks</th>
-                <th style="width:12%">Applicability</th>
-                <th style="width:12%">Implementation</th>
-                <th style="width:10%">Owner</th>
-                <th style="width:20%">Rationale / Evidence</th>
-              </tr>
-            </thead>
-            <tbody id="soa-table-body"></tbody>
-          </table>
-        </div>
-      </div>
-      <!-- Dashboard -->
-      <div id="tab-dashboard" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">Monitor key metrics. Use to track progress. Tip: Aim for low high risks, high coverage, no overdue.</span></span>: Overview of your GRC posture.</p>
-        </div>
-        <h3>Dashboard</h3>
-        <div class="row">
-          <div class="col-sm-6 col-md-3 mb-3">
-            <div class="dashboard-card p-3 h-100"><div class="label">Assets</div><div class="value" id="dash-assets">0</div><div class="sub">Tracked</div></div>
-          </div>
-          <div class="col-sm-6 col-md-3 mb-3">
-            <div class="dashboard-card p-3 h-100"><div class="label">Vendors</div><div class="value" id="dash-vendors">0</div><div class="sub">Managed</div></div> <!-- New -->
-          </div>
-          <div class="col-sm-6 col-md-3 mb-3">
-            <div class="dashboard-card p-3 h-100"><div class="label">Risks</div><div class="value" id="dash-risks">0</div><div class="sub"><span id="dash-high">0</span> high</div></div>
-          </div>
-          <div class="col-sm-6 col-md-3 mb-3">
-            <div class="dashboard-card p-3 h-100"><div class="label">Controls</div><div class="value" id="dash-controls">0</div><div class="sub">Implemented</div></div>
-          </div>
-          <div class="col-sm-6 col-md-3 mb-3">
-            <div class="dashboard-card p-3 h-100"><div class="label">Issues</div><div class="value" id="dash-issues">0</div><div class="sub"><span id="dash-overdue">0</span> overdue</div></div>
-          </div>
-          <div class="col-sm-6 col-md-3 mb-3">
-            <div class="dashboard-card p-3 h-100"><div class="label">Incidents</div><div class="value" id="dash-incidents">0</div><div class="sub">Open</div></div> <!-- New -->
-          </div>
-          <div class="col-sm-6 col-md-3 mb-3">
-            <div class="dashboard-card p-3 h-100"><div class="label">Treatments</div><div class="value" id="dash-treatments">0</div><div class="sub">In progress</div></div>
-          </div>
-          <div class="col-sm-6 col-md-3 mb-3">
-            <div class="dashboard-card p-3 h-100"><div class="label">Compliance Coverage</div><div class="value" id="dash-coverage">0%</div><div class="sub">Implemented</div></div>
-          </div>
-        </div>
-        <div class="row mt-2">
-          <div class="col-md-4 mb-3">
-            <div class="dashboard-card p-3 h-100 d-flex flex-column justify-content-between">
-              <div>
-                <div class="label">Framework coverage</div>
-                <div class="value"><span id="dash-coverage">0%</span></div>
-                <div class="sub">Implemented local controls mapped to frameworks.</div>
-              </div>
-              <div class="mt-2"><span id="dash-coverage-pill" class="heat-pill heat-none">Coverage heat</span></div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-3">
-            <div class="dashboard-card p-3 h-100">
-              <div class="label mb-1">Templates</div>
-              <p class="sub">Load pre-built setups for standards.</p>
-              <div class="d-flex flex-wrap">
-                <button id="load-iso-template" class="btn btn-sm btn-outline-info mr-2 mb-2">Load ISO 27001</button>
-                <button id="load-nist-template" class="btn btn-sm btn-outline-info mr-2 mb-2">Load NIST CSF</button>
-                <button id="load-pci-template" class="btn btn-sm btn-outline-info mr-2 mb-2">Load PCI DSS</button>
-                <button id="load-hipaa-template" class="btn btn-sm btn-outline-info mb-2">Load HIPAA</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 mb-3">
-            <div class="dashboard-card p-3 h-100">
-              <div class="label mb-1">Scenarios &amp; exports</div>
-              <p class="sub">Manage data and load examples.</p>
-              <div class="d-flex flex-wrap">
-                <button id="btn-export" class="btn btn-sm btn-primary mr-2 mb-2">Export JSON</button>
-                <button id="btn-import" class="btn btn-sm btn-outline-light mr-2 mb-2">Import JSON</button>
-                <button id="btn-load-demo" class="btn btn-sm btn-outline-info mr-2 mb-2">Load Demo</button>
-                <button id="btn-reset" class="btn btn-sm btn-outline-danger mb-2">Reset All</button>
-                <input type="file" id="file-import" accept="application/json" style="display:none">
-              </div>
-              <small id="import-status" class="text-muted d-block mt-2"></small>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Risk Matrix -->
-      <div id="tab-matrix" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">Visualize risks. Toggle inherent vs residual. Export PNG for reports. Tip: Residual shows control effectiveness.</span></span>: Risk visualization tool.</p>
-        </div>
-        <h3>Risk Matrix (Inherent vs Residual)</h3>
-        <p class="mb-3">Toggle to compare inherent (pre-controls) and residual (post-controls) risks.</p>
-        <div class="bg-dark p-3 rounded mb-3">
-          <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-sm btn-primary active" id="toggle-inherent"><input type="radio" name="mx" checked> Inherent</label>
-              <label class="btn btn-sm btn-outline-light" id="toggle-residual"><input type="radio" name="mx"> Residual</label>
-            </div>
-            <button id="matrix-export" class="btn btn-outline-light btn-sm">Export PNG</button>
-          </div>
-          <canvas id="risk-matrix-canvas" width="920" height="640"></canvas>
-          <div id="matrix-legend" class="mt-3 text-center text-muted small"></div>
-        </div>
-      </div>
-      <!-- Auditor Summary -->
-      <div id="tab-summary" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">Auto-generated narrative. Refresh after changes. Copy/export for docs. Tip: Customize in reports tab.</span></span>: Executive summary generator.</p>
-        </div>
-        <h3>Auditor-style Summary</h3>
-        <p class="mb-3">Generated narrative narrative for reports/decks.</p>
-        <div class="bg-dark p-3 rounded mb-3">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="small-muted">Based on current data.</span>
-            <div>
-              <button id="summary-refresh" class="btn btn-sm btn-primary mr-2">Refresh</button>
-              <button id="summary-copy" class="btn btn-sm btn-outline-light mr-2">Copy</button>
-              <button id="summary-export-md" class="btn btn-sm btn-outline-light mr-2">Export MD</button>
-              <button id="summary-export-pdf" class="btn btn-sm btn-outline-light">Export PDF</button>
-            </div>
-          </div>
-          <textarea id="summary-text" class="form-control" rows="16"></textarea>
-          <div class="small-muted mt-2">Tip: Use in audit reports or ISO SoA.</div>
-        </div>
-      </div>
-      <!-- Reports -->
-      <div id="tab-reports" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">Select type, generate. Export MD/PDF. Tip: Customize text before export.</span></span>: Create customizable reports.</p>
-        </div>
-        <h3>Reports</h3>
-        <p class="mb-3">Generate teaching-oriented reports.</p>
-        <div class="bg-dark p-3 rounded mb-3">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="small-muted">Select type.</span>
-            <select id="report-type" class="form-control form-control-sm mr-2" style="width:200px;">
-              <option value="full-audit">Full Audit</option>
-              <option value="risk-register">Risk Register</option>
-              <option value="control-coverage">Control Coverage</option>
-              <option value="issue-summary">Issue Summary</option>
-              <option value="vendor-report">Vendor Risk</option> <!-- New -->
-              <option value="incident-report">Incident Log</option> <!-- New -->
-            </select>
-            <button id="generate-report" class="btn btn-sm btn-primary mr-2">Generate</button>
-            <button id="report-export-md" class="btn btn-sm btn-outline-light mr-2">Export MD</button>
-            <button id="report-export-pdf" class="btn btn-sm btn-outline-light">Export PDF</button>
-          </div>
-          <textarea id="report-text" class="form-control" rows="16" ></textarea>
-          <div class="small-muted mt-2">Edit text if needed before export.</div>
-        </div>
-      </div>
-      <!-- Challenge Mode -->
-      <div id="tab-challenges" class="grc-tab ftco-animate">
-        <div class="guidance">
-          <p><span class="tooltip">How to use<span class="tooltiptext">Select challenge, complete tasks in lab, check score. Tip: Use to practice real scenarios, aim for high scores.</span></span>: Gamified learning mode.</p>
-        </div>
-        <h3>Challenge Mode</h3>
-        <p class="mb-3">Test your GRC skills with scored challenges. Complete tasks, then self-score.</p>
-        <div class="challenge-card">
-          <h4>Challenge 1: Basic Risk Assessment (Beginner)</h4>
-          <p>Scenario: You're a new analyst at a small e-commerce company. Identify 5 risks for their web app and database.</p>
-          <ul>
-            <li>Add 2 assets</li>
-            <li>Add 5 risks, score them</li>
-            <li>Add 3 controls to mitigate</li>
-            <li>Achieve 60% coverage in gap analysis</li>
-          </ul>
-          <p>Score: Check dashboard - 1 point per task, bonus for high risks mitigated. Your score: <span class="challenge-score" id="challenge-1-score">0/5</span></p>
-          <button class="btn btn-sm btn-primary" onclick="scoreChallenge(1)">Calculate Score</button>
-        </div>
-        <div class="challenge-card">
-          <h4>Challenge 2: Compliance Mapping (Intermediate)</h4>
-          <p>Scenario: Prepare for ISO 27001 certification. Map controls to Annex A.</p>
-          <ul>
-            <li>Load ISO template</li>
-            <li>Add 10 local controls</li>
-            <li>Map to at least 20 framework controls</li>
-            <li>Complete SoA with rationale</li>
-            <li>Achieve 75% coverage</li>
-          </ul>
-          <p>Score: <span class="challenge-score" id="challenge-2-score">0/5</span></p>
-          <button class="btn btn-sm btn-primary" onclick="scoreChallenge(2)">Calculate Score</button>
-        </div>
-        <div class="challenge-card">
-          <h4>Challenge 3: Incident Response (Advanced)</h4>
-          <p>Scenario: Simulate a data breach. Log incident, link to risks, add treatments.</p>
-          <ul>
-            <li>Add incident with critical severity</li>
-            <li>Link to asset/risk/control</li>
-            <li>Add 3 treatments with targets</li>
-            <li>Update risk residual</li>
-            <li>Generate incident report</li>
-          </ul>
-          <p>Score: <span class="challenge-score" id="challenge-3-score">0/5</span></p>
-          <button class="btn btn-sm btn-primary" onclick="scoreChallenge(3)">Calculate Score</button>
-        </div>
-      </div>
-    </div>
-  </section>
-  <footer class="ftco-footer ftco-section">
-    <div class="container">
-      <div class="row"><div class="col-md-12 text-center">
-        <p>Copyright &copy;<script>
+</div>
+</div>
+<div class="gridfx"></div>
+<div class="orb one"></div>
+<div class="orb two"></div>
+<div class="orb three"></div>
+<div class="wrap">
+<header class="topbar">
+<a class="brandRow" href="index.html" style="text-decoration:none;color:inherit;">
+<div aria-hidden="true" class="logo"></div>
+<div>
+<div class="brandTitle">John Bommeraveni Joseph</div>
+<div class="brandSub">Cybersecurity • GRC • AI Governance • ISO/IEC 27001 &amp; 42001 Lead Auditor</div>
+</div>
+</a>
+<nav aria-label="Primary navigation" class="navlinks">
+<a class="pill muted" href="index.html">Home</a>
+<a aria-current="page" class="pill primary" href="grc-lab.html">GRC Lab</a>
+<a class="pill muted" href="cyber-readiness-tool.html">Cyber Readiness Tool</a>
+<a class="pill muted" href="terms.html">Terms</a>
+<a class="pill muted" href="https://www.youtube.com/@GRCMadeSimple" rel="noopener noreferrer" target="_blank">YouTube</a>
+</nav>
+</header>
+<!-- Lab -->
+<section class="ftco-section grc-lab-hero">
+<div class="grc-lab-container container-fluid px-4 px-md-5">
+<!-- Header -->
+<div class="row justify-content-center mb-4">
+<div class="col-md-10 text-start ftco-animate">
+<h1 class="mb-3">GRC Practice Lab</h1>
+<div class="eduBanner"><span class="eduPill">Educational use only</span><span class="eduText">All controls are paraphrased and provided for practice &amp; portfolio demonstration — not for production use, certification, or legal compliance.</span></div>
+<p class="lead">Practice frameworks, assets, risks, controls, issues, actions, vendors, incidents and reporting — all in your browser (data stays local). </p>
+<p class="small-muted mb-0">Controls are paraphrased from ISO 27001:2022, NIST CSF 2.0, PCI DSS v4.0, HIPAA, SOC 2 for education only. Now with over 200 controls, challenge mode, templates, guidance, and PDF exports.</p>
+</div>
+</div>
+<!-- Guidance Overview -->
+<div class="guidance">
+<h4>Welcome to the GRC Practice Lab</h4>
+<p>This tool is designed for aspiring GRC analysts, students, and professionals to hands-on practice cybersecurity governance, risk, and compliance concepts. Everything runs locally in your browser - no data leaves your device.</p>
+<p class="small-muted"><strong>Disclaimer:</strong> All controls are paraphrased and intended solely for educational and practice purposes. This lab is not for real-world production use or compliance certification.</p>
+<ul>
+<li><strong>Start here:</strong> Use the tabs below to navigate. Begin with 'Guidance' for step-by-step instructions.</li>
+<li><strong>Learn by doing:</strong> Load templates or demos, add your own data, analyze gaps, generate reports.</li>
+<li><strong>Challenge yourself:</strong> Try Challenge Mode for scored scenarios to test your skills.</li>
+<li><strong>Tips:</strong> Hover over tooltips for help. Export data anytime. Reset if needed.</li>
+</ul>
+</div>
+<!-- Tabs -->
+<div class="row mb-4">
+<div class="col-md-12 text-center grc-tab-buttons">
+<button class="btn btn-primary btn-sm" data-grc-tab="guidance">Guidance</button>
+<button class="btn btn-outline-light btn-sm" data-grc-tab="frameworks">Frameworks &amp; Controls</button>
+<button class="btn btn-outline-light btn-sm" data-grc-tab="assets">Assets</button>
+<button class="btn btn-outline-light btn-sm" data-grc-tab="vendors">Vendors</button> <!-- New -->
+<button class="btn btn-outline-light btn-sm" data-grc-tab="risks">Risks</button>
+<button class="btn btn-outline-light btn-sm" data-grc-tab="controls">Local Controls</button>
+<button class="btn btn-outline-light btn-sm" data-grc-tab="issues">Issues / Findings</button>
+<button class="btn btn-outline-light btn-sm" data-grc-tab="incidents">Incidents</button> <!-- New -->
+<button class="btn btn-outline-light btn-sm" data-grc-tab="treatments">Treatments</button>
+<button class="btn btn-outline-light btn-sm" data-grc-tab="gap">Gap Analysis</button>
+<button class="btn btn-outline-light btn-sm" data-grc-tab="soa">SoA</button>
+<button class="btn btn-outline-light btn-sm" data-grc-tab="dashboard">Dashboard</button>
+<button class="btn btn-outline-light btn-sm" data-grc-tab="matrix">Risk Matrix</button>
+<button class="btn btn-outline-light btn-sm" data-grc-tab="summary">Auditor Summary</button>
+<button class="btn btn-outline-light btn-sm" data-grc-tab="reports">Reports</button>
+<button class="btn btn-outline-light btn-sm" data-grc-tab="challenges">Challenge Mode</button> <!-- New -->
+</div>
+</div>
+<!-- Guidance Tab -->
+<div class="grc-tab active ftco-animate" id="tab-guidance">
+<h3>GRC Practice Lab Guidance</h3>
+<div class="guidance">
+<h4>Step-by-Step Guide</h4>
+<ul>
+<li><strong>1. Learn Frameworks:</strong> Review standard controls in Frameworks tab. Use to understand what good looks like.</li>
+<li><strong>2. Inventory Assets:</strong> Add your organization's key assets (systems, data, etc). Classify criticality and data types.</li>
+<li><strong>3. Manage Vendors:</strong> Track third-parties, assess risks, contracts.</li>
+<li><strong>4. Identify Risks:</strong> For each asset/vendor, add risks with likelihood/impact. Use matrix to visualize.</li>
+<li><strong>5. Implement Controls:</strong> Add local controls, map to frameworks and risks. Aim for coverage.</li>
+<li><strong>6. Log Issues/Findings:</strong> From audits or tests, add issues linked to objects.</li>
+<li><strong>7. Report Incidents:</strong> Log security incidents, link to response.</li>
+<li><strong>8. Plan Treatments:</strong> Add actions to mitigate risks/issues. Track progress.</li>
+<li><strong>9. Assess Compliance:</strong> Use Gap Analysis and SoA to check against standards.</li>
+<li><strong>10. Monitor Dashboard:</strong> View metrics, heatmaps.</li>
+<li><strong>11. Generate Reports:</strong> Create summaries, exports for management.</li>
+<li><strong>12. Challenge Mode:</strong> Test skills with scenarios, get scores.</li>
+</ul>
+</div>
+</div>
+<!-- Frameworks -->
+<div class="grc-tab ftco-animate" id="tab-frameworks">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">Browse and filter controls from major standards. Use these to map your local controls for compliance. Tip: Search for specific topics like 'access'.</span></span>: Review unified library. Over 200 controls from ISO, NIST, PCI, HIPAA, SOC2.</p>
+</div>
+<h3>Framework Library</h3>
+<p class="mb-3">Filter and review a unified control set aligned to ISO/NIST/PCI/HIPAA/SOC2.</p>
+<div class="row mb-3">
+<div class="col-md-4 mb-2">
+<label class="text-muted small mb-1">Filter by Framework</label>
+<select class="form-control form-control-sm" id="framework-filter">
+<option value="all">All frameworks</option>
+<option value="ISO 27001">ISO 27001</option>
+<option value="NIST CSF">NIST CSF</option>
+<option value="PCI DSS">PCI DSS</option>
+<option value="HIPAA">HIPAA</option>
+<option value="SOC2">SOC 2</option> <!-- New -->
+</select>
+</div>
+<div class="col-md-4 mb-2">
+<label class="text-muted small mb-1">Filter by Category</label>
+<select class="form-control form-control-sm" id="category-filter">
+<option value="all">All categories</option>
+<option>Access Control</option>
+<option>Identity &amp; Authentication</option>
+<option>Logging &amp; Monitoring</option>
+<option>Encryption &amp; Key Management</option>
+<option>Backup &amp; Recovery</option>
+<option>Change Management</option>
+<option>Vulnerability Management</option>
+<option>Incident Response</option>
+<option>Vendor Risk</option>
+<option>Policy &amp; Governance</option>
+<option>Awareness &amp; Training</option>
+<option>Physical Security</option> <!-- New -->
+<option>Network Security</option> <!-- New -->
+<option>Asset Management</option> <!-- New -->
+</select>
+</div>
+<div class="col-md-4 mb-2">
+<label class="text-muted small mb-1">Search</label>
+<input class="form-control form-control-sm" id="framework-search" placeholder="Search by name, ID, description..."/>
+</div>
+</div>
+<div class="table-responsive bg-dark p-3 rounded">
+<table class="table table-dark table-striped table-hover table-sm mb-0">
+<thead>
+<tr>
+<th style="width:10%">ID</th>
+<th style="width:20%">Name</th>
+<th style="width:18%">Category</th>
+<th style="width:20%">Based On</th>
+<th style="width:32%">Description</th>
+</tr>
+</thead>
+<tbody id="frameworks-table-body"></tbody>
+</table>
+<div class="mt-2 text-right">
+<small class="text-muted" id="frameworks-count"></small>
+</div>
+</div>
+</div>
+<!-- Assets -->
+<div class="grc-tab ftco-animate" id="tab-assets">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">Add key assets like apps, databases, servers. Classify criticality and data. Link to risks later. Tip: Start with high-critical assets handling sensitive data.</span></span>: Build your asset inventory. Essential for risk assessment.</p>
+</div>
+<h3>Asset Inventory</h3>
+<div class="row">
+<div class="col-lg-4 col-md-5 mb-4">
+<div class="bg-dark p-3 rounded">
+<h5 class="mb-3">Add / Edit Asset</h5>
+<form class="grc-form-grid" id="asset-form">
+<input id="asset-id" type="hidden"/>
+<div class="form-group">
+<label class="text-muted small mb-1">Name *</label>
+<input class="form-control form-control-sm" id="asset-name" placeholder="e.g. MediCloud Web App" required=""/>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Type *</label>
+<select class="form-control form-control-sm" id="asset-type" required="">
+<option value="">Select...</option>
+<option>Application</option><option>Database</option><option>Server / Host</option>
+<option>Network / Security Device</option><option>Cloud Service</option>
+<option>Vendor / Third Party</option><option>Data Store</option>
+<option>People / Role</option><option>Other</option>
+</select>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Business criticality *</label>
+<select class="form-control form-control-sm" id="asset-criticality" required="">
+<option value="">Select level...</option>
+<option>High</option><option>Medium</option><option>Low</option>
+</select>
+</div>
+<div class="form-group grc-span-2">
+<label class="text-muted small mb-1 d-block">Data types</label>
+<div class="d-flex flex-wrap">
+<div class="custom-control custom-checkbox mr-3 mb-1">
+<input class="custom-control-input asset-dt" id="dt-phi" type="checkbox" value="PHI"/>
+<label class="custom-control-label" for="dt-phi">PHI</label>
+</div>
+<div class="custom-control custom-checkbox mr-3 mb-1">
+<input class="custom-control-input asset-dt" id="dt-pii" type="checkbox" value="PII"/>
+<label class="custom-control-label" for="dt-pii">PII</label>
+</div>
+<div class="custom-control custom-checkbox mr-3 mb-1">
+<input class="custom-control-input asset-dt" id="dt-pan" type="checkbox" value="Card data"/>
+<label class="custom-control-label" for="dt-pan">Card data</label>
+</div>
+<div class="custom-control custom-checkbox mr-3 mb-1">
+<input class="custom-control-input asset-dt" id="dt-int" type="checkbox" value="Internal data"/>
+<label class="custom-control-label" for="dt-int">Internal data</label>
+</div>
+</div>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Owner</label>
+<input class="form-control form-control-sm" id="asset-owner" placeholder="e.g. DevOps Team / CTO"/>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Location / Scope</label> <!-- New field -->
+<input class="form-control form-control-sm" id="asset-location" placeholder="e.g. AWS US-East-1, In-scope for PCI"/>
+</div>
+<div class="form-group grc-span-2">
+<label class="text-muted small mb-1">Notes</label>
+<textarea class="form-control form-control-sm" id="asset-notes" placeholder="Scope, region, integrations..." rows="2"></textarea>
+</div>
+<div class="d-flex justify-content-between grc-actions grc-span-2">
+<button class="btn btn-primary btn-sm" id="asset-form-submit" type="submit">Save asset</button>
+<button class="btn btn-outline-light btn-sm" id="asset-form-cancel" type="button">Clear</button>
+</div>
+<small class="text-muted d-block mt-2">Stored locally in your browser.</small>
+</form>
+</div>
+</div>
+<div class="col-lg-8 col-md-7 mb-4">
+<div class="bg-dark p-3 rounded">
+<div class="d-flex justify-content-between align-items-center mb-2">
+<h5 class="mb-0">Assets</h5>
+<div>
+<button class="btn btn-sm btn-outline-light mr-2" id="export-assets">Export CSV</button>
+<small class="text-muted" id="assets-count"></small>
+</div>
+</div>
+<div class="table-responsive">
+<table class="table table-dark table-striped table-hover table-sm mb-0">
+<thead>
+<tr>
+<th style="width:20%">Name</th><th style="width:14%">Type</th><th style="width:12%">Criticality</th>
+<th style="width:18%">Data types</th><th style="width:14%">Owner</th><th style="width:12%">Location</th><th style="width:10%">Actions</th>
+</tr>
+</thead>
+<tbody id="assets-table-body"></tbody>
+</table>
+</div>
+<div class="text-muted small mt-2" id="assets-empty">No assets yet. Add some to start risk assessment.</div>
+<ul class="pagination" id="assets-pagination"></ul>
+</div>
+</div>
+</div>
+</div>
+<!-- New Vendors Tab -->
+<div class="grc-tab ftco-animate" id="tab-vendors">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">Track third-party vendors. Assess risks, contracts. Link to assets/risks. Tip: Prioritize critical vendors handling sensitive data.</span></span>: Manage vendor relationships for third-party risk.</p>
+</div>
+<h3>Vendor Management</h3>
+<div class="row">
+<div class="col-lg-4 col-md-5 mb-4">
+<div class="bg-dark p-3 rounded">
+<h5 class="mb-3">Add / Edit Vendor</h5>
+<form class="grc-form-grid" id="vendor-form">
+<input id="vendor-id" type="hidden"/>
+<div class="form-group">
+<label class="text-muted small mb-1">Name *</label>
+<input class="form-control form-control-sm" id="vendor-name" placeholder="e.g. AWS" required=""/>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Type *</label>
+<select class="form-control form-control-sm" id="vendor-type" required="">
+<option value="">Select...</option>
+<option>Cloud Provider</option><option>SaaS</option><option>Outsourcing</option><option>Hardware</option><option>Other</option>
+</select>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Criticality *</label>
+<select class="form-control form-control-sm" id="vendor-criticality" required="">
+<option value="">Select...</option>
+<option>High</option><option>Medium</option><option>Low</option>
+</select>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Data Access</label>
+<select class="form-control form-control-sm" id="vendor-data-access">
+<option>None</option><option>Read</option><option>Read/Write</option><option>Full</option>
+</select>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Contract Status</label>
+<select class="form-control form-control-sm" id="vendor-contract">
+<option>Active</option><option>Pending</option><option>Expired</option>
+</select>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Last Assessment</label>
+<input class="form-control form-control-sm" id="vendor-assessment" type="date"/>
+</div>
+<div class="form-group grc-span-2">
+<label class="text-muted small mb-1">Notes</label>
+<textarea class="form-control form-control-sm" id="vendor-notes" placeholder="Services, SLAs, risks..." rows="2"></textarea>
+</div>
+<div class="d-flex justify-content-between grc-actions grc-span-2">
+<button class="btn btn-primary btn-sm" type="submit">Save vendor</button>
+<button class="btn btn-outline-light btn-sm" id="vendor-form-cancel" type="button">Clear</button>
+</div>
+</form>
+</div>
+</div>
+<div class="col-lg-8 col-md-7 mb-4">
+<div class="bg-dark p-3 rounded">
+<div class="d-flex justify-content-between align-items-center mb-2">
+<h5 class="mb-0">Vendors</h5>
+<div>
+<button class="btn btn-sm btn-outline-light mr-2" id="export-vendors">Export CSV</button>
+<small class="text-muted" id="vendors-count"></small>
+</div>
+</div>
+<div class="table-responsive">
+<table class="table table-dark table-striped table-hover table-sm mb-0">
+<thead>
+<tr>
+<th style="width:20%">Name</th><th style="width:15%">Type</th><th style="width:12%">Criticality</th>
+<th style="width:15%">Data Access</th><th style="width:15%">Contract</th><th style="width:15%">Last Assessment</th><th style="width:8%">Actions</th>
+</tr>
+</thead>
+<tbody id="vendors-table-body"></tbody>
+</table>
+</div>
+<div class="text-muted small mt-2" id="vendors-empty">No vendors yet. Add third-parties to assess supply chain risks.</div>
+<ul class="pagination" id="vendors-pagination"></ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Risks -->
+<div class="grc-tab ftco-animate" id="tab-risks">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">Add risks linked to assets/vendors. Score likelihood/impact. Use thresholds to categorize. Tip: Focus on top risks (high score, open status).</span></span>: Build risk register. Link to assets/vendors for context.</p>
+</div>
+<h3>Risk Register</h3>
+<div class="row">
+<div class="col-lg-4 col-md-5 mb-4">
+<div class="bg-dark p-3 rounded">
+<h5 class="mb-3">Add / Edit Risk</h5>
+<form class="grc-form-grid" id="risk-form">
+<input id="risk-id" type="hidden"/>
+<div class="form-group">
+<label class="text-muted small mb-1">Title *</label>
+<input class="form-control form-control-sm" id="risk-title" placeholder="e.g. Unauthorised access to app" required=""/>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Linked Asset/Vendor *</label>
+<select class="form-control form-control-sm" id="risk-linked" required=""> <!-- Updated to link asset or vendor -->
+<option value="">Select...</option>
+</select>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Category *</label>
+<select class="form-control form-control-sm" id="risk-category" required="">
+<option value="">Select...</option>
+<option>Cybersecurity</option><option>Compliance</option><option>Operational</option>
+<option>Privacy</option><option>Third-Party</option><option>Financial</option><option>Reputational</option><option>Other</option>
+</select>
+</div>
+<div class="form-row">
+<div class="form-group col-6">
+<label class="text-muted small mb-1">Likelihood (1–5) *</label>
+<select class="form-control form-control-sm" id="risk-likelihood" required="">
+<option value="">Select...</option>
+<option value="1">1 – Rare</option><option value="2">2 – Unlikely</option><option value="3">3 – Possible</option>
+<option value="4">4 – Likely</option><option value="5">5 – Almost certain</option>
+</select>
+</div>
+<div class="form-group col-6">
+<label class="text-muted small mb-1">Impact (1–5) *</label>
+<select class="form-control form-control-sm" id="risk-impact" required="">
+<option value="">Select...</option>
+<option value="1">1 – Insignificant</option><option value="2">2 – Minor</option><option value="3">3 – Moderate</option>
+<option value="4">4 – Major</option><option value="5">5 – Severe</option>
+</select>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group col-6">
+<label class="text-muted small mb-1">Residual Likelihood</label>
+<select class="form-control form-control-sm" id="risk-res-likelihood">
+<option value="">Select...</option>
+<option value="1">1 – Rare</option><option value="2">2 – Unlikely</option><option value="3">3 – Possible</option>
+<option value="4">4 – Likely</option><option value="5">5 – Almost certain</option>
+</select>
+</div>
+<div class="form-group col-6">
+<label class="text-muted small mb-1">Residual Impact</label>
+<select class="form-control form-control-sm" id="risk-res-impact">
+<option value="">Select...</option>
+<option value="1">1 – Insignificant</option><option value="2">2 – Minor</option><option value="3">3 – Moderate</option>
+<option value="4">4 – Major</option><option value="5">5 – Severe</option>
+</select>
+</div>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Owner</label>
+<input class="form-control form-control-sm" id="risk-owner" placeholder="e.g. CISO / Product Owner"/>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Status *</label>
+<select class="form-control form-control-sm" id="risk-status" required="">
+<option>Open</option><option>In progress</option><option>Mitigated</option><option>Accepted</option><option>Avoided</option><option>Transferred</option>
+</select>
+</div>
+<div class="form-group grc-span-2">
+<label class="text-muted small mb-1">Description / Notes</label>
+<textarea class="form-control form-control-sm" id="risk-notes" rows="2"></textarea>
+</div>
+<div class="d-flex justify-content-between grc-actions grc-span-2">
+<button class="btn btn-primary btn-sm" id="risk-form-submit" type="submit">Save risk</button>
+<button class="btn btn-outline-light btn-sm" id="risk-form-cancel" type="button">Clear</button>
+</div>
+<small class="text-muted d-block mt-2">Score = Likelihood × Impact (1–25). Residual after controls. High / Medium / Low thresholds configurable.</small>
+</form>
+</div>
+</div>
+<div class="col-lg-8 col-md-7 mb-4">
+<div class="bg-dark p-3 rounded">
+<div class="d-flex justify-content-between align-items-center mb-2">
+<h5 class="mb-0">Risks</h5>
+<div>
+<button class="btn btn-sm btn-outline-light mr-2" id="export-risks">Export CSV</button>
+<small class="text-muted" id="risks-count"></small>
+</div>
+</div>
+<!-- Filters + sorting -->
+<div class="row mb-2">
+<div class="col-md-3 mb-1">
+<label class="text-muted small mb-1">Filter by status</label>
+<select class="form-control form-control-sm" id="risk-filter-status">
+<option value="all">All statuses</option>
+<option>Open</option>
+<option>In progress</option>
+<option>Mitigated</option>
+<option>Accepted</option>
+<option>Avoided</option>
+<option>Transferred</option>
+</select>
+</div>
+<div class="col-md-3 mb-1">
+<label class="text-muted small mb-1">Filter by level</label>
+<select class="form-control form-control-sm" id="risk-filter-level">
+<option value="all">All levels</option>
+<option>High</option>
+<option>Medium</option>
+<option>Low</option>
+</select>
+</div>
+<div class="col-md-3 mb-1">
+<label class="text-muted small mb-1">Filter by category</label>
+<select class="form-control form-control-sm" id="risk-filter-category">
+<option value="all">All</option>
+<option>Cybersecurity</option><option>Compliance</option><option>Operational</option>
+<option>Privacy</option><option>Third-Party</option><option>Financial</option><option>Reputational</option><option>Other</option>
+</select>
+</div>
+<div class="col-md-3 mb-1">
+<label class="text-muted small mb-1">Sort</label>
+<div class="d-flex">
+<select class="form-control form-control-sm mr-1" id="risk-sort-field">
+<option value="score">Score</option>
+<option value="title">Title</option>
+<option value="asset">Linked</option>
+<option value="impact">Impact</option>
+<option value="likelihood">Likelihood</option>
+<option value="status">Status</option>
+</select>
+<select class="form-control form-control-sm" id="risk-sort-dir">
+<option value="desc">Desc</option>
+<option value="asc">Asc</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Threshold settings -->
+<div class="bg-secondary rounded p-2 mb-2">
+<div class="d-flex flex-wrap align-items-center">
+<span class="small text-light mr-2">
+                    Risk levels: High ≥ <input class="form-control form-control-sm d-inline-block" id="risk-thres-high" max="25" min="1" style="width:60px;" type="number"> ; Medium ≥ <input class="form-control form-control-sm d-inline-block" id="risk-thres-med" max="25" min="1" style="width:60px;" type="number"> ; Low below Medium.
+                  </input></input></span>
+<button class="btn btn-sm btn-outline-light ml-auto" id="risk-thres-reset">Reset</button>
+</div>
+</div>
+<div class="table-responsive">
+<table class="table table-dark table-striped table-hover table-sm mb-0">
+<thead>
+<tr>
+<th style="width:24%">Title</th><th style="width:16%">Linked</th><th style="width:14%">Category</th>
+<th style="width:14%">Inherent</th><th style="width:14%">Residual</th><th style="width:12%">Status</th><th style="width:6%">Actions</th>
+</tr>
+</thead>
+<tbody id="risks-table-body"></tbody>
+</table>
+</div>
+<div class="text-muted small mt-2" id="risks-empty">No risks yet. Add some based on assets.</div>
+<ul class="pagination" id="risks-pagination"></ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Local Controls -->
+<div class="grc-tab ftco-animate" id="tab-controls">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">Add your organization's controls. Map to frameworks and risks. Set status to track implementation. Tip: Use 'In place' for operating controls, 'Planned' for gaps.</span></span>: Build control library. Map to standards for compliance.</p>
+</div>
+<h3>Local Controls (Org Library)</h3>
+<div class="row">
+<div class="col-lg-4 col-md-5 mb-4">
+<div class="bg-dark p-3 rounded">
+<h5 class="mb-3">Add / Edit Control</h5>
+<form class="grc-form-grid" id="control-form">
+<input id="control-id" type="hidden"/>
+<div class="form-group">
+<label class="text-muted small mb-1">Control name *</label>
+<input class="form-control form-control-sm" id="control-name" placeholder="e.g. Enforce MFA for admins" required=""/>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Type *</label>
+<select class="form-control form-control-sm" id="control-type" required="">
+<option value="">Select...</option>
+<option>Preventive</option><option>Detective</option><option>Corrective</option>
+<option>Administrative</option><option>Technical</option><option>Physical</option>
+<option>Compensating</option> <!-- New -->
+</select>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Status *</label>
+<select class="form-control form-control-sm" id="control-status" required="">
+<option>In place</option><option>Planned</option><option>Not applicable</option><option>Ineffective</option> <!-- New -->
+</select>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Owner</label>
+<input class="form-control form-control-sm" id="control-owner" placeholder="DevSecOps / IT Ops / Compliance"/>
+</div>
+<div class="form-group grc-span-2">
+<label class="text-muted small mb-1">Description</label>
+<textarea class="form-control form-control-sm" id="control-description" placeholder="Implementation details, evidence..." rows="2"></textarea>
+</div>
+<div class="form-group grc-span-2">
+<label class="text-muted small mb-1">Related risks</label>
+<select class="form-control form-control-sm" id="control-risks" multiple=""></select>
+<small class="text-muted">Hold Ctrl/Cmd to multi-select.</small>
+</div>
+<div class="form-group grc-span-2">
+<label class="text-muted small mb-1">Related framework controls</label>
+<select class="form-control form-control-sm" id="control-frameworks" multiple=""></select>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Evidence</label>
+<input class="form-control form-control-sm" id="control-evidence" placeholder="Links to docs, screenshots..."/>
+</div>
+<div class="d-flex justify-content-between grc-actions grc-span-2">
+<button class="btn btn-primary btn-sm" id="control-form-submit" type="submit">Save control</button>
+<button class="btn btn-outline-light btn-sm" id="control-form-cancel" type="button">Clear</button>
+</div>
+<small class="text-muted d-block mt-2">Stored locally. Map to frameworks for gap analysis.</small>
+</form>
+</div>
+</div>
+<div class="col-lg-8 col-md-7 mb-4">
+<div class="bg-dark p-3 rounded">
+<div class="d-flex justify-content-between align-items-center mb-2">
+<h5 class="mb-0">Controls</h5>
+<div>
+<button class="btn btn-sm btn-outline-light mr-2" id="export-controls">Export CSV</button>
+<small class="text-muted" id="controls-count"></small>
+</div>
+</div>
+<div class="table-responsive">
+<table class="table table-dark table-striped table-hover table-sm mb-0">
+<thead>
+<tr>
+<th style="width:24%">Name</th><th style="width:14%">Type</th><th style="width:12%">Status</th>
+<th style="width:18%">Linked risks</th><th style="width:14%">Frameworks</th><th style="width:18%">Evidence</th><th style="width:10%">Actions</th>
+</tr>
+</thead>
+<tbody id="controls-table-body"></tbody>
+</table>
+</div>
+<div class="text-muted small mt-2" id="controls-empty">No controls yet. Add and map to frameworks.</div>
+<ul class="pagination" id="controls-pagination"></ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Issues / Findings -->
+<div class="grc-tab ftco-animate" id="tab-issues">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">Log findings from audits, tests, reviews. Link to objects. Set severity/status. Tip: Use for gap remediation tracking.</span></span>: Track audit findings and gaps.</p>
+</div>
+<h3>Issues &amp; Findings</h3>
+<div class="row">
+<div class="col-lg-4 col-md-5 mb-4">
+<div class="bg-dark p-3 rounded">
+<h5 class="mb-3">Add / Edit Issue</h5>
+<form class="grc-form-grid" id="issue-form">
+<input id="issue-id" type="hidden"/>
+<div class="form-group">
+<label class="text-muted small mb-1">Title *</label>
+<input class="form-control form-control-sm" id="issue-title" placeholder="e.g. Missing MFA for admins" required=""/>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Type *</label>
+<select class="form-control form-control-sm" id="issue-type" required="">
+<option value="">Select...</option>
+<option>Audit</option><option>Pen test</option><option>Vulnerability Scan</option><option>Self-Assessment</option><option>Risk review</option><option>Other</option>
+</select>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Linked objects (optional)</label>
+<select class="form-control form-control-sm mb-1" id="issue-asset"><option value="">Linked asset...</option></select>
+<select class="form-control form-control-sm mb-1" id="issue-vendor"><option value="">Linked vendor...</option></select> <!-- New -->
+<select class="form-control form-control-sm mb-1" id="issue-risk"><option value="">Linked risk...</option></select>
+<select class="form-control form-control-sm" id="issue-control"><option value="">Linked control...</option></select>
+</div>
+<div class="form-row">
+<div class="form-group col-6">
+<label class="text-muted small mb-1">Severity *</label>
+<select class="form-control form-control-sm" id="issue-severity" required="">
+<option value="">Select...</option>
+<option>Low</option><option>Medium</option><option>High</option><option>Critical</option>
+</select>
+</div>
+<div class="form-group col-6">
+<label class="text-muted small mb-1">Status *</label>
+<select class="form-control form-control-sm" id="issue-status" required="">
+<option>Open</option><option>In progress</option><option>Resolved</option><option>Accepted</option>
+</select>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group col-6">
+<label class="text-muted small mb-1">Owner</label>
+<input class="form-control form-control-sm" id="issue-owner" placeholder="e.g. Dev Lead"/>
+</div>
+<div class="form-group col-6">
+<label class="text-muted small mb-1">Due date</label>
+<input class="form-control form-control-sm" id="issue-due" type="date"/>
+</div>
+</div>
+<div class="form-group grc-span-2">
+<label class="text-muted small mb-1">Details / Recommendation</label>
+<textarea class="form-control form-control-sm" id="issue-notes" rows="2"></textarea>
+</div>
+<div class="d-flex justify-content-between grc-actions grc-span-2">
+<button class="btn btn-primary btn-sm" id="issue-form-submit" type="submit">Save issue</button>
+<button class="btn btn-outline-light btn-sm" id="issue-form-cancel" type="button">Clear</button>
+</div>
+<small class="text-muted d-block mt-2">Stored locally in your browser.</small>
+</form>
+</div>
+</div>
+<div class="col-lg-8 col-md-7 mb-4">
+<div class="bg-dark p-3 rounded">
+<div class="d-flex justify-content-between align-items-center mb-2">
+<h5 class="mb-0">Issues / Findings</h5>
+<div>
+<button class="btn btn-sm btn-outline-light mr-2" id="export-issues">Export CSV</button>
+<small class="text-muted" id="issues-count"></small>
+</div>
+</div>
+<div class="table-responsive">
+<table class="table table-dark table-striped table-hover table-sm mb-0">
+<thead>
+<tr>
+<th style="width:22%">Title</th><th style="width:10%">Type</th><th style="width:12%">Severity</th>
+<th style="width:12%">Status</th><th style="width:20%">Linked to</th><th style="width:12%">Due</th><th style="width:12%">Actions</th>
+</tr>
+</thead>
+<tbody id="issues-table-body"></tbody>
+</table>
+</div>
+<div class="text-muted small mt-2" id="issues-empty">No issues yet.</div>
+<ul class="pagination" id="issues-pagination"></ul>
+</div>
+</div>
+</div>
+</div>
+<!-- New Incidents Tab -->
+<div class="grc-tab ftco-animate" id="tab-incidents">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">Log security incidents. Classify severity, status. Link to risks/controls. Tip: Use for response practice and lessons learned.</span></span>: Track and respond to incidents.</p>
+</div>
+<h3>Incident Management</h3>
+<div class="row">
+<div class="col-lg-4 col-md-5 mb-4">
+<div class="bg-dark p-3 rounded">
+<h5 class="mb-3">Add / Edit Incident</h5>
+<form class="grc-form-grid" id="incident-form">
+<input id="incident-id" type="hidden"/>
+<div class="form-group">
+<label class="text-muted small mb-1">Title *</label>
+<input class="form-control form-control-sm" id="incident-title" placeholder="e.g. Data Breach Suspicion" required=""/>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Type *</label>
+<select class="form-control form-control-sm" id="incident-type" required="">
+<option value="">Select...</option>
+<option>Data Breach</option><option>Phishing</option><option>Malware</option><option>Insider Threat</option><option>Denial of Service</option><option>Other</option>
+</select>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Detected Date *</label>
+<input class="form-control form-control-sm" id="incident-detected" required="" type="date"/>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Linked objects (optional)</label>
+<select class="form-control form-control-sm mb-1" id="incident-asset"><option value="">Linked asset...</option></select>
+<select class="form-control form-control-sm mb-1" id="incident-vendor"><option value="">Linked vendor...</option></select>
+<select class="form-control form-control-sm mb-1" id="incident-risk"><option value="">Linked risk...</option></select>
+<select class="form-control form-control-sm" id="incident-control"><option value="">Linked control...</option></select>
+</div>
+<div class="form-row">
+<div class="form-group col-6">
+<label class="text-muted small mb-1">Severity *</label>
+<select class="form-control form-control-sm" id="incident-severity" required="">
+<option value="">Select...</option>
+<option>Low</option><option>Medium</option><option>High</option><option>Critical</option>
+</select>
+</div>
+<div class="form-group col-6">
+<label class="text-muted small mb-1">Status *</label>
+<select class="form-control form-control-sm" id="incident-status" required="">
+<option>Detected</option><option>Investigating</option><option>Contained</option><option>Recovered</option><option>Closed</option>
+</select>
+</div>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Owner</label>
+<input class="form-control form-control-sm" id="incident-owner" placeholder="e.g. Incident Response Team"/>
+</div>
+<div class="form-group grc-span-2">
+<label class="text-muted small mb-1">Details / Response</label>
+<textarea class="form-control form-control-sm" id="incident-notes" placeholder="What happened, root cause, lessons learned..." rows="3"></textarea>
+</div>
+<div class="d-flex justify-content-between grc-actions grc-span-2">
+<button class="btn btn-primary btn-sm" type="submit">Save incident</button>
+<button class="btn btn-outline-light btn-sm" id="incident-form-cancel" type="button">Clear</button>
+</div>
+</form>
+</div>
+</div>
+<div class="col-lg-8 col-md-7 mb-4">
+<div class="bg-dark p-3 rounded">
+<div class="d-flex justify-content-between align-items-center mb-2">
+<h5 class="mb-0">Incidents</h5>
+<div>
+<button class="btn btn-sm btn-outline-light mr-2" id="export-incidents">Export CSV</button>
+<small class="text-muted" id="incidents-count"></small>
+</div>
+</div>
+<div class="table-responsive">
+<table class="table table-dark table-striped table-hover table-sm mb-0">
+<thead>
+<tr>
+<th style="width:22%">Title</th><th style="width:10%">Type</th><th style="width:12%">Severity</th>
+<th style="width:12%">Status</th><th style="width:16%">Detected</th><th style="width:20%">Linked to</th><th style="width:8%">Actions</th>
+</tr>
+</thead>
+<tbody id="incidents-table-body"></tbody>
+</table>
+</div>
+<div class="text-muted small mt-2" id="incidents-empty">No incidents yet. Log when they occur for practice.</div>
+<ul class="pagination" id="incidents-pagination"></ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Treatments -->
+<div class="grc-tab ftco-animate" id="tab-treatments">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">Add mitigation actions for risks/issues. Link to controls. Track status/target. Tip: Use for risk treatment plans.</span></span>: Plan and track remediations.</p>
+</div>
+<h3>Treatments (Mitigation Plan)</h3>
+<div class="row">
+<div class="col-lg-4 col-md-5 mb-4">
+<div class="bg-dark p-3 rounded">
+<h5 class="mb-3">Add / Edit Treatment</h5>
+<form id="treat-form">
+<input id="treat-id" type="hidden"/>
+<div class="form-group">
+<label class="text-muted small mb-1">Action title *</label>
+<input class="form-control form-control-sm" id="treat-title" placeholder="e.g. Enforce SSO &amp; MFA for admins" required=""/>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Linked risk/issue *</label>
+<select class="form-control form-control-sm" id="treat-linked" required=""><option value="">Select...</option></select> <!-- Updated -->
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Linked control (optional)</label>
+<select class="form-control form-control-sm" id="treat-control"><option value="">Select control...</option></select>
+</div>
+<div class="form-row">
+<div class="form-group col-6">
+<label class="text-muted small mb-1">Status *</label>
+<select class="form-control form-control-sm" id="treat-status" required="">
+<option>Open</option><option>In progress</option><option>Closed</option><option>Deferred</option>
+</select>
+</div>
+<div class="form-group col-6">
+<label class="text-muted small mb-1">Target date</label>
+<input class="form-control form-control-sm" id="treat-date" type="date"/>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group col-6">
+<label class="text-muted small mb-1">Owner</label>
+<input class="form-control form-control-sm" id="treat-owner" placeholder="e.g. DevOps Lead"/>
+</div>
+<div class="form-group col-6">
+<label class="text-muted small mb-1">Budget (optional)</label>
+<input class="form-control form-control-sm" id="treat-budget" placeholder="e.g. 2,500 USD"/>
+</div>
+</div>
+<div class="form-group">
+<label class="text-muted small mb-1">Notes</label>
+<textarea class="form-control form-control-sm" id="treat-notes" rows="2"></textarea>
+</div>
+<div class="d-flex justify-content-between">
+<button class="btn btn-primary btn-sm" id="treat-submit" type="submit">Save action</button>
+<button class="btn btn-outline-light btn-sm" id="treat-cancel" type="button">Clear</button>
+</div>
+<small class="text-muted d-block mt-2">Stored locally. Link to risks/issues for tracking.</small>
+</form>
+</div>
+</div>
+<div class="col-lg-8 col-md-7 mb-4">
+<div class="bg-dark p-3 rounded">
+<div class="d-flex justify-content-between align-items-center mb-2">
+<h5 class="mb-0">Treatment actions</h5>
+<div>
+<button class="btn btn-sm btn-outline-light mr-2" id="export-treatments">Export CSV</button>
+<small class="text-muted" id="treat-count"></small>
+</div>
+</div>
+<div class="table-responsive">
+<table class="table table-dark table-striped table-hover table-sm mb-0">
+<thead>
+<tr>
+<th style="width:26%">Title</th><th style="width:20%">Linked</th>
+<th style="width:12%">Status</th><th style="width:14%">Target</th>
+<th style="width:10%">Owner</th><th style="width:10%">Budget</th><th style="width:8%">Actions</th>
+</tr>
+</thead>
+<tbody id="treat-table-body"></tbody>
+</table>
+</div>
+<div class="text-muted small mt-2" id="treat-empty">No treatment actions yet.</div>
+<ul class="pagination" id="treatments-pagination"></ul>
+</div>
+</div>
+</div>
+</div>
+<!-- Gap Analysis -->
+<div class="grc-tab ftco-animate" id="tab-gap">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">View coverage by category. Heatmap shows maturity. Tip: Aim for 80%+ implemented in core areas.</span></span>: Analyze control gaps against frameworks.</p>
+</div>
+<h3>Gap Analysis &amp; Heatmap</h3>
+<p class="mb-3">Coverage based on local controls mapped to frameworks. “In place” = implemented; “Planned” = planned-only.</p>
+<div class="table-responsive bg-dark p-3 rounded">
+<table class="table table-dark table-striped table-hover table-sm mb-0">
+<thead>
+<tr>
+<th style="width:24%">Category</th>
+<th style="width:12%">Total controls</th>
+<th style="width:16%">Implemented</th>
+<th style="width:16%">Planned only</th>
+<th style="width:16%">Not implemented</th>
+<th style="width:16%">Heatmap</th>
+</tr>
+</thead>
+<tbody id="gap-table-body"></tbody>
+</table>
+<div class="mt-2 text-right"><small class="text-muted" id="gap-overall-coverage"></small></div>
+</div>
+</div>
+<!-- SoA -->
+<div class="grc-tab ftco-animate" id="tab-soa">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">Set applicability and implementation for each control. Use bulk edit for efficiency. Add rationale/evidence for audits. Tip: 'Auto' uses local controls mapping.</span></span>: Document Statement of Applicability for ISO-like compliance.</p>
+</div>
+<h3>Statement of Applicability (SoA)</h3>
+<p class="mb-3 small-muted"> Applicability &amp; implementation against the unified framework library. Edit rationale/evidence inline; data persists locally. </p>
+<div class="bg-dark p-3 rounded mb-2">
+<div class="d-flex justify-content-between align-items-center">
+<div class="small text-muted">
+<span id="soa-count"></span>
+</div>
+<div>
+<button class="btn btn-sm btn-outline-light" id="soa-export">Export SoA CSV</button>
+</div>
+</div>
+</div>
+<!-- Filters for SoA -->
+<div class="row mb-3">
+<div class="col-md-3 mb-2">
+<label class="text-muted small mb-1">Filter by Framework</label>
+<select class="form-control form-control-sm" id="soa-framework-filter">
+<option value="all">All frameworks</option>
+<option value="ISO 27001">ISO 27001</option>
+<option value="NIST CSF">NIST CSF</option>
+<option value="PCI DSS">PCI DSS</option>
+<option value="HIPAA">HIPAA</option>
+<option value="SOC2">SOC 2</option>
+</select>
+</div>
+<div class="col-md-3 mb-2">
+<label class="text-muted small mb-1">Filter by Category</label>
+<select class="form-control form-control-sm" id="soa-category-filter">
+<option value="all">All categories</option>
+<!-- Categories from expanded list -->
+<option>Access Control</option>
+<option>Identity &amp; Authentication</option>
+<option>Logging &amp; Monitoring</option>
+<option>Encryption &amp; Key Management</option>
+<option>Backup &amp; Recovery</option>
+<option>Change Management</option>
+<option>Vulnerability Management</option>
+<option>Incident Response</option>
+<option>Vendor Risk</option>
+<option>Policy &amp; Governance</option>
+<option>Awareness &amp; Training</option>
+<option>Physical Security</option>
+<option>Network Security</option>
+<option>Asset Management</option>
+</select>
+</div>
+<div class="col-md-3 mb-2">
+<label class="text-muted small mb-1">Filter by Applicability</label>
+<select class="form-control form-control-sm" id="soa-applicability-filter">
+<option value="all">All</option>
+<option>Applicable</option>
+<option>Not Applicable</option>
+</select>
+</div>
+<div class="col-md-3 mb-2">
+<label class="text-muted small mb-1">Filter by Implementation</label>
+<select class="form-control form-control-sm" id="soa-implementation-filter">
+<option value="all">All</option>
+<option>In place</option>
+<option>Planned</option>
+<option>Not implemented</option>
+<option>Not applicable</option>
+</select>
+</div>
+</div>
+<!-- Bulk edit bar -->
+<div class="bulk-edit-bar" id="soa-bulk-bar">
+<label class="text-muted small mb-1">Bulk Edit Selected:</label>
+<select class="soa-select mr-2" id="bulk-applicability">
+<option value="">Set Applicability...</option>
+<option>Applicable</option>
+<option>Not Applicable</option>
+</select>
+<select class="soa-select mr-2" id="bulk-implementation">
+<option value="">Set Implementation...</option>
+<option>In place</option>
+<option>Planned</option>
+<option>Not implemented</option>
+<option>Not applicable</option>
+</select>
+<button class="btn btn-sm btn-primary" id="bulk-apply">Apply</button>
+<button class="btn btn-sm btn-outline-light ml-2" id="bulk-clear">Clear Selection</button>
+</div>
+<div class="table-responsive bg-dark p-3 rounded">
+<table class="table table-dark table-striped table-hover table-sm mb-0">
+<thead>
+<tr>
+<th style="width:5%"><input class="soa-checkbox" id="soa-select-all" type="checkbox"/></th>
+<th style="width:10%">ID</th>
+<th style="width:18%">Name</th>
+<th style="width:14%">Category</th>
+<th style="width:14%">Frameworks</th>
+<th style="width:12%">Applicability</th>
+<th style="width:12%">Implementation</th>
+<th style="width:10%">Owner</th>
+<th style="width:20%">Rationale / Evidence</th>
+</tr>
+</thead>
+<tbody id="soa-table-body"></tbody>
+</table>
+</div>
+</div>
+<!-- Dashboard -->
+<div class="grc-tab ftco-animate" id="tab-dashboard">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">Monitor key metrics. Use to track progress. Tip: Aim for low high risks, high coverage, no overdue.</span></span>: Overview of your GRC posture.</p>
+</div>
+<h3>Dashboard</h3>
+<div class="dashboard-kpi-row">
+<div class="col-sm-6 col-md-3 mb-3">
+<div class="dashboard-card p-3 h-100"><div class="label">Assets</div><div class="value" id="dash-assets">0</div><div class="sub">Tracked</div></div>
+</div>
+<div class="col-sm-6 col-md-3 mb-3">
+<div class="dashboard-card p-3 h-100"><div class="label">Vendors</div><div class="value" id="dash-vendors">0</div><div class="sub">Managed</div></div> <!-- New -->
+</div>
+<div class="col-sm-6 col-md-3 mb-3">
+<div class="dashboard-card p-3 h-100"><div class="label">Risks</div><div class="value" id="dash-risks">0</div><div class="sub"><span id="dash-high">0</span> high</div></div>
+</div>
+<div class="col-sm-6 col-md-3 mb-3">
+<div class="dashboard-card p-3 h-100"><div class="label">Controls</div><div class="value" id="dash-controls">0</div><div class="sub">Implemented</div></div>
+</div>
+<div class="col-sm-6 col-md-3 mb-3">
+<div class="dashboard-card p-3 h-100"><div class="label">Issues</div><div class="value" id="dash-issues">0</div><div class="sub"><span id="dash-overdue">0</span> overdue</div></div>
+</div>
+<div class="col-sm-6 col-md-3 mb-3">
+<div class="dashboard-card p-3 h-100"><div class="label">Incidents</div><div class="value" id="dash-incidents">0</div><div class="sub">Open</div></div> <!-- New -->
+</div>
+<div class="col-sm-6 col-md-3 mb-3">
+<div class="dashboard-card p-3 h-100"><div class="label">Treatments</div><div class="value" id="dash-treatments">0</div><div class="sub">In progress</div></div>
+</div>
+<div class="col-sm-6 col-md-3 mb-3">
+<div class="dashboard-card p-3 h-100"><div class="label">Compliance Coverage</div><div class="value" id="dash-coverage">0%</div><div class="sub">Implemented</div></div>
+</div>
+</div>
+<div class="row mt-2">
+<div class="col-md-4 mb-3">
+<div class="dashboard-card p-3 h-100 d-flex flex-column justify-content-between">
+<div>
+<div class="label">Framework coverage</div>
+<div class="value"><span id="dash-coverage">0%</span></div>
+<div class="sub">Implemented local controls mapped to frameworks.</div>
+</div>
+<div class="mt-2"><span class="heat-pill heat-none" id="dash-coverage-pill">Coverage heat</span></div>
+</div>
+</div>
+<div class="col-md-4 mb-3">
+<div class="dashboard-card p-3 h-100">
+<div class="label mb-1">Templates</div>
+<p class="sub">Load pre-built setups for standards.</p>
+<div class="d-flex flex-wrap">
+<button class="btn btn-sm btn-outline-info mr-2 mb-2" id="load-iso-template">Load ISO 27001</button>
+<button class="btn btn-sm btn-outline-info mr-2 mb-2" id="load-nist-template">Load NIST CSF</button>
+<button class="btn btn-sm btn-outline-info mr-2 mb-2" id="load-pci-template">Load PCI DSS</button>
+<button class="btn btn-sm btn-outline-info mb-2" id="load-hipaa-template">Load HIPAA</button>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-3">
+<div class="dashboard-card p-3 h-100">
+<div class="label mb-1">Scenarios &amp; exports</div>
+<p class="sub">Manage data and load examples.</p>
+<div class="d-flex flex-wrap">
+<button class="btn btn-sm btn-primary mr-2 mb-2" id="btn-export">Export JSON</button>
+<button class="btn btn-sm btn-outline-light mr-2 mb-2" id="btn-import">Import JSON</button>
+<button class="btn btn-sm btn-outline-info mr-2 mb-2" id="btn-load-demo">Load Demo</button>
+<button class="btn btn-sm btn-outline-danger mb-2" id="btn-reset">Reset All</button>
+<input accept="application/json" id="file-import" style="display:none" type="file"/>
+</div>
+<small class="text-muted d-block mt-2" id="import-status"></small>
+</div>
+</div>
+</div>
+</div>
+<!-- Risk Matrix -->
+<div class="grc-tab ftco-animate" id="tab-matrix">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">Visualize risks. Toggle inherent vs residual. Export PNG for reports. Tip: Residual shows control effectiveness.</span></span>: Risk visualization tool.</p>
+</div>
+<h3>Risk Matrix (Inherent vs Residual)</h3>
+<p class="mb-3">Toggle to compare inherent (pre-controls) and residual (post-controls) risks.</p>
+<div class="bg-dark p-3 rounded mb-3">
+<div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+<label class="btn btn-sm btn-primary active" id="toggle-inherent"><input checked="" name="mx" type="radio"/> Inherent</label>
+<label class="btn btn-sm btn-outline-light" id="toggle-residual"><input name="mx" type="radio"/> Residual</label>
+</div>
+<button class="btn btn-outline-light btn-sm" id="matrix-export">Export PNG</button>
+</div>
+<canvas height="640" id="risk-matrix-canvas" width="920"></canvas>
+<div class="mt-3 text-center text-muted small" id="matrix-legend"></div>
+</div>
+</div>
+<!-- Auditor Summary -->
+<div class="grc-tab ftco-animate" id="tab-summary">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">Auto-generated narrative. Refresh after changes. Copy/export for docs. Tip: Customize in reports tab.</span></span>: Executive summary generator.</p>
+</div>
+<h3>Auditor-style Summary</h3>
+<p class="mb-3">Generated narrative narrative for reports/decks.</p>
+<div class="bg-dark p-3 rounded mb-3">
+<div class="d-flex justify-content-between align-items-center mb-2">
+<span class="small-muted">Based on current data.</span>
+<div>
+<button class="btn btn-sm btn-primary mr-2" id="summary-refresh">Refresh</button>
+<button class="btn btn-sm btn-outline-light mr-2" id="summary-copy">Copy</button>
+<button class="btn btn-sm btn-outline-light mr-2" id="summary-export-md">Export MD</button>
+<button class="btn btn-sm btn-outline-light" id="summary-export-pdf">Export PDF</button>
+</div>
+</div>
+<textarea class="form-control" id="summary-text" rows="16"></textarea>
+<div class="small-muted mt-2">Tip: Use in audit reports or ISO SoA.</div>
+</div>
+</div>
+<!-- Reports -->
+<div class="grc-tab ftco-animate" id="tab-reports">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">Select type, generate. Export MD/PDF. Tip: Customize text before export.</span></span>: Create customizable reports.</p>
+</div>
+<h3>Reports</h3>
+<p class="mb-3">Generate teaching-oriented reports.</p>
+<div class="bg-dark p-3 rounded mb-3">
+<div class="d-flex justify-content-between align-items-center mb-2">
+<span class="small-muted">Select type.</span>
+<select class="form-control form-control-sm mr-2" id="report-type" style="width:200px;">
+<option value="full-audit">Full Audit</option>
+<option value="risk-register">Risk Register</option>
+<option value="control-coverage">Control Coverage</option>
+<option value="issue-summary">Issue Summary</option>
+<option value="vendor-report">Vendor Risk</option> <!-- New -->
+<option value="incident-report">Incident Log</option> <!-- New -->
+</select>
+<button class="btn btn-sm btn-primary mr-2" id="generate-report">Generate</button>
+<button class="btn btn-sm btn-outline-light mr-2" id="report-export-md">Export MD</button>
+<button class="btn btn-sm btn-outline-light" id="report-export-pdf">Export PDF</button>
+</div>
+<textarea class="form-control" id="report-text" rows="16"></textarea>
+<div class="small-muted mt-2">Edit text if needed before export.</div>
+</div>
+</div>
+<!-- Challenge Mode -->
+<div class="grc-tab ftco-animate" id="tab-challenges">
+<div class="guidance">
+<p><span class="tooltip">How to use<span class="tooltiptext">Select challenge, complete tasks in lab, check score. Tip: Use to practice real scenarios, aim for high scores.</span></span>: Gamified learning mode.</p>
+</div>
+<h3>Challenge Mode</h3>
+<p class="mb-3">Test your GRC skills with scored challenges. Complete tasks, then self-score.</p>
+<div class="challenge-card">
+<h4>Challenge 1: Basic Risk Assessment (Beginner)</h4>
+<p>Scenario: You're a new analyst at a small e-commerce company. Identify 5 risks for their web app and database.</p>
+<ul>
+<li>Add 2 assets</li>
+<li>Add 5 risks, score them</li>
+<li>Add 3 controls to mitigate</li>
+<li>Achieve 60% coverage in gap analysis</li>
+</ul>
+<p>Score: Check dashboard - 1 point per task, bonus for high risks mitigated. Your score: <span class="challenge-score" id="challenge-1-score">0/5</span></p>
+<button class="btn btn-sm btn-primary" onclick="scoreChallenge(1)">Calculate Score</button>
+</div>
+<div class="challenge-card">
+<h4>Challenge 2: Compliance Mapping (Intermediate)</h4>
+<p>Scenario: Prepare for ISO 27001 certification. Map controls to Annex A.</p>
+<ul>
+<li>Load ISO template</li>
+<li>Add 10 local controls</li>
+<li>Map to at least 20 framework controls</li>
+<li>Complete SoA with rationale</li>
+<li>Achieve 75% coverage</li>
+</ul>
+<p>Score: <span class="challenge-score" id="challenge-2-score">0/5</span></p>
+<button class="btn btn-sm btn-primary" onclick="scoreChallenge(2)">Calculate Score</button>
+</div>
+<div class="challenge-card">
+<h4>Challenge 3: Incident Response (Advanced)</h4>
+<p>Scenario: Simulate a data breach. Log incident, link to risks, add treatments.</p>
+<ul>
+<li>Add incident with critical severity</li>
+<li>Link to asset/risk/control</li>
+<li>Add 3 treatments with targets</li>
+<li>Update risk residual</li>
+<li>Generate incident report</li>
+</ul>
+<p>Score: <span class="challenge-score" id="challenge-3-score">0/5</span></p>
+<button class="btn btn-sm btn-primary" onclick="scoreChallenge(3)">Calculate Score</button>
+</div>
+</div>
+</div>
+</section>
+<footer class="ftco-footer ftco-section">
+<div class="container">
+<div class="row"><div class="col-md-12 text-center">
+<p>Copyright ©<script>
   // Ensure tab button class exists for JS bindings (safety)
   document.addEventListener("DOMContentLoaded", ()=>{
     document.querySelectorAll(".grc-tab-buttons button[data-grc-tab]").forEach(b=>b.classList.add("grc-tab-button"));
   });
 </script>
-
 <script>document.write(new Date().getFullYear());</script> All rights reserved | GRC Practice Lab by John B Joseph | Empowering Future GRC Leaders</p>
-      </div></div>
-    </div>
-  </footer>
-  <!-- Toast container -->
-  <div id="toast-container" class="toast-message"></div>
-  <!-- Core scripts -->
-  <script src="js/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/main.js"></script>
-  <!-- GRC Lab App -->
-  <script>
+</div></div>
+</div>
+</footer>
+<!-- Toast container -->
+<div class="toast-message" id="toast-container"></div>
+<!-- Core scripts -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
+<!-- GRC Lab App -->
+<script>
   // ---------- Expanded Framework library (over 200 controls) ----------
   const FRAMEWORK_CONTROLS = [
     // ISO 27001 Annex A
@@ -2977,6 +3527,7 @@
       `;
       tbody.appendChild(tr);
     });
+    applySoALabels();
     count.textContent = `${filtered.length} framework control(s) shown of ${FRAMEWORK_CONTROLS.length}`;
     // Delegate change events for all inputs/selects in table
     tbody.onchange = (e)=>{
@@ -3930,5 +4481,225 @@
   });
   </script>
 </div>
+<script>
+(function uiFixPack(){
+  function qs(sel, root=document){ return root.querySelector(sel); }
+  function qsa(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
+
+  // Loading overlay helpers
+  const overlay = document.getElementById('uiBusyOverlay');
+  function setBusy(on, label){
+    if(!overlay) return;
+    overlay.classList.toggle('show', !!on);
+    overlay.setAttribute('aria-hidden', on ? 'false' : 'true');
+    if(label){
+      const t = overlay.querySelector('div[style*="font-weight:900"]');
+      if(t) t.textContent = label;
+    }
+  }
+  window.__grcSetBusy = setBusy;
+
+  // Attach loading feedback to export/report buttons (best-effort, no breaking)
+  const busyIds = [
+    'export-assets','export-vendors','export-risks','export-controls','export-issues','export-incidents','export-treatments',
+    'export-gap','export-soa','export-dashboard','export-matrix','export-summary','export-reports'
+  ];
+  busyIds.forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.addEventListener('click', ()=> {
+      setBusy(true, 'Exporting…');
+      setTimeout(()=> setBusy(false), 900);
+    }, {capture:true});
+  });
+
+  // Make filter rows look like "filterBar" without changing markup
+  const tabFrameworks = document.getElementById('tab-frameworks');
+  if(tabFrameworks){
+    const row = tabFrameworks.querySelector('.row.mb-3');
+    if(row) row.classList.add('filterBar');
+  }
+  const tabRisks = document.getElementById('tab-risks');
+  if(tabRisks){
+    const row = tabRisks.querySelector('.row.mb-2');
+    if(row) row.classList.add('filterBar');
+  }
+
+  // Empty states: upgrade existing empty divs
+  qsa('[id$="-empty"]').forEach(el => {
+    el.classList.add('emptyState');
+  });
+
+  // Action buttons alignment: try to wrap last cell buttons
+  qsa('table tbody tr').forEach(tr=>{
+    const tds = tr.querySelectorAll('td');
+    if(!tds.length) return;
+    const last = tds[tds.length-1];
+    // if last contains multiple buttons, add flex wrapper
+    const btns = last.querySelectorAll('.btn');
+    if(btns.length >= 1){
+      last.classList.add('actionsCell');
+    }
+  });
+
+  // Edit mode highlighting: detect hidden id fields in common forms
+  const formIdFields = [
+    ['asset-form','asset-id'],
+    ['vendor-form','vendor-id'],
+    ['risk-form','risk-id'],
+    ['control-form','control-id'],
+    ['issue-form','issue-id'],
+    ['incident-form','incident-id'],
+    ['treat-form','treat-id']
+  ];
+  formIdFields.forEach(([formId, idFieldId])=>{
+    const form = document.getElementById(formId);
+    const idField = document.getElementById(idFieldId);
+    if(!form || !idField) return;
+
+    // Add small badge
+    if(!form.querySelector('.editBadge')){
+      const badge = document.createElement('div');
+      badge.className = 'editBadge';
+      badge.textContent = 'Edit mode';
+      form.prepend(badge);
+    }
+
+    const update = ()=>{
+      const editing = !!(idField.value && String(idField.value).trim().length);
+      form.classList.toggle('is-editing', editing);
+    };
+    update();
+    // Mutation observer for programmatic value changes
+    const mo = new MutationObserver(update);
+    mo.observe(idField, {attributes:true, attributeFilter:['value']});
+    // Also poll on input events
+    idField.addEventListener('input', update);
+    idField.addEventListener('change', update);
+    // Lightweight periodic sync (safe)
+    setInterval(update, 800);
+  });
+
+  // SoA: if there are inputs used for rationale/evidence, upgrade to textarea non-destructively
+  // (Keeps values and triggers change/input events.)
+  const tabSoa = document.getElementById('tab-soa');
+  if(tabSoa){
+    // convert any inputs with class 'soa-input' that are meant for longer text (heuristic)
+    qsa('input.soa-input', tabSoa).forEach(inp=>{
+      const name = (inp.getAttribute('placeholder')||'').toLowerCase();
+      const id = (inp.id||'').toLowerCase();
+      const isLong = name.includes('evidence') || name.includes('rationale') || id.includes('evidence') || id.includes('rationale') || inp.value.length > 40;
+      if(!isLong) return;
+
+      const ta = document.createElement('textarea');
+      ta.className = inp.className + ' soa-notes';
+      ta.value = inp.value || '';
+      ta.setAttribute('data-from', 'soa-input');
+      if(inp.name) ta.name = inp.name;
+      if(inp.id) ta.id = inp.id; // preserve id for JS binding
+      if(inp.getAttribute('data-key')) ta.setAttribute('data-key', inp.getAttribute('data-key'));
+      if(inp.getAttribute('data-row')) ta.setAttribute('data-row', inp.getAttribute('data-row'));
+      ta.placeholder = inp.placeholder || '';
+      inp.replaceWith(ta);
+
+      // propagate events so existing handlers keep working
+      ['input','change'].forEach(ev=>{
+        ta.addEventListener(ev, ()=> {
+          const e = new Event(ev, {bubbles:true});
+          ta.dispatchEvent(e);
+        }, {passive:true});
+      });
+    });
+  }
+})();
+
+/* ===== Premium UI Patch (safe DOM helpers) ===== */
+document.addEventListener('DOMContentLoaded', () => {
+  // Make SoA filters horizontal
+  const soaFilterRow = document.querySelector('#tab-soa .row.mb-3');
+  if(soaFilterRow) soaFilterRow.classList.add('grc-filter-row');
+
+  // Assets: convert data-types checkbox block into a horizontal row (visual only)
+  const assetForm = document.getElementById('asset-form');
+  if(assetForm){
+    // Force key long fields to span full width
+    ['asset-notes'].forEach(id=>{
+      const el = document.getElementById(id);
+      if(el){
+        const fg = el.closest('.form-group');
+        if(fg) fg.classList.add('grc-span-2');
+      }
+    });
+    // data types group (wrap the custom controls if present)
+    const dtypes = assetForm.querySelectorAll('.custom-control.custom-checkbox');
+    if(dtypes && dtypes.length){
+      const parent = dtypes[0].closest('.form-group') || dtypes[0].parentElement;
+      if(parent){
+        // create wrapper row if not already
+        if(!parent.querySelector('.grc-check-row')){
+          const wrap = document.createElement('div');
+          wrap.className = 'grc-check-row';
+          dtypes.forEach(n => wrap.appendChild(n));
+          parent.appendChild(wrap);
+        }
+        parent.classList.add('grc-span-2');
+      }
+    }
+  }
+
+  // Treatments: apply grid styling without changing markup
+  const treatForm = document.getElementById('treat-form');
+  if(treatForm){
+    treatForm.classList.add('grc-form-grid');
+    const notes = document.getElementById('treat-notes');
+    if(notes){
+      const fg = notes.closest('.form-group');
+      if(fg) fg.classList.add('grc-span-2');
+    }
+  }
+
+  // Ensure SoA rows have labels for mobile stacked layout (if not already)
+  if(typeof applySoALabels === 'function'){
+    // run once after first render too (renderSoATable calls it, but safe)
+    setTimeout(()=>{ try{ applySoALabels(); }catch(e){} }, 600);
+  }
+});
+
+
+/* === SoA mobile labels (safe, non-breaking) === */
+(function setSoALabels(){
+  try{
+    const tab = document.getElementById("tab-soa");
+    if(!tab) return;
+    const table = tab.querySelector("table");
+    if(!table) return;
+    const headers = Array.from(table.querySelectorAll("thead th")).map(th => th.textContent.trim());
+    if(!headers.length) return;
+    const rows = table.querySelectorAll("tbody tr");
+    rows.forEach(tr=>{
+      Array.from(tr.children).forEach((td, idx)=>{
+        if(!td.getAttribute("data-label")){
+          td.setAttribute("data-label", headers[idx] || "");
+        }
+      });
+    });
+    // Also observe future row renders (when filtering updates)
+    const tbody = table.querySelector("tbody");
+    if(!tbody) return;
+    const obs = new MutationObserver(()=>{
+      const rows2 = tbody.querySelectorAll("tr");
+      rows2.forEach(tr=>{
+        Array.from(tr.children).forEach((td, idx)=>{
+          if(!td.getAttribute("data-label")){
+            td.setAttribute("data-label", headers[idx] || "");
+          }
+        });
+      });
+    });
+    obs.observe(tbody, {childList:true, subtree:true});
+  }catch(e){}
+})();
+
+</script>
 </body>
 </html>
