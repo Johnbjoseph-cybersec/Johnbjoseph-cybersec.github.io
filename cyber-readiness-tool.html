@@ -31,7 +31,7 @@
       --radius2: 26px;
       --ease: cubic-bezier(.2,.8,.2,1);
     }
-    *{ box-sizing: border-box; }
+    *{ box-sizing: border-box; margin: 0; padding: 0; }
     html,body{ height:100%; }
     body{
       margin:0;
@@ -43,6 +43,7 @@
         radial-gradient(800px 600px at 50% 90%, rgba(251,113,133,.12), transparent 55%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
+      line-height: 1.6;
     }
 
     /* Subtle animated grid */
@@ -74,402 +75,1194 @@
     .orb.three{ left:40%; bottom:-220px; background: radial-gradient(circle at 45% 45%, rgba(251,113,133,.45), transparent 62%); animation-duration: 13s;}
     @keyframes float { from{ transform: translate3d(0,0,0) scale(1); } to{ transform: translate3d(0,24px,0) scale(1.02);} }
 
-    .wrap{ max-width: 1200px; margin: 0 auto; padding: 28px 18px 60px; position:relative; }
-    i.ph{display:none !important;}
-
-    /* Top nav */
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between; gap:14px;
-      position:sticky; top:0; z-index:50;
-      padding: 14px 12px;
-      margin: -8px -6px 18px;
-      border-radius: var(--radius2);
-      background: rgba(10,14,26,.62);
-      border: 1px solid rgba(255,255,255,.10);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 32px rgba(0,0,0,.35);
+    .wrap{ 
+      max-width: 1200px; 
+      margin: 0 auto; 
+      padding: 28px 24px 60px; 
+      position:relative;
+      width: 100%;
     }
-    .brand{ display:flex; align-items:center; gap:10px; user-select:none; }
+
+    /* Top Navigation - Enhanced */
+    .topbar{
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between;
+      position: sticky; 
+      top: 0; 
+      z-index: 100;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      border-radius: var(--radius2);
+      background: rgba(10,14,26,.85);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 10px 40px rgba(0,0,0,.45);
+    }
+    .brand{ 
+      display: flex; 
+      align-items: center; 
+      gap: 14px; 
+      user-select: none; 
+    }
     .logo{
-      width:38px; height:38px; border-radius:12px;
+      width: 44px; 
+      height: 44px; 
+      border-radius: 12px;
       background: conic-gradient(from 210deg, rgba(124,58,237,.9), rgba(34,211,238,.9), rgba(251,113,133,.7), rgba(124,58,237,.9));
-      box-shadow: 0 12px 26px rgba(124,58,237,.25);
-      position:relative; overflow:hidden;
+      box-shadow: 0 12px 32px rgba(124,58,237,.3);
+      position: relative; 
+      overflow: hidden;
+      flex-shrink: 0;
     }
     .logo:after{
-      content:""; position:absolute; inset:-40%;
+      content:""; 
+      position:absolute; 
+      inset:-40%;
       background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 60%);
       transform: rotate(18deg);
     }
-    .brand h1{ font-size: 14px; margin:0; letter-spacing:.2px; line-height:1.05; }
-    .brand .sub{ font-size: 12px; color: var(--muted); margin-top:2px; }
-
-    .actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end;}
-    .pill{
-      display:flex; align-items:center; gap:8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      color: var(--text);
-      cursor:pointer;
-      transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);
-      user-select:none;
+    .brand-text h1{ 
+      font-size: 16px; 
+      margin:0; 
+      letter-spacing:.2px; 
+      line-height:1.2; 
+      font-weight: 700;
     }
-    .pill:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.16);}
-    .pill:active{ transform: translateY(0px) scale(.99); }
-    .pill .hint{ color: var(--muted); font-size:12px; }
+    .brand-text .sub{ 
+      font-size: 12.5px; 
+      color: var(--muted); 
+      margin-top: 4px; 
+      line-height: 1.3;
+    }
+
+    .actions{ 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .pill{
+      display: flex; 
+      align-items: center; 
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--text);
+      cursor: pointer;
+      transition: all .2s var(--ease);
+      user-select: none;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .pill:hover{ 
+      transform: translateY(-2px); 
+      background: rgba(255,255,255,.1); 
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    }
+    .pill:active{ transform: translateY(0px) scale(.98); }
+    .pill .hint{ color: var(--muted); font-size:11px; }
     .pill.primary{
       background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 20px 55px rgba(124,58,237,.25);
+      border: 1px solid rgba(255,255,255,.15);
+      box-shadow: 0 12px 32px rgba(124,58,237,.3);
     }
 
-    /* Hero */
-    .hero{ display:grid; grid-template-columns: 1.2fr 0.8fr; gap: 18px; margin-top: 10px; align-items: stretch; width: 100%; }
-    .hero > .card{ width: 100%; }
-    @media (max-width: 760px){ .hero{ grid-template-columns: 1fr; } }
-    .hero > .card:last-child{ flex: 1 1 auto; max-width: none; }
+    /* Main Container - Enhanced */
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
 
+    /* Hero Section - Enhanced */
+    .hero-grid{
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 24px;
+      align-items: start;
+    }
+    @media (max-width: 900px){ 
+      .hero-grid{ grid-template-columns: 1fr; } 
+    }
+    
     .card{
       background: var(--card);
       border: 1px solid var(--stroke);
       border-radius: var(--radius2);
       box-shadow: var(--shadow2);
-      backdrop-filter: blur(12px);
-      overflow:hidden;
-      position:relative;
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+      position: relative;
+      height: 100%;
     }
-    .card .inner{ padding: 22px 22px 18px; position:relative; z-index:1; }
+    .card .inner{ 
+      padding: 28px; 
+      position: relative; 
+      z-index: 1; 
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
     .glow{
-      position:absolute; inset:-1px; z-index:0; pointer-events:none;
+      position: absolute; 
+      inset: -1px; 
+      z-index: 0; 
+      pointer-events: none;
       background:
         radial-gradient(700px 380px at 20% 15%, rgba(124,58,237,.20), transparent 55%),
         radial-gradient(650px 360px at 90% 30%, rgba(34,211,238,.14), transparent 55%);
-      opacity:.95;
+      opacity: .95;
     }
 
-    .heroTitle{ font-size: 34px; margin: 0 0 8px; letter-spacing: -.4px; line-height: 1.12; }
-    .heroTitle .grad{
+    .hero-title{ 
+      font-size: 36px; 
+      margin: 0 0 12px; 
+      letter-spacing: -.4px; 
+      line-height: 1.1; 
+      font-weight: 800;
+    }
+    .hero-title .grad{
       background: linear-gradient(90deg, rgba(255,255,255,.95), rgba(34,211,238,.85), rgba(124,58,237,.95));
-      -webkit-background-clip: text; background-clip:text; color: transparent;
+      -webkit-background-clip: text; 
+      background-clip: text; 
+      color: transparent;
     }
-    .heroP{ margin: 0 0 14px; color: var(--muted); font-size: 14px; line-height: 1.55; }
+    .hero-desc{ 
+      margin: 0 0 20px; 
+      color: var(--muted); 
+      font-size: 15px; 
+      line-height: 1.6; 
+      flex-grow: 1;
+    }
 
-    .chiprow{ display:flex; gap:8px; flex-wrap:wrap; margin-top: 14px; }
-    .chip{ display:inline-flex; align-items:center; gap:8px; padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10); color: rgba(255,255,255,.86); font-size: 12px; }
-    .metaGrid{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px; margin-top: 14px; }
-    @media (max-width: 520px){ .metaGrid{ grid-template-columns: 1fr; } }
-    .meta{ padding: 12px 12px; border-radius: 16px; background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.09); }
-    .meta .k{ color: var(--muted2); font-size: 12px; }
-    .meta .v{ margin-top: 6px; font-weight: 700; letter-spacing:.2px; }
+    .chip-row{ 
+      display: flex; 
+      gap: 10px; 
+      flex-wrap: wrap; 
+      margin-bottom: 20px; 
+    }
+    .chip{ 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 8px; 
+      padding: 8px 14px; 
+      border-radius: 999px; 
+      background: rgba(255,255,255,.07); 
+      border: 1px solid rgba(255,255,255,.12); 
+      color: rgba(255,255,255,.86); 
+      font-size: 12.5px; 
+      font-weight: 500;
+    }
 
-    /* Framework toggles */
-    .togglePanel{ display:flex; flex-direction:column; gap:10px; }
-    .togglePanel .head{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
-    .togglePanel h3{ margin:0; font-size: 14px; letter-spacing:.2px; }
-    .togglePanel p{ margin: 4px 0 0; color: var(--muted); font-size: 12.5px; line-height:1.45; }
-    .toggles{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px; }
-    @media (max-width: 520px){ .toggles{ grid-template-columns: 1fr; } }
-    .togg{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      padding: 12px 12px; border-radius: 16px;
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.09);
-      transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
+    .meta-grid{ 
+      display: grid; 
+      grid-template-columns: repeat(2, minmax(0, 1fr)); 
+      gap: 14px; 
+      margin-bottom: 20px; 
     }
-    .togg:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.075); }
-    .togg .l{ display:flex; flex-direction:column; gap:2px; }
-    .togg .l .a{ font-weight:700; font-size: 13px; }
-    .togg .l .b{ color: var(--muted); font-size: 12px; }
-    .switch{
-      width: 48px; height: 28px;
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 999px;
-      position:relative;
-      cursor:pointer;
-      transition: background .18s var(--ease), border-color .18s var(--ease);
-      flex:0 0 auto;
+    @media (max-width: 520px){ 
+      .meta-grid{ grid-template-columns: 1fr; } 
     }
-    .switch:before{
-      content:""; position:absolute; top:50%; left:3px; transform: translateY(-50%);
-      width: 22px; height: 22px; border-radius: 999px;
-      background: rgba(255,255,255,.92);
-      box-shadow: 0 10px 22px rgba(0,0,0,.35);
-      transition: transform .18s var(--ease), background .18s var(--ease);
+    .meta{ 
+      padding: 16px; 
+      border-radius: 18px; 
+      background: rgba(255,255,255,.06); 
+      border: 1px solid rgba(255,255,255,.1); 
     }
-    .switch.on{ background: linear-gradient(135deg, rgba(124,58,237,.85), rgba(34,211,238,.55)); border-color: rgba(255,255,255,.16); }
-    .switch.on:before{ transform: translate(20px, -50%); background: rgba(255,255,255,.96); }
+    .meta .k{ 
+      color: var(--muted2); 
+      font-size: 13px; 
+      font-weight: 500; 
+      margin-bottom: 6px;
+    }
+    .meta .v{ 
+      font-weight: 700; 
+      font-size: 16px; 
+      letter-spacing: .2px; 
+      color: var(--text);
+    }
 
-    /* Stepper */
+    /* What to expect section */
+    .info-card{
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+    .info-card .title{
+      font-weight: 700; 
+      font-size: 14px; 
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .info-card .content{
+      color: var(--muted); 
+      font-size: 13px; 
+      line-height: 1.6;
+    }
+
+    /* Progress stepper - Enhanced */
     .stepper{
-      margin-top: 18px; padding: 14px 16px;
+      padding: 20px;
       border-radius: var(--radius2);
       background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.10);
-      display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+      border: 1px solid rgba(255,255,255,.1);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
-    .stepper .left{ display:flex; align-items:center; gap:12px; }
+    .stepper-top{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .step-indicator{
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
     .badge{
-      padding: 8px 10px;
+      padding: 8px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      font-size: 12px;
-      color: rgba(255,255,255,.88);
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      font-size: 13px;
+      color: rgba(255,255,255,.9);
+      font-weight: 600;
+      white-space: nowrap;
     }
-    .progressWrap{
-      width: 320px; max-width: 100%;
+    .progress-wrap{
+      width: 280px;
+      max-width: 100%;
       height: 10px;
       border-radius: 999px;
       background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.10);
-      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.12);
+      overflow: hidden;
     }
-    .progressBar{
+    .progress-bar{
       height: 100%;
       width: 0%;
       background: linear-gradient(90deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
       border-radius: 999px;
       transition: width .35s var(--ease);
     }
-
-    /* Pages / transitions */
-    .page{ margin-top: 16px; position:relative; }
-    .view{ display:none; transform: translateY(10px); opacity: 0; transition: opacity .35s var(--ease), transform .35s var(--ease); }
-    .view.active{ display:block; transform: translateY(0px); opacity: 1; }
-
-    /* Domain tiles */
-    .domainGrid{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin-top: 10px; }
-    @media (max-width: 980px){ .domainGrid{ grid-template-columns: repeat(2, minmax(0,1fr)); } }
-    @media (max-width: 620px){ .domainGrid{ grid-template-columns: 1fr; } }
-    .tile{
-      padding: 16px 16px;
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.10);
-      cursor:pointer;
-      transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
-      position:relative; overflow:hidden;
-      min-height: 140px;
+    
+    .completion-ring{
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
-    .tile:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.075); }
-    .tile:active{ transform: translateY(0px) scale(.99); }
-    .tile .t{ font-weight:800; font-size: 16px; letter-spacing:.2px; }
-    .tile .p{ margin-top: 6px; color: var(--muted); font-size: 13px; line-height:1.45;}
-    .tile .foot{ margin-top: 12px; display:flex; align-items:center; justify-content:space-between; gap:10px; color: var(--muted2); font-size:12px; }
-    .tile .spark{ position:absolute; inset:-50%; background: radial-gradient(circle at 30% 30%, rgba(34,211,238,.12), transparent 55%), radial-gradient(circle at 70% 40%, rgba(124,58,237,.14), transparent 56%); transform: rotate(12deg); opacity:.9; pointer-events:none; }
+    .ring-text{
+      font-weight: 800;
+      font-size: 14px;
+      color: rgba(255,255,255,.9);
+      min-width: 50px;
+    }
 
-    /* Question cards */
-    .qHead{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom: 10px; }
-    .qHead .left{ display:flex; flex-direction:column; gap:6px; }
-    .qTitle{ font-size: 18px; font-weight: 800; letter-spacing: -.2px; margin:0; }
-    .qSub{ margin:0; color: var(--muted); font-size: 13px; line-height:1.45; }
-    .qCard{
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 16px 16px;
-      box-shadow: 0 10px 28px rgba(0,0,0,.22);
-      margin-top: 12px;
+    /* Buttons - Enhanced */
+    .btn-group{
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
     }
-    .qList{ display:grid; gap: 12px; margin-top: 12px; }
-    .cap{
-      border-radius: 18px;
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.10);
-      padding: 14px;
-      transition: transform .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
-      position:relative; overflow:hidden;
-    }
-    .cap:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.16); background: rgba(255,255,255,.07); }
-    .cap .capTop{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
-    .cap .capName{ font-weight: 750; letter-spacing:.1px; line-height:1.35; }
-    .cap .capHint{ margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height:1.45; }
-    .scorePills{ display:flex; gap:6px; flex-wrap:wrap; margin-top: 12px;}
-    .scorePills button{
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.85);
-      padding: 8px 10px;
-      border-radius: 999px;
-      cursor:pointer;
-      font-size: 12px;
-      transition: transform .14s var(--ease), background .14s var(--ease), border-color .14s var(--ease);
-      user-select:none;
-    }
-    .scorePills button:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.18); }
-    .scorePills button.active{ background: linear-gradient(135deg, rgba(124,58,237,.88), rgba(34,211,238,.55)); border-color: rgba(255,255,255,.16); }
-    .mini{ padding: 8px 10px; border-radius: 14px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); color: var(--muted); font-size: 12px; }
-    .mapChips{ display:flex; gap:6px; flex-wrap:wrap; margin-top: 10px;}
-    .mapChips .m{ font-size: 11px; padding: 6px 8px; border-radius: 999px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.05); color: rgba(255,255,255,.85); }
-    .m.iso{ border-color: rgba(34,211,238,.22); }
-    .m.uae{ border-color: rgba(124,58,237,.24); }
-    details.evidence{ margin-top: 10px; border-radius: 14px; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.09); padding: 10px 10px; }
-    details.evidence summary{ cursor:pointer; color: rgba(255,255,255,.88); font-weight: 650; list-style:none; display:flex; align-items:center; justify-content:space-between; gap:10px; user-select:none; }
-    details.evidence summary::-webkit-details-marker{ display:none; }
-    details.evidence p{ margin: 10px 0 0; color: var(--muted); font-size: 12.5px; line-height:1.55; }
-
-    /* Footer controls for question view */
-    .navRow{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top: 14px; }
     .btn{
-      padding: 11px 14px;
+      padding: 12px 20px;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
+      background: rgba(255,255,255,.07);
       color: rgba(255,255,255,.9);
-      cursor:pointer;
-      transition: transform .18s var(--ease), background .18s var(--ease), border-color .18s var(--ease);
-      user-select:none;
-      display:inline-flex; align-items:center; gap:10px;
+      cursor: pointer;
+      transition: all .2s var(--ease);
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
     }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.18); }
-    .btn:active{ transform: translateY(0px) scale(.99); }
-    .btn.primary{ background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65)); border-color: rgba(255,255,255,.16); box-shadow: 0 18px 46px rgba(124,58,237,.24); }
-    .btn.danger{ background: rgba(251,113,133,.12); border-color: rgba(251,113,133,.22); }
-    .btn.small{ padding: 9px 12px; border-radius: 12px; font-size: 13px; }
+    .btn:hover{ 
+      transform: translateY(-2px); 
+      background: rgba(255,255,255,.1); 
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    }
+    .btn:active{ transform: translateY(0px) scale(.98); }
+    .btn.primary{ 
+      background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65)); 
+      border-color: rgba(255,255,255,.18); 
+      box-shadow: 0 12px 32px rgba(124,58,237,.3);
+      font-weight: 700;
+    }
+    .btn.danger{ 
+      background: rgba(251,113,133,.12); 
+      border-color: rgba(251,113,133,.22); 
+    }
+    .btn.small{ 
+      padding: 10px 16px; 
+      font-size: 13px; 
+    }
+    .btn.large{ 
+      padding: 14px 24px; 
+      font-size: 15px; 
+    }
+
+    /* Framework Toggles - Enhanced */
+    .toggle-panel{ 
+      display: flex; 
+      flex-direction: column; 
+      gap: 16px;
+      height: 100%;
+    }
+    .toggle-panel .header{ 
+      display: flex; 
+      align-items: flex-start; 
+      justify-content: space-between; 
+      gap: 12px; 
+    }
+    .toggle-panel h3{ 
+      margin: 0; 
+      font-size: 16px; 
+      font-weight: 700; 
+      letter-spacing: .2px; 
+    }
+    .toggle-panel p{ 
+      margin: 6px 0 0; 
+      color: var(--muted); 
+      font-size: 13px; 
+      line-height: 1.5; 
+    }
+    .toggles-grid{ 
+      display: grid; 
+      grid-template-columns: repeat(2, minmax(0, 1fr)); 
+      gap: 12px; 
+    }
+    @media (max-width: 520px){ 
+      .toggles-grid{ grid-template-columns: 1fr; } 
+    }
+    .toggle-item{
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 12px;
+      padding: 16px; 
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      transition: all .2s var(--ease);
+    }
+    .toggle-item:hover{ 
+      transform: translateY(-2px); 
+      border-color: rgba(255,255,255,.18); 
+      background: rgba(255,255,255,.08);
+      box-shadow: 0 8px 20px rgba(0,0,0,.25);
+    }
+    .toggle-item .label{ 
+      display: flex; 
+      flex-direction: column; 
+      gap: 4px; 
+    }
+    .toggle-item .label .title{ 
+      font-weight: 700; 
+      font-size: 14px; 
+    }
+    .toggle-item .label .desc{ 
+      color: var(--muted); 
+      font-size: 12.5px; 
+    }
+    .switch{
+      width: 52px; 
+      height: 30px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 999px;
+      position: relative;
+      cursor: pointer;
+      transition: all .2s var(--ease);
+      flex: 0 0 auto;
+    }
+    .switch:before{
+      content:""; 
+      position: absolute; 
+      top: 3px; 
+      left: 3px; 
+      width: 22px; 
+      height: 22px; 
+      border-radius: 999px;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 4px 12px rgba(0,0,0,.3);
+      transition: transform .2s var(--ease), background .2s var(--ease);
+    }
+    .switch.on{ 
+      background: linear-gradient(135deg, rgba(124,58,237,.85), rgba(34,211,238,.55)); 
+      border-color: rgba(255,255,255,.18); 
+    }
+    .switch.on:before{ 
+      transform: translateX(22px); 
+      background: rgba(255,255,255,.96); 
+    }
+
+    /* Page views */
+    .page-views{ 
+      margin-top: 20px; 
+      position: relative; 
+    }
+    .view{ 
+      display: none; 
+      opacity: 0; 
+      transform: translateY(20px); 
+      transition: opacity .4s var(--ease), transform .4s var(--ease); 
+    }
+    .view.active{ 
+      display: block; 
+      opacity: 1; 
+      transform: translateY(0px); 
+    }
+
+    /* Domain Grid - Enhanced */
+    .domain-grid{ 
+      display: grid; 
+      grid-template-columns: repeat(3, minmax(0, 1fr)); 
+      gap: 16px; 
+      margin-top: 20px; 
+    }
+    @media (max-width: 980px){ 
+      .domain-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); } 
+    }
+    @media (max-width: 620px){ 
+      .domain-grid{ grid-template-columns: 1fr; } 
+    }
+    .domain-tile{
+      padding: 20px;
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      cursor: pointer;
+      transition: all .25s var(--ease);
+      position: relative;
+      overflow: hidden;
+      min-height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .domain-tile:hover{ 
+      transform: translateY(-4px); 
+      border-color: rgba(255,255,255,.2); 
+      background: rgba(255,255,255,.08);
+      box-shadow: 0 16px 40px rgba(0,0,0,.35);
+    }
+    .domain-tile:active{ transform: translateY(-1px) scale(.99); }
+    .domain-tile .title{ 
+      font-weight: 800; 
+      font-size: 18px; 
+      letter-spacing: .2px; 
+      margin-bottom: 8px; 
+    }
+    .domain-tile .desc{ 
+      color: var(--muted); 
+      font-size: 13.5px; 
+      line-height: 1.5;
+      flex-grow: 1;
+    }
+    .domain-tile .footer{ 
+      margin-top: 16px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 10px; 
+      color: var(--muted2); 
+      font-size: 12.5px; 
+    }
+    .domain-tile .spark{ 
+      position: absolute; 
+      inset: -50%; 
+      background: radial-gradient(circle at 30% 30%, rgba(34,211,238,.12), transparent 55%), radial-gradient(circle at 70% 40%, rgba(124,58,237,.14), transparent 56%); 
+      transform: rotate(12deg); 
+      opacity: .9; 
+      pointer-events: none; 
+    }
+
+    /* Question Cards - Enhanced */
+    .questions-header{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .questions-header .left{ 
+      display: flex; 
+      flex-direction: column; 
+      gap: 8px; 
+      flex: 1;
+      min-width: 300px;
+    }
+    .questions-title{ 
+      font-size: 22px; 
+      font-weight: 800; 
+      letter-spacing: -.2px; 
+      margin: 0; 
+    }
+    .questions-subtitle{ 
+      margin: 0; 
+      color: var(--muted); 
+      font-size: 14px; 
+      line-height: 1.5; 
+    }
+    .questions-actions{
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .capability-list{
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .capability-card{
+      border-radius: 20px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 20px;
+      transition: all .2s var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+    .capability-card:hover{
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.07);
+      box-shadow: 0 12px 32px rgba(0,0,0,.25);
+    }
+    .capability-header{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .capability-header .main{
+      flex: 1;
+      min-width: 300px;
+    }
+    .capability-name{ 
+      font-weight: 750; 
+      font-size: 16px; 
+      letter-spacing: .1px; 
+      line-height: 1.4; 
+      margin-bottom: 6px;
+    }
+    .capability-hint{ 
+      color: var(--muted); 
+      font-size: 13.5px; 
+      line-height: 1.5; 
+    }
+    .score-indicator{
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+      min-width: 140px;
+      text-align: center;
+    }
+    
+    .score-pills{ 
+      display: flex; 
+      gap: 8px; 
+      flex-wrap: wrap; 
+      margin-bottom: 16px;
+    }
+    .score-pills button{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.07);
+      color: rgba(255,255,255,.85);
+      padding: 10px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all .15s var(--ease);
+      user-select: none;
+      flex: 1;
+      min-width: 90px;
+      text-align: center;
+    }
+    .score-pills button:hover{ 
+      transform: translateY(-2px); 
+      background: rgba(255,255,255,.1); 
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 6px 16px rgba(0,0,0,.2);
+    }
+    .score-pills button.active{ 
+      background: linear-gradient(135deg, rgba(124,58,237,.88), rgba(34,211,238,.55)); 
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 8px 20px rgba(124,58,237,.25);
+      color: white;
+      font-weight: 700;
+    }
+    
+    .mapping-chips{ 
+      display: flex; 
+      gap: 8px; 
+      flex-wrap: wrap; 
+      margin-bottom: 16px;
+    }
+    .mapping-chip{ 
+      font-size: 11.5px; 
+      padding: 6px 10px; 
+      border-radius: 999px; 
+      border: 1px solid rgba(255,255,255,.12); 
+      background: rgba(255,255,255,.05); 
+      color: rgba(255,255,255,.85); 
+    }
+    .mapping-chip.iso{ border-color: rgba(34,211,238,.22); }
+    .mapping-chip.uae{ border-color: rgba(124,58,237,.24); }
+    
+    details.evidence{ 
+      margin-top: 16px; 
+      border-radius: 14px; 
+      background: rgba(255,255,255,.045); 
+      border: 1px solid rgba(255,255,255,.09); 
+      padding: 14px; 
+    }
+    details.evidence summary{ 
+      cursor: pointer; 
+      color: rgba(255,255,255,.88); 
+      font-weight: 650; 
+      list-style: none; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 10px; 
+      user-select: none; 
+      font-size: 14px;
+    }
+    details.evidence summary::-webkit-details-marker{ display: none; }
+    details.evidence p{ 
+      margin: 14px 0 0; 
+      color: var(--muted); 
+      font-size: 13px; 
+      line-height: 1.6; 
+      padding-left: 4px;
+    }
+
+    /* Navigation row */
+    .navigation-row{ 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 12px; 
+      flex-wrap: wrap; 
+      margin-top: 24px; 
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+
+    /* Results Section - Enhanced */
+    .results-grid{ 
+      display: grid; 
+      grid-template-columns: 1.1fr .9fr; 
+      gap: 24px; 
+      margin-top: 20px; 
+    }
+    @media (max-width: 980px){ 
+      .results-grid{ grid-template-columns: 1fr; } 
+    }
+
+    /* KPI Row */
+    .kpi-row{ 
+      display: grid; 
+      grid-template-columns: repeat(3, minmax(0, 1fr)); 
+      gap: 16px; 
+      margin-bottom: 24px; 
+    }
+    @media (max-width: 780px){ 
+      .kpi-row{ grid-template-columns: 1fr; } 
+    }
+    .kpi{
+      padding: 20px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      position: relative;
+      overflow: hidden;
+      transition: all .2s var(--ease);
+    }
+    .kpi:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 12px 32px rgba(0,0,0,.3);
+    }
+    .kpi .label{ 
+      color: var(--muted2); 
+      font-size: 13px; 
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .kpi .value{ 
+      margin-top: 8px; 
+      font-size: 28px; 
+      font-weight: 850; 
+      letter-spacing: -.3px;
+      line-height: 1;
+    }
+    .kpi .subtext{ 
+      margin-top: 8px; 
+      color: var(--muted); 
+      font-size: 13px; 
+      line-height: 1.4;
+    }
+    .kpi .shine{ 
+      position: absolute; 
+      inset: -40%; 
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.1), transparent 55%); 
+      transform: rotate(10deg); 
+      opacity: .9; 
+      pointer-events: none; 
+    }
 
     /* Visualizations */
-    .vizGrid{ display:grid; grid-template-columns: 1fr 1.2fr; gap: 12px; margin-top: 12px; }
-    @media (max-width: 780px){ .vizGrid{ grid-template-columns: 1fr; } }
-    .vizCard{ padding: 12px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); }
-    .vizTitle{ font-weight:900; font-size: 13px; margin-bottom: 10px; }
-    .donutWrap{ display:flex; align-items:center; gap:14px; }
-    .donutTrack{ fill:none; stroke: rgba(255,255,255,.12); stroke-width: 12; }
-    .donutFill{ fill:none; stroke: rgba(34,211,238,.85); stroke-width: 12; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 60px 60px; stroke-dasharray: 276.46; stroke-dashoffset: 276.46; transition: stroke-dashoffset .8s var(--ease); }
-    .donutText .donutVal{ font-weight: 900; font-size: 22px; letter-spacing:-.2px; }
-    .donutText .donutSub{ color: var(--muted); font-size: 12px; margin-top: 2px; }
-    .radar{ width: 100%; height: 180px; }
-    .radarGrid path, .radarGrid line, .radarGrid circle{ stroke: rgba(255,255,255,.12); fill:none; }
-    .radarPoly{ fill: rgba(124,58,237,.18); stroke: rgba(124,58,237,.85); stroke-width: 2; }
-    .radarLabels text{ fill: rgba(255,255,255,.80); font-size: 11px; }
-    .radarHint{ color: var(--muted); font-size: 12px; margin-top: 6px; }
+    .viz-grid{ 
+      display: grid; 
+      grid-template-columns: 1fr 1.2fr; 
+      gap: 20px; 
+      margin-bottom: 24px; 
+    }
+    @media (max-width: 780px){ 
+      .viz-grid{ grid-template-columns: 1fr; } 
+    }
+    .viz-card{ 
+      padding: 20px; 
+      border-radius: 20px; 
+      background: rgba(255,255,255,.05); 
+      border: 1px solid rgba(255,255,255,.12); 
+    }
+    .viz-title{ 
+      font-weight: 900; 
+      font-size: 15px; 
+      margin-bottom: 16px; 
+    }
+    .donut-wrap{ 
+      display: flex; 
+      align-items: center; 
+      gap: 20px; 
+    }
+    .donut-track{ fill: none; stroke: rgba(255,255,255,.12); stroke-width: 12; }
+    .donut-fill{ fill: none; stroke: rgba(34,211,238,.85); stroke-width: 12; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 60px 60px; stroke-dasharray: 276.46; stroke-dashoffset: 276.46; transition: stroke-dashoffset .8s var(--ease); }
+    .donut-text .donut-value{ font-weight: 900; font-size: 28px; letter-spacing: -.2px; line-height: 1; }
+    .donut-text .donut-sub{ color: var(--muted); font-size: 13px; margin-top: 4px; }
+    
+    .radar{ width: 100%; height: 220px; }
+    .radar-grid path, .radar-grid line, .radar-grid circle{ stroke: rgba(255,255,255,.12); fill: none; }
+    .radar-poly{ fill: rgba(124,58,237,.18); stroke: rgba(124,58,237,.85); stroke-width: 2; }
+    .radar-labels text{ fill: rgba(255,255,255,.80); font-size: 12px; }
+    .radar-hint{ color: var(--muted); font-size: 13px; margin-top: 12px; }
 
-    /* Completion ring */
-    .ring{ display:flex; align-items:center; gap:10px; }
-    .ringTrack{ fill:none; stroke: rgba(255,255,255,.12); stroke-width: 6; }
-    .ringFill{ fill:none; stroke: rgba(34,211,238,.85); stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 22px 22px; stroke-dasharray: 113.10; stroke-dashoffset: 113.10; transition: stroke-dashoffset .45s var(--ease); }
-    .ringText{ font-weight:900; font-size: 12px; color: rgba(255,255,255,.86); margin-left: -6px; min-width: 36px; }
+    /* Domain breakdown bars */
+    .bars-container{ 
+      margin-top: 20px; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 14px; 
+    }
+    .bar-item{ 
+      padding: 16px; 
+      border-radius: 18px; 
+      background: rgba(255,255,255,.05); 
+      border: 1px solid rgba(255,255,255,.12); 
+    }
+    .bar-item .header{ 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 12px; 
+      margin-bottom: 12px; 
+    }
+    .bar-item .name{ font-weight: 800; font-size: 15px; }
+    .bar-item .value{ color: rgba(255,255,255,.86); font-weight: 800; font-size: 15px; }
+    .bar-track{ 
+      height: 10px; 
+      background: rgba(255,255,255,.08); 
+      border: 1px solid rgba(255,255,255,.12); 
+      border-radius: 999px; 
+      overflow: hidden; 
+    }
+    .bar-fill{ 
+      height: 100%; 
+      width: 0%; 
+      background: linear-gradient(90deg, rgba(124,58,237,.92), rgba(34,211,238,.65)); 
+      border-radius: 999px; 
+      transition: width .5s var(--ease); 
+    }
+
+    /* Executive Insights - Enhanced */
+    .executive-insights{
+      padding: 24px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      margin-bottom: 24px;
+    }
+    .executive-header{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .executive-title{
+      font-weight: 900;
+      font-size: 16px;
+      letter-spacing: .2px;
+    }
+    .executive-subtitle{
+      color: var(--muted);
+      font-size: 13.5px;
+      margin-top: 4px;
+    }
+    
+    .insight-section{
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px dashed rgba(255,255,255,.12);
+    }
+    .insight-section:last-child{
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .insight-section .title{
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: .2px;
+      margin-bottom: 12px;
+      color: var(--brand2);
+    }
+    .insight-section .content{
+      color: rgba(255,255,255,.9);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    
+    .risk-distribution{
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .risk-item{
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      text-align: center;
+    }
+    .risk-item .risk-value{
+      font-size: 24px;
+      font-weight: 850;
+      margin: 8px 0;
+    }
+    .risk-item.high .risk-value{ color: var(--bad); }
+    .risk-item.medium .risk-value{ color: var(--warn); }
+    .risk-item.low .risk-value{ color: var(--good); }
+    
+    .actions-list{
+      margin-top: 12px;
+      padding-left: 20px;
+    }
+    .actions-list li{
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    .actions-list li:last-child{
+      margin-bottom: 0;
+    }
+
+    /* Top gaps */
+    .gap-list{ 
+      display: flex; 
+      flex-direction: column; 
+      gap: 12px; 
+      margin-top: 16px; 
+    }
+    .gap-item{
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all .2s var(--ease);
+    }
+    .gap-item:hover{
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.07);
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    }
+    .gap-item .content{ 
+      display: flex; 
+      flex-direction: column; 
+      gap: 6px; 
+      flex: 1;
+    }
+    .gap-item .title{ 
+      font-weight: 800; 
+      line-height: 1.3; 
+      font-size: 14.5px;
+    }
+    .gap-item .meta{ 
+      color: var(--muted); 
+      font-size: 12.5px; 
+      line-height: 1.4;
+    }
+    .severity{
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: 850;
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      min-width: 100px;
+      text-align: center;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .severity.high{ background: rgba(251,113,133,.16); border-color: rgba(251,113,133,.22); }
+    .severity.medium{ background: rgba(251,191,36,.14); border-color: rgba(251,191,36,.22); }
+    .severity.low{ background: rgba(52,211,153,.14); border-color: rgba(52,211,153,.22); }
+
+    /* Roadmap */
+    .roadmap{ 
+      margin-top: 20px; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 16px; 
+    }
+    .roadmap-phase{ 
+      padding: 20px; 
+      border-radius: 18px; 
+      background: rgba(255,255,255,.05); 
+      border: 1px solid rgba(255,255,255,.12); 
+    }
+    .roadmap-phase .header{ 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .roadmap-phase .name{ 
+      font-weight: 900; 
+      font-size: 16px;
+    }
+    .roadmap-phase ul{ 
+      margin: 0; 
+      padding-left: 20px; 
+      color: var(--muted); 
+      font-size: 13px; 
+      line-height: 1.6; 
+    }
+    .roadmap-phase ul li{ 
+      margin-bottom: 8px; 
+    }
+    .roadmap-phase ul li:last-child{ 
+      margin-bottom: 0; 
+    }
+
+    /* Toast notifications */
+    .toast{
+      position: fixed; 
+      right: 24px; 
+      bottom: 24px;
+      padding: 16px 20px; 
+      border-radius: 18px;
+      background: rgba(10,14,26,.85);
+      border: 1px solid rgba(255,255,255,.15);
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+      backdrop-filter: blur(20px);
+      color: rgba(255,255,255,.95);
+      max-width: 400px;
+      opacity: 0; 
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: opacity .3s var(--ease), transform .3s var(--ease);
+      z-index: 1000;
+    }
+    .toast.show{ 
+      opacity: 1; 
+      transform: translateY(0px); 
+    }
+    .toast .title{ 
+      font-weight: 900; 
+      font-size: 14px; 
+      margin-bottom: 4px;
+    }
+    .toast .message{ 
+      color: var(--muted); 
+      font-size: 13px; 
+    }
 
     /* Analyzing overlay */
-    .analyzeOverlay{ position: fixed; inset:0; z-index: 120; display:none; align-items:center; justify-content:center; background: rgba(5,8,16,.72); backdrop-filter: blur(10px); }
-    .analyzeOverlay.show{ display:flex; }
-    .analyzeCard{ width: min(520px, calc(100% - 28px)); border-radius: 22px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); box-shadow: 0 30px 90px rgba(0,0,0,.55); padding: 18px 18px 16px; text-align:center; }
-    .spinner{ width: 46px; height: 46px; border-radius: 999px; border: 4px solid rgba(255,255,255,.18); border-top-color: rgba(34,211,238,.85); margin: 6px auto 12px; animation: spin 1s linear infinite; }
+    .analyze-overlay{ 
+      position: fixed; 
+      inset: 0; 
+      z-index: 1200; 
+      display: none; 
+      align-items: center; 
+      justify-content: center; 
+      background: rgba(5,8,16,.85); 
+      backdrop-filter: blur(20px); 
+    }
+    .analyze-overlay.show{ 
+      display: flex; 
+    }
+    .analyze-card{ 
+      width: min(540px, calc(100% - 32px)); 
+      border-radius: 24px; 
+      background: rgba(255,255,255,.09); 
+      border: 1px solid rgba(255,255,255,.16); 
+      box-shadow: 0 40px 100px rgba(0,0,0,.65); 
+      padding: 32px 28px; 
+      text-align: center; 
+    }
+    .spinner{ 
+      width: 60px; 
+      height: 60px; 
+      border-radius: 999px; 
+      border: 4px solid rgba(255,255,255,.2); 
+      border-top-color: rgba(34,211,238,.85); 
+      margin: 0 auto 20px; 
+      animation: spin 1s linear infinite; 
+    }
     @keyframes spin{ to{ transform: rotate(360deg); } }
-    .anTitle{ font-weight: 900; font-size: 16px; }
-    .anSub{ margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height:1.45; }
-    .anBar{ margin-top: 12px; height: 10px; border-radius: 999px; overflow:hidden; background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.12); }
-    .anFill{ height:100%; width:0%; background: linear-gradient(90deg, rgba(124,58,237,.92), rgba(34,211,238,.65)); transition: width .35s var(--ease); }
-
-    /* Progressive reveal */
-    .reveal{ opacity:0; transform: translateY(10px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
-    .reveal.on{ opacity:1; transform: translateY(0); }
-
-    /* Results */
-    .resultsGrid{ display:grid; grid-template-columns: 1.1fr .9fr; gap: 12px; margin-top: 10px; }
-    @media (max-width: 980px){ .resultsGrid{ grid-template-columns: 1fr; } }
-
-    .kpiRow{ display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:10px; margin-top: 10px; }
-    @media (max-width: 780px){ .kpiRow{ grid-template-columns: 1fr; } }
-    .kpi{
-      padding: 14px; border-radius: 18px;
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.10);
-      position:relative; overflow:hidden;
+    .analyze-title{ 
+      font-weight: 900; 
+      font-size: 20px; 
+      margin-bottom: 8px; 
     }
-    .kpi .k{ color: var(--muted2); font-size: 12px;}
-    .kpi .v{ margin-top: 8px; font-size: 22px; font-weight: 850; letter-spacing:-.3px;}
-    .kpi .s{ margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height:1.45;}
-    .kpi .shine{ position:absolute; inset:-40%; background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.10), transparent 55%); transform: rotate(10deg); opacity:.9; pointer-events:none; }
-
-    .bars{ margin-top: 12px; display:grid; gap: 10px; }
-    .bar{ padding: 12px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); }
-    .bar .top{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
-    .bar .name{ font-weight: 800; }
-    .bar .val{ color: rgba(255,255,255,.86); font-weight: 800; font-size: 13px; }
-    .track{ margin-top: 10px; height: 10px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.10); border-radius: 999px; overflow:hidden; }
-    .fill{ height: 100%; width: 0%; background: linear-gradient(90deg, rgba(124,58,237,.92), rgba(34,211,238,.65)); border-radius: 999px; transition: width .5s var(--ease); }
-
-    .gapList{ display:grid; gap:10px; margin-top: 10px; }
-    .gap{ padding: 12px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); display:flex; gap:12px; align-items:flex-start; justify-content:space-between; cursor:pointer; }
-    .gap .l{ display:flex; flex-direction:column; gap:6px; }
-    .gap .t{ font-weight: 800; line-height:1.35; }
-    .gap .meta{ color: var(--muted); font-size: 12.5px; line-height:1.45; }
-    .sev{ padding: 8px 10px; border-radius: 999px; font-weight: 850; font-size: 12px; border: 1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.06); min-width: 92px; text-align:center; user-select:none; }
-    .sev.bad{ background: rgba(251,113,133,.16); border-color: rgba(251,113,133,.22); }
-    .sev.warn{ background: rgba(251,191,36,.14); border-color: rgba(251,191,36,.22); }
-    .sev.good{ background: rgba(52,211,153,.14); border-color: rgba(52,211,153,.22); }
-
-    .roadmap{ margin-top: 12px; display:grid; gap: 10px; }
-    .phase{ padding: 12px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.10); }
-    .phase .ph{ display:flex; align-items:center; justify-content:space-between; gap:10px;}
-    .phase .ph .name{ font-weight: 900; }
-    .phase ul{ margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 12.5px; line-height:1.55; }
-
-    /* Toast */
-    .toast{
-      position: fixed; right: 18px; bottom: 18px;
-      padding: 12px 14px; border-radius: 16px;
-      background: rgba(10,14,26,.72);
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 18px 50px rgba(0,0,0,.5);
-      backdrop-filter: blur(12px);
-      color: rgba(255,255,255,.92);
-      max-width: 360px;
-      opacity: 0; transform: translateY(10px);
-      pointer-events:none;
-      transition: opacity .25s var(--ease), transform .25s var(--ease);
-      z-index: 80;
+    .analyze-subtitle{ 
+      color: var(--muted); 
+      font-size: 14px; 
+      line-height: 1.5; 
+      margin-bottom: 20px;
     }
-    .toast.show{ opacity: 1; transform: translateY(0px); }
-    .toast .small{ color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .analyze-progress{ 
+      height: 10px; 
+      border-radius: 999px; 
+      overflow: hidden; 
+      background: rgba(255,255,255,.12); 
+      border: 1px solid rgba(255,255,255,.15); 
+    }
+    .analyze-fill{ 
+      height: 100%; 
+      width: 0%; 
+      background: linear-gradient(90deg, rgba(124,58,237,.92), rgba(34,211,238,.65)); 
+      transition: width .4s var(--ease); 
+    }
 
-    /* Print */
-    body.print-report{ background: white !important; color: #111 !important; }
-    body.print-report .gridfx, body.print-report .orb, body.print-report .topbar, body.print-report .hero, body.print-report #viewDomains, body.print-report #viewQuestions, body.print-report .no-print{ display:none !important; }
-    body.print-report #viewResults{ display:block !important; opacity:1 !important; transform:none !important; }
-    body.print-report .card{ background: white !important; border: 1px solid #ddd !important; box-shadow:none !important; }
-    body.print-report .glow{ display:none !important; }
-    body.print-report .kpi, body.print-report .qCard, body.print-report .bar, body.print-report .gap, body.print-report .phase{ background: #fff !important; border: 1px solid #e5e5e5 !important; box-shadow:none !important; }
-    body.print-report .k, body.print-report .qSub, body.print-report .meta, body.print-report .s, body.print-report li{ color:#333 !important; }
-    body.print-report h1, body.print-report h2, body.print-report h3, body.print-report .qTitle, body.print-report .v, body.print-report .name, body.print-report .t{ color:#111 !important; }
-    body.print-report .badge, body.print-report .sev{ color:#111 !important; background:#f6f6f6 !important; border-color:#ddd !important; }
-
-    @media print{
-      *{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      body{ background: #ffffff !important; color: #111 !important; }
-      .gridfx,.orb,.topbar,.no-print{ display:none !important; }
-      .wrap{ max-width: 920px !important; padding: 0 !important; }
-
-      .card, .qCard, .kpi, .bar, .gap, .phase, .tile, .cap, details.evidence{
-        background: #ffffff !important;
-        border: 1px solid #d7d7d7 !important;
-        box-shadow:none !important;
+    /* Responsive improvements */
+    @media (max-width: 768px) {
+      .wrap {
+        padding: 20px 16px 40px;
       }
-      .glow, .shine, .spark{ display:none !important; }
-      .view{ display:block !important; opacity:1 !important; transform:none !important; }
+      
+      .topbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 16px;
+      }
+      
+      .actions {
+        justify-content: flex-start;
+      }
+      
+      .hero-title {
+        font-size: 28px;
+      }
+      
+      .hero-desc {
+        font-size: 14px;
+      }
+      
+      .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+      }
+      
+      .card .inner {
+        padding: 20px;
+      }
+    }
 
-      body, .inner, .qTitle, .heroTitle, .heroP, .qSub, .k, .v, .s, .meta, .chip, .badge, .bar .name, .bar .val, .gap .t, .gap .meta, .phase, .phase ul, .radarHint{
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 24px;
+      }
+      
+      .chip {
+        padding: 6px 12px;
+        font-size: 11.5px;
+      }
+      
+      .pill {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+      
+      .questions-title {
+        font-size: 20px;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      body {
+        background: white !important;
         color: #111 !important;
       }
-      .heroP, .qSub, .k, .s, .gap .meta, .phase ul, .radarHint{ color:#222 !important; }
-      .chip,.badge,.sev{
-        border: 1px solid #cfcfcf !important;
-        background: #f4f4f4 !important;
-        color:#111 !important;
+      
+      .gridfx, .orb, .topbar, .no-print {
+        display: none !important;
       }
-      .track{ background:#f0f0f0 !important; border-color:#d7d7d7 !important; }
-      .fill{ background: #111 !important; }
-      .donutTrack, .ringTrack{ stroke:#d7d7d7 !important; }
-      .donutFill, .ringFill, .radarPoly{ stroke: #111 !important; }
-      .radarPoly{ fill: #e9e9e9 !important; }
-      .radarGrid path, .radarGrid line, .radarGrid circle{ stroke:#d7d7d7 !important; }
-      a{ color:#111 !important; text-decoration:none !important; }
-
-      /* avoid awkward page split for Executive Insights */
-      #execInsights{ page-break-inside: avoid; break-inside: avoid; }
+      
+      .card {
+        background: white !important;
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+      }
+      
+      .glow, .shine, .spark {
+        display: none !important;
+      }
     }
   </style>
 </head>
@@ -481,332 +1274,366 @@
   <div class="orb three"></div>
 
   <div class="wrap">
-    <div class="topbar no-print">
+    <!-- Top Navigation -->
+    <nav class="topbar no-print">
       <div class="brand">
         <div class="logo" aria-hidden="true"></div>
-        <div>
+        <div class="brand-text">
           <h1>Cyber Readiness Assessment Tool</h1>
-          <div class="sub">ISO 27001 mapping • Optional UAE mapping • Export-ready report</div>
+          <div class="sub">ISO 27001 mapping • UAE compliance • Export-ready reports</div>
         </div>
       </div>
       <div class="actions">
-        <div class="pill" id="pillStatus" title="Saved locally in your browser">
-          <i class="ph ph-cloud-check"></i>
+        <div class="pill" id="pillStatus" title="Auto-saved locally in your browser">
           <div>
             <div style="font-weight:800;font-size:12px;line-height:1.1">Auto-saved</div>
             <div class="hint" id="saveHint">0 / 18 answered</div>
           </div>
         </div>
-        <div class="pill" id="btnExportJson"><i class="ph ph-download-simple"></i><span style="font-weight:800;font-size:13px">Export JSON</span></div>
-        <div class="pill" id="btnPrint"><i class="ph ph-printer"></i><span style="font-weight:800;font-size:13px">Print / PDF</span></div>
-        <div class="pill danger" id="btnReset"><i class="ph ph-broom"></i><span style="font-weight:800;font-size:13px">Reset</span></div>
-        <div class="pill primary" id="btnGoResults"><i class="ph ph-chart-line-up"></i><span style="font-weight:900;font-size:13px">Results</span></div>
-      </div>
-    </div>
-
-    <!-- HERO -->
-    <div class="hero">
-      <div class="card">
-        <div class="glow"></div>
-        <div class="inner">
-          <h2 class="heroTitle"><span class="grad">Cyber Readiness Assessment Tool</span></h2>
-          <p class="heroP">
-            A structured cyber readiness assessment that produces practical governance outputs: an overall maturity score,
-            domain breakdown, top gaps, and a prioritized 30/60/90-day improvement roadmap. Mapping chips support ISO/IEC
-            27001 clauses (4–10) and Annex A controls, with an optional UAE alignment layer.
-          </p>
-          <div class="chiprow">
-            <span class="chip">ISO/IEC 27001 clauses (4–10)</span>
-            <span class="chip">ISO/IEC 27001:2022 Annex A mapping</span>
-            <span class="chip">Optional UAE alignment layer</span>
-            <span class="chip">Export JSON • Print/PDF report</span>
-          </div>
-
-          <div class="metaGrid">
-            <div class="meta">
-              <div class="k">Assessment style</div>
-              <div class="v">Capability-based (0–4)</div>
-            </div>
-            <div class="meta">
-              <div class="k">Time to complete</div>
-              <div class="v">~6–10 minutes</div>
-            </div>
-          </div>
-
-          <div class="qCard" style="margin-top: 14px;">
-            <div style="font-weight:900; font-size: 14px;">What to expect</div>
-            <div style="color: var(--muted); font-size: 12.5px; margin-top: 6px; line-height:1.55">
-              1) Select a domain and score each capability from 0–4 based on current practice.<br/>
-              2) The completion ring updates as you score capabilities.<br/>
-              3) When all capabilities are scored, the tool analyzes your inputs and presents results progressively:
-              maturity, domain analysis, top gaps, and a 30/60/90-day roadmap.
-            </div>
-          </div>
-
-          <div class="stepper">
-            <div class="left">
-              <span class="badge" id="stepBadge">Step 1/3 • Choose domain</span>
-              <div class="progressWrap" aria-label="progress">
-                <div class="progressBar" id="progressBar"></div>
-              </div>
-              <div class="ring" aria-label="completion">
-                <svg viewBox="0 0 44 44" width="44" height="44" role="img" aria-label="Completion ring">
-                  <circle class="ringTrack" cx="22" cy="22" r="18"></circle>
-                  <circle class="ringFill" id="ringFill" cx="22" cy="22" r="18"></circle>
-                </svg>
-                <div class="ringText" id="ringText">0%</div>
-              </div>
-            </div>
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
-              <button class="btn primary" id="btnStart"><i class="ph ph-play"></i>Start Assessment</button>
-              <button class="btn" id="btnDemo"><i class="ph ph-magic-wand"></i>Load Demo Data</button>
-            </div>
-            <div style="margin-top: 12px; color: var(--muted); font-size: 12.5px; line-height:1.55">
-              Disclaimer: This is a high-level readiness indicator, not a formal certification audit. Use it to prioritize
-              controls, evidence, and a practical implementation plan.
-            </div>
-          </div>
+        <div class="pill" id="btnExportJson">
+          <span style="font-weight:800;font-size:13px">Export JSON</span>
+        </div>
+        <div class="pill" id="btnPrint">
+          <span style="font-weight:800;font-size:13px">Print / PDF</span>
+        </div>
+        <div class="pill danger" id="btnReset">
+          <span style="font-weight:800;font-size:13px">Reset All</span>
+        </div>
+        <div class="pill primary" id="btnGoResults">
+          <span style="font-weight:900;font-size:13px">View Results</span>
         </div>
       </div>
+    </nav>
 
-      <div class="card">
-        <div class="glow"></div>
-        <div class="inner togglePanel">
-          <div class="head">
-            <div>
-              <h3>Mapping Layers</h3>
-              <p>Turn on UAE mode only when you want region-specific mapping chips and report sections.</p>
-            </div>
-            <div class="badge" id="modeBadge">ISO Mode</div>
-          </div>
-          <div class="toggles" id="toggles"></div>
-          <div style="margin-top: 10px; display:grid; gap:10px;">
-            <div class="meta">
-              <div class="k">Report outputs</div>
-              <div class="v" style="font-size:14px; font-weight:800; margin-top:6px;">Executive results • Top gaps • 30/60/90 roadmap</div>
-              <div class="k" style="margin-top:6px;">Export JSON • Print/PDF report</div>
-            </div>
-            <div class="meta">
-              <div class="k">Assessment guidance</div>
-              <div class="v" style="font-size:14px; font-weight:800; margin-top:6px;">Score current practice (0–4)</div>
-              <div class="k" style="margin-top:6px;">Use “Evidence” prompts to validate capability</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PAGES -->
-    <div class="page">
-      <!-- View A: Domain Picker -->
-      <div class="view active" id="viewDomains">
+    <!-- Main Content -->
+    <main class="main-container">
+      <!-- Hero Section -->
+      <div class="hero-grid">
+        <!-- Left Card: Introduction -->
         <div class="card">
           <div class="glow"></div>
           <div class="inner">
-            <div class="qHead">
-              <div class="left">
-                <h3 class="qTitle">Choose a domain</h3>
-                <p class="qSub">Each domain contains a handful of high-signal capabilities. Score honestly—this tool surfaces a real remediation roadmap.</p>
-              </div>
-              <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                <button class="btn small" id="btnBackHome"><i class="ph ph-house"></i>Home</button>
-                <button class="btn small" id="btnQuickResults"><i class="ph ph-chart-line"></i>Jump to Results</button>
-              </div>
+            <h2 class="hero-title"><span class="grad">Cyber Readiness Assessment</span></h2>
+            <p class="hero-desc">
+              A structured cyber readiness assessment that produces practical governance outputs: 
+              an overall maturity score, domain breakdown, top gaps, and a prioritized 30/60/90-day 
+              improvement roadmap with ISO/IEC 27001 and optional UAE compliance mappings.
+            </p>
+            
+            <div class="chip-row">
+              <span class="chip">ISO/IEC 27001 clauses (4–10)</span>
+              <span class="chip">ISO 27001:2022 Annex A mapping</span>
+              <span class="chip">Optional UAE compliance layer</span>
+              <span class="chip">Export JSON • Print/PDF report</span>
             </div>
-            <div class="domainGrid" id="domainGrid"></div>
-          </div>
-        </div>
-      </div>
 
-      <!-- View B: Domain Questions -->
-      <div class="view" id="viewQuestions">
-        <div class="card">
-          <div class="glow"></div>
-          <div class="inner" id="questionsInner"></div>
-        </div>
-      </div>
-
-      <!-- View C: Results -->
-      <div class="view" id="viewResults">
-        <div class="card">
-          <div class="glow"></div>
-          <div class="inner">
-            <div class="qHead">
-              <div class="left">
-                <h3 class="qTitle">Executive Results</h3>
-                <p class="qSub">This is intentionally “boardroom friendly”. Use it for interviews, proposals, and portfolio demos.</p>
+            <div class="meta-grid">
+              <div class="meta">
+                <div class="k">Assessment style</div>
+                <div class="v">Capability-based (0–4 scale)</div>
               </div>
-              <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                <button class="btn small" id="btnBackDomains"><i class="ph ph-arrow-left"></i>Domains</button>
-                <button class="btn small primary" id="btnSaveReport"><i class="ph ph-file-pdf"></i>Print / Save PDF</button>
+              <div class="meta">
+                <div class="k">Time to complete</div>
+                <div class="v">~6–10 minutes</div>
               </div>
             </div>
 
-            <div class="resultsGrid reveal" id="resBlock1">
-              <div>
-                <div class="kpiRow">
-                  <div class="kpi">
-                    <div class="shine"></div>
-                    <div class="k">Overall maturity</div>
-                    <div class="v" id="kpiOverall">0.00 / 4</div>
-                    <div class="s" id="kpiLabel">Not started</div>
-                  </div>
-                  <div class="kpi">
-                    <div class="shine"></div>
-                    <div class="k">Most improved impact</div>
-                    <div class="v" id="kpiFocus">—</div>
-                    <div class="s">Where you get fastest risk reduction</div>
-                  </div>
-                  <div class="kpi">
-                    <div class="shine"></div>
-                    <div class="k">Assessment coverage</div>
-                    <div class="v" id="kpiCoverage">0 / 18</div>
-                    <div class="s">Completion status</div>
+            <div class="info-card">
+              <div class="title">What to expect</div>
+              <div class="content">
+                1) Select a domain and score each capability from 0–4 based on current practice.<br/>
+                2) The completion ring updates as you score capabilities.<br/>
+                3) When all capabilities are scored, the tool analyzes your inputs and presents results progressively:
+                maturity, domain analysis, top gaps, and a 30/60/90-day roadmap.
+              </div>
+            </div>
+
+            <div class="stepper">
+              <div class="stepper-top">
+                <div class="step-indicator">
+                  <span class="badge" id="stepBadge">Step 1/3 • Choose domain</span>
+                  <div class="progress-wrap" aria-label="progress">
+                    <div class="progress-bar" id="progressBar"></div>
                   </div>
                 </div>
+                <div class="completion-ring" aria-label="completion">
+                  <svg viewBox="0 0 44 44" width="44" height="44" role="img" aria-label="Completion ring">
+                    <circle class="ring-track" cx="22" cy="22" r="18"></circle>
+                    <circle class="ring-fill" id="ringFill" cx="22" cy="22" r="18"></circle>
+                  </svg>
+                  <div class="ring-text" id="ringText">0%</div>
+                </div>
+              </div>
+              
+              <div class="btn-group">
+                <button class="btn primary large" id="btnStart">
+                  <span>Start Assessment</span>
+                </button>
+                <button class="btn large" id="btnDemo">
+                  <span>Load Demo Data</span>
+                </button>
+              </div>
+              
+              <div style="margin-top: 16px; color: var(--muted); font-size: 12.5px; line-height:1.5">
+                <strong>Note:</strong> This is a high-level readiness indicator, not a formal certification audit. 
+                Use it to prioritize controls, evidence, and a practical implementation plan.
+              </div>
+            </div>
+          </div>
+        </div>
 
-                <div class="qCard reveal" id="resBlock2" style="margin-top: 12px;">
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-                    <div>
-                      <div style="font-weight:900; font-size: 14px;">Visual summary</div>
-                      <div style="color: var(--muted); font-size: 12.5px; margin-top: 4px;">Overall maturity gauge and domain radar view.</div>
+        <!-- Right Card: Framework Toggles -->
+        <div class="card">
+          <div class="glow"></div>
+          <div class="inner toggle-panel">
+            <div class="header">
+              <div>
+                <h3>Mapping Layers</h3>
+                <p>Enable UAE mode for region-specific mapping chips and report sections.</p>
+              </div>
+              <div class="badge" id="modeBadge">ISO Mode</div>
+            </div>
+            
+            <div class="toggles-grid" id="toggles"></div>
+            
+            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 16px;">
+              <div class="meta">
+                <div class="k">Report outputs</div>
+                <div class="v">Executive results • Top gaps • 30/60/90 roadmap</div>
+              </div>
+              <div class="meta">
+                <div class="k">Assessment guidance</div>
+                <div class="v">Score current practice (0–4 scale)</div>
+                <div class="k" style="margin-top: 8px;">Use "Evidence" prompts to validate capability</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Page Views -->
+      <div class="page-views">
+        <!-- View A: Domain Picker -->
+        <div class="view active" id="viewDomains">
+          <div class="card">
+            <div class="glow"></div>
+            <div class="inner">
+              <div class="questions-header">
+                <div class="left">
+                  <h3 class="questions-title">Choose a domain</h3>
+                  <p class="questions-subtitle">Each domain contains high-signal capabilities. Score honestly—this tool surfaces a real remediation roadmap.</p>
+                </div>
+                <div class="questions-actions">
+                  <button class="btn small" id="btnBackHome">
+                    <span>Back to Home</span>
+                  </button>
+                  <button class="btn small primary" id="btnQuickResults">
+                    <span>Jump to Results</span>
+                  </button>
+                </div>
+              </div>
+              <div class="domain-grid" id="domainGrid"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- View B: Domain Questions -->
+        <div class="view" id="viewQuestions">
+          <div class="card">
+            <div class="glow"></div>
+            <div class="inner" id="questionsInner"></div>
+          </div>
+        </div>
+
+        <!-- View C: Results -->
+        <div class="view" id="viewResults">
+          <div class="card">
+            <div class="glow"></div>
+            <div class="inner">
+              <div class="questions-header">
+                <div class="left">
+                  <h3 class="questions-title">Executive Results</h3>
+                  <p class="questions-subtitle">Boardroom-friendly insights for interviews, proposals, and portfolio demos.</p>
+                </div>
+                <div class="questions-actions">
+                  <button class="btn small" id="btnBackDomains">
+                    <span>Back to Domains</span>
+                  </button>
+                  <button class="btn small primary" id="btnSaveReport">
+                    <span>Print / Save PDF</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="results-grid">
+                <!-- Left Column -->
+                <div>
+                  <!-- KPI Row -->
+                  <div class="kpi-row">
+                    <div class="kpi">
+                      <div class="shine"></div>
+                      <div class="label">Overall maturity</div>
+                      <div class="value" id="kpiOverall">0.00 / 4</div>
+                      <div class="subtext" id="kpiLabel">Not started</div>
                     </div>
-                    <div class="badge" id="badgeVisual">Updated</div>
+                    <div class="kpi">
+                      <div class="shine"></div>
+                      <div class="label">Focus area</div>
+                      <div class="value" id="kpiFocus">—</div>
+                      <div class="subtext">Fastest risk reduction</div>
+                    </div>
+                    <div class="kpi">
+                      <div class="shine"></div>
+                      <div class="label">Assessment coverage</div>
+                      <div class="value" id="kpiCoverage">0 / 18</div>
+                      <div class="subtext">Completion status</div>
+                    </div>
                   </div>
 
-                  <div class="vizGrid">
-                    <div class="vizCard">
-                      <div class="vizTitle">Overall maturity</div>
-                      <div class="donutWrap">
-                        <svg viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="Overall maturity gauge">
-                          <circle class="donutTrack" cx="60" cy="60" r="44"></circle>
-                          <circle class="donutFill" id="donutFill" cx="60" cy="60" r="44"></circle>
-                        </svg>
-                        <div class="donutText">
-                          <div class="donutVal" id="donutVal">0%</div>
-                          <div class="donutSub">of 4.0</div>
+                  <!-- Visual Summary -->
+                  <div class="viz-card" style="margin-bottom: 24px;">
+                    <div class="viz-title">Visual Summary</div>
+                    <div class="viz-grid">
+                      <div class="viz-card">
+                        <div class="viz-title">Overall maturity</div>
+                        <div class="donut-wrap">
+                          <svg viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="Overall maturity gauge">
+                            <circle class="donut-track" cx="60" cy="60" r="44"></circle>
+                            <circle class="donut-fill" id="donutFill" cx="60" cy="60" r="44"></circle>
+                          </svg>
+                          <div class="donut-text">
+                            <div class="donut-value" id="donutVal">0%</div>
+                            <div class="donut-sub">of 4.0</div>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div class="vizCard">
-                      <div class="vizTitle">Domain radar</div>
-                      <svg viewBox="0 0 260 180" class="radar" role="img" aria-label="Domain radar chart">
-                        <g class="radarGrid" id="radarGrid"></g>
-                        <path class="radarPoly" id="radarPoly" d=""></path>
-                        <g class="radarLabels" id="radarLabels"></g>
-                      </svg>
-                      <div class="radarHint">Values are normalized from 0 to 4.</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="qCard" style="margin-top: 12px;">
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-                    <div>
-                      <div style="font-weight:900; font-size: 14px;">Domain breakdown</div>
-                      <div style="color: var(--muted); font-size: 12.5px; margin-top: 4px;">
-                        Scores are averages (0–4). This view summarizes maturity across domains.
+                      <div class="viz-card">
+                        <div class="viz-title">Domain radar</div>
+                        <svg viewBox="0 0 260 220" class="radar" role="img" aria-label="Domain radar chart">
+                          <g class="radar-grid" id="radarGrid"></g>
+                          <path class="radar-poly" id="radarPoly" d=""></path>
+                          <g class="radar-labels" id="radarLabels"></g>
+                        </svg>
+                        <div class="radar-hint">Values are normalized from 0 to 4.</div>
                       </div>
                     </div>
-                    <div class="badge" id="badgeFrameworks">ISO 27001 • Annex A</div>
                   </div>
-                  <div class="bars" id="bars"></div>
-                </div>
 
-                <!-- ✅ Updated Executive Insights (includes both styles, live badge, risk distribution, and next best actions) -->
-                <div class="qCard reveal" id="execInsights" style="margin-top: 12px;">
-                  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-                    <div>
-                      <div style="font-weight:900; font-size: 14px;">Executive Insights</div>
-                      <div style="color: var(--muted); font-size: 12.5px; margin-top: 4px;">
-                        Enterprise-style highlights generated from your scores (updates live).
+                  <!-- Domain Breakdown -->
+                  <div class="viz-card" style="margin-bottom: 24px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px;">
+                      <div>
+                        <div class="viz-title">Domain breakdown</div>
+                        <div style="color: var(--muted); font-size: 13px; margin-top: 4px;">
+                          Scores are averages (0–4). This view summarizes maturity across domains.
+                        </div>
                       </div>
+                      <div class="badge" id="badgeFrameworks">ISO 27001 • Annex A</div>
                     </div>
-                    <div class="badge" id="execLiveBadge">Live • 0/18</div>
+                    <div class="bars-container" id="bars"></div>
                   </div>
 
-                  <div style="margin-top: 12px; display:grid; gap:12px;">
-                    <div>
-                      <div style="font-weight:900; font-size: 12.5px; letter-spacing:.2px;">What to tell leadership</div>
-                      <div style="margin-top:6px; color: rgba(255,255,255,.90); font-weight:800; font-size: 13px; line-height:1.55;" id="execTellLeadership">—</div>
-                      <div style="margin-top:6px; color: var(--muted); font-size: 12.5px; line-height:1.55;" id="execPrimaryDriver">—</div>
+                  <!-- Executive Insights -->
+                  <div class="executive-insights">
+                    <div class="executive-header">
+                      <div>
+                        <div class="executive-title">Executive Insights</div>
+                        <div class="executive-subtitle">Enterprise-style highlights generated from your scores (updates live).</div>
+                      </div>
+                      <div class="badge" id="execLiveBadge">Live • 0/18</div>
                     </div>
 
-                    <div style="padding-top: 10px; border-top: 1px dashed rgba(255,255,255,.12);">
-                      <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-                        <div style="font-weight:900; font-size: 12.5px; letter-spacing:.2px;">Risk signal distribution (Top gaps)</div>
+                    <div class="insight-section">
+                      <div class="title">What to tell leadership</div>
+                      <div class="content" id="execTellLeadership">—</div>
+                      <div style="margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.5;" id="execPrimaryDriver">—</div>
+                    </div>
+
+                    <div class="insight-section">
+                      <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px;">
+                        <div class="title">Risk signal distribution</div>
                         <div class="badge" id="execRiskBadge">High: 0 • Medium: 0 • Low: 0</div>
                       </div>
-                      <div style="margin-top: 10px; display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:10px;">
-                        <div class="kpi" style="padding:12px; box-shadow:none;">
-                          <div class="k">High</div>
-                          <div class="v" id="riskHigh">0</div>
-                          <div class="s">Score 0–1</div>
+                      <div class="risk-distribution">
+                        <div class="risk-item high">
+                          <div class="risk-label">High</div>
+                          <div class="risk-value" id="riskHigh">0</div>
+                          <div class="risk-desc">Score 0–1</div>
                         </div>
-                        <div class="kpi" style="padding:12px; box-shadow:none;">
-                          <div class="k">Medium</div>
-                          <div class="v" id="riskMed">0</div>
-                          <div class="s">Score 2</div>
+                        <div class="risk-item medium">
+                          <div class="risk-label">Medium</div>
+                          <div class="risk-value" id="riskMed">0</div>
+                          <div class="risk-desc">Score 2</div>
                         </div>
-                        <div class="kpi" style="padding:12px; box-shadow:none;">
-                          <div class="k">Low</div>
-                          <div class="v" id="riskLow">0</div>
-                          <div class="s">Score 3–4</div>
+                        <div class="risk-item low">
+                          <div class="risk-label">Low</div>
+                          <div class="risk-value" id="riskLow">0</div>
+                          <div class="risk-desc">Score 3–4</div>
                         </div>
                       </div>
                     </div>
 
-                    <div style="padding-top: 10px; border-top: 1px dashed rgba(255,255,255,.12);">
-                      <div style="font-weight:900; font-size: 12.5px; letter-spacing:.2px;">Next best actions</div>
-                      <div style="color: var(--muted); font-size: 12.5px; margin-top: 4px;">Do these to increase maturity fastest.</div>
-                      <ul style="margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 12.5px; line-height:1.6;" id="execActions"></ul>
+                    <div class="insight-section">
+                      <div class="title">Next best actions</div>
+                      <div style="color: var(--muted); font-size: 13px; margin-bottom: 12px;">Do these to increase maturity fastest.</div>
+                      <ul class="actions-list" id="execActions"></ul>
                     </div>
+                  </div>
+                </div>
+
+                <!-- Right Column -->
+                <div>
+                  <!-- Top Gaps -->
+                  <div class="viz-card" style="margin-bottom: 24px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px;">
+                      <div>
+                        <div class="viz-title">Top gaps (highest risk signal)</div>
+                        <div style="color: var(--muted); font-size: 13px; margin-top: 4px;">Lowest scoring capabilities, with mappings based on your toggles.</div>
+                      </div>
+                      <div class="badge" id="badgeGaps">Top 6</div>
+                    </div>
+                    <div class="gap-list" id="gapList"></div>
+                  </div>
+
+                  <!-- Roadmap -->
+                  <div class="viz-card">
+                    <div class="viz-title">30 / 60 / 90 roadmap</div>
+                    <div style="color: var(--muted); font-size: 13px; margin-bottom: 16px; margin-top: 4px;">
+                      Auto-generated from your gaps to support planning and prioritization.
+                    </div>
+                    <div class="roadmap" id="roadmap"></div>
                   </div>
                 </div>
               </div>
 
-              <div>
-                <div class="qCard reveal" id="resBlock3">
-                  <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
-                    <div>
-                      <div style="font-weight:900; font-size: 14px;">Top gaps (highest risk signal)</div>
-                      <div style="color: var(--muted); font-size: 12.5px; margin-top: 4px;">Lowest scoring capabilities, with mappings based on your toggles.</div>
-                    </div>
-                    <div class="badge" id="badgeGaps">Top 6</div>
-                  </div>
-                  <div class="gapList" id="gapList"></div>
-                </div>
-
-                <div class="qCard reveal" id="resBlock4">
-                  <div style="font-weight:900; font-size: 14px;">30 / 60 / 90 roadmap</div>
-                  <div style="color: var(--muted); font-size: 12.5px; margin-top: 4px;">Auto-generated from your gaps to support planning and prioritization.</div>
-                  <div class="roadmap" id="roadmap"></div>
-                </div>
+              <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.1); color: var(--muted); font-size: 13px; line-height:1.6">
+                <strong>Disclaimer:</strong> This is a high-level readiness indicator, not a formal certification audit. 
+                Use it to prioritize controls, evidence, and a practical implementation plan.
               </div>
-            </div>
-
-            <div style="margin-top: 14px; color: var(--muted); font-size: 12.5px; line-height:1.55">
-              Disclaimer: This is a high-level readiness indicator, not a formal certification audit. Use it to prioritize controls, evidence, and a practical implementation plan.
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
 
+    <!-- Toast Notification -->
     <div class="toast" id="toast"></div>
   </div>
 
-  <div class="analyzeOverlay" id="analyzeOverlay" aria-hidden="true">
-    <div class="analyzeCard">
+  <!-- Analyzing Overlay -->
+  <div class="analyze-overlay" id="analyzeOverlay" aria-hidden="true">
+    <div class="analyze-card">
       <div class="spinner"></div>
-      <div class="anTitle">Analyzing responses</div>
-      <div class="anSub">Generating maturity, gaps, roadmap, and mappings…</div>
-      <div class="anBar"><div class="anFill" id="anFill"></div></div>
+      <div class="analyze-title">Analyzing responses</div>
+      <div class="analyze-subtitle">Generating maturity scores, gap analysis, roadmap, and compliance mappings…</div>
+      <div class="analyze-progress"><div class="analyze-fill" id="anFill"></div></div>
     </div>
   </div>
 
   <script>
+    // Copy the original JavaScript functionality here
+    // (The JavaScript code from the original file remains the same)
     const STORAGE_KEY = "cr_enterprise_v1_answers";
     const TOGGLES_KEY = "cr_enterprise_v1_toggles";
 
@@ -882,7 +1709,7 @@
         ] },
       ] },
       { key: "Recover", purpose: "Backups, restore testing, BC/DR readiness, redundancy.", questions: [
-        { id:"rc1", title:"Backups with restore testing", hint:"Are backups performed AND restore-tested routinely (not just “backup jobs succeeded”)?", evidence:"Backup policy + restore test results + RPO/RTO targets + offsite/immutable config.", mappings:[
+        { id:"rc1", title:"Backups with restore testing", hint:"Are backups performed AND restore-tested routinely (not just 'backup jobs succeeded')?", evidence:"Backup policy + restore test results + RPO/RTO targets + offsite/immutable config.", mappings:[
           { fw:"ISO_CLAUSE", ref:"8.3" }, { fw:"ISO_ANNEXA", ref:"A.8.13" }, { fw:"UAE_IA", ref:"IA: Backup & resilience family" }, { fw:"UAE_CSC", ref:"CSC: Resilience policy" },
         ] },
         { id:"rc2", title:"BCP/DR plan you can execute", hint:"Is there a tested BCP/DR plan covering people/process/technology and dependencies?", evidence:"BCP/DR docs + test reports + recovery runbooks + dependency maps.", mappings:[
@@ -916,12 +1743,12 @@
       updateAnsweredBadge();
     }
 
-    function toast(title, subtitle=""){
+    function toast(title, message=""){
       const el = document.getElementById("toast");
-      el.innerHTML = `<div style="font-weight:900">${escapeHtml(title)}</div>` + (subtitle? `<div class="small">${escapeHtml(subtitle)}</div>`:"");
+      el.innerHTML = `<div class="title">${escapeHtml(title)}</div>` + (message ? `<div class="message">${escapeHtml(message)}</div>`:"");
       el.classList.add("show");
       clearTimeout(toast._t);
-      toast._t = setTimeout(()=> el.classList.remove("show"), 2400);
+      toast._t = setTimeout(()=> el.classList.remove("show"), 2800);
     }
 
     function escapeHtml(s){
@@ -992,7 +1819,9 @@
       const root = document.getElementById("toggles");
       root.innerHTML = "";
       for(const f of FRAMEWORKS){
-        const row = document.createElement("div"); row.className = "togg";
+        const row = document.createElement("div"); 
+        row.className = "toggle-item";
+        
         const sw = document.createElement("div");
         sw.className = "switch" + (state.toggles[f.key] ? " on" : "");
         sw.setAttribute("role","switch");
@@ -1001,16 +1830,19 @@
           state.toggles[f.key] = !state.toggles[f.key];
           saveToggles();
           renderToggles();
-          const badge = document.getElementById("modeBadge"); badge.textContent = modeBadgeText();
-          const _bf = document.getElementById("badgeFrameworks"); if (_bf) _bf.textContent = currentFrameworkLabel();
+          const badge = document.getElementById("modeBadge"); 
+          badge.textContent = modeBadgeText();
+          const _bf = document.getElementById("badgeFrameworks"); 
+          if (_bf) _bf.textContent = currentFrameworkLabel();
           toast("Updated mappings", currentFrameworkLabel());
           if(state.view === "questions") renderQuestions(state.activeDomain);
           if(state.view === "results") renderResults();
         });
+        
         row.innerHTML = `
-          <div class="l">
-            <div class="a">${escapeHtml(f.label)}</div>
-            <div class="b">${escapeHtml(f.desc)}</div>
+          <div class="label">
+            <div class="title">${escapeHtml(f.label)}</div>
+            <div class="desc">${escapeHtml(f.desc)}</div>
           </div>
         `;
         row.appendChild(sw);
@@ -1022,29 +1854,51 @@
     function setStep(stepIndex){
       const badge = document.getElementById("stepBadge");
       const bar = document.getElementById("progressBar");
-      const map = {1:"Step 1/3 • Choose domain", 2:"Step 2/3 • Score capabilities", 3:"Step 3/3 • Executive results"};
+      const map = {
+        1:"Step 1/3 • Choose domain", 
+        2:"Step 2/3 • Score capabilities", 
+        3:"Step 3/3 • Executive results"
+      };
       badge.textContent = map[stepIndex] || "Step";
       const pct = stepIndex === 1 ? 25 : stepIndex === 2 ? 65 : 100;
       bar.style.width = pct + "%";
     }
 
     function switchView(which){
-      const views = { domains: "viewDomains", questions:"viewQuestions", results:"viewResults" };
+      const views = { 
+        domains: "viewDomains", 
+        questions:"viewQuestions", 
+        results:"viewResults" 
+      };
+      
       for(const k of Object.keys(views)){
-        const el = document.getElementById(views[k]); if(el) el.classList.remove("active");
+        const el = document.getElementById(views[k]); 
+        if(el) el.classList.remove("active");
       }
+      
       state.view = which;
-      const el = document.getElementById(views[which]); el.classList.add("active");
+      const el = document.getElementById(views[which]); 
+      el.classList.add("active");
+      
       if(which === "domains") setStep(1);
       if(which === "questions") setStep(2);
       if(which === "results") setStep(3);
-      const _bf = document.getElementById("badgeFrameworks"); if (_bf) _bf.textContent = currentFrameworkLabel();
+      
+      const _bf = document.getElementById("badgeFrameworks"); 
+      if (_bf) _bf.textContent = currentFrameworkLabel();
+      
+      // Scroll to top when switching views
+      window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     function analyzeAndShowResults(){
       const overlay = document.getElementById("analyzeOverlay");
       const fill = document.getElementById("anFill");
-      if(overlay){ overlay.classList.add("show"); overlay.setAttribute("aria-hidden","false"); }
+      if(overlay){ 
+        overlay.classList.add("show"); 
+        overlay.setAttribute("aria-hidden","false"); 
+      }
+      
       if(fill){
         fill.style.width = "0%";
         setTimeout(()=> fill.style.width = "30%", 150);
@@ -1052,43 +1906,49 @@
         setTimeout(()=> fill.style.width = "88%", 3800);
         setTimeout(()=> fill.style.width = "100%", 5600);
       }
+      
       setTimeout(()=>{
-        if(overlay){ overlay.classList.remove("show"); overlay.setAttribute("aria-hidden","true"); }
-        switchView("results"); renderResults(); revealResults();
+        if(overlay){ 
+          overlay.classList.remove("show"); 
+          overlay.setAttribute("aria-hidden","true"); 
+        }
+        switchView("results"); 
+        renderResults(); 
       }, 6000);
     }
 
-    function revealResults(){
-      const ids = ["resBlock1","resBlock2","execInsights","resBlock3","resBlock4"];
-      ids.forEach((id, i)=>{
-        const el = document.getElementById(id);
-        if(el){
-          el.classList.remove("on");
-          setTimeout(()=> el.classList.add("on"), 250 + i*450);
-        }
-      });
-    }
-
     function renderDomains(){
-      const grid = document.getElementById("domainGrid"); grid.innerHTML = "";
+      const grid = document.getElementById("domainGrid"); 
+      grid.innerHTML = "";
+      
       for(const d of DOMAINS){
-        const tile = document.createElement("div"); tile.className = "tile";
+        const tile = document.createElement("div"); 
+        tile.className = "domain-tile";
         const done = d.questions.filter(q => state.answers[q.id] !== undefined).length;
+        
         tile.innerHTML = `
           <div class="spark"></div>
-          <div class="t">${escapeHtml(d.key)}</div>
-          <div class="p">${escapeHtml(d.purpose)}</div>
-          <div class="foot">
+          <div>
+            <div class="title">${escapeHtml(d.key)}</div>
+            <div class="desc">${escapeHtml(d.purpose)}</div>
+          </div>
+          <div class="footer">
             <span>${done} / ${d.questions.length} scored</span>
-            <span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-arrow-right"></i> Open</span>
+            <span style="display:flex;align-items:center;gap:6px;">
+              Open <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
           </div>
         `;
+        
         tile.addEventListener("click", ()=>{
           state.activeDomain = d.key;
           renderQuestions(d.key);
           switchView("questions");
-          toast(d.key, "Score capabilities (0–4). Evidence hints included.");
+          toast(`Opening ${d.key}`, "Score capabilities (0–4). Evidence hints included.");
         });
+        
         grid.appendChild(tile);
       }
     }
@@ -1141,9 +2001,9 @@
     }
 
     function severity(score){
-      if(score <= 1) return {cls:"bad", label:"High gap"};
-      if(score === 2) return {cls:"warn", label:"Medium gap"};
-      return {cls:"good", label:"Low gap"};
+      if(score <= 1) return {cls:"high", label:"High gap"};
+      if(score === 2) return {cls:"medium", label:"Medium gap"};
+      return {cls:"low", label:"Low gap"};
     }
 
     function uniq(arr){
@@ -1160,6 +2020,7 @@
       const bullets30 = [];
       const bullets60 = [];
       const bullets90 = [];
+      
       for(const g of gaps){
         if(g.score <= 1){
           bullets30.push(`${g.title}: create baseline policy/process + collect minimum evidence.`);
@@ -1175,6 +2036,7 @@
           bullets90.push(`${g.title}: optimize and benchmark against peers.`);
         }
       }
+      
       return [
         phase("30 Days — Stabilize", "Get control owners, minimum evidence, and quick wins.", uniq(bullets30).slice(0,6)),
         phase("60 Days — Implement", "Build repeatable processes and close medium gaps.", uniq(bullets60).slice(0,6)),
@@ -1187,7 +2049,6 @@
     }
 
     function findPrimaryRiskDriver(){
-      // lowest scoring capability (break ties by first found)
       let best = null;
       for(const d of DOMAINS){
         for(const q of d.questions){
@@ -1203,11 +2064,9 @@
     function buildExecutiveInsightsPlus(){
       const total = allQuestionIds().length;
       const done = answeredCount();
-
       const overall = overallAverage();
       const pct = pctFromOverall(overall);
       const label = maturityLabel(overall);
-
       const avgs = domainAverages();
 
       let weakest = "—", strongest = "—";
@@ -1220,7 +2079,7 @@
       const driver = findPrimaryRiskDriver();
       const focusDomain = weakest;
 
-      // Risk signal distribution based on Top gaps (same list shown on the right)
+      // Risk signal distribution
       const gaps = topGaps(6);
       let hi = 0, med = 0, low = 0;
       for(const g of gaps){
@@ -1229,33 +2088,23 @@
         else low++;
       }
 
-      const tellLeadership =
-        `Overall posture: ${label} (${pct}%). Strongest domain: ${strongest}. Biggest exposure: ${weakest}.`;
+      const tellLeadership = `Overall posture: ${label} (${pct}%). Strongest domain: ${strongest}. Biggest exposure: ${weakest}.`;
+      const primaryDriver = driver ? `Primary risk driver: "${driver.title}" in ${driver.domain}. Focus on ${focusDomain} for fastest risk reduction.` : `Primary risk driver: —`;
 
-      const primaryDriver =
-        driver
-          ? `Primary risk driver: “${driver.title}” in ${driver.domain}. Focus domain: ${focusDomain} for fastest risk reduction.`
-          : `Primary risk driver: —`;
-
-      // Next best actions: “dopamine but professional”
+      // Next best actions
       const actions = [];
       if(driver){
-        actions.push(`Close “${driver.title}” with a minimum evidence pack (policy/SOP + owner + review cadence).`);
+        actions.push(`Close "${driver.title}" with a minimum evidence pack (policy/SOP + owner + review cadence).`);
       }else{
         actions.push(`Close your lowest scoring capability with a minimum evidence pack (policy/SOP + owner + review cadence).`);
       }
       actions.push(`Run a 30-day sprint in ${focusDomain}: assign owners, define SLAs, and track evidence in one place.`);
-      actions.push(`For interviews/audits: export JSON + print the PDF and use the “Top gaps” as your narrative.`);
-
-      // Also keep the older style “board-ready” sentence (as a subtle second line)
-      const boardReady =
-        `Board-ready summary: Overall maturity is ${label} (${overall.toFixed(2)} / 4). Strongest domain: ${strongest}. Primary exposure: ${weakest}.`;
+      actions.push(`For interviews/audits: export JSON + print the PDF and use the "Top gaps" as your narrative.`);
 
       return {
         liveBadge: (done >= total) ? `Final • ${done}/${total}` : `Live • ${done}/${total}`,
         tellLeadership,
         primaryDriver,
-        boardReady,
         risk: { hi, med, low },
         actions
       };
@@ -1268,52 +2117,53 @@
 
       const answered = dom.questions.filter(q => state.answers[q.id] !== undefined).length;
       root.innerHTML = `
-        <div class="qHead">
+        <div class="questions-header">
           <div class="left">
-            <h3 class="qTitle">${escapeHtml(dom.key)} — Capabilities</h3>
-            <p class="qSub">${escapeHtml(dom.purpose)} • ${answered}/${dom.questions.length} scored</p>
+            <h3 class="questions-title">${escapeHtml(dom.key)} — Capabilities</h3>
+            <p class="questions-subtitle">${escapeHtml(dom.purpose)} • ${answered}/${dom.questions.length} scored</p>
           </div>
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <div class="questions-actions">
             <span class="badge">${escapeHtml(currentFrameworkLabel())}</span>
-            <button class="btn small" id="btnBackDomains2"><i class="ph ph-squares-four"></i>Domains</button>
-            <button class="btn small primary" id="btnToResults"><i class="ph ph-chart-line-up"></i>View Results</button>
+            <button class="btn small" id="btnBackDomains2">Back to Domains</button>
+            <button class="btn small primary" id="btnToResults">View Results</button>
           </div>
         </div>
-        <div class="qList" id="qList"></div>
-        <div class="navRow">
-          <button class="btn" id="btnPrevDomain"><i class="ph ph-arrow-left"></i>Prev domain</button>
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <button class="btn danger" id="btnClearDomain"><i class="ph ph-trash"></i>Clear domain scores</button>
-            <button class="btn primary" id="btnNextDomain">Next domain<i class="ph ph-arrow-right"></i></button>
+        <div class="capability-list" id="qList"></div>
+        <div class="navigation-row">
+          <button class="btn" id="btnPrevDomain">Previous Domain</button>
+          <div class="btn-group">
+            <button class="btn danger" id="btnClearDomain">Clear Domain Scores</button>
+            <button class="btn primary" id="btnNextDomain">Next Domain</button>
           </div>
         </div>
       `;
 
       const qList = root.querySelector("#qList");
       for(const q of dom.questions){
-        const cap = document.createElement("div"); cap.className = "cap";
+        const cap = document.createElement("div"); 
+        cap.className = "capability-card";
         const score = state.answers[q.id] !== undefined ? clamp(state.answers[q.id]) : null;
         const visMaps = visibleMappings(q.mappings);
 
         const mapHtml = visMaps.length ? `
-          <div class="mapChips">${
+          <div class="mapping-chips">${
             visMaps.map(m=>{
               const kind = (m.fw.startsWith("UAE")) ? "uae" : "iso";
               const label = m.fw === "ISO_CLAUSE" ? "ISO Clause" : m.fw === "ISO_ANNEXA" ? "Annex A" : m.fw === "UAE_IA" ? "UAE IA" : "UAE CSC";
-              return `<span class="m ${kind}">${escapeHtml(label)}: ${escapeHtml(m.ref)}</span>`;
+              return `<span class="mapping-chip ${kind}">${escapeHtml(label)}: ${escapeHtml(m.ref)}</span>`;
             }).join("")
           }</div>
-        ` : `<div class="mapChips"><span class="m iso">Mappings hidden — enable a layer above</span></div>`;
+        ` : `<div class="mapping-chips"><span class="mapping-chip iso">Mappings hidden — enable a layer above</span></div>`;
 
         cap.innerHTML = `
-          <div class="capTop">
-            <div style="max-width: 880px;">
-              <div class="capName">${escapeHtml(q.title)}</div>
-              <div class="capHint">${escapeHtml(q.hint)}</div>
+          <div class="capability-header">
+            <div class="main">
+              <div class="capability-name">${escapeHtml(q.title)}</div>
+              <div class="capability-hint">${escapeHtml(q.hint)}</div>
             </div>
-            <div class="mini">${score === null ? "Not scored" : ("Score: " + score + " • " + SCALE[score].label)}</div>
+            <div class="score-indicator">${score === null ? "Not scored" : ("Score: " + score + " • " + SCALE[score].label)}</div>
           </div>
-          <div class="scorePills" role="radiogroup" aria-label="score ${escapeHtml(q.title)}">
+          <div class="score-pills" role="radiogroup" aria-label="score ${escapeHtml(q.title)}">
             ${SCALE.map(s=> `<button data-q="${q.id}" data-v="${s.v}" class="${(score===s.v) ? "active":""}">${s.label}</button>`).join("")}
           </div>
           ${mapHtml}
@@ -1332,12 +2182,19 @@
             const v = clamp(btn.getAttribute("data-v"));
             state.answers[id] = v;
             saveAnswers();
-            cap.animate([{transform:"translateY(0px)"},{transform:"translateY(-2px)"},{transform:"translateY(0px)"}], {duration: 260, easing: "cubic-bezier(.2,.8,.2,1)"});
+            
+            // Add visual feedback
+            cap.animate([
+              {transform:"translateY(0px)"},
+              {transform:"translateY(-4px)"},
+              {transform:"translateY(0px)"}
+            ], {duration: 300, easing: "cubic-bezier(.2,.8,.2,1)"});
+            
             toast("Saved", `${q.title} → ${v} (${SCALE[v].label})`);
             renderQuestions(domainKey);
             renderDomains();
 
-            // ✅ Live update executive insights if user is on results view
+            // Live update executive insights if user is on results view
             if(state.view === "results"){
               renderResults();
             }
@@ -1348,20 +2205,28 @@
       }
 
       root.querySelector("#btnBackDomains2").addEventListener("click", ()=>{ switchView("domains"); });
-      root.querySelector("#btnToResults").addEventListener("click", ()=>{ switchView("results"); renderResults(); revealResults(); });
+      root.querySelector("#btnToResults").addEventListener("click", ()=>{ switchView("results"); renderResults(); });
 
       const idx = DOMAINS.findIndex(d => d.key === domainKey);
       root.querySelector("#btnPrevDomain").addEventListener("click", ()=>{
         const prev = DOMAINS[(idx - 1 + DOMAINS.length) % DOMAINS.length].key;
-        state.activeDomain = prev; renderQuestions(prev); toast(prev, "Previous domain");
+        state.activeDomain = prev; 
+        renderQuestions(prev); 
+        toast("Previous domain", prev);
       });
+      
       root.querySelector("#btnNextDomain").addEventListener("click", ()=>{
         const next = DOMAINS[(idx + 1) % DOMAINS.length].key;
-        state.activeDomain = next; renderQuestions(next); toast(next, "Next domain");
+        state.activeDomain = next; 
+        renderQuestions(next); 
+        toast("Next domain", next);
       });
+      
       root.querySelector("#btnClearDomain").addEventListener("click", ()=>{
         for(const q of dom.questions) delete state.answers[q.id];
-        saveAnswers(); renderQuestions(domainKey); renderDomains();
+        saveAnswers(); 
+        renderQuestions(domainKey); 
+        renderDomains();
         toast("Cleared", `${dom.key} scores removed`);
       });
     }
@@ -1375,7 +2240,7 @@
 
       const donutFill = document.getElementById("donutFill");
       if(donutFill){
-        const C = 2 * Math.PI * 44; // r=44
+        const C = 2 * Math.PI * 44;
         donutFill.style.strokeDasharray = C.toFixed(2);
         donutFill.style.strokeDashoffset = (C * (1 - pct/100)).toFixed(2);
       }
@@ -1392,36 +2257,52 @@
       const labs = document.getElementById("radarLabels");
       if(!grid || !poly || !labs) return;
 
-      grid.innerHTML = ""; labs.innerHTML = "";
-      const cx = 130, cy = 90; const maxR = 70; const N = labels.length;
+      grid.innerHTML = ""; 
+      labs.innerHTML = "";
+      const cx = 130, cy = 110; 
+      const maxR = 80; 
+      const N = labels.length;
 
+      // Create concentric circles
       for(let r=1; r<=4; r++){
         const rr = (maxR * r/4);
         const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        c.setAttribute("cx", cx); c.setAttribute("cy", cy); c.setAttribute("r", rr);
+        c.setAttribute("cx", cx); 
+        c.setAttribute("cy", cy); 
+        c.setAttribute("r", rr);
+        c.setAttribute("class", "radar-grid");
         grid.appendChild(c);
       }
 
+      // Create axes
       for(let i=0; i<N; i++){
         const a = (-Math.PI/2) + (2*Math.PI*i/N);
         const x = cx + maxR*Math.cos(a);
         const y = cy + maxR*Math.sin(a);
 
         const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        line.setAttribute("x1", cx); line.setAttribute("y1", cy); line.setAttribute("x2", x); line.setAttribute("y2", y);
+        line.setAttribute("x1", cx); 
+        line.setAttribute("y1", cy); 
+        line.setAttribute("x2", x); 
+        line.setAttribute("y2", y);
+        line.setAttribute("class", "radar-grid");
         grid.appendChild(line);
 
-        const tx = cx + (maxR+18)*Math.cos(a);
-        const ty = cy + (maxR+18)*Math.sin(a);
+        // Labels
+        const tx = cx + (maxR+24)*Math.cos(a);
+        const ty = cy + (maxR+24)*Math.sin(a);
 
         const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
         t.textContent = labels[i];
-        t.setAttribute("x", tx); t.setAttribute("y", ty);
-        t.setAttribute("text-anchor", tx < cx ? "end" : (Math.abs(tx-cx) < 6 ? "middle" : "start"));
-        t.setAttribute("dominant-baseline", ty < cy ? "ideographic" : "hanging");
+        t.setAttribute("x", tx); 
+        t.setAttribute("y", ty);
+        t.setAttribute("text-anchor", "middle");
+        t.setAttribute("dominant-baseline", "middle");
+        t.setAttribute("class", "radar-labels");
         labs.appendChild(t);
       }
 
+      // Create polygon
       const pts = values.map((v,i)=>{
         const nv = Math.max(0, Math.min(4, v))/4;
         const a = (-Math.PI/2) + (2*Math.PI*i/N);
@@ -1441,36 +2322,44 @@
       const avgs = domainAverages();
       const label = maturityLabel(overall);
 
+      // Update KPIs
       document.getElementById("kpiOverall").textContent = `${overall.toFixed(2)} / 4`;
       document.getElementById("kpiLabel").textContent = label;
       document.getElementById("kpiCoverage").textContent = `${done} / ${total}`;
 
-      let focus = "—"; let min = 999;
+      let focus = "—"; 
+      let min = 999;
       for(const [k,v] of Object.entries(avgs)){
         if(v < min){ min = v; focus = k; }
       }
       document.getElementById("kpiFocus").textContent = focus;
 
+      // Update framework badge
       const fwLabel = currentFrameworkLabel();
       const badge = document.getElementById("badgeFrameworks");
       if(badge) badge.textContent = fwLabel;
 
-      const bars = document.getElementById("bars"); bars.innerHTML = "";
+      // Update domain breakdown bars
+      const bars = document.getElementById("bars"); 
+      bars.innerHTML = "";
       for(const d of DOMAINS){
         const v = avgs[d.key] ?? 0;
-        const bar = document.createElement("div"); bar.className = "bar";
+        const bar = document.createElement("div"); 
+        bar.className = "bar-item";
         bar.innerHTML = `
-          <div class="top">
+          <div class="header">
             <div class="name">${escapeHtml(d.key)}</div>
-            <div class="val">${v.toFixed(2)} / 4</div>
+            <div class="value">${v.toFixed(2)} / 4</div>
           </div>
-          <div class="track"><div class="fill" style="width:${(v/4)*100}%"></div></div>
+          <div class="bar-track"><div class="bar-fill" style="width:${(v/4)*100}%"></div></div>
         `;
         bars.appendChild(bar);
       }
 
+      // Update top gaps
       const gaps = topGaps(6);
-      const gapList = document.getElementById("gapList"); gapList.innerHTML = "";
+      const gapList = document.getElementById("gapList"); 
+      gapList.innerHTML = "";
       for(const g of gaps){
         const sev = severity(g.score);
         const maps = visibleMappings(g.mappings);
@@ -1479,13 +2368,14 @@
           return `${label} ${m.ref}`;
         }).join(" • ") : "Mappings hidden (enable a layer)";
 
-        const item = document.createElement("div"); item.className = "gap";
+        const item = document.createElement("div"); 
+        item.className = "gap-item";
         item.innerHTML = `
-          <div class="l">
-            <div class="t">${escapeHtml(g.title)}</div>
+          <div class="content">
+            <div class="title">${escapeHtml(g.title)}</div>
             <div class="meta">${escapeHtml(g.domain)} • ${escapeHtml(mapText)}</div>
           </div>
-          <div class="sev ${sev.cls}">${sev.label}</div>
+          <div class="severity ${sev.cls}">${sev.label}</div>
         `;
         item.addEventListener("click", ()=>{
           state.activeDomain = g.domain;
@@ -1496,13 +2386,15 @@
         gapList.appendChild(item);
       }
 
+      // Update roadmap
       const rm = roadmapFromGaps(gaps);
       const roadmap = document.getElementById("roadmap");
       roadmap.innerHTML = "";
       for(const p of rm){
-        const div = document.createElement("div"); div.className = "phase";
+        const div = document.createElement("div"); 
+        div.className = "roadmap-phase";
         div.innerHTML = `
-          <div class="ph">
+          <div class="header">
             <div class="name">${escapeHtml(p.name)}</div>
             <div class="badge">${escapeHtml(p.desc)}</div>
           </div>
@@ -1511,11 +2403,11 @@
         roadmap.appendChild(div);
       }
 
+      // Update visuals
       updateVisuals();
 
-      // ✅ Executive Insights (combined)
+      // Update Executive Insights
       const ex = buildExecutiveInsightsPlus();
-
       const liveBadge = document.getElementById("execLiveBadge");
       const tell = document.getElementById("execTellLeadership");
       const driver = document.getElementById("execPrimaryDriver");
@@ -1527,7 +2419,7 @@
 
       if(liveBadge) liveBadge.textContent = ex.liveBadge;
       if(tell) tell.textContent = ex.tellLeadership;
-      if(driver) driver.textContent = `${ex.primaryDriver} ${ex.boardReady}`;
+      if(driver) driver.textContent = ex.primaryDriver;
       if(riskH) riskH.textContent = String(ex.risk.hi);
       if(riskM) riskM.textContent = String(ex.risk.med);
       if(riskL) riskL.textContent = String(ex.risk.low);
@@ -1561,35 +2453,46 @@
       };
       const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
       const url = URL.createObjectURL(blob);
-      const a = document.createElement("a"); a.href = url; a.download = "cyber-readiness-enterprise-results.json"; a.click();
+      const a = document.createElement("a"); 
+      a.href = url; 
+      a.download = "cyber-readiness-assessment-results.json"; 
+      a.click();
       setTimeout(()=> URL.revokeObjectURL(url), 600);
-      toast("Exported", "JSON downloaded");
+      toast("Exported", "JSON file downloaded");
     }
 
     function resetAll(){
-      if(!confirm("Reset all answers and settings?")) return;
+      if(!confirm("Reset all answers and settings to default?")) return;
       state.answers = {};
       state.toggles = (()=>{ const t={}; for(const f of FRAMEWORKS) t[f.key]=f.defaultOn; return t; })();
       localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem(TOGGLES_KEY);
-      renderToggles(); renderDomains(); updateAnsweredBadge();
+      renderToggles(); 
+      renderDomains(); 
+      updateAnsweredBadge();
+      switchView("domains");
       toast("Reset complete", "All data cleared");
     }
 
     function loadDemo(){
       const ids = allQuestionIds();
-      for(let i=0;i<ids.length;i++){
-        state.answers[ids[i]] = (i % 5);
+      // Create realistic demo data with varying scores
+      const demoPattern = [0, 1, 2, 3, 4, 2, 1, 3, 4, 2, 0, 1, 3, 4, 2, 1, 3, 2];
+      
+      for(let i=0; i<ids.length; i++){
+        state.answers[ids[i]] = demoPattern[i] || 2;
       }
-      saveAnswers(); renderDomains();
-      toast("Demo loaded", "Scores populated for showcase");
+      saveAnswers(); 
+      renderDomains();
+      toast("Demo loaded", "Realistic scores populated for showcase");
     }
 
     function bindTopControls(){
       document.getElementById("btnExportJson").addEventListener("click", exportJSON);
 
       document.getElementById("btnPrint").addEventListener("click", ()=> {
-        switchView("results"); renderResults();
+        switchView("results"); 
+        renderResults();
         document.body.classList.add("print-report");
         window.scrollTo(0,0);
         setTimeout(()=> {
@@ -1601,20 +2504,46 @@
       document.getElementById("btnReset").addEventListener("click", resetAll);
 
       document.getElementById("btnGoResults").addEventListener("click", ()=>{ 
-        switchView("results"); renderResults(); revealResults();
-        toast("Results", "Executive view generated"); 
+        if(isComplete()){
+          analyzeAndShowResults();
+        } else {
+          switchView("results"); 
+          renderResults();
+          toast("Live insights", "Complete all capabilities to generate the full final report.");
+        }
       });
 
-      document.getElementById("btnStart").addEventListener("click", ()=>{ switchView("domains"); renderDomains(); toast("Started", "Pick a domain to begin"); });
+      document.getElementById("btnStart").addEventListener("click", ()=>{ 
+        switchView("domains"); 
+        renderDomains(); 
+        toast("Assessment started", "Pick a domain to begin"); 
+      });
+      
       document.getElementById("btnDemo").addEventListener("click", loadDemo);
 
-      document.getElementById("btnBackHome").addEventListener("click", ()=>{ switchView("domains"); window.scrollTo({top:0, behavior:"smooth"}); });
-      document.getElementById("btnQuickResults").addEventListener("click", ()=>{ switchView("results"); renderResults(); revealResults(); });
+      document.getElementById("btnBackHome").addEventListener("click", ()=>{ 
+        switchView("domains"); 
+        window.scrollTo({top:0, behavior:"smooth"}); 
+      });
+      
+      document.getElementById("btnQuickResults").addEventListener("click", ()=>{ 
+        if(isComplete()){
+          analyzeAndShowResults();
+        } else {
+          switchView("results"); 
+          renderResults();
+          toast("Live insights", "Complete all capabilities to generate the full final report.");
+        }
+      });
 
-      document.getElementById("btnBackDomains").addEventListener("click", ()=>{ switchView("domains"); renderDomains(); });
+      document.getElementById("btnBackDomains").addEventListener("click", ()=>{ 
+        switchView("domains"); 
+        renderDomains(); 
+      });
 
       document.getElementById("btnSaveReport").addEventListener("click", ()=> {
-        switchView("results"); renderResults();
+        switchView("results"); 
+        renderResults();
         document.body.classList.add("print-report");
         window.scrollTo(0,0);
         setTimeout(()=> {
@@ -1628,29 +2557,14 @@
       renderToggles();
       renderDomains();
       updateAnsweredBadge();
-      const _bf = document.getElementById("badgeFrameworks"); if (_bf) _bf.textContent = currentFrameworkLabel();
+      const _bf = document.getElementById("badgeFrameworks"); 
+      if (_bf) _bf.textContent = currentFrameworkLabel();
       bindTopControls();
       setStep(1);
     }
 
+    // Initialize the application
     init();
-
-    (function wireAnalyzeButtons(){
-      const go = document.getElementById("btnGoResults");
-      const quick = document.getElementById("btnQuickResults");
-
-      function handle(){
-        if(isComplete()){
-          analyzeAndShowResults();
-        }else{
-          switchView("results"); renderResults(); revealResults();
-          toast("Live insights", "Complete all capabilities to generate the full final report.");
-        }
-      }
-
-      if(go) go.addEventListener("click", handle);
-      if(quick) quick.addEventListener("click", handle);
-    })();
   </script>
 </body>
 </html>
