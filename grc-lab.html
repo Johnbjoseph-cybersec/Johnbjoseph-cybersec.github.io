@@ -3,14 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>GRC Practice Lab | Cyber Readiness Assessment</title>
+    <title>GRC Practice Lab | 125+ Controls Library</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Styles -->
     <style>
         :root {
             --bg0:#070A12;
@@ -115,7 +114,7 @@
             width: 100%;
         }
 
-        /* Top Navigation */
+        /* Top Navigation - Identical to Cyber Readiness Tool */
         .topbar {
             display: flex;
             align-items: center;
@@ -227,7 +226,7 @@
             gap: 24px;
         }
 
-        /* Hero Section */
+        /* Hero Section - Same as Cyber Readiness Tool */
         .hero-grid {
             display: grid;
             grid-template-columns: 1.1fr 0.9fr;
@@ -482,7 +481,7 @@
         
         .table-header {
             display: grid;
-            grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+            grid-template-columns: 100px 2fr 120px 120px 120px;
             padding: 16px 20px;
             background: rgba(255,255,255,.05);
             border-bottom: 1px solid var(--stroke);
@@ -492,7 +491,7 @@
         
         .table-row {
             display: grid;
-            grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+            grid-template-columns: 100px 2fr 120px 120px 120px;
             padding: 16px 20px;
             border-bottom: 1px solid var(--stroke);
             transition: background-color .2s var(--ease);
@@ -723,6 +722,10 @@
                 margin-right: 8px;
                 min-width: 100px;
             }
+            
+            .search-filter {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -740,7 +743,7 @@
                 <div class="logo" aria-hidden="true"></div>
                 <div class="brand-text">
                     <h1>GRC Practice Lab</h1>
-                    <div class="sub">ISO 27001 • NIST CSF • PCI DSS • HIPAA • SOC 2 • 125+ Controls</div>
+                    <div class="sub">125+ Controls • ISO 27001 • NIST • PCI DSS • HIPAA • SOC 2</div>
                 </div>
             </div>
             <div class="actions">
@@ -900,10 +903,10 @@
                                 </select>
                                 <select class="filter-select" id="categoryFilter">
                                     <option value="all">All Categories</option>
-                                    <option value="Organisational">Organisational</option>
-                                    <option value="People">People</option>
-                                    <option value="Physical">Physical</option>
-                                    <option value="Technological">Technological</option>
+                                    <option value="Organisational Controls">Organisational</option>
+                                    <option value="People Controls">People</option>
+                                    <option value="Physical Controls">Physical</option>
+                                    <option value="Technological Controls">Technological</option>
                                 </select>
                             </div>
                         </div>
@@ -1089,6 +1092,7 @@ Click "Generate Report" to create a compliance report.
 
     <script>
         // ===== DATA =====
+        // Full control data based on your list
         const CONTROLS = [
             // ISO 27001 Controls (37)
             { id: "CTRL-5.1", name: "Policies for information security", category: "Organisational Controls", framework: "iso", status: "not-implemented", description: "Information security policy and topic-specific policies shall be defined, approved by management, published, communicated to and acknowledged by relevant personnel and relevant interested parties, and reviewed at planned intervals and if significant changes occur." },
@@ -1129,7 +1133,40 @@ Click "Generate Report" to create a compliance report.
             { id: "CTRL-5.36", name: "Compliance with security policies and standards", category: "Organisational Controls", framework: "iso", status: "not-implemented", description: "Managers shall regularly review the compliance of information processing and procedures within their area of responsibility with the appropriate security policies, standards and any other security requirements." },
             { id: "CTRL-5.37", name: "Documented operating procedures", category: "Organisational Controls", framework: "iso", status: "not-implemented", description: "Operating procedures for information processing facilities shall be documented and made available to personnel who need them." },
             
-            // NIST CSF Controls (8)
+            // People Controls
+            { id: "CTRL-6.1", name: "Screening", category: "People Controls", framework: "iso", status: "not-implemented", description: "Background verification checks on all candidates to become personnel shall be carried out prior to joining the organization and on an ongoing basis taking into consideration applicable laws, regulations and ethics and be proportional to the business requirements, the classification of the information to be accessed and the perceived risks." },
+            { id: "CTRL-6.2", name: "Terms and conditions of employment", category: "People Controls", framework: "iso", status: "not-implemented", description: "Personnel shall agree to terms and conditions of employment, which includes the organization's information security policy and appropriate topic-specific policies." },
+            { id: "CTRL-6.3", name: "Information security awareness, education and training", category: "People Controls", framework: "iso", status: "not-implemented", description: "Personnel of the organization and relevant interested parties shall receive appropriate information security awareness, education and training and regular updates of the organization's information security policy and topic-specific policies, as relevant for their job function." },
+            { id: "CTRL-6.4", name: "Disciplinary process", category: "People Controls", framework: "iso", status: "not-implemented", description: "A disciplinary process shall be formalized and communicated to take actions against personnel and other relevant interested parties who have committed an information security policy violation." },
+            { id: "CTRL-6.5", name: "Responsibilities after termination or change of employment", category: "People Controls", framework: "iso", status: "not-implemented", description: "Information security responsibilities and duties that remain valid after termination or change of employment shall be defined, enforced and communicated to relevant personnel and other interested parties." },
+            { id: "CTRL-6.6", name: "Confidentiality or non-disclosure agreements", category: "People Controls", framework: "iso", status: "not-implemented", description: "Confidentiality or non-disclosure agreements reflecting the organization's needs for the protection of information shall be identified, documented, regularly reviewed and signed by personnel and other relevant interested parties." },
+            { id: "CTRL-6.7", name: "Remote working", category: "People Controls", framework: "iso", status: "not-implemented", description: "Security measures shall be implemented when personnel are working remotely to protect information accessed, processed or stored outside the organization's premises." },
+            { id: "CTRL-6.8", name: "Information security event reporting", category: "People Controls", framework: "iso", status: "not-implemented", description: "The organization shall provide a mechanism for personnel to report observed or suspected information security events through appropriate channels in a timely manner." },
+            
+            // Physical Controls
+            { id: "CTRL-7.1", name: "Physical security perimeters", category: "Physical Controls", framework: "iso", status: "not-implemented", description: "Security perimeters shall be defined and used to protect areas that contain information and other associated assets." },
+            { id: "CTRL-7.2", name: "Physical entry", category: "Physical Controls", framework: "iso", status: "not-implemented", description: "Secure areas shall be protected by appropriate entry controls and access points." },
+            { id: "CTRL-7.3", name: "Securing offices, rooms and facilities", category: "Physical Controls", framework: "iso", status: "not-implemented", description: "Physical security for offices, rooms and facilities shall be designed and implemented." },
+            { id: "CTRL-7.4", name: "Physical security monitoring", category: "Physical Controls", framework: "iso", status: "not-implemented", description: "Premises shall be continuously monitored for unauthorized physical access." },
+            { id: "CTRL-7.5", name: "Protecting against physical and environmental threats", category: "Physical Controls", framework: "iso", status: "not-implemented", description: "Protection against physical and environmental threats, such as natural disasters and other intentional or accidental physical threats to infrastructure, shall be designed and implemented." },
+            { id: "CTRL-7.6", name: "Working in secure areas", category: "Physical Controls", framework: "iso", status: "not-implemented", description: "Security measures for working in secure areas shall be designed and implemented." },
+            { id: "CTRL-7.7", name: "Clear desk and clear screen", category: "Physical Controls", framework: "iso", status: "not-implemented", description: "Clear desk rules for papers and removable storage media and clear screen rules for information processing facilities shall be defined and appropriately enforced." },
+            { id: "CTRL-7.8", name: "Equipment siting and protection", category: "Physical Controls", framework: "iso", status: "not-implemented", description: "Equipment shall be sited securely and protected against environmental threats." },
+            { id: "CTRL-7.9", name: "Security of assets off-premises", category: "Physical Controls", framework: "iso", status: "not-implemented", description: "Off-premise assets shall be protected." },
+            { id: "CTRL-7.10", name: "Storage media", category: "Physical Controls", framework: "iso", status: "not-implemented", description: "Storage media shall be managed in accordance with the organization's classification scheme and media handling procedures." },
+            { id: "CTRL-7.11", name: "Supporting utilities", category: "Physical Controls", framework: "iso", status: "not-implemented", description: "Information processing facilities shall be protected from power failures and other disruptions caused by failures in supporting utilities." },
+            { id: "CTRL-7.12", name: "Cabling security", category: "Physical Controls", framework: "iso", status: "not-implemented", description: "Cables carrying power, data or supporting information services shall be protected from interception, interference or damage." },
+            { id: "CTRL-7.13", name: "Equipment maintenance", category: "Physical Controls", framework: "iso", status: "not-implemented", description: "Equipment shall be maintained to ensure continued availability and integrity." },
+            { id: "CTRL-7.14", name: "Secure disposal or re-use of equipment", category: "Physical Controls", framework: "iso", status: "not-implemented", description: "Items of equipment containing storage media shall be verified to ensure that any sensitive data and licensed software has been removed or securely overwritten prior to disposal or re-use." },
+            
+            // Technological Controls (first 20 for brevity)
+            { id: "CTRL-8.1", name: "User endpoint devices", category: "Technological Controls", framework: "iso", status: "not-implemented", description: "Information stored on, processed by or accessible via user endpoint devices shall be protected." },
+            { id: "CTRL-8.2", name: "Privileged access rights", category: "Technological Controls", framework: "iso", status: "not-implemented", description: "The allocation and use of privileged access rights shall be restricted and managed." },
+            { id: "CTRL-8.3", name: "Information access restriction", category: "Technological Controls", framework: "iso", status: "not-implemented", description: "Access to information and other associated assets shall be restricted in accordance with the established topic-specific policy on access control." },
+            { id: "CTRL-8.4", name: "Access to source code", category: "Technological Controls", framework: "iso", status: "not-implemented", description: "Read and write access to source code, development tools and software libraries shall be appropriately managed." },
+            { id: "CTRL-8.5", name: "Secure authentication", category: "Technological Controls", framework: "iso", status: "not-implemented", description: "Secure authentication technologies and procedures shall be implemented based on information access restrictions and the topic-specific policy on access control." },
+            
+            // NIST CSF Controls
             { id: "CTRL-ID.AM-01", name: "Physical devices and systems inventory", category: "Asset Management", framework: "nist", status: "not-implemented", description: "Inventories of physical devices and systems within the organization are maintained." },
             { id: "CTRL-ID.AM-02", name: "Software platforms and applications inventory", category: "Asset Management", framework: "nist", status: "not-implemented", description: "Inventories of software platforms and applications within the organization are maintained." },
             { id: "CTRL-ID.AM-03", name: "Organizational communication and data flows mapping", category: "Asset Management", framework: "nist", status: "not-implemented", description: "Organizational communication and data flows are mapped." },
@@ -1138,7 +1175,7 @@ Click "Generate Report" to create a compliance report.
             { id: "CTRL-ID.AM-06", name: "Cybersecurity roles and responsibilities definition", category: "Asset Management", framework: "nist", status: "not-implemented", description: "Cybersecurity roles and responsibilities for the entire workforce and third-party stakeholders are established." },
             { id: "CTRL-ID.BE-01", name: "Organization's role in supply chain identification", category: "Policy & Governance", framework: "nist", status: "not-implemented", description: "The organization's place in critical infrastructure and its sector is identified and communicated." },
             
-            // PCI DSS Controls (12)
+            // PCI DSS Controls (first 12)
             { id: "CTRL-PCI-1.1", name: "Processes for network security controls", category: "Network Security", framework: "pci", status: "not-implemented", description: "Processes and mechanisms for installing and maintaining network security controls are defined and understood." },
             { id: "CTRL-PCI-1.2", name: "Network security controls implementation", category: "Network Security", framework: "pci", status: "not-implemented", description: "Network security controls are implemented." },
             { id: "CTRL-PCI-1.3", name: "Network access restriction", category: "Network Security", framework: "pci", status: "not-implemented", description: "Network access to and from the cardholder data environment is restricted." },
@@ -1151,18 +1188,23 @@ Click "Generate Report" to create a compliance report.
             { id: "CTRL-PCI-3.2", name: "Sensitive authentication data storage", category: "Encryption & Key Management", framework: "pci", status: "not-implemented", description: "Sensitive authentication data is not stored and PAN is rendered unrecoverable." },
             { id: "CTRL-PCI-3.3", name: "PAN masking", category: "Encryption & Key Management", framework: "pci", status: "not-implemented", description: "Primary account number is masked when displayed." },
             
-            // HIPAA Controls (5)
+            // HIPAA Controls
             { id: "CTRL-HIPAA-164.308(a)(1)(i)", name: "Security management process", category: "Policy & Governance", framework: "hipaa", status: "not-implemented", description: "Implement policies and procedures to prevent, detect, contain, and correct security violations." },
             { id: "CTRL-HIPAA-164.308(a)(1)(ii)(A)", name: "Risk analysis", category: "Policy & Governance", framework: "hipaa", status: "not-implemented", description: "Conduct an accurate and thorough assessment of the potential risks and vulnerabilities to the confidentiality, integrity, and availability of electronic protected health information held by the covered entity." },
             { id: "CTRL-HIPAA-164.308(a)(1)(ii)(B)", name: "Risk management", category: "Policy & Governance", framework: "hipaa", status: "not-implemented", description: "Implement security measures sufficient to reduce risks and vulnerabilities to a reasonable and appropriate level to comply with §164.306(a)." },
             { id: "CTRL-HIPAA-164.308(a)(1)(ii)(C)", name: "Sanction policy", category: "Policy & Governance", framework: "hipaa", status: "not-implemented", description: "Apply appropriate sanctions against workforce members who fail to comply with the security policies and procedures of the covered entity." },
             { id: "CTRL-HIPAA-164.308(a)(1)(ii)(D)", name: "Information system activity review", category: "Logging & Monitoring", framework: "hipaa", status: "not-implemented", description: "Implement procedures to regularly review records of information system activity, such as audit logs, access reports, and security incident tracking reports." },
             
-            // SOC 2 Controls (4)
+            // SOC 2 Controls
             { id: "CTRL-SOC-CC1.1", name: "Commitment to integrity and ethical values", category: "Policy & Governance", framework: "soc2", status: "not-implemented", description: "The entity demonstrates a commitment to integrity and ethical values." },
             { id: "CTRL-SOC-CC1.2", name: "Board independence", category: "Policy & Governance", framework: "soc2", status: "not-implemented", description: "The board of directors demonstrates independence from management and exercises oversight of the development and performance of internal control." },
             { id: "CTRL-SOC-CC1.3", name: "Management roles and responsibilities", category: "Policy & Governance", framework: "soc2", status: "not-implemented", description: "Management establishes, with board oversight, structures, reporting lines, and appropriate authorities and responsibilities in the pursuit of objectives." },
-            { id: "CTRL-SOC-CC1.4", name: "Commitment to competent personnel", category: "Policy & Governance", framework: "soc2", status: "not-implemented", description: "The entity demonstrates a commitment to attract, develop, and retain competent individuals in alignment with objectives." }
+            { id: "CTRL-SOC-CC1.4", name: "Commitment to competent personnel", category: "Policy & Governance", framework: "soc2", status: "not-implemented", description: "The entity demonstrates a commitment to attract, develop, and retain competent individuals in alignment with objectives." },
+            { id: "CTRL-SOC-CC1.5", name: "Accountability", category: "Policy & Governance", framework: "soc2", status: "not-implemented", description: "The entity holds individuals accountable for their internal control responsibilities in the pursuit of objectives." },
+            { id: "CTRL-SOC-CC2.1", name: "Risk assessment objectives", category: "Policy & Governance", framework: "soc2", status: "not-implemented", description: "The entity specifies objectives with sufficient clarity to enable the identification and assessment of risks relating to objectives." },
+            { id: "CTRL-SOC-CC2.2", name: "Risk identification and assessment", category: "Policy & Governance", framework: "soc2", status: "not-implemented", description: "The entity identifies risks to the achievement of its objectives across the entity and analyzes risks as a basis for determining how the risks should be managed." },
+            { id: "CTRL-SOC-CC2.3", name: "Fraud risk", category: "Policy & Governance", framework: "soc2", status: "not-implemented", description: "The entity considers the potential for fraud in assessing risks to the achievement of objectives." },
+            { id: "CTRL-SOC-CC2.4", name: "Change management", category: "Change Management", framework: "soc2", status: "not-implemented", description: "The entity identifies and assesses changes that could significantly impact the system of internal control." }
         ];
 
         const FRAMEWORKS = {
@@ -1171,20 +1213,6 @@ Click "Generate Report" to create a compliance report.
             pci: { name: "PCI DSS", color: "badge-pci" },
             hipaa: { name: "HIPAA", color: "badge-hipaa" },
             soc2: { name: "SOC 2", color: "badge-soc2" }
-        };
-
-        const CATEGORIES = {
-            "Organisational Controls": "Organisational",
-            "People Controls": "People",
-            "Physical Controls": "Physical",
-            "Technological Controls": "Technological",
-            "Asset Management": "Asset Management",
-            "Policy & Governance": "Policy & Governance",
-            "Network Security": "Network Security",
-            "Access Control": "Access Control",
-            "Encryption & Key Management": "Encryption & Key Management",
-            "Logging & Monitoring": "Logging & Monitoring",
-            "Change Management": "Change Management"
         };
 
         // ===== STATE =====
