@@ -1941,13 +1941,18 @@ body{
                 }
             }
 
-            saveData(key, data) {
+       saveData(key, data) {
                 try {
-                    localStorage.setItem(this.storagePrefix + key, JSON.stringify(data));
-                    this.data[key] = data;
+                    // Ensure we have a prefix, fallback to default if missing
+                    const prefix = this.storagePrefix || "grc_lab_v2_";
+                    localStorage.setItem(prefix + key, JSON.stringify(data));
+                    this.updateMetrics(); // Force the dashboard to update immediately
                     return true;
                 } catch (e) {
-                    this.showToast('Error saving data. Check storage space.', 'error');
+                    console.error('Error saving data:', e);
+                    if (typeof this.showToast === 'function') {
+                        this.showToast('Error saving data. Storage might be full.', 'danger');
+                    }
                     return false;
                 }
             }
