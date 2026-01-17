@@ -4641,56 +4641,64 @@ Description: ${risk.description || 'No description'}
 </div>
 
 <script>
-
-
 function resetLabData() {
   const ok = confirm(
-    "Reset Lab will clear all demo/entered data stored locally in this browser and reset the dashboard to zeros.
-
-" +
-    "This does NOT remove the built-in framework library.
-
-" +
+    "Reset Lab will clear all demo/entered data stored locally in this browser and reset the dashboard to zeros." +
+    "This does NOT remove the built-in framework library." +
     "Continue?"
   );
   if (!ok) return;
 
-  // Clear all app-scoped keys (guaranteed)
-  const prefix = "grc_lab_v2_";
-  Object.keys(localStorage).forEach(k => {
-    if (k.startsWith(prefix)) localStorage.removeItem(k);
+  // Prefer the real app instance (covers both const app and window.app)
+  const inst = (window.app && typeof window.app.saveData === "function") ? window.app :
+              (typeof app !== "undefined" && app && typeof app.saveData === "function" ? app : null);
+
+  // If we can use the app instance, clear datasets and persist empties using its own storage prefix.
+  if (inst) {
+    inst.data.assets = [];
+    inst.data.vendors = [];
+    inst.data.risks = [];
+    inst.data.controls = [];
+    inst.data.issues = [];
+    inst.data.incidents = [];
+    inst.data.treatments = [];
+    inst.data.soa = [];
+    inst.saveData("assets", inst.data.assets);
+    inst.saveData("vendors", inst.data.vendors);
+    inst.saveData("risks", inst.data.risks);
+    inst.saveData("controls", inst.data.controls);
+    inst.saveData("issues", inst.data.issues);
+    inst.saveData("incidents", inst.data.incidents);
+    inst.saveData("treatments", inst.data.treatments);
+    inst.saveData("soa", inst.data.soa);
+    inst.saveData("challenges", { progress: {}, scores: {} });
+    inst.saveData("firstRun", true);
+
+    // Also wipe any other keys under the app's prefix to guarantee demo data is gone
+    const prefix = inst.storagePrefix || "grc_lab_v2_";
+    Object.keys(localStorage).forEach(k => {
+      if (k.startsWith(prefix) && !k.endsWith("firstRun")) localStorage.removeItem(k);
+    });
+
+    // Re-render dashboard immediately (no reload required)
+    try { if (typeof inst.renderDashboard === "function") inst.renderDashboard(); } catch(e){}
+    try { if (typeof inst.switchTab === "function") inst.switchTab("dashboard"); } catch(e){}
+    if (typeof inst.showToast === "function") inst.showToast("Lab reset complete. Dashboard cleared.", "success");
+
+    // Force a reload to ensure all tabs and UI fully reflect the changes (added for reliability)
+    setTimeout(() => location.reload(), 500);  // Short delay to allow toast to show
+    return;
+  }
+
+  // Fallback: clear likely keys and reload
+  Object.keys(localStorage).forEach(key => {
+    if (key.startsWith("grc_lab_v2_")) localStorage.removeItem(key);
   });
-
-  // If the app instance exists, also clear in-memory so UI updates immediately
-  try{
-    const inst = (typeof app !== "undefined" && app) ? app : (window.app || null);
-    if (inst && inst.data){
-      inst.data.assets = [];
-      inst.data.vendors = [];
-      inst.data.risks = [];
-      inst.data.controls = [];
-      inst.data.issues = [];
-      inst.data.incidents = [];
-      inst.data.treatments = [];
-      inst.data.soa = [];
-    }
-  }catch(e){}
-
-  // Force dashboard counters to zero right away (best effort)
-  const setText = (id,val)=>{ const el=document.getElementById(id); if(el) el.textContent=val; };
-  setText("dash-assets","0");
-  setText("dash-risks","0");
-  setText("dash-controls","0");
-  setText("dash-vendors","0");
-  setText("dash-issues","0");
-  setText("dash-incidents","0");
-  setText("dash-treatments","0");
-
-  // Hard reload so the app re-initializes from empty storage
+  // keep onboarding from re-triggering endlessly
+  localStorage.setItem("grc_lab_v2_firstRun", "true");
+  alert("Lab reset complete. Reloading…");
   location.reload();
 }
-
 </script>
-
 </body>
 </html>
