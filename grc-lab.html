@@ -741,7 +741,19 @@ body{
   border: 1px solid rgba(255,255,255,.10) !important;
 }
 
+
+.btn-reset-lab{
+  min-width:140px;
+  margin-left:12px;
+}
+
+.reset-lab-btn{
+  font-size:0.85rem;
+  font-weight:600;
+}
 </style>
+
+
 </head>
 <body>
 <div class="gridfx"></div>
@@ -764,7 +776,7 @@ body{
   <nav class="navlinks" aria-label="Primary navigation">
     <a class="pill muted" href="index.html">Home</a>
     <a class="pill primary" href="grc-lab.html" aria-current="page">GRC Lab</a>
-    <a class="pill muted" href="cyber-readiness-tool.html">Cyber Readiness Tool</a>
+<a class="pill muted" href="cyber-readiness-tool.html">Cyber Readiness Tool</a>
     <a class="pill muted" href="terms.html">Terms</a>
     <a class="pill muted" href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer">YouTube</a>
   </nav>
@@ -802,7 +814,7 @@ body{
                             <button class="btn btn-outline-light" onclick="app.exportAllData()">
                                 <i class="bi bi-download me-2"></i> Export All
                             </button>
-                        </div>
+</div>
                     </div>
                 </div>
             </div>
@@ -912,6 +924,17 @@ body{
                         <div class="col-lg-4">
                             <div class="card-glass">
                                 <h4>Quick Actions</h4>
+
+<div class="mt-3">
+  <button class="btn btn-outline-warning w-100 reset-lab-btn" onclick="resetLabData()">
+    <i class="bi bi-arrow-counterclockwise me-2"></i> Reset Lab (Clear all local data)
+  </button>
+  <div class="small text-muted mt-2">
+    This clears demo/entered data stored locally in your browser and resets the dashboard counters.
+  </div>
+</div>
+
+
                                 <div class="d-grid gap-2">
                                     <button class="btn btn-outline-light" onclick="app.switchTab('risks'); app.showRiskForm()">
                                         <i class="bi bi-plus-circle me-2"></i> Add New Risk
@@ -4616,5 +4639,58 @@ Description: ${risk.description || 'No description'}
         window.GRCApp = app;
     </script>
 </div>
+
+<script>
+
+
+function resetLabData() {
+  const ok = confirm(
+    "Reset Lab will clear all demo/entered data stored locally in this browser and reset the dashboard to zeros.
+
+" +
+    "This does NOT remove the built-in framework library.
+
+" +
+    "Continue?"
+  );
+  if (!ok) return;
+
+  // Clear all app-scoped keys (guaranteed)
+  const prefix = "grc_lab_v2_";
+  Object.keys(localStorage).forEach(k => {
+    if (k.startsWith(prefix)) localStorage.removeItem(k);
+  });
+
+  // If the app instance exists, also clear in-memory so UI updates immediately
+  try{
+    const inst = (typeof app !== "undefined" && app) ? app : (window.app || null);
+    if (inst && inst.data){
+      inst.data.assets = [];
+      inst.data.vendors = [];
+      inst.data.risks = [];
+      inst.data.controls = [];
+      inst.data.issues = [];
+      inst.data.incidents = [];
+      inst.data.treatments = [];
+      inst.data.soa = [];
+    }
+  }catch(e){}
+
+  // Force dashboard counters to zero right away (best effort)
+  const setText = (id,val)=>{ const el=document.getElementById(id); if(el) el.textContent=val; };
+  setText("dash-assets","0");
+  setText("dash-risks","0");
+  setText("dash-controls","0");
+  setText("dash-vendors","0");
+  setText("dash-issues","0");
+  setText("dash-incidents","0");
+  setText("dash-treatments","0");
+
+  // Hard reload so the app re-initializes from empty storage
+  location.reload();
+}
+
+</script>
+
 </body>
 </html>
