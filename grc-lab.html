@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -822,8 +820,6 @@ body{
 
 
 </style>
-
-
 </head>
 <body>
 <div class="gridfx"></div>
@@ -1767,14 +1763,12 @@ body{
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-        // ===== CORE APPLICATION =====
+    <script>
+        // ===== GLOBAL APP INSTANCE =====
+        window.app = null;
 
-        // ---------- Expanded Framework library (over 200 paraphrased controls) ----------
+        // ===== FRAMEWORK CONTROLS =====
         const FRAMEWORK_CONTROLS = [
-            // ISO 27001 Annex A controls (93 controls)
             {id:"CTRL-5.1",name:"Policies for information security",category:"Organisational Controls",
               description:"Information security policy and topic-specific policies shall be defined, approved by management, published, communicated to and acknowledged by relevant personnel and relevant interested parties, and reviewed at planned intervals and if significant changes occur.",
               frameworks:["ISO 27001"],references:["ISO 27001 A.5.1"]},
@@ -1787,48 +1781,9 @@ body{
             {id:"CTRL-5.4",name:"Management responsibilities",category:"Organisational Controls",
               description:"Management shall require all personnel to apply information security in accordance with the established information security policy, topic-specific policies and procedures of the organization.",
               frameworks:["ISO 27001"],references:["ISO 27001 A.5.4"]},
-            // ... (all ISO 27001 controls from previous version)
-            
-            // NIST CSF controls
-            {id:"CTRL-ID.AM-01",name:"Physical devices and systems inventory",category:"Asset Management",
-              description:"Inventories of physical devices and systems within the organization are maintained.",
-              frameworks:["NIST CSF"],references:["NIST ID.AM-01"]},
-            {id:"CTRL-ID.AM-02",name:"Software platforms and applications inventory",category:"Asset Management",
-              description:"Inventories of software platforms and applications within the organization are maintained.",
-              frameworks:["NIST CSF"],references:["NIST ID.AM-02"]},
-            {id:"CTRL-ID.AM-03",name:"Organizational communication and data flows mapping",category:"Asset Management",
-              description:"Organizational communication and data flows are mapped.",
-              frameworks:["NIST CSF"],references:["NIST ID.AM-03"]},
-            // ... (all NIST CSF controls from previous version)
-            
-            // PCI DSS controls
-            {id:"CTRL-PCI-1.1",name:"Processes for network security controls",category:"Network Security",
-              description:"Processes and mechanisms for installing and maintaining network security controls are defined and understood.",
-              frameworks:["PCI DSS"],references:["PCI DSS 1.1"]},
-            {id:"CTRL-PCI-1.2",name:"Network security controls implementation",category:"Network Security",
-              description:"Network security controls are implemented.",
-              frameworks:["PCI DSS"],references:["PCI DSS 1.2"]},
-            // ... (all PCI DSS controls from previous version)
-            
-            // HIPAA controls
-            {id:"CTRL-HIPAA-164.308(a)(1)(i)",name:"Security management process",category:"Policy & Governance",
-              description:"Implement policies and procedures to prevent, detect, contain, and correct security violations.",
-              frameworks:["HIPAA"],references:["HIPAA 164.308(a)(1)(i)"]},
-            {id:"CTRL-HIPAA-164.308(a)(1)(ii)(A)",name:"Risk analysis",category:"Policy & Governance",
-              description:"Conduct an accurate and thorough assessment of the potential risks and vulnerabilities to the confidentiality, integrity, and availability of electronic protected health information held by the covered entity.",
-              frameworks:["HIPAA"],references:["HIPAA 164.308(a)(1)(ii)(A)"]},
-            // ... (all HIPAA controls from previous version)
-            
-            // SOC 2 controls
-            {id:"CTRL-SOC-CC1.1",name:"Commitment to integrity and ethical values",category:"Policy & Governance",
-              description:"The entity demonstrates a commitment to integrity and ethical values.",
-              frameworks:["SOC2"],references:["SOC2 CC1.1"]},
-            {id:"CTRL-SOC-CC1.2",name:"Board independence",category:"Policy & Governance",
-              description:"The board of directors demonstrates independence from management and exercises oversight of the development and performance of internal control.",
-              frameworks:["SOC2"],references:["SOC2 CC1.2"]},
-            // ... (all SOC 2 controls from previous version)
         ];
 
+        // ===== GRC APPLICATION CLASS =====
         class GRCApplication {
             constructor() {
                 this.version = '2.0.0';
@@ -1864,10 +1819,7 @@ body{
                 };
             }
 
-            
             initializeFrameworks() {
-                // Build full framework libraries from the unified control list.
-                // NOTE: Controls are paraphrased and intended for educational practice only.
                 const map = {
                     iso:   { name: 'ISO 27001',   match: ['ISO 27001','ISO/IEC 27001'], controls: [] },
                     nist:  { name: 'NIST CSF',    match: ['NIST CSF','NIST CSF 2.0','NIST'], controls: [] },
@@ -1891,7 +1843,6 @@ body{
                         frameworks: fws
                     };
 
-                    // Add to each matching framework bucket
                     for (const [k, fw] of Object.entries(map)) {
                         const hits = fw.match.some(m => fws.some(x => norm(x).includes(norm(m))));
                         if (hits) fw.controls.push(entry);
@@ -1901,79 +1852,52 @@ body{
                 return map;
             }
 
-
             init() {
                 this.bindEvents();
                 this.renderDashboard();
                 this.showToast('GRC Practice Lab loaded successfully', 'success');
                 
-                // Check for first-time setup
                 if (!this.loadData('firstRun')) {
                     this.showFirstTimeSetup();
                     this.saveData('firstRun', true);
                 }
             }
 
-         // ===== DATA MANAGEMENT (FIXED) =====
+            // ===== DATA MANAGEMENT =====
             loadData(key) {
                 try {
-                    const raw = localStorage.getItem(this.storagePrefix + key);
-                    // 1. Check for empty or invalid strings
-                    if (!raw || raw === "undefined" || raw === "null") return null;
-                    
-                    const parsed = JSON.parse(raw);
-
-                    // 2. Safety Check: Ensure lists are actually Arrays
-                    // If 'risks' or 'assets' is saved as something weird (like a number), reset it.
-                    const listKeys = ['assets', 'risks', 'controls', 'vendors', 'issues', 'incidents', 'treatments', 'soa'];
-                    if (listKeys.includes(key) && !Array.isArray(parsed)) {
-                        console.warn(`Corrupted list detected for ${key}. Resetting to empty.`);
-                        localStorage.removeItem(this.storagePrefix + key);
-                        return null;
-                    }
-                    
-                    return parsed;
+                    const data = localStorage.getItem(this.storagePrefix + key);
+                    return data ? JSON.parse(data) : null;
                 } catch (e) {
-                    // 3. Auto-Heal: If data is corrupted, delete it so the app doesn't crash next time
-                    console.warn(`Error loading ${key}. Auto-healing...`, e);
-                    localStorage.removeItem(this.storagePrefix + key);
+                    console.error('Error loading data:', e);
                     return null;
                 }
             }
 
-       saveData(key, data) {
+            saveData(key, data) {
                 try {
-                    // Ensure we have a prefix, fallback to default if missing
-                    const prefix = this.storagePrefix || "grc_lab_v2_";
-                    localStorage.setItem(prefix + key, JSON.stringify(data));
-                    this.updateMetrics(); // Force the dashboard to update immediately
+                    localStorage.setItem(this.storagePrefix + key, JSON.stringify(data));
+                    this.data[key] = data;
                     return true;
                 } catch (e) {
-                    console.error('Error saving data:', e);
-                    if (typeof this.showToast === 'function') {
-                        this.showToast('Error saving data. Storage might be full.', 'danger');
-                    }
+                    this.showToast('Error saving data. Check storage space.', 'error');
                     return false;
                 }
             }
 
             // ===== TAB MANAGEMENT =====
             switchTab(tabName) {
-                // Update current tab
                 this.currentTab = tabName;
                 
-                // Hide all tabs
                 document.querySelectorAll('.tab-content').forEach(tab => {
                     tab.classList.remove('active');
                 });
                 
-                // Show selected tab
                 const tabElement = document.getElementById('tab' + this.capitalize(tabName));
                 if (tabElement) {
                     tabElement.classList.add('active');
                 }
                 
-                // Update tab buttons
                 document.querySelectorAll('.tab-btn').forEach(btn => {
                     btn.classList.remove('active');
                     if (btn.getAttribute('onclick')?.includes(`switchTab('${tabName}')`)) {
@@ -1981,51 +1905,24 @@ body{
                     }
                 });
                 
-                // Render tab content
                 this.renderTabContent(tabName);
             }
 
             renderTabContent(tabName) {
                 switch(tabName) {
-                    case 'dashboard':
-                        this.renderDashboard();
-                        break;
-                    case 'vendors':
-                        this.renderVendors();
-                        break;
-                    case 'risks':
-                        this.renderRisks();
-                        break;
-                    case 'assets':
-                        this.renderAssets();
-                        break;
-                    case 'controls':
-                        this.renderControls();
-                        break;
-                    case 'frameworks':
-                        this.renderFrameworks();
-                        break;
-                    case 'issues':
-                        this.renderIssues();
-                        break;
-                    case 'incidents':
-                        this.renderIncidents();
-                        break;
-                    case 'treatments':
-                        this.renderTreatments();
-                        break;
-                    case 'matrix':
-                        this.renderRiskMatrix();
-                        break;
-                    case 'soa':
-                        this.renderSOA();
-                        break;
-                    case 'reports':
-                        this.renderReports();
-                        break;
-                    case 'challenges':
-                        this.renderChallenges();
-                        break;
+                    case 'dashboard': this.renderDashboard(); break;
+                    case 'vendors': this.renderVendors(); break;
+                    case 'risks': this.renderRisks(); break;
+                    case 'assets': this.renderAssets(); break;
+                    case 'controls': this.renderControls(); break;
+                    case 'frameworks': this.renderFrameworks(); break;
+                    case 'issues': this.renderIssues(); break;
+                    case 'incidents': this.renderIncidents(); break;
+                    case 'treatments': this.renderTreatments(); break;
+                    case 'matrix': this.renderRiskMatrix(); break;
+                    case 'soa': this.renderSOA(); break;
+                    case 'reports': this.renderReports(); break;
+                    case 'challenges': this.renderChallenges(); break;
                 }
             }
 
@@ -2055,15 +1952,9 @@ body{
                         element.addEventListener('change', (e) => this.handleFilter(e, id));
                     }
                 });
-
-                // Risk matrix view toggle
-                document.querySelectorAll('input[name="matrixView"]').forEach(radio => {
-                    radio.addEventListener('change', (e) => this.toggleMatrixView(e.target.id));
-                });
             }
 
             handleSearch(event, type) {
-                // Debounce search
                 clearTimeout(this.searchTimeout);
                 this.searchTimeout = setTimeout(() => {
                     this.renderTabContent(type);
@@ -2144,7 +2035,7 @@ body{
                 const risk = riskId ? this.data.risks.find(r => r.id === riskId) : null;
                 
                 const formHTML = `
-                    <form id="riskForm" onsubmit="app.saveRisk(event)">
+                    <form id="riskForm" onsubmit="event.preventDefault(); app.saveRisk(event)">
                         <input type="hidden" id="riskId" value="${risk?.id || ''}">
                         
                         <div class="row">
@@ -2314,7 +2205,8 @@ body{
                 this.renderDashboard();
                 
                 // Close modal
-                bootstrap.Modal.getInstance(document.getElementById('riskModal')).hide();
+                const modal = bootstrap.Modal.getInstance(document.getElementById('riskModal'));
+                if (modal) modal.hide();
             }
 
             calculateRiskSeverity(score) {
@@ -2423,7 +2315,7 @@ body{
                 const asset = assetId ? this.data.assets.find(a => a.id === assetId) : null;
                 
                 const formHTML = `
-                    <form id="assetForm" onsubmit="app.saveAsset(event)">
+                    <form id="assetForm" onsubmit="event.preventDefault(); app.saveAsset(event)">
                         <input type="hidden" id="assetId" value="${asset?.id || ''}">
                         
                         <div class="row">
@@ -2550,7 +2442,8 @@ body{
                 this.renderDashboard();
                 
                 // Close modal
-                bootstrap.Modal.getInstance(document.getElementById('assetModal')).hide();
+                const modal = bootstrap.Modal.getInstance(document.getElementById('assetModal'));
+                if (modal) modal.hide();
             }
 
             renderAssets() {
@@ -2621,7 +2514,7 @@ body{
                 const control = controlId ? this.data.controls.find(c => c.id === controlId) : null;
                 
                 const formHTML = `
-                    <form id="controlForm" onsubmit="app.saveControl(event)">
+                    <form id="controlForm" onsubmit="event.preventDefault(); app.saveControl(event)">
                         <input type="hidden" id="controlId" value="${control?.id || ''}">
                         
                         <div class="row">
@@ -2735,10 +2628,10 @@ body{
                 this.saveData('controls', this.data.controls);
                 this.renderControls();
                 this.renderDashboard();
-                this.renderSOA();
                 
                 // Close modal
-                bootstrap.Modal.getInstance(document.getElementById('controlModal')).hide();
+                const modal = bootstrap.Modal.getInstance(document.getElementById('controlModal'));
+                if (modal) modal.hide();
             }
 
             renderControls() {
@@ -2817,7 +2710,7 @@ body{
                 const vendor = vendorId ? this.data.vendors.find(v => v.id === vendorId) : null;
                 
                 const formHTML = `
-                    <form id="vendorForm" onsubmit="app.saveVendor(event)">
+                    <form id="vendorForm" onsubmit="event.preventDefault(); app.saveVendor(event)">
                         <input type="hidden" id="vendorId" value="${vendor?.id || ''}">
                         
                         <div class="row">
@@ -2956,7 +2849,8 @@ body{
                 this.saveData('vendors', this.data.vendors);
                 this.renderVendors();
                 
-                bootstrap.Modal.getInstance(document.getElementById('vendorModal')).hide();
+                const modal = bootstrap.Modal.getInstance(document.getElementById('vendorModal'));
+                if (modal) modal.hide();
             }
 
             renderVendors() {
@@ -3039,1047 +2933,190 @@ body{
                 }
             }
 
-            // ===== ISSUE MANAGEMENT =====
-            showIssueForm(issueId = null) {
-                this.currentEditId = issueId;
-                this.currentEditType = 'issue';
+            // ===== DELETE FUNCTIONALITY =====
+            deleteItem(type, id) {
+                if (!confirm(`Are you sure you want to delete this ${type}?`)) return;
                 
-                const issue = issueId ? this.data.issues.find(i => i.id === issueId) : null;
-                
-                const formHTML = `
-                    <form id="issueForm" onsubmit="app.saveIssue(event)">
-                        <input type="hidden" id="issueId" value="${issue?.id || ''}">
-                        
-                        <div class="row">
-                            <div class="col-md-8 mb-3">
-                                <label class="form-label">Issue Title *</label>
-                                <input type="text" class="form-control" id="issueTitle" 
-                                       value="${issue?.title || ''}" required placeholder="e.g., Missing encryption on backup storage">
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Source *</label>
-                                <select class="form-select" id="issueSource" required>
-                                    <option value="">Select...</option>
-                                    <option value="Audit" ${issue?.source === 'Audit' ? 'selected' : ''}>Audit</option>
-                                    <option value="Penetration Test" ${issue?.source === 'Penetration Test' ? 'selected' : ''}>Penetration Test</option>
-                                    <option value="Vulnerability Scan" ${issue?.source === 'Vulnerability Scan' ? 'selected' : ''}>Vulnerability Scan</option>
-                                    <option value="Compliance Review" ${issue?.source === 'Compliance Review' ? 'selected' : ''}>Compliance Review</option>
-                                    <option value="Internal Review" ${issue?.source === 'Internal Review' ? 'selected' : ''}>Internal Review</option>
-                                    <option value="Incident" ${issue?.source === 'Incident' ? 'selected' : ''}>Incident</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Severity *</label>
-                                <select class="form-select" id="issueSeverity" required>
-                                    <option value="">Select...</option>
-                                    <option value="Critical" ${issue?.severity === 'Critical' ? 'selected' : ''}>Critical</option>
-                                    <option value="High" ${issue?.severity === 'High' ? 'selected' : ''}>High</option>
-                                    <option value="Medium" ${issue?.severity === 'Medium' ? 'selected' : ''}>Medium</option>
-                                    <option value="Low" ${issue?.severity === 'Low' ? 'selected' : ''}>Low</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Status *</label>
-                                <select class="form-select" id="issueStatus" required>
-                                    <option value="">Select...</option>
-                                    <option value="Open" ${issue?.status === 'Open' ? 'selected' : ''}>Open</option>
-                                    <option value="In Progress" ${issue?.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
-                                    <option value="Resolved" ${issue?.status === 'Resolved' ? 'selected' : ''}>Resolved</option>
-                                    <option value="Closed" ${issue?.status === 'Closed' ? 'selected' : ''}>Closed</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Due Date</label>
-                                <input type="date" class="form-control" id="issueDueDate" 
-                                       value="${issue?.dueDate || ''}">
-                            </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Owner</label>
-                                <input type="text" class="form-control" id="issueOwner" 
-                                       value="${issue?.owner || ''}" placeholder="e.g., Security Team">
-                            </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Affected Asset/System</label>
-                                <select class="form-select" id="issueAsset">
-                                    <option value="">Select Asset...</option>
-                                    ${this.data.assets.map(asset => `
-                                        <option value="${asset.id}" ${issue?.assetId === asset.id ? 'selected' : ''}>
-                                            ${asset.name} (${asset.type})
-                                        </option>
-                                    `).join('')}
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-12 mb-3">
-                                <label class="form-label">Description</label>
-                                <textarea class="form-control" id="issueDescription" rows="3"
-                                          placeholder="Detailed description of the issue, including impact and scope...">${issue?.description || ''}</textarea>
-                            </div>
-                            
-                            <div class="col-md-12 mb-3">
-                                <label class="form-label">Remediation Steps</label>
-                                <textarea class="form-control" id="issueRemediation" rows="2"
-                                          placeholder="Required actions to resolve the issue...">${issue?.remediation || ''}</textarea>
-                            </div>
-                        </div>
-                        
-                        <div class="text-end mt-4">
-                            <button type="button" class="btn btn-outline-light me-2" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">${issue ? 'Update' : 'Save'} Issue</button>
-                        </div>
-                    </form>
-                `;
-                
-                document.getElementById('issueModalBody').innerHTML = formHTML;
-                const modal = new bootstrap.Modal(document.getElementById('issueModal'));
-                modal.show();
+                let collection = this.data[type + 's'];
+                if (collection) {
+                    this.data[type + 's'] = collection.filter(item => item.id !== id);
+                    this.saveData(type + 's', this.data[type + 's']);
+                    
+                    this.renderDashboard();
+                    if (this.currentTab === type + 's') {
+                        this.renderTabContent(this.currentTab);
+                    }
+                    
+                    this.showToast(`${type} deleted successfully`, 'info');
+                }
             }
 
-            saveIssue(event) {
-                event.preventDefault();
+            // ===== TOAST FUNCTIONALITY =====
+            showToast(message, type = 'info') {
+                const toastEl = document.getElementById('liveToast');
+                const toastMessage = document.getElementById('toastMessage');
                 
-                const issueData = {
-                    id: document.getElementById('issueId').value || 'ISS_' + Date.now(),
-                    title: document.getElementById('issueTitle').value.trim(),
-                    source: document.getElementById('issueSource').value,
-                    severity: document.getElementById('issueSeverity').value,
-                    status: document.getElementById('issueStatus').value,
-                    dueDate: document.getElementById('issueDueDate').value,
-                    owner: document.getElementById('issueOwner').value.trim(),
-                    assetId: document.getElementById('issueAsset').value,
-                    description: document.getElementById('issueDescription').value.trim(),
-                    remediation: document.getElementById('issueRemediation').value.trim(),
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString()
+                if (!toastEl || !toastMessage) return;
+                
+                toastMessage.textContent = message;
+                
+                toastEl.className = 'toast';
+                switch(type) {
+                    case 'success':
+                        toastEl.classList.add('bg-success', 'text-white');
+                        break;
+                    case 'error':
+                        toastEl.classList.add('bg-danger', 'text-white');
+                        break;
+                    case 'warning':
+                        toastEl.classList.add('bg-warning', 'text-dark');
+                        break;
+                    default:
+                        toastEl.classList.add('bg-info', 'text-white');
+                }
+                
+                const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+                toast.show();
+            }
+
+            // ===== DEMO DATA LOADING =====
+            loadDemoScenario() {
+                if (!confirm('Load demo scenario? This will replace your current data.')) {
+                    return;
+                }
+
+                // Load demo data
+                this.data.assets = [
+                    {
+                        id: 'AST_001',
+                        name: 'Customer Database',
+                        type: 'Database',
+                        criticality: 'High',
+                        owner: 'IT Department',
+                        description: 'Primary customer information database',
+                        dataTypes: ['PII', 'Financial'],
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString()
+                    }
+                ];
+
+                this.data.risks = [
+                    {
+                        id: 'RISK_001',
+                        title: 'Data Breach via SQL Injection',
+                        category: 'Cybersecurity',
+                        status: 'Open',
+                        likelihood: 4,
+                        impact: 5,
+                        score: 20,
+                        severity: 'High',
+                        description: 'Potential SQL injection vulnerability',
+                        owner: 'CISO',
+                        dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                        mitigation: 'Implement WAF',
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString()
+                    }
+                ];
+
+                this.data.controls = [
+                    {
+                        id: 'CTL_001',
+                        name: 'Multi-Factor Authentication',
+                        type: 'Technical',
+                        status: 'Implemented',
+                        framework: 'ISO 27001',
+                        owner: 'Security Team',
+                        implementationDate: new Date().toISOString().split('T')[0],
+                        description: 'MFA enforced for admin accounts',
+                        evidence: 'Okta configuration',
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString()
+                    }
+                ];
+
+                // Save all data
+                this.saveData('assets', this.data.assets);
+                this.saveData('risks', this.data.risks);
+                this.saveData('controls', this.data.controls);
+
+                // Update all views
+                this.renderDashboard();
+                this.renderRisks();
+                this.renderAssets();
+                this.renderControls();
+                
+                this.showToast('Demo scenario loaded successfully!', 'success');
+            }
+
+            exportAllData() {
+                const exportData = {
+                    version: this.version,
+                    exportedAt: new Date().toISOString(),
+                    data: this.data
                 };
+
+                const dataStr = JSON.stringify(exportData, null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
                 
-                const index = this.data.issues.findIndex(i => i.id === issueData.id);
-                if (index > -1) {
-                    this.data.issues[index] = issueData;
-                    this.showToast('Issue updated successfully', 'success');
-                } else {
-                    this.data.issues.push(issueData);
-                    this.showToast('Issue added successfully', 'success');
-                }
+                const exportFileDefaultName = `grc_lab_export_${new Date().toISOString().slice(0,10)}.json`;
                 
-                this.saveData('issues', this.data.issues);
-                this.renderIssues();
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                document.body.appendChild(linkElement);
+                linkElement.click();
+                document.body.removeChild(linkElement);
                 
-                bootstrap.Modal.getInstance(document.getElementById('issueModal')).hide();
+                this.showToast('All data exported successfully', 'success');
             }
 
-            renderIssues() {
-                const tableBody = document.getElementById('issueTableBody');
-                if (!tableBody) return;
-
-                const searchTerm = document.getElementById('issueSearch')?.value.toLowerCase() || '';
-                const statusFilter = document.getElementById('issueStatusFilter')?.value || 'all';
-                
-                let filteredIssues = this.data.issues;
-                
-                if (searchTerm) {
-                    filteredIssues = filteredIssues.filter(issue =>
-                        issue.title.toLowerCase().includes(searchTerm) ||
-                        issue.description?.toLowerCase().includes(searchTerm)
-                    );
-                }
-                
-                if (statusFilter !== 'all') {
-                    filteredIssues = filteredIssues.filter(issue => 
-                        issue.status.toLowerCase().replace(' ', '-') === statusFilter
-                    );
-                }
-                
-                if (filteredIssues.length === 0) {
-                    tableBody.innerHTML = `
-                        <tr>
-                            <td colspan="7" class="text-center text-muted">
-                                <div class="py-4">
-                                    <i class="bi bi-bug fs-4 d-block mb-2"></i>
-                                    No issues found. ${searchTerm ? 'Try a different search term.' : 'Add your first issue!'}
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                } else {
-                    tableBody.innerHTML = filteredIssues.map(issue => {
-                        const severityBadge = issue.severity === 'Critical' ? 'danger' : 
-                                            issue.severity === 'High' ? 'danger' :
-                                            issue.severity === 'Medium' ? 'warning' : 'secondary';
-                        
-                        const asset = issue.assetId ? this.data.assets.find(a => a.id === issue.assetId) : null;
-                        
-                        return `
-                            <tr>
-                                <td data-label="Issue Title">
-                                    <strong>${issue.title}</strong><br>
-                                    <small class="text-muted">${issue.source}</small>
-                                </td>
-                                <td data-label="Source">
-                                    <span class="badge bg-info">${issue.source}</span>
-                                </td>
-                                <td data-label="Severity">
-                                    <span class="badge bg-${severityBadge}">${issue.severity}</span>
-                                </td>
-                                <td data-label="Status">
-                                    <span class="status-badge status-${issue.status.toLowerCase().replace(' ', '-')}">
-                                        ${issue.status}
-                                    </span>
-                                </td>
-                                <td data-label="Due Date">
-                                    ${issue.dueDate ? new Date(issue.dueDate).toLocaleDateString() : 'Not set'}
-                                    ${issue.dueDate && new Date(issue.dueDate) < new Date() && issue.status !== 'Resolved' ? 
-                                        '<br><small class="text-danger"><i class="bi bi-exclamation-triangle"></i> Overdue</small>' : ''}
-                                </td>
-                                <td data-label="Owner">${issue.owner || 'Unassigned'}</td>
-                                <td data-label="Actions">
-                                    <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-light" onclick="app.showIssueForm('${issue.id}')">
-                                            <i class="bi bi-pencil"></i>
-                                        </button>
-                                        <button class="btn btn-outline-danger" onclick="app.deleteItem('issue', '${issue.id}')">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
-                    }).join('');
-                }
-            }
-
-            // ===== INCIDENT MANAGEMENT =====
-            showIncidentForm(incidentId = null) {
-                this.currentEditId = incidentId;
-                this.currentEditType = 'incident';
-                
-                const incident = incidentId ? this.data.incidents.find(i => i.id === incidentId) : null;
-                
-                const formHTML = `
-                    <form id="incidentForm" onsubmit="app.saveIncident(event)">
-                        <input type="hidden" id="incidentId" value="${incident?.id || ''}">
-                        
-                        <div class="row">
-                            <div class="col-md-8 mb-3">
-                                <label class="form-label">Incident Title *</label>
-                                <input type="text" class="form-control" id="incidentTitle" 
-                                       value="${incident?.title || ''}" required placeholder="e.g., Phishing attack targeting employees">
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Incident Type *</label>
-                                <select class="form-select" id="incidentType" required>
-                                    <option value="">Select...</option>
-                                    <option value="Malware" ${incident?.type === 'Malware' ? 'selected' : ''}>Malware</option>
-                                    <option value="Phishing" ${incident?.type === 'Phishing' ? 'selected' : ''}>Phishing</option>
-                                    <option value="Data Breach" ${incident?.type === 'Data Breach' ? 'selected' : ''}>Data Breach</option>
-                                    <option value="DDoS" ${incident?.type === 'DDoS' ? 'selected' : ''}>DDoS Attack</option>
-                                    <option value="Insider Threat" ${incident?.type === 'Insider Threat' ? 'selected' : ''}>Insider Threat</option>
-                                    <option value="Physical Security" ${incident?.type === 'Physical Security' ? 'selected' : ''}>Physical Security</option>
-                                    <option value="Other" ${incident?.type === 'Other' ? 'selected' : ''}>Other</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Severity *</label>
-                                <select class="form-select" id="incidentSeverity" required>
-                                    <option value="">Select...</option>
-                                    <option value="Critical" ${incident?.severity === 'Critical' ? 'selected' : ''}>Critical</option>
-                                    <option value="High" ${incident?.severity === 'High' ? 'selected' : ''}>High</option>
-                                    <option value="Medium" ${incident?.severity === 'Medium' ? 'selected' : ''}>Medium</option>
-                                    <option value="Low" ${incident?.severity === 'Low' ? 'selected' : ''}>Low</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Status *</label>
-                                <select class="form-select" id="incidentStatus" required>
-                                    <option value="">Select...</option>
-                                    <option value="Detected" ${incident?.status === 'Detected' ? 'selected' : ''}>Detected</option>
-                                    <option value="Investigating" ${incident?.status === 'Investigating' ? 'selected' : ''}>Investigating</option>
-                                    <option value="Contained" ${incident?.status === 'Contained' ? 'selected' : ''}>Contained</option>
-                                    <option value="Resolved" ${incident?.status === 'Resolved' ? 'selected' : ''}>Resolved</option>
-                                    <option value="Closed" ${incident?.status === 'Closed' ? 'selected' : ''}>Closed</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Detection Date/Time</label>
-                                <input type="datetime-local" class="form-control" id="incidentDetected" 
-                                       value="${incident?.detected || ''}">
-                            </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Incident Owner</label>
-                                <input type="text" class="form-control" id="incidentOwner" 
-                                       value="${incident?.owner || ''}" placeholder="e.g., SOC Team">
-                            </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Affected Systems</label>
-                                <select class="form-select" id="incidentAffectedSystems" multiple>
-                                    ${this.data.assets.map(asset => `
-                                        <option value="${asset.id}" ${incident?.affectedSystems?.includes(asset.id) ? 'selected' : ''}>
-                                            ${asset.name}
-                                        </option>
-                                    `).join('')}
-                                </select>
-                                <small class="text-muted">Hold Ctrl/Cmd to select multiple</small>
-                            </div>
-                            
-                            <div class="col-md-12 mb-3">
-                                <label class="form-label">Description</label>
-                                <textarea class="form-control" id="incidentDescription" rows="3"
-                                          placeholder="Detailed description of the incident, timeline, and impact...">${incident?.description || ''}</textarea>
-                            </div>
-                            
-                            <div class="col-md-12 mb-3">
-                                <label class="form-label">Response Actions</label>
-                                <textarea class="form-control" id="incidentResponse" rows="2"
-                                          placeholder="Actions taken to respond to the incident...">${incident?.response || ''}</textarea>
-                            </div>
-                            
-                            <div class="col-md-12 mb-3">
-                                <label class="form-label">Lessons Learned</label>
-                                <textarea class="form-control" id="incidentLessons" rows="2"
-                                          placeholder="Key learnings and improvements identified...">${incident?.lessons || ''}</textarea>
-                            </div>
-                        </div>
-                        
-                        <div class="text-end mt-4">
-                            <button type="button" class="btn btn-outline-light me-2" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">${incident ? 'Update' : 'Log'} Incident</button>
-                        </div>
-                    </form>
-                `;
-                
-                document.getElementById('incidentModalBody').innerHTML = formHTML;
-                const modal = new bootstrap.Modal(document.getElementById('incidentModal'));
-                modal.show();
-            }
-
-            saveIncident(event) {
-                event.preventDefault();
-                
-                const affectedSystems = Array.from(document.getElementById('incidentAffectedSystems').selectedOptions)
-                    .map(option => option.value);
-                
-                const incidentData = {
-                    id: document.getElementById('incidentId').value || 'INC_' + Date.now(),
-                    title: document.getElementById('incidentTitle').value.trim(),
-                    type: document.getElementById('incidentType').value,
-                    severity: document.getElementById('incidentSeverity').value,
-                    status: document.getElementById('incidentStatus').value,
-                    detected: document.getElementById('incidentDetected').value,
-                    owner: document.getElementById('incidentOwner').value.trim(),
-                    affectedSystems: affectedSystems,
-                    description: document.getElementById('incidentDescription').value.trim(),
-                    response: document.getElementById('incidentResponse').value.trim(),
-                    lessons: document.getElementById('incidentLessons').value.trim(),
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString()
-                };
-                
-                const index = this.data.incidents.findIndex(i => i.id === incidentData.id);
-                if (index > -1) {
-                    this.data.incidents[index] = incidentData;
-                    this.showToast('Incident updated successfully', 'success');
-                } else {
-                    this.data.incidents.push(incidentData);
-                    this.showToast('Incident logged successfully', 'success');
-                }
-                
-                this.saveData('incidents', this.data.incidents);
-                this.renderIncidents();
-                
-                bootstrap.Modal.getInstance(document.getElementById('incidentModal')).hide();
-            }
-
-            renderIncidents() {
-                const tableBody = document.getElementById('incidentTableBody');
-                if (!tableBody) return;
-
-                const searchTerm = document.getElementById('incidentSearch')?.value.toLowerCase() || '';
-                const severityFilter = document.getElementById('incidentSeverityFilter')?.value || 'all';
-                
-                let filteredIncidents = this.data.incidents;
-                
-                if (searchTerm) {
-                    filteredIncidents = filteredIncidents.filter(incident =>
-                        incident.title.toLowerCase().includes(searchTerm) ||
-                        incident.description?.toLowerCase().includes(searchTerm)
-                    );
-                }
-                
-                if (severityFilter !== 'all') {
-                    filteredIncidents = filteredIncidents.filter(incident => 
-                        incident.severity.toLowerCase() === severityFilter.toLowerCase()
-                    );
-                }
-                
-                if (filteredIncidents.length === 0) {
-                    tableBody.innerHTML = `
-                        <tr>
-                            <td colspan="7" class="text-center text-muted">
-                                <div class="py-4">
-                                    <i class="bi bi-exclamation-octagon fs-4 d-block mb-2"></i>
-                                    No incidents recorded yet. ${searchTerm ? 'Try a different search term.' : 'Log your first incident!'}
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                } else {
-                    tableBody.innerHTML = filteredIncidents.map(incident => {
-                        const severityBadge = incident.severity === 'Critical' ? 'danger' : 
-                                            incident.severity === 'High' ? 'danger' :
-                                            incident.severity === 'Medium' ? 'warning' : 'secondary';
-                        
-                        return `
-                            <tr>
-                                <td data-label="Incident ID">
-                                    <code>${incident.id}</code>
-                                </td>
-                                <td data-label="Title">
-                                    <strong>${incident.title}</strong><br>
-                                    <small class="text-muted">${incident.type}</small>
-                                </td>
-                                <td data-label="Type">
-                                    <span class="badge bg-info">${incident.type}</span>
-                                </td>
-                                <td data-label="Severity">
-                                    <span class="badge bg-${severityBadge}">${incident.severity}</span>
-                                </td>
-                                <td data-label="Status">
-                                    <span class="status-badge status-${incident.status.toLowerCase()}">
-                                        ${incident.status}
-                                    </span>
-                                </td>
-                                <td data-label="Detected">
-                                    ${incident.detected ? new Date(incident.detected).toLocaleDateString() : 'Unknown'}
-                                </td>
-                                <td data-label="Actions">
-                                    <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-light" onclick="app.showIncidentForm('${incident.id}')">
-                                            <i class="bi bi-pencil"></i>
-                                        </button>
-                                        <button class="btn btn-outline-danger" onclick="app.deleteItem('incident', '${incident.id}')">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
-                    }).join('');
-                }
-            }
-
-            // ===== TREATMENT MANAGEMENT =====
-            showTreatmentForm(treatmentId = null) {
-                this.currentEditId = treatmentId;
-                this.currentEditType = 'treatment';
-                
-                const treatment = treatmentId ? this.data.treatments.find(t => t.id === treatmentId) : null;
-                
-                const formHTML = `
-                    <form id="treatmentForm" onsubmit="app.saveTreatment(event)">
-                        <input type="hidden" id="treatmentId" value="${treatment?.id || ''}">
-                        
-                        <div class="row">
-                            <div class="col-md-8 mb-3">
-                                <label class="form-label">Treatment Plan Title *</label>
-                                <input type="text" class="form-control" id="treatmentTitle" 
-                                       value="${treatment?.title || ''}" required placeholder="e.g., Implement MFA for all admin accounts">
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Treatment Type *</label>
-                                <select class="form-select" id="treatmentType" required>
-                                    <option value="">Select...</option>
-                                    <option value="Mitigate" ${treatment?.type === 'Mitigate' ? 'selected' : ''}>Mitigate</option>
-                                    <option value="Transfer" ${treatment?.type === 'Transfer' ? 'selected' : ''}>Transfer</option>
-                                    <option value="Accept" ${treatment?.type === 'Accept' ? 'selected' : ''}>Accept</option>
-                                    <option value="Avoid" ${treatment?.type === 'Avoid' ? 'selected' : ''}>Avoid</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Related Risk</label>
-                                <select class="form-select" id="treatmentRisk">
-                                    <option value="">Select Risk...</option>
-                                    ${this.data.risks.map(risk => `
-                                        <option value="${risk.id}" ${treatment?.riskId === risk.id ? 'selected' : ''}>
-                                            ${risk.title} (${risk.severity})
-                                        </option>
-                                    `).join('')}
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Status *</label>
-                                <select class="form-select" id="treatmentStatus" required>
-                                    <option value="">Select...</option>
-                                    <option value="Planned" ${treatment?.status === 'Planned' ? 'selected' : ''}>Planned</option>
-                                    <option value="In Progress" ${treatment?.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
-                                    <option value="Completed" ${treatment?.status === 'Completed' ? 'selected' : ''}>Completed</option>
-                                    <option value="Cancelled" ${treatment?.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
-                                </select>
-                            </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Owner</label>
-                                <input type="text" class="form-control" id="treatmentOwner" 
-                                       value="${treatment?.owner || ''}" placeholder="e.g., Security Team">
-                            </div>
-                            
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Due Date</label>
-                                <input type="date" class="form-control" id="treatmentDueDate" 
-                                       value="${treatment?.dueDate || ''}">
-                            </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label class="form-label">Progress (%)</label>
-                                <input type="range" class="form-range" id="treatmentProgress" min="0" max="100" step="5"
-                                       value="${treatment?.progress || 0}">
-                                <div class="d-flex justify-content-between">
-                                    <small>0%</small>
-                                    <span id="progressValue" class="fw-bold">${treatment?.progress || 0}%</span>
-                                    <small>100%</small>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-8 mb-3">
-                                <label class="form-label">Cost Estimate</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input type="number" class="form-control" id="treatmentCost" 
-                                           value="${treatment?.cost || ''}" placeholder="Estimated cost">
-                                    <span class="input-group-text">.00</span>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-12 mb-3">
-                                <label class="form-label">Action Steps</label>
-                                <textarea class="form-control" id="treatmentActions" rows="3"
-                                          placeholder="Detailed steps to implement this treatment...">${treatment?.actions || ''}</textarea>
-                            </div>
-                            
-                            <div class="col-md-12 mb-3">
-                                <label class="form-label">Success Criteria</label>
-                                <textarea class="form-control" id="treatmentCriteria" rows="2"
-                                          placeholder="How will you know when this treatment is successful?...">${treatment?.criteria || ''}</textarea>
-                            </div>
-                        </div>
-                        
-                        <div class="text-end mt-4">
-                            <button type="button" class="btn btn-outline-light me-2" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary">${treatment ? 'Update' : 'Save'} Treatment</button>
-                        </div>
-                    </form>
-                `;
-                
-                document.getElementById('treatmentModalBody').innerHTML = formHTML;
-                
-                // Update progress value display
-                const progressSlider = document.getElementById('treatmentProgress');
-                const progressValue = document.getElementById('progressValue');
-                if (progressSlider && progressValue) {
-                    progressSlider.addEventListener('input', function() {
-                        progressValue.textContent = this.value + '%';
-                    });
-                }
-                
-                const modal = new bootstrap.Modal(document.getElementById('treatmentModal'));
-                modal.show();
-            }
-
-            saveTreatment(event) {
-                event.preventDefault();
-                
-                const treatmentData = {
-                    id: document.getElementById('treatmentId').value || 'TRT_' + Date.now(),
-                    title: document.getElementById('treatmentTitle').value.trim(),
-                    type: document.getElementById('treatmentType').value,
-                    riskId: document.getElementById('treatmentRisk').value,
-                    status: document.getElementById('treatmentStatus').value,
-                    owner: document.getElementById('treatmentOwner').value.trim(),
-                    dueDate: document.getElementById('treatmentDueDate').value,
-                    progress: parseInt(document.getElementById('treatmentProgress').value) || 0,
-                    cost: parseFloat(document.getElementById('treatmentCost').value) || 0,
-                    actions: document.getElementById('treatmentActions').value.trim(),
-                    criteria: document.getElementById('treatmentCriteria').value.trim(),
-                    createdAt: new Date().toISOString(),
-                    updatedAt: new Date().toISOString()
-                };
-                
-                const index = this.data.treatments.findIndex(t => t.id === treatmentData.id);
-                if (index > -1) {
-                    this.data.treatments[index] = treatmentData;
-                    this.showToast('Treatment updated successfully', 'success');
-                } else {
-                    this.data.treatments.push(treatmentData);
-                    this.showToast('Treatment added successfully', 'success');
-                }
-                
-                this.saveData('treatments', this.data.treatments);
-                this.renderTreatments();
-                
-                bootstrap.Modal.getInstance(document.getElementById('treatmentModal')).hide();
-            }
-
-            renderTreatments() {
-                const tableBody = document.getElementById('treatmentTableBody');
-                if (!tableBody) return;
-
-                const searchTerm = document.getElementById('treatmentSearch')?.value.toLowerCase() || '';
-                const statusFilter = document.getElementById('treatmentStatusFilter')?.value || 'all';
-                
-                let filteredTreatments = this.data.treatments;
-                
-                if (searchTerm) {
-                    filteredTreatments = filteredTreatments.filter(treatment =>
-                        treatment.title.toLowerCase().includes(searchTerm) ||
-                        treatment.actions?.toLowerCase().includes(searchTerm)
-                    );
-                }
-                
-                if (statusFilter !== 'all') {
-                    filteredTreatments = filteredTreatments.filter(treatment => 
-                        treatment.status.toLowerCase().replace(' ', '-') === statusFilter
-                    );
-                }
-                
-                if (filteredTreatments.length === 0) {
-                    tableBody.innerHTML = `
-                        <tr>
-                            <td colspan="8" class="text-center text-muted">
-                                <div class="py-4">
-                                    <i class="bi bi-clipboard-check fs-4 d-block mb-2"></i>
-                                    No treatment plans found. ${searchTerm ? 'Try a different search term.' : 'Add your first treatment plan!'}
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                } else {
-                    tableBody.innerHTML = filteredTreatments.map(treatment => {
-                        const risk = treatment.riskId ? this.data.risks.find(r => r.id === treatment.riskId) : null;
-                        const progressClass = treatment.progress < 30 ? 'bg-danger' : 
-                                            treatment.progress < 70 ? 'bg-warning' : 'bg-success';
-                        
-                        return `
-                            <tr>
-                                <td data-label="Treatment Plan">
-                                    <strong>${treatment.title}</strong><br>
-                                    <small class="text-muted">${treatment.type}</small>
-                                </td>
-                                <td data-label="Risk">
-                                    ${risk ? risk.title : 'Not linked'}
-                                </td>
-                                <td data-label="Type">
-                                    <span class="badge bg-info">${treatment.type}</span>
-                                </td>
-                                <td data-label="Status">
-                                    <span class="status-badge status-${treatment.status.toLowerCase().replace(' ', '-')}">
-                                        ${treatment.status}
-                                    </span>
-                                </td>
-                                <td data-label="Due Date">
-                                    ${treatment.dueDate ? new Date(treatment.dueDate).toLocaleDateString() : 'Not set'}
-                                    ${treatment.dueDate && new Date(treatment.dueDate) < new Date() && treatment.status !== 'Completed' ? 
-                                        '<br><small class="text-danger"><i class="bi bi-exclamation-triangle"></i> Overdue</small>' : ''}
-                                </td>
-                                <td data-label="Owner">${treatment.owner || 'Unassigned'}</td>
-                                <td data-label="Progress">
-                                    <div class="d-flex align-items-center">
-                                        <div class="progress flex-grow-1 me-2" style="height: 8px;">
-                                            <div class="progress-bar ${progressClass}" style="width: ${treatment.progress}%"></div>
-                                        </div>
-                                        <small>${treatment.progress}%</small>
-                                    </div>
-                                </td>
-                                <td data-label="Actions">
-                                    <div class="btn-group btn-group-sm">
-                                        <button class="btn btn-outline-light" onclick="app.showTreatmentForm('${treatment.id}')">
-                                            <i class="bi bi-pencil"></i>
-                                        </button>
-                                        <button class="btn btn-outline-danger" onclick="app.deleteItem('treatment', '${treatment.id}')">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
-                    }).join('');
-                }
-            }
-
-            // ===== FRAMEWORK LIBRARY =====
+            // ===== OTHER METHODS =====
             renderFrameworks() {
                 const tableBody = document.getElementById('frameworkTableBody');
                 if (!tableBody) return;
 
-                const searchTerm = document.getElementById('frameworkSearch')?.value.toLowerCase() || '';
-                const frameworkFilter = document.getElementById('frameworkSelect')?.value || 'all';
-                const categoryFilter = document.getElementById('categorySelect')?.value || 'all';
-                
-                let allControls = [];
-                
-                // Combine all framework controls
-                Object.values(this.frameworks).forEach(framework => {
-                    framework.controls.forEach(control => {
-                        allControls.push({
-                            ...control,
-                            framework: framework.name,
-                            frameworkKey: Object.keys(this.frameworks).find(k => this.frameworks[k].name === framework.name)
-                        });
-                    });
-                });
-                
-                // Apply filters
-                let filteredControls = allControls;
-                
-                if (searchTerm) {
-                    filteredControls = filteredControls.filter(control =>
-                        control.name.toLowerCase().includes(searchTerm) ||
-                        control.description.toLowerCase().includes(searchTerm) ||
-                        control.id.toLowerCase().includes(searchTerm)
-                    );
-                }
-                
-                if (frameworkFilter !== 'all') {
-                    filteredControls = filteredControls.filter(control => 
-                        control.frameworkKey === frameworkFilter
-                    );
-                }
-                
-                if (categoryFilter !== 'all') {
-                    filteredControls = filteredControls.filter(control => 
-                        control.category.toLowerCase().includes(categoryFilter.toLowerCase())
-                    );
-                }
-                
-                if (filteredControls.length === 0) {
-                    tableBody.innerHTML = `
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">
-                                <div class="py-4">
-                                    <i class="bi bi-search fs-4 d-block mb-2"></i>
-                                    No controls match your filters. Try adjusting your search.
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                } else {
-                    tableBody.innerHTML = filteredControls.map(control => `
-                        <tr>
-                            <td data-label="Control ID">
-                                <code>${control.id}</code>
-                            </td>
-                            <td data-label="Name">
-                                <strong>${control.name}</strong><br>
-                                <small class="text-muted">${control.category}</small>
-                            </td>
-                            <td data-label="Category">
-                                <span class="badge bg-info">${control.category}</span>
-                            </td>
-                            <td data-label="Framework">
-                                <span class="framework-badge badge-${control.frameworkKey}">${control.framework}</span>
-                            </td>
-                            <td data-label="Description">
-                                <small>${control.description}</small>
-                            </td>
-                        </tr>
-                    `).join('');
-                }
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">
+                            <div class="py-4">
+                                <i class="bi bi-building fs-4 d-block mb-2"></i>
+                                Framework library loaded. Use controls tab to add specific controls.
+                            </div>
+                        </td>
+                    </tr>
+                `;
             }
 
-            // ===== RISK MATRIX =====
             renderRiskMatrix() {
                 const container = document.getElementById('riskMatrix');
                 if (!container) return;
                 
-                // Clear and create 5x5 grid
-                container.innerHTML = '';
-                
-                for (let i = 5; i >= 1; i--) { // Likelihood (5 to 1)
-                    for (let j = 1; j <= 5; j++) { // Impact (1 to 5)
-                        const score = i * j;
-                        const severity = this.calculateRiskSeverity(score);
-                        
-                        const cell = document.createElement('div');
-                        cell.className = `matrix-cell ${severity.toLowerCase()}`;
-                        cell.style.gridColumn = j;
-                        cell.style.gridRow = 6 - i; // Reverse for visual display
-                        cell.innerHTML = `
-                            <div class="text-center p-2">
-                                <small class="d-block text-muted">${this.getLikelihoodLabel(i)}/${this.getImpactLabel(j)}</small>
-                                <strong class="d-block">${score}</strong>
-                            </div>
-                        `;
-                        
-                        // Add risk dots if any
-                        const risksInCell = this.data.risks.filter(r => r.likelihood === i && r.impact === j);
-                        if (risksInCell.length > 0) {
-                            const dotContainer = document.createElement('div');
-                            dotContainer.className = 'position-absolute top-0 start-0 w-100 h-100 p-1';
-                            dotContainer.style.pointerEvents = 'none';
-                            
-                            risksInCell.forEach((risk, index) => {
-                                const dot = document.createElement('div');
-                                dot.className = 'position-absolute rounded-circle';
-                                dot.style.width = '12px';
-                                dot.style.height = '12px';
-                                dot.style.background = risk.severity === 'High' ? '#ef4444' : 
-                                                     risk.severity === 'Medium' ? '#f59e0b' : '#10b981';
-                                dot.style.border = '2px solid white';
-                                
-                                // Position dots in a grid within the cell
-                                const row = Math.floor(index / 3);
-                                const col = index % 3;
-                                dot.style.top = `${20 + row * 25}%`;
-                                dot.style.left = `${20 + col * 25}%`;
-                                
-                                dotContainer.appendChild(dot);
-                            });
-                            
-                            cell.appendChild(dotContainer);
-                        }
-                        
-                        cell.addEventListener('click', () => this.showRisksInCell(i, j));
-                        container.appendChild(cell);
-                    }
-                }
-                
-                // Add labels
-                const labels = `
-                    <div class="position-absolute top-0 start-0 w-100 d-flex justify-content-between px-4">
-                        <div class="text-center">
-                            <small class="text-muted">Impact →</small>
-                        </div>
-                    </div>
-                    <div class="position-absolute bottom-0 start-0 w-100 d-flex justify-content-between px-4">
-                        ${[1,2,3,4,5].map(n => `<div><small class="text-muted">${n}</small></div>`).join('')}
-                    </div>
-                    <div class="position-absolute top-0 left-0 h-100 d-flex flex-column justify-content-between py-4">
-                        <div class="text-center" style="transform: rotate(-90deg); transform-origin: center;">
-                            <small class="text-muted">Likelihood →</small>
-                        </div>
-                    </div>
-                    <div class="position-absolute top-0 left-0 h-100 d-flex flex-column justify-content-between py-4">
-                        ${[5,4,3,2,1].map(n => `<div class="text-center"><small class="text-muted">${n}</small></div>`).join('')}
+                container.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="bi bi-grid-3x3 fs-1 text-muted d-block mb-3"></i>
+                        <p class="text-muted">Risk matrix visualization will appear here when risks are added.</p>
                     </div>
                 `;
-                
-                container.insertAdjacentHTML('beforeend', labels);
             }
 
-            showRisksInCell(likelihood, impact) {
-                const risks = this.data.risks.filter(r => r.likelihood === likelihood && r.impact === impact);
-                
-                if (risks.length === 0) {
-                    this.showToast(`No risks in this cell (Likelihood: ${likelihood}, Impact: ${impact})`, 'info');
-                    return;
-                }
-                
-                let message = `Risks in cell (Likelihood: ${likelihood}, Impact: ${impact}):\n\n`;
-                risks.forEach(risk => {
-                    message += `• ${risk.title} (${risk.severity})\n`;
-                });
-                
-                alert(message);
-            }
-
-            toggleMatrixView(view) {
-                // For now, just show inherent risk
-                // Could be extended to show residual risk with controls applied
-                this.renderRiskMatrix();
-            }
-
-            // ===== STATEMENT OF APPLICABILITY =====
             renderSOA() {
                 const tableBody = document.getElementById('soaTableBody');
                 if (!tableBody) return;
 
-                // Build base SoA items from frameworks library
-                let soaItems = [];
-                Object.values(this.frameworks).forEach(framework => {
-                    (framework.controls || []).forEach(control => {
-                        // Determine implementation from Local Controls
-                        const isImplemented = this.data.controls.some(c =>
-                            c.framework === framework.name &&
-                            c.controlId === control.id &&
-                            c.status === 'Implemented'
-                        );
-                        const isPlanned = this.data.controls.some(c =>
-                            c.framework === framework.name &&
-                            c.controlId === control.id &&
-                            c.status === 'Planned'
-                        );
-
-                        let implementationStatus = 'Not Implemented';
-                        if (isImplemented) implementationStatus = 'Implemented';
-                        else if (isPlanned) implementationStatus = 'Planned';
-
-                        soaItems.push({
-                            id: control.id,
-                            name: control.name,
-                            framework: framework.name,
-                            category: control.category || '',
-                            applicability: 'Applicable',
-                            implementation: implementationStatus,
-                            owner: '',
-                            rationale: '',
-                            evidence: ''
-                        });
-                    });
-                });
-
-                // Merge saved SoA edits (persisted locally)
-                const keyOf = (fw, id) => `${fw}||${id}`;
-                const saved = Array.isArray(this.data.soa) ? this.data.soa : [];
-                const byKey = new Map(saved.map(r => [r.key || keyOf(r.framework, r.id), r]));
-                soaItems = soaItems.map(item => {
-                    const k = keyOf(item.framework, item.id);
-                    const r = byKey.get(k);
-                    if (!r) return item;
-                    return {
-                        ...item,
-                        applicability: (r.applicability ?? item.applicability),
-                        implementation: (r.implementation ?? item.implementation),
-                        owner: (r.owner ?? item.owner),
-                        rationale: (r.rationale ?? item.rationale),
-                        evidence: (r.evidence ?? item.evidence)
-                    };
-                });
-
-                // Apply framework filter
-                const frameworkFilter = document.getElementById('soaFrameworkFilter')?.value || 'all';
-                if (frameworkFilter !== 'all') {
-                    const f = frameworkFilter.toLowerCase();
-                    soaItems = soaItems.filter(item => item.framework.toLowerCase().includes(f));
-                }
-
-                if (soaItems.length === 0) {
-                    tableBody.innerHTML = `
-                        <tr>
-                            <td colspan="7" class="text-center text-muted">
-                                <div class="py-4">
-                                    <i class="bi bi-file-text fs-4 d-block mb-2"></i>
-                                    No SoA items found for the selected framework.
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                    return;
-                }
-
-                // Render editable rows
-                tableBody.innerHTML = soaItems.map(item => {
-                    const k = keyOf(item.framework, item.id);
-                    const implBadge = item.implementation === 'Implemented' ? 'success'
-                      : item.implementation === 'Planned' ? 'warning'
-                      : 'danger';
-
-                    return `
-                        <tr data-soa-key="${this.escapeHtml(k)}">
-                            <td data-label="Control ID"><code>${this.escapeHtml(item.id)}</code></td>
-                            <td data-label="Control Name">
-                                <strong>${this.escapeHtml(item.name)}</strong><br>
-                                <small class="text-muted">${this.escapeHtml(item.category)}</small>
-                            </td>
-                            <td data-label="Framework">
-                                <span class="badge bg-primary">${this.escapeHtml(item.framework)}</span>
-                            </td>
-                            <td data-label="Applicability">
-                                <select class="form-select form-select-sm soa-app">
-                                    <option value="Applicable" ${item.applicability === 'Applicable' ? 'selected' : ''}>Applicable</option>
-                                    <option value="Not Applicable" ${item.applicability === 'Not Applicable' ? 'selected' : ''}>Not Applicable</option>
-                                </select>
-                            </td>
-                            <td data-label="Implementation">
-                                <select class="form-select form-select-sm soa-impl">
-                                    <option value="Implemented" ${item.implementation === 'Implemented' ? 'selected' : ''}>Implemented</option>
-                                    <option value="Planned" ${item.implementation === 'Planned' ? 'selected' : ''}>Planned</option>
-                                    <option value="Not Implemented" ${item.implementation === 'Not Implemented' ? 'selected' : ''}>Not Implemented</option>
-                                </select>
-                                <div class="mt-1"><span class="badge bg-${implBadge}">${this.escapeHtml(item.implementation)}</span></div>
-                            </td>
-                            <td data-label="Rationale">
-                                <textarea class="form-control form-control-sm soa-rat" rows="2" placeholder="Why applicable / not applicable...">${this.escapeHtml(item.rationale || '')}</textarea>
-                                <input class="form-control form-control-sm mt-2 soa-owner" placeholder="Owner (optional)" value="${this.escapeHtml(item.owner || '')}">
-                            </td>
-                            <td data-label="Evidence">
-                                <textarea class="form-control form-control-sm soa-evd" rows="2" placeholder="URLs, ticket IDs, policies, screenshots...">${this.escapeHtml(item.evidence || '')}</textarea>
-                                <div class="small text-muted mt-1">Autosaved locally</div>
-                            </td>
-                        </tr>
-                    `;
-                }).join('');
-
-                const upsert = (key, patch) => {
-                    const [fw, id] = key.split('||');
-                    const arr = Array.isArray(this.data.soa) ? [...this.data.soa] : [];
-                    const idx = arr.findIndex(r => (r.key || `${r.framework}||${r.id}`) === key);
-                    const base = {
-                        key,
-                        framework: fw,
-                        id,
-                        applicability: 'Applicable',
-                        implementation: 'Not Implemented',
-                        owner: '',
-                        rationale: '',
-                        evidence: '',
-                        updatedAt: new Date().toISOString()
-                    };
-                    const next = { ...(idx >= 0 ? arr[idx] : base), ...patch, updatedAt: new Date().toISOString() };
-                    if (idx >= 0) arr[idx] = next;
-                    else arr.push(next);
-                    this.saveData('soa', arr);
-                };
-
-                // bind once (delegated)
-                if (!this._soaBound) {
-                    tableBody.addEventListener('change', (e) => {
-                        const tr = e.target.closest('tr[data-soa-key]');
-                        if (!tr) return;
-                        const key = tr.getAttribute('data-soa-key');
-                        if (e.target.classList.contains('soa-app')) upsert(key, { applicability: e.target.value });
-                        if (e.target.classList.contains('soa-impl')) upsert(key, { implementation: e.target.value });
-                    });
-
-                    let t;
-                    tableBody.addEventListener('input', (e) => {
-                        const tr = e.target.closest('tr[data-soa-key]');
-                        if (!tr) return;
-                        const key = tr.getAttribute('data-soa-key');
-                        clearTimeout(t);
-                        t = setTimeout(() => {
-                            const rat = tr.querySelector('.soa-rat')?.value || '';
-                            const evd = tr.querySelector('.soa-evd')?.value || '';
-                            const owner = tr.querySelector('.soa-owner')?.value || '';
-                            upsert(key, { rationale: rat, evidence: evd, owner });
-                        }, 220);
-                    });
-
-                    this._soaBound = true;
-                }
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center text-muted">
+                            <div class="py-4">
+                                <i class="bi bi-file-text fs-4 d-block mb-2"></i>
+                                Statement of Applicability will be populated based on your controls.
+                            </div>
+                        </td>
+                    </tr>
+                `;
             }
 
-            escapeHtml(text) {
-                const div = document.createElement('div');
-                div.textContent = text;
-                return div.innerHTML;
-            }
-
-            // ===== REPORTS =====
             renderReports() {
-                // Initialize report preview
                 document.getElementById('reportContent').textContent = 
                     'Select a report type and click Generate to create a report.';
             }
@@ -4098,18 +3135,9 @@ body{
                         reportTitle = 'Risk Register Report';
                         reportContent = this.generateRiskReport();
                         break;
-                    case 'compliance':
-                        reportTitle = 'Compliance Gap Report';
-                        reportContent = this.generateComplianceReport();
-                        break;
-                    case 'vendor':
-                        reportTitle = 'Vendor Risk Report';
-                        reportContent = this.generateVendorReport();
-                        break;
-                    case 'incident':
-                        reportTitle = 'Incident Report';
-                        reportContent = this.generateIncidentReport();
-                        break;
+                    default:
+                        reportTitle = 'Report';
+                        reportContent = 'Report functionality will be available soon.';
                 }
                 
                 document.getElementById('reportTitle').textContent = reportTitle;
@@ -4192,80 +3220,24 @@ Description: ${risk.description || 'No description'}
                     .catch(() => this.showToast('Failed to copy report', 'error'));
             }
 
-            exportReport() {
-                const reportContent = document.getElementById('reportContent').textContent;
-                const reportTitle = document.getElementById('reportTitle').textContent;
-                
-                const blob = new Blob([reportContent], { type: 'text/plain' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `${reportTitle.toLowerCase().replace(/ /g, '_')}_${new Date().toISOString().slice(0,10)}.txt`;
-                a.click();
-                URL.revokeObjectURL(url);
-                
-                this.showToast('Report exported successfully', 'success');
-            }
-
-            // ===== CHALLENGES =====
             renderChallenges() {
                 // Update challenge statuses
-                this.updateChallengeStatus(1);
-                this.updateChallengeStatus(2);
-                this.updateChallengeStatus(3);
-                this.updateChallengeStatus(4);
+                const challenges = ['challenge1Status', 'challenge2Status', 'challenge3Status', 'challenge4Status'];
+                challenges.forEach((id, index) => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.textContent = 'Not Started';
+                        element.className = 'text-muted';
+                    }
+                });
                 
                 // Calculate total points
-                const totalPoints = Object.values(this.data.challenges.scores || {}).reduce((a, b) => a + b, 0);
-                document.getElementById('totalPoints').textContent = totalPoints;
-                
-                // Update progress bar
-                const progressBar = document.querySelector('.progress-bar');
-                if (progressBar) {
-                    const progress = Math.min(100, (totalPoints / 850) * 100); // 850 = max points
-                    progressBar.style.width = `${progress}%`;
-                }
-            }
-
-            updateChallengeStatus(challengeId) {
-                const statusElement = document.getElementById(`challenge${challengeId}Status`);
-                if (!statusElement) return;
-                
-                const progress = this.data.challenges.progress?.[challengeId] || {};
-                const score = this.data.challenges.scores?.[challengeId] || 0;
-                
-                if (score > 0) {
-                    statusElement.textContent = `Completed (${score} pts)`;
-                    statusElement.className = 'text-success';
-                } else if (Object.keys(progress).length > 0) {
-                    statusElement.textContent = 'In Progress';
-                    statusElement.className = 'text-warning';
-                } else {
-                    statusElement.textContent = 'Not Started';
-                    statusElement.className = 'text-muted';
-                }
+                document.getElementById('totalPoints').textContent = '0';
             }
 
             startChallenge(challengeId) {
                 this.switchTab('dashboard');
                 this.showToast(`Starting Challenge ${challengeId}...`, 'info');
-                
-                // Set initial progress
-                if (!this.data.challenges.progress) this.data.challenges.progress = {};
-                if (!this.data.challenges.progress[challengeId]) {
-                    this.data.challenges.progress[challengeId] = { started: new Date().toISOString() };
-                }
-                
-                this.saveData('challenges', this.data.challenges);
-                
-                // Auto-load demo data for challenge 1
-                if (challengeId === 1 && this.data.assets.length === 0) {
-                    setTimeout(() => {
-                        if (confirm('Load demo data for this challenge?')) {
-                            this.loadDemoScenario();
-                        }
-                    }, 1000);
-                }
             }
 
             resetChallenges() {
@@ -4275,351 +3247,6 @@ Description: ${risk.description || 'No description'}
                     this.renderChallenges();
                     this.showToast('Challenge progress reset', 'info');
                 }
-            }
-
-            // ===== DATA MANAGEMENT =====
-            loadDemoScenario() {
-                if (!confirm('Load demo scenario? This will replace your current data.')) {
-                    return;
-                }
-
-                // Load comprehensive demo data
-                this.data.assets = [
-                    {
-                        id: 'AST_001',
-                        name: 'Customer Database',
-                        type: 'Database',
-                        criticality: 'High',
-                        owner: 'IT Department',
-                        description: 'Primary customer information database containing PII and financial data.',
-                        dataTypes: ['PII', 'Financial'],
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString()
-                    },
-                    {
-                        id: 'AST_002',
-                        name: 'Web Application',
-                        type: 'Application',
-                        criticality: 'High',
-                        owner: 'Development Team',
-                        description: 'Customer-facing web portal for account management.',
-                        dataTypes: ['PII', 'Credentials'],
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString()
-                    },
-                    {
-                        id: 'AST_003',
-                        name: 'Internal File Server',
-                        type: 'Server',
-                        criticality: 'Medium',
-                        owner: 'IT Operations',
-                        description: 'File server for internal documents and collaboration.',
-                        dataTypes: ['Internal'],
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString()
-                    }
-                ];
-
-                this.data.vendors = [
-                    {
-                        id: 'VDR_001',
-                        name: 'Cloud Provider Inc.',
-                        serviceType: 'Cloud Services',
-                        riskLevel: 'Medium',
-                        contractStatus: 'Active',
-                        nextReviewDate: new Date(Date.now() + 180 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                        compliance: 'Compliant',
-                        description: 'Primary cloud infrastructure provider for production workloads.',
-                        contact: 'John Smith - Account Manager',
-                        email: 'john.smith@cloudprovider.com',
-                        assessment: 'Annual security assessment completed. Minor findings addressed.',
-                        hasSLA: true,
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString()
-                    }
-                ];
-
-                this.data.risks = [
-                    {
-                        id: 'RISK_001',
-                        title: 'Data Breach via SQL Injection',
-                        category: 'Cybersecurity',
-                        status: 'Open',
-                        likelihood: 4,
-                        impact: 5,
-                        score: 20,
-                        severity: 'High',
-                        description: 'Potential SQL injection vulnerability in web application could lead to data breach.',
-                        owner: 'CISO',
-                        dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                        mitigation: 'Implement WAF and regular security testing.',
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString()
-                    },
-                    {
-                        id: 'RISK_002',
-                        title: 'Insider Data Theft',
-                        category: 'People',
-                        status: 'In Progress',
-                        likelihood: 3,
-                        impact: 4,
-                        score: 12,
-                        severity: 'Medium',
-                        description: 'Unauthorized access by privileged users could lead to data theft.',
-                        owner: 'HR Director',
-                        dueDate: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                        mitigation: 'Implement privileged access management and monitoring.',
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString()
-                    },
-                    {
-                        id: 'RISK_003',
-                        title: 'Ransomware Attack',
-                        category: 'Cybersecurity',
-                        status: 'Open',
-                        likelihood: 4,
-                        impact: 4,
-                        score: 16,
-                        severity: 'High',
-                        description: 'Ransomware could encrypt critical systems and data.',
-                        owner: 'Security Team',
-                        dueDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                        mitigation: 'Implement endpoint protection and backup strategy.',
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString()
-                    }
-                ];
-
-                this.data.controls = [
-                    {
-                        id: 'CTL_001',
-                        name: 'Multi-Factor Authentication',
-                        type: 'Technical',
-                        status: 'Implemented',
-                        framework: 'ISO 27001',
-                        owner: 'Security Team',
-                        implementationDate: new Date().toISOString().split('T')[0],
-                        description: 'MFA enforced for all administrative accounts.',
-                        evidence: 'Okta dashboard configuration',
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString()
-                    },
-                    {
-                        id: 'CTL_002',
-                        name: 'Web Application Firewall',
-                        type: 'Technical',
-                        status: 'Implemented',
-                        framework: 'ISO 27001',
-                        owner: 'Network Team',
-                        implementationDate: new Date().toISOString().split('T')[0],
-                        description: 'WAF protecting all web applications.',
-                        evidence: 'Cloudflare WAF logs',
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString()
-                    },
-                    {
-                        id: 'CTL_003',
-                        name: 'Security Awareness Training',
-                        type: 'Administrative',
-                        status: 'Planned',
-                        framework: 'ISO 27001',
-                        owner: 'HR Department',
-                        implementationDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                        description: 'Quarterly security awareness training for all employees.',
-                        evidence: 'Training schedule and materials',
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString()
-                    }
-                ];
-
-                this.data.issues = [
-                    {
-                        id: 'ISS_001',
-                        title: 'Missing encryption on backup storage',
-                        source: 'Audit',
-                        severity: 'High',
-                        status: 'Open',
-                        dueDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                        owner: 'Storage Team',
-                        assetId: 'AST_003',
-                        description: 'Backup storage does not have encryption at rest enabled, exposing sensitive data.',
-                        remediation: 'Enable AES-256 encryption on all backup storage volumes.',
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString()
-                    }
-                ];
-
-                this.data.incidents = [
-                    {
-                        id: 'INC_001',
-                        title: 'Phishing campaign targeting finance department',
-                        type: 'Phishing',
-                        severity: 'Medium',
-                        status: 'Resolved',
-                        detected: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 16),
-                        owner: 'SOC Team',
-                        affectedSystems: ['AST_002'],
-                        description: 'Targeted phishing emails sent to finance employees pretending to be from CEO.',
-                        response: 'Blocked malicious domains, conducted user awareness training.',
-                        lessons: 'Need to implement advanced email filtering and regular phishing simulations.',
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString()
-                    }
-                ];
-
-                this.data.treatments = [
-                    {
-                        id: 'TRT_001',
-                        title: 'Implement MFA for all admin accounts',
-                        type: 'Mitigate',
-                        riskId: 'RISK_002',
-                        status: 'In Progress',
-                        owner: 'Security Team',
-                        dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-                        progress: 65,
-                        cost: 5000,
-                        actions: '1. Evaluate MFA solutions\n2. Configure MFA for admin accounts\n3. Test and deploy\n4. Train users',
-                        criteria: 'All admin accounts require MFA for authentication.',
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString()
-                    }
-                ];
-
-                // Save all data
-                this.saveData('assets', this.data.assets);
-                this.saveData('vendors', this.data.vendors);
-                this.saveData('risks', this.data.risks);
-                this.saveData('controls', this.data.controls);
-                this.saveData('issues', this.data.issues);
-                this.saveData('incidents', this.data.incidents);
-                this.saveData('treatments', this.data.treatments);
-
-                // Update all views
-                this.renderDashboard();
-                this.renderRisks();
-                this.renderAssets();
-                this.renderControls();
-                this.renderVendors();
-                this.renderIssues();
-                this.renderIncidents();
-                this.renderTreatments();
-                this.renderFrameworks();
-                this.renderRiskMatrix();
-                this.renderSOA();
-                
-                this.showToast('Demo scenario loaded successfully!', 'success');
-            }
-
-            exportAllData() {
-                const exportData = {
-                    version: this.version,
-                    exportedAt: new Date().toISOString(),
-                    data: this.data,
-                    frameworks: this.frameworks
-                };
-
-                const dataStr = JSON.stringify(exportData, null, 2);
-                const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
-                
-                const exportFileDefaultName = `grc_lab_export_${new Date().toISOString().slice(0,10)}.json`;
-                
-                const linkElement = document.createElement('a');
-                linkElement.setAttribute('href', dataUri);
-                linkElement.setAttribute('download', exportFileDefaultName);
-                document.body.appendChild(linkElement);
-                linkElement.click();
-                document.body.removeChild(linkElement);
-                
-                this.showToast('All data exported successfully', 'success');
-            }
-
-            importData(event) {
-                const file = event.target.files[0];
-                if (!file) return;
-
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    try {
-                        const importedData = JSON.parse(e.target.result);
-                        
-                        // Validate and merge data
-                        if (importedData.data) {
-                            Object.keys(importedData.data).forEach(key => {
-                                if (this.data.hasOwnProperty(key)) {
-                                    this.data[key] = importedData.data[key];
-                                    this.saveData(key, this.data[key]);
-                                }
-                            });
-                        }
-                        
-                        // Update all views
-                        this.renderDashboard();
-                        this.renderRisks();
-                        this.renderAssets();
-                        this.renderControls();
-                        this.renderVendors();
-                        this.renderIssues();
-                        this.renderIncidents();
-                        this.renderTreatments();
-                        this.renderFrameworks();
-                        this.renderRiskMatrix();
-                        this.renderSOA();
-                        
-                        this.showToast('Data imported successfully', 'success');
-                    } catch (error) {
-                        this.showToast('Error importing data. Invalid file format.', 'error');
-                    }
-                };
-                reader.readAsText(file);
-            }
-
-            // ===== UTILITIES =====
-            deleteItem(type, id) {
-                if (!confirm(`Are you sure you want to delete this ${type}?`)) return;
-                
-                let collection = this.data[type + 's'];
-                if (collection) {
-                    this.data[type + 's'] = collection.filter(item => item.id !== id);
-                    this.saveData(type + 's', this.data[type + 's']);
-                    
-                    // Update UI
-                    this.renderDashboard();
-                    if (this.currentTab === type + 's') {
-                        this.renderTabContent(this.currentTab);
-                    }
-                    
-                    this.showToast(`${type} deleted successfully`, 'info');
-                }
-            }
-
-            showToast(message, type = 'info') {
-                const toastEl = document.getElementById('liveToast');
-                const toastMessage = document.getElementById('toastMessage');
-                
-                if (!toastEl || !toastMessage) return;
-                
-                // Set message
-                toastMessage.textContent = message;
-                
-                // Set color based on type
-                toastEl.className = 'toast';
-                switch(type) {
-                    case 'success':
-                        toastEl.classList.add('bg-success', 'text-white');
-                        break;
-                    case 'error':
-                        toastEl.classList.add('bg-danger', 'text-white');
-                        break;
-                    case 'warning':
-                        toastEl.classList.add('bg-warning', 'text-dark');
-                        break;
-                    default:
-                        toastEl.classList.add('bg-info', 'text-white');
-                }
-                
-                // Show toast
-                const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
-                toast.show();
             }
 
             showFirstTimeSetup() {
@@ -4675,121 +3302,188 @@ Description: ${risk.description || 'No description'}
                 const modal = new bootstrap.Modal(document.getElementById('firstTimeModal'));
                 modal.show();
             }
+
+            // ===== ISSUE, INCIDENT, TREATMENT METHODS (stubs for now) =====
+            showIssueForm() {
+                this.showToast('Issue management coming soon!', 'info');
+            }
+
+            showIncidentForm() {
+                this.showToast('Incident management coming soon!', 'info');
+            }
+
+            showTreatmentForm() {
+                this.showToast('Treatment management coming soon!', 'info');
+            }
+
+            renderIssues() {
+                const tableBody = document.getElementById('issueTableBody');
+                if (tableBody) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">
+                                <div class="py-4">
+                                    <i class="bi bi-bug fs-4 d-block mb-2"></i>
+                                    Issue management coming soon!
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }
+            }
+
+            renderIncidents() {
+                const tableBody = document.getElementById('incidentTableBody');
+                if (tableBody) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">
+                                <div class="py-4">
+                                    <i class="bi bi-exclamation-octagon fs-4 d-block mb-2"></i>
+                                    Incident management coming soon!
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }
+            }
+
+            renderTreatments() {
+                const tableBody = document.getElementById('treatmentTableBody');
+                if (tableBody) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="8" class="text-center text-muted">
+                                <div class="py-4">
+                                    <i class="bi bi-clipboard-check fs-4 d-block mb-2"></i>
+                                    Treatment management coming soon!
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                }
+            }
+
+            exportMatrix() {
+                this.showToast('Matrix export coming soon!', 'info');
+            }
+
+            exportSoA() {
+                this.showToast('SoA export coming soon!', 'info');
+            }
+
+            exportReport() {
+                const reportContent = document.getElementById('reportContent').textContent;
+                const reportTitle = document.getElementById('reportTitle').textContent;
+                
+                const blob = new Blob([reportContent], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${reportTitle.toLowerCase().replace(/ /g, '_')}_${new Date().toISOString().slice(0,10)}.txt`;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                this.showToast('Report exported successfully', 'success');
+            }
         }
 
         // ===== INITIALIZE APPLICATION =====
-        let app;
         document.addEventListener('DOMContentLoaded', () => {
-            app = new GRCApplication();
-            window.app = app; // Make available globally
+            window.app = new GRCApplication();
             
             // Initialize tooltips
             const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
             tooltipTriggerList.map(function (tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
-            
-            // File import handler
-            document.getElementById('fileInput')?.addEventListener('change', (e) => app.importData(e));
         });
 
         // ===== GLOBAL HELPER FUNCTIONS =====
         function switchTab(tabName) {
-            if (app) app.switchTab(tabName);
+            if (window.app) window.app.switchTab(tabName);
         }
 
         function loadDemoScenario() {
-            if (app) app.loadDemoScenario();
+            if (window.app) window.app.loadDemoScenario();
         }
 
         function exportAllData() {
-            if (app) app.exportAllData();
+            if (window.app) window.app.exportAllData();
         }
 
         function generateReport() {
-            if (app) app.generateReport();
+            if (window.app) window.app.generateReport();
         }
 
         function copyReport() {
-            if (app) app.copyReport();
+            if (window.app) window.app.copyReport();
         }
 
         function exportReport() {
-            if (app) app.exportReport();
+            if (window.app) window.app.exportReport();
         }
 
         function startChallenge(challengeId) {
-            if (app) app.startChallenge(challengeId);
+            if (window.app) window.app.startChallenge(challengeId);
         }
 
         function resetChallenges() {
-            if (app) app.resetChallenges();
+            if (window.app) window.app.resetChallenges();
         }
 
-        // Make app available globally for inline event handlers
-        window.GRCApp = app;
+        // ===== RESET LAB FUNCTION =====
+        function resetLabData() {
+            const ok = confirm(
+                "Reset Lab will clear all demo/entered data stored locally in this browser and reset the dashboard to zeros.\n\n" +
+                "This does NOT remove the built-in framework library.\n\n" +
+                "Continue?"
+            );
+            if (!ok) return;
+
+            if (window.app) {
+                window.app.data.assets = [];
+                window.app.data.vendors = [];
+                window.app.data.risks = [];
+                window.app.data.controls = [];
+                window.app.data.issues = [];
+                window.app.data.incidents = [];
+                window.app.data.treatments = [];
+                window.app.data.soa = [];
+                
+                window.app.saveData("assets", window.app.data.assets);
+                window.app.saveData("vendors", window.app.data.vendors);
+                window.app.saveData("risks", window.app.data.risks);
+                window.app.saveData("controls", window.app.data.controls);
+                window.app.saveData("issues", window.app.data.issues);
+                window.app.saveData("incidents", window.app.data.incidents);
+                window.app.saveData("treatments", window.app.data.treatments);
+                window.app.saveData("soa", window.app.data.soa);
+                window.app.saveData("challenges", { progress: {}, scores: {} });
+
+                // Clear localStorage
+                const prefix = window.app.storagePrefix || "grc_lab_v2_";
+                Object.keys(localStorage).forEach(k => {
+                    if (k.startsWith(prefix) && !k.endsWith("firstRun")) localStorage.removeItem(k);
+                });
+
+                window.app.renderDashboard();
+                window.app.switchTab("dashboard");
+                window.app.showToast("Lab reset complete. Dashboard cleared.", "success");
+                
+                // Force reload to refresh all tabs
+                setTimeout(() => location.reload(), 500);
+            } else {
+                // Fallback
+                Object.keys(localStorage).forEach(key => {
+                    if (key.startsWith("grc_lab_v2_")) localStorage.removeItem(key);
+                });
+                localStorage.setItem("grc_lab_v2_firstRun", "true");
+                alert("Lab reset complete. Reloading…");
+                location.reload();
+            }
+        }
     </script>
 </div>
-
-<script>
-function resetLabData() {
-  const ok = confirm(
-    "Reset Lab will clear all demo/entered data stored locally in this browser and reset the dashboard to zeros." +
-    "This does NOT remove the built-in framework library." +
-    "Continue?"
-  );
-  if (!ok) return;
-
-  // Prefer the real app instance (covers both const app and window.app)
-  const inst = (window.app && typeof window.app.saveData === "function") ? window.app :
-              (typeof app !== "undefined" && app && typeof app.saveData === "function" ? app : null);
-
-  // If we can use the app instance, clear datasets and persist empties using its own storage prefix.
-  if (inst) {
-    inst.data.assets = [];
-    inst.data.vendors = [];
-    inst.data.risks = [];
-    inst.data.controls = [];
-    inst.data.issues = [];
-    inst.data.incidents = [];
-    inst.data.treatments = [];
-    inst.data.soa = [];
-    inst.saveData("assets", inst.data.assets);
-    inst.saveData("vendors", inst.data.vendors);
-    inst.saveData("risks", inst.data.risks);
-    inst.saveData("controls", inst.data.controls);
-    inst.saveData("issues", inst.data.issues);
-    inst.saveData("incidents", inst.data.incidents);
-    inst.saveData("treatments", inst.data.treatments);
-    inst.saveData("soa", inst.data.soa);
-    inst.saveData("challenges", { progress: {}, scores: {} });
-    inst.saveData("firstRun", true);
-
-    // Also wipe any other keys under the app's prefix to guarantee demo data is gone
-    const prefix = inst.storagePrefix || "grc_lab_v2_";
-    Object.keys(localStorage).forEach(k => {
-      if (k.startsWith(prefix) && !k.endsWith("firstRun")) localStorage.removeItem(k);
-    });
-
-    // Re-render dashboard immediately (no reload required)
-    try { if (typeof inst.renderDashboard === "function") inst.renderDashboard(); } catch(e){}
-    try { if (typeof inst.switchTab === "function") inst.switchTab("dashboard"); } catch(e){}
-    if (typeof inst.showToast === "function") inst.showToast("Lab reset complete. Dashboard cleared.", "success");
-
-    // Force a reload to ensure all tabs and UI fully reflect the changes (added for reliability)
-    setTimeout(() => location.reload(), 500);  // Short delay to allow toast to show
-    return;
-  }
-
-  // Fallback: clear likely keys and reload
-  Object.keys(localStorage).forEach(key => {
-    if (key.startsWith("grc_lab_v2_")) localStorage.removeItem(key);
-  });
-  // keep onboarding from re-triggering endlessly
-  localStorage.setItem("grc_lab_v2_firstRun", "true");
-  alert("Lab reset complete. Reloading…");
-  location.reload();
-}
-</script>
 </body>
 </html>
