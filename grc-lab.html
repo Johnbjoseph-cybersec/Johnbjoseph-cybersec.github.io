@@ -1914,13 +1914,29 @@ body{
                 }
             }
 
-            // ===== DATA MANAGEMENT =====
+         // ===== DATA MANAGEMENT (FIXED) =====
             loadData(key) {
                 try {
-                    const data = localStorage.getItem(this.storagePrefix + key);
-                    return data ? JSON.parse(data) : null;
+                    const raw = localStorage.getItem(this.storagePrefix + key);
+                    // 1. Check for empty or invalid strings
+                    if (!raw || raw === "undefined" || raw === "null") return null;
+                    
+                    const parsed = JSON.parse(raw);
+
+                    // 2. Safety Check: Ensure lists are actually Arrays
+                    // If 'risks' or 'assets' is saved as something weird (like a number), reset it.
+                    const listKeys = ['assets', 'risks', 'controls', 'vendors', 'issues', 'incidents', 'treatments', 'soa'];
+                    if (listKeys.includes(key) && !Array.isArray(parsed)) {
+                        console.warn(`Corrupted list detected for ${key}. Resetting to empty.`);
+                        localStorage.removeItem(this.storagePrefix + key);
+                        return null;
+                    }
+                    
+                    return parsed;
                 } catch (e) {
-                    console.error('Error loading data:', e);
+                    // 3. Auto-Heal: If data is corrupted, delete it so the app doesn't crash next time
+                    console.warn(`Error loading ${key}. Auto-healing...`, e);
+                    localStorage.removeItem(this.storagePrefix + key);
                     return null;
                 }
             }
