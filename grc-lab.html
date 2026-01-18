@@ -1793,46 +1793,54 @@ class GRCApplication {
         this.showToast('Item deleted', 'info');
     }
 
-    loadDemoScenario() {
-        const demoData = {
-            risks: [
-                {id:'DR1',title:'SQL Injection Vulnerability',category:'Cybersecurity',status:'Open',likelihood:4,impact:5,score:20,severity:'High',description:'Web application vulnerable to SQL injection',updatedAt:new Date().toISOString()},
-                {id:'DR2',title:'GDPR Compliance Gap',category:'Compliance',status:'In Progress',likelihood:3,impact:4,score:12,severity:'Medium',description:'Data retention policy non-compliant',updatedAt:new Date().toISOString()},
-                {id:'DR3',title:'Vendor Security Assessment',category:'Third-Party',status:'Open',likelihood:2,impact:3,score:6,severity:'Medium',description:'Cloud provider lacks SOC 2',updatedAt:new Date().toISOString()}
-            ],
-            assets: [
-                {id:'DA1',name:'Production Database',type:'Database',criticality:'High',owner:'DBA Team',updatedAt:new Date().toISOString()},
-                {id:'DA2',name:'Web Application Server',type:'Server',criticality:'High',owner:'DevOps',updatedAt:new Date().toISOString()},
-                {id:'DA3',name:'Employee Laptops',type:'Workstation',criticality:'Medium',owner:'IT Support',updatedAt:new Date().toISOString()}
-            ],
-            vendors: [
-                {id:'DV1',name:'AWS',service:'Cloud Hosting',risk:'Medium',status:'Active',updatedAt:new Date().toISOString()},
-                {id:'DV2',name:'Salesforce',service:'SaaS',risk:'Low',status:'Active',updatedAt:new Date().toISOString()}
-            ],
-            controls: [
-                {id:'DC1',name:'Multi-Factor Authentication',type:'Preventive',framework:'ISO 27001',status:'Implemented',updatedAt:new Date().toISOString()},
-                {id:'DC2',name:'Security Awareness Training',type:'Administrative',framework:'NIST CSF',status:'Implemented',updatedAt:new Date().toISOString()},
-                {id:'DC3',name:'Data Encryption at Rest',type:'Preventive',framework:'PCI DSS',status:'Planned',updatedAt:new Date().toISOString()}
-            ],
-            issues: [
-                {id:'DI1',title:'Unpatched Servers',source:'Vulnerability Scan',severity:'High',status:'Open',updatedAt:new Date().toISOString()},
-                {id:'DI2',title:'Weak Password Policy',source:'Audit',severity:'Medium',status:'In Progress',updatedAt:new Date().toISOString()}
-            ],
-            incidents: [
-                {id:'DIN1',title:'Phishing Email Campaign',type:'Phishing',severity:'Medium',status:'Resolved',updatedAt:new Date().toISOString()},
-                {id:'DIN2',title:'Failed Login Attempts',type:'Unauthorized Access',severity:'Low',status:'Investigating',updatedAt:new Date().toISOString()}
-            ]
-        };
-        
-        Object.keys(demoData).forEach(key => {
-            this.data[key] = [...this.data[key], ...demoData[key]];
-            this.saveData(key, this.data[key]);
-        });
-        
-        this.renderDashboard();
-        this.renderTabContent(this.currentTab);
-        this.showToast('Demo scenario loaded with sample data across all modules', 'success');
+loadDemoScenario() {
+
+    if (localStorage.getItem('demoLoaded') === 'true') {
+        this.showToast('Demo data already loaded', 'info');
+        return;
     }
+
+    const demoData = {
+        risks: [
+            {id:'DR1',title:'SQL Injection Vulnerability',category:'Cybersecurity',status:'Open',likelihood:4,impact:5,score:20,severity:'High',description:'Web application vulnerable to SQL injection',updatedAt:new Date().toISOString()},
+            {id:'DR2',title:'GDPR Compliance Gap',category:'Compliance',status:'In Progress',likelihood:3,impact:4,score:12,severity:'Medium',description:'Data retention policy non-compliant',updatedAt:new Date().toISOString()},
+            {id:'DR3',title:'Vendor Security Assessment',category:'Third-Party',status:'Open',likelihood:2,impact:3,score:6,severity:'Medium',description:'Cloud provider lacks SOC 2',updatedAt:new Date().toISOString()}
+        ],
+        assets: [
+            {id:'DA1',name:'Production Database',type:'Database',criticality:'High',owner:'DBA Team',updatedAt:new Date().toISOString()},
+            {id:'DA2',name:'Web Application Server',type:'Server',criticality:'High',owner:'DevOps',updatedAt:new Date().toISOString()},
+            {id:'DA3',name:'Employee Laptops',type:'Workstation',criticality:'Medium',owner:'IT Support',updatedAt:new Date().toISOString()}
+        ],
+        vendors: [
+            {id:'DV1',name:'AWS',service:'Cloud Hosting',risk:'Medium',status:'Active',updatedAt:new Date().toISOString()},
+            {id:'DV2',name:'Salesforce',service:'SaaS',risk:'Low',status:'Active',updatedAt:new Date().toISOString()}
+        ],
+        controls: [
+            {id:'DC1',name:'Multi-Factor Authentication',type:'Preventive',framework:'ISO 27001',status:'Implemented',updatedAt:new Date().toISOString()},
+            {id:'DC2',name:'Security Awareness Training',type:'Administrative',framework:'NIST CSF',status:'Implemented',updatedAt:new Date().toISOString()},
+            {id:'DC3',name:'Data Encryption at Rest',type:'Preventive',framework:'PCI DSS',status:'Planned',updatedAt:new Date().toISOString()}
+        ],
+        issues: [
+            {id:'DI1',title:'Unpatched Servers',source:'Vulnerability Scan',severity:'High',status:'Open',updatedAt:new Date().toISOString()},
+            {id:'DI2',title:'Weak Password Policy',source:'Audit',severity:'Medium',status:'In Progress',updatedAt:new Date().toISOString()}
+        ],
+        incidents: [
+            {id:'DIN1',title:'Phishing Email Campaign',type:'Phishing',severity:'Medium',status:'Resolved',updatedAt:new Date().toISOString()},
+            {id:'DIN2',title:'Failed Login Attempts',type:'Unauthorized Access',severity:'Low',status:'Investigating',updatedAt:new Date().toISOString()}
+        ]
+    };
+
+    Object.keys(demoData).forEach(key => {
+        this.data[key] = [...demoData[key]];
+        this.saveData(key, this.data[key]);
+    });
+
+    this.renderDashboard();
+    this.renderTabContent(this.currentTab);
+    this.showToast('Demo scenario loaded with sample data across all modules', 'success');
+    localStorage.setItem('demoLoaded', 'true');
+}
+
 
     exportAllData() {
         const exportData = {
