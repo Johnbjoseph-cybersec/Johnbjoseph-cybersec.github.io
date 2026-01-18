@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2508,6 +2509,7 @@ clearReportDraft() {
   if (el) el.value = '';
   this.showToast('Report draft cleared', 'info');
 }
+
 generateBoardReport() {
   const draft = document.getElementById('reportDraft');
   if (!draft) return;
@@ -2515,6 +2517,7 @@ generateBoardReport() {
   const type = document.getElementById('reportType')?.value || 'executive';
   const title = (document.getElementById('reportTitle')?.value || 'GRC Management Report').trim();
   const stamp = new Date().toISOString().replace('T',' ').slice(0,19);
+  const NL = "\n";
 
   const assets = this.data.assets || [];
   const vendors = this.data.vendors || [];
@@ -2525,7 +2528,6 @@ generateBoardReport() {
   const treatments = this.data.treatments || [];
   const soa = this.data.soa || [];
 
-  // --- helpers
   const isOpen = (s) => {
     const x = String(s || '').toLowerCase();
     return x.includes('open') || x.includes('in progress') || x.includes('investig');
@@ -2535,7 +2537,7 @@ generateBoardReport() {
   const to15 = (v) => {
     const n = Number(v);
     if (!Number.isNaN(n) && n >= 1 && n <= 5) return n;
-    const s = String(v||'').toLowerCase();
+    const s = String(v || '').toLowerCase();
     if (s.includes('low')) return 2;
     if (s.includes('med')) return 3;
     if (s.includes('high')) return 5;
@@ -2546,7 +2548,7 @@ generateBoardReport() {
     let i = to15(r.impact);
     let l = to15(r.likelihood);
     if (!i || !l) {
-      const sev = String(r.severity||'').toLowerCase();
+      const sev = String(r.severity || '').toLowerCase();
       if (sev.includes('high')) { i = i || 5; l = l || 4; }
       else if (sev.includes('medium')) { i = i || 3; l = l || 3; }
       else { i = i || 2; l = l || 2; }
@@ -2569,141 +2571,97 @@ generateBoardReport() {
   const soaImplemented = soaApplicable.filter(x => String(x.status||'').toLowerCase() === 'implemented');
   const soaCoverage = soaApplicable.length ? Math.round((soaImplemented.length / soaApplicable.length) * 100) : 0;
 
-  // --- build the report (OVERWRITE, no duplicates)
-  const header =
-`==============================
-${title}
-==============================
-Generated: ${stamp}
+  const header = [
+    '==============================',
+    title,
+    '==============================',
+    `Generated: ${stamp}`,
+    '',
+    'CONFIDENTIAL – INTERNAL USE (Training / Demo)',
+  ].join(NL);
 
-CONFIDENTIAL – INTERNAL USE (Training / Demo)
-`;
+  const executive = [
+    '1) EXECUTIVE SUMMARY',
+    `Assets: ${assets.length}`,
+    `Vendors: ${vendors.length}`,
+    `Risks: ${risks.length} (Open: ${countOpen(risks)})`,
+    `Controls tracked: ${controls.length}`,
+    `Treatments: ${treatments.length}`,
+    `Issues: ${issues.length} (Open: ${countOpen(issues)})`,
+    `Incidents: ${incidents.length} (Open: ${countOpen(incidents)})`,
+    '',
+    `ISO SoA coverage (Applicable implemented): ${soaCoverage}% (${soaImplemented.length}/${soaApplicable.length})`,
+    '',
+    'TOP RISKS (Impact×Likelihood)',
+    (topRisks.length ? topRisks.map((x,i)=>`  ${i+1}. ${x.r.title || x.r.id} — Score ${x.score} (I${x.i}×L${x.l}) • Status: ${x.r.status || '—'}`).join(NL) : '  (No risks available)'),
+  ].join(NL);
 
-  const executive =
-`1) EXECUTIVE SUMMARY
-- Overall posture: ${risks.length ? 'Active risk register maintained' : 'No risk register data yet'}
-- Key counts:
-  • Assets: ${assets.length}
-  • Vendors: ${vendors.length}
-  • Risks: ${risks.length} (Open: ${countOpen(risks)})
-  • Controls tracked: ${controls.length}
-  • Treatments: ${treatments.length}
-  • Issues: ${issues.length} (Open: ${countOpen(issues)})
-  • Incidents: ${incidents.length} (Open: ${countOpen(incidents)})
+  const riskPosture = [
+    '2) RISK POSTURE',
+    'Distribution by category:',
+    (Object.keys(byCategory).length ? Object.entries(byCategory).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`  • ${k}: ${v}`).join(NL) : '  (No categories available)'),
+    '',
+    'Recommendations:',
+    '  • Ensure High risks have owner, target date, and treatment plan.',
+    '  • Confirm risk appetite thresholds and escalation paths.',
+  ].join(NL);
 
-- SoA (ISO 27001) coverage (Applicable implemented): ${soaCoverage}% (${soaImplemented.length}/${soaApplicable.length})
+  const controlsSection = [
+    '3) CONTROLS & COMPLIANCE',
+    `Controls tracked: ${controls.length}`,
+    `SoA entries: ${soa.length}`,
+    `Applicable: ${soaApplicable.length}`,
+    `Implemented: ${soaImplemented.length}`,
+    `Coverage: ${soaCoverage}%`,
+    '',
+    'Next actions (30 days):',
+    '  • Update top 20 SoA controls with status + evidence references.',
+    '  • Map risks → controls → treatments for traceability.',
+  ].join(NL);
 
-2) TOP RISKS (by score: Impact×Likelihood)
-${topRisks.length
-  ? topRisks.map((x,i)=>`  ${i+1}. ${x.r.title || x.r.id} — Score ${x.score} (I${x.i}×L${x.l}) • Status: ${x.r.status || '—'}`).join('\n')
-  : '  (No risks available)'}
-`;
+  const incidentsSection = [
+    '4) INCIDENTS & ISSUES',
+    `Incidents: ${incidents.length} (Open: ${countOpen(incidents)})`,
+    `Issues: ${issues.length} (Open: ${countOpen(issues)})`,
+    '',
+    'Board expectation:',
+    '  • Confirm triage SLAs, escalation, and post-incident reviews.',
+  ].join(NL);
 
-  const riskPosture =
-`3) RISK POSTURE
-- Distribution by category:
-${Object.keys(byCategory).length
-  ? Object.entries(byCategory).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`  • ${k}: ${v}`).join('\n')
-  : '  (No categories available)'}
-- Recommendation:
-  • Ensure all High risks have assigned owner, target date, and treatment plan.
-  • Confirm risk acceptance criteria (appetite) and escalation thresholds.
-`;
+  const vendorsSection = [
+    '5) THIRD-PARTY RISK',
+    `Vendors tracked: ${vendors.length}`,
+    'Next actions:',
+    '  • Assign vendor risk tier and collect assurance evidence (SOC2, ISO, DPAs).',
+  ].join(NL);
 
-  const controlsSection =
-`4) CONTROLS & COMPLIANCE
-- Controls tracked in lab: ${controls.length}
-- ISO 27001 SoA:
-  • Total controls in SoA: ${soa.length}
-  • Applicable: ${soaApplicable.length}
-  • Implemented: ${soaImplemented.length}
-  • Coverage: ${soaCoverage}%
+  const roadmap = [
+    '6) 30/60/90 DAY ROADMAP',
+    '30 Days: asset inventory, SoA baseline, top risks treated.',
+    '60 Days: full traceability (risk→control→treatment), vendor workflow.',
+    '90 Days: simulate internal audit evidence pack + management review.',
+  ].join(NL);
 
-- Priority actions (next 30 days):
-  • Convert “Planned” to “Implemented” for highest-risk domains first.
-  • Attach evidence references (tickets, screenshots, change records).
-`;
+  const disclaimer = [
+    'DISCLAIMER',
+    'Educational/practice use only. Not a certified GRC platform; not for formal audit/certification decisions.',
+    'Framework content summarized/paraphrased for training.',
+  ].join(NL);
 
-  const incidentsSection =
-`5) INCIDENTS & ISSUES
-- Incidents: ${incidents.length} (Open: ${countOpen(incidents)})
-- Issues: ${issues.length} (Open: ${countOpen(issues)})
+  let report = header + NL + NL;
 
-- Board-level expectation:
-  • Confirm triage SLA, escalation paths, and post-incident review cadence.
-`;
+  if (type === 'executive') report += executive + NL + NL + disclaimer;
+  else if (type === 'soa') report += controlsSection + NL + NL + disclaimer;
+  else if (type === 'risk') report += executive + NL + NL + riskPosture + NL + NL + disclaimer;
+  else if (type === 'treatments') report += roadmap + NL + NL + disclaimer;
+  else if (type === 'full') report += [executive, riskPosture, controlsSection, incidentsSection, vendorsSection, roadmap, disclaimer].join(NL + NL);
+  else report += executive + NL + NL + disclaimer;
 
-  const vendorsSection =
-`6) THIRD-PARTY / VENDOR RISK
-- Vendors tracked: ${vendors.length}
-- Suggested next steps:
-  • Assign risk tier for each vendor (Low/Med/High).
-  • Record assurance evidence (SOC 2, ISO certs, pen test, DPAs).
-`;
-
-  const roadmap =
-`7) 30 / 60 / 90-DAY ROADMAP (Recommended)
-30 Days:
-- Populate asset inventory (owners, criticality, classification)
-- Ensure risk register has likelihood + impact for scoring
-- Generate SoA and update top 20 controls with status + evidence
-
-60 Days:
-- Map risks → controls → treatments end-to-end
-- Add vendor assessment workflow and evidence fields
-- Add metrics: open risk trend, treatment completion %
-
-90 Days:
-- Run a simulated internal audit (evidence pack)
-- Create management review minutes + action register
-- Export board pack (PDF) monthly
-`;
-
-  const disclaimer =
-`DISCLAIMER
-This GRC Practice Lab is for educational and portfolio demonstration purposes only.
-It is not a certified GRC platform and should not be used as the sole basis for production compliance decisions,
-formal audits, or certification activities. Framework content is summarized/paraphrased for training.
-`;
-
-  const report = let report = header + "\n\n";
-
-if (type === 'executive') {
-  report += executive + "\n\n" + disclaimer;
-}
-
-else if (type === 'soa') {
-  report += controlsSection + "\n\n" + disclaimer;
-}
-
-else if (type === 'risk') {
-  report += riskPosture + "\n\n" + executive + "\n\n" + disclaimer;
-  // (Risk summary + Top risks is most board-friendly)
-}
-
-else if (type === 'treatments') {
-  report += roadmap + "\n\n" + disclaimer;
-}
-
-else if (type === 'full') {
-  report += [
-    executive,
-    riskPosture,
-    controlsSection,
-    incidentsSection,
-    vendorsSection,
-    roadmap,
-    disclaimer
-  ].join("\n\n");
-
-
-  // OVERWRITE (no duplicates)
   draft.value = report;
-
-  this.showToast('Board report generated', 'success');
+  this.showToast('Report generated', 'success');
 }
 
-    
+
 generateReportSection() {
   const type = document.getElementById('reportType')?.value || 'executive';
   const title = (document.getElementById('reportTitle')?.value || '').trim();
