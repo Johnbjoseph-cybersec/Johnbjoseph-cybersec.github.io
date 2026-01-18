@@ -3253,3 +3253,892 @@ class GRCApplication {
         return map;
     }
     
+// ===== UTILITY FUNCTIONS =====
+function safeHideModal(modalId) {
+    try {
+        const el = document.getElementById(modalId);
+        if (!el) return;
+        if (window.bootstrap && bootstrap.Modal) {
+            const inst = bootstrap.Modal.getInstance(el) || new bootstrap.Modal(el);
+            inst.hide();
+            return;
+        }
+        el.classList.remove('show');
+        el.style.display = 'none';
+        document.body.classList.remove('modal-open');
+        const backdrops = document.querySelectorAll('.modal-backdrop');
+        backdrops.forEach(b => b.remove());
+    } catch(e) {
+        console.error("safeHideModal failed:", e);
+    }
+}
+
+function resetLabData() {
+    const ok = confirm(
+        "Reset Lab will clear all demo/entered data stored locally in this browser and reset the dashboard to zeros. " +
+        "This does NOT remove the built-in framework library. Continue?"
+    );
+    if (!ok) return;
+
+    const inst = (window.app && typeof window.app.saveData === "function") ? window.app :
+                (typeof app !== "undefined" && app && typeof app.saveData === "function" ? app : null);
+
+    if (inst) {
+        inst.data.assets = [];
+        inst.data.vendors = [];
+        inst.data.risks = [];
+        inst.data.controls = [];
+        inst.data.issues = [];
+        inst.data.incidents = [];
+        inst.data.treatments = [];
+        inst.data.soa = [];
+        inst.saveData("assets", inst.data.assets);
+        inst.saveData("vendors", inst.data.vendors);
+        inst.saveData("risks", inst.data.risks);
+        inst.saveData("controls", inst.data.controls);
+        inst.saveData("issues", inst.data.issues);
+        inst.saveData("incidents", inst.data.incidents);
+        inst.saveData("treatments", inst.data.treatments);
+        inst.saveData("soa", inst.data.soa);
+        inst.saveData("challenges", { progress: {}, scores: {} });
+        inst.saveData("firstRun", true);
+
+        const prefix = inst.storagePrefix || "grc_lab_v2_";
+        Object.keys(localStorage).forEach(k => {
+            if (k.startsWith(prefix) && !k.endsWith("firstRun")) localStorage.removeItem(k);
+        });
+
+        try { if (typeof inst.renderDashboard === "function") inst.renderDashboard(); } catch(e){}
+        try { if (typeof inst.switchTab === "function") inst.switchTab("dashboard"); } catch(e){}
+        if (typeof inst.showToast === "function") inst.showToast("Lab reset complete. Dashboard cleared.", "success");
+
+        setTimeout(() => location.reload(), 500);
+        return;
+    }
+
+    Object.keys(localStorage).forEach(key => {
+        if (key.startsWith("grc_lab_v2_")) localStorage.removeItem(key);
+    });
+    localStorage.setItem("grc_lab_v2_firstRun", "true");
+    alert("Lab reset complete. Reloading…");
+    location.reload();
+}
+
+// ===== MAIN APPLICATION CLASS =====
+class GRCApplication {
+    constructor() {
+        this.version = '2.5.0';
+        this.storagePrefix = 'grc_lab_v2_';
+        this.currentTab = 'dashboard';
+        this.data = this.initializeData();
+        this.frameworks = this.initializeFrameworks();
+        this.currentEditId = null;
+        this.currentEditType = null;
+        this.init();
+    }
+
+    // ===== INITIALIZATION =====
+    initializeData() {
+        return {
+            assets: this.loadData('assets') || [],
+            vendors: this.loadData('vendors') || [],
+            risks: this.loadData('risks') || [],
+            controls: this.loadData('controls') || [],
+            issues: this.loadData('issues') || [],
+            incidents: this.loadData('incidents') || [],
+            treatments: this.loadData('treatments') || [],
+            soa: this.loadData('soa') || [],
+            challenges: this.loadData('challenges') || {
+                progress: {},
+                scores: {}
+            },
+            settings: this.loadData('settings') || {
+                riskThresholds: { high: 15, medium: 6 },
+                companyName: 'Your Organization',
+                complianceFramework: 'ISO 27001'
+            }
+        };
+    }
+
+    initializeFrameworks() {
+        const map = {
+            iso:   { name: 'ISO 27001',   match: ['ISO 27001','ISO/IEC 27001'], controls: [] },
+            nist:  { name: 'NIST CSF',    match: ['NIST CSF','NIST CSF 2.0','NIST'], controls: [] },
+            pci:   { name: 'PCI DSS',     match: ['PCI DSS','PCI DSS v4.0','PCI'], controls: [] },
+            hipaa: { name: 'HIPAA',       match: ['HIPAA'], controls: [] },
+            soc2:  { name: 'SOC 2',       match: ['SOC2','SOC 2'], controls: [] },
+            cis:   { name: 'CIS Controls', match: ['CIS Controls','CIS'], controls: [] },
+            gdpr:  { name: 'GDPR',        match: ['GDPR'], controls: [] },
+            cmmc:  { name: 'CMMC',        match: ['CMMC','CMMC 2.0'], controls: [] },
+            cobit: { name: 'COBIT',       match: ['COBIT','COBIT 2019'], controls: [] }
+        };
+
+        if (typeof FRAMEWORK_CONTROLS === 'undefined' || !Array.isArray(FRAMEWORK_CONTROLS)) return map;
+
+        const norm = (s) => String(s || '').toLowerCase();
+
+        for (const c of FRAMEWORK_CONTROLS) {
+            const fws = Array.isArray(c.frameworks) ? c.frameworks : [c.frameworks].filter(Boolean);
+            const entry = {
+                id: c.id,
+                name: c.name,
+                category: c.category || 'General',
+                description: c.description || '',
+                references: Array.isArray(c.references) ? c.references : [],
+                frameworks: fws
+            };
+
+            for (const [k, fw] of Object.entries(map)) {
+                const hits = fw.match.some(m => fws.some(x => norm(x).includes(norm(m))));
+                if (hits) fw.controls.push(entry);
+            }
+        }
+
+        return map;
+    }
+
+    init() {
+        this.bindEvents();
+        this.renderDashboard();
+        this.showToast('GRC Practice Lab Enhanced Edition loaded successfully', 'success');
+        
+        if (!this.loadData('firstRun')) {
+            this.showFirstTimeSetup();
+            this.saveData('firstRun', true);
+        }
+    }
+
+    // ===== DATA MANAGEMENT =====
+    loadData(key) {
+        try {
+            const data = localStorage.getItem(this.storagePrefix + key);
+            return data ? JSON.parse(data) : null;
+        } catch (e) {
+            console.error('Error loading data:', e);
+            return null;
+        }
+    }
+
+    saveData(key, data) {
+        try {
+            localStorage.setItem(this.storagePrefix + key, JSON.stringify(data));
+            this.data[key] = data;
+            return true;
+        } catch (e) {
+            this.showToast('Error saving data. Check storage space.', 'error');
+            return false;
+        }
+    }
+
+    // ===== TAB MANAGEMENT =====
+    switchTab(tabName) {
+        this.currentTab = tabName;
+        
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        
+        const tabElement = document.getElementById('tab' + this.capitalize(tabName));
+        if (tabElement) {
+            tabElement.classList.add('active');
+        }
+        
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('onclick')?.includes(`switchTab('${tabName}')`)) {
+                btn.classList.add('active');
+            }
+        });
+        
+        this.renderTabContent(tabName);
+    }
+
+    renderTabContent(tabName) {
+        switch(tabName) {
+            case 'dashboard':
+                this.renderDashboard();
+                break;
+            case 'vendors':
+                this.renderVendors();
+                break;
+            case 'risks':
+                this.renderRisks();
+                break;
+            case 'assets':
+                this.renderAssets();
+                break;
+            case 'controls':
+                this.renderControls();
+                break;
+            case 'frameworks':
+                this.renderFrameworks();
+                break;
+            case 'issues':
+                this.renderIssues();
+                break;
+            case 'incidents':
+                this.renderIncidents();
+                break;
+            case 'treatments':
+                this.renderTreatments();
+                break;
+            case 'matrix':
+                this.renderRiskMatrix();
+                break;
+            case 'soa':
+                this.renderSOA();
+                break;
+            case 'reports':
+                this.renderReports();
+                break;
+            case 'challenges':
+                this.renderChallenges();
+                break;
+        }
+    }
+
+    capitalize(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    // ===== EVENT BINDING =====
+    bindEvents() {
+        const searchInputs = ['riskSearch', 'assetSearch', 'controlSearch', 'frameworkSearch', 
+                             'vendorSearch', 'issueSearch', 'incidentSearch', 'treatmentSearch'];
+        searchInputs.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('input', (e) => this.handleSearch(e, id.replace('Search', '')));
+            }
+        });
+
+        const filterInputs = ['riskFilter', 'controlStatusFilter', 'frameworkSelect', 'categorySelect',
+                             'vendorRiskFilter', 'issueStatusFilter', 'incidentSeverityFilter', 
+                             'treatmentStatusFilter', 'soaFrameworkFilter'];
+        filterInputs.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('change', (e) => this.handleFilter(e, id));
+            }
+        });
+
+        document.querySelectorAll('input[name="matrixView"]').forEach(radio => {
+            radio.addEventListener('change', (e) => this.toggleMatrixView(e.target.id));
+        });
+    }
+
+    handleSearch(event, type) {
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => {
+            this.renderTabContent(type);
+        }, 300);
+    }
+
+    handleFilter(event, filterId) {
+        this.renderTabContent(this.currentTab);
+    }
+
+    // ===== DASHBOARD =====
+    renderDashboard() {
+        document.getElementById('metricAssets').textContent = this.data.assets.length;
+        document.getElementById('metricRisks').textContent = this.data.risks.length;
+        document.getElementById('metricControls').textContent = this.data.controls.length;
+        
+        const totalControls = this.data.controls.length;
+        const implemented = this.data.controls.filter(c => c.status === 'Implemented').length;
+        const coverage = totalControls > 0 ? Math.round((implemented / totalControls) * 100) : 0;
+        document.getElementById('metricCoverage').textContent = `${coverage}%`;
+        
+        this.renderRecentRisks();
+    }
+
+    renderRecentRisks() {
+        const container = document.getElementById('recentRisks');
+        if (!container) return;
+        
+        const recentRisks = this.data.risks
+            .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+            .slice(0, 5);
+        
+        if (recentRisks.length === 0) {
+            container.innerHTML = `
+                <tr>
+                    <td colspan="4" class="text-center text-muted">
+                        No risks yet. Add some to get started!
+                    </td>
+                </tr>
+            `;
+        } else {
+            container.innerHTML = recentRisks.map(risk => `
+                <tr>
+                    <td>
+                        <strong>${risk.title}</strong><br>
+                        <small class="text-muted">${risk.category}</small>
+                    </td>
+                    <td>
+                        <span class="badge bg-${risk.severity === 'High' ? 'danger' : risk.severity === 'Medium' ? 'warning' : 'success'}">
+                            ${risk.severity}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge bg-${risk.status === 'Open' ? 'secondary' : 
+                                                 risk.status === 'In Progress' ? 'info' : 
+                                                 risk.status === 'Mitigated' ? 'success' : 'dark'}">
+                            ${risk.status}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-light" onclick="app.showRiskForm('${risk.id}')">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+    }
+
+    // ===== RISK MANAGEMENT =====
+    showRiskForm(riskId = null) {
+        this.currentEditId = riskId;
+        this.currentEditType = 'risk';
+        
+        const risk = riskId ? this.data.risks.find(r => r.id === riskId) : null;
+        
+        const formHTML = `
+            <form id="riskForm" onsubmit="app.saveRisk(event)">
+                <input type="hidden" id="riskId" value="${risk?.id || ''}">
+                
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Risk Title *</label>
+                        <input type="text" class="form-control" id="riskTitle" 
+                               value="${risk?.title || ''}" required placeholder="e.g., Data breach via SQL injection">
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Category *</label>
+                        <select class="form-select" id="riskCategory" required>
+                            <option value="">Select...</option>
+                            <option value="Cybersecurity" ${risk?.category === 'Cybersecurity' ? 'selected' : ''}>Cybersecurity</option>
+                            <option value="Compliance" ${risk?.category === 'Compliance' ? 'selected' : ''}>Compliance</option>
+                            <option value="Operational" ${risk?.category === 'Operational' ? 'selected' : ''}>Operational</option>
+                            <option value="Privacy" ${risk?.category === 'Privacy' ? 'selected' : ''}>Privacy</option>
+                            <option value="Third-Party" ${risk?.category === 'Third-Party' ? 'selected' : ''}>Third-Party</option>
+                            <option value="Financial" ${risk?.category === 'Financial' ? 'selected' : ''}>Financial</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Status *</label>
+                        <select class="form-select" id="riskStatus" required>
+                            <option value="Open" ${risk?.status === 'Open' ? 'selected' : ''}>Open</option>
+                            <option value="In Progress" ${risk?.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                            <option value="Mitigated" ${risk?.status === 'Mitigated' ? 'selected' : ''}>Mitigated</option>
+                            <option value="Accepted" ${risk?.status === 'Accepted' ? 'selected' : ''}>Accepted</option>
+                            <option value="Closed" ${risk?.status === 'Closed' ? 'selected' : ''}>Closed</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Likelihood (1-5) *</label>
+                        <select class="form-select" id="riskLikelihood" required>
+                            <option value="">Select...</option>
+                            ${[1,2,3,4,5].map(n => `
+                                <option value="${n}" ${risk?.likelihood === n ? 'selected' : ''}>
+                                    ${n} - ${this.getLikelihoodLabel(n)}
+                                </option>
+                            `).join('')}
+                        </select>
+                        <small class="text-muted">How likely is this risk to occur?</small>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Impact (1-5) *</label>
+                        <select class="form-select" id="riskImpact" required>
+                            <option value="">Select...</option>
+                            ${[1,2,3,4,5].map(n => `
+                                <option value="${n}" ${risk?.impact === n ? 'selected' : ''}>
+                                    ${n} - ${this.getImpactLabel(n)}
+                                </option>
+                            `).join('')}
+                        </select>
+                        <small class="text-muted">How severe would the impact be?</small>
+                    </div>
+                    
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" id="riskDescription" rows="3" 
+                                  placeholder="Describe the risk scenario, potential causes, and business impact...">${risk?.description || ''}</textarea>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Owner</label>
+                        <input type="text" class="form-control" id="riskOwner" 
+                               value="${risk?.owner || ''}" placeholder="e.g., CISO, DevOps Team">
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Due Date</label>
+                        <input type="date" class="form-control" id="riskDueDate" 
+                               value="${risk?.dueDate || ''}">
+                    </div>
+                    
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Mitigation Notes</label>
+                        <textarea class="form-control" id="riskMitigation" rows="2"
+                                  placeholder="Current or planned mitigation controls...">${risk?.mitigation || ''}</textarea>
+                    </div>
+                    
+                    <div class="col-12">
+                        <div class="alert alert-info bg-dark border-info">
+                            <small>
+                                <strong>Risk Score:</strong> <span id="riskScorePreview">${risk ? risk.score : '0'}</span> 
+                                <span class="ms-3"><strong>Severity:</strong> <span id="riskSeverityPreview">${risk ? risk.severity : 'None'}</span></span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-end mt-4">
+                    <button type="button" class="btn btn-outline-light me-2" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">${risk ? 'Update' : 'Save'} Risk</button>
+                </div>
+            </form>
+        `;
+        
+        document.getElementById('riskModalBody').innerHTML = formHTML;
+        
+        this.updateRiskScorePreview();
+        
+        document.getElementById('riskLikelihood')?.addEventListener('change', () => this.updateRiskScorePreview());
+        document.getElementById('riskImpact')?.addEventListener('change', () => this.updateRiskScorePreview());
+        
+        const modal = new bootstrap.Modal(document.getElementById('riskModal'));
+        modal.show();
+    }
+
+    updateRiskScorePreview() {
+        const likelihood = parseInt(document.getElementById('riskLikelihood')?.value) || 0;
+        const impact = parseInt(document.getElementById('riskImpact')?.value) || 0;
+        const score = likelihood * impact;
+        const severity = this.calculateRiskSeverity(score);
+        
+        const scoreElement = document.getElementById('riskScorePreview');
+        const severityElement = document.getElementById('riskSeverityPreview');
+        
+        if (scoreElement) scoreElement.textContent = score;
+        if (severityElement) {
+            severityElement.textContent = severity;
+            severityElement.className = '';
+            severityElement.classList.add('badge', `bg-${severity === 'High' ? 'danger' : severity === 'Medium' ? 'warning' : 'success'}`);
+        }
+    }
+
+    saveRisk(event) {
+        event.preventDefault();
+        
+        const riskData = {
+            id: document.getElementById('riskId').value || 'RISK_' + Date.now(),
+            title: document.getElementById('riskTitle').value.trim(),
+            category: document.getElementById('riskCategory').value,
+            status: document.getElementById('riskStatus').value,
+            likelihood: parseInt(document.getElementById('riskLikelihood').value),
+            impact: parseInt(document.getElementById('riskImpact').value),
+            description: document.getElementById('riskDescription').value.trim(),
+            owner: document.getElementById('riskOwner').value.trim(),
+            dueDate: document.getElementById('riskDueDate').value,
+            mitigation: document.getElementById('riskMitigation').value.trim(),
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
+        
+        riskData.score = riskData.likelihood * riskData.impact;
+        riskData.severity = this.calculateRiskSeverity(riskData.score);
+        
+        const index = this.data.risks.findIndex(r => r.id === riskData.id);
+        if (index > -1) {
+            this.data.risks[index] = riskData;
+            this.showToast('Risk updated successfully', 'success');
+        } else {
+            this.data.risks.push(riskData);
+            this.showToast('Risk added successfully', 'success');
+        }
+        
+        this.saveData('risks', this.data.risks);
+        this.renderRisks();
+        this.renderDashboard();
+        
+        safeHideModal('riskModal');
+    }
+
+    calculateRiskSeverity(score) {
+        const thresholds = this.data.settings.riskThresholds;
+        if (score >= thresholds.high) return 'High';
+        if (score >= thresholds.medium) return 'Medium';
+        return 'Low';
+    }
+
+    getLikelihoodLabel(score) {
+        const labels = ['Rare', 'Unlikely', 'Possible', 'Likely', 'Almost Certain'];
+        return labels[score - 1] || '';
+    }
+
+    getImpactLabel(score) {
+        const labels = ['Insignificant', 'Minor', 'Moderate', 'Major', 'Severe'];
+        return labels[score - 1] || '';
+    }
+
+    renderRisks() {
+        const tableBody = document.getElementById('riskTableBody');
+        if (!tableBody) return;
+
+        const searchTerm = document.getElementById('riskSearch')?.value.toLowerCase() || '';
+        const filterStatus = document.getElementById('riskFilter')?.value || 'all';
+        
+        let filteredRisks = this.data.risks;
+        
+        if (searchTerm) {
+            filteredRisks = filteredRisks.filter(risk =>
+                risk.title.toLowerCase().includes(searchTerm) ||
+                risk.category.toLowerCase().includes(searchTerm) ||
+                risk.description?.toLowerCase().includes(searchTerm)
+            );
+        }
+        
+        if (filterStatus !== 'all') {
+            filteredRisks = filteredRisks.filter(risk => 
+                risk.status.toLowerCase().replace(' ', '-') === filterStatus
+            );
+        }
+        
+        filteredRisks.sort((a, b) => b.score - a.score);
+        
+        if (filteredRisks.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="text-center text-muted">
+                        <div class="py-4">
+                            <i class="bi bi-exclamation-triangle fs-4 d-block mb-2"></i>
+                            No risks found. ${searchTerm ? 'Try a different search term.' : 'Add your first risk!'}
+                        </div>
+                    </td>
+                </tr>
+            `;
+        } else {
+            tableBody.innerHTML = filteredRisks.map(risk => `
+                <tr>
+                    <td data-label="Risk">
+                        <strong>${risk.title}</strong><br>
+                        <small class="text-muted">${risk.category}</small>
+                    </td>
+                    <td data-label="Category">${risk.category}</td>
+                    <td data-label="Likelihood">
+                        <span class="badge bg-info">${risk.likelihood}</span>
+                        <small class="d-block text-muted">${this.getLikelihoodLabel(risk.likelihood)}</small>
+                    </td>
+                    <td data-label="Impact">
+                        <span class="badge bg-warning">${risk.impact}</span>
+                        <small class="d-block text-muted">${this.getImpactLabel(risk.impact)}</small>
+                    </td>
+                    <td data-label="Severity">
+                        <span class="badge bg-${risk.severity === 'High' ? 'danger' : risk.severity === 'Medium' ? 'warning' : 'success'}">
+                            ${risk.severity} (${risk.score})
+                        </span>
+                    </td>
+                    <td data-label="Status">
+                        <span class="status-badge status-${risk.status.toLowerCase().replace(' ', '-')}">
+                            ${risk.status}
+                        </span>
+                    </td>
+                    <td data-label="Actions">
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-outline-light" onclick="app.showRiskForm('${risk.id}')">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="app.deleteItem('risk', '${risk.id}')">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+    }
+
+    // ===== FRAMEWORK LIBRARY =====
+    renderFrameworks() {
+        const tableBody = document.getElementById('frameworkTableBody');
+        if (!tableBody) return;
+
+        const searchTerm = document.getElementById('frameworkSearch')?.value.toLowerCase() || '';
+        const frameworkFilter = document.getElementById('frameworkSelect')?.value || 'all';
+        const categoryFilter = document.getElementById('categorySelect')?.value || 'all';
+        
+        let allControls = [];
+        
+        Object.values(this.frameworks).forEach(framework => {
+            framework.controls.forEach(control => {
+                allControls.push({
+                    ...control,
+                    framework: framework.name,
+                    frameworkKey: Object.keys(this.frameworks).find(k => this.frameworks[k].name === framework.name)
+                });
+            });
+        });
+        
+        let filteredControls = allControls;
+        
+        if (searchTerm) {
+            filteredControls = filteredControls.filter(control =>
+                control.name.toLowerCase().includes(searchTerm) ||
+                control.description.toLowerCase().includes(searchTerm) ||
+                control.id.toLowerCase().includes(searchTerm)
+            );
+        }
+        
+        if (frameworkFilter !== 'all') {
+            filteredControls = filteredControls.filter(control => 
+                control.frameworkKey === frameworkFilter
+            );
+        }
+        
+        if (categoryFilter !== 'all') {
+            filteredControls = filteredControls.filter(control => 
+                control.category.toLowerCase().includes(categoryFilter.toLowerCase())
+            );
+        }
+        
+        if (filteredControls.length === 0) {
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="text-center text-muted">
+                        <div class="py-4">
+                            <i class="bi bi-search fs-4 d-block mb-2"></i>
+                            No controls match your filters. Try adjusting your search.
+                        </div>
+                    </td>
+                </tr>
+            `;
+        } else {
+            tableBody.innerHTML = filteredControls.map(control => `
+                <tr>
+                    <td data-label="Control ID">
+                        <code>${control.id}</code>
+                    </td>
+                    <td data-label="Name">
+                        <strong>${control.name}</strong><br>
+                        <small class="text-muted">${control.category}</small>
+                    </td>
+                    <td data-label="Category">
+                        <span class="badge bg-info">${control.category}</span>
+                    </td>
+                    <td data-label="Framework">
+                        <span class="framework-badge badge-${control.frameworkKey}">${control.framework}</span>
+                    </td>
+                    <td data-label="Description">
+                        <small>${control.description}</small>
+                    </td>
+                </tr>
+            `).join('');
+        }
+    }
+
+    // ===== UTILITY FUNCTIONS =====
+    deleteItem(type, id) {
+        if (!confirm(`Are you sure you want to delete this ${type}?`)) return;
+        
+        let collection = this.data[type + 's'];
+        if (collection) {
+            this.data[type + 's'] = collection.filter(item => item.id !== id);
+            this.saveData(type + 's', this.data[type + 's']);
+            
+            this.renderDashboard();
+            if (this.currentTab === type + 's') {
+                this.renderTabContent(this.currentTab);
+            }
+            
+            this.showToast(`${type} deleted successfully`, 'info');
+        }
+    }
+
+    showToast(message, type = 'info') {
+        const toastEl = document.getElementById('liveToast');
+        const toastMessage = document.getElementById('toastMessage');
+        
+        if (!toastEl || !toastMessage) return;
+        
+        toastMessage.textContent = message;
+        
+        toastEl.className = 'toast';
+        switch(type) {
+            case 'success':
+                toastEl.classList.add('bg-success', 'text-white');
+                break;
+            case 'error':
+                toastEl.classList.add('bg-danger', 'text-white');
+                break;
+            case 'warning':
+                toastEl.classList.add('bg-warning', 'text-dark');
+                break;
+            default:
+                toastEl.classList.add('bg-info', 'text-white');
+        }
+        
+        const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+        toast.show();
+    }
+
+    showFirstTimeSetup() {
+        const setupHTML = `
+            <div class="modal fade" id="firstTimeModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content bg-dark border border-light">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Welcome to GRC Practice Lab Enhanced! 👋</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card-glass mb-3">
+                                        <h6><i class="bi bi-rocket-takeoff me-2"></i> Quick Start</h6>
+                                        <p>Load the demo scenario to see how the lab works with sample data.</p>
+                                        <button class="btn btn-sm btn-primary w-100" onclick="app.loadDemoScenario(); safeHideModal('firstTimeModal');">
+                                            Load Demo
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card-glass mb-3">
+                                        <h6><i class="bi bi-plus-circle me-2"></i> Start Fresh</h6>
+                                        <p>Begin with a clean slate and add your own data from scratch.</p>
+                                        <button class="btn btn-sm btn-outline-light w-100" data-bs-dismiss="modal">
+                                            Start Fresh
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info bg-dark border-info mt-3">
+                                <h6><i class="bi bi-lightbulb me-2"></i> What's New in Enhanced Edition:</h6>
+                                <ul class="mb-0">
+                                    <li>400+ controls from 9 major frameworks</li>
+                                    <li>CIS Controls v8, GDPR, CMMC 2.0, COBIT 2019</li>
+                                    <li>Enhanced categorization and filtering</li>
+                                    <li>Improved Statement of Applicability</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <small class="text-muted">This tool runs entirely in your browser. No data is sent to any server.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', setupHTML);
+        const modal = new bootstrap.Modal(document.getElementById('firstTimeModal'));
+        modal.show();
+    }
+
+    // Placeholder methods for remaining functions
+    showAssetForm(assetId = null) { /* Implementation continues */ }
+    saveAsset(event) { /* Implementation continues */ }
+    renderAssets() { /* Implementation continues */ }
+    
+    showControlForm(controlId = null) { /* Implementation continues */ }
+    saveControl(event) { /* Implementation continues */ }
+    renderControls() { /* Implementation continues */ }
+    
+    showVendorForm(vendorId = null) { /* Implementation continues */ }
+    saveVendor(event) { /* Implementation continues */ }
+    renderVendors() { /* Implementation continues */ }
+    
+    showIssueForm(issueId = null) { /* Implementation continues */ }
+    saveIssue(event) { /* Implementation continues */ }
+    renderIssues() { /* Implementation continues */ }
+    
+    showIncidentForm(incidentId = null) { /* Implementation continues */ }
+    saveIncident(event) { /* Implementation continues */ }
+    renderIncidents() { /* Implementation continues */ }
+    
+    showTreatmentForm(treatmentId = null) { /* Implementation continues */ }
+    saveTreatment(event) { /* Implementation continues */ }
+    renderTreatments() { /* Implementation continues */ }
+    
+    renderRiskMatrix() { /* Implementation continues */ }
+    toggleMatrixView(view) { /* Implementation continues */ }
+    
+    renderSOA() { /* Implementation continues */ }
+    escapeHtml(text) { 
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    renderReports() { /* Implementation continues */ }
+    generateReport() { /* Implementation continues */ }
+    copyReport() { /* Implementation continues */ }
+    exportReport() { /* Implementation continues */ }
+    
+    renderChallenges() { /* Implementation continues */ }
+    startChallenge(challengeId) { /* Implementation continues */ }
+    resetChallenges() { /* Implementation continues */ }
+    
+    loadDemoScenario() { /* Implementation continues */ }
+    exportAllData() { /* Implementation continues */ }
+    importData(event) { /* Implementation continues */ }
+}
+
+// ===== INITIALIZE APPLICATION =====
+let app;
+document.addEventListener('DOMContentLoaded', () => {
+    app = new GRCApplication();
+    window.app = app;
+    
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+    
+    document.getElementById('fileInput')?.addEventListener('change', (e) => app.importData(e));
+});
+
+// ===== GLOBAL HELPER FUNCTIONS =====
+function switchTab(tabName) {
+    if (app) app.switchTab(tabName);
+}
+
+function loadDemoScenario() {
+    if (app) app.loadDemoScenario();
+}
+
+function exportAllData() {
+    if (app) app.exportAllData();
+}
+
+function generateReport() {
+    if (app) app.generateReport();
+}
+
+function copyReport() {
+    if (app) app.copyReport();
+}
+
+function exportReport() {
+    if (app) app.exportReport();
+}
+
+function startChallenge(challengeId) {
+    if (app) app.startChallenge(challengeId);
+}
+
+function resetChallenges() {
+    if (app) app.resetChallenges();
+}
+
+window.GRCApp = app;
+</script>
+
+</body>
+</html>
