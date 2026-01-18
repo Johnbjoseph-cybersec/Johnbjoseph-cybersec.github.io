@@ -164,10 +164,27 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
     .container-glass { padding: 1.5rem; }
     .tab-btn { padding: 0.5rem 1rem; font-size: 0.875rem; }
 }
+        /* === Risk Heatmap: force white text === */
+.risk-heatmap-white,
+.risk-heatmap-white * {
+  color: #ffffff !important;
+}
+
+.risk-heatmap-white .text-muted {
+  color: #ffffff !important;
+  opacity: 0.85;
+}
+
+.risk-heatmap-white small {
+  color: #ffffff !important;
+  opacity: 0.85;
+}
+
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: rgba(255,255,255,.05); }
 ::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+    
     </style>
 </head>
 <body>
@@ -618,7 +635,7 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
     <!-- Top row: Heatmap + Top risks -->
     <div class="row g-3">
       <div class="col-lg-8">
-        <div class="card-glass">
+    <div class="card-glass risk-heatmap-white">
           <h4 class="mb-2">Risk Heatmap (5×5)</h4>
           <div class="text-muted mb-3" style="font-size:13px;">Click a cell to view risks in that bucket.</div>
           <div id="heatmap5x5"></div>
