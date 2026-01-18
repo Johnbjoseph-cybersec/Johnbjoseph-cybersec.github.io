@@ -2666,8 +2666,27 @@ It is not a certified GRC platform and should not be used as the sole basis for 
 formal audits, or certification activities. Framework content is summarized/paraphrased for training.
 `;
 
-  const report = [
-    header,
+  const report = let report = header + "\n\n";
+
+if (type === 'executive') {
+  report += executive + "\n\n" + disclaimer;
+}
+
+else if (type === 'soa') {
+  report += controlsSection + "\n\n" + disclaimer;
+}
+
+else if (type === 'risk') {
+  report += riskPosture + "\n\n" + executive + "\n\n" + disclaimer;
+  // (Risk summary + Top risks is most board-friendly)
+}
+
+else if (type === 'treatments') {
+  report += roadmap + "\n\n" + disclaimer;
+}
+
+else if (type === 'full') {
+  report += [
     executive,
     riskPosture,
     controlsSection,
@@ -2675,7 +2694,8 @@ formal audits, or certification activities. Framework content is summarized/para
     vendorsSection,
     roadmap,
     disclaimer
-  ].join('\n\n');
+  ].join("\n\n");
+
 
   // OVERWRITE (no duplicates)
   draft.value = report;
