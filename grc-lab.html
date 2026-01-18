@@ -685,14 +685,56 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
 
             <!-- Reports Tab -->
             <div id="tabReports" class="tab-content">
-                <div class="container-glass">
-                    <h2>Reports</h2>
-                    <div class="row g-3">
-                        <div class="col-lg-4"><div class="card-glass"><h5>ISO SoA</h5><p class="text-muted">Export auditor-ready SoA.</p><button class="btn btn-outline-light" onclick="window.app.exportSoA()"><i class="bi bi-download me-2"></i> Download</button></div></div>
-                        <div class="col-lg-4"><div class="card-glass"><h5>Treatments</h5><p class="text-muted">Export risk treatment plan.</p><button class="btn btn-outline-light" onclick="window.app.exportTreatments()"><i class="bi bi-download me-2"></i> Download</button></div></div>
-                        <div class="col-lg-4"><div class="card-glass"><h5>Full Lab Export</h5><p class="text-muted">All data as JSON.</p><button class="btn btn-outline-light" onclick="window.app.exportAllData()"><i class="bi bi-box-arrow-up me-2"></i> Export</button></div></div>
-                    </div>
-                </div>
+                
+                
+              <div class="card-glass mb-4">
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+    <div>
+      <h4 class="mb-1">Report Builder</h4>
+      <div class="text-muted" style="font-size:13px;">Generate multiple report sections and export to PDF.</div>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      <button class="btn btn-outline-light btn-sm" onclick="window.app.clearReportDraft()">
+        <i class="bi bi-trash me-1"></i> Clear
+      </button>
+      <button class="btn btn-primary btn-sm" onclick="window.app.exportReportPDF()">
+        <i class="bi bi-file-earmark-pdf me-1"></i> Export PDF
+      </button>
+    </div>
+  </div>
+
+  <div class="row g-3 mt-2">
+    <div class="col-md-4">
+      <label class="form-label">Report Section</label>
+      <select class="form-select" id="reportType">
+        <option value="executive">Executive Summary</option>
+        <option value="soa">ISO SoA Status</option>
+        <option value="risk">Risk Register Summary</option>
+        <option value="treatments">Treatment Plan Summary</option>
+      </select>
+    </div>
+
+    <div class="col-md-5">
+      <label class="form-label">Title (optional)</label>
+      <input class="form-control" id="reportTitle" placeholder="e.g., Monthly Security & GRC Report">
+    </div>
+
+    <div class="col-md-3 d-flex align-items-end">
+      <button class="btn btn-outline-light w-100" onclick="window.app.generateReportSection()">
+        <i class="bi bi-plus-circle me-2"></i> Add Section
+      </button>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">Report Draft</label>
+      <textarea class="form-control" id="reportDraft" rows="14" placeholder="Generated reports will appear here..."></textarea>
+      <div class="text-muted mt-2" style="font-size:12px;">
+        Educational use only. Do not use this output as a sole basis for production compliance decisions or formal audits.
+      </div>
+    </div>
+  </div>
+</div>
+
             </div>
 
             <!-- Challenges Tab -->
@@ -774,6 +816,8 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
 
 <script>
 // FRAMEWORK CONTROLS DATA - Condensed version with key controls from each framework
@@ -2397,9 +2441,11 @@ loadDemoScenario() {
 }
 
     // ======== REPORTS ========
-    renderReports() {
-        // static UI; nothing dynamic required for now
-    }
+  renderReports() {
+  const summary = document.getElementById('reportSummary');
+  if (!summary) return;
+  summary.innerHTML = `<div class="text-muted">Use Report Builder above to generate and export reports.</div>`;
+}
 
     // ======== CHALLENGES (auto gaps) ========
     renderChallenges() {
@@ -2442,6 +2488,157 @@ loadDemoScenario() {
             </div>
         `).join('');
     }
+    // =====================
+// REPORT BUILDER + PDF
+// =====================
+
+getReportDraftEl() {
+  return document.getElementById('reportDraft');
+}
+
+appendToReport(text) {
+  const el = this.getReportDraftEl();
+  if (!el) return;
+  const current = el.value || '';
+  el.value = current ? (current.trim() + "\n\n" + text.trim() + "\n") : (text.trim() + "\n");
+}
+
+clearReportDraft() {
+  const el = this.getReportDraftEl();
+  if (el) el.value = '';
+  this.showToast('Report draft cleared', 'info');
+}
+
+generateReportSection() {
+  const type = document.getElementById('reportType')?.value || 'executive';
+  const title = (document.getElementById('reportTitle')?.value || '').trim();
+  const stamp = new Date().toISOString().replace('T',' ').slice(0,19);
+
+  // Data snapshots
+  const assets = this.data.assets || [];
+  const vendors = this.data.vendors || [];
+  const risks = this.data.risks || [];
+  const controls = this.data.controls || [];
+  const incidents = this.data.incidents || [];
+  const treatments = this.data.treatments || [];
+  const soa = this.data.soa || [];
+
+  // Helpers
+  const countStatus = (arr, field='status', match='open') =>
+    arr.filter(x => String(x[field] || '').toLowerCase().includes(match)).length;
+
+  const topRisks = [...risks]
+    .map(r => {
+      const impact = Number(r.impact) || Number(r.score) || (r.severity === 'High' ? 5 : r.severity === 'Medium' ? 3 : 2);
+      const likelihood = Number(r.likelihood) || (r.severity === 'High' ? 4 : r.severity === 'Medium' ? 3 : 2);
+      return { r, score: impact * likelihood };
+    })
+    .sort((a,b) => b.score - a.score)
+    .slice(0,5);
+
+  const sectionHeader = (h) => `=== ${h} ===\nGenerated: ${stamp}${title ? `\nReport Title: ${title}` : ''}\n`;
+
+  let block = '';
+
+  if (type === 'executive') {
+    const openRisks = countStatus(risks,'status','open') + countStatus(risks,'status','in progress');
+    const openIssues = countStatus(this.data.issues || [], 'status', 'open');
+    const openInc = countStatus(incidents,'status','open') + countStatus(incidents,'status','investig');
+    block =
+      sectionHeader('Executive Summary') +
+      `Assets: ${assets.length}\nVendors: ${vendors.length}\nRisks: ${risks.length} (Open approx: ${openRisks})\nControls tracked: ${controls.length}\nTreatments: ${treatments.length}\nIssues: ${(this.data.issues || []).length} (Open approx: ${openIssues})\nIncidents: ${incidents.length} (Open approx: ${openInc})\n\n` +
+      `Top Risks:\n` +
+      (topRisks.length ? topRisks.map(x => `- ${x.r.title || x.r.id} (Score ${x.score})`).join('\n') : '- None') +
+      `\n\nNotes:\n- This output is for educational/practice use only.\n`;
+  }
+
+  if (type === 'soa') {
+    const applicable = soa.filter(x => x.applicable !== false);
+    const implemented = applicable.filter(x => String(x.status||'').toLowerCase() === 'implemented');
+    const coverage = applicable.length ? Math.round((implemented.length / applicable.length) * 100) : 0;
+
+    block =
+      sectionHeader('ISO SoA Status') +
+      `SoA entries: ${soa.length}\nApplicable: ${applicable.length}\nImplemented: ${implemented.length}\nCoverage: ${coverage}%\n\n` +
+      `Top gaps (first 10):\n` +
+      (applicable.filter(x => String(x.status||'').toLowerCase() !== 'implemented')
+        .slice(0,10)
+        .map(x => `- ${x.controlId || ''} ${x.title || ''} [${x.status || 'Planned'}]`)
+        .join('\n') || '- None') +
+      `\n`;
+  }
+
+  if (type === 'risk') {
+    block =
+      sectionHeader('Risk Register Summary') +
+      `Total risks: ${risks.length}\nOpen/In Progress: ${countStatus(risks,'status','open') + countStatus(risks,'status','in progress')}\nResolved/Closed: ${countStatus(risks,'status','closed') + countStatus(risks,'status','resolved')}\n\n` +
+      `Top Risks:\n` +
+      (topRisks.length ? topRisks.map(x => `- ${x.r.title || x.r.id} (Score ${x.score}) • ${x.r.status || ''}`).join('\n') : '- None') +
+      `\n`;
+  }
+
+  if (type === 'treatments') {
+    block =
+      sectionHeader('Treatment Plan Summary') +
+      `Total treatments: ${treatments.length}\nPlanned: ${treatments.filter(x => String(x.status||'')==='Planned').length}\nIn Progress: ${treatments.filter(x => String(x.status||'')==='In Progress').length}\nCompleted: ${treatments.filter(x => String(x.status||'')==='Completed').length}\n\n` +
+      `Sample treatments (first 10):\n` +
+      (treatments.slice(0,10).map(t => `- ${t.riskTitle || t.riskId || ''}: ${t.treatment || ''} [${t.status || ''}]`).join('\n') || '- None') +
+      `\n`;
+  }
+
+  this.appendToReport(block);
+  this.showToast('Report section added', 'success');
+}
+
+exportReportPDF() {
+  const el = this.getReportDraftEl();
+  if (!el || !(el.value || '').trim()) {
+    this.showToast('Report draft is empty', 'warning');
+    return;
+  }
+
+  if (!window.jspdf || !window.jspdf.jsPDF) {
+    this.showToast('PDF library not loaded (jsPDF)', 'error');
+    return;
+  }
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+
+  const margin = 40;
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+
+  const title = (document.getElementById('reportTitle')?.value || 'GRC Practice Lab Report').trim();
+  const body = el.value;
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(16);
+  doc.text(title, margin, 60);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.text('Educational / Practice Use Only — Not for production audits or certification.', margin, 80);
+
+  doc.setFontSize(11);
+  const textLines = doc.splitTextToSize(body, pageWidth - margin*2);
+
+  let y = 110;
+  for (const line of textLines) {
+    if (y > pageHeight - 60) {
+      doc.addPage();
+      y = 60;
+    }
+    doc.text(line, margin, y);
+    y += 16;
+  }
+
+  const fname = `grc-report-${new Date().toISOString().split('T')[0]}.pdf`;
+  doc.save(fname);
+  this.showToast('PDF exported', 'success');
+}
+
+    
     showToast(message, type = 'info') {
         const toastEl = document.getElementById('liveToast');
         const toastMessage = document.getElementById('toastMessage');
