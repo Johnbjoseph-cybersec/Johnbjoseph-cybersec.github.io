@@ -601,13 +601,70 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
             </div>
 
             <!-- Risk Matrix Tab -->
-            <div id="tabMatrix" class="tab-content">
-                <div class="container-glass">
-                    <h2>Risk Matrix</h2>
-                    <div class="text-muted mb-3">Quick view using likelihood × impact (based on risk fields when available).</div>
-                    <div id="riskMatrixGrid"></div>
-                </div>
-            </div>
+      <div id="tabMatrix" class="tab-content">
+  <div class="container-glass">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+      <div>
+        <h2 class="mb-1">Risk Analytics</h2>
+        <div class="text-muted">Industry standard: 5×5 Likelihood (1–5) × Impact (1–5). Supports Low/Medium/High too.</div>
+      </div>
+      <div class="d-flex gap-2 flex-wrap">
+        <button class="btn btn-outline-light btn-sm" onclick="window.app.renderRiskAnalytics()">
+          <i class="bi bi-arrow-repeat me-2"></i> Refresh
+        </button>
+      </div>
+    </div>
+
+    <!-- Top row: Heatmap + Top risks -->
+    <div class="row g-3">
+      <div class="col-lg-8">
+        <div class="card-glass">
+          <h4 class="mb-2">Risk Heatmap (5×5)</h4>
+          <div class="text-muted mb-3" style="font-size:13px;">Click a cell to view risks in that bucket.</div>
+          <div id="heatmap5x5"></div>
+          <div class="mt-3">
+            <div class="text-muted" style="font-size:13px;">Selected cell:</div>
+            <div id="heatmapSelection" class="text-secondary">None</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card-glass mb-3">
+          <h4 class="mb-2">Open vs Closed</h4>
+          <canvas id="chartOpenClosed" height="160"></canvas>
+        </div>
+        <div class="card-glass">
+          <h4 class="mb-2">Top Risks</h4>
+          <div id="topRisksList" class="text-secondary"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row: Category / Score distribution / Trend -->
+    <div class="row g-3 mt-1">
+      <div class="col-lg-4">
+        <div class="card-glass">
+          <h4 class="mb-2">Risks by Category</h4>
+          <canvas id="chartByCategory" height="180"></canvas>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card-glass">
+          <h4 class="mb-2">Score Distribution</h4>
+          <canvas id="chartScoreDist" height="180"></canvas>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card-glass">
+          <h4 class="mb-2">Trend (Last 30 days)</h4>
+          <canvas id="chartTrend" height="180"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
             <!-- Reports Tab -->
             <div id="tabReports" class="tab-content">
@@ -699,6 +756,8 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
 <script>
 // FRAMEWORK CONTROLS DATA - Condensed version with key controls from each framework
 const FRAMEWORK_CONTROLS = [
@@ -1091,7 +1150,7 @@ class GRCApplication {
             incidents: 'renderIncidents',
             treatments: 'renderTreatments',
             soa: 'renderSoA',
-            matrix: 'renderMatrix',
+            matrix: 'renderRiskAnalytics',
             reports: 'renderReports',
             challenges: 'renderChallenges'
         };
@@ -2089,63 +2148,236 @@ loadDemoScenario() {
         URL.revokeObjectURL(url);
     }
 
-    // ======== RISK MATRIX ========
-    renderMatrix() {
-        const grid = document.getElementById('riskMatrixGrid');
-        if (!grid) return;
+   renderRiskAnalytics() {
+  const risks = Array.isArray(this.data?.risks) ? this.data.risks : [];
 
-        const risks = this.data.risks || [];
-        const levels = ['Low','Medium','High'];
-        const map = { Low: 1, Medium: 2, High: 3 };
-        const get = (r, key) => r[key] || r[key?.toLowerCase()] || null;
+  // --- Helpers (supports 1–5 and Low/Medium/High) ---
+  const to15 = (v) => {
+    if (v === null || v === undefined) return null;
 
-        const counts = {};
-        for (const i of levels) for (const l of levels) counts[`${l}-${i}`]=0;
+    // numeric string or number
+    const n = Number(v);
+    if (!Number.isNaN(n) && n >= 1 && n <= 5) return n;
 
-        for (const r of risks) {
-            let impact = get(r,'impact') || null;
-            let likelihood = get(r,'likelihood') || null;
-            if (!impact || !likelihood) {
-                // fallback from severity if present
-                const sev = (r.severity || r.rating || '').toString();
-                const v = sev.includes('High') ? 'High' : sev.includes('Medium') ? 'Medium' : 'Low';
-                impact = impact || v;
-                likelihood = likelihood || v;
-            }
-            impact = levels.includes(impact) ? impact : 'Low';
-            likelihood = levels.includes(likelihood) ? likelihood : 'Low';
-            counts[`${likelihood}-${impact}`] = (counts[`${likelihood}-${impact}`] || 0) + 1;
-        }
+    // Low/Medium/High mapping (common)
+    const s = String(v).toLowerCase();
+    if (s.includes("low")) return 2;
+    if (s.includes("med")) return 3;
+    if (s.includes("high")) return 5;
 
-        const cell = (l,i) => {
-            const c = counts[`${l}-${i}`] || 0;
-            const score = map[l]*map[i];
-            const tone = score >= 7 ? 'danger' : score >= 4 ? 'warning' : 'success';
-            return `
-                <div class="card-glass" style="min-height:86px">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <small class="text-muted">L:${l} • I:${i}</small>
-                        <span class="badge bg-${tone}">${c}</span>
-                    </div>
-                    <div class="mt-2"><strong>Score:</strong> ${score}</div>
-                </div>
-            `;
-        };
+    return null;
+  };
 
-        grid.innerHTML = `
-            <div class="row g-3">
-                <div class="col-12"><div class="text-muted"><strong>Likelihood</strong> (rows) × <strong>Impact</strong> (columns)</div></div>
-                ${['High','Medium','Low'].map(l => `
-                    <div class="col-12">
-                        <div class="row g-3">
-                            <div class="col-12"><h5 class="mb-0">Likelihood: ${l}</h5></div>
-                            ${['Low','Medium','High'].map(i => `<div class="col-md-4">${cell(l,i)}</div>`).join('')}
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
+  const inferFromSeverity = (sev) => {
+    const s = String(sev || "").toLowerCase();
+    if (s.includes("high")) return { i: 5, l: 4 };
+    if (s.includes("medium")) return { i: 3, l: 3 };
+    return { i: 2, l: 2 };
+  };
+
+  const normIL = (r) => {
+    let i = to15(r.impact);
+    let l = to15(r.likelihood);
+
+    // some of your demo uses 1–5 but could be stored as score components; fallback
+    if (!i && r.impactLevel) i = to15(r.impactLevel);
+    if (!l && r.likelihoodLevel) l = to15(r.likelihoodLevel);
+
+    if (!i || !l) {
+      const inf = inferFromSeverity(r.severity);
+      i = i || inf.i;
+      l = l || inf.l;
     }
+    return { i, l, score: i * l };
+  };
+
+  // --- Heatmap 5×5 counts ---
+  const buckets = Array.from({ length: 5 }, () => Array.from({ length: 5 }, () => []));
+  risks.forEach(r => {
+    const { i, l } = normIL(r);
+    // matrix indexes: [impact-1][likelihood-1]
+    buckets[i - 1][l - 1].push(r);
+  });
+
+  // Render heatmap HTML
+  const heatmap = document.getElementById("heatmap5x5");
+  const selection = document.getElementById("heatmapSelection");
+  if (heatmap) {
+    const cellHtml = (impact, likelihood) => {
+      const list = buckets[impact - 1][likelihood - 1];
+      const count = list.length;
+      const score = impact * likelihood;
+
+      // simple intensity via score bands
+      const bg =
+        score >= 20 ? "rgba(239,68,68,.20)" :
+        score >= 12 ? "rgba(245,158,11,.18)" :
+        score >= 6  ? "rgba(6,182,212,.14)" :
+                      "rgba(16,185,129,.12)";
+
+      return `
+        <div style="border:1px solid rgba(255,255,255,.10); border-radius:12px; padding:12px; cursor:pointer; background:${bg};"
+             onclick="window.app._showHeatmapCell(${impact},${likelihood})">
+          <div class="text-muted" style="font-size:12px;">I:${impact} • L:${likelihood}</div>
+          <div style="font-size:28px; font-weight:900;">${count}</div>
+          <div class="text-muted" style="font-size:12px;">Score: ${score}</div>
+        </div>
+      `;
+    };
+
+    let html = `
+      <div style="display:grid; grid-template-columns: 110px repeat(5, 1fr); gap:10px;">
+        <div></div>
+        ${[1,2,3,4,5].map(l => `<div class="text-center text-muted" style="font-weight:800;">L${l}</div>`).join("")}
+        ${[5,4,3,2,1].map(i => `
+          <div class="text-muted" style="font-weight:800; display:flex; align-items:center;">I${i}</div>
+          ${[1,2,3,4,5].map(l => cellHtml(i,l)).join("")}
+        `).join("")}
+      </div>
+    `;
+    heatmap.innerHTML = html;
+  }
+
+  // expose cell click handler
+  window.app._showHeatmapCell = (impact, likelihood) => {
+    const list = buckets[impact - 1][likelihood - 1];
+    const names = list.slice(0, 8).map(r => `• ${r.title || r.id}`).join("<br>");
+    if (selection) {
+      selection.innerHTML = `<strong>I${impact} / L${likelihood}</strong> (${list.length} risks)<br><br>${names || "<span class='text-muted'>No risks</span>"}`;
+    }
+  };
+
+  // --- Charts ---
+  const statuses = risks.reduce((acc, r) => {
+    const st = String(r.status || "Open").toLowerCase();
+    if (st.includes("closed") || st.includes("resolved")) acc.closed++;
+    else acc.open++;
+    return acc;
+  }, { open: 0, closed: 0 });
+
+  const byCategory = {};
+  risks.forEach(r => {
+    const c = r.category || "Uncategorized";
+    byCategory[c] = (byCategory[c] || 0) + 1;
+  });
+
+  const scores = risks.map(r => normIL(r).score);
+  // distribution bins 1–25
+  const dist = Array.from({ length: 25 }, () => 0);
+  scores.forEach(sc => dist[sc - 1] = (dist[sc - 1] || 0) + 1);
+
+  // trend last 30 days by day (using updatedAt)
+  const days = 30;
+  const today = new Date();
+  const labels = [];
+  const trend = Array.from({ length: days }, () => 0);
+  for (let d = days - 1; d >= 0; d--) {
+    const dt = new Date(today);
+    dt.setDate(today.getDate() - d);
+    labels.push(`${dt.getMonth()+1}/${dt.getDate()}`);
+  }
+  risks.forEach(r => {
+    const t = new Date(r.updatedAt || r.createdAt || Date.now());
+    const diff = Math.floor((today - t) / (1000*60*60*24));
+    if (diff >= 0 && diff < days) {
+      trend[days - 1 - diff] += 1;
+    }
+  });
+
+  // destroy old charts safely
+  window.app._charts = window.app._charts || {};
+  const kill = (key) => {
+    if (window.app._charts[key]) {
+      window.app._charts[key].destroy();
+      window.app._charts[key] = null;
+    }
+  };
+
+  // Donut: open vs closed
+  kill("openClosed");
+  const ctx1 = document.getElementById("chartOpenClosed");
+  if (ctx1) {
+    window.app._charts.openClosed = new Chart(ctx1, {
+      type: "doughnut",
+      data: {
+        labels: ["Open", "Closed"],
+        datasets: [{ data: [statuses.open, statuses.closed] }]
+      },
+      options: { plugins: { legend: { labels: { color: "rgba(255,255,255,.75)" }}}}
+    });
+  }
+
+  // Bar: by category
+  kill("byCategory");
+  const ctx2 = document.getElementById("chartByCategory");
+  if (ctx2) {
+    const cats = Object.keys(byCategory);
+    window.app._charts.byCategory = new Chart(ctx2, {
+      type: "bar",
+      data: { labels: cats, datasets: [{ data: cats.map(c => byCategory[c]) }] },
+      options: {
+        plugins: { legend: { display: false }},
+        scales: {
+          x: { ticks: { color: "rgba(255,255,255,.70)" } },
+          y: { ticks: { color: "rgba(255,255,255,.70)" } }
+        }
+      }
+    });
+  }
+
+  // Histogram: score distribution
+  kill("scoreDist");
+  const ctx3 = document.getElementById("chartScoreDist");
+  if (ctx3) {
+    window.app._charts.scoreDist = new Chart(ctx3, {
+      type: "bar",
+      data: {
+        labels: Array.from({ length: 25 }, (_, i) => String(i + 1)),
+        datasets: [{ data: dist }]
+      },
+      options: {
+        plugins: { legend: { display: false }},
+        scales: {
+          x: { ticks: { color: "rgba(255,255,255,.70)", maxRotation: 0 }, title: { display: true, text: "Score", color: "rgba(255,255,255,.70)" } },
+          y: { ticks: { color: "rgba(255,255,255,.70)" } }
+        }
+      }
+    });
+  }
+
+  // Line: trend
+  kill("trend");
+  const ctx4 = document.getElementById("chartTrend");
+  if (ctx4) {
+    window.app._charts.trend = new Chart(ctx4, {
+      type: "line",
+      data: { labels, datasets: [{ data: trend, tension: 0.35 }] },
+      options: {
+        plugins: { legend: { display: false }},
+        scales: {
+          x: { ticks: { color: "rgba(255,255,255,.70)", maxTicksLimit: 6 } },
+          y: { ticks: { color: "rgba(255,255,255,.70)" } }
+        }
+      }
+    });
+  }
+
+  // Top risks list
+  const top = [...risks]
+    .map(r => ({ r, ...normIL(r) }))
+    .sort((a,b) => b.score - a.score)
+    .slice(0, 5);
+
+  const topEl = document.getElementById("topRisksList");
+  if (topEl) {
+    topEl.innerHTML = top.length ? top.map(x =>
+      `<div class="mb-2">
+        <div style="font-weight:800;">${this.escapeHtml(x.r.title || x.r.id)}</div>
+        <div class="text-muted" style="font-size:12px;">Score ${x.score} (I${x.i} × L${x.l}) • ${this.escapeHtml(x.r.status || "Open")}</div>
+      </div>`
+    ).join("") : `<div class="text-muted">No risks yet.</div>`;
+  }
+}
 
     // ======== REPORTS ========
     renderReports() {
