@@ -395,6 +395,43 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
     justify-content: space-between;
   }
 }
+/* ================================
+   Reduce Dashboard Tile Spacing
+   ================================ */
+
+/* Reduce vertical gaps between rows */
+.row.g-4 {
+  --bs-gutter-y: 0.9rem;   /* was ~1.5rem */
+}
+
+/* Reduce excessive bottom margin */
+.mb-5 {
+  margin-bottom: 2rem !important;
+}
+
+/* Compact dashboard sections */
+#tabDashboard .container-glass {
+  padding-bottom: 1.75rem;
+}
+/* ================================
+   Dashboard spacing compact fixes
+   ================================ */
+
+/* Compact metric cards */
+.metric-card {
+  padding: 1.1rem !important;
+}
+
+.metric-value {
+  font-size: 2.1rem !important;
+  margin-bottom: 0.25rem;
+}
+
+/* Reduce vertical spacing between stacked cards
+   (Recent Risks / Quick Actions) */
+#tabDashboard .card-glass {
+  margin-bottom: 0.75rem;
+}
 
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: rgba(255,255,255,.05); }
