@@ -4,329 +4,468 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Terms | GRC Practice Lab</title>
-  <meta name="description" content="Terms of Use and Disclaimer for the GRC Practice Lab and Cyber Readiness Tool (educational simulation)." />
+  <title>Terms & Conditions — John Bommeraveni Joseph</title>
+  <meta name="description" content="Terms of Use and Disclaimer for the GRC Practice Lab and Cyber Readiness Assessment Tool (educational simulation)." />
 
-  <!-- Fonts -->
+  <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- Bootstrap (matches GRC Lab page) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
+    /* ===== PREMIUM DESIGN TOKENS ===== */
     :root {
-      --bg0:#070A12; --bg1:#0B1226;
-      --text-primary: #f8fafc; --text-secondary: #cbd5e1; --text-muted: #94a3b8;
-      --border-light: rgba(255,255,255,.10); --border-medium: rgba(255,255,255,.15);
-      --accent-primary:#3b82f6; --accent-info:#06b6d4;
-      --radius-lg:16px; --radius-md:12px; --radius-sm:8px;
-      --shadow-lg: 0 10px 30px rgba(0,0,0,.40);
+      --bg: #0A0A0A;
+      --surface: #121212;
+      --surface-elevated: #1A1A1A;
+      --border: rgba(255,255,255,0.08);
+      --border-elevated: rgba(255,255,255,0.12);
+      --text-primary: rgba(255,255,255,0.95);
+      --text-secondary: rgba(255,255,255,0.65);
+      --text-tertiary: rgba(255,255,255,0.45);
+      --text-muted: rgba(255,255,255,0.35);
+      --gold: #D4AF37;
+      --spacing-unit: 8px;
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
     }
 
-    *{ margin:0; padding:0; box-sizing:border-box; }
-    html{ height:100%; scroll-behavior:smooth; }
-    body{
-      min-height:100vh;
-      font-family:'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: var(--font-sans);
       color: var(--text-primary);
-      line-height:1.6;
-      overflow-x:hidden;
-      background:
-        radial-gradient(1200px 800px at 20% 10%, rgba(124,58,237,.28), transparent 60%),
-        radial-gradient(900px 600px at 80% 20%, rgba(34,211,238,.18), transparent 55%),
-        radial-gradient(800px 600px at 50% 90%, rgba(251,113,133,.12), transparent 55%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
+      background: var(--bg);
+      line-height: 1.6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    .wrap{ max-width:1200px; margin:0 auto; padding:28px 18px 60px; position:relative; z-index:1; }
-
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between; gap:14px;
-      position:sticky; top:0; z-index:50;
-      padding:14px 12px; margin:-8px -6px 18px;
-      border-radius:26px;
-      background: rgba(10,14,26,.62);
-      border: 1px solid rgba(255,255,255,.10);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 32px rgba(0,0,0,.35);
+    /* Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
     }
 
-    .brandRow{ display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
-    .logo{ width:38px; height:38px; border-radius:12px;
-      background: conic-gradient(from 210deg, rgba(124,58,237,.9), rgba(34,211,238,.9), rgba(124,58,237,.9));
-      box-shadow: 0 12px 26px rgba(124,58,237,.25);
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 5vw, 60px);
     }
-    .brandTitle{ margin:0; font-size:14px; font-weight:800; }
-    .brandSub{ margin-top:2px; font-size:12px; color: var(--text-muted); }
 
-    .navlinks{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
-    .pill{
-      display:flex; align-items:center; gap:8px;
-      padding:10px 12px; border-radius:999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: calc(var(--spacing-unit) * 3) 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: calc(var(--spacing-unit) * 2);
+      text-decoration: none;
       color: var(--text-primary);
-      cursor:pointer;
-      transition: all .18s;
-      font-weight:800;
-      font-size:13px;
-      text-decoration:none;
-      white-space:nowrap;
-    }
-    .pill:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.16); }
-    .pill.primary{
-      background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
-      box-shadow: 0 20px 55px rgba(124,58,237,.25);
-      border: 1px solid rgba(255,255,255,.12);
     }
 
-    .container-glass{
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.10);
-      backdrop-filter: blur(12px);
+    .logo-text {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: calc(var(--spacing-unit) * 4);
+      align-items: center;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+    }
+
+    /* Main Content */
+    .main {
+      padding: calc(var(--spacing-unit) * 10) 0 calc(var(--spacing-unit) * 12);
+    }
+
+    .content-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 2rem;
-      box-shadow: var(--shadow-lg);
+      padding: calc(var(--spacing-unit) * 6);
+      max-width: 900px;
+      margin: 0 auto;
     }
 
-    h1{
-      font-weight:900;
-      font-size: 2.15rem;
-      line-height:1.15;
-      margin:0 0 .65rem;
-      background: linear-gradient(135deg, var(--accent-primary), var(--accent-info));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    }
-    h2{ font-weight:900; font-size:1.25rem; margin: 1.6rem 0 .6rem; }
-    .lead{ color: var(--text-secondary); font-size: 1.02rem; margin-bottom: 1rem; }
-
-    .muted{ color: rgba(255,255,255,.72); }
-    .note{
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      border-radius: 14px;
-      padding: 14px 14px;
-    }
-    .note strong{ letter-spacing:.02em; }
-
-    ul{ margin-left: 1.15rem; }
-    li{ margin: .35rem 0; }
-
-    .divider{ height:1px; background: rgba(255,255,255,.10); margin: 1.25rem 0; }
-
-    .k{ color: rgba(255,255,255,.70); font-size: 12px; letter-spacing:.02em; text-transform: uppercase; }
-    .v{ color: rgba(255,255,255,.92); font-weight:800; }
-
-    .twoCol{ display:grid; grid-template-columns: 1.1fr .9fr; gap: 14px; }
-    @media (max-width: 900px){ .twoCol{ grid-template-columns: 1fr; } }
-
-    .miniCard{
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      border-radius: 14px;
-      padding: 14px;
+    /* Typography */
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: calc(var(--spacing-unit) * 3);
+      color: var(--text-primary);
     }
 
-    a.inline{ color: rgba(255,255,255,.92); text-decoration: underline; text-underline-offset: 3px; }
+    h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin-top: calc(var(--spacing-unit) * 5);
+      margin-bottom: calc(var(--spacing-unit) * 2);
+      color: var(--text-primary);
+    }
 
-    ::-webkit-scrollbar{ width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track{ background: rgba(255,255,255,.05); }
-    ::-webkit-scrollbar-thumb{ background: rgba(255,255,255,.15); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover{ background: var(--accent-primary); }
- /* ===== Global Footer ===== */
-.footer{
-  margin-top: 48px;
-  padding: 22px 18px;
-  border-top: 1px solid rgba(255,255,255,.12);
-  background: rgba(10,14,26,.55);
-  backdrop-filter: blur(14px);
-  border-radius: 18px;
-}
+    .lead {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: calc(var(--spacing-unit) * 4);
+    }
 
-.footer a{
-  color: rgba(255,255,255,.85);
-  text-decoration: none;
-  font-weight: 700;
-}
+    p {
+      color: var(--text-secondary);
+      margin-bottom: calc(var(--spacing-unit) * 2);
+      line-height: 1.7;
+    }
 
-.footer a:hover{
-  color: #ffffff;
-}
-.site-logo{
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  object-fit: cover;
-  box-shadow: 0 6px 20px rgba(0,0,0,.35);
-}
+    /* Notice Box */
+    .notice {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-elevated);
+      border-radius: var(--radius-md);
+      padding: calc(var(--spacing-unit) * 3);
+      margin-bottom: calc(var(--spacing-unit) * 4);
+    }
 
+    .notice p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .notice strong {
+      color: var(--text-primary);
+    }
+
+    /* Info Grid */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: calc(var(--spacing-unit) * 3);
+      margin-bottom: calc(var(--spacing-unit) * 4);
+    }
+
+    .info-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: calc(var(--spacing-unit) * 3);
+    }
+
+    .info-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-tertiary);
+      margin-bottom: calc(var(--spacing-unit) * 1.5);
+      font-weight: 600;
+    }
+
+    .info-value {
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: calc(var(--spacing-unit) * 1);
+    }
+
+    .info-description {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Lists */
+    ul {
+      margin-left: calc(var(--spacing-unit) * 3);
+      margin-bottom: calc(var(--spacing-unit) * 2);
+    }
+
+    li {
+      color: var(--text-secondary);
+      margin: calc(var(--spacing-unit) * 1) 0;
+      line-height: 1.7;
+    }
+
+    li strong {
+      color: var(--text-primary);
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: calc(var(--spacing-unit) * 4) 0;
+    }
+
+    /* Footer */
+    .footer {
+      padding: calc(var(--spacing-unit) * 6) 0 calc(var(--spacing-unit) * 5);
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: calc(var(--spacing-unit) * 3);
+    }
+
+    .footer-text {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      font-weight: 600;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: calc(var(--spacing-unit) * 4);
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: var(--text-primary);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .content-card {
+        padding: calc(var(--spacing-unit) * 4);
+      }
+
+      .nav-links {
+        gap: calc(var(--spacing-unit) * 2);
+      }
+
+      .nav-link {
+        font-size: 13px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
-
 <body>
-  <div class="wrap">
-
-    <!-- Top Nav (matches GRC Lab nav) -->
-    <header class="topbar">
-  <a class="brandRow" href="index.html" style="text-decoration:none;color:inherit;">
-    <img src="logo.png" alt="GRC Made Simple Logo" class="site-logo">
-
-    <div>
-      <div class="brandTitle">John Bommeraveni Joseph</div>
-      <div class="brandSub">Cybersecurity • GRC • AI Governance • ISO/IEC 27001 & 42001 Lead Auditor</div>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="index.html" class="logo">
+          <img src="logo.png" alt="Logo" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover; margin-right: 12px;">
+          <span class="logo-text">JOHN BOMMERAVENI JOSEPH</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="grc-lab.html" class="nav-link">GRC Lab</a>
+          <a href="cyber-readiness-tool.html" class="nav-link">Cyber Readiness Tool</a>
+          <a href="terms.html" class="nav-link active">Terms</a>
+          <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" class="nav-link">YouTube</a>
+        </div>
+      </nav>
     </div>
-  </a>
+  </header>
 
-<nav class="navlinks" aria-label="Primary navigation">
-  <a class="pill muted" href="index.html">Home</a>
-  <a class="pill muted" href="grc-lab.html">GRC Lab</a>
-  <a class="pill muted" href="cyber-readiness-tool.html">Cyber Readiness Tool</a>
-  <a class="pill primary" href="terms.html" aria-current="page">Terms</a>
-  <a class="pill muted" href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer">YouTube</a>
-</nav>
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+      <div class="content-card">
+        <h1 style="font-size: clamp(36px, 5vw, 56px); font-weight: 600;">Terms of Use & Disclaimer</h1>
+        <p class="lead">
+          This page explains the rules for using this website, including the GRC Practice Lab and the Cyber Readiness Assessment Tool. By accessing or using the site, you agree to these terms.
+        </p>
 
-</header>
+        <div class="notice">
+          <p>
+            <strong>Educational / Practice Use Only</strong> — This site is a learning simulator for skills practice and portfolio building. It is not a certified GRC platform, legal service, consulting service, audit service, or certification body. Do not rely on this site as the sole basis for production compliance decisions, formal audits, certification activities, incident response, or legal/regulatory filings.
+          </p>
+        </div>
 
-
-    <main>
-      <section class="py-4">
-        <div class="container">
-          <div class="container-glass">
-            <h1>Terms of Use & Disclaimer</h1>
-            <p class="lead">This page explains the rules for using this website, including the <strong>GRC Practice Lab</strong> and the <strong>Cyber Readiness Assessment Tool</strong>. By accessing or using the site, you agree to these terms.</p>
-
-            <div class="note">
-              <div class="d-flex align-items-start gap-2">
-                <i class="bi bi-info-circle" style="font-size:18px; margin-top:2px; color: rgba(255,255,255,.90);"></i>
-                <div class="muted" style="font-size:14px; line-height:1.55;">
-                  <strong>Educational / Practice Use Only —</strong>
-                  This site is a learning simulator for skills practice and portfolio building. It is <strong>not</strong> a certified GRC platform, legal service, consulting service, audit service, or certification body.
-                  Do <strong>not</strong> rely on this site as the sole basis for production compliance decisions, formal audits, certification activities, incident response, or legal/regulatory filings.
-                </div>
-              </div>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-label">Effective Date</div>
+            <div class="info-value">When Published</div>
+            <div class="info-description">
+              We may update these terms from time to time. Continued use of the site after an update means you accept the updated terms.
             </div>
-
-            <div class="divider"></div>
-
-            <div class="twoCol">
-              <div class="miniCard">
-                <div class="k">Effective date</div>
-                <div class="v">When published</div>
-                <div class="muted" style="margin-top:8px; font-size:13px;">
-                  We may update these terms from time to time. Continued use of the site after an update means you accept the updated terms.
-                </div>
-              </div>
-              <div class="miniCard">
-                <div class="k">Quick summary</div>
-                <div class="muted" style="margin-top:8px; font-size:13px; line-height:1.55;">
-                  Use for learning only • No professional advice • You own your local data • No warranties • Limited liability • Don’t upload sensitive data.
-                </div>
-              </div>
+          </div>
+          <div class="info-card">
+            <div class="info-label">Quick Summary</div>
+            <div class="info-description">
+              Use for learning only • No professional advice • You own your local data • No warranties • Limited liability • Don't upload sensitive data.
             </div>
-
-            <h2>1) Who this is for</h2>
-            <p class="muted">This site is intended for individuals learning cybersecurity, governance, risk, compliance (GRC), and related frameworks. It provides simulated workflows (assets, risks, controls, vendors, incidents, SoA, reports) and readiness assessments.</p>
-
-            <h2>2) No professional advice</h2>
-            <p class="muted">Content and outputs on this site are provided for general educational information only. Nothing on this site constitutes legal advice, compliance advice, audit advice, certification guidance, financial advice, medical advice, or professional consulting. If you need professional help, consult a qualified professional in your jurisdiction.</p>
-
-            <h2>3) Framework references and paraphrased content</h2>
-            <p class="muted">The site may reference well-known standards and frameworks (for example ISO/IEC 27001, NIST CSF, PCI DSS, HIPAA, SOC 2, CIS, GDPR, CMMC, COBIT). Any control statements, mappings, or descriptions presented in this site may be summarized, paraphrased, or simplified for training purposes. This site is not affiliated with, endorsed by, or sponsored by any standards body or framework owner.</p>
-
-            <h2>4) User responsibilities and acceptable use</h2>
-            <ul class="muted">
-              <li><strong>Do not enter sensitive data</strong> (real personal data, payment card data, protected health information, secrets, passwords, API keys, customer data, proprietary incident details, etc.).</li>
-              <li>Do not use the site for illegal activities, harassment, malware, or unauthorized access attempts.</li>
-              <li>You are responsible for ensuring your use of the site complies with local laws, employer policies, and contractual obligations.</li>
-              <li>If you use the site for portfolio/demo purposes, clearly communicate that it is a simulation.</li>
-            </ul>
-
-            <h2>5) Data storage and privacy (localStorage)</h2>
-            <p class="muted">The tools on this site may store your entries (e.g., assessment answers, risks, controls) <strong>locally in your browser</strong> using technologies such as <strong>localStorage</strong>. This means:</p>
-            <ul class="muted">
-              <li>Data is generally stored on your device/browser profile, not on our servers.</li>
-              <li>Clearing your browser storage, using private browsing, or switching devices may remove or hide your saved data.</li>
-              <li>If you use a shared device, other users of that device/browser profile may be able to access your stored data.</li>
-            </ul>
-            <p class="muted">You are responsible for managing your local data and protecting your device. If the site includes export features (JSON/PDF), you are responsible for how exported files are stored and shared.</p>
-
-            <h2>6) Intellectual property and trademarks</h2>
-            <p class="muted">All trademarks, product names, and logos mentioned are the property of their respective owners. References are for educational identification purposes only. Nothing here grants you a license to use any third-party trademark.</p>
-
-            <h2>7) Availability, changes, and security</h2>
-            <p class="muted">We may change, suspend, or discontinue any part of the site at any time. While we aim for a secure and reliable experience, no website is guaranteed to be error-free or fully secure. Use the site at your own risk.</p>
-
-            <h2>8) Disclaimer of warranties</h2>
-            <p class="muted"><strong>To the maximum extent permitted by applicable law</strong>, this site is provided “as is” and “as available,” without warranties of any kind—express or implied—including (without limitation) implied warranties of merchantability, fitness for a particular purpose, accuracy, completeness, or non-infringement.</p>
-
-            <h2>9) Limitation of liability</h2>
-            <p class="muted"><strong>To the maximum extent permitted by applicable law</strong>, we will not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits, data, goodwill, or business interruption, arising out of or related to your use of (or inability to use) the site—even if we have been advised of the possibility of such damages.</p>
-            <p class="muted">Some jurisdictions do not allow certain limitations of liability. In those jurisdictions, liability will be limited to the minimum extent allowed by law.</p>
-
-            <h2>10) Indemnity</h2>
-            <p class="muted">You agree to indemnify and hold harmless the site owner/operator from and against claims, liabilities, damages, losses, and expenses (including reasonable legal fees) arising out of your misuse of the site, violation of these terms, or violation of any law or third-party rights.</p>
-
-            <h2>11) Third-party services and links</h2>
-            <p class="muted">The site may include third-party libraries (e.g., CSS/JS/CDN resources) and may link to third-party websites. We do not control those services and are not responsible for their content, policies, or availability. Your use of third-party services is subject to their terms and privacy policies.</p>
-
-            <h2>12) International use</h2>
-            <p class="muted">This site may be accessed globally. Laws vary by country/state. You are responsible for determining whether your use is permitted under the laws and regulations applicable to you. Where required, these terms apply <strong>to the maximum extent permitted by applicable law</strong>.</p>
-
-            <h2>13) Governing law</h2>
-            <p class="muted">Unless otherwise required by your local consumer protection laws, these terms will be governed by the laws of the site owner’s place of operation, without regard to conflict of laws rules. If a court finds any provision unenforceable, the remaining provisions will remain in effect.</p>
-
-            <h2>14) Contact</h2>
-            <p class="muted">If you have questions about these terms, you can contact the site owner via the contact methods listed on the Home/Portfolio page.</p>
-
-            <div class="divider"></div>
-
-            <div class="note">
-              <div class="muted" style="font-size:13px; line-height:1.55;">
-                <strong>Reminder:</strong> This is an educational simulator. Do not use it as a substitute for professional advice, formal audit work, or certification evidence.
-              </div>
-            </div>
-
           </div>
         </div>
-      </section>
 
-      <section class="py-4">
-        <div class="container">
-          <div class="container-glass">
-            <h2 style="margin-top:0;">Practical Safety Checklist</h2>
-            <ul class="muted">
-              <li>Use fictional/demo company names and sample data only.</li>
-              <li>Don’t paste internal client documents, policies, logs, tickets, or incident details.</li>
-              <li>Review and validate any exported report with a qualified professional before using it in real work.</li>
-              <li>If you are in a regulated environment, follow your organization’s policies and legal requirements.</li>
-            </ul>
-          </div>
+        <h2>1. Who This Is For</h2>
+        <p>
+          This site is intended for individuals learning cybersecurity, governance, risk, compliance (GRC), and related frameworks. It provides simulated workflows (assets, risks, controls, vendors, incidents, SoA, reports) and readiness assessments.
+        </p>
+
+        <h2>2. No Professional Advice</h2>
+        <p>
+          Content and outputs on this site are provided for general educational information only. Nothing on this site constitutes legal advice, compliance advice, audit advice, certification guidance, financial advice, medical advice, or professional consulting. If you need professional help, consult a qualified professional in your jurisdiction.
+        </p>
+
+        <h2>3. Framework References and Paraphrased Content</h2>
+        <p>
+          The site may reference well-known standards and frameworks (for example ISO/IEC 27001, NIST CSF, PCI DSS, HIPAA, SOC 2, CIS, GDPR, CMMC, COBIT). Any control statements, mappings, or descriptions presented in this site may be summarized, paraphrased, or simplified for training purposes. This site is not affiliated with, endorsed by, or sponsored by any standards body or framework owner.
+        </p>
+
+        <h2>4. User Responsibilities and Acceptable Use</h2>
+        <ul>
+          <li><strong>Do not enter sensitive data</strong> (real personal data, payment card data, protected health information, secrets, passwords, API keys, customer data, proprietary incident details, etc.).</li>
+          <li>Do not use the site for illegal activities, harassment, malware, or unauthorized access attempts.</li>
+          <li>You are responsible for ensuring your use of the site complies with local laws, employer policies, and contractual obligations.</li>
+          <li>If you use the site for portfolio/demo purposes, clearly communicate that it is a simulation.</li>
+        </ul>
+
+        <h2>5. Data Storage and Privacy (localStorage)</h2>
+        <p>
+          The tools on this site may store your entries (e.g., assessment answers, risks, controls) locally in your browser using technologies such as localStorage. This means:
+        </p>
+        <ul>
+          <li>Data is generally stored on your device/browser profile, not on our servers.</li>
+          <li>Clearing your browser storage, using private browsing, or switching devices may remove or hide your saved data.</li>
+          <li>If you use a shared device, other users of that device/browser profile may be able to access your stored data.</li>
+        </ul>
+        <p>
+          You are responsible for managing your local data and protecting your device. If the site includes export features (JSON/PDF), you are responsible for how exported files are stored and shared.
+        </p>
+
+        <h2>6. Intellectual Property and Trademarks</h2>
+        <p>
+          All trademarks, product names, and logos mentioned are the property of their respective owners. References are for educational identification purposes only. Nothing here grants you a license to use any third-party trademark.
+        </p>
+
+        <h2>7. Availability, Changes, and Security</h2>
+        <p>
+          We may change, suspend, or discontinue any part of the site at any time. While we aim for a secure and reliable experience, no website is guaranteed to be error-free or fully secure. Use the site at your own risk.
+        </p>
+
+        <h2>8. Disclaimer of Warranties</h2>
+        <p>
+          To the maximum extent permitted by applicable law, this site is provided "as is" and "as available," without warranties of any kind—express or implied—including (without limitation) implied warranties of merchantability, fitness for a particular purpose, accuracy, completeness, or non-infringement.
+        </p>
+
+        <h2>9. Limitation of Liability</h2>
+        <p>
+          To the maximum extent permitted by applicable law, we will not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits, data, goodwill, or business interruption, arising out of or related to your use of (or inability to use) the site—even if we have been advised of the possibility of such damages.
+        </p>
+        <p>
+          Some jurisdictions do not allow certain limitations of liability. In those jurisdictions, liability will be limited to the minimum extent allowed by law.
+        </p>
+
+        <h2>10. Indemnity</h2>
+        <p>
+          You agree to indemnify and hold harmless the site owner/operator from and against claims, liabilities, damages, losses, and expenses (including reasonable legal fees) arising out of your misuse of the site, violation of these terms, or violation of any law or third-party rights.
+        </p>
+
+        <h2>11. Third-Party Services and Links</h2>
+        <p>
+          The site may include third-party libraries (e.g., CSS/JS/CDN resources) and may link to third-party websites. We do not control those services and are not responsible for their content, policies, or availability. Your use of third-party services is subject to their terms and privacy policies.
+        </p>
+
+        <h2>12. International Use</h2>
+        <p>
+          This site may be accessed globally. Laws vary by country/state. You are responsible for determining whether your use is permitted under the laws and regulations applicable to you. Where required, these terms apply to the maximum extent permitted by applicable law.
+        </p>
+
+        <h2>13. Governing Law</h2>
+        <p>
+          Unless otherwise required by your local consumer protection laws, these terms will be governed by the laws of the site owner's place of operation, without regard to conflict of laws rules. If a court finds any provision unenforceable, the remaining provisions will remain in effect.
+        </p>
+
+        <h2>14. Contact</h2>
+        <p>
+          If you have questions about these terms, you can contact the site owner via the contact methods listed on the Home/Portfolio page.
+        </p>
+
+        <div class="divider"></div>
+
+        <div class="notice">
+          <p>
+            <strong>Reminder:</strong> This is an educational simulator. Do not use it as a substitute for professional advice, formal audit work, or certification evidence.
+          </p>
         </div>
-      </section>
 
-    </main>
-<footer class="footer">
-  <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;">
-    <div style="font-weight:800; font-size:13px;">
-      © 2026 John Bommeraveni Joseph.
+        <div class="divider"></div>
+
+        <h2>Practical Safety Checklist</h2>
+        <ul>
+          <li>Use fictional/demo company names and sample data only.</li>
+          <li>Don't paste internal client documents, policies, logs, tickets, or incident details.</li>
+          <li>Review and validate any exported report with a qualified professional before using it in real work.</li>
+          <li>If you are in a regulated environment, follow your organization's policies and legal requirements.</li>
+        </ul>
+      </div>
     </div>
+  </main>
 
-    <div style="display:flex; gap:14px; flex-wrap:wrap; font-size:12.5px;">
-      <a href="terms.html">Terms</a>
-      <a href="cyber-readiness-tool.html">Cyber Readiness Tool</a>
-      <a href="grc-lab.html">GRC Lab</a>
-      <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer">YouTube</a>
-      <a href="https://www.linkedin.com/in/john-bj/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href="https://github.com/Johnbjoseph-cybersec/" target="_blank" rel="noopener noreferrer">GitHub</a>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-text">
+          © 2026 John Bommeraveni Joseph. Educational use only.
+        </div>
+        <div class="footer-links">
+          <a href="terms.html" class="footer-link">Terms</a>
+          <a href="grc-lab.html" class="footer-link">GRC Lab</a>
+          <a href="cyber-readiness-tool.html" class="footer-link">Cyber Readiness Tool</a>
+          <a href="https://www.linkedin.com/in/john-bj" target="_blank" class="footer-link">LinkedIn</a>
+          <a href="https://github.com/Johnbjoseph-cybersec" target="_blank" class="footer-link">GitHub</a>
+        </div>
+      </div>
     </div>
-  </div>
-</footer>
-
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </footer>
 </body>
 </html>
