@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -132,6 +133,27 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
     display: inline-flex; align-items: center; padding: 0.25rem 0.75rem;
     border-radius: 100px; font-size: 0.75rem; font-weight: 600; margin: 0.125rem;
 }
+.points-badge{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:.25rem .65rem; border-radius: 999px;
+    font-size:.75rem; font-weight:800; letter-spacing:.01em;
+    border:1px solid rgba(255,255,255,.12);
+}
+.points-green{ background: rgba(16,185,129,.16); color:#6ee7b7; }
+.points-amber{ background: rgba(245,158,11,.16); color:#fcd34d; }
+.points-red{ background: rgba(239,68,68,.16); color:#fca5a5; }
+.points-cyan{ background: rgba(34,211,238,.16); color:#67e8f9; }
+.challenge-task{
+    display:flex; align-items:flex-start; gap:.55rem;
+    cursor:pointer; user-select:none;
+}
+.challenge-task i{ margin-top:2px; }
+.challenge-task small{ color: rgba(255,255,255,.70); }
+.challenge-status{ font-weight:800; }
+.challenge-status.notstarted{ color: rgba(255,255,255,.72); }
+.challenge-status.inprogress{ color: #fcd34d; }
+.challenge-status.completed{ color: #6ee7b7; }
+
 .badge-iso { background: rgba(59, 130, 246, 0.15); color: #93c5fd; }
 .badge-nist { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; }
 .badge-pci { background: rgba(245, 158, 11, 0.15); color: #fcd34d; }
@@ -768,8 +790,8 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
             <!-- Challenges Tab -->
             <div id="tabChallenges" class="tab-content">
                 <div class="container-glass">
-                    <h2>Challenges</h2>
-                    <div class="text-muted mb-3">Auto-detected gaps to make this lab addictive (and audit-realistic).</div>
+                    <h2>GRC Challenges</h2>
+                    <div class="text-muted mb-3">Test your GRC skills with these hands-on challenges. Complete tasks to earn points!</div>
                     <div id="challengeList" class="row g-3"></div>
                 </div>
             </div>
@@ -1143,7 +1165,8 @@ class GRCApplication {
             issues: this.loadData('issues') || [],
             incidents: this.loadData('incidents') || [],
             treatments: this.loadData('treatments') || [],
-            soa: this.loadData('soa') || []
+            soa: this.loadData('soa') || [],
+            challengeProgress: this.loadData('challengeProgress') || { started: {}, completed: {}, manual: {}, awarded: {}, reportsGenerated: 0 }
         };
     }
 
@@ -2475,48 +2498,232 @@ loadDemoScenario() {
   summary.innerHTML = `<div class="text-muted">Use Report Builder above to generate and export reports.</div>`;
 }
 
-    // ======== CHALLENGES (auto gaps) ========
+
+    // ======== CHALLENGES (curated + points) ========
+    getCuratedChallenges() {
+        return [
+            {
+                id: 'beginner',
+                title: 'Beginner Challenge',
+                points: 100,
+                pointsClass: 'points-green',
+                desc: 'Complete a basic risk assessment for a small e-commerce company.',
+                tasks: [
+                    { key: 'assets3', label: 'Add 3 assets', auto: true, check: () => (this.data.assets || []).length >= 3, cta: { tab: 'assets', label: 'Add Assets' } },
+                    { key: 'risks5', label: 'Identify 5 risks', auto: true, check: () => (this.data.risks || []).length >= 5, cta: { tab: 'risks', label: 'Add Risks' } },
+                    { key: 'controls3', label: 'Add 3 controls', auto: true, check: () => (this.data.controls || []).length >= 3, cta: { tab: 'controls', label: 'Add Controls' } },
+                    { key: 'report1', label: 'Generate a report', auto: true, check: () => (this.data.challengeProgress?.reportsGenerated || 0) >= 1, cta: { tab: 'reports', label: 'Build Report' } },
+                ]
+            },
+            {
+                id: 'iso27001',
+                title: 'ISO 27001 Certification',
+                points: 250,
+                pointsClass: 'points-amber',
+                desc: 'Prepare for ISO 27001 certification with comprehensive controls.',
+                tasks: [
+                    { key: 'loadiso', label: 'Load ISO template', auto: true, check: () => (this.data.soa || []).length > 0, cta: { tab: 'soa', label: 'Open SoA' } },
+                    { key: 'map20', label: 'Map 20+ controls', auto: true, check: () => (this.data.controls || []).length >= 20, cta: { tab: 'controls', label: 'Add Controls' } },
+                    { key: 'soaComplete', label: 'Complete SoA', auto: true, check: () => {
+                        this.ensureSoASeeded();
+                        const soa = this.data.soa || [];
+                        const applicable = soa.filter(x => x.applicable !== false);
+                        const goodJust = applicable.filter(x => (x.justification || '').trim().length >= 10).length;
+                        return goodJust >= 20;
+                    }, cta: { tab: 'soa', label: 'Work SoA' } },
+                    { key: 'cov80', label: 'Achieve 80% coverage', auto: true, check: () => {
+                        const total = (this.data.controls || []).length;
+                        const impl = (this.data.controls || []).filter(c => c.status === 'Implemented').length;
+                        const cov = total ? Math.round((impl / total) * 100) : 0;
+                        return cov >= 80;
+                    }, cta: { tab: 'controls', label: 'Update Status' } },
+                ]
+            },
+            {
+                id: 'incident',
+                title: 'Incident Response',
+                points: 300,
+                pointsClass: 'points-red',
+                desc: 'Handle a simulated data breach incident.',
+                tasks: [
+                    { key: 'logIncident', label: 'Log the incident', auto: true, check: () => (this.data.incidents || []).length >= 1, cta: { tab: 'incidents', label: 'Add Incident' } },
+                    { key: 'linkRC', label: 'Link to risks/controls', auto: false, note: 'Mark done when you’ve referenced related risks/controls in the incident details or notes.' },
+                    { key: 'treatments1', label: 'Add treatments', auto: true, check: () => (this.data.treatments || []).length >= 1, cta: { tab: 'treatments', label: 'Add Treatment' } },
+                    { key: 'incidentReport', label: 'Generate incident report', auto: false, note: 'Use Reports tab (include incident details), then mark complete.' },
+                ]
+            },
+            {
+                id: 'vendor',
+                title: 'Vendor Risk Management',
+                points: 200,
+                pointsClass: 'points-cyan',
+                desc: 'Assess and manage third-party vendor risks.',
+                tasks: [
+                    { key: 'vendors5', label: 'Add 5 vendors', auto: true, check: () => (this.data.vendors || []).length >= 5, cta: { tab: 'vendors', label: 'Add Vendors' } },
+                    { key: 'criticality', label: 'Assess criticality', auto: true, check: () => (this.data.vendors || []).some(v => String(v.riskLevel || '').trim().length > 0), cta: { tab: 'vendors', label: 'Update Vendors' } },
+                    { key: 'contracts', label: 'Review contracts', auto: false, note: 'Mark done after you’ve reviewed/recorded contract requirements for key vendors.' },
+                    { key: 'vendorReport', label: 'Generate vendor report', auto: false, note: 'Use Reports tab (vendor summary), then mark complete.' },
+                ]
+            },
+        ];
+    }
+
+    getChallengeState() {
+        const cp = this.data.challengeProgress || { started: {}, completed: {}, manual: {}, awarded: {}, reportsGenerated: 0 };
+        cp.started = cp.started || {};
+        cp.completed = cp.completed || {};
+        cp.manual = cp.manual || {};
+        cp.awarded = cp.awarded || {};
+        cp.reportsGenerated = Number(cp.reportsGenerated || 0);
+        this.data.challengeProgress = cp;
+        return cp;
+    }
+
+    saveChallengeState(cp) {
+        this.data.challengeProgress = cp;
+        this.saveData('challengeProgress', cp);
+    }
+
+    bumpReportCount() {
+        const cp = this.getChallengeState();
+        cp.reportsGenerated = Number(cp.reportsGenerated || 0) + 1;
+        this.saveChallengeState(cp);
+        if (this.currentTab === 'challenges') this.renderChallenges();
+    }
+
+    startChallenge(id) {
+        const cp = this.getChallengeState();
+        cp.started[id] = true;
+        this.saveChallengeState(cp);
+        this.showToast('Challenge started', 'info');
+        this.renderChallenges();
+    }
+
+    toggleManualTask(chId, taskKey) {
+        const cp = this.getChallengeState();
+        cp.manual[chId] = cp.manual[chId] || {};
+        cp.manual[chId][taskKey] = !cp.manual[chId][taskKey];
+        this.saveChallengeState(cp);
+        this.renderChallenges();
+    }
+
+    resetChallengeProgress() {
+        if (!confirm('Reset progress for challenges only?')) return;
+        const fresh = { started: {}, completed: {}, manual: {}, awarded: {}, reportsGenerated: 0 };
+        this.saveChallengeState(fresh);
+        this.showToast('Challenge progress reset', 'success');
+        this.renderChallenges();
+    }
+
+    syncChallengeProgress(curated) {
+        const cp = this.getChallengeState();
+        let changed = false;
+        for (const ch of curated) {
+            const manual = cp.manual[ch.id] || {};
+            const allDone = ch.tasks.every(t => {
+                if (t.auto) return !!t.check();
+                return !!manual[t.key];
+            });
+            if (allDone && !cp.completed[ch.id]) {
+                cp.completed[ch.id] = true;
+                changed = true;
+                // award points once
+                if (!cp.awarded[ch.id]) {
+                    cp.awarded[ch.id] = true;
+                    this.showToast(`Completed: ${ch.title} (+${ch.points})`, 'success');
+                }
+            }
+        }
+        if (changed) this.saveChallengeState(cp);
+        return cp;
+    }
+
     renderChallenges() {
         const host = document.getElementById('challengeList');
         if (!host) return;
         this.ensureSoASeeded();
-        const challenges = [];
 
-        const assets = this.data.assets || [];
-        const risks = this.data.risks || [];
-        const controls = this.data.controls || [];
-        const treatments = this.data.treatments || [];
-        const soa = this.data.soa || [];
+        const curated = this.getCuratedChallenges();
+        const cp = this.syncChallengeProgress(curated);
 
-        if (assets.length === 0) challenges.push({title:'Build your Asset Inventory', desc:'Add critical assets to make risk scoring realistic.', cta:{tab:'assets', label:'Add Assets'}});
-        if (risks.length === 0) challenges.push({title:'Create a Risk Register', desc:'Add 3–5 risks (phishing, vendor, endpoint, cloud misconfig).', cta:{tab:'risks', label:'Add Risks'}});
-        if (controls.length === 0) challenges.push({title:'Start Control Implementation', desc:'Add controls and mark status to calculate coverage.', cta:{tab:'controls', label:'Add Controls'}});
-        if (treatments.length === 0) challenges.push({title:'Create a Treatment Plan', desc:'Link risks to mitigations, owners, and due dates.', cta:{tab:'treatments', label:'Add Treatments'}});
+        const totalPoints = curated.reduce((sum, c) => sum + (cp.completed[c.id] ? c.points : 0), 0);
 
-        const missingJust = soa.filter(x => x.applicable && (!x.justification || x.justification.trim().length < 5)).length;
-        if (missingJust > 0) challenges.push({title:'Complete SoA Justifications', desc:`${missingJust} applicable ISO controls have weak / missing justification.`, cta:{tab:'soa', label:'Fix SoA'}});
+        const statusLabel = (id) => {
+            if (cp.completed[id]) return { text: 'Completed', cls: 'completed' };
+            if (cp.started[id]) return { text: 'In Progress', cls: 'inprogress' };
+            return { text: 'Not Started', cls: 'notstarted' };
+        };
 
-        const notImpl = soa.filter(x => x.applicable && (x.status === 'Not Implemented')).length;
-        if (notImpl > 0) challenges.push({title:'Reduce “Not Implemented” Controls', desc:`${notImpl} applicable ISO controls are Not Implemented. Move them to Planned or Implemented.`, cta:{tab:'soa', label:'Review SoA'}});
-
-        if (challenges.length === 0) {
-            host.innerHTML = '<div class="col-12"><div class="card-glass"><h5 class="mb-1">All set ✅</h5><div class="text-muted">No critical gaps detected. Add more risks/controls to level up.</div></div></div>';
-            return;
-        }
-
-        host.innerHTML = challenges.map(ch => `
-            <div class="col-lg-6">
-                <div class="card-glass">
-                    <h5 class="mb-1">${this.escapeHtml(ch.title)}</h5>
-                    <div class="text-muted">${this.escapeHtml(ch.desc)}</div>
-                    <div class="mt-3">
-                        <button class="btn btn-outline-light btn-sm" onclick="window.app.switchTab('${ch.cta.tab}')">${this.escapeHtml(ch.cta.label)}</button>
-                    </div>
+        const taskRow = (ch, t) => {
+            const manual = (cp.manual[ch.id] || {});
+            const done = t.auto ? !!t.check() : !!manual[t.key];
+            const icon = done ? 'bi-check-circle-fill' : (t.auto ? 'bi-circle' : 'bi-circle');
+            const note = t.note ? `<small>${this.escapeHtml(t.note)}</small>` : '';
+            const cta = t.cta ? `<div class="mt-1"><button class="btn btn-outline-light btn-sm" onclick="event.stopPropagation(); window.app.switchTab('${t.cta.tab}')">${this.escapeHtml(t.cta.label)}</button></div>` : '';
+            const onclick = t.auto ? '' : `onclick="window.app.toggleManualTask('${ch.id}','${t.key}')"`;
+            const cursor = t.auto ? 'cursor:default;' : 'cursor:pointer;';
+            return `
+              <li class="challenge-task" style="list-style:none; margin: .35rem 0; ${cursor}" ${onclick}>
+                <i class="bi ${icon}" style="font-size:16px; color:${done ? 'var(--accent-success)' : 'rgba(255,255,255,.45)'}"></i>
+                <div>
+                  <div style="font-weight:700;">${this.escapeHtml(t.label)}</div>
+                  ${note}${cta}
                 </div>
+              </li>
+            `;
+        };
+
+        const card = (ch) => {
+            const s = statusLabel(ch.id);
+            const btn = cp.completed[ch.id]
+                ? `<button class="btn btn-outline-light btn-sm" disabled><i class="bi bi-check2-circle me-1"></i> Done</button>`
+                : `<button class="btn btn-primary btn-sm" onclick="window.app.startChallenge('${ch.id}')"><i class="bi bi-play-fill me-1"></i> Start</button>`;
+
+            return `
+              <div class="col-lg-6">
+                <div class="card-glass h-100">
+                  <div class="d-flex align-items-start justify-content-between gap-3">
+                    <div>
+                      <h5 class="mb-1">${this.escapeHtml(ch.title)}</h5>
+                      <div class="text-muted">${this.escapeHtml(ch.desc)}</div>
+                    </div>
+                    <span class="points-badge ${ch.pointsClass}">${ch.points} Points</span>
+                  </div>
+                  <ul class="mt-3 mb-3" style="padding-left: 0;">
+                    ${ch.tasks.map(t => taskRow(ch, t)).join('')}
+                  </ul>
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div class="text-muted" style="font-size:13px;">Status: <span class="challenge-status ${s.cls}">${s.text}</span></div>
+                    ${btn}
+                  </div>
+                </div>
+              </div>
+            `;
+        };
+
+        const progressCard = `
+          <div class="col-12">
+            <div class="card-glass">
+              <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <div>
+                  <h5 class="mb-1">Your Progress</h5>
+                  <div class="text-muted" style="font-size:13px;">Total Points: <span style="font-weight:900;">${totalPoints}</span></div>
+                </div>
+                <button class="btn btn-outline-light btn-sm" onclick="window.app.resetChallengeProgress()"><i class="bi bi-arrow-counterclockwise me-1"></i> Reset Progress</button>
+              </div>
+              <div class="mt-3" style="height:10px; border-radius:999px; background: rgba(255,255,255,.08); overflow:hidden;">
+                <div style="height:10px; width:${Math.min(100, Math.round((totalPoints / (curated.reduce((s,c)=>s+c.points,0) || 1)) * 100))}%; background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65));"></div>
+              </div>
+              <div class="text-muted mt-2" style="font-size:12px;">Progress is stored locally in your browser (localStorage).</div>
             </div>
-        `).join('');
+          </div>
+        `;
+
+        host.innerHTML = curated.map(card).join('') + progressCard;
     }
-    // =====================
+
+// =====================
+
 // REPORT BUILDER + PDF
 // =====================
 
@@ -2769,6 +2976,7 @@ generateReportSection() {
 
   this.appendToReport(block);
   this.showToast('Report section added', 'success');
+  this.bumpReportCount();
 }
 
 exportReportPDF() {
@@ -2817,6 +3025,7 @@ exportReportPDF() {
   const fname = `grc-report-${new Date().toISOString().split('T')[0]}.pdf`;
   doc.save(fname);
   this.showToast('PDF exported', 'success');
+  this.bumpReportCount();
 }
 
     
