@@ -324,6 +324,62 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
   z-index: 2;
 }
 
+/* ================================
+   Hero / Header Tile Polish (GRC Practice Lab)
+   ================================ */
+
+/* Make the first hero tile feel "product-grade" */
+.wrap > section.py-5 .container-glass {
+  padding: 2.25rem !important;
+}
+
+/* Bigger, cleaner title */
+.wrap > section.py-5 h1 {
+  font-size: 34px !important;
+  line-height: 1.12 !important;
+  letter-spacing: -0.02em !important;
+}
+
+/* Subtitle: slightly bigger and clearer */
+.wrap > section.py-5 h1 + span,
+.wrap > section.py-5 .container-glass span {
+  font-size: 15.5px !important;
+  color: rgba(255,255,255,.78) !important;
+}
+
+/* Align header row content nicely + breathing room */
+.wrap > section.py-5 .container-glass > .row .mb-3.p-3 > div {
+  align-items: center !important;
+}
+
+/* Buttons slightly larger + consistent height */
+.wrap > section.py-5 .btn.btn-sm {
+  padding: 0.55rem 0.95rem !important;
+  font-size: 14px !important;
+  border-radius: 12px !important;
+}
+
+/* Disclaimer block: better readability */
+.wrap > section.py-5 .container-glass .mt-3.p-3 {
+  padding: 1.05rem 1.15rem !important;
+}
+
+.wrap > section.py-5 .container-glass .mt-3.p-3 strong {
+  font-size: 14.5px !important;
+}
+
+.wrap > section.py-5 .container-glass .mt-3.p-3 div {
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+}
+
+/* Framework pills: slightly bigger + more “enterprise” */
+.wrap > section.py-5 .framework-badge {
+  padding: 0.33rem 0.8rem !important;
+  font-size: 12.5px !important;
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+}
 
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: rgba(255,255,255,.05); }
