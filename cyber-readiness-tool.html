@@ -1,4 +1,5 @@
 
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,75 +7,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Cyber Readiness Assessment Tool</title>
 
-  <!-- Fonts -->
+  <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg0:#070A12;
-      --bg1:#0B1226;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.085);
-      --stroke: rgba(255,255,255,.10);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.62);
-      --muted2: rgba(255,255,255,.44);
-      --brand:#7C3AED;
-      --brand2:#22D3EE;
-      --good:#34D399;
-      --warn:#FBBF24;
-      --bad:#FB7185;
-      --shadow: 0 24px 70px rgba(0,0,0,.55);
-      --shadow2: 0 14px 40px rgba(0,0,0,.35);
-      --radius: 18px;
-      --radius2: 26px;
-      --ease: cubic-bezier(.2,.8,.2,1);
+      /* Premium Design Tokens */
+      --bg: #0A0A0A;
+      --surface: #121212;
+      --surface-elevated: #1A1A1A;
+      --border: rgba(255,255,255,.08);
+      --border-elevated: rgba(255,255,255,.12);
+      --text: rgba(255,255,255,.95);
+      --text-secondary: rgba(255,255,255,.65);
+      --muted: rgba(255,255,255,.45);
+      --muted2: rgba(255,255,255,.35);
+      --gold: #D4AF37;
+      --good:#10B981;
+      --warn:#F59E0B;
+      --bad:#EF4444;
+      --shadow: 0 8px 32px rgba(0,0,0,.4);
+      --shadow2: 0 4px 16px rgba(0,0,0,.35);
+      --radius: 8px;
+      --radius2: 12px;
+      --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
     }
     *{ box-sizing: border-box; margin: 0; padding: 0; }
     html,body{ height:100%; }
     body{
       margin:0;
-      font-family: Manrope, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      font-family: var(--font-sans);
       color: var(--text);
-      background:
-        radial-gradient(1200px 800px at 20% 10%, rgba(124,58,237,.28), transparent 60%),
-        radial-gradient(900px 600px at 80% 20%, rgba(34,211,238,.18), transparent 55%),
-        radial-gradient(800px 600px at 50% 90%, rgba(251,113,133,.12), transparent 55%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
+      background: var(--bg);
       overflow-x:hidden;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Subtle animated grid */
-    .gridfx{
-      position:fixed; inset:0;
-      background-image:
-        linear-gradient(to right, rgba(255,255,255,.045) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,.045) 1px, transparent 1px);
-      background-size: 42px 42px;
-      mask-image: radial-gradient(800px 600px at 50% 20%, black 35%, transparent 85%);
-      pointer-events:none;
-      opacity:.55;
-      animation: drift 14s var(--ease) infinite alternate;
-    }
-    @keyframes drift{ from{ transform: translate3d(0,0,0); } to{ transform: translate3d(0,-14px,0);} }
+    /* Grid removed for premium clean design */
 
-    /* Floating orbs */
-    .orb{
-      position:fixed; width:520px; height:520px;
-      border-radius:999px;
-      filter: blur(18px);
-      opacity:.55;
-      pointer-events:none;
-      mix-blend-mode: screen;
-      animation: float 9s var(--ease) infinite alternate;
-    }
-    .orb.one{ left:-140px; top:-140px; background: radial-gradient(circle at 35% 30%, rgba(124,58,237,.75), transparent 55%); }
-    .orb.two{ right:-180px; top:80px; background: radial-gradient(circle at 40% 35%, rgba(34,211,238,.55), transparent 60%); animation-duration: 11s;}
-    .orb.three{ left:40%; bottom:-220px; background: radial-gradient(circle at 45% 45%, rgba(251,113,133,.45), transparent 62%); animation-duration: 13s;}
-    @keyframes float { from{ transform: translate3d(0,0,0) scale(1); } to{ transform: translate3d(0,24px,0) scale(1.02);} }
+    /* Orbs removed for premium clean design */
 
     .wrap{ 
       max-width: 1200px; 
@@ -84,7 +60,7 @@
       width: 100%;
     }
 
-    /* Top Navigation - Enhanced */
+    /* Premium Header */
     .topbar{
       display: flex; 
       align-items: center; 
@@ -92,13 +68,11 @@
       position: sticky; 
       top: 0; 
       z-index: 100;
-      padding: 16px 20px;
+      padding: 24px 0;
       margin-bottom: 24px;
-      border-radius: var(--radius2);
-      background: rgba(10,14,26,.85);
-      border: 1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 10px 40px rgba(0,0,0,.45);
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
     }
     .brand{ 
       display: flex; 
@@ -109,29 +83,27 @@
     .logo{
       width: 44px; 
       height: 44px; 
-      border-radius: 12px;
-      background: conic-gradient(from 210deg, rgba(124,58,237,.9), rgba(34,211,238,.9), rgba(251,113,133,.7), rgba(124,58,237,.9));
-      box-shadow: 0 12px 32px rgba(124,58,237,.3);
-      position: relative; 
-      overflow: hidden;
+      border-radius: 8px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
       flex-shrink: 0;
-    }
-    .logo:after{
-      content:""; 
-      position:absolute; 
-      inset:-40%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), transparent 60%);
-      transform: rotate(18deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
     }
     .brand-text h1{ 
+      font-family: var(--font-serif);
       font-size: 16px; 
       margin:0; 
-      letter-spacing:.2px; 
+      letter-spacing: -0.01em; 
       line-height:1.2; 
-      font-weight: 700;
+      font-weight: 600;
     }
     .brand-text .sub{ 
-      font-size: 12.5px; 
+      font-size: 12px; 
       color: var(--muted); 
       margin-top: 4px; 
       line-height: 1.3;
@@ -148,30 +120,33 @@
       display: flex; 
       align-items: center; 
       gap: 8px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.07);
-      border: 1px solid rgba(255,255,255,.12);
+      padding: 12px 20px;
+      border-radius: var(--radius);
+      background: transparent;
+      border: 1px solid var(--border-elevated);
       color: var(--text);
       cursor: pointer;
-      transition: all .2s var(--ease);
+      transition: all 0.2s;
       user-select: none;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       white-space: nowrap;
     }
     .pill:hover{ 
       transform: translateY(-2px); 
-      background: rgba(255,255,255,.1); 
-      border-color: rgba(255,255,255,.18);
-      box-shadow: 0 8px 24px rgba(0,0,0,.3);
+      background: rgba(255,255,255,.03); 
+      border-color: var(--text);
     }
     .pill:active{ transform: translateY(0px) scale(.98); }
     .pill .hint{ color: var(--muted); font-size:11px; }
     .pill.primary{
-      background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
-      border: 1px solid rgba(255,255,255,.15);
-      box-shadow: 0 12px 32px rgba(124,58,237,.3);
+      background: var(--text);
+      color: var(--bg);
+      border: 1px solid var(--text);
+    }
+    .pill.primary:hover{
+      background: transparent;
+      color: var(--text);
     }
 
     /* Main Container - Enhanced */
@@ -193,11 +168,11 @@
     }
     
     .card{
-      background: var(--card);
-      border: 1px solid var(--stroke);
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: var(--radius2);
       box-shadow: var(--shadow2);
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(12px);
       overflow: hidden;
       position: relative;
       height: 100%;
@@ -222,23 +197,19 @@
     }
 
     .hero-title{ 
-      font-size: 36px; 
-      margin: 0 0 12px; 
-      letter-spacing: -.4px; 
-      line-height: 1.1; 
-      font-weight: 800;
-    }
-    .hero-title .grad{
-      background: linear-gradient(90deg, rgba(255,255,255,.95), rgba(34,211,238,.85), rgba(124,58,237,.95));
-      -webkit-background-clip: text; 
-      background-clip: text; 
-      color: transparent;
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 3.5vw, 42px); 
+      margin: 0 0 16px; 
+      letter-spacing: -0.02em; 
+      line-height: 1.2; 
+      font-weight: 400;
+      color: var(--text);
     }
     .hero-desc{ 
       margin: 0 0 20px; 
-      color: var(--muted); 
-      font-size: 15px; 
-      line-height: 1.6; 
+      color: var(--text-secondary); 
+      font-size: 16px; 
+      line-height: 1.7; 
       flex-grow: 1;
     }
 
@@ -252,13 +223,14 @@
       display: inline-flex; 
       align-items: center; 
       gap: 8px; 
-      padding: 8px 14px; 
-      border-radius: 999px; 
-      background: rgba(255,255,255,.07); 
-      border: 1px solid rgba(255,255,255,.12); 
-      color: rgba(255,255,255,.86); 
-      font-size: 12.5px; 
+      padding: 6px 12px; 
+      border-radius: var(--radius); 
+      background: var(--surface-elevated); 
+      border: 1px solid var(--border); 
+      color: var(--text-secondary); 
+      font-size: 12px; 
       font-weight: 500;
+      letter-spacing: 0.01em;
     }
 
     .meta-grid{ 
@@ -271,21 +243,23 @@
       .meta-grid{ grid-template-columns: 1fr; } 
     }
     .meta{ 
-      padding: 16px; 
-      border-radius: 18px; 
-      background: rgba(255,255,255,.06); 
-      border: 1px solid rgba(255,255,255,.1); 
+      padding: 20px; 
+      border-radius: var(--radius2); 
+      background: var(--surface-elevated); 
+      border: 1px solid var(--border); 
     }
     .meta .k{ 
-      color: var(--muted2); 
-      font-size: 13px; 
-      font-weight: 500; 
-      margin-bottom: 6px;
+      color: var(--muted); 
+      font-size: 11px; 
+      font-weight: 600; 
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
     .meta .v{ 
-      font-weight: 700; 
+      font-weight: 600; 
       font-size: 16px; 
-      letter-spacing: .2px; 
+      letter-spacing: -0.01em; 
       color: var(--text);
     }
 
@@ -355,9 +329,9 @@
     .progress-bar{
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
+      background: var(--text);
       border-radius: 999px;
-      transition: width .35s var(--ease);
+      transition: width 0.35s;
     }
     
     .completion-ring{
@@ -380,12 +354,12 @@
     }
     .btn{
       padding: 12px 20px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.07);
-      color: rgba(255,255,255,.9);
+      border-radius: var(--radius);
+      border: 1px solid var(--border-elevated);
+      background: transparent;
+      color: var(--text);
       cursor: pointer;
-      transition: all .2s var(--ease);
+      transition: all 0.2s;
       user-select: none;
       display: inline-flex;
       align-items: center;
@@ -397,20 +371,23 @@
     }
     .btn:hover{ 
       transform: translateY(-2px); 
-      background: rgba(255,255,255,.1); 
-      border-color: rgba(255,255,255,.18);
-      box-shadow: 0 8px 24px rgba(0,0,0,.3);
+      background: rgba(255,255,255,.03); 
+      border-color: var(--text);
     }
     .btn:active{ transform: translateY(0px) scale(.98); }
     .btn.primary{ 
-      background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65)); 
-      border-color: rgba(255,255,255,.18); 
-      box-shadow: 0 12px 32px rgba(124,58,237,.3);
-      font-weight: 700;
+      background: var(--text); 
+      border-color: var(--text);
+      color: var(--bg);
+    }
+    .btn.primary:hover{
+      background: transparent;
+      color: var(--text);
     }
     .btn.danger{ 
-      background: rgba(251,113,133,.12); 
-      border-color: rgba(251,113,133,.22); 
+      background: transparent; 
+      border-color: var(--bad); 
+      color: var(--bad);
     }
     .btn.small{ 
       padding: 10px 16px; 
@@ -568,9 +545,10 @@
     }
     .domain-tile:active{ transform: translateY(-1px) scale(.99); }
     .domain-tile .title{ 
-      font-weight: 800; 
-      font-size: 18px; 
-      letter-spacing: .2px; 
+      font-family: var(--font-serif);
+      font-weight: 600; 
+      font-size: 20px; 
+      letter-spacing: -0.01em; 
       margin-bottom: 8px; 
     }
     .domain-tile .desc{ 
@@ -589,12 +567,7 @@
       font-size: 12.5px; 
     }
     .domain-tile .spark{ 
-      position: absolute; 
-      inset: -50%; 
-      background: radial-gradient(circle at 30% 30%, rgba(34,211,238,.12), transparent 55%), radial-gradient(circle at 70% 40%, rgba(124,58,237,.14), transparent 56%); 
-      transform: rotate(12deg); 
-      opacity: .9; 
-      pointer-events: none; 
+      display: none; /* Removed for premium clean design */
     }
 
     /* Question Cards - Enhanced */
@@ -614,9 +587,10 @@
       min-width: 300px;
     }
     .questions-title{ 
-      font-size: 22px; 
-      font-weight: 800; 
-      letter-spacing: -.2px; 
+      font-family: var(--font-serif);
+      font-size: 28px; 
+      font-weight: 600; 
+      letter-spacing: -0.02em; 
       margin: 0; 
     }
     .questions-subtitle{ 
@@ -715,11 +689,10 @@
       box-shadow: 0 6px 16px rgba(0,0,0,.2);
     }
     .score-pills button.active{ 
-      background: linear-gradient(135deg, rgba(124,58,237,.88), rgba(34,211,238,.55)); 
-      border-color: rgba(255,255,255,.18);
-      box-shadow: 0 8px 20px rgba(124,58,237,.25);
-      color: white;
-      font-weight: 700;
+      background: var(--text); 
+      border-color: var(--text);
+      color: var(--bg);
+      font-weight: 600;
     }
     
     .mapping-chips{ 
@@ -1502,10 +1475,7 @@
 </head>
 
 <body>
-  <div class="gridfx"></div>
-  <div class="orb one"></div>
-  <div class="orb two"></div>
-  <div class="orb three"></div>
+  <!-- Decorative elements removed for premium clean design -->
 
   <div class="wrap">
     <!-- Top Navigation -->
@@ -1536,7 +1506,7 @@
         <div class="card">
           <div class="glow"></div>
           <div class="inner">
-            <h2 class="hero-title"><span class="grad">Cyber Readiness Assessment</span></h2>
+            <h1 class="hero-title" style="font-size: clamp(36px, 5vw, 56px); font-weight: 600;">Cyber Readiness Assessment Tool</h1>
             <p class="hero-desc">
               A structured cyber readiness assessment that produces practical governance outputs: 
               an overall maturity score, domain breakdown, top gaps, and a prioritized 30/60/90-day 
@@ -1619,7 +1589,7 @@
             
             <div class="toggles-grid" id="toggles"></div>
             
-            <div style="margin-top: auto; display: flex; flex-direction: column; gap: 16px;">
+            <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px;">
               <div class="meta">
                 <div class="k">Report outputs</div>
                 <div class="v">Executive results • Top gaps • 30/60/90 roadmap</div>
