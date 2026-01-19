@@ -2415,11 +2415,11 @@ loadDemoScenario() {
     };
 
     let html = `
-      <div style="display:grid; grid-template-columns: 110px repeat(5, 1fr); gap:10px;">
+     <div style="display:grid; grid-template-columns: 56px repeat(5, 1fr); gap:10px;">
         <div></div>
         ${[1,2,3,4,5].map(l => `<div class="text-center text-muted" style="font-weight:800;">L${l}</div>`).join("")}
         ${[5,4,3,2,1].map(i => `
-          <div class="text-muted" style="font-weight:800; display:flex; align-items:center;">I${i}</div>
+          <div class="text-muted" style="font-weight:800; display:flex; align-items:center; justify-content:flex-end; padding-right:6px;">I${i}</div>
           ${[1,2,3,4,5].map(l => cellHtml(i,l)).join("")}
         `).join("")}
       </div>
