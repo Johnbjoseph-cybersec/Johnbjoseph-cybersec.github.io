@@ -1220,7 +1220,38 @@
     @media print {
       body {
         background: white !important;
-        color: #111 !important;
+        color: #000 !important;
+      }
+      
+      /* Make all text dark and readable */
+      * {
+        color: #000 !important;
+      }
+      
+      h1, h2, h3, h4, h5, h6 {
+        color: #000 !important;
+      }
+      
+      .hero-title, .questions-title, .section-title {
+        color: #000 !important;
+      }
+      
+      .hero-desc, .questions-subtitle, .text-secondary, .muted, .muted2 {
+        color: #333 !important;
+      }
+      
+      .meta .k {
+        color: #666 !important;
+      }
+      
+      .meta .v {
+        color: #000 !important;
+      }
+      
+      .chip, .badge, .credential-badge {
+        background: #f5f5f5 !important;
+        border: 1px solid #ddd !important;
+        color: #000 !important;
       }
       
       .gridfx, .orb, .topbar, .no-print {
@@ -1236,6 +1267,22 @@
       
       .glow, .shine, .spark {
         display: none !important;
+      }
+      
+      /* Fix specific elements */
+      .domain-tile .title, .capability-name {
+        color: #000 !important;
+      }
+      
+      .domain-tile .desc, .capability-hint {
+        color: #333 !important;
+      }
+      
+      /* Buttons in print */
+      .btn, .pill {
+        border: 1px solid #000 !important;
+        color: #000 !important;
+        background: white !important;
       }
     }
     /* ===== Fix header layout (match index header classes) ===== */
@@ -1506,7 +1553,7 @@
         <div class="card">
           <div class="glow"></div>
           <div class="inner">
-            <h1 class="hero-title" style="font-size: clamp(36px, 5vw, 56px); font-weight: 600;">Cyber Readiness Assessment Tool</h1>
+            <h1 class="hero-title" style="font-size: clamp(36px, 5vw, 56px); font-weight: 600;">Cyber Readiness Assessment</h1>
             <p class="hero-desc">
               A structured cyber readiness assessment that produces practical governance outputs: 
               an overall maturity score, domain breakdown, top gaps, and a prioritized 30/60/90-day 
