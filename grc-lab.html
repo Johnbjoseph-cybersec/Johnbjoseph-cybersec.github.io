@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -395,42 +396,70 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
     justify-content: space-between;
   }
 }
-/* ================================
-   Reduce Dashboard Tile Spacing
-   ================================ */
 
-/* Reduce vertical gaps between rows */
-.row.g-4 {
-  --bs-gutter-y: 0.9rem;   /* was ~1.5rem */
-}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,.05); }
+::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
+    
+    
 
-/* Reduce excessive bottom margin */
-.mb-5 {
-  margin-bottom: 2rem !important;
-}
-
-/* Compact dashboard sections */
-#tabDashboard .container-glass {
-  padding-bottom: 1.75rem;
-}
 /* ================================
    Dashboard spacing compact fixes
    ================================ */
 
-/* Compact metric cards */
-.metric-card {
+/* Reduce vertical & horizontal gutter on dashboard grids */
+#tabDashboard .row{
+  --bs-gutter-x: 0.9rem;
+  --bs-gutter-y: 0.9rem;
+}
+
+/* Compact metric cards (dashboard top tiles) */
+#tabDashboard .metric-card{
   padding: 1.1rem !important;
 }
-
-.metric-value {
+#tabDashboard .metric-value{
   font-size: 2.1rem !important;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.25rem !important;
 }
 
-/* Reduce vertical spacing between stacked cards
-   (Recent Risks / Quick Actions) */
-#tabDashboard .card-glass {
-  margin-bottom: 0.75rem;
+/* Slightly tighter card spacing under dashboard */
+#tabDashboard .card-glass{
+  padding: 1.25rem !important;
+}
+
+
+
+/* ================================
+   Dashboard tiles: bring closer
+   ================================ */
+#tabDashboard .container-glass{
+  padding: 1.5rem !important;
+}
+#tabDashboard h2{
+  margin-top: 0 !important;
+  margin-bottom: 1rem !important;
+}
+/* tighten bootstrap gutters for dashboard rows */
+#tabDashboard .g-3, 
+#tabDashboard .g-2,
+#tabDashboard .row{
+  --bs-gutter-x: 0.55rem !important;
+  --bs-gutter-y: 0.55rem !important;
+}
+/* reduce extra spacing between metric row and the next row */
+#tabDashboard .row.mb-3{ margin-bottom: 0.6rem !important; }
+#tabDashboard .metric-card{ padding: 1rem !important; }
+#tabDashboard .metric-value{ font-size: 2.0rem !important; margin-bottom: 0.2rem !important; }
+#tabDashboard .card-glass{ padding: 1.15rem !important; }
+
+/* ================================
+   Risks tab: make category text visible
+   ================================ */
+#tabRisks .text-muted,
+#tabRisks small.text-muted{
+  color: rgba(255,255,255,.78) !important;
+  opacity: 1 !important;
 }
 /* ================================
    Dashboard – Recent Risks text color fix
@@ -441,12 +470,7 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
   color: rgba(255,255,255,0.78) !important;
 }
 
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: rgba(255,255,255,.05); }
-::-webkit-scrollbar-thumb { background: var(--border-medium); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
-    
-    </style>
+</style>
 </head>
 <body>
 
@@ -591,7 +615,7 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
             <div id="tabDashboard" class="tab-content active">
                 <div class="container-glass">
                     <h2>Dashboard Overview</h2>
-                    <div class="row g-4 mb-5">
+                    <div class="row g-2 mb-2">
                         <div class="col-md-3 col-6">
                             <div class="metric-card">
                                 <div class="metric-value" id="metricAssets">0</div>
@@ -617,7 +641,7 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
                             </div>
                         </div>
                     </div>
-                    <div class="row g-4">
+                    <div class="row g-2">
                         <div class="col-lg-8">
                             <div class="card-glass">
                                 <h4>Recent Risks</h4>
