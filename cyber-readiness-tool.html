@@ -1438,6 +1438,58 @@
       white-space: nowrap;
     }
     .dd-close:hover{ background: rgba(255,255,255,.09); }
+/* ===== Global Footer ===== */
+.site-footer{
+  margin-top: 48px;
+  padding: 24px 20px;
+  border-top: 1px solid rgba(255,255,255,.12);
+  background: rgba(10,14,26,.55);
+  backdrop-filter: blur(14px);
+  border-radius: 18px;
+}
+
+.footer-inner{
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-left{
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.footer-links{
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.footer-links a{
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,.85);
+  text-decoration: none;
+  transition: color .2s ease, transform .2s ease;
+}
+
+.footer-links a:hover{
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* Mobile */
+@media (max-width: 520px){
+  .footer-inner{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
 
   </style>
 </head>
@@ -1783,6 +1835,22 @@
         </div>
       </div>
     </main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      © 2026 John Bommeraveni Joseph.
+    </div>
+
+    <nav class="footer-links">
+      <a href="terms.html">Terms</a>
+      <a href="cyber-readiness-tool.html">Cyber Readiness Tool</a>
+      <a href="grc-lab.html">GRC Lab</a>
+      <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="https://www.linkedin.com/in/john-bommeraveni-joseph/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+  </div>
+</footer>
 
     <!-- Toast Notification -->
     <div class="toast" id="toast"></div>
