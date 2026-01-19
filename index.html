@@ -285,10 +285,10 @@
     /* Image helpers */
     /* Profile image – bigger + better crop */
 /* Profile headshot: keep portrait ratio + reduce “speckle” look */
+/* Profile image (index.html) – stable layout + sharp */
 .avatar{
   width: 96px;
-  aspect-ratio: 3 / 4;     /* portrait ratio (no squish) */
-  height: auto;
+  height: 96px;
   border-radius: 18px;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,.18);
@@ -301,13 +301,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 18%;   /* keeps face centered */
+  object-position: 50% 18%;
   display: block;
-
-  /* tiny smoothing to reduce enhancement speckles */
-  filter: blur(0.12px);
-  transform: translateZ(0);
 }
+
 
 
     .brandLogoMini{
@@ -424,7 +421,7 @@
               assets/img/profile.png
             -->
             <div class="avatar">
-              <img src="profile.png" alt="John Bommeraveni Joseph headshot">
+              <img src="profile_clean.png" alt="John Bommeraveni Joseph headshot">
 
             </div>
             <div>
