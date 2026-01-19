@@ -284,10 +284,12 @@
 
     /* Image helpers */
     /* Profile image – bigger + better crop */
+/* Profile headshot: keep portrait ratio + reduce “speckle” look */
 .avatar{
-  width: 110px;
-  height: 110px;
-  border-radius: 20px;
+  width: 96px;
+  aspect-ratio: 3 / 4;     /* portrait ratio (no squish) */
+  height: auto;
+  border-radius: 18px;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,.18);
   background: rgba(255,255,255,.06);
@@ -299,9 +301,14 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 18%; /* moves crop up so your face stays centered */
+  object-position: 50% 18%;   /* keeps face centered */
   display: block;
+
+  /* tiny smoothing to reduce enhancement speckles */
+  filter: blur(0.12px);
+  transform: translateZ(0);
 }
+
 
     .brandLogoMini{
       width:34px; height:34px; border-radius:12px; overflow:hidden;
