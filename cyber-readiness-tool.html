@@ -1316,6 +1316,129 @@
   .stepper-top{ flex-wrap: wrap !important; }
 }
 
+/* === Stepper: show % inside a round badge (hide ring SVG) === */
+.completion-ring svg{ display:none !important; }
+.completion-ring .ring-text{
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 13px;
+  color: rgba(255,255,255,.95);
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow: 0 10px 28px rgba(0,0,0,.35);
+  backdrop-filter: blur(10px);
+}
+
+  
+
+    /* === Results: Domain Drilldown (clickable domain breakdown) === */
+    .domain-drilldown{
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .dd-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom: 12px;
+    }
+    .dd-title{
+      font-weight: 900;
+      font-size: 16px;
+    }
+    .dd-sub{
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+    .dd-chiprow{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .dd-chip{
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.86);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .dd-list{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin-top: 10px;
+    }
+    .dd-item{
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .dd-q{
+      font-weight: 900;
+      font-size: 14px;
+      margin-bottom: 6px;
+      letter-spacing: .1px;
+    }
+    .dd-hint{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .dd-meta{
+      margin-top: 10px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      color: rgba(255,255,255,.82);
+      font-size: 12.5px;
+    }
+    .dd-score{
+      font-weight: 900;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      white-space: nowrap;
+    }
+    .dd-map{
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(124,58,237,.14);
+      border: 1px solid rgba(124,58,237,.22);
+      white-space: nowrap;
+    }
+    .dd-close{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.9);
+      padding: 8px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 12.5px;
+      white-space: nowrap;
+    }
+    .dd-close:hover{ background: rgba(255,255,255,.09); }
+
   </style>
 </head>
 
@@ -1573,6 +1696,9 @@
                       <div class="badge" id="badgeFrameworks">ISO 27001 • Annex A</div>
                     </div>
                     <div class="bars-container" id="bars"></div>
+
+                    <!-- Domain drilldown (click a domain bar to expand) -->
+                    <div class="domain-drilldown" id="domainDrilldown" style="display:none;"></div>
                   </div>
 
                   <!-- Executive Insights -->
@@ -2247,7 +2373,14 @@
       }
 
       root.querySelector("#btnBackDomains2").addEventListener("click", ()=>{ switchView("domains"); });
-      root.querySelector("#btnToResults").addEventListener("click", ()=>{ switchView("results"); renderResults(); });
+      root.querySelector("#btnToResults").addEventListener("click", ()=>{ 
+        switchView("results");
+        renderResults();
+        setTimeout(()=>{
+          const el = document.getElementById("viewResults");
+          if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+        }, 120);
+      });
 
       const idx = DOMAINS.findIndex(d => d.key === domainKey);
       root.querySelector("#btnPrevDomain").addEventListener("click", ()=>{
@@ -2388,6 +2521,10 @@
         const v = avgs[d.key] ?? 0;
         const bar = document.createElement("div"); 
         bar.className = "bar-item";
+        bar.style.cursor = "pointer";
+        bar.setAttribute("role","button");
+        bar.setAttribute("tabindex","0");
+        bar.setAttribute("aria-label", `Open ${d.key} details`);
         bar.innerHTML = `
           <div class="header">
             <div class="name">${escapeHtml(d.key)}</div>
@@ -2395,6 +2532,8 @@
           </div>
           <div class="bar-track"><div class="bar-fill" style="width:${(v/4)*100}%"></div></div>
         `;
+        bar.addEventListener("click", ()=> window.openDomainDrilldown(d.key));
+        bar.addEventListener("keydown", (e)=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); window.openDomainDrilldown(d.key); }});
         bars.appendChild(bar);
       }
 
@@ -2471,6 +2610,68 @@
       }
     }
 
+    // === Results: Domain drilldown (click a Domain Breakdown bar to expand) ===
+    window.openDomainDrilldown = function(domainKey){
+      const dd = document.getElementById("domainDrilldown");
+      if(!dd) return;
+
+      const domain = DOMAINS.find(d => d.key === domainKey);
+      if(!domain) return;
+
+      const total = domain.questions.length;
+      const scored = domain.questions.filter(q => state.answers[q.id] !== undefined && state.answers[q.id] !== null).length;
+
+      const showClause = !!state.toggles.ISO_CLAUSE;
+      const showAnnex  = !!state.toggles.ISO_ANNEXA;
+
+      const scoreLabel = (v)=>{
+        const s = SCALE.find(x => x.v === Number(v));
+        return s ? s.label : "—";
+      };
+
+      const mapChips = (q)=>{
+        const clause = (q.mappings||[]).find(m => m.fw === "ISO_CLAUSE")?.ref;
+        const annex  = (q.mappings||[]).find(m => m.fw === "ISO_ANNEXA")?.ref;
+        const chips = [];
+        if(showClause && clause) chips.push(`<span class="dd-map">ISO Clause: ${escapeHtml(clause)}</span>`);
+        if(showAnnex && annex) chips.push(`<span class="dd-map">Annex A: ${escapeHtml(annex)}</span>`);
+        return chips.join("");
+      };
+
+      const items = domain.questions.map(q => {
+        const v = state.answers[q.id];
+        const hasScore = (v !== undefined && v !== null);
+        return `
+          <div class="dd-item">
+            <div class="dd-q">${escapeHtml(q.title)}</div>
+            <div class="dd-hint">${escapeHtml(q.hint || "")}</div>
+            <div class="dd-meta">
+              <span class="dd-score">Score: ${hasScore ? `${v} • ${escapeHtml(scoreLabel(v))}` : "Not scored"}</span>
+              ${mapChips(q)}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      dd.innerHTML = `
+        <div class="dd-head">
+          <div>
+            <div class="dd-title">${escapeHtml(domain.key)} — Capabilities</div>
+            <div class="dd-sub">${escapeHtml(domain.purpose)} • ${scored}/${total} scored</div>
+          </div>
+          <div class="dd-chiprow">
+            ${(showClause || showAnnex) ? `<span class="dd-chip">ISO 27001 • Annex A</span>` : ``}
+            <button class="dd-close" type="button" onclick="document.getElementById('domainDrilldown').style.display='none'">Close</button>
+          </div>
+        </div>
+        <div class="dd-list">${items}</div>
+      `;
+
+      dd.style.display = "block";
+      dd.scrollIntoView({behavior:"smooth", block:"start"});
+    };
+
+
     function exportJSON(){
       const payload = {
         tool: "Cyber Readiness & GRC Assessment (Enterprise Static)",
@@ -2525,8 +2726,17 @@
         state.answers[ids[i]] = demoPattern[i] || 2;
       }
       saveAnswers(); 
-      renderDomains();
-      toast("Demo loaded", "Realistic scores populated for showcase");
+      // After loading demo, jump straight to Results (like clicking Results)
+      switchView("results");
+      renderResults();
+      toast("Demo loaded", "Demo scores populated — showing Results");
+
+      // Scroll to the results view for a "bottom-of-page" feel
+      setTimeout(()=>{
+        const el = document.getElementById("viewResults");
+        if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+        else window.scrollTo({top: document.body.scrollHeight, behavior:"smooth"});
+      }, 150);
     }
 
     function safeOn(id, fn){
@@ -2558,16 +2768,23 @@
           switchView("results"); 
           renderResults();
           toast("Live insights", "Complete all capabilities to generate the full final report.");
+          setTimeout(()=>{
+            const el = document.getElementById("viewResults");
+            if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+          }, 120);
         }
       });
 
       const _btnStart=document.getElementById("btnStart"); if(_btnStart) _btnStart.addEventListener("click", ()=>{ 
-        switchView("domains"); 
-        renderDomains(); 
-        toast("Assessment started", "Pick a domain to begin"); 
+        // Go straight into the Govern domain (as requested)
+        state.activeDomain = "Govern";
+        renderQuestions("Govern");
+        switchView("questions");
+        toast("Assessment started", "Opened: Govern");
+        window.scrollTo({top:0, behavior:"smooth"});
       });
       
-      document.getElementById("btnDemo").addEventListener("click", loadDemo);
+      const _btnDemo=document.getElementById("btnDemo"); if(_btnDemo) _btnDemo.addEventListener("click", loadDemo);
 
       const _btnBackHome=document.getElementById("btnBackHome"); if(_btnBackHome) _btnBackHome.addEventListener("click", ()=>{ 
         switchView("domains"); 
@@ -2581,6 +2798,10 @@
           switchView("results"); 
           renderResults();
           toast("Live insights", "Complete all capabilities to generate the full final report.");
+          setTimeout(()=>{
+            const el = document.getElementById("viewResults");
+            if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+          }, 120);
         }
       });
 
