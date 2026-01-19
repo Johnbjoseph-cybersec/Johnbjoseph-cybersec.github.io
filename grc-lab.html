@@ -180,6 +180,33 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
   color: #ffffff !important;
   opacity: 0.85;
 }
+/* === FORCE WHITE TEXT FOR GRC CHALLENGES === */
+.challenges-section,
+.challenges-section * {
+  color: #ffffff !important;
+}
+
+/* Slightly muted text for descriptions/status (still visible) */
+.challenges-section .muted,
+.challenges-section .status,
+.challenges-section .task {
+  color: rgba(255,255,255,0.75) !important;
+}
+
+/* Bullet points */
+.challenges-section ul li {
+  color: rgba(255,255,255,0.85) !important;
+}
+
+/* Status text */
+.challenges-section .status {
+  font-weight: 500;
+}
+
+/* Points badges stay readable */
+.challenges-section .points {
+  color: #ffffff !important;
+}
 
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: rgba(255,255,255,.05); }
