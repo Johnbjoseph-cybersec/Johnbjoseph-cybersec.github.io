@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -1298,6 +1299,23 @@
   font-weight:800;
 }
 
+  /* === Stepper: keep "Step 1/3" and "0%" on same line === */
+.stepper-top{
+  flex-wrap: nowrap !important;
+}
+.step-indicator{
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.completion-ring{
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+/* On small screens, allow wrapping again */
+@media (max-width: 520px){
+  .stepper-top{ flex-wrap: wrap !important; }
+}
+
   </style>
 </head>
 
@@ -1655,6 +1673,7 @@
   </div>
 
   <script>
+
     // Copy the original JavaScript functionality here
     // (The JavaScript code from the original file remains the same)
     const STORAGE_KEY = "cr_enterprise_v1_answers";
@@ -2510,10 +2529,16 @@
       toast("Demo loaded", "Realistic scores populated for showcase");
     }
 
-    function bindTopControls(){
-      document.getElementById("btnExportJson").addEventListener("click", exportJSON);
+    function safeOn(id, fn){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.addEventListener("click", fn);
+    }
 
-      document.getElementById("btnPrint").addEventListener("click", ()=> {
+    function bindTopControls(){
+      safeOn("btnExportJson", exportJSON);
+
+      safeOn("btnPrint", () => {
         switchView("results"); 
         renderResults();
         document.body.classList.add("print-report");
@@ -2524,9 +2549,9 @@
         }, 250);
       });
 
-      document.getElementById("btnReset").addEventListener("click", resetAll);
+      safeOn("btnReset", resetAll);
 
-      document.getElementById("btnGoResults").addEventListener("click", ()=>{ 
+      safeOn("btnGoResults", () => { 
         if(isComplete()){
           analyzeAndShowResults();
         } else {
@@ -2536,7 +2561,7 @@
         }
       });
 
-      document.getElementById("btnStart").addEventListener("click", ()=>{ 
+      const _btnStart=document.getElementById("btnStart"); if(_btnStart) _btnStart.addEventListener("click", ()=>{ 
         switchView("domains"); 
         renderDomains(); 
         toast("Assessment started", "Pick a domain to begin"); 
@@ -2544,12 +2569,12 @@
       
       document.getElementById("btnDemo").addEventListener("click", loadDemo);
 
-      document.getElementById("btnBackHome").addEventListener("click", ()=>{ 
+      const _btnBackHome=document.getElementById("btnBackHome"); if(_btnBackHome) _btnBackHome.addEventListener("click", ()=>{ 
         switchView("domains"); 
         window.scrollTo({top:0, behavior:"smooth"}); 
       });
       
-      document.getElementById("btnQuickResults").addEventListener("click", ()=>{ 
+      const _btnQuickResults=document.getElementById("btnQuickResults"); if(_btnQuickResults) _btnQuickResults.addEventListener("click", ()=>{ 
         if(isComplete()){
           analyzeAndShowResults();
         } else {
@@ -2559,12 +2584,12 @@
         }
       });
 
-      document.getElementById("btnBackDomains").addEventListener("click", ()=>{ 
+      const _btnBackDomains=document.getElementById("btnBackDomains"); if(_btnBackDomains) _btnBackDomains.addEventListener("click", ()=>{ 
         switchView("domains"); 
         renderDomains(); 
       });
 
-      document.getElementById("btnSaveReport").addEventListener("click", ()=> {
+      const _btnSaveReport=document.getElementById("btnSaveReport"); if(_btnSaveReport) _btnSaveReport.addEventListener("click", ()=>{
         switchView("results"); 
         renderResults();
         document.body.classList.add("print-report");
@@ -2588,6 +2613,7 @@
 
     // Initialize the application
     init();
-  </script>
+  
+</script>
 </body>
 </html>
