@@ -3,6 +3,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,88 +14,121 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     
     <style>
 :root {
-    --bg0:#070A12; --bg1:#0B1226; --brand:#7C3AED; --brand2:#22D3EE;
-    --text-primary: #f8fafc; --text-secondary: #cbd5e1; --text-muted: #94a3b8;
-    --border-light: rgba(255, 255, 255, 0.1); --border-medium: rgba(255, 255, 255, 0.15);
-    --accent-primary: #3b82f6; --accent-success: #10b981; --accent-warning: #f59e0b;
-    --accent-danger: #ef4444; --accent-info: #06b6d4;
-    --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px;
+    /* Premium Design Tokens */
+    --bg: #0A0A0A;
+    --surface: #121212;
+    --surface-elevated: #1A1A1A;
+    --border: rgba(255,255,255,.08);
+    --border-elevated: rgba(255,255,255,.12);
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --accent-primary: #3b82f6;
+    --accent-success: #10b981;
+    --accent-warning: #f59e0b;
+    --accent-danger: #ef4444;
+    --accent-info: #06b6d4;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
     --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.4);
+    --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; height: 100%; }
 body {
-    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: radial-gradient(1200px 800px at 20% 10%, rgba(124,58,237,.28), transparent 60%),
-                radial-gradient(900px 600px at 80% 20%, rgba(34,211,238,.18), transparent 55%),
-                radial-gradient(800px 600px at 50% 90%, rgba(251,113,133,.12), transparent 55%),
-                linear-gradient(180deg, var(--bg0), var(--bg1)) !important;
-    color: var(--text-primary); line-height: 1.6; min-height: 100vh; overflow-x: hidden;
+    font-family: var(--font-sans);
+    background: var(--bg) !important;
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
-h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.2; margin-bottom: 1rem; }
-h1 { font-size: 2.5rem; background: linear-gradient(135deg, var(--accent-primary), var(--accent-info));
-     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-h2 { font-size: 1.75rem; margin-top: 2rem; }
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+}
+h1 {
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 400;
+    color: var(--text-primary);
+}
+h2 {
+    font-size: clamp(24px, 3vw, 32px);
+    margin-top: 2rem;
+}
 .lead { font-size: 1.125rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
 .wrap { max-width: 1200px; margin: 0 auto; padding: 28px 18px 60px; position: relative; z-index: 1; }
 .topbar {
     display:flex; align-items:center; justify-content:space-between; gap:14px;
-    position:sticky; top:0; z-index:50; padding: 14px 12px; margin: -8px -6px 18px;
-    border-radius: 26px; background: rgba(10,14,26,.62); border: 1px solid rgba(255,255,255,.10);
-    backdrop-filter: blur(12px); box-shadow: 0 10px 32px rgba(0,0,0,.35);
+    position:sticky; top:0; z-index:50; padding: 24px 0; margin-bottom: 18px;
+    background: rgba(10, 10, 10, 0.9); border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(20px) saturate(180%);
 }
 .brandRow{ display:flex; align-items:center; gap:10px; text-decoration:none; color: inherit; }
-.logo { width:38px; height:38px; border-radius:12px;
-        background: conic-gradient(from 210deg, rgba(124,58,237,.9), rgba(34,211,238,.9), rgba(124,58,237,.9));
-        box-shadow: 0 12px 26px rgba(124,58,237,.25); }
+.logo {
+    width:38px; height:38px; border-radius: var(--radius-md);
+    background: var(--surface-elevated); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+}
 .brandTitle{ margin:0; font-size:14px; font-weight:800; }
 .brandSub{ margin-top:2px; font-size:12px; color: var(--text-muted); }
 .navlinks{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-.pill { display:flex; align-items:center; gap:8px; padding: 10px 12px; border-radius: 999px;
-        background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10);
-        color: var(--text-primary); cursor:pointer; transition: all .18s;
-        font-weight:800; font-size:13px; text-decoration:none; }
-.pill:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); }
-.pill.primary { background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65));
-                box-shadow: 0 20px 55px rgba(124,58,237,.25); }
+.pill {
+    display:flex; align-items:center; gap:8px; padding: 12px 16px; border-radius: var(--radius-md);
+    background: transparent; border: 1px solid var(--border-elevated);
+    color: var(--text-primary); cursor:pointer; transition: all .18s;
+    font-weight:600; font-size:14px; text-decoration:none;
+}
+.pill:hover{ transform: translateY(-1px); background: rgba(255,255,255,.03); border-color: var(--text-primary); }
+.pill.primary {
+    background: var(--text-primary); color: var(--bg); border-color: var(--text-primary);
+}
+.pill.primary:hover{ background: transparent; color: var(--text-primary); }
 .container-glass {
-    background: rgba(255,255,255,.05) !important; border: 1px solid rgba(255,255,255,.10) !important;
+    background: var(--surface) !important; border: 1px solid var(--border) !important;
     backdrop-filter: blur(12px); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-lg);
 }
 .card-glass {
-    background: rgba(255,255,255,.055) !important; border: 1px solid rgba(255,255,255,.10) !important;
+    background: var(--surface-elevated) !important; border: 1px solid var(--border) !important;
     border-radius: var(--radius-md); padding: 1.5rem; transition: all 0.25s;
 }
-.card-glass:hover { border-color: var(--border-medium); transform: translateY(-4px); }
+.card-glass:hover { border-color: var(--border-elevated); transform: translateY(-4px); }
 .tab-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; padding: 1rem 0; margin-bottom: 2rem; }
 .tab-btn {
-    border-radius: 999px !important; padding: 0.62rem 1.05rem !important;
-    border: 1px solid rgba(255,255,255,.12) !important; background: rgba(255,255,255,.06) !important;
-    color: rgba(255,255,255,.86) !important; font-weight: 800 !important; white-space: nowrap;
-    transition: all .18s; box-shadow: 0 10px 26px rgba(0,0,0,.18);
+    border-radius: var(--radius-md) !important; padding: 0.75rem 1.25rem !important;
+    border: 1px solid var(--border-elevated) !important; background: transparent !important;
+    color: var(--text-primary) !important; font-weight: 600 !important; white-space: nowrap;
+    transition: all .18s;
 }
-.tab-btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.085) !important; }
+.tab-btn:hover { transform: translateY(-1px); background: rgba(255,255,255,.03) !important; }
 .tab-btn.active {
-    background: linear-gradient(135deg, rgba(124,58,237,.92), rgba(34,211,238,.65)) !important;
-    color: rgba(255,255,255,.96) !important; box-shadow: 0 18px 46px rgba(124,58,237,.22);
+    background: var(--text-primary) !important;
+    color: var(--bg) !important;
 }
 .tab-content { display: none; }
 .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 .form-control, .form-select, textarea {
-    background: rgba(255,255,255,.06) !important; border: 1px solid rgba(255,255,255,.12) !important;
-    color: rgba(255,255,255,.92) !important; border-radius: var(--radius-sm);
+    background: rgba(255,255,255,.05) !important; border: 1px solid var(--border) !important;
+    color: var(--text-primary) !important; border-radius: var(--radius-sm);
     padding: 0.75rem 1rem; transition: all 0.15s;
 }
 .form-control:focus, .form-select:focus {
-    background: rgba(255,255,255,.1) !important; border-color: var(--accent-primary) !important;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); color: var(--text-primary) !important;
+    background: rgba(255,255,255,.08) !important; border-color: var(--border-elevated) !important;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05); color: var(--text-primary) !important;
 }
 .form-control::placeholder { color: rgba(255,255,255,.45) !important; }
 .form-select option { color: #111 !important; }
@@ -537,7 +571,7 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
 
       <!-- Left: Title + subtitle in same line -->
       <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;">
-        <h1 class="mb-0" style="font-size:56px;">GRC Practice Lab</h1>
+        <h1 class="mb-0" style="font-size: clamp(36px, 5vw, 64px); font-weight: 600;">GRC Practice Lab</h1>
         <span style="color:rgba(255,255,255,.75); font-size:14px;">
           Interactive simulation with 400+ controls from 9 major frameworks
         </span>
