@@ -380,6 +380,21 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
   border-radius: 999px !important;
   font-weight: 700 !important;
 }
+/* ================================
+   Full-width Framework Badges Row
+   ================================ */
+
+.frameworks-row {
+  justify-content: flex-start;
+  padding-top: 6px;
+}
+
+/* Optional: distribute nicely if screen is wide */
+@media (min-width: 992px) {
+  .frameworks-row {
+    justify-content: space-between;
+  }
+}
 
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: rgba(255,255,255,.05); }
@@ -461,7 +476,8 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
   </div>
 
   <!-- Framework badges -->
-  <div class="d-flex flex-wrap gap-2 mt-3">
+<div class="d-flex flex-wrap gap-2 mt-3 w-100 frameworks-row">
+
     <span class="framework-badge badge-iso">ISO 27001</span>
     <span class="framework-badge badge-nist">NIST CSF</span>
     <span class="framework-badge badge-pci">PCI DSS</span>
