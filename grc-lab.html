@@ -290,6 +290,22 @@ h2 { font-size: 1.75rem; margin-top: 2rem; }
   border-radius: 999px;
   box-shadow: 0 6px 18px rgba(59,130,246,0.25);
 }
+/* ================================
+   FORCE POINTS TEXT TO ONE LINE
+   ================================ */
+
+#tabChallenges .points-badge {
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 4px;
+  line-height: 1 !important;
+}
+
+/* If Points text is wrapped in spans */
+#tabChallenges .points-badge span {
+  white-space: nowrap !important;
+}
 
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: rgba(255,255,255,.05); }
