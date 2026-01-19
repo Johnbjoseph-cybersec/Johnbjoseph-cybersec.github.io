@@ -286,6 +286,17 @@
     /* Profile image – bigger + better crop */
 /* Profile headshot: keep portrait ratio + reduce “speckle” look */
 /* Profile image (index.html) – stable layout + sharp */
+/* Profile block (Right card) */
+.profileBlock{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+/* Bigger avatar – crisp, not stretched */
 .avatar{
   width: 96px;
   height: 96px;
@@ -297,13 +308,34 @@
   flex: 0 0 auto;
 }
 
+/* Large variant for portfolio hero */
+.avatar-lg{
+  width: 140px;
+  height: 140px;
+  border-radius: 22px;
+}
+
 .avatar img{
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: 50% 18%;
+  object-fit: cover;          /* keeps proportions, no stretch */
+  object-position: 50% 18%;   /* keeps face centered */
   display: block;
 }
+
+/* Text under image */
+.profileName{
+  font-weight: 900;
+  font-size: 16px;
+  letter-spacing: -0.2px;
+  margin-top: 2px;
+}
+.profileRole{
+  font-size: 12.5px;
+  color: rgba(255,255,255,.75);
+  line-height: 1.35;
+}
+
 
 
 
@@ -415,23 +447,16 @@
       <div class="card">
         <div class="glow"></div>
         <div class="inner">
-          <div style="display:flex; gap:14px; align-items:center;">
-            <!-- PROFILE IMAGE LOCATION:
-              Replace this file with your best headshot:
-              assets/img/profile.png
-            -->
-            <div class="avatar">
-              <img src="profile_clean.png" alt="John Bommeraveni Joseph headshot">
+          <div class="profileBlock">
+  <div class="avatar avatar-lg">
+    <img src="profile_clean.png" alt="John Bommeraveni Joseph headshot">
+  </div>
 
-            </div>
-            <div>
-              <div style="font-weight:900; font-size:16px; letter-spacing:-.2px;">John Bommeraveni Joseph, CCEP</div>
-              <div class="small" style="margin-top:4px;">
-                Certified Cybersecurity, GRC & AI Governance Professional<br>
-                ISO/IEC 27001 & 42001 Lead Auditor
-              </div>
-            </div>
-          </div>
+  <div class="profileName">John Bommeraveni Joseph, CCEP</div>
+  <div class="profileRole">Certified Cybersecurity, GRC & AI Governance Professional</div>
+  <div class="profileRole">ISO/IEC 27001 & 42001 Lead Auditor</div>
+</div>
+
 
           <div class="meta" style="margin-top: 14px;">
             <div class="k">What you’ll find on this portfolio</div>
