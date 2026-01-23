@@ -1020,7 +1020,10 @@ h2 {
         <h2 class="mb-1">Risk Analytics</h2>
         <div class="text-muted">Industry standard: 5×5 Likelihood (1–5) × Impact (1–5). Supports Low/Medium/High too.</div>
       </div>
-      <div class="d-flex gap-2 flex-wrap">
+      <div class="d-flex gap-2 flex-wrap align-items-center">
+        <select id="riskAnalyticsProjectFilter" class="form-select" style="min-width: 280px;" onchange="window.app.renderRiskAnalytics()">
+          <option value="">None (General Risk Analytics)</option>
+        </select>
         <button class="btn btn-outline-light btn-sm" onclick="window.app.renderRiskAnalytics()">
           <i class="bi bi-arrow-repeat me-2"></i> Refresh
         </button>
@@ -2866,8 +2869,59 @@ loadDemoScenario() {
         URL.revokeObjectURL(url);
     }
 
-   renderRiskAnalytics() {
-  const risks = Array.isArray(this.data?.risks) ? this.data.risks : [];
+   
+    populateRiskAnalyticsProjectFilter() {
+        const sel = document.getElementById('riskAnalyticsProjectFilter');
+        if (!sel) return;
+
+        // Preserve current selection
+        const current = sel.value || '';
+
+        // Build options from project scenarios + started/in-progress projects
+        const scenarios = this.getProjectScenarios ? this.getProjectScenarios() : [];
+        const projects = Array.isArray(this.data?.projects) ? this.data.projects : [];
+        const inProgress = projects.filter(p => p.status === 'in-progress');
+
+        // Always keep the first option as "None (General...)"
+        const options = [
+            { value: '', label: 'None (General Risk Analytics)' },
+            ...inProgress.map(p => {
+                const sc = scenarios.find(s => s.id === p.id);
+                const label = sc ? `${sc.company}` : p.id;
+                return { value: p.id, label };
+            })
+        ];
+
+        // De-duplicate by value while keeping order
+        const seen = new Set();
+        const unique = options.filter(o => {
+            if (seen.has(o.value)) return false;
+            seen.add(o.value);
+            return true;
+        });
+
+        sel.innerHTML = unique.map(o => `<option value="${o.value}">${this.escapeHtml(o.label)}</option>`).join('');
+        sel.value = current;
+    }
+
+    getRisksForAnalytics() {
+        const all = Array.isArray(this.data?.risks) ? this.data.risks : [];
+        const sel = document.getElementById('riskAnalyticsProjectFilter');
+        const projectId = sel ? (sel.value || '') : '';
+
+        // None => General analytics across all risks
+        if (!projectId) return all;
+
+        // Project selected => only risks linked to that project
+        return all.filter(r => String(r.projectId || '') === String(projectId));
+    }
+
+
+renderRiskAnalytics() {
+  // Ensure project filter options are in sync
+  this.populateRiskAnalyticsProjectFilter();
+
+  const risks = this.getRisksForAnalytics();
 
   // --- Helpers (supports 1–5 and Low/Medium/High) ---
   const to15 = (v) => {
