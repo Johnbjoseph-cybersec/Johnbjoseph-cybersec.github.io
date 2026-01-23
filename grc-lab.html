@@ -1606,6 +1606,7 @@ class GRCApplication {
         this.version = '2.5.0';
         this.storagePrefix = 'grc_lab_v2_';
         this.currentTab = 'dashboard';
+        this.currentProjectId = null; // Track current project for auto-assignment
         this.data = this.initializeData();
         this.frameworks = this.initializeFrameworks();
         this.init();
@@ -1705,6 +1706,11 @@ class GRCApplication {
             }
         });
         this.renderTabContent(tabName);
+        
+        // Refresh projects when switching back to see updated progress
+        if (tabName === 'projects') {
+            this.renderProjects();
+        }
     }
 
     renderTabContent(tabName) {
@@ -1809,6 +1815,9 @@ class GRCApplication {
     // RISKS
     showRiskForm(riskId = null) {
         const risk = riskId ? this.data.risks.find(r => r.id === riskId) : null;
+        const projects = this.getProjectScenarios();
+        const startedProjects = this.data.projects.filter(p => p.status === 'in-progress');
+        
         document.getElementById('riskModalBody').innerHTML = `
             <form id="riskForm" onsubmit="window.app.saveRisk(event); return false;">
                 <input type="hidden" id="riskId" value="${risk?.id || ''}">
@@ -1817,6 +1826,18 @@ class GRCApplication {
                         <label class="form-label">Title *</label>
                         <input type="text" class="form-control" id="riskTitle" value="${risk?.title || ''}" required>
                     </div>
+                    ${startedProjects.length > 0 ? `
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Project (Optional)</label>
+                        <select class="form-select" id="riskProjectId">
+                            <option value="">None (General Risk)</option>
+                            ${startedProjects.map(p => {
+                                const proj = projects.find(pr => pr.id === p.id);
+                                return `<option value="${p.id}" ${(risk?.projectId === p.id || this.currentProjectId === p.id) ? 'selected' : ''}>${proj ? proj.company : p.id}</option>`;
+                            }).join('')}
+                        </select>
+                    </div>
+                    ` : ''}
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Category *</label>
                         <select class="form-select" id="riskCategory" required>
@@ -1878,6 +1899,7 @@ class GRCApplication {
 
     saveRisk(event) {
         event.preventDefault();
+        const projectIdEl = document.getElementById('riskProjectId');
         const data = {
             id: document.getElementById('riskId').value || 'RISK_' + Date.now(),
             title: document.getElementById('riskTitle').value.trim(),
@@ -1891,6 +1913,13 @@ class GRCApplication {
         data.score = data.likelihood * data.impact;
         data.severity = data.score >= 15 ? 'High' : data.score >= 6 ? 'Medium' : 'Low';
         
+        // Add projectId if selected
+        if (projectIdEl && projectIdEl.value) {
+            data.projectId = projectIdEl.value;
+        } else if (this.currentProjectId) {
+            data.projectId = this.currentProjectId;
+        }
+        
         const idx = this.data.risks.findIndex(r => r.id === data.id);
         if (idx > -1) this.data.risks[idx] = data;
         else this.data.risks.push(data);
@@ -1900,6 +1929,11 @@ class GRCApplication {
         this.renderDashboard();
         safeHideModal('riskModal');
         this.showToast('Risk saved', 'success');
+        
+        // Refresh projects if working on one
+        if (data.projectId) {
+            this.renderProjects();
+        }
     }
 
     renderRisks() {
@@ -1938,6 +1972,9 @@ class GRCApplication {
     // ASSETS
     showAssetForm(assetId = null) {
         const asset = assetId ? this.data.assets.find(a => a.id === assetId) : null;
+        const projects = this.getProjectScenarios();
+        const startedProjects = this.data.projects.filter(p => p.status === 'in-progress');
+        
         document.getElementById('assetModalBody').innerHTML = `
             <form id="assetForm" onsubmit="window.app.saveAsset(event); return false;">
                 <input type="hidden" id="assetId" value="${asset?.id || ''}">
@@ -1946,6 +1983,18 @@ class GRCApplication {
                         <label class="form-label">Asset Name *</label>
                         <input type="text" class="form-control" id="assetName" value="${asset?.name || ''}" required>
                     </div>
+                    ${startedProjects.length > 0 ? `
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Project (Optional)</label>
+                        <select class="form-select" id="assetProjectId">
+                            <option value="">None (General Asset)</option>
+                            ${startedProjects.map(p => {
+                                const proj = projects.find(pr => pr.id === p.id);
+                                return `<option value="${p.id}" ${(asset?.projectId === p.id || this.currentProjectId === p.id) ? 'selected' : ''}>${proj ? proj.company : p.id}</option>`;
+                            }).join('')}
+                        </select>
+                    </div>
+                    ` : ''}
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Type *</label>
                         <select class="form-select" id="assetType" required>
@@ -1978,6 +2027,7 @@ class GRCApplication {
 
     saveAsset(event) {
         event.preventDefault();
+        const projectIdEl = document.getElementById('assetProjectId');
         const data = {
             id: document.getElementById('assetId').value || 'ASSET_' + Date.now(),
             name: document.getElementById('assetName').value.trim(),
@@ -1986,6 +2036,13 @@ class GRCApplication {
             owner: document.getElementById('assetOwner').value.trim(),
             updatedAt: new Date().toISOString()
         };
+        
+        // Add projectId if selected
+        if (projectIdEl && projectIdEl.value) {
+            data.projectId = projectIdEl.value;
+        } else if (this.currentProjectId) {
+            data.projectId = this.currentProjectId;
+        }
         
         const idx = this.data.assets.findIndex(a => a.id === data.id);
         if (idx > -1) this.data.assets[idx] = data;
@@ -1996,6 +2053,11 @@ class GRCApplication {
         this.renderDashboard();
         safeHideModal('assetModal');
         this.showToast('Asset saved', 'success');
+        
+        // Refresh projects if working on one
+        if (data.projectId) {
+            this.renderProjects();
+        }
     }
 
     renderAssets() {
@@ -2031,6 +2093,9 @@ class GRCApplication {
     // VENDORS
     showVendorForm(vendorId = null) {
         const vendor = vendorId ? this.data.vendors.find(v => v.id === vendorId) : null;
+        const projects = this.getProjectScenarios();
+        const startedProjects = this.data.projects.filter(p => p.status === 'in-progress');
+        
         document.getElementById('vendorModalBody').innerHTML = `
             <form id="vendorForm" onsubmit="window.app.saveVendor(event); return false;">
                 <input type="hidden" id="vendorId" value="${vendor?.id || ''}">
@@ -2039,6 +2104,18 @@ class GRCApplication {
                         <label class="form-label">Vendor Name *</label>
                         <input type="text" class="form-control" id="vendorName" value="${vendor?.name || ''}" required>
                     </div>
+                    ${startedProjects.length > 0 ? `
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Project (Optional)</label>
+                        <select class="form-select" id="vendorProjectId">
+                            <option value="">None (General Vendor)</option>
+                            ${startedProjects.map(p => {
+                                const proj = projects.find(pr => pr.id === p.id);
+                                return `<option value="${p.id}" ${(vendor?.projectId === p.id || this.currentProjectId === p.id) ? 'selected' : ''}>${proj ? proj.company : p.id}</option>`;
+                            }).join('')}
+                        </select>
+                    </div>
+                    ` : ''}
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Service Type *</label>
                         <select class="form-select" id="vendorService" required>
@@ -2075,6 +2152,7 @@ class GRCApplication {
 
     saveVendor(event) {
         event.preventDefault();
+        const projectIdEl = document.getElementById('vendorProjectId');
         const data = {
             id: document.getElementById('vendorId').value || 'VENDOR_' + Date.now(),
             name: document.getElementById('vendorName').value.trim(),
@@ -2084,6 +2162,13 @@ class GRCApplication {
             updatedAt: new Date().toISOString()
         };
         
+        // Add projectId if selected
+        if (projectIdEl && projectIdEl.value) {
+            data.projectId = projectIdEl.value;
+        } else if (this.currentProjectId) {
+            data.projectId = this.currentProjectId;
+        }
+        
         const idx = this.data.vendors.findIndex(v => v.id === data.id);
         if (idx > -1) this.data.vendors[idx] = data;
         else this.data.vendors.push(data);
@@ -2092,6 +2177,11 @@ class GRCApplication {
         this.renderVendors();
         safeHideModal('vendorModal');
         this.showToast('Vendor saved', 'success');
+        
+        // Refresh projects if working on one
+        if (data.projectId) {
+            this.renderProjects();
+        }
     }
 
     renderVendors() {
@@ -2127,6 +2217,9 @@ class GRCApplication {
     // CONTROLS (similar pattern)
     showControlForm(controlId = null) {
         const control = controlId ? this.data.controls.find(c => c.id === controlId) : null;
+        const projects = this.getProjectScenarios();
+        const startedProjects = this.data.projects.filter(p => p.status === 'in-progress');
+        
         document.getElementById('controlModalBody').innerHTML = `
             <form id="controlForm" onsubmit="window.app.saveControl(event); return false;">
                 <input type="hidden" id="controlId" value="${control?.id || ''}">
@@ -2135,6 +2228,18 @@ class GRCApplication {
                         <label class="form-label">Control Name *</label>
                         <input type="text" class="form-control" id="controlName" value="${control?.name || ''}" required>
                     </div>
+                    ${startedProjects.length > 0 ? `
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Project (Optional)</label>
+                        <select class="form-select" id="controlProjectId">
+                            <option value="">None (General Control)</option>
+                            ${startedProjects.map(p => {
+                                const proj = projects.find(pr => pr.id === p.id);
+                                return `<option value="${p.id}" ${(control?.projectId === p.id || this.currentProjectId === p.id) ? 'selected' : ''}>${proj ? proj.company : p.id}</option>`;
+                            }).join('')}
+                        </select>
+                    </div>
+                    ` : ''}
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Type *</label>
                         <select class="form-select" id="controlType" required>
@@ -2171,6 +2276,7 @@ class GRCApplication {
 
     saveControl(event) {
         event.preventDefault();
+        const projectIdEl = document.getElementById('controlProjectId');
         const data = {
             id: document.getElementById('controlId').value || 'CTRL_' + Date.now(),
             name: document.getElementById('controlName').value.trim(),
@@ -2179,6 +2285,13 @@ class GRCApplication {
             status: document.getElementById('controlStatus').value,
             updatedAt: new Date().toISOString()
         };
+        
+        // Add projectId if selected
+        if (projectIdEl && projectIdEl.value) {
+            data.projectId = projectIdEl.value;
+        } else if (this.currentProjectId) {
+            data.projectId = this.currentProjectId;
+        }
         
         const idx = this.data.controls.findIndex(c => c.id === data.id);
         if (idx > -1) this.data.controls[idx] = data;
@@ -2189,6 +2302,11 @@ class GRCApplication {
         this.renderDashboard();
         safeHideModal('controlModal');
         this.showToast('Control saved', 'success');
+        
+        // Refresh projects if working on one
+        if (data.projectId) {
+            this.renderProjects();
+        }
     }
 
     renderControls() {
@@ -2224,6 +2342,9 @@ class GRCApplication {
     // ISSUES
     showIssueForm(issueId = null) {
         const issue = issueId ? this.data.issues.find(i => i.id === issueId) : null;
+        const projects = this.getProjectScenarios();
+        const startedProjects = this.data.projects.filter(p => p.status === 'in-progress');
+        
         document.getElementById('issueModalBody').innerHTML = `
             <form id="issueForm" onsubmit="window.app.saveIssue(event); return false;">
                 <input type="hidden" id="issueId" value="${issue?.id || ''}">
@@ -2232,6 +2353,18 @@ class GRCApplication {
                         <label class="form-label">Issue Title *</label>
                         <input type="text" class="form-control" id="issueTitle" value="${issue?.title || ''}" required>
                     </div>
+                    ${startedProjects.length > 0 ? `
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Project (Optional)</label>
+                        <select class="form-select" id="issueProjectId">
+                            <option value="">None (General Issue)</option>
+                            ${startedProjects.map(p => {
+                                const proj = projects.find(pr => pr.id === p.id);
+                                return `<option value="${p.id}" ${(issue?.projectId === p.id || this.currentProjectId === p.id) ? 'selected' : ''}>${proj ? proj.company : p.id}</option>`;
+                            }).join('')}
+                        </select>
+                    </div>
+                    ` : ''}
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Source *</label>
                         <select class="form-select" id="issueSource" required>
@@ -2268,6 +2401,7 @@ class GRCApplication {
 
     saveIssue(event) {
         event.preventDefault();
+        const projectIdEl = document.getElementById('issueProjectId');
         const data = {
             id: document.getElementById('issueId').value || 'ISSUE_' + Date.now(),
             title: document.getElementById('issueTitle').value.trim(),
@@ -2277,6 +2411,13 @@ class GRCApplication {
             updatedAt: new Date().toISOString()
         };
         
+        // Add projectId if selected
+        if (projectIdEl && projectIdEl.value) {
+            data.projectId = projectIdEl.value;
+        } else if (this.currentProjectId) {
+            data.projectId = this.currentProjectId;
+        }
+        
         const idx = this.data.issues.findIndex(i => i.id === data.id);
         if (idx > -1) this.data.issues[idx] = data;
         else this.data.issues.push(data);
@@ -2285,6 +2426,11 @@ class GRCApplication {
         this.renderIssues();
         safeHideModal('issueModal');
         this.showToast('Issue saved', 'success');
+        
+        // Refresh projects if working on one
+        if (data.projectId) {
+            this.renderProjects();
+        }
     }
 
     renderIssues() {
@@ -2320,6 +2466,9 @@ class GRCApplication {
     // INCIDENTS
     showIncidentForm(incidentId = null) {
         const incident = incidentId ? this.data.incidents.find(i => i.id === incidentId) : null;
+        const projects = this.getProjectScenarios();
+        const startedProjects = this.data.projects.filter(p => p.status === 'in-progress');
+        
         document.getElementById('incidentModalBody').innerHTML = `
             <form id="incidentForm" onsubmit="window.app.saveIncident(event); return false;">
                 <input type="hidden" id="incidentId" value="${incident?.id || ''}">
@@ -2328,6 +2477,18 @@ class GRCApplication {
                         <label class="form-label">Incident Title *</label>
                         <input type="text" class="form-control" id="incidentTitle" value="${incident?.title || ''}" required>
                     </div>
+                    ${startedProjects.length > 0 ? `
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Project (Optional)</label>
+                        <select class="form-select" id="incidentProjectId">
+                            <option value="">None (General Incident)</option>
+                            ${startedProjects.map(p => {
+                                const proj = projects.find(pr => pr.id === p.id);
+                                return `<option value="${p.id}" ${(incident?.projectId === p.id || this.currentProjectId === p.id) ? 'selected' : ''}>${proj ? proj.company : p.id}</option>`;
+                            }).join('')}
+                        </select>
+                    </div>
+                    ` : ''}
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Type *</label>
                         <select class="form-select" id="incidentType" required>
@@ -2364,6 +2525,7 @@ class GRCApplication {
 
     saveIncident(event) {
         event.preventDefault();
+        const projectIdEl = document.getElementById('incidentProjectId');
         const data = {
             id: document.getElementById('incidentId').value || 'INC_' + Date.now(),
             title: document.getElementById('incidentTitle').value.trim(),
@@ -2373,6 +2535,13 @@ class GRCApplication {
             updatedAt: new Date().toISOString()
         };
         
+        // Add projectId if selected
+        if (projectIdEl && projectIdEl.value) {
+            data.projectId = projectIdEl.value;
+        } else if (this.currentProjectId) {
+            data.projectId = this.currentProjectId;
+        }
+        
         const idx = this.data.incidents.findIndex(i => i.id === data.id);
         if (idx > -1) this.data.incidents[idx] = data;
         else this.data.incidents.push(data);
@@ -2381,6 +2550,11 @@ class GRCApplication {
         this.renderIncidents();
         safeHideModal('incidentModal');
         this.showToast('Incident saved', 'success');
+        
+        // Refresh projects if working on one
+        if (data.projectId) {
+            this.renderProjects();
+        }
     }
 
     renderIncidents() {
@@ -2525,6 +2699,8 @@ loadDemoScenario() {
     showTreatmentForm(treatmentId = null) {
         const t = treatmentId ? (this.data.treatments || []).find(x => x.id === treatmentId) : null;
         const risks = (this.data.risks || []);
+        const projects = this.getProjectScenarios();
+        const startedProjects = this.data.projects.filter(p => p.status === 'in-progress');
         const options = risks.length
             ? risks.map(r => `<option value="${this.escapeHtml(r.id)}" ${t?.riskId===r.id?'selected':''}>${this.escapeHtml(r.title)}</option>`).join('')
             : '<option value="">No risks found (add a risk first)</option>';
@@ -2537,6 +2713,18 @@ loadDemoScenario() {
                     <label class="form-label">Risk *</label>
                     <select class="form-select" id="treatmentRiskId" required>${options}</select>
                 </div>
+                ${startedProjects.length > 0 ? `
+                <div class="mb-3">
+                    <label class="form-label">Project (Optional)</label>
+                    <select class="form-select" id="treatmentProjectId">
+                        <option value="">None (General Treatment)</option>
+                        ${startedProjects.map(p => {
+                            const proj = projects.find(pr => pr.id === p.id);
+                            return `<option value="${p.id}" ${(t?.projectId === p.id || this.currentProjectId === p.id) ? 'selected' : ''}>${proj ? proj.company : p.id}</option>`;
+                        }).join('')}
+                    </select>
+                </div>
+                ` : ''}
                 <div class="mb-3">
                     <label class="form-label">Treatment *</label>
                     <input class="form-control" id="treatmentText" required value="${this.escapeHtml(t?.treatment || '')}" placeholder="e.g., Implement MFA for admin access">
@@ -2574,6 +2762,7 @@ loadDemoScenario() {
 
     saveTreatment(e) {
         e.preventDefault();
+        const projectIdEl = document.getElementById('treatmentProjectId');
         const id = document.getElementById('treatmentId')?.value || '';
         const treatment = {
             id: id || ('treat_' + Math.random().toString(16).slice(2)),
@@ -2586,6 +2775,13 @@ loadDemoScenario() {
             updatedAt: new Date().toISOString()
         };
 
+        // Add projectId if selected
+        if (projectIdEl && projectIdEl.value) {
+            treatment.projectId = projectIdEl.value;
+        } else if (this.currentProjectId) {
+            treatment.projectId = this.currentProjectId;
+        }
+
         const list = Array.isArray(this.data.treatments) ? [...this.data.treatments] : [];
         const idx = list.findIndex(x => x.id === treatment.id);
         if (idx >= 0) list[idx] = treatment; else list.push(treatment);
@@ -2594,6 +2790,11 @@ loadDemoScenario() {
         this.renderTreatments();
         this.renderChallenges();
         this.showToast('Treatment saved', 'success');
+        
+        // Refresh projects if working on one
+        if (treatment.projectId) {
+            this.renderProjects();
+        }
     }
 
     deleteTreatment(id) {
@@ -2693,9 +2894,19 @@ loadDemoScenario() {
         const idx = list.findIndex(x => x.controlId === controlId);
         if (idx < 0) return;
         list[idx] = { ...list[idx], [field]: value };
+        
+        // Auto-assign projectId if working on a project
+        if (this.currentProjectId && !list[idx].projectId) {
+            list[idx].projectId = this.currentProjectId;
+        }
+        
         this.saveData('soa', list);
         // lightweight refresh for challenges only
         if (this.currentTab === 'challenges') this.renderChallenges();
+        // Refresh projects if working on one
+        if (list[idx].projectId) {
+            this.renderProjects();
+        }
     }
 
     resetSoA() {
@@ -3658,6 +3869,14 @@ exportReportPDF() {
         this.renderProjects();
     }
 
+    setProjectContext(projectId) {
+        this.currentProjectId = projectId;
+        const project = this.getProjectScenarios().find(p => p.id === projectId);
+        if (project) {
+            this.showToast(`Working on: ${project.company}`, 'info');
+        }
+    }
+
     renderProjects() {
         const container = document.getElementById('projectList');
         if (!container) return;
@@ -3696,7 +3915,7 @@ exportReportPDF() {
                                     <li class="project-task-item ${isDone ? 'completed' : ''}">
                                         <i class="bi bi-${isDone ? 'check-circle-fill' : 'circle'}"></i>
                                         <span>${this.escapeHtml(task.label)}</span>
-                                        ${!isDone && task.tab ? `<button class="btn btn-sm btn-outline-light ms-auto" onclick="window.app.switchTab('${task.tab}')">Go to ${this.capitalize(task.tab)}</button>` : ''}
+                                        ${!isDone && task.tab ? `<button class="btn btn-sm btn-outline-light ms-auto" onclick="window.app.setProjectContext('${project.id}'); window.app.switchTab('${task.tab}')">Go to ${this.capitalize(task.tab)}</button>` : ''}
                                     </li>
                                 `;
                             }).join('')}
