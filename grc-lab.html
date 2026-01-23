@@ -1946,11 +1946,30 @@ class GRCApplication {
                     ` : ''}
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Type *</label>
-                        <select class="form-select" id="assetType" required>
-                            ${['Server','Workstation','Network Device','Mobile Device','Application','Database','Cloud Service'].map(t => 
-                                `<option value="${t}" ${asset?.type === t ? 'selected' : ''}>${t}</option>`
-                            ).join('')}
-                        </select>
+                        
+<select class="form-select" id="assetType" required>
+  <option value="">Select Asset Type</option>
+
+  <!-- GRC / Business-aligned -->
+  <option>Application</option>
+  <option>Data Asset</option>
+  <option>Database</option>
+  <option>Cloud Infrastructure</option>
+  <option>Cloud Service</option>
+  <option>Identity & Access System</option>
+  <option>DevOps / CI-CD Pipeline</option>
+
+  <!-- Technical -->
+  <option>Network Infrastructure</option>
+  <option>Endpoint Device</option>
+  <option>Security Tool</option>
+  <option>Monitoring & Logging System</option>
+  <option>Backup & Recovery System</option>
+
+  <!-- External -->
+  <option>Third-Party Service</option>
+</select>
+
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Criticality *</label>
