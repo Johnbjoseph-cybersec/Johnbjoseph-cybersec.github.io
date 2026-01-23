@@ -1,10 +1,5 @@
 
 
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -481,10 +476,23 @@ h2 {
     border-radius: var(--radius-lg);
     padding: 2rem;
     margin-bottom: 2rem;
+    color: #ffffff !important;
+}
+.portfolio-summary * {
+    color: #ffffff !important;
 }
 .portfolio-summary h3 {
-    color: var(--accent-primary);
+    color: var(--accent-primary) !important;
     margin-bottom: 1.5rem;
+}
+.portfolio-summary h5 {
+    color: #ffffff !important;
+}
+.portfolio-summary p {
+    color: rgba(255,255,255,0.9) !important;
+}
+.portfolio-summary .text-muted {
+    color: rgba(255,255,255,0.8) !important;
 }
 .portfolio-bullet {
     background: rgba(255,255,255,0.05);
@@ -494,6 +502,7 @@ h2 {
     border-radius: 4px;
     font-family: 'Courier New', monospace;
     font-size: 0.875rem;
+    color: #ffffff !important;
 }
 .portfolio-stat {
     display: inline-flex;
@@ -504,7 +513,33 @@ h2 {
     border-radius: 999px;
     margin: 0.25rem;
     font-size: 0.875rem;
+    color: #ffffff !important;
 }
+    border-radius: 999px;
+    margin: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--text-primary) !important;
+}
+/* ================================
+   Projects tab – force white text
+   Industry / Size / Description
+   ================================ */
+
+#tabProjects .project-card strong,
+#tabProjects .project-card .industry,
+#tabProjects .project-card .size,
+#tabProjects .project-card .description,
+#tabProjects .project-card p,
+#tabProjects .project-card span {
+  color: #ffffff !important;
+}
+
+/* If labels are rendered as muted text */
+#tabProjects .project-card .text-muted {
+  color: #ffffff !important;
+  opacity: 0.9;
+}
+
 
 </style>
 </head>
@@ -2793,11 +2828,14 @@ loadDemoScenario() {
     }
 
     resetSoA() {
-        if (!confirm('Reset SoA to defaults?')) return;
+        if (!confirm('Reset SoA to defaults (all Not Applicable)?')) return;
+        // Clear all existing data
         this.saveData('soa', []);
         this.data.soa = [];
+        // Re-seed with all controls set to NOT applicable
+        this.ensureSoASeeded();
         this.renderSoA();
-        this.showToast('SoA reset', 'success');
+        this.showToast('SoA reset - all controls set to Not Applicable', 'success');
     }
 
     exportSoA() {
@@ -3379,7 +3417,7 @@ exportReportPDF() {
                 industry: 'SaaS / Cloud Services',
                 size: '500 employees',
                 scenario: 'Conducting ISO 27001 risk assessment for cloud migration project',
-                description: 'TechStart is migrating their customer database to AWS. As the GRC Analyst, you need to identify critical assets, assess risks, implement controls, and document the security posture.',
+                description: 'TechStart Inc is migrating their customer database (5M+ records) from on-premises to AWS cloud infrastructure while pursuing ISO 27001 certification. As GRC Analyst, you will identify critical cloud assets, assess migration risks, implement security controls, and document findings in a Statement of Applicability. This project demonstrates cloud security risk assessment and ISO 27001 implementation skills.',
                 frameworks: ['ISO 27001', 'NIST CSF'],
                 tasks: [
                     { id: 'assets', label: 'Add 3 critical assets', tab: 'assets', check: () => this.countProjectItems('iso-risk-assessment', 'assets') >= 3 },
@@ -3395,7 +3433,7 @@ exportReportPDF() {
                 industry: 'Financial Services',
                 size: '1200 employees',
                 scenario: 'Third-party risk management for payment processor integration',
-                description: 'FinSecure is integrating a new payment processing vendor. Conduct comprehensive vendor assessment including security evaluation, compliance verification, and ongoing monitoring setup.',
+                description: 'FinSecure Banking is integrating a third-party payment processor with access to cardholder data and PCI DSS scope systems. As TPRM lead, you will conduct vendor due diligence, assess security risks, verify compliance controls, and document remediation requirements. This project demonstrates third-party risk management skills in a regulated financial environment.',
                 frameworks: ['PCI DSS', 'SOC 2'],
                 tasks: [
                     { id: 'vendor', label: 'Add vendor profile', tab: 'vendors', check: () => this.countProjectItems('vendor-tprm', 'vendors') >= 1 },
@@ -3410,7 +3448,7 @@ exportReportPDF() {
                 industry: 'Data Analytics Platform',
                 size: '300 employees',
                 scenario: 'SOC 2 Type II audit preparation',
-                description: 'Prepare for SOC 2 Type II audit by documenting Trust Services Criteria controls, collecting evidence, and completing the audit readiness assessment.',
+                description: 'DataFlow Analytics is a SaaS platform serving Fortune 500 clients, with customers requiring SOC 2 Type II certification for contract renewals. As Compliance Manager, you will document Trust Services Criteria controls, catalog critical systems, collect audit evidence, and complete a control matrix demonstrating operational effectiveness. This project covers comprehensive SOC 2 audit preparation.',
                 frameworks: ['SOC 2', 'NIST CSF'],
                 tasks: [
                     { id: 'soc2-controls', label: 'Document 12 SOC 2 controls', tab: 'controls', check: () => this.countProjectItems('soc2-audit', 'controls') >= 12 },
@@ -3425,7 +3463,7 @@ exportReportPDF() {
                 industry: 'E-commerce',
                 size: '800 employees',
                 scenario: 'GDPR compliance program implementation',
-                description: 'Implement GDPR compliance program for EU expansion including data mapping, privacy controls, DPIAs, and data subject rights procedures.',
+                description: 'EuroShop Ltd is a UK e-commerce retailer expanding into EU markets, processing personal data for 3M+ European customers and facing penalties up to €20M for non-compliance. As Data Protection Officer, you will map data processing activities, conduct DPIAs, implement privacy controls, and establish data subject rights procedures. This project demonstrates GDPR compliance program development.',
                 frameworks: ['GDPR', 'ISO 27001'],
                 tasks: [
                     { id: 'gdpr-assets', label: 'Map 5 data processing assets', tab: 'assets', check: () => this.countProjectItems('gdpr-compliance', 'assets') >= 5 },
@@ -3440,7 +3478,7 @@ exportReportPDF() {
                 industry: 'Healthcare Technology',
                 size: '600 employees',
                 scenario: 'Incident response program development',
-                description: 'Develop comprehensive incident response program including playbooks, team structure, and tabletop exercises for healthcare data breach scenarios.',
+                description: 'HealthTech Systems provides EHR systems to 200+ hospitals storing PHI for 2M+ patients, with recent attacks highlighting the need for formal incident response capabilities. As Security Operations Manager, you will develop IR playbooks, define team roles, establish escalation procedures, and ensure HIPAA breach notification compliance. This project demonstrates healthcare incident response program development.',
                 frameworks: ['HIPAA', 'NIST CSF'],
                 tasks: [
                     { id: 'ir-incidents', label: 'Document 3 incident scenarios', tab: 'incidents', check: () => this.countProjectItems('incident-response', 'incidents') >= 3 },
@@ -3455,7 +3493,7 @@ exportReportPDF() {
                 industry: 'Cloud Infrastructure',
                 size: '400 employees',
                 scenario: 'AWS security assessment and hardening',
-                description: 'Conduct comprehensive AWS security assessment against CIS Benchmarks, identify misconfigurations, and implement security controls across all cloud resources.',
+                description: 'CloudNative Corp manages AWS infrastructure for 50+ enterprise clients, with recent audits revealing critical misconfigurations including public S3 buckets and overly permissive IAM policies. As Cloud Security Engineer, you will conduct a CIS Benchmark assessment, document security findings, implement remediation controls, and create a prioritized security roadmap. This project demonstrates AWS security assessment and hardening expertise.',
                 frameworks: ['CIS Controls', 'NIST CSF'],
                 tasks: [
                     { id: 'cloud-assets', label: 'Inventory 6 cloud assets', tab: 'assets', check: () => this.countProjectItems('cloud-security', 'assets') >= 6 },
@@ -3471,7 +3509,7 @@ exportReportPDF() {
                 industry: 'Critical Infrastructure',
                 size: '900 employees',
                 scenario: 'Business Continuity and Disaster Recovery planning',
-                description: 'Develop comprehensive BCDR plan including business impact analysis, recovery procedures, RTO/RPO requirements, and backup strategies.',
+                description: 'CriticalOps Inc operates critical infrastructure for water treatment, power grid monitoring, and emergency services serving 10M+ citizens, with recent disasters exposing preparedness gaps. As Business Continuity Manager, you will conduct Business Impact Analysis, define RTO/RPO requirements, document recovery procedures, and implement technical controls. This project covers BCDR planning for critical infrastructure with regulatory compliance requirements.',
                 frameworks: ['COBIT', 'ISO 27001'],
                 tasks: [
                     { id: 'bcdr-assets', label: 'Identify 5 critical assets', tab: 'assets', check: () => this.countProjectItems('bcdr-planning', 'assets') >= 5 },
@@ -3486,7 +3524,7 @@ exportReportPDF() {
                 industry: 'Regulatory Technology',
                 size: '350 employees',
                 scenario: 'Multi-framework compliance gap analysis',
-                description: 'Conduct comprehensive gap analysis across PCI DSS, SOC 2, and HIPAA requirements. Identify gaps, prioritize remediation, and create compliance roadmap.',
+                description: 'RegTech Solutions serves healthcare, finance, and payment clients requiring simultaneous compliance with PCI DSS, SOC 2, and HIPAA frameworks. As Compliance Architect, you will map control objectives across frameworks, assess implementation status for 100+ controls, document gaps with risk ratings, and create a unified remediation roadmap. This project demonstrates multi-framework compliance assessment skills.',
                 frameworks: ['PCI DSS', 'SOC 2', 'HIPAA'],
                 tasks: [
                     { id: 'gap-controls', label: 'Assess 15 controls', tab: 'controls', check: () => this.countProjectItems('compliance-gap', 'controls') >= 15 },
@@ -3749,8 +3787,8 @@ exportReportPDF() {
         if (summaries.length === 0) {
             container.innerHTML = `
                 <div class="text-center py-5">
-                    <i class="bi bi-folder2-open" style="font-size:3rem;color:var(--text-muted);"></i>
-                    <p class="text-muted mt-3">No portfolio summaries yet. Complete projects and generate summaries!</p>
+                    <i class="bi bi-folder2-open" style="font-size:3rem;color:rgba(255,255,255,0.5);"></i>
+                    <p style="color:rgba(255,255,255,0.7);" class="mt-3">No portfolio summaries yet. Complete projects and generate summaries!</p>
                 </div>
             `;
             return;
@@ -3761,7 +3799,7 @@ exportReportPDF() {
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <div>
                         <h3>${this.escapeHtml(summary.company)}</h3>
-                        <p class="text-muted mb-2">${this.escapeHtml(summary.industry)} • ${this.escapeHtml(summary.scenario)}</p>
+                        <p style="color:rgba(255,255,255,0.85);" class="mb-2">${this.escapeHtml(summary.industry)} • ${this.escapeHtml(summary.scenario)}</p>
                     </div>
                     <button class="btn btn-sm btn-outline-light" onclick="navigator.clipboard.writeText(\`${summary.bullets.join('\\n')}\`).then(() => window.app.showToast('Bullets copied!', 'success'))">
                         <i class="bi bi-clipboard"></i> Copy Bullets
@@ -3769,7 +3807,7 @@ exportReportPDF() {
                 </div>
                 
                 <h5 class="mb-3">Project Description:</h5>
-                <p class="text-muted mb-3">${this.escapeHtml(summary.description)}</p>
+                <p style="color:rgba(255,255,255,0.85);" class="mb-3">${this.escapeHtml(summary.description)}</p>
                 
                 <h5 class="mb-3">Frameworks Used:</h5>
                 <div class="d-flex gap-2 flex-wrap mb-4">
@@ -3795,7 +3833,7 @@ exportReportPDF() {
                     `).join('')}
                 </div>
                 
-                <div class="text-muted mt-3" style="font-size:0.875rem;">
+                <div style="color:rgba(255,255,255,0.6); font-size:0.875rem;" class="mt-3">
                     Generated: ${new Date(summary.generatedAt).toLocaleString()}
                 </div>
             </div>
