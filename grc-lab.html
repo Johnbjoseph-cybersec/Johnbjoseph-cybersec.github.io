@@ -543,6 +543,19 @@ h2 {
 }
 
 
+
+/* Risk Analytics header polish */
+#riskAnalyticsProjectFilter,
+#riskAnalyticsViewMode {
+  font-size: 0.9rem;
+}
+
+#tabMatrix small.text-muted {
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 </style>
 </head>
 <body>
@@ -1018,13 +1031,23 @@ h2 {
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
       <div>
         <h2 class="mb-1">Risk Analytics</h2>
-        <div class="text-muted">Industry standard: 5×5 Likelihood (1–5) × Impact (1–5). Supports Low/Medium/High too.</div>
+        <div class="text-muted">Industry standard: 5×5 Inherent Likelihood (1–5) × Inherent Impact (1–5). Supports Low/Medium/High too.</div>
       </div>
       <div class="d-flex gap-2 flex-wrap align-items-center">
-        <select id="riskAnalyticsProjectFilter" class="form-select" style="min-width: 280px;" onchange="window.app.renderRiskAnalytics()">
+        <div class="d-flex flex-column">
+  <small class="text-muted mb-1">Project Scope</small>
+  <select id="riskAnalyticsProjectFilter" class="form-select" style="min-width: 280px;" onchange="window.app.renderRiskAnalytics()">
           <option value="">None (General Risk Analytics)</option>
         </select>
-        <button class="btn btn-outline-light btn-sm" onclick="window.app.renderRiskAnalytics()">
+</div>
+<div class="d-flex flex-column">
+  <small class="text-muted mb-1">Risk View</small>
+  <select id="riskAnalyticsViewMode" class="form-select" style="min-width: 220px;" onchange="window.app.renderRiskAnalytics()">
+          <option value="inherent">View: Inherent Risk</option>
+          <option value="residual">View: Residual Risk</option>
+        </select>
+</div>
+<button class="btn btn-outline-light btn-sm align-self-end" onclick="window.app.renderRiskAnalytics()">
           <i class="bi bi-arrow-repeat me-2"></i> Refresh
         </button>
       </div>
@@ -2904,6 +2927,18 @@ loadDemoScenario() {
         sel.value = current;
     }
 
+    getRiskLI(risk) {
+        const modeSel = document.getElementById('riskAnalyticsViewMode');
+        const mode = modeSel ? (modeSel.value || 'inherent') : 'inherent';
+        const L = (mode === 'residual' && risk.residualLikelihood !== undefined && risk.residualLikelihood !== null && String(risk.residualLikelihood) !== '')
+            ? Number(risk.residualLikelihood)
+            : Number(risk.likelihood);
+        const I = (mode === 'residual' && risk.residualImpact !== undefined && risk.residualImpact !== null && String(risk.residualImpact) !== '')
+            ? Number(risk.residualImpact)
+            : Number(risk.impact);
+        return { L, I, mode };
+    }
+
     getRisksForAnalytics() {
         const all = Array.isArray(this.data?.risks) ? this.data.risks : [];
         const sel = document.getElementById('riskAnalyticsProjectFilter');
@@ -2948,8 +2983,9 @@ renderRiskAnalytics() {
   };
 
   const normIL = (r) => {
-    let i = to15(r.impact);
-    let l = to15(r.likelihood);
+    const li = this.getRiskLI ? this.getRiskLI(r) : {L: r.likelihood, I: r.impact};
+    let i = to15(li.I);
+    let l = to15(li.L);
 
     // some of your demo uses 1–5 but could be stored as score components; fallback
     if (!i && r.impactLevel) i = to15(r.impactLevel);
