@@ -502,6 +502,77 @@
     .hero-lead { animation-delay: 0.2s; }
     .credentials { animation-delay: 0.3s; }
     .cta-group { animation-delay: 0.4s; }
+  
+    /* ===== Unified Card & Title Style (matches Featured Work) ===== */
+    .unified-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: calc(var(--spacing-unit) * 4);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .unified-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .unified-card:hover {
+      border-color: var(--border-elevated);
+      transform: translateY(-4px);
+    }
+
+    .unified-card:hover::before {
+      opacity: 1;
+    }
+
+    .unified-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: calc(var(--spacing-unit) * 2);
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+
+    .unified-body {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: calc(var(--spacing-unit) * 2);
+    }
+
+    .unified-subline {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+  
+    /* ===== Unified Width Alignment ===== */
+    .unified-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: calc(var(--spacing-unit) * 3);
+    }
+
+    @media (max-width: 1024px) {
+      .unified-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -516,8 +587,7 @@
         <div class="nav-links" role="menubar">
           <a href="index.html" class="nav-link active" role="menuitem" aria-current="page">Home</a>
           <a href="grc-lab.html" class="nav-link" role="menuitem">GRC Lab</a>
-          <a href="cyber-readiness-tool.html" class="nav-link" role="menuitem">Cyber Readiness Tool</a>
-          <a href="terms.html" class="nav-link" role="menuitem">Terms</a>
+<a href="terms.html" class="nav-link" role="menuitem">Terms</a>
           <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer" class="nav-link" role="menuitem">YouTube</a>
         </div>
       </nav>
@@ -565,8 +635,7 @@
 
           <div class="cta-group">
             <a href="grc-lab.html" class="btn btn-primary">Explore GRC Lab</a>
-            <a href="cyber-readiness-tool.html" class="btn btn-secondary">Use Readiness Tool</a>
-            <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" class="btn btn-secondary">Watch on YouTube</a>
+<a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" class="btn btn-secondary">Watch on YouTube</a>
           </div>
         </div>
 
@@ -636,22 +705,8 @@
             <span class="work-tag">Evidence Workflow</span>
           </div>
         </a>
-
-        <a href="cyber-readiness-tool.html" class="work-card">
+<a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" class="work-card">
           <div class="work-number">02</div>
-          <h3 class="work-title serif">Cyber Readiness Tool</h3>
-          <p class="work-description">
-            Assessment tool for measuring maturity (0–4 scale) and generating executive-ready insights with priority actions. Built for repeat use and continuous improvement tracking.
-          </p>
-          <div class="work-tags">
-            <span class="work-tag">Maturity Assessment</span>
-            <span class="work-tag">Executive Reports</span>
-            <span class="work-tag">PDF Export</span>
-          </div>
-        </a>
-
-        <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" class="work-card">
-          <div class="work-number">03</div>
           <h3 class="work-title serif">GRC Made Simple</h3>
           <p class="work-description">
             Weekly YouTube channel teaching ISO 27001, ISO 42001, NIST CSF, risk, compliance, and career growth in accessible language. Practical guidance without the fluff.
@@ -664,7 +719,7 @@
         </a>
 
         <a href="about.html" class="work-card">
-          <div class="work-number">04</div>
+          <div class="work-number">03</div>
           <h3 class="work-title serif">Background: HR to Cybersecurity</h3>
           <p class="work-description">
             10+ years in HR & Recruitment brought stakeholder management, documentation discipline, and process ownership. Now applied to GRC and security programs with a focus on clear communication and execution.
@@ -682,65 +737,65 @@
   <!-- What I Bring to a Team -->
   <section style="padding: calc(var(--spacing-unit) * 8) 0; border-top: 1px solid var(--border);">
     <div class="container">
-      <div style="max-width: 900px; margin: 0 auto;">
+      <div style="margin: 0 auto;">
         <h2 class="serif" style="font-size: clamp(28px, 3.5vw, 42px); margin-bottom: calc(var(--spacing-unit) * 3); text-align: center;">What I Bring to a Team</h2>
         <p style="font-size: 16px; line-height: 1.7; color: var(--text-secondary); text-align: center; margin-bottom: calc(var(--spacing-unit) * 6); max-width: 700px; margin-left: auto; margin-right: auto;">
           Beyond certifications and technical knowledge, here's how I add value from day one.
         </p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: calc(var(--spacing-unit) * 3);">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: calc(var(--spacing-unit) * 3);">
           <!-- Card 1 -->
-          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: calc(var(--spacing-unit) * 4);">
-            <h3 style="font-size: 18px; font-weight: 600; margin-bottom: calc(var(--spacing-unit) * 2); color: var(--text-primary);">Documentation That Works</h3>
-            <p style="font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: calc(var(--spacing-unit) * 2);">
+          <div class="unified-card">
+            <h3 class="unified-title">Documentation That Works</h3>
+            <p class="unified-body">
               I create clear policies, SOPs, and evidence packs that auditors and stakeholders actually understand. No jargon walls—just clean documentation that supports certification and daily operations.
             </p>
-            <div style="font-size: 12px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;">Policy Writing • Process Documentation • Evidence Management</div>
+            <div class="unified-subline">Policy Writing • Process Documentation • Evidence Management</div>
           </div>
 
           <!-- Card 2 -->
-          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: calc(var(--spacing-unit) * 4);">
-            <h3 style="font-size: 18px; font-weight: 600; margin-bottom: calc(var(--spacing-unit) * 2); color: var(--text-primary);">Stakeholder Translation</h3>
-            <p style="font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: calc(var(--spacing-unit) * 2);">
+          <div class="unified-card">
+            <h3 class="unified-title">Stakeholder Translation</h3>
+            <p class="unified-body">
               From HR leadership to cybersecurity operations, I bridge technical and non-technical conversations. I explain risk in business terms and present controls as enablers, not blockers.
             </p>
-            <div style="font-size: 12px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;">Executive Communication • Cross-Team Collaboration • Risk Translation</div>
+            <div class="unified-subline">Executive Communication • Cross-Team Collaboration • Risk Translation</div>
           </div>
 
           <!-- Card 3 -->
-          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: calc(var(--spacing-unit) * 4);">
-            <h3 style="font-size: 18px; font-weight: 600; margin-bottom: calc(var(--spacing-unit) * 2); color: var(--text-primary);">Frameworks in Action</h3>
-            <p style="font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: calc(var(--spacing-unit) * 2);">
+          <div class="unified-card">
+            <h3 class="unified-title">Frameworks in Action</h3>
+            <p class="unified-body">
               I map controls to ISO 27001, NIST CSF, SOC 2, and regulatory requirements. Not just checkboxes—I connect frameworks to real workflows, making compliance operational and measurable.
             </p>
-            <div style="font-size: 12px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;">ISO 27001/42001 • NIST CSF • Compliance Mapping</div>
+            <div class="unified-subline">ISO 27001/42001 • NIST CSF • Compliance Mapping</div>
           </div>
 
           <!-- Card 4 -->
-          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: calc(var(--spacing-unit) * 4);">
-            <h3 style="font-size: 18px; font-weight: 600; margin-bottom: calc(var(--spacing-unit) * 2); color: var(--text-primary);">Process Ownership Mindset</h3>
-            <p style="font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: calc(var(--spacing-unit) * 2);">
+          <div class="unified-card">
+            <h3 class="unified-title">Process Ownership Mindset</h3>
+            <p class="unified-body">
               I own processes end-to-end: design, document, implement, measure. From risk registers to incident response workflows, I ensure controls are documented, tested, and audit-ready.
             </p>
-            <div style="font-size: 12px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;">Process Design • Ownership • Continuous Improvement</div>
+            <div class="unified-subline">Process Design • Ownership • Continuous Improvement</div>
           </div>
 
           <!-- Card 5 -->
-          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: calc(var(--spacing-unit) * 4);">
-            <h3 style="font-size: 18px; font-weight: 600; margin-bottom: calc(var(--spacing-unit) * 2); color: var(--text-primary);">Quick Learner, Fast Executor</h3>
-            <p style="font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: calc(var(--spacing-unit) * 2);">
+          <div class="unified-card">
+            <h3 class="unified-title">Quick Learner, Fast Executor</h3>
+            <p class="unified-body">
               Career pivot from HR to Cybersecurity in under 2 years while earning Lead Auditor credentials. I learn fast, execute faster, and bring a hunger to prove value in every task.
             </p>
-            <div style="font-size: 12px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;">Self-Directed Learning • Rapid Skill Acquisition • Results-Driven</div>
+            <div class="unified-subline">Self-Directed Learning • Rapid Skill Acquisition • Results-Driven</div>
           </div>
 
           <!-- Card 6 -->
-          <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: calc(var(--spacing-unit) * 4);">
-            <h3 style="font-size: 18px; font-weight: 600; margin-bottom: calc(var(--spacing-unit) * 2); color: var(--text-primary);">Tool Proficiency</h3>
-            <p style="font-size: 14px; line-height: 1.7; color: var(--text-secondary); margin-bottom: calc(var(--spacing-unit) * 2);">
+          <div class="unified-card">
+            <h3 class="unified-title">Tool Proficiency</h3>
+            <p class="unified-body">
               Hands-on with Qualys VMDR, GRC platforms, risk assessment tools, and compliance automation. I adapt quickly to new tools and integrate them into existing security workflows.
             </p>
-            <div style="font-size: 12px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em;">Qualys VMDR • GRC Platforms • Risk Tools • Quick Onboarding</div>
+            <div class="unified-subline">Qualys VMDR • GRC Platforms • Risk Tools • Quick Onboarding</div>
           </div>
         </div>
 
@@ -769,8 +824,7 @@
         <div class="footer-links">
           <a href="terms.html" class="footer-link">Terms</a>
           <a href="grc-lab.html" class="footer-link">GRC Lab</a>
-          <a href="cyber-readiness-tool.html" class="footer-link">Cyber Readiness Tool</a>
-          <a href="https://www.linkedin.com/in/john-bj" target="_blank" class="footer-link">LinkedIn</a>
+<a href="https://www.linkedin.com/in/john-bj" target="_blank" class="footer-link">LinkedIn</a>
           <a href="https://github.com/Johnbjoseph-cybersec" target="_blank" class="footer-link">GitHub</a>
         </div>
       </div>
