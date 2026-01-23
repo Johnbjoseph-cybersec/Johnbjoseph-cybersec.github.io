@@ -669,7 +669,7 @@ h2 {
                 <button class="tab-btn" onclick="window.app.switchTab('treatments')">
                     <i class="bi bi-check2-circle me-2"></i> Treatments
                 </button>
-                <button class="tab-btn" onclick="window.app.switchTab('soa')">
+                <button class="tab-btn" onclick="window.app.switchTab('SoA')">
                     <i class="bi bi-list-check me-2"></i> SoA
                 </button>
                 <button class="tab-btn" onclick="window.app.switchTab('matrix')">
@@ -969,7 +969,7 @@ h2 {
                 <div class="container-glass">
                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
                         <div>
-                            <h2 class="mb-1">Statement of Applicability (SoA)</h2>
+                            <h2 class="mb-1"> (SoA)</h2>
                             <div class="text-muted">ISO 27001 Annex A applicability + justification + implementation status.</div>
                         </div>
                         <div class="d-flex gap-2">
@@ -1089,7 +1089,7 @@ h2 {
       <label class="form-label">Report Section</label>
       <select class="form-select" id="reportType">
         <option value="executive">Executive Summary</option>
-        <option value="soa">ISO SoA Status</option>
+        <option value="SoA">ISO SoA Status</option>
         <option value="risk">Risk Register Summary</option>
         <option value="treatments">Treatment Plan Summary</option>
       </select>
@@ -1530,7 +1530,7 @@ class GRCApplication {
             issues: this.loadData('issues') || [],
             incidents: this.loadData('incidents') || [],
             treatments: this.loadData('treatments') || [],
-            soa: this.loadData('soa') || [],
+            SoA: this.loadData('SoA') || [],
             projects: this.loadData('projects') || [],
             portfolioSummaries: this.loadData('portfolioSummaries') || {}
         };
@@ -1632,7 +1632,7 @@ class GRCApplication {
             issues: 'renderIssues',
             incidents: 'renderIncidents',
             treatments: 'renderTreatments',
-            soa: 'renderSoA',
+            SoA: 'renderSoA',
             matrix: 'renderRiskAnalytics',
             reports: 'renderReports',
             projects: 'renderProjects',
@@ -2729,16 +2729,16 @@ loadDemoScenario() {
 
     ensureSoASeeded() {
         const iso = this.getIsoControls();
-        if (!Array.isArray(this.data.soa)) this.data.soa = [];
-        const byId = Object.fromEntries(this.data.soa.map(x => [x.controlId, x]));
+        if (!Array.isArray(this.data.SoA)) this.data.SoA = [];
+        const byId = Object.fromEntries(this.data.SoA.map(x => [x.controlId, x]));
         let changed = false;
         for (const c of iso) {
             if (!byId[c.id]) {
-                this.data.soa.push({ controlId: c.id, applicable: false, justification: '', status: 'Not Applicable' });
+                this.data.SoA.push({ controlId: c.id, applicable: false, justification: '', status: 'Not Applicable' });
                 changed = true;
             }
         }
-        if (changed) this.saveData('soa', this.data.soa);
+        if (changed) this.saveData('SoA', this.data.SoA);
     }
 
     renderSoA() {
@@ -2751,7 +2751,7 @@ loadDemoScenario() {
         const search = (document.getElementById('soaSearch')?.value || '').toLowerCase();
         const statusFilter = document.getElementById('soaStatusFilter')?.value || 'all';
 
-        let rows = (this.data.soa || []).map(x => ({...x, meta: index[x.controlId]})).filter(r => r.meta);
+        let rows = (this.data.SoA || []).map(x => ({...x, meta: index[x.controlId]})).filter(r => r.meta);
         if (search) rows = rows.filter(r =>
             r.controlId.toLowerCase().includes(search) ||
             (r.meta.name||'').toLowerCase().includes(search) ||
@@ -2795,7 +2795,7 @@ loadDemoScenario() {
 
     updateSoA(controlId, field, value) {
         this.ensureSoASeeded();
-        const list = [...(this.data.soa || [])];
+        const list = [...(this.data.SoA || [])];
         const idx = list.findIndex(x => x.controlId === controlId);
         if (idx < 0) return;
         list[idx] = { ...list[idx], [field]: value };
@@ -2818,7 +2818,7 @@ loadDemoScenario() {
             list[idx].projectId = this.currentProjectId;
         }
         
-        this.saveData('soa', list);
+        this.saveData('SoA', list);
         // Re-render to show the updated status
         this.renderSoA();
         // Refresh projects if working on one
@@ -2830,8 +2830,8 @@ loadDemoScenario() {
     resetSoA() {
         if (!confirm('Reset SoA to defaults (all Not Applicable)?')) return;
         // Clear all existing data
-        this.saveData('soa', []);
-        this.data.soa = [];
+        this.saveData('SoA', []);
+        this.data.SoA = [];
         // Re-seed with all controls set to NOT applicable
         this.ensureSoASeeded();
         this.renderSoA();
@@ -2840,12 +2840,12 @@ loadDemoScenario() {
 
     exportSoA() {
         this.ensureSoASeeded();
-        const payload = { exportedAt: new Date().toISOString(), soa: this.data.soa || [] };
+        const payload = { exportedAt: new Date().toISOString(), SoA: this.data.SoA || [] };
         const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `soa-${new Date().toISOString().split('T')[0]}.json`;
+        a.download = `SoA-${new Date().toISOString().split('T')[0]}.json`;
         a.click();
         URL.revokeObjectURL(url);
     }
@@ -3137,7 +3137,7 @@ generateBoardReport() {
   const issues = this.data.issues || [];
   const incidents = this.data.incidents || [];
   const treatments = this.data.treatments || [];
-  const soa = this.data.soa || [];
+  const SoA = this.data.SoA || [];
 
   const isOpen = (s) => {
     const x = String(s || '').toLowerCase();
@@ -3178,7 +3178,7 @@ generateBoardReport() {
     byCategory[c] = (byCategory[c] || 0) + 1;
   });
 
-  const soaApplicable = soa.filter(x => x.applicable !== false);
+  const soaApplicable = SoA.filter(x => x.applicable !== false);
   const soaImplemented = soaApplicable.filter(x => String(x.status||'').toLowerCase() === 'implemented');
   const soaCoverage = soaApplicable.length ? Math.round((soaImplemented.length / soaApplicable.length) * 100) : 0;
 
@@ -3220,7 +3220,7 @@ generateBoardReport() {
   const controlsSection = [
     '3) CONTROLS & COMPLIANCE',
     `Controls tracked: ${controls.length}`,
-    `SoA entries: ${soa.length}`,
+    `SoA entries: ${SoA.length}`,
     `Applicable: ${soaApplicable.length}`,
     `Implemented: ${soaImplemented.length}`,
     `Coverage: ${soaCoverage}%`,
@@ -3262,7 +3262,7 @@ generateBoardReport() {
   let report = header + NL + NL;
 
   if (type === 'executive') report += executive + NL + NL + disclaimer;
-  else if (type === 'soa') report += controlsSection + NL + NL + disclaimer;
+  else if (type === 'SoA') report += controlsSection + NL + NL + disclaimer;
   else if (type === 'risk') report += executive + NL + NL + riskPosture + NL + NL + disclaimer;
   else if (type === 'treatments') report += roadmap + NL + NL + disclaimer;
   else if (type === 'full') report += [executive, riskPosture, controlsSection, incidentsSection, vendorsSection, roadmap, disclaimer].join(NL + NL);
@@ -3286,7 +3286,7 @@ generateReportSection() {
   const controls = this.data.controls || [];
   const incidents = this.data.incidents || [];
   const treatments = this.data.treatments || [];
-  const soa = this.data.soa || [];
+  const SoA = this.data.SoA || [];
 
   // Helpers
   const countStatus = (arr, field='status', match='open') =>
@@ -3317,14 +3317,14 @@ generateReportSection() {
       `\n\nNotes:\n- This output is for educational/practice use only.\n`;
   }
 
-  if (type === 'soa') {
-    const applicable = soa.filter(x => x.applicable !== false);
+  if (type === 'SoA') {
+    const applicable = SoA.filter(x => x.applicable !== false);
     const implemented = applicable.filter(x => String(x.status||'').toLowerCase() === 'implemented');
     const coverage = applicable.length ? Math.round((implemented.length / applicable.length) * 100) : 0;
 
     block =
       sectionHeader('ISO SoA Status') +
-      `SoA entries: ${soa.length}\nApplicable: ${applicable.length}\nImplemented: ${implemented.length}\nCoverage: ${coverage}%\n\n` +
+      `SoA entries: ${SoA.length}\nApplicable: ${applicable.length}\nImplemented: ${implemented.length}\nCoverage: ${coverage}%\n\n` +
       `Top gaps (first 10):\n` +
       (applicable.filter(x => String(x.status||'').toLowerCase() !== 'implemented')
         .slice(0,10)
@@ -3424,7 +3424,7 @@ exportReportPDF() {
                     { id: 'risks', label: 'Identify 5 risks', tab: 'risks', check: () => this.countProjectItems('iso-risk-assessment', 'risks') >= 5 },
                     { id: 'controls', label: 'Implement 8 controls', tab: 'controls', check: () => this.countProjectItems('iso-risk-assessment', 'controls') >= 8 },
                     { id: 'treatments', label: 'Document 5 risk treatments', tab: 'treatments', check: () => this.countProjectItems('iso-risk-assessment', 'treatments') >= 5 },
-                    { id: 'soa', label: 'Complete Statement of Applicability (10 controls)', tab: 'soa', check: () => this.countProjectItems('iso-risk-assessment', 'soa') >= 10 }
+                    { id: 'SoA', label: 'Complete SoA (10 controls)', tab: 'SoA', check: () => this.countProjectItems('iso-risk-assessment', 'SoA') >= 10 }
                 ]
             },
             {
@@ -3454,7 +3454,7 @@ exportReportPDF() {
                     { id: 'soc2-controls', label: 'Document 12 SOC 2 controls', tab: 'controls', check: () => this.countProjectItems('soc2-audit', 'controls') >= 12 },
                     { id: 'soc2-assets', label: 'Catalog 4 critical systems', tab: 'assets', check: () => this.countProjectItems('soc2-audit', 'assets') >= 4 },
                     { id: 'soc2-incidents', label: 'Track 2 security incidents', tab: 'incidents', check: () => this.countProjectItems('soc2-audit', 'incidents') >= 2 },
-                    { id: 'soc2-soa', label: 'Complete control matrix (15 controls)', tab: 'soa', check: () => this.countProjectItems('soc2-audit', 'soa') >= 15 }
+                    { id: 'soc2-SoA', label: 'Complete control matrix (15 controls)', tab: 'SoA', check: () => this.countProjectItems('soc2-audit', 'SoA') >= 15 }
                 ]
             },
             {
@@ -3530,7 +3530,7 @@ exportReportPDF() {
                     { id: 'gap-controls', label: 'Assess 15 controls', tab: 'controls', check: () => this.countProjectItems('compliance-gap', 'controls') >= 15 },
                     { id: 'gap-issues', label: 'Identify 6 compliance gaps', tab: 'issues', check: () => this.countProjectItems('compliance-gap', 'issues') >= 6 },
                     { id: 'gap-treatments', label: 'Plan 6 remediations', tab: 'treatments', check: () => this.countProjectItems('compliance-gap', 'treatments') >= 6 },
-                    { id: 'gap-soa', label: 'Complete control matrix (20 controls)', tab: 'soa', check: () => this.countProjectItems('compliance-gap', 'soa') >= 20 }
+                    { id: 'gap-SoA', label: 'Complete control matrix (20 controls)', tab: 'SoA', check: () => this.countProjectItems('compliance-gap', 'SoA') >= 20 }
                 ]
             }
         ];
@@ -3654,7 +3654,7 @@ exportReportPDF() {
             issues: this.data.issues.filter(i => i.projectId === projectId),
             incidents: this.data.incidents.filter(i => i.projectId === projectId),
             treatments: this.data.treatments.filter(t => t.projectId === projectId),
-            soa: this.data.soa.filter(s => s.projectId === projectId)
+            SoA: this.data.SoA.filter(s => s.projectId === projectId)
         };
 
         // Generate summary
@@ -3713,8 +3713,8 @@ exportReportPDF() {
         }
         
         // Compliance
-        if (data.soa.length > 0) {
-            const applicable = data.soa.filter(s => s.applicable !== false).length;
+        if (data.SoA.length > 0) {
+            const applicable = data.SoA.filter(s => s.applicable !== false).length;
             bullets.push(`• Completed Statement of Applicability for ${applicable} controls, establishing compliance baseline for ${data.frameworks.join(', ')}`);
         }
         
@@ -3736,7 +3736,7 @@ exportReportPDF() {
                 issues: data.issues.length,
                 incidents: data.incidents.length,
                 treatments: data.treatments.length,
-                soa: data.soa.length
+                SoA: data.SoA.length
             }
         };
     }
@@ -3823,7 +3823,7 @@ exportReportPDF() {
                     ${summary.stats.issues > 0 ? `<span class="portfolio-stat"><i class="bi bi-bug"></i> ${summary.stats.issues} Issues</span>` : ''}
                     ${summary.stats.incidents > 0 ? `<span class="portfolio-stat"><i class="bi bi-exclamation-octagon"></i> ${summary.stats.incidents} Incidents</span>` : ''}
                     ${summary.stats.treatments > 0 ? `<span class="portfolio-stat"><i class="bi bi-check2-circle"></i> ${summary.stats.treatments} Treatments</span>` : ''}
-                    ${summary.stats.soa > 0 ? `<span class="portfolio-stat"><i class="bi bi-list-check"></i> ${summary.stats.soa} SoA Controls</span>` : ''}
+                    ${summary.stats.SoA > 0 ? `<span class="portfolio-stat"><i class="bi bi-list-check"></i> ${summary.stats.SoA} SoA Controls</span>` : ''}
                 </div>
                 
                 <h5 class="mb-3">Resume Bullet Points:</h5>
