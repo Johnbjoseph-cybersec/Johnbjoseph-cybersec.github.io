@@ -1151,7 +1151,10 @@ h2 {
                             <i class="bi bi-magic me-2"></i> Generate All Summaries
                         </button>
                         <button class="btn btn-outline-light ms-2" onclick="window.app.copyAllBullets()">
-                            <i class="bi bi-clipboard me-2"></i> Copy All Bullets
+                            <i class="bi bi-clipboard me-2"></i> Copy All Summaries
+                        </button>
+                        <button class="btn btn-outline-light ms-2" onclick="window.app.exportPortfolioPDF()">
+                            <i class="bi bi-file-earmark-pdf me-2"></i> Export Portfolio PDF
                         </button>
                     </div>
                     <div id="portfolioContent"></div>
@@ -3791,7 +3794,120 @@ exportReportPDF() {
         });
     }
 
-    renderPortfolio() {
+    
+    copyPortfolioSummary(projectId) {
+        const summary = (this.data.portfolioSummaries || {})[projectId];
+        if (!summary) {
+            this.showToast('Summary not found', 'error');
+            return;
+        }
+        const text = this.formatPortfolioSummaryText(summary);
+        navigator.clipboard.writeText(text).then(() => {
+            this.showToast('Summary copied!', 'success');
+        }).catch(() => {
+            this.showToast('Failed to copy to clipboard', 'error');
+        });
+    }
+
+
+    formatPortfolioSummaryText(summary) {
+        const lines = [];
+        lines.push(summary.company);
+        lines.push(`${summary.industry} • ${summary.scenario}`);
+        lines.push('');
+        lines.push('Project Description:');
+        lines.push(summary.description || '');
+        lines.push('');
+        lines.push('Frameworks Used:');
+        lines.push((summary.frameworks || []).join(', '));
+        lines.push('');
+        lines.push('Project Statistics:');
+        lines.push(`${summary.stats.assets} Assets`);
+        lines.push(`${summary.stats.risks} Risks`);
+        lines.push(`${summary.stats.controls} Controls`);
+        lines.push(`${summary.stats.treatments} Treatments`);
+        lines.push(`${summary.stats.SoA} SoA Controls`);
+        lines.push('');
+        lines.push('Resume Bullet Points:');
+        (summary.bullets || []).forEach(b => lines.push(b.startsWith('•') ? b : `• ${b}`));
+        return lines.join('\n');
+    }
+
+    exportPortfolioPDF(projectId = null) {
+        // jsPDF UMD exposes window.jspdf.jsPDF
+        const jsPDF = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : window.jsPDF;
+        if (!jsPDF) {
+            this.showToast('PDF library not loaded. Please refresh the page.', 'error');
+            return;
+        }
+
+        const summariesMap = this.data.portfolioSummaries || {};
+        const summaries = projectId
+            ? (summariesMap[projectId] ? [summariesMap[projectId]] : [])
+            : Object.values(summariesMap);
+
+        if (summaries.length === 0) {
+            this.showToast('No portfolio summaries to export', 'info');
+            return;
+        }
+
+        const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        const margin = 40;
+        const maxWidth = pageWidth - margin * 2;
+
+        let y = margin;
+
+        const addWrapped = (text, fontSize = 11, bold = false, gap = 6) => {
+            doc.setFont('helvetica', bold ? 'bold' : 'normal');
+            doc.setFontSize(fontSize);
+            const lines = doc.splitTextToSize(String(text || ''), maxWidth);
+            for (const line of lines) {
+                if (y > pageHeight - margin) {
+                    doc.addPage();
+                    y = margin;
+                }
+                doc.text(line, margin, y);
+                y += fontSize + 3;
+            }
+            y += gap;
+        };
+
+        summaries.forEach((s, idx) => {
+            addWrapped(s.company, 16, true, 2);
+            addWrapped(`${s.industry} • ${s.scenario}`, 11, false, 10);
+
+            addWrapped('Project Description', 12, true, 2);
+            addWrapped(s.description || '', 11, false, 10);
+
+            addWrapped('Frameworks Used', 12, true, 2);
+            addWrapped((s.frameworks || []).join(', '), 11, false, 10);
+
+            addWrapped('Project Statistics', 12, true, 2);
+            addWrapped(
+                `${s.stats.assets} Assets • ${s.stats.risks} Risks • ${s.stats.controls} Controls • ${s.stats.treatments} Treatments • ${s.stats.SoA} SoA Controls`,
+                11, false, 10
+            );
+
+            addWrapped('Resume Bullet Points', 12, true, 2);
+            (s.bullets || []).forEach(b => addWrapped(b.startsWith('•') ? b : `• ${b}`, 11, false, 2));
+            y += 8;
+
+            if (idx < summaries.length - 1) {
+                doc.setDrawColor(180);
+                doc.line(margin, y, pageWidth - margin, y);
+                y += 18;
+            }
+        });
+
+        const nameBase = projectId ? (summaries[0].company || 'Portfolio') : 'Portfolio_Summaries';
+        const safeName = nameBase.replace(/[\\/:*?"<>|]+/g, '').replace(/\s+/g, '_').trim();
+        doc.save(`${safeName}.pdf`);
+        this.showToast('PDF exported!', 'success');
+    }
+
+renderPortfolio() {
         const container = document.getElementById('portfolioContent');
         if (!container) return;
 
@@ -3815,8 +3931,9 @@ exportReportPDF() {
                         <p style="color:rgba(255,255,255,0.85);" class="mb-2">${this.escapeHtml(summary.industry)} • ${this.escapeHtml(summary.scenario)}</p>
                     </div>
                     <button class="btn btn-sm btn-outline-light" onclick="navigator.clipboard.writeText(\`${summary.bullets.join('\\n')}\`).then(() => window.app.showToast('Bullets copied!', 'success'))">
-                        <i class="bi bi-clipboard"></i> Copy Bullets
+                        <i class="bi bi-clipboard"></i> Copy Summary
                     </button>
+                    <button class="btn btn-sm btn-outline-light ms-2" onclick="window.app.exportPortfolioPDF('${projectId}')"><i class="bi bi-file-earmark-pdf"></i> Export PDF</button>
                 </div>
                 
                 <h5 class="mb-3">Project Description:</h5>
