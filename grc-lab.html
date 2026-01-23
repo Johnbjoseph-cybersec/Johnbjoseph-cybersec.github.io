@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -776,11 +777,24 @@ h2 {
                             <select class="form-select" id="categorySelect" onchange="window.app.renderFrameworks()">
                                 <option value="all">All Categories</option>
                                 <option value="Access Control">Access Control</option>
-                                <option value="Asset Management">Asset Management</option>
-                                <option value="Data Protection">Data Protection</option>
-                                <option value="Incident Management">Incident Management</option>
-                                <option value="Risk Management">Risk Management</option>
-                            </select>
+<option value="Asset Management">Asset Management</option>
+<option value="Cloud Security">Cloud Security</option>
+<option value="Network Security">Network Security</option>
+<option value="Application Security">Application Security</option>
+<option value="Data Protection">Data Protection</option>
+<option value="Monitoring & Logging">Monitoring &amp; Logging</option>
+<option value="Incident Management">Incident Management</option>
+<option value="Vulnerability Management">Vulnerability Management</option>
+<option value="Change Management">Change Management</option>
+<option value="Business Continuity">Business Continuity</option>
+<option value="Vendor Management">Vendor Management</option>
+<option value="Privacy">Privacy</option>
+<option value="Compliance">Compliance</option>
+<option value="Governance">Governance</option>
+<option value="Physical Security">Physical Security</option>
+<option value="Human Resources">Human Resources</option>
+<option value="Risk Management">Risk Management</option>
+</select>
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control" id="frameworkSearch" placeholder="Search...">
@@ -965,11 +979,11 @@ h2 {
             </div>
 
             <!-- SoA Tab -->
-            <div id="tabSoa" class="tab-content">
+            <div id="tabSoA" class="tab-content">
                 <div class="container-glass">
                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
                         <div>
-                            <h2 class="mb-1"> (SoA)</h2>
+                            <h2 class="mb-1">Statement of Applicability (SoA)</h2>
                             <div class="text-muted">ISO 27001 Annex A applicability + justification + implementation status.</div>
                         </div>
                         <div class="d-flex gap-2">
@@ -1748,7 +1762,7 @@ class GRCApplication {
                         <label class="form-label">Category *</label>
                         <select class="form-select" id="riskCategory" required>
                             <option value="">Select...</option>
-                            ${['Cybersecurity','Compliance','Operational','Privacy','Third-Party'].map(c => 
+                            ${['Access Control','Asset Management','Cloud Security','Network Security','Application Security','Data Protection','Monitoring & Logging','Incident Management','Vulnerability Management','Change Management','Business Continuity','Vendor Management','Privacy','Compliance','Governance','Physical Security','Human Resources'].map(c => 
                                 `<option value="${c}" ${risk?.category === c ? 'selected' : ''}>${c}</option>`
                             ).join('')}
                         </select>
