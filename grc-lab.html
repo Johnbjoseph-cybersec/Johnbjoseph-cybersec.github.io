@@ -555,7 +555,30 @@ h2 {
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
+/* Add these NEW feature styles after your existing styles */
+.risk-appetite-warning {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.5rem 1rem; border-radius: var(--radius-md);
+    font-weight: 600; font-size: 0.875rem;
+}
+.appetite-within { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; }
+.appetite-near { background: rgba(245, 158, 11, 0.15); color: #fcd34d; }
+.appetite-exceeded { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
 
+.audit-entry {
+    padding: 0.75rem; border-left: 3px solid var(--accent-info);
+    background: rgba(255,255,255,0.03); margin-bottom: 0.5rem; border-radius: 4px;
+}
+.tier-critical { background: rgba(239, 68, 68, 0.2); color: #fca5a5; font-weight: 700; }
+.tier-high { background: rgba(245, 158, 11, 0.2); color: #fcd34d; font-weight: 700; }
+.tier-medium { background: rgba(6, 182, 212, 0.2); color: #67e8f9; font-weight: 600; }
+.tier-low { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; font-weight: 600; }
+.control-map-item {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.25rem 0.75rem; background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 100px;
+    font-size: 0.75rem; margin: 0.25rem;
+}
 </style>
 </head>
 <body>
@@ -698,6 +721,28 @@ h2 {
                 <button class="tab-btn" onclick="window.app.switchTab('portfolio')">
                     <i class="bi bi-folder-check me-2"></i> Portfolio
                 </button>
+                <!-- Add after your existing tab buttons -->
+<button class="tab-btn" onclick="window.app.switchTab('kpi')">
+    <i class="bi bi-graph-up me-2"></i> Executive KPIs
+</button>
+<button class="tab-btn" onclick="window.app.switchTab('testing')">
+    <i class="bi bi-clipboard-check me-2"></i> Testing
+</button>
+<button class="tab-btn" onclick="window.app.switchTab('findings')">
+    <i class="bi bi-search me-2"></i> Findings
+</button>
+<button class="tab-btn" onclick="window.app.switchTab('tasks')">
+    <i class="bi bi-list-task me-2"></i> Tasks
+</button>
+<button class="tab-btn" onclick="window.app.switchTab('policies')">
+    <i class="bi bi-file-text me-2"></i> Policies
+</button>
+<button class="tab-btn" onclick="window.app.switchTab('compliance')">
+    <i class="bi bi-clipboard-data me-2"></i> Compliance
+</button>
+<button class="tab-btn" onclick="window.app.switchTab('audit')">
+    <i class="bi bi-clock-history me-2"></i> Audit Trail
+</button>
             </div>
 
             <!-- Dashboard Tab -->
@@ -1574,7 +1619,12 @@ class GRCApplication {
             treatments: this.loadData('treatments') || [],
             SoA: this.loadData('SoA') || [],
             projects: this.loadData('projects') || [],
-            portfolioSummaries: this.loadData('portfolioSummaries') || {}
+            portfolioSummaries: this.loadData('portfolioSummaries') || {},
+              testing: this.loadData('testing') || [],
+        findings: this.loadData('findings') || [],
+        tasks: this.loadData('tasks') || [],
+        policies: this.loadData('policies') || [],
+        auditTrail: this.loadData('auditTrail') || []
         };
     }
 
