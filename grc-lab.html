@@ -1,51 +1,51 @@
 
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>GRC Practice Lab Pro | Enterprise Edition</title>
+    <title>GRC Made Simple - Practice Lab | Build Real GRC Skills</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
 :root {
-    --bg-base: #09090b;
-    --bg-surface: #18181b;
-    --bg-elevated: #27272a;
-    --bg-hover: #3f3f46;
-    --border-subtle: rgba(255,255,255,0.06);
-    --border-default: rgba(255,255,255,0.1);
-    --border-strong: rgba(255,255,255,0.15);
-    --text-primary: #fafafa;
-    --text-secondary: #a1a1aa;
-    --text-muted: #71717a;
-    --accent-blue: #3b82f6;
-    --accent-blue-soft: rgba(59,130,246,0.15);
-    --accent-green: #22c55e;
-    --accent-green-soft: rgba(34,197,94,0.15);
-    --accent-amber: #f59e0b;
-    --accent-amber-soft: rgba(245,158,11,0.15);
-    --accent-red: #ef4444;
-    --accent-red-soft: rgba(239,68,68,0.15);
-    --accent-purple: #a855f7;
-    --accent-purple-soft: rgba(168,85,247,0.15);
-    --accent-cyan: #06b6d4;
-    --accent-cyan-soft: rgba(6,182,212,0.15);
-    --accent-pink: #ec4899;
-    --accent-pink-soft: rgba(236,72,153,0.15);
+    --bg-base: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-elevated: #f1f5f9;
+    --bg-hover: #e2e8f0;
+    --border-subtle: rgba(0,0,0,0.06);
+    --border-default: rgba(0,0,0,0.1);
+    --border-strong: rgba(0,0,0,0.15);
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --accent-blue: #2563eb;
+    --accent-blue-soft: rgba(37,99,235,0.12);
+    --accent-green: #16a34a;
+    --accent-green-soft: rgba(22,163,74,0.12);
+    --accent-amber: #d97706;
+    --accent-amber-soft: rgba(217,119,6,0.12);
+    --accent-red: #dc2626;
+    --accent-red-soft: rgba(220,38,38,0.12);
+    --accent-purple: #9333ea;
+    --accent-purple-soft: rgba(147,51,234,0.12);
+    --accent-cyan: #0891b2;
+    --accent-cyan-soft: rgba(8,145,178,0.12);
+    --accent-pink: #db2777;
+    --accent-pink-soft: rgba(219,39,119,0.12);
     --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
     --gradient-green: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
     --gradient-purple: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
-    --gradient-mesh: radial-gradient(at 40% 20%, rgba(59,130,246,0.15) 0px, transparent 50%),
-                     radial-gradient(at 80% 0%, rgba(168,85,247,0.1) 0px, transparent 50%),
-                     radial-gradient(at 0% 50%, rgba(34,197,94,0.08) 0px, transparent 50%);
-    --shadow-sm: 0 1px 2px rgba(0,0,0,0.5);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
-    --shadow-lg: 0 8px 30px rgba(0,0,0,0.5);
-    --shadow-glow-blue: 0 0 40px rgba(59,130,246,0.3);
-    --shadow-glow-green: 0 0 40px rgba(34,197,94,0.3);
+    --gradient-mesh: radial-gradient(at 40% 20%, rgba(59,130,246,0.08) 0px, transparent 50%),
+                     radial-gradient(at 80% 0%, rgba(168,85,247,0.06) 0px, transparent 50%),
+                     radial-gradient(at 0% 50%, rgba(34,197,94,0.05) 0px, transparent 50%);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+    --shadow-glow-blue: 0 0 40px rgba(59,130,246,0.15);
+    --shadow-glow-green: 0 0 40px rgba(34,197,94,0.15);
     --radius-sm: 6px;
     --radius-md: 8px;
     --radius-lg: 12px;
@@ -69,16 +69,17 @@ body {
 .sidebar {
     width: 260px;
     background: var(--bg-surface);
-    border-right: 1px solid var(--border-subtle);
+    border-right: 1px solid var(--border-default);
     display: flex;
     flex-direction: column;
     position: fixed;
     top: 0; left: 0; bottom: 0;
     z-index: 100;
+    box-shadow: var(--shadow-md);
 }
 .sidebar-header {
     padding: 20px;
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-default);
 }
 .logo-container { display: flex; align-items: center; gap: 12px; }
 .logo-icon {
@@ -156,9 +157,9 @@ body {
 }
 .content-header {
     position: sticky; top: 0; z-index: 50;
-    background: rgba(9,9,11,0.85);
+    background: rgba(248,250,252,0.9);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-default);
     padding: 16px 24px;
     display: flex;
     align-items: center;
@@ -168,33 +169,81 @@ body {
 .content-title i { color: var(--accent-blue); }
 .header-actions { display: flex; gap: 12px; }
 .content-body { padding: 24px; max-width: 1600px; }
+
+/* ===== CONSISTENT BUTTON STYLES ===== */
 .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    padding: 8px 16px; font-size: 14px; font-weight: 600;
+    padding: 10px 18px; font-size: 13px; font-weight: 600;
     border-radius: var(--radius-md);
     border: 1px solid transparent;
     cursor: pointer;
     transition: all var(--transition-fast);
+    font-family: var(--font-sans);
+    line-height: 1;
+    white-space: nowrap;
 }
 .btn-primary {
-    background: var(--gradient-blue);
+    background: var(--accent-blue);
     color: white; border: none;
     box-shadow: var(--shadow-sm);
 }
-.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-md), var(--shadow-glow-blue); }
+.btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: var(--shadow-md); }
 .btn-secondary {
-    background: var(--bg-elevated);
+    background: var(--bg-surface);
     color: var(--text-primary);
     border: 1px solid var(--border-default);
 }
-.btn-secondary:hover { background: var(--bg-hover); }
-.btn-ghost { background: transparent; color: var(--text-secondary); }
+.btn-secondary:hover { background: var(--bg-elevated); border-color: var(--border-strong); }
+.btn-ghost { background: transparent; color: var(--text-secondary); border: 1px solid transparent; }
 .btn-ghost:hover { background: var(--bg-elevated); color: var(--text-primary); }
-.btn-sm { padding: 6px 12px; font-size: 13px; }
-.btn-lg { padding: 12px 24px; font-size: 15px; }
+.btn-sm { padding: 7px 14px; font-size: 12px; }
+.btn-lg { padding: 12px 24px; font-size: 14px; }
+.btn-xs { padding: 5px 10px; font-size: 11px; }
+
+/* Filter/Toggle Button Group - Used everywhere for filters */
+.btn-group { display: inline-flex; gap: 0; }
+.btn-group .btn { border-radius: 0; margin: 0; }
+.btn-group .btn:first-child { border-radius: var(--radius-md) 0 0 var(--radius-md); }
+.btn-group .btn:last-child { border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+.btn-group .btn:not(:last-child) { border-right: none; }
+
+.btn-filter {
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    color: var(--text-secondary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+.btn-filter:hover { background: var(--bg-elevated); color: var(--text-primary); }
+.btn-filter.active {
+    background: var(--accent-blue);
+    color: white;
+    border-color: var(--accent-blue);
+}
+
+/* ===== CONSISTENT TYPOGRAPHY ===== */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.3;
+}
+h1 { font-size: 24px; }
+h2 { font-size: 20px; }
+h3 { font-size: 16px; }
+h4 { font-size: 14px; }
+p { font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
+.text-sm { font-size: 13px; }
+.text-xs { font-size: 12px; }
+.text-lg { font-size: 16px; }
+
 .card {
     background: var(--bg-surface);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border-default);
     border-radius: var(--radius-lg);
     overflow: hidden;
     transition: all var(--transition-normal);
@@ -442,15 +491,16 @@ tbody tr:last-child td { border-bottom: none; }
     background: var(--bg-surface);
 }
 .risk-matrix-header { background: var(--bg-elevated); color: var(--text-muted); }
-.risk-low { background: #052e16; color: #4ade80; }
-.risk-medium { background: #422006; color: #fbbf24; }
-.risk-high { background: #7c2d12; color: #fb923c; }
-.risk-critical { background: #450a0a; color: #f87171; }
+.risk-low { background: #dcfce7; color: #166534; }
+.risk-medium { background: #fef3c7; color: #92400e; }
+.risk-high { background: #fed7aa; color: #9a3412; }
+.risk-critical { background: #fee2e2; color: #b91c1c; }
 .progress-bar { height: 8px; background: var(--bg-elevated); border-radius: var(--radius-full); overflow: hidden; }
 .progress-fill { height: 100%; border-radius: var(--radius-full); }
 .progress-fill.blue { background: var(--gradient-blue); }
 .progress-fill.green { background: var(--gradient-green); }
 .progress-fill.amber { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+.progress-fill.red { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
 .progress-fill.purple { background: var(--gradient-purple); }
 .chart-container {
     background: var(--bg-surface);
@@ -549,13 +599,23 @@ tbody tr:last-child td { border-bottom: none; }
     </style>
 </head>
 <body>
+    <!-- Educational Disclaimer Banner -->
+    <div id="edu-banner" style="background: linear-gradient(90deg, #1e40af, #7c3aed); color: white; padding: 10px 24px; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 12px; position: relative;">
+        <i class="bi bi-mortarboard-fill" style="font-size: 16px;"></i>
+        <span><strong>Educational / Practice Use Only</strong> — This is a learning simulator for portfolio building and skills practice. Not for production compliance decisions or formal audits.</span>
+        <button onclick="document.getElementById('edu-banner').style.display='none'" style="background: none; border: none; color: white; cursor: pointer; position: absolute; right: 16px; font-size: 18px; opacity: 0.7;">&times;</button>
+    </div>
+    
     <div class="app-container">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo-container">
-                    <div class="logo-icon"><i class="bi bi-shield-check"></i></div>
-                    <div class="logo-text">GRC Lab Pro</div>
-                    <span class="logo-badge">v2.0</span>
+                    <img src="logo.png" alt="GRC Made Simple" style="height: 40px; width: 40px; border-radius: var(--radius-md); object-fit: contain;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="logo-icon" style="display: none;"><i class="bi bi-shield-check"></i></div>
+                    <div>
+                        <div class="logo-text" style="font-size: 15px; line-height: 1.2;">GRC Made Simple</div>
+                        <div style="font-size: 11px; color: var(--text-muted); font-weight: 500;">Practice Lab</div>
+                    </div>
                 </div>
             </div>
             <nav class="sidebar-nav">
@@ -597,12 +657,12 @@ tbody tr:last-child td { border-bottom: none; }
                 </div>
                 <div class="nav-section">
                     <div class="nav-section-title">Learning</div>
-                    <div class="nav-item" data-tab="frameworks" style="background: linear-gradient(90deg, rgba(59,130,246,0.1), transparent);"><i class="bi bi-journal-code"></i><span>Frameworks</span><span class="nav-badge" style="background: var(--accent-blue);">400+</span></div>
-                    <div class="nav-item" data-tab="projects" style="background: linear-gradient(90deg, rgba(168,85,247,0.1), transparent);"><i class="bi bi-briefcase"></i><span>Projects</span><span class="nav-badge" style="background: var(--accent-purple);">9</span></div>
-                    <div class="nav-item" data-tab="portfolio" style="background: linear-gradient(90deg, rgba(34,197,94,0.1), transparent);"><i class="bi bi-person-badge"></i><span>Portfolio</span></div>
+                    <div class="nav-item" data-tab="frameworks"><i class="bi bi-journal-code"></i><span>Frameworks</span><span class="nav-badge" style="background: var(--accent-blue); color: white;">400+</span></div>
+                    <div class="nav-item" data-tab="projects"><i class="bi bi-briefcase"></i><span>Projects</span><span class="nav-badge" style="background: var(--accent-purple); color: white;">9</span></div>
+                    <div class="nav-item" data-tab="portfolio"><i class="bi bi-person-badge"></i><span>Portfolio</span></div>
                 </div>
             </nav>
-            <div style="padding: 16px; border-top: 1px solid var(--border-subtle);">
+            <div style="padding: 16px; border-top: 1px solid var(--border-default);">
                 <button class="btn btn-primary" style="width: 100%;" onclick="app.loadDemo()">
                     <i class="bi bi-lightning-fill"></i> Load Demo Data
                 </button>
@@ -768,10 +828,24 @@ class GRCLabPro {
         const d = this.getActiveData();
         const openRisks = d.risks.filter(r => r.status !== 'Closed').length;
         const criticalRisks = d.risks.filter(r => (r.likelihood * r.impact) >= 20).length;
+        const highRisks = d.risks.filter(r => (r.likelihood * r.impact) >= 12 && (r.likelihood * r.impact) < 20).length;
+        const mediumRisks = d.risks.filter(r => (r.likelihood * r.impact) >= 6 && (r.likelihood * r.impact) < 12).length;
+        const lowRisks = d.risks.filter(r => (r.likelihood * r.impact) < 6).length;
         const openIssues = d.issues.filter(i => i.status === 'Open').length;
         const pendingTasks = d.tasks.filter(t => t.status !== 'Completed').length;
         const effectiveControls = d.controls.filter(c => c.effectiveness === 'Effective').length;
+        const partialControls = d.controls.filter(c => c.effectiveness === 'Partially Effective').length;
+        const ineffectiveControls = d.controls.filter(c => c.effectiveness === 'Ineffective').length;
         const openFindings = d.findings.filter(f => f.status === 'Open').length;
+        const closedFindings = d.findings.filter(f => f.status === 'Closed').length;
+        const activeIncidents = d.incidents.filter(i => i.status !== 'Resolved').length;
+        const criticalVendors = d.vendors.filter(v => v.criticality === 'Critical').length;
+        
+        // Calculate health score
+        const riskScore = d.risks.length > 0 ? Math.max(0, 100 - (criticalRisks * 15 + highRisks * 8 + mediumRisks * 3)) : 100;
+        const controlScore = d.controls.length > 0 ? Math.round((effectiveControls / d.controls.length) * 100) : 0;
+        const overallHealth = d.risks.length > 0 || d.controls.length > 0 ? Math.round((riskScore + controlScore) / 2) : 0;
+        const healthColor = overallHealth >= 70 ? 'green' : overallHealth >= 40 ? 'amber' : 'red';
         
         const projectModeNote = this.activeProject ? `
             <div style="background: linear-gradient(135deg, var(--accent-purple-soft), var(--accent-blue-soft)); padding: 16px; border-radius: var(--radius-md); margin-bottom: 24px; border: 1px solid var(--accent-purple);">
@@ -787,33 +861,411 @@ class GRCLabPro {
         
         c.innerHTML = `
             ${projectModeNote}
-            <div class="welcome-banner">
-                <h1 class="welcome-title">${this.activeProject ? 'Project Dashboard' : 'Welcome to GRC Practice Lab Pro'}</h1>
-                <p class="welcome-subtitle">${this.activeProject ? 'Track your progress on this project. Complete tasks to build your portfolio.' : 'Master enterprise GRC with hands-on practice. Build your risk register, implement controls, manage audits, and generate portfolio-ready artifacts.'}</p>
-                ${!this.activeProject ? `
-                <div class="welcome-actions">
-                    <button class="btn btn-primary btn-lg" onclick="app.loadDemo()"><i class="bi bi-lightning-fill"></i> Load Demo Data</button>
-                    <button class="btn btn-secondary btn-lg" onclick="app.switchTab('projects')"><i class="bi bi-briefcase"></i> Start a Project</button>
+            
+            <!-- Welcome Banner -->
+            <div style="background: var(--bg-surface); border-radius: var(--radius-lg); padding: 28px; margin-bottom: 24px; border: 1px solid var(--border-default); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: radial-gradient(circle, var(--accent-blue-soft) 0%, transparent 70%); pointer-events: none;"></div>
+                <div style="position: relative; z-index: 1;">
+                    <div style="display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px;">
+                        <img src="logo.png" alt="GRC Made Simple" style="height: 56px; width: 56px; border-radius: var(--radius-md); object-fit: contain;" onerror="this.outerHTML='<div style=\\'width:56px;height:56px;background:var(--accent-blue);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;\\'><i class=\\'bi bi-shield-check\\' style=\\'font-size:28px;color:white;\\'></i></div>'">
+                        <div style="flex: 1;">
+                            <h1 style="font-size: 22px; font-weight: 700; margin: 0; color: var(--text-primary);">${this.activeProject ? 'Project Dashboard' : 'GRC Made Simple — Practice Lab'}</h1>
+                            <p style="font-size: 14px; color: var(--text-secondary); margin: 6px 0 0 0; line-height: 1.5;">${this.activeProject ? 'Track your progress and complete tasks to build your portfolio.' : 'Build practical GRC skills through hands-on simulations. Create risk registers, implement controls, manage audits, and generate portfolio-ready artifacts.'}</p>
+                        </div>
+                    </div>
+                    
+                    ${!this.activeProject ? `
+                        <!-- Feature Highlights -->
+                        <div style="display: flex; gap: 24px; margin: 20px 0; padding: 16px 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="bi bi-journal-code" style="color: var(--accent-blue);"></i>
+                                <span style="font-size: 13px; color: var(--text-secondary);">400+ Framework Controls</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="bi bi-briefcase" style="color: var(--accent-purple);"></i>
+                                <span style="font-size: 13px; color: var(--text-secondary);">9 Real-World Projects</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="bi bi-file-earmark-text" style="color: var(--accent-green);"></i>
+                                <span style="font-size: 13px; color: var(--text-secondary);">Resume Builder</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="bi bi-bar-chart" style="color: var(--accent-amber);"></i>
+                                <span style="font-size: 13px; color: var(--text-secondary);">Interactive Reports</span>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 12px;">
+                            <button class="btn btn-primary" onclick="app.loadDemo()"><i class="bi bi-lightning-fill"></i> Load Demo Data</button>
+                            <button class="btn btn-secondary" onclick="app.switchTab('projects')"><i class="bi bi-briefcase"></i> Start a Project</button>
+                            <button class="btn btn-secondary" onclick="app.switchTab('frameworks')"><i class="bi bi-book"></i> Learn Frameworks</button>
+                        </div>
+                    ` : ''}
                 </div>
-                ` : ''}
             </div>
-            <div class="dashboard-grid">
-                <div class="metric-card"><div class="metric-icon blue"><i class="bi bi-hdd-stack"></i></div><div class="metric-value">${d.assets.length}</div><div class="metric-label">Total Assets</div></div>
-                <div class="metric-card"><div class="metric-icon red"><i class="bi bi-exclamation-triangle"></i></div><div class="metric-value">${openRisks}</div><div class="metric-label">Open Risks</div>${criticalRisks > 0 ? `<div class="metric-change negative"><i class="bi bi-exclamation-circle"></i> ${criticalRisks} Critical</div>` : ''}</div>
-                <div class="metric-card"><div class="metric-icon green"><i class="bi bi-shield-check"></i></div><div class="metric-value">${d.controls.length}</div><div class="metric-label">Controls</div>${effectiveControls > 0 ? `<div class="metric-change positive"><i class="bi bi-check"></i> ${effectiveControls} Effective</div>` : ''}</div>
-                <div class="metric-card"><div class="metric-icon amber"><i class="bi bi-bug"></i></div><div class="metric-value">${openIssues}</div><div class="metric-label">Open Issues</div></div>
-                <div class="metric-card"><div class="metric-icon purple"><i class="bi bi-check2-square"></i></div><div class="metric-value">${pendingTasks}</div><div class="metric-label">Pending Tasks</div></div>
-                <div class="metric-card"><div class="metric-icon cyan"><i class="bi bi-search"></i></div><div class="metric-value">${openFindings}</div><div class="metric-label">Open Findings</div></div>
+            
+            <!-- Main Stats Grid -->
+            <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; margin-bottom: 24px;">
+                <div class="metric-card" onclick="app.switchTab('assets')" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+                    <div class="metric-icon blue"><i class="bi bi-hdd-stack"></i></div>
+                    <div class="metric-value">${d.assets.length}</div>
+                    <div class="metric-label">Total Assets</div>
+                </div>
+                <div class="metric-card" onclick="app.switchTab('risks')" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+                    <div class="metric-icon red"><i class="bi bi-exclamation-triangle"></i></div>
+                    <div class="metric-value">${openRisks}</div>
+                    <div class="metric-label">Open Risks</div>
+                    ${criticalRisks > 0 ? `<div class="metric-change negative"><i class="bi bi-exclamation-circle"></i> ${criticalRisks} Critical</div>` : ''}
+                </div>
+                <div class="metric-card" onclick="app.switchTab('controls')" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+                    <div class="metric-icon green"><i class="bi bi-shield-check"></i></div>
+                    <div class="metric-value">${d.controls.length}</div>
+                    <div class="metric-label">Controls</div>
+                    ${effectiveControls > 0 ? `<div class="metric-change positive"><i class="bi bi-check"></i> ${effectiveControls} Effective</div>` : ''}
+                </div>
+                <div class="metric-card" onclick="app.switchTab('issues')" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+                    <div class="metric-icon amber"><i class="bi bi-bug"></i></div>
+                    <div class="metric-value">${openIssues}</div>
+                    <div class="metric-label">Open Issues</div>
+                </div>
+                <div class="metric-card" onclick="app.switchTab('tasks')" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+                    <div class="metric-icon purple"><i class="bi bi-check2-square"></i></div>
+                    <div class="metric-value">${pendingTasks}</div>
+                    <div class="metric-label">Pending Tasks</div>
+                </div>
+                <div class="metric-card" onclick="app.switchTab('findings')" style="cursor: pointer; transition: all 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+                    <div class="metric-icon cyan"><i class="bi bi-search"></i></div>
+                    <div class="metric-value">${openFindings}</div>
+                    <div class="metric-label">Open Findings</div>
+                </div>
             </div>
-            ${d.risks.length > 0 ? this.renderRiskByCategory() : '<div class="chart-container"><div class="empty-state"><p class="text-muted">No data yet. Add some risks to see charts.</p></div></div>'}
+            
+            <!-- Charts Row -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+                
+                <!-- GRC Health Score -->
+                <div class="card">
+                    <div class="card-header" style="padding: 16px;">
+                        <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-heart-pulse"></i> GRC Health Score</span>
+                    </div>
+                    <div class="card-body" style="padding: 24px; text-align: center;">
+                        <div style="position: relative; width: 140px; height: 140px; margin: 0 auto 16px;">
+                            <svg viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="var(--bg-elevated)" stroke-width="12"/>
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="var(--accent-${healthColor})" stroke-width="12" 
+                                    stroke-dasharray="${overallHealth * 2.64} 264" stroke-linecap="round"/>
+                            </svg>
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                                <div style="font-size: 32px; font-weight: 700; color: var(--accent-${healthColor});">${overallHealth}</div>
+                                <div style="font-size: 11px; color: var(--text-muted);">/ 100</div>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: center;">
+                            <div style="padding: 10px; background: var(--bg-elevated); border-radius: var(--radius-sm);">
+                                <div style="font-size: 16px; font-weight: 600; color: var(--text-primary);">${riskScore}%</div>
+                                <div style="font-size: 10px; color: var(--text-muted);">Risk Score</div>
+                            </div>
+                            <div style="padding: 10px; background: var(--bg-elevated); border-radius: var(--radius-sm);">
+                                <div style="font-size: 16px; font-weight: 600; color: var(--text-primary);">${controlScore}%</div>
+                                <div style="font-size: 10px; color: var(--text-muted);">Control Effectiveness</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Risk Distribution -->
+                <div class="card">
+                    <div class="card-header" style="padding: 16px;">
+                        <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-pie-chart"></i> Risk Distribution</span>
+                    </div>
+                    <div class="card-body" style="padding: 20px;">
+                        ${d.risks.length > 0 ? `
+                            <div style="display: flex; align-items: center; gap: 20px;">
+                                <!-- Donut Chart -->
+                                <div style="position: relative; width: 120px; height: 120px; flex-shrink: 0;">
+                                    <svg viewBox="0 0 100 100">
+                                        ${this.renderDonutChart([
+                                            { value: criticalRisks, color: '#ef4444' },
+                                            { value: highRisks, color: '#f59e0b' },
+                                            { value: mediumRisks, color: '#3b82f6' },
+                                            { value: lowRisks, color: '#22c55e' }
+                                        ], d.risks.length)}
+                                    </svg>
+                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                                        <div style="font-size: 20px; font-weight: 700;">${d.risks.length}</div>
+                                        <div style="font-size: 9px; color: var(--text-muted);">Total</div>
+                                    </div>
+                                </div>
+                                <!-- Legend -->
+                                <div style="flex: 1;">
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                        <div style="width: 12px; height: 12px; background: #ef4444; border-radius: 3px;"></div>
+                                        <span style="font-size: 12px; flex: 1;">Critical</span>
+                                        <span style="font-size: 13px; font-weight: 600;">${criticalRisks}</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                        <div style="width: 12px; height: 12px; background: #f59e0b; border-radius: 3px;"></div>
+                                        <span style="font-size: 12px; flex: 1;">High</span>
+                                        <span style="font-size: 13px; font-weight: 600;">${highRisks}</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+                                        <div style="width: 12px; height: 12px; background: #3b82f6; border-radius: 3px;"></div>
+                                        <span style="font-size: 12px; flex: 1;">Medium</span>
+                                        <span style="font-size: 13px; font-weight: 600;">${mediumRisks}</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <div style="width: 12px; height: 12px; background: #22c55e; border-radius: 3px;"></div>
+                                        <span style="font-size: 12px; flex: 1;">Low</span>
+                                        <span style="font-size: 13px; font-weight: 600;">${lowRisks}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ` : `
+                            <div style="text-align: center; padding: 30px 0; color: var(--text-muted);">
+                                <i class="bi bi-pie-chart" style="font-size: 32px; opacity: 0.3; margin-bottom: 8px; display: block;"></i>
+                                <p style="font-size: 13px;">No risks recorded yet</p>
+                            </div>
+                        `}
+                    </div>
+                </div>
+                
+                <!-- Control Effectiveness -->
+                <div class="card">
+                    <div class="card-header" style="padding: 16px;">
+                        <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-bar-chart"></i> Control Effectiveness</span>
+                    </div>
+                    <div class="card-body" style="padding: 20px;">
+                        ${d.controls.length > 0 ? `
+                            <div style="margin-bottom: 16px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                    <span style="font-size: 12px; display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: var(--accent-green); border-radius: 2px;"></span> Effective</span>
+                                    <span style="font-size: 13px; font-weight: 600;">${effectiveControls}</span>
+                                </div>
+                                <div class="progress-bar" style="height: 10px; border-radius: 5px;">
+                                    <div class="progress-fill green" style="width: ${d.controls.length > 0 ? (effectiveControls/d.controls.length)*100 : 0}%; border-radius: 5px;"></div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                    <span style="font-size: 12px; display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: var(--accent-amber); border-radius: 2px;"></span> Partial</span>
+                                    <span style="font-size: 13px; font-weight: 600;">${partialControls}</span>
+                                </div>
+                                <div class="progress-bar" style="height: 10px; border-radius: 5px;">
+                                    <div class="progress-fill amber" style="width: ${d.controls.length > 0 ? (partialControls/d.controls.length)*100 : 0}%; border-radius: 5px;"></div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 16px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                    <span style="font-size: 12px; display: flex; align-items: center; gap: 6px;"><span style="width: 10px; height: 10px; background: var(--accent-red); border-radius: 2px;"></span> Ineffective</span>
+                                    <span style="font-size: 13px; font-weight: 600;">${ineffectiveControls}</span>
+                                </div>
+                                <div class="progress-bar" style="height: 10px; border-radius: 5px;">
+                                    <div class="progress-fill red" style="width: ${d.controls.length > 0 ? (ineffectiveControls/d.controls.length)*100 : 0}%; border-radius: 5px;"></div>
+                                </div>
+                            </div>
+                            <div style="text-align: center; padding-top: 8px; border-top: 1px solid var(--border-subtle);">
+                                <span style="font-size: 11px; color: var(--text-muted);">Total: ${d.controls.length} controls</span>
+                            </div>
+                        ` : `
+                            <div style="text-align: center; padding: 30px 0; color: var(--text-muted);">
+                                <i class="bi bi-bar-chart" style="font-size: 32px; opacity: 0.3; margin-bottom: 8px; display: block;"></i>
+                                <p style="font-size: 13px;">No controls recorded yet</p>
+                            </div>
+                        `}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Second Row - Risk by Category & Activity -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 24px;">
+                
+                <!-- Risk by Category - Visual Bars -->
+                <div class="card">
+                    <div class="card-header" style="padding: 16px;">
+                        <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-collection"></i> Risk by Category</span>
+                        <span class="badge badge-blue">${d.risks.length} Total</span>
+                    </div>
+                    <div class="card-body" style="padding: 20px;">
+                        ${d.risks.length > 0 ? this.renderRiskByCategoryChart() : `
+                            <div style="text-align: center; padding: 40px 0; color: var(--text-muted);">
+                                <i class="bi bi-collection" style="font-size: 40px; opacity: 0.3; margin-bottom: 12px; display: block;"></i>
+                                <p style="font-size: 13px; margin-bottom: 12px;">No risks by category yet</p>
+                                <button class="btn btn-primary btn-sm" onclick="app.switchTab('risks')"><i class="bi bi-plus"></i> Add Risk</button>
+                            </div>
+                        `}
+                    </div>
+                </div>
+                
+                <!-- Quick Stats Panel -->
+                <div class="card">
+                    <div class="card-header" style="padding: 16px;">
+                        <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-speedometer2"></i> Quick Stats</span>
+                    </div>
+                    <div class="card-body" style="padding: 16px;">
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <div onclick="app.switchTab('vendors')" style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--bg-elevated); border-radius: var(--radius-md); cursor: pointer; transition: all 0.15s;" onmouseover="this.style.background='var(--accent-purple-soft)'" onmouseout="this.style.background='var(--bg-elevated)'">
+                                <div style="width: 36px; height: 36px; background: var(--accent-purple-soft); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="bi bi-building" style="color: var(--accent-purple);"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-size: 13px; color: var(--text-muted);">Vendors</div>
+                                    <div style="font-size: 16px; font-weight: 600;">${d.vendors.length} <span style="font-size: 11px; color: var(--accent-red);">${criticalVendors} critical</span></div>
+                                </div>
+                                <i class="bi bi-chevron-right" style="color: var(--text-muted);"></i>
+                            </div>
+                            <div onclick="app.switchTab('incidents')" style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--bg-elevated); border-radius: var(--radius-md); cursor: pointer; transition: all 0.15s;" onmouseover="this.style.background='var(--accent-amber-soft)'" onmouseout="this.style.background='var(--bg-elevated)'">
+                                <div style="width: 36px; height: 36px; background: var(--accent-amber-soft); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="bi bi-lightning" style="color: var(--accent-amber);"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-size: 13px; color: var(--text-muted);">Incidents</div>
+                                    <div style="font-size: 16px; font-weight: 600;">${d.incidents.length} <span style="font-size: 11px; color: var(--accent-red);">${activeIncidents} active</span></div>
+                                </div>
+                                <i class="bi bi-chevron-right" style="color: var(--text-muted);"></i>
+                            </div>
+                            <div onclick="app.switchTab('audits')" style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--bg-elevated); border-radius: var(--radius-md); cursor: pointer; transition: all 0.15s;" onmouseover="this.style.background='var(--accent-blue-soft)'" onmouseout="this.style.background='var(--bg-elevated)'">
+                                <div style="width: 36px; height: 36px; background: var(--accent-blue-soft); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="bi bi-clipboard-check" style="color: var(--accent-blue);"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-size: 13px; color: var(--text-muted);">Audits</div>
+                                    <div style="font-size: 16px; font-weight: 600;">${d.audits.length} <span style="font-size: 11px; color: var(--accent-amber);">${d.audits.filter(a => a.status === 'In Progress').length} active</span></div>
+                                </div>
+                                <i class="bi bi-chevron-right" style="color: var(--text-muted);"></i>
+                            </div>
+                            <div onclick="app.switchTab('evidence')" style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--bg-elevated); border-radius: var(--radius-md); cursor: pointer; transition: all 0.15s;" onmouseover="this.style.background='var(--accent-green-soft)'" onmouseout="this.style.background='var(--bg-elevated)'">
+                                <div style="width: 36px; height: 36px; background: var(--accent-green-soft); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="bi bi-file-earmark-check" style="color: var(--accent-green);"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-size: 13px; color: var(--text-muted);">Evidence</div>
+                                    <div style="font-size: 16px; font-weight: 600;">${d.evidence.length} items</div>
+                                </div>
+                                <i class="bi bi-chevron-right" style="color: var(--text-muted);"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Activity & Top Risks -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px;">
+                
+                <!-- Top Critical Risks -->
+                <div class="card">
+                    <div class="card-header" style="padding: 16px;">
+                        <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-exclamation-octagon"></i> Top Risks Requiring Attention</span>
+                    </div>
+                    <div class="card-body" style="padding: 0;">
+                        ${d.risks.filter(r => r.status !== 'Closed').sort((a,b) => (b.likelihood * b.impact) - (a.likelihood * a.impact)).slice(0, 5).length > 0 ? 
+                            d.risks.filter(r => r.status !== 'Closed').sort((a,b) => (b.likelihood * b.impact) - (a.likelihood * a.impact)).slice(0, 5).map((r, i) => {
+                                const score = r.likelihood * r.impact;
+                                const scoreClass = score >= 20 ? 'red' : score >= 12 ? 'amber' : score >= 6 ? 'blue' : 'green';
+                                return `
+                                    <div style="display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--border-subtle); cursor: pointer;" onclick="app.switchTab('risks')" onmouseover="this.style.background='var(--bg-elevated)'" onmouseout="this.style.background='transparent'">
+                                        <div style="width: 28px; height: 28px; background: var(--accent-${scoreClass}-soft); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--accent-${scoreClass});">${score}</div>
+                                        <div style="flex: 1; min-width: 0;">
+                                            <div style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${r.title}</div>
+                                            <div style="font-size: 11px; color: var(--text-muted);">${r.category}</div>
+                                        </div>
+                                        <span class="badge badge-${r.status === 'In Progress' ? 'amber' : 'gray'}" style="font-size: 10px;">${r.status}</span>
+                                    </div>
+                                `;
+                            }).join('') 
+                        : `
+                            <div style="text-align: center; padding: 40px 20px; color: var(--text-muted);">
+                                <i class="bi bi-shield-check" style="font-size: 32px; color: var(--accent-green); margin-bottom: 8px; display: block;"></i>
+                                <p style="font-size: 13px;">No open risks - great job!</p>
+                            </div>
+                        `}
+                    </div>
+                </div>
+                
+                <!-- Findings Status -->
+                <div class="card">
+                    <div class="card-header" style="padding: 16px;">
+                        <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-search"></i> Findings Overview</span>
+                    </div>
+                    <div class="card-body" style="padding: 20px;">
+                        ${d.findings.length > 0 ? `
+                            <div style="display: flex; gap: 16px; margin-bottom: 20px;">
+                                <div style="flex: 1; text-align: center; padding: 16px; background: var(--accent-red-soft); border-radius: var(--radius-md);">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-red);">${openFindings}</div>
+                                    <div style="font-size: 11px; color: var(--text-muted);">Open</div>
+                                </div>
+                                <div style="flex: 1; text-align: center; padding: 16px; background: var(--accent-green-soft); border-radius: var(--radius-md);">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-green);">${closedFindings}</div>
+                                    <div style="font-size: 11px; color: var(--text-muted);">Closed</div>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 12px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                    <span style="font-size: 12px;">Closure Rate</span>
+                                    <span style="font-size: 12px; font-weight: 600;">${Math.round((closedFindings / d.findings.length) * 100)}%</span>
+                                </div>
+                                <div class="progress-bar" style="height: 8px;">
+                                    <div class="progress-fill green" style="width: ${(closedFindings / d.findings.length) * 100}%;"></div>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary btn-sm" onclick="app.switchTab('findings')" style="width: 100%;"><i class="bi bi-arrow-right"></i> View All Findings</button>
+                        ` : `
+                            <div style="text-align: center; padding: 30px 0; color: var(--text-muted);">
+                                <i class="bi bi-search" style="font-size: 32px; opacity: 0.3; margin-bottom: 8px; display: block;"></i>
+                                <p style="font-size: 13px; margin-bottom: 12px;">No findings recorded</p>
+                                <button class="btn btn-primary btn-sm" onclick="app.switchTab('findings')"><i class="bi bi-plus"></i> Add Finding</button>
+                            </div>
+                        `}
+                    </div>
+                </div>
+            </div>
         `;
     }
-    renderRiskByCategory() {
+    
+    renderDonutChart(segments, total) {
+        if (total === 0) return '';
+        let currentAngle = 0;
+        return segments.map(seg => {
+            if (seg.value === 0) return '';
+            const angle = (seg.value / total) * 360;
+            const startAngle = currentAngle;
+            const endAngle = currentAngle + angle;
+            currentAngle = endAngle;
+            
+            const startRad = (startAngle - 90) * Math.PI / 180;
+            const endRad = (endAngle - 90) * Math.PI / 180;
+            const largeArc = angle > 180 ? 1 : 0;
+            
+            const x1 = 50 + 35 * Math.cos(startRad);
+            const y1 = 50 + 35 * Math.sin(startRad);
+            const x2 = 50 + 35 * Math.cos(endRad);
+            const y2 = 50 + 35 * Math.sin(endRad);
+            
+            return `<path d="M 50 50 L ${x1} ${y1} A 35 35 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${seg.color}" opacity="0.9"/>`;
+        }).join('');
+    }
+    
+    renderRiskByCategoryChart() {
         const d = this.getActiveData();
-        const cats = {}; d.risks.forEach(r => cats[r.category] = (cats[r.category] || 0) + 1);
-        const total = d.risks.length;
-        const colors = ['#3b82f6', '#22c55e', '#f59e0b', '#ef4444', '#a855f7', '#06b6d4'];
-        return `<div class="chart-container"><div class="chart-header"><h3 class="chart-title">Risk by Category</h3></div>${Object.entries(cats).map(([cat, count], i) => `<div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;color:var(--text-secondary);">${cat}</span><span style="font-size:13px;font-weight:600;">${count}</span></div><div class="progress-bar"><div class="progress-fill" style="width:${(count/total)*100}%;background:${colors[i % colors.length]};"></div></div></div>`).join('')}</div>`;
+        const cats = {};
+        d.risks.forEach(r => cats[r.category] = (cats[r.category] || 0) + 1);
+        const maxCount = Math.max(...Object.values(cats));
+        const colors = ['#3b82f6', '#a855f7', '#22c55e', '#f59e0b', '#ef4444', '#06b6d4', '#ec4899'];
+        
+        return `
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+                ${Object.entries(cats).sort((a, b) => b[1] - a[1]).map(([cat, count], i) => `
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 13px; font-weight: 500;">${cat}</span>
+                            <span style="font-size: 13px; font-weight: 600; color: ${colors[i % colors.length]};">${count}</span>
+                        </div>
+                        <div style="height: 24px; background: var(--bg-elevated); border-radius: 6px; overflow: hidden; position: relative;">
+                            <div style="height: 100%; width: ${(count/maxCount)*100}%; background: linear-gradient(90deg, ${colors[i % colors.length]}dd, ${colors[i % colors.length]}99); border-radius: 6px; transition: width 0.5s ease;"></div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
     }
     renderAssets() {
         const c = document.getElementById('tab-assets');
@@ -1475,15 +1927,17 @@ class GRCLabPro {
         // Map implemented controls to Annex A
         const implementedControlIds = new Set(this.getActiveData().controls.map(ctrl => ctrl.controlId || ctrl.id));
         
-        // Calculate SoA statistics
+        // Calculate SoA statistics - DEFAULT TO NOT APPLICABLE
         const totalAnnexA = annexAControls.length;
         const applicable = annexAControls.filter(ac => {
             const soaEntry = this.data.soaEntries?.find(e => e.controlId === ac.id);
-            return soaEntry ? soaEntry.applicable : true; // Default to applicable
+            return soaEntry ? soaEntry.applicable : false; // Default to NOT applicable
         }).length;
-        const implemented = annexAControls.filter(ac => 
-            this.getActiveData().controls.some(c => c.controlId === ac.id || c.name === ac.name)
-        ).length;
+        const implemented = annexAControls.filter(ac => {
+            const soaEntry = this.data.soaEntries?.find(e => e.controlId === ac.id);
+            const isApplicable = soaEntry ? soaEntry.applicable : false;
+            return isApplicable && this.getActiveData().controls.some(c => c.controlId === ac.id || c.name === ac.name);
+        }).length;
         const notApplicable = totalAnnexA - applicable;
         
         // Group controls by category
@@ -1495,7 +1949,7 @@ class GRCLabPro {
         });
         
         const categories = Object.keys(controlsByCategory).sort();
-        const selectedCategory = this.soaSelectedCategory || categories[0] || '';
+        const selectedCategory = this.soaSelectedCategory || ''; // Default to ALL categories
         
         c.innerHTML = `
             <div class="welcome-banner" style="margin-bottom: 24px;">
@@ -1565,14 +2019,12 @@ class GRCLabPro {
             
             <!-- SoA Table -->
             <div class="card">
-                <div class="card-header" style="position: sticky; top: 0; z-index: 20; background: var(--bg-surface);">
+                <div class="card-header" style="position: sticky; top: 0; z-index: 20; background: var(--bg-surface); flex-wrap: wrap; gap: 12px;">
                     <div class="card-title"><i class="bi bi-table"></i> Annex A Controls</div>
-                    <div style="display: flex; gap: 8px;">
-                        <select class="form-select" id="soa-category-filter" onchange="app.filterSoACategory(this.value)" style="min-width: 200px;">
-                            <option value="">All Categories</option>
-                            ${categories.map(cat => `<option value="${cat}" ${selectedCategory === cat ? 'selected' : ''}>${cat}</option>`).join('')}
-                        </select>
-                        <button class="btn btn-secondary btn-sm" onclick="app.exportSoA()"><i class="bi bi-download"></i> Export SoA</button>
+                    <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                        <button class="btn btn-sm ${selectedCategory === '' ? 'btn-primary' : 'btn-secondary'}" onclick="app.filterSoACategory('')">All</button>
+                        ${categories.map(cat => `<button class="btn btn-sm ${selectedCategory === cat ? 'btn-primary' : 'btn-secondary'}" onclick="app.filterSoACategory('${cat}')">${cat}</button>`).join('')}
+                        <button class="btn btn-sm btn-secondary" onclick="app.exportSoA()" style="margin-left: 8px;"><i class="bi bi-download"></i> Export</button>
                     </div>
                 </div>
                 <div style="max-height: 600px; overflow-y: auto;">
@@ -1590,8 +2042,8 @@ class GRCLabPro {
                         <tbody>
                             ${(selectedCategory ? controlsByCategory[selectedCategory] : annexAControls).map(ac => {
                                 const soaEntry = this.data.soaEntries?.find(e => e.controlId === ac.id);
-                                const isApplicable = soaEntry ? soaEntry.applicable : true;
-                                const isImplemented = this.getActiveData().controls.some(c => c.controlId === ac.id || c.name === ac.name);
+                                const isApplicable = soaEntry ? soaEntry.applicable : false; // Default to NOT applicable
+                                const isImplemented = isApplicable && this.getActiveData().controls.some(c => c.controlId === ac.id || c.name === ac.name);
                                 const justification = soaEntry?.justification || '';
                                 
                                 let statusBadge = '';
@@ -1880,19 +2332,1287 @@ class GRCLabPro {
     
     renderTraceability() {
         const c = document.getElementById('tab-traceability');
-        if (this.getActiveData().risks.length === 0) { c.innerHTML = this.renderEmpty('bi-diagram-3', 'No Traceability Data', 'Add risks and controls first.', null); return; }
-        c.innerHTML = `<div class="card"><div class="card-header"><h3 class="card-title"><i class="bi bi-diagram-3"></i> Risk → Control → Evidence Flow</h3></div><div class="card-body">${this.getActiveData().risks.slice(0, 8).map(risk => {
-            const relatedTreatments = this.getActiveData().treatments.filter(t => t.riskId === risk.id).length;
+        const d = this.getActiveData();
+        
+        // Calculate traceability metrics
+        const risksWithTreatments = d.risks.filter(r => d.treatments.some(t => t.riskId === r.id)).length;
+        const risksWithoutTreatments = d.risks.length - risksWithTreatments;
+        const controlsWithEvidence = d.controls.filter(c => d.evidence.some(e => e.controlId === c.id)).length;
+        const controlsWithoutEvidence = d.controls.length - controlsWithEvidence;
+        const controlsTested = d.controls.filter(c => d.controlTests.some(t => t.controlId === c.id)).length;
+        const findingsWithOwner = d.findings.filter(f => f.owner).length;
+        
+        // Calculate coverage percentages
+        const riskCoverage = d.risks.length > 0 ? Math.round((risksWithTreatments / d.risks.length) * 100) : 0;
+        const evidenceCoverage = d.controls.length > 0 ? Math.round((controlsWithEvidence / d.controls.length) * 100) : 0;
+        const testCoverage = d.controls.length > 0 ? Math.round((controlsTested / d.controls.length) * 100) : 0;
+        
+        const selectedView = this.traceabilityView || 'overview';
+        
+        c.innerHTML = `
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 4px;"><i class="bi bi-diagram-3"></i> Traceability Matrix</h2>
+                <p style="color: var(--text-muted); font-size: 13px;">Track relationships between risks, controls, evidence, and findings across your GRC program.</p>
+            </div>
+            
+            <!-- View Selector Tabs -->
+            <div style="display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 16px;">
+                <button class="btn ${selectedView === 'overview' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setTraceabilityView('overview')">
+                    <i class="bi bi-grid-3x3-gap"></i> Overview
+                </button>
+                <button class="btn ${selectedView === 'risk-control' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setTraceabilityView('risk-control')">
+                    <i class="bi bi-arrow-right-circle"></i> Risk → Control
+                </button>
+                <button class="btn ${selectedView === 'control-evidence' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setTraceabilityView('control-evidence')">
+                    <i class="bi bi-file-earmark-check"></i> Control → Evidence
+                </button>
+                <button class="btn ${selectedView === 'gaps' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setTraceabilityView('gaps')">
+                    <i class="bi bi-exclamation-triangle"></i> Gap Analysis
+                </button>
+                <button class="btn ${selectedView === 'flow' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setTraceabilityView('flow')">
+                    <i class="bi bi-bezier2"></i> Full Flow
+                </button>
+            </div>
+            
+            ${this.renderTraceabilityView(selectedView, d, { riskCoverage, evidenceCoverage, testCoverage, risksWithTreatments, risksWithoutTreatments, controlsWithEvidence, controlsWithoutEvidence, controlsTested })}
+        `;
+    }
+    
+    setTraceabilityView(view) {
+        this.traceabilityView = view;
+        this.renderTraceability();
+    }
+    
+    renderTraceabilityView(view, d, stats) {
+        switch(view) {
+            case 'overview':
+                return this.renderTraceabilityOverview(d, stats);
+            case 'risk-control':
+                return this.renderRiskControlMatrix(d);
+            case 'control-evidence':
+                return this.renderControlEvidenceMatrix(d);
+            case 'gaps':
+                return this.renderGapAnalysis(d, stats);
+            case 'flow':
+                return this.renderFullFlowView(d);
+            default:
+                return this.renderTraceabilityOverview(d, stats);
+        }
+    }
+    
+    renderTraceabilityOverview(d, stats) {
+        return `
+            <!-- Coverage Metrics -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                <div class="card">
+                    <div class="card-body" style="padding: 20px; text-align: center;">
+                        <div style="position: relative; width: 80px; height: 80px; margin: 0 auto 12px;">
+                            <svg viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="var(--bg-elevated)" stroke-width="10"/>
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="var(--accent-blue)" stroke-width="10" stroke-dasharray="${stats.riskCoverage * 2.51} 251" stroke-linecap="round"/>
+                            </svg>
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 18px; font-weight: 700;">${stats.riskCoverage}%</div>
+                        </div>
+                        <div style="font-size: 13px; font-weight: 600;">Risk Treatment Coverage</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">${stats.risksWithTreatments} of ${d.risks.length} risks treated</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body" style="padding: 20px; text-align: center;">
+                        <div style="position: relative; width: 80px; height: 80px; margin: 0 auto 12px;">
+                            <svg viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="var(--bg-elevated)" stroke-width="10"/>
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="var(--accent-green)" stroke-width="10" stroke-dasharray="${stats.evidenceCoverage * 2.51} 251" stroke-linecap="round"/>
+                            </svg>
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 18px; font-weight: 700;">${stats.evidenceCoverage}%</div>
+                        </div>
+                        <div style="font-size: 13px; font-weight: 600;">Evidence Coverage</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">${stats.controlsWithEvidence} of ${d.controls.length} controls documented</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body" style="padding: 20px; text-align: center;">
+                        <div style="position: relative; width: 80px; height: 80px; margin: 0 auto 12px;">
+                            <svg viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="var(--bg-elevated)" stroke-width="10"/>
+                                <circle cx="50" cy="50" r="40" fill="none" stroke="var(--accent-purple)" stroke-width="10" stroke-dasharray="${stats.testCoverage * 2.51} 251" stroke-linecap="round"/>
+                            </svg>
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 18px; font-weight: 700;">${stats.testCoverage}%</div>
+                        </div>
+                        <div style="font-size: 13px; font-weight: 600;">Testing Coverage</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">${stats.controlsTested} of ${d.controls.length} controls tested</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body" style="padding: 20px; text-align: center;">
+                        <div style="width: 80px; height: 80px; margin: 0 auto 12px; background: var(--bg-elevated); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <div>
+                                <div style="font-size: 24px; font-weight: 700; color: var(--accent-amber);">${d.findings.filter(f => f.status === 'Open').length}</div>
+                            </div>
+                        </div>
+                        <div style="font-size: 13px; font-weight: 600;">Open Findings</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">${d.findings.length} total findings</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Summary Cards -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                
+                <!-- Relationships Summary -->
+                <div class="card">
+                    <div class="card-header" style="padding: 16px;">
+                        <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-link-45deg"></i> Relationship Summary</span>
+                    </div>
+                    <div class="card-body" style="padding: 0;">
+                        <table style="margin: 0;">
+                            <tbody>
+                                <tr onclick="app.setTraceabilityView('risk-control')" style="cursor: pointer;" onmouseover="this.style.background='var(--bg-elevated)'" onmouseout="this.style.background='transparent'">
+                                    <td style="padding: 14px 16px;"><i class="bi bi-arrow-right" style="color: var(--accent-blue);"></i> Risks → Treatments</td>
+                                    <td style="padding: 14px 16px; text-align: right;"><span class="badge badge-blue">${d.treatments.length} links</span></td>
+                                </tr>
+                                <tr onclick="app.setTraceabilityView('control-evidence')" style="cursor: pointer;" onmouseover="this.style.background='var(--bg-elevated)'" onmouseout="this.style.background='transparent'">
+                                    <td style="padding: 14px 16px;"><i class="bi bi-arrow-right" style="color: var(--accent-green);"></i> Controls → Evidence</td>
+                                    <td style="padding: 14px 16px; text-align: right;"><span class="badge badge-green">${d.evidence.filter(e => e.controlId).length} links</span></td>
+                                </tr>
+                                <tr onclick="app.setTraceabilityView('control-evidence')" style="cursor: pointer;" onmouseover="this.style.background='var(--bg-elevated)'" onmouseout="this.style.background='transparent'">
+                                    <td style="padding: 14px 16px;"><i class="bi bi-arrow-right" style="color: var(--accent-purple);"></i> Controls → Tests</td>
+                                    <td style="padding: 14px 16px; text-align: right;"><span class="badge badge-purple">${d.controlTests.length} links</span></td>
+                                </tr>
+                                <tr onclick="app.setTraceabilityView('gaps')" style="cursor: pointer;" onmouseover="this.style.background='var(--bg-elevated)'" onmouseout="this.style.background='transparent'">
+                                    <td style="padding: 14px 16px;"><i class="bi bi-arrow-right" style="color: var(--accent-amber);"></i> Audits → Findings</td>
+                                    <td style="padding: 14px 16px; text-align: right;"><span class="badge badge-amber">${d.findings.length} items</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-header" style="padding: 16px;">
+                        <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-lightning"></i> Quick Actions</span>
+                    </div>
+                    <div class="card-body" style="padding: 16px;">
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <button class="btn btn-secondary" onclick="app.setTraceabilityView('gaps')" style="justify-content: flex-start; text-align: left;">
+                                <i class="bi bi-search"></i> Run Gap Analysis
+                            </button>
+                            <button class="btn btn-secondary" onclick="app.exportTraceabilityMatrix()" style="justify-content: flex-start; text-align: left;">
+                                <i class="bi bi-download"></i> Export Traceability Matrix
+                            </button>
+                            <button class="btn btn-secondary" onclick="app.setTraceabilityView('flow')" style="justify-content: flex-start; text-align: left;">
+                                <i class="bi bi-diagram-3"></i> View Full Flow Diagram
+                            </button>
+                            <button class="btn btn-secondary" onclick="app.switchTab('reports')" style="justify-content: flex-start; text-align: left;">
+                                <i class="bi bi-file-text"></i> Generate Compliance Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    renderRiskControlMatrix(d) {
+        return `
+            <div class="card">
+                <div class="card-header" style="padding: 16px;">
+                    <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-table"></i> Risk → Treatment → Control Mapping</span>
+                    <button class="btn btn-secondary btn-sm" onclick="app.exportTraceabilityMatrix()"><i class="bi bi-download"></i> Export</button>
+                </div>
+                <div class="card-body" style="padding: 0; max-height: 600px; overflow-y: auto;">
+                    ${d.risks.length > 0 ? `
+                        <table style="margin: 0;">
+                            <thead style="position: sticky; top: 0; background: var(--bg-surface); z-index: 10;">
+                                <tr>
+                                    <th style="padding: 14px 16px; width: 120px;">Risk ID</th>
+                                    <th style="padding: 14px 16px;">Risk Title</th>
+                                    <th style="padding: 14px 16px; width: 100px; text-align: center;">Score</th>
+                                    <th style="padding: 14px 16px;">Treatments</th>
+                                    <th style="padding: 14px 16px;">Linked Controls</th>
+                                    <th style="padding: 14px 16px; width: 100px; text-align: center;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${d.risks.map(risk => {
+                                    const treatments = d.treatments.filter(t => t.riskId === risk.id);
+                                    const linkedControls = treatments.map(t => d.controls.find(c => c.id === t.controlId)).filter(Boolean);
+                                    const score = risk.likelihood * risk.impact;
+                                    const scoreClass = score >= 20 ? 'red' : score >= 12 ? 'amber' : score >= 6 ? 'blue' : 'green';
+                                    const hasTreatment = treatments.length > 0;
+                                    
+                                    return `
+                                        <tr style="border-bottom: 1px solid var(--border-subtle);">
+                                            <td style="padding: 14px 16px;"><span class="font-mono text-muted">${risk.id}</span></td>
+                                            <td style="padding: 14px 16px;">
+                                                <div class="font-semibold">${risk.title}</div>
+                                                <div style="font-size: 11px; color: var(--text-muted);">${risk.category}</div>
+                                            </td>
+                                            <td style="padding: 14px 16px; text-align: center;">
+                                                <span class="badge badge-${scoreClass}">${score}</span>
+                                            </td>
+                                            <td style="padding: 14px 16px;">
+                                                ${treatments.length > 0 ? treatments.map(t => `
+                                                    <div style="font-size: 12px; padding: 4px 8px; background: var(--accent-blue-soft); border-radius: 4px; margin-bottom: 4px;">
+                                                        <span class="badge badge-${t.type === 'Mitigate' ? 'green' : t.type === 'Transfer' ? 'purple' : t.type === 'Avoid' ? 'amber' : 'gray'}" style="font-size: 9px; margin-right: 4px;">${t.type}</span>
+                                                        ${t.description?.substring(0, 30) || 'No description'}...
+                                                    </div>
+                                                `).join('') : `<span style="color: var(--text-muted); font-size: 12px;"><i class="bi bi-exclamation-circle" style="color: var(--accent-red);"></i> No treatment</span>`}
+                                            </td>
+                                            <td style="padding: 14px 16px;">
+                                                ${linkedControls.length > 0 ? linkedControls.map(c => `
+                                                    <span class="badge badge-green" style="margin-right: 4px; margin-bottom: 4px; font-size: 10px;">${c.name.substring(0, 20)}...</span>
+                                                `).join('') : `<span style="color: var(--text-muted); font-size: 12px;">-</span>`}
+                                            </td>
+                                            <td style="padding: 14px 16px; text-align: center;">
+                                                <span class="badge badge-${hasTreatment ? 'green' : 'red'}">${hasTreatment ? 'Mapped' : 'Gap'}</span>
+                                            </td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    ` : `
+                        <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
+                            <i class="bi bi-diagram-3" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px; display: block;"></i>
+                            <p style="font-size: 14px; margin-bottom: 16px;">No risks to display</p>
+                            <button class="btn btn-primary" onclick="app.switchTab('risks')"><i class="bi bi-plus"></i> Add Risks</button>
+                        </div>
+                    `}
+                </div>
+            </div>
+        `;
+    }
+    
+    renderControlEvidenceMatrix(d) {
+        return `
+            <div class="card">
+                <div class="card-header" style="padding: 16px;">
+                    <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-table"></i> Control → Evidence → Test Mapping</span>
+                    <button class="btn btn-secondary btn-sm" onclick="app.exportTraceabilityMatrix()"><i class="bi bi-download"></i> Export</button>
+                </div>
+                <div class="card-body" style="padding: 0; max-height: 600px; overflow-y: auto;">
+                    ${d.controls.length > 0 ? `
+                        <table style="margin: 0;">
+                            <thead style="position: sticky; top: 0; background: var(--bg-surface); z-index: 10;">
+                                <tr>
+                                    <th style="padding: 14px 16px; width: 120px;">Control ID</th>
+                                    <th style="padding: 14px 16px;">Control Name</th>
+                                    <th style="padding: 14px 16px; width: 120px;">Framework</th>
+                                    <th style="padding: 14px 16px;">Evidence</th>
+                                    <th style="padding: 14px 16px;">Tests</th>
+                                    <th style="padding: 14px 16px; width: 120px; text-align: center;">Effectiveness</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${d.controls.map(ctrl => {
+                                    const evidence = d.evidence.filter(e => e.controlId === ctrl.id);
+                                    const tests = d.controlTests.filter(t => t.controlId === ctrl.id);
+                                    const hasEvidence = evidence.length > 0;
+                                    const hasTested = tests.length > 0;
+                                    
+                                    return `
+                                        <tr style="border-bottom: 1px solid var(--border-subtle);">
+                                            <td style="padding: 14px 16px;"><span class="font-mono text-muted">${ctrl.id}</span></td>
+                                            <td style="padding: 14px 16px;">
+                                                <div class="font-semibold">${ctrl.name}</div>
+                                                <div style="font-size: 11px; color: var(--text-muted);">${ctrl.ref || 'No reference'}</div>
+                                            </td>
+                                            <td style="padding: 14px 16px;">
+                                                <span class="badge badge-${this.getFrameworkColor(ctrl.framework)}">${ctrl.framework}</span>
+                                            </td>
+                                            <td style="padding: 14px 16px;">
+                                                ${evidence.length > 0 ? evidence.map(e => `
+                                                    <div style="font-size: 12px; padding: 4px 8px; background: var(--accent-green-soft); border-radius: 4px; margin-bottom: 4px;">
+                                                        <i class="bi bi-file-earmark" style="margin-right: 4px;"></i> ${e.name.substring(0, 25)}...
+                                                    </div>
+                                                `).join('') : `<span style="color: var(--text-muted); font-size: 12px;"><i class="bi bi-exclamation-circle" style="color: var(--accent-amber);"></i> No evidence</span>`}
+                                            </td>
+                                            <td style="padding: 14px 16px;">
+                                                ${tests.length > 0 ? tests.map(t => `
+                                                    <div style="font-size: 12px; padding: 4px 8px; background: var(--accent-purple-soft); border-radius: 4px; margin-bottom: 4px;">
+                                                        <span class="badge badge-${t.result === 'Pass' ? 'green' : t.result === 'Fail' ? 'red' : 'amber'}" style="font-size: 9px; margin-right: 4px;">${t.result}</span>
+                                                        ${t.testType || 'Test'}
+                                                    </div>
+                                                `).join('') : `<span style="color: var(--text-muted); font-size: 12px;"><i class="bi bi-exclamation-circle" style="color: var(--accent-amber);"></i> Not tested</span>`}
+                                            </td>
+                                            <td style="padding: 14px 16px; text-align: center;">
+                                                <span class="badge badge-${ctrl.effectiveness === 'Effective' ? 'green' : ctrl.effectiveness === 'Partially Effective' ? 'amber' : ctrl.effectiveness === 'Ineffective' ? 'red' : 'gray'}">${ctrl.effectiveness}</span>
+                                            </td>
+                                        </tr>
+                                    `;
+                                }).join('')}
+                            </tbody>
+                        </table>
+                    ` : `
+                        <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
+                            <i class="bi bi-shield-check" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px; display: block;"></i>
+                            <p style="font-size: 14px; margin-bottom: 16px;">No controls to display</p>
+                            <button class="btn btn-primary" onclick="app.switchTab('controls')"><i class="bi bi-plus"></i> Add Controls</button>
+                        </div>
+                    `}
+                </div>
+            </div>
+        `;
+    }
+    
+    renderGapAnalysis(d, stats) {
+        const untreatedRisks = d.risks.filter(r => !d.treatments.some(t => t.riskId === r.id));
+        const controlsWithoutEvidence = d.controls.filter(c => !d.evidence.some(e => e.controlId === c.id));
+        const untestedControls = d.controls.filter(c => !d.controlTests.some(t => t.controlId === c.id));
+        const findingsOpen = d.findings.filter(f => f.status === 'Open');
+        
+        return `
+            <!-- Gap Summary -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                <div class="card" style="border-left: 4px solid var(--accent-red);">
+                    <div class="card-body" style="padding: 16px; text-align: center;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--accent-red);">${untreatedRisks.length}</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Untreated Risks</div>
+                    </div>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--accent-amber);">
+                    <div class="card-body" style="padding: 16px; text-align: center;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--accent-amber);">${controlsWithoutEvidence.length}</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Controls Without Evidence</div>
+                    </div>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--accent-purple);">
+                    <div class="card-body" style="padding: 16px; text-align: center;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--accent-purple);">${untestedControls.length}</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Untested Controls</div>
+                    </div>
+                </div>
+                <div class="card" style="border-left: 4px solid var(--accent-cyan);">
+                    <div class="card-body" style="padding: 16px; text-align: center;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--accent-cyan);">${findingsOpen.length}</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Open Findings</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <!-- Untreated Risks -->
+                <div class="card">
+                    <div class="card-header" style="padding: 16px; background: var(--accent-red-soft);">
+                        <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-exclamation-triangle"></i> Untreated Risks</span>
+                        <span class="badge badge-red">${untreatedRisks.length}</span>
+                    </div>
+                    <div class="card-body" style="padding: 0; max-height: 300px; overflow-y: auto;">
+                        ${untreatedRisks.length > 0 ? untreatedRisks.map(r => {
+                            const score = r.likelihood * r.impact;
+                            const scoreClass = score >= 20 ? 'red' : score >= 12 ? 'amber' : 'blue';
+                            return `
+                                <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border-subtle);">
+                                    <span class="badge badge-${scoreClass}">${score}</span>
+                                    <div style="flex: 1; min-width: 0;">
+                                        <div style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${r.title}</div>
+                                        <div style="font-size: 11px; color: var(--text-muted);">${r.category}</div>
+                                    </div>
+                                    <button class="btn btn-ghost btn-sm" onclick="app.switchTab('treatments')" title="Add Treatment"><i class="bi bi-plus-lg"></i></button>
+                                </div>
+                            `;
+                        }).join('') : `<div style="padding: 30px; text-align: center; color: var(--text-muted);"><i class="bi bi-check-circle" style="color: var(--accent-green); font-size: 24px; display: block; margin-bottom: 8px;"></i>All risks have treatments!</div>`}
+                    </div>
+                </div>
+                
+                <!-- Controls Without Evidence -->
+                <div class="card">
+                    <div class="card-header" style="padding: 16px; background: var(--accent-amber-soft);">
+                        <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-file-earmark-x"></i> Controls Missing Evidence</span>
+                        <span class="badge badge-amber">${controlsWithoutEvidence.length}</span>
+                    </div>
+                    <div class="card-body" style="padding: 0; max-height: 300px; overflow-y: auto;">
+                        ${controlsWithoutEvidence.length > 0 ? controlsWithoutEvidence.map(c => `
+                            <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border-subtle);">
+                                <span class="badge badge-${this.getFrameworkColor(c.framework)}" style="font-size: 10px;">${c.framework}</span>
+                                <div style="flex: 1; min-width: 0;">
+                                    <div style="font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${c.name}</div>
+                                    <div style="font-size: 11px; color: var(--text-muted);">${c.ref || 'No reference'}</div>
+                                </div>
+                                <button class="btn btn-ghost btn-sm" onclick="app.switchTab('evidence')" title="Add Evidence"><i class="bi bi-plus-lg"></i></button>
+                            </div>
+                        `).join('') : `<div style="padding: 30px; text-align: center; color: var(--text-muted);"><i class="bi bi-check-circle" style="color: var(--accent-green); font-size: 24px; display: block; margin-bottom: 8px;"></i>All controls have evidence!</div>`}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    renderFullFlowView(d) {
+        return `
+            <div class="card">
+                <div class="card-header" style="padding: 16px;">
+                    <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-bezier2"></i> End-to-End GRC Flow</span>
+                </div>
+                <div class="card-body" style="padding: 24px;">
+                    <!-- Flow Diagram -->
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; padding: 24px; background: var(--bg-elevated); border-radius: var(--radius-lg);">
+                        <div style="text-align: center; flex: 1;">
+                            <div style="width: 60px; height: 60px; background: var(--accent-blue-soft); border-radius: 12px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-hdd-stack" style="font-size: 24px; color: var(--accent-blue);"></i>
+                            </div>
+                            <div style="font-size: 14px; font-weight: 600;">Assets</div>
+                            <div style="font-size: 20px; font-weight: 700; color: var(--accent-blue);">${d.assets.length}</div>
+                        </div>
+                        <i class="bi bi-arrow-right" style="font-size: 24px; color: var(--text-muted);"></i>
+                        <div style="text-align: center; flex: 1;">
+                            <div style="width: 60px; height: 60px; background: var(--accent-red-soft); border-radius: 12px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-exclamation-triangle" style="font-size: 24px; color: var(--accent-red);"></i>
+                            </div>
+                            <div style="font-size: 14px; font-weight: 600;">Risks</div>
+                            <div style="font-size: 20px; font-weight: 700; color: var(--accent-red);">${d.risks.length}</div>
+                        </div>
+                        <i class="bi bi-arrow-right" style="font-size: 24px; color: var(--text-muted);"></i>
+                        <div style="text-align: center; flex: 1;">
+                            <div style="width: 60px; height: 60px; background: var(--accent-amber-soft); border-radius: 12px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-bandaid" style="font-size: 24px; color: var(--accent-amber);"></i>
+                            </div>
+                            <div style="font-size: 14px; font-weight: 600;">Treatments</div>
+                            <div style="font-size: 20px; font-weight: 700; color: var(--accent-amber);">${d.treatments.length}</div>
+                        </div>
+                        <i class="bi bi-arrow-right" style="font-size: 24px; color: var(--text-muted);"></i>
+                        <div style="text-align: center; flex: 1;">
+                            <div style="width: 60px; height: 60px; background: var(--accent-green-soft); border-radius: 12px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-shield-check" style="font-size: 24px; color: var(--accent-green);"></i>
+                            </div>
+                            <div style="font-size: 14px; font-weight: 600;">Controls</div>
+                            <div style="font-size: 20px; font-weight: 700; color: var(--accent-green);">${d.controls.length}</div>
+                        </div>
+                        <i class="bi bi-arrow-right" style="font-size: 24px; color: var(--text-muted);"></i>
+                        <div style="text-align: center; flex: 1;">
+                            <div style="width: 60px; height: 60px; background: var(--accent-purple-soft); border-radius: 12px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-clipboard-check" style="font-size: 24px; color: var(--accent-purple);"></i>
+                            </div>
+                            <div style="font-size: 14px; font-weight: 600;">Tests</div>
+                            <div style="font-size: 20px; font-weight: 700; color: var(--accent-purple);">${d.controlTests.length}</div>
+                        </div>
+                        <i class="bi bi-arrow-right" style="font-size: 24px; color: var(--text-muted);"></i>
+                        <div style="text-align: center; flex: 1;">
+                            <div style="width: 60px; height: 60px; background: var(--accent-cyan-soft); border-radius: 12px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-file-earmark-check" style="font-size: 24px; color: var(--accent-cyan);"></i>
+                            </div>
+                            <div style="font-size: 14px; font-weight: 600;">Evidence</div>
+                            <div style="font-size: 20px; font-weight: 700; color: var(--accent-cyan);">${d.evidence.length}</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Detailed Flow Table -->
+                    <h4 style="font-size: 14px; margin-bottom: 16px;"><i class="bi bi-list-columns-reverse"></i> Detailed Traceability Chain</h4>
+                    ${d.risks.length > 0 ? `
+                        <div style="max-height: 400px; overflow-y: auto;">
+                            ${d.risks.slice(0, 10).map(risk => {
+                                const treatments = d.treatments.filter(t => t.riskId === risk.id);
+                                const linkedControls = treatments.map(t => d.controls.find(c => c.id === t.controlId)).filter(Boolean);
+                                const allEvidence = linkedControls.flatMap(c => d.evidence.filter(e => e.controlId === c.id));
+                                const score = risk.likelihood * risk.impact;
+                                const scoreClass = score >= 20 ? 'red' : score >= 12 ? 'amber' : score >= 6 ? 'blue' : 'green';
+                                
+                                return `
+                                    <div style="display: flex; align-items: stretch; gap: 2px; margin-bottom: 12px; background: var(--bg-elevated); border-radius: var(--radius-md); overflow: hidden;">
+                                        <div style="flex: 1; padding: 12px; border-left: 3px solid var(--accent-${scoreClass}); min-width: 0;">
+                                            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">RISK</div>
+                                            <div style="font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${risk.title}</div>
+                                            <span class="badge badge-${scoreClass}" style="font-size: 9px; margin-top: 4px;">${score}</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; padding: 0 8px;"><i class="bi bi-chevron-right" style="color: var(--text-muted);"></i></div>
+                                        <div style="flex: 1; padding: 12px; background: var(--bg-surface); min-width: 0;">
+                                            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">TREATMENTS</div>
+                                            ${treatments.length > 0 ? `<div style="font-size: 12px;">${treatments.length} treatment(s)</div>` : `<div style="font-size: 11px; color: var(--accent-red);">No treatment</div>`}
+                                        </div>
+                                        <div style="display: flex; align-items: center; padding: 0 8px;"><i class="bi bi-chevron-right" style="color: var(--text-muted);"></i></div>
+                                        <div style="flex: 1; padding: 12px; background: var(--bg-surface); min-width: 0;">
+                                            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">CONTROLS</div>
+                                            ${linkedControls.length > 0 ? `<div style="font-size: 12px;">${linkedControls.length} control(s)</div>` : `<div style="font-size: 11px; color: var(--text-muted);">-</div>`}
+                                        </div>
+                                        <div style="display: flex; align-items: center; padding: 0 8px;"><i class="bi bi-chevron-right" style="color: var(--text-muted);"></i></div>
+                                        <div style="flex: 1; padding: 12px; background: var(--bg-surface); min-width: 0;">
+                                            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">EVIDENCE</div>
+                                            ${allEvidence.length > 0 ? `<div style="font-size: 12px; color: var(--accent-green);">${allEvidence.length} item(s)</div>` : `<div style="font-size: 11px; color: var(--text-muted);">-</div>`}
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    ` : `
+                        <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                            <i class="bi bi-diagram-3" style="font-size: 40px; opacity: 0.3; margin-bottom: 12px; display: block;"></i>
+                            <p>Add risks and controls to see the traceability flow</p>
+                        </div>
+                    `}
+                </div>
+            </div>
+        `;
+    }
+    
+    exportTraceabilityMatrix() {
+        const d = this.getActiveData();
+        let csv = 'Risk ID,Risk Title,Risk Score,Treatment Type,Control ID,Control Name,Evidence Count,Test Result\\n';
+        
+        d.risks.forEach(risk => {
+            const treatments = d.treatments.filter(t => t.riskId === risk.id);
             const score = risk.likelihood * risk.impact;
-            return `<div class="trace-flow"><div class="trace-node"><div class="trace-node-label">Risk</div><div class="trace-node-value">${risk.title.substring(0, 25)}...</div></div><div class="trace-arrow">→</div><div class="trace-node"><div class="trace-node-label">Score</div><div class="trace-node-value">${score}</div></div><div class="trace-arrow">→</div><div class="trace-node"><div class="trace-node-label">Treatments</div><div class="trace-node-value">${relatedTreatments}</div></div><div class="trace-arrow">→</div><div class="trace-node"><div class="trace-node-label">Status</div><div class="trace-node-value">${risk.status}</div></div></div>`;
-        }).join('')}</div></div>`;
+            
+            if (treatments.length > 0) {
+                treatments.forEach(t => {
+                    const ctrl = d.controls.find(c => c.id === t.controlId);
+                    const evidenceCount = ctrl ? d.evidence.filter(e => e.controlId === ctrl.id).length : 0;
+                    const tests = ctrl ? d.controlTests.filter(ct => ct.controlId === ctrl.id) : [];
+                    const testResult = tests.length > 0 ? tests[tests.length - 1].result : 'Not Tested';
+                    
+                    csv += `"${risk.id}","${risk.title}",${score},"${t.type}","${ctrl?.id || ''}","${ctrl?.name || ''}",${evidenceCount},"${testResult}"\\n`;
+                });
+            } else {
+                csv += `"${risk.id}","${risk.title}",${score},"No Treatment","","",0,"N/A"\\n`;
+            }
+        });
+        
+        const blob = new Blob([csv.replace(/\\\\n/g, '\\n')], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `traceability-matrix-${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        this.toast('Traceability matrix exported!', 'success');
     }
     renderReports() {
         const c = document.getElementById('tab-reports');
-        const criticalRisks = this.getActiveData().risks.filter(r => r.likelihood * r.impact >= 20).length;
-        const effectiveControls = this.getActiveData().controls.filter(ct => ct.effectiveness === 'Effective').length;
-        const openFindings = this.getActiveData().findings.filter(f => f.status === 'Open').length;
-        c.innerHTML = `<div class="card mb-6"><div class="card-header"><h3 class="card-title"><i class="bi bi-file-earmark-bar-graph"></i> Executive Summary</h3><button class="btn btn-primary btn-sm" onclick="app.exportData()"><i class="bi bi-download"></i> Export All</button></div><div class="card-body"><div class="dashboard-grid"><div style="background:var(--bg-elevated);padding:20px;border-radius:var(--radius-md);"><div style="font-size:32px;font-weight:700;color:var(--accent-blue);">${this.getActiveData().risks.length}</div><div style="font-size:13px;color:var(--text-muted);">Total Risks</div></div><div style="background:var(--bg-elevated);padding:20px;border-radius:var(--radius-md);"><div style="font-size:32px;font-weight:700;color:var(--accent-red);">${criticalRisks}</div><div style="font-size:13px;color:var(--text-muted);">Critical Risks</div></div><div style="background:var(--bg-elevated);padding:20px;border-radius:var(--radius-md);"><div style="font-size:32px;font-weight:700;color:var(--accent-green);">${effectiveControls}</div><div style="font-size:13px;color:var(--text-muted);">Effective Controls</div></div><div style="background:var(--bg-elevated);padding:20px;border-radius:var(--radius-md);"><div style="font-size:32px;font-weight:700;color:var(--accent-amber);">${openFindings}</div><div style="font-size:13px;color:var(--text-muted);">Open Findings</div></div></div></div></div><div class="card"><div class="card-header"><h3 class="card-title">Quick Stats</h3></div><div class="card-body"><table><tbody><tr><td>Total Assets</td><td class="font-semibold">${this.data.assets.length}</td></tr><tr><td>Total Vendors</td><td class="font-semibold">${this.getActiveData().vendors.length}</td></tr><tr><td>Total Controls</td><td class="font-semibold">${this.getActiveData().controls.length}</td></tr><tr><td>Control Tests</td><td class="font-semibold">${this.getActiveData().controlTests.length}</td></tr><tr><td>Evidence Items</td><td class="font-semibold">${this.getActiveData().evidence.length}</td></tr><tr><td>Active Audits</td><td class="font-semibold">${this.getActiveData().audits.filter(a => a.status === 'In Progress').length}</td></tr></tbody></table></div></div>`;
+        const d = this.getActiveData();
+        
+        // Calculate statistics
+        const totalRisks = d.risks.length;
+        const criticalRisks = d.risks.filter(r => r.likelihood * r.impact >= 20).length;
+        const highRisks = d.risks.filter(r => r.likelihood * r.impact >= 12 && r.likelihood * r.impact < 20).length;
+        const openRisks = d.risks.filter(r => r.status !== 'Closed').length;
+        const totalControls = d.controls.length;
+        const effectiveControls = d.controls.filter(ct => ct.effectiveness === 'Effective').length;
+        const partialControls = d.controls.filter(ct => ct.effectiveness === 'Partially Effective').length;
+        const openFindings = d.findings.filter(f => f.status === 'Open').length;
+        const closedFindings = d.findings.filter(f => f.status === 'Closed').length;
+        const openIssues = d.issues.filter(i => i.status === 'Open').length;
+        const criticalVendors = d.vendors.filter(v => v.criticality === 'Critical').length;
+        
+        const selectedReport = this.selectedReport || null;
+        
+        c.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <div>
+                    <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 4px;"><i class="bi bi-file-earmark-bar-graph"></i> Reports & Analytics</h2>
+                    <p style="color: var(--text-muted); font-size: 13px;">Generate detailed reports for compliance, audits, and management review.</p>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button class="btn btn-secondary" onclick="app.exportAllReports()" style="white-space: nowrap;"><i class="bi bi-download"></i> Export All</button>
+                    <button class="btn btn-primary" onclick="app.printReport()" style="white-space: nowrap;"><i class="bi bi-printer"></i> Print to PDF</button>
+                </div>
+            </div>
+            
+            <!-- Report Cards Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                
+                <!-- Risk Report Card -->
+                <div class="card" onclick="app.showReport('risk')" style="cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                    <div class="card-body" style="padding: 20px;">
+                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                            <div style="width: 50px; height: 50px; background: var(--accent-red-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-exclamation-triangle" style="font-size: 24px; color: var(--accent-red);"></i>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 16px; margin-bottom: 2px;">Risk Assessment Report</h4>
+                                <p style="font-size: 12px; color: var(--text-muted);">Complete risk register analysis</p>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${totalRisks}</div><div style="font-size: 11px; color: var(--text-muted);">Total</div></div>
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-red);">${criticalRisks}</div><div style="font-size: 11px; color: var(--text-muted);">Critical</div></div>
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-amber);">${highRisks}</div><div style="font-size: 11px; color: var(--text-muted);">High</div></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Control Report Card -->
+                <div class="card" onclick="app.showReport('control')" style="cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                    <div class="card-body" style="padding: 20px;">
+                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                            <div style="width: 50px; height: 50px; background: var(--accent-green-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-shield-check" style="font-size: 24px; color: var(--accent-green);"></i>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 16px; margin-bottom: 2px;">Control Effectiveness Report</h4>
+                                <p style="font-size: 12px; color: var(--text-muted);">Control status and testing results</p>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${totalControls}</div><div style="font-size: 11px; color: var(--text-muted);">Total</div></div>
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-green);">${effectiveControls}</div><div style="font-size: 11px; color: var(--text-muted);">Effective</div></div>
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-amber);">${partialControls}</div><div style="font-size: 11px; color: var(--text-muted);">Partial</div></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Compliance Report Card -->
+                <div class="card" onclick="app.showReport('compliance')" style="cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                    <div class="card-body" style="padding: 20px;">
+                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                            <div style="width: 50px; height: 50px; background: var(--accent-blue-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-clipboard-check" style="font-size: 24px; color: var(--accent-blue);"></i>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 16px; margin-bottom: 2px;">Compliance Status Report</h4>
+                                <p style="font-size: 12px; color: var(--text-muted);">Framework compliance overview</p>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${d.audits.length}</div><div style="font-size: 11px; color: var(--text-muted);">Audits</div></div>
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-green);">${closedFindings}</div><div style="font-size: 11px; color: var(--text-muted);">Closed</div></div>
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-amber);">${openFindings}</div><div style="font-size: 11px; color: var(--text-muted);">Open</div></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vendor Report Card -->
+                <div class="card" onclick="app.showReport('vendor')" style="cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                    <div class="card-body" style="padding: 20px;">
+                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                            <div style="width: 50px; height: 50px; background: var(--accent-purple-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-building" style="font-size: 24px; color: var(--accent-purple);"></i>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 16px; margin-bottom: 2px;">Third-Party Risk Report</h4>
+                                <p style="font-size: 12px; color: var(--text-muted);">Vendor risk assessment summary</p>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${d.vendors.length}</div><div style="font-size: 11px; color: var(--text-muted);">Vendors</div></div>
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-red);">${criticalVendors}</div><div style="font-size: 11px; color: var(--text-muted);">Critical</div></div>
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-green);">${d.vendors.filter(v => v.status === 'Active').length}</div><div style="font-size: 11px; color: var(--text-muted);">Active</div></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Incident Report Card -->
+                <div class="card" onclick="app.showReport('incident')" style="cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                    <div class="card-body" style="padding: 20px;">
+                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                            <div style="width: 50px; height: 50px; background: var(--accent-amber-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-lightning" style="font-size: 24px; color: var(--accent-amber);"></i>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 16px; margin-bottom: 2px;">Incident Summary Report</h4>
+                                <p style="font-size: 12px; color: var(--text-muted);">Security incident analysis</p>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${d.incidents.length}</div><div style="font-size: 11px; color: var(--text-muted);">Total</div></div>
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-green);">${d.incidents.filter(i => i.status === 'Resolved').length}</div><div style="font-size: 11px; color: var(--text-muted);">Resolved</div></div>
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-red);">${d.incidents.filter(i => i.status === 'Investigating').length}</div><div style="font-size: 11px; color: var(--text-muted);">Active</div></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Executive Summary Card -->
+                <div class="card" onclick="app.showReport('executive')" style="cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                    <div class="card-body" style="padding: 20px;">
+                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                            <div style="width: 50px; height: 50px; background: var(--accent-cyan-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-graph-up" style="font-size: 24px; color: var(--accent-cyan);"></i>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 16px; margin-bottom: 2px;">Executive Summary</h4>
+                                <p style="font-size: 12px; color: var(--text-muted);">High-level GRC overview</p>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${this.data.assets.length}</div><div style="font-size: 11px; color: var(--text-muted);">Assets</div></div>
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-blue);">${d.policies.length}</div><div style="font-size: 11px; color: var(--text-muted);">Policies</div></div>
+                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-purple);">${openIssues}</div><div style="font-size: 11px; color: var(--text-muted);">Issues</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Report Detail View -->
+            <div id="report-detail-container">
+                ${selectedReport ? this.renderReportDetail(selectedReport) : `
+                    <div class="card">
+                        <div class="card-body" style="padding: 60px; text-align: center;">
+                            <i class="bi bi-file-earmark-text" style="font-size: 48px; color: var(--text-muted); opacity: 0.4; margin-bottom: 16px; display: block;"></i>
+                            <h4 style="font-size: 16px; margin-bottom: 8px;">Select a Report</h4>
+                            <p style="color: var(--text-muted); font-size: 13px;">Click on any report card above to view detailed information.</p>
+                        </div>
+                    </div>
+                `}
+            </div>
+        `;
+    }
+    
+    showReport(reportType) {
+        this.selectedReport = reportType;
+        const container = document.getElementById('report-detail-container');
+        if (container) {
+            container.innerHTML = this.renderReportDetail(reportType);
+        }
+    }
+    
+    renderReportDetail(reportType) {
+        const d = this.getActiveData();
+        const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        
+        const reports = {
+            'risk': () => {
+                const criticalRisks = d.risks.filter(r => r.likelihood * r.impact >= 20);
+                const highRisks = d.risks.filter(r => r.likelihood * r.impact >= 12 && r.likelihood * r.impact < 20);
+                const mediumRisks = d.risks.filter(r => r.likelihood * r.impact >= 6 && r.likelihood * r.impact < 12);
+                const lowRisks = d.risks.filter(r => r.likelihood * r.impact < 6);
+                const risksByCategory = {};
+                d.risks.forEach(r => { risksByCategory[r.category] = (risksByCategory[r.category] || 0) + 1; });
+                
+                return `
+                    <div class="card" id="printable-report">
+                        <div class="card-header" style="background: linear-gradient(135deg, var(--accent-red-soft), transparent);">
+                            <div>
+                                <h3 class="card-title"><i class="bi bi-exclamation-triangle"></i> Risk Assessment Report</h3>
+                                <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Generated: ${today}</p>
+                            </div>
+                            <button class="btn btn-secondary btn-sm" onclick="app.exportReportCSV('risk')" style="white-space: nowrap;"><i class="bi bi-download"></i> Export CSV</button>
+                        </div>
+                        <div class="card-body">
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Risk Summary</h4>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                                <div style="background: var(--accent-red-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-red);">${criticalRisks.length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Critical (20-25)</div>
+                                </div>
+                                <div style="background: var(--accent-amber-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-amber);">${highRisks.length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">High (12-19)</div>
+                                </div>
+                                <div style="background: var(--accent-blue-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-blue);">${mediumRisks.length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Medium (6-11)</div>
+                                </div>
+                                <div style="background: var(--accent-green-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-green);">${lowRisks.length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Low (1-5)</div>
+                                </div>
+                            </div>
+                            
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Risks by Category</h4>
+                            <div style="margin-bottom: 24px;">
+                                ${Object.entries(risksByCategory).map(([cat, count]) => `
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-subtle);">
+                                        <span style="font-size: 13px;">${cat}</span>
+                                        <span class="badge badge-blue">${count}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            ${criticalRisks.length > 0 ? `
+                                <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle); color: var(--accent-red);">⚠️ Critical Risks Requiring Immediate Attention</h4>
+                                <table style="margin-bottom: 24px;">
+                                    <thead><tr><th>ID</th><th>Risk</th><th>Category</th><th>Score</th><th>Owner</th><th>Status</th></tr></thead>
+                                    <tbody>
+                                        ${criticalRisks.map(r => `
+                                            <tr>
+                                                <td><span class="font-mono text-muted">${r.id}</span></td>
+                                                <td class="font-semibold">${r.title}</td>
+                                                <td>${r.category}</td>
+                                                <td><span class="badge badge-red">${r.likelihood * r.impact}</span></td>
+                                                <td>${r.owner || '-'}</td>
+                                                <td><span class="badge badge-${r.status === 'Closed' ? 'green' : r.status === 'In Progress' ? 'amber' : 'red'}">${r.status}</span></td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            ` : ''}
+                            
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Complete Risk Register</h4>
+                            ${d.risks.length > 0 ? `
+                                <table>
+                                    <thead><tr><th>ID</th><th>Risk</th><th>Category</th><th>L</th><th>I</th><th>Score</th><th>Status</th></tr></thead>
+                                    <tbody>
+                                        ${d.risks.map(r => {
+                                            const score = r.likelihood * r.impact;
+                                            const scoreClass = score >= 20 ? 'red' : score >= 12 ? 'amber' : score >= 6 ? 'blue' : 'green';
+                                            return `
+                                                <tr>
+                                                    <td><span class="font-mono text-muted">${r.id}</span></td>
+                                                    <td class="font-semibold">${r.title}</td>
+                                                    <td><span class="badge badge-blue" style="font-size: 10px;">${r.category}</span></td>
+                                                    <td>${r.likelihood}</td>
+                                                    <td>${r.impact}</td>
+                                                    <td><span class="badge badge-${scoreClass}">${score}</span></td>
+                                                    <td><span class="badge badge-${r.status === 'Closed' ? 'green' : r.status === 'In Progress' ? 'amber' : 'gray'}">${r.status}</span></td>
+                                                </tr>
+                                            `;
+                                        }).join('')}
+                                    </tbody>
+                                </table>
+                            ` : '<p style="color: var(--text-muted); text-align: center; padding: 20px;">No risks recorded.</p>'}
+                        </div>
+                    </div>
+                `;
+            },
+            
+            'control': () => {
+                const byFramework = {};
+                d.controls.forEach(c => { byFramework[c.framework] = (byFramework[c.framework] || 0) + 1; });
+                const byEffectiveness = { 'Effective': 0, 'Partially Effective': 0, 'Ineffective': 0, 'Not Tested': 0 };
+                d.controls.forEach(c => { byEffectiveness[c.effectiveness] = (byEffectiveness[c.effectiveness] || 0) + 1; });
+                
+                return `
+                    <div class="card" id="printable-report">
+                        <div class="card-header" style="background: linear-gradient(135deg, var(--accent-green-soft), transparent);">
+                            <div>
+                                <h3 class="card-title"><i class="bi bi-shield-check"></i> Control Effectiveness Report</h3>
+                                <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Generated: ${today}</p>
+                            </div>
+                            <button class="btn btn-secondary btn-sm" onclick="app.exportReportCSV('control')" style="white-space: nowrap;"><i class="bi bi-download"></i> Export CSV</button>
+                        </div>
+                        <div class="card-body">
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Control Effectiveness Summary</h4>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                                <div style="background: var(--accent-green-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-green);">${byEffectiveness['Effective']}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Effective</div>
+                                </div>
+                                <div style="background: var(--accent-amber-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-amber);">${byEffectiveness['Partially Effective']}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Partial</div>
+                                </div>
+                                <div style="background: var(--accent-red-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-red);">${byEffectiveness['Ineffective']}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Ineffective</div>
+                                </div>
+                                <div style="background: var(--bg-elevated); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--text-muted);">${byEffectiveness['Not Tested']}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Not Tested</div>
+                                </div>
+                            </div>
+                            
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Controls by Framework</h4>
+                            <div style="margin-bottom: 24px;">
+                                ${Object.entries(byFramework).map(([fw, count]) => `
+                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-subtle);">
+                                        <span style="font-size: 13px;">${fw}</span>
+                                        <span class="badge badge-${this.getFrameworkColor(fw)}">${count}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Control Catalog</h4>
+                            ${d.controls.length > 0 ? `
+                                <table>
+                                    <thead><tr><th>ID</th><th>Control</th><th>Framework</th><th>Ref</th><th>Effectiveness</th><th>Owner</th></tr></thead>
+                                    <tbody>
+                                        ${d.controls.map(c => `
+                                            <tr>
+                                                <td><span class="font-mono text-muted">${c.id}</span></td>
+                                                <td class="font-semibold">${c.name}</td>
+                                                <td><span class="badge badge-${this.getFrameworkColor(c.framework)}" style="font-size: 10px;">${c.framework}</span></td>
+                                                <td><span class="font-mono">${c.ref || '-'}</span></td>
+                                                <td><span class="badge badge-${c.effectiveness === 'Effective' ? 'green' : c.effectiveness === 'Partially Effective' ? 'amber' : c.effectiveness === 'Ineffective' ? 'red' : 'gray'}">${c.effectiveness}</span></td>
+                                                <td>${c.owner || '-'}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            ` : '<p style="color: var(--text-muted); text-align: center; padding: 20px;">No controls recorded.</p>'}
+                        </div>
+                    </div>
+                `;
+            },
+            
+            'compliance': () => {
+                const auditsByStatus = { 'In Progress': 0, 'Planned': 0, 'Completed': 0 };
+                d.audits.forEach(a => { auditsByStatus[a.status] = (auditsByStatus[a.status] || 0) + 1; });
+                
+                return `
+                    <div class="card" id="printable-report">
+                        <div class="card-header" style="background: linear-gradient(135deg, var(--accent-blue-soft), transparent);">
+                            <div>
+                                <h3 class="card-title"><i class="bi bi-clipboard-check"></i> Compliance Status Report</h3>
+                                <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Generated: ${today}</p>
+                            </div>
+                            <button class="btn btn-secondary btn-sm" onclick="app.exportReportCSV('compliance')" style="white-space: nowrap;"><i class="bi bi-download"></i> Export CSV</button>
+                        </div>
+                        <div class="card-body">
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Audit Summary</h4>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+                                <div style="background: var(--accent-amber-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-amber);">${auditsByStatus['In Progress']}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">In Progress</div>
+                                </div>
+                                <div style="background: var(--accent-blue-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-blue);">${auditsByStatus['Planned']}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Planned</div>
+                                </div>
+                                <div style="background: var(--accent-green-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-green);">${auditsByStatus['Completed']}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Completed</div>
+                                </div>
+                            </div>
+                            
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Findings Summary</h4>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px;">
+                                <div style="background: var(--accent-red-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-red);">${d.findings.filter(f => f.status === 'Open').length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Open Findings</div>
+                                </div>
+                                <div style="background: var(--accent-green-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-green);">${d.findings.filter(f => f.status === 'Closed').length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Closed Findings</div>
+                                </div>
+                            </div>
+                            
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Active Audits</h4>
+                            ${d.audits.length > 0 ? `
+                                <table>
+                                    <thead><tr><th>ID</th><th>Audit Name</th><th>Type</th><th>Status</th><th>Lead</th><th>Scope</th></tr></thead>
+                                    <tbody>
+                                        ${d.audits.map(a => `
+                                            <tr>
+                                                <td><span class="font-mono text-muted">${a.id}</span></td>
+                                                <td class="font-semibold">${a.name}</td>
+                                                <td><span class="badge badge-blue">${a.type}</span></td>
+                                                <td><span class="badge badge-${a.status === 'Completed' ? 'green' : a.status === 'In Progress' ? 'amber' : 'gray'}">${a.status}</span></td>
+                                                <td>${a.lead || '-'}</td>
+                                                <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${a.scope || '-'}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            ` : '<p style="color: var(--text-muted); text-align: center; padding: 20px;">No audits recorded.</p>'}
+                        </div>
+                    </div>
+                `;
+            },
+            
+            'vendor': () => {
+                const byCriticality = { 'Critical': 0, 'High': 0, 'Medium': 0, 'Low': 0 };
+                d.vendors.forEach(v => { byCriticality[v.criticality] = (byCriticality[v.criticality] || 0) + 1; });
+                
+                return `
+                    <div class="card" id="printable-report">
+                        <div class="card-header" style="background: linear-gradient(135deg, var(--accent-purple-soft), transparent);">
+                            <div>
+                                <h3 class="card-title"><i class="bi bi-building"></i> Third-Party Risk Report</h3>
+                                <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Generated: ${today}</p>
+                            </div>
+                            <button class="btn btn-secondary btn-sm" onclick="app.exportReportCSV('vendor')" style="white-space: nowrap;"><i class="bi bi-download"></i> Export CSV</button>
+                        </div>
+                        <div class="card-body">
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Vendor Criticality Breakdown</h4>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                                <div style="background: var(--accent-red-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-red);">${byCriticality['Critical']}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Critical</div>
+                                </div>
+                                <div style="background: var(--accent-amber-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-amber);">${byCriticality['High']}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">High</div>
+                                </div>
+                                <div style="background: var(--accent-blue-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-blue);">${byCriticality['Medium']}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Medium</div>
+                                </div>
+                                <div style="background: var(--accent-green-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-green);">${byCriticality['Low']}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Low</div>
+                                </div>
+                            </div>
+                            
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Vendor Inventory</h4>
+                            ${d.vendors.length > 0 ? `
+                                <table>
+                                    <thead><tr><th>ID</th><th>Vendor</th><th>Service</th><th>Criticality</th><th>Status</th><th>Owner</th></tr></thead>
+                                    <tbody>
+                                        ${d.vendors.map(v => `
+                                            <tr>
+                                                <td><span class="font-mono text-muted">${v.id}</span></td>
+                                                <td class="font-semibold">${v.name}</td>
+                                                <td>${v.service || '-'}</td>
+                                                <td><span class="badge badge-${v.criticality === 'Critical' ? 'red' : v.criticality === 'High' ? 'amber' : 'green'}">${v.criticality}</span></td>
+                                                <td><span class="badge badge-${v.status === 'Active' ? 'green' : 'gray'}">${v.status}</span></td>
+                                                <td>${v.owner || '-'}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            ` : '<p style="color: var(--text-muted); text-align: center; padding: 20px;">No vendors recorded.</p>'}
+                        </div>
+                    </div>
+                `;
+            },
+            
+            'incident': () => {
+                const byType = {};
+                d.incidents.forEach(i => { byType[i.type] = (byType[i.type] || 0) + 1; });
+                
+                return `
+                    <div class="card" id="printable-report">
+                        <div class="card-header" style="background: linear-gradient(135deg, var(--accent-amber-soft), transparent);">
+                            <div>
+                                <h3 class="card-title"><i class="bi bi-lightning"></i> Incident Summary Report</h3>
+                                <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Generated: ${today}</p>
+                            </div>
+                            <button class="btn btn-secondary btn-sm" onclick="app.exportReportCSV('incident')" style="white-space: nowrap;"><i class="bi bi-download"></i> Export CSV</button>
+                        </div>
+                        <div class="card-body">
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Incident Status</h4>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+                                <div style="background: var(--accent-red-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-red);">${d.incidents.filter(i => i.status === 'Investigating').length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Investigating</div>
+                                </div>
+                                <div style="background: var(--accent-amber-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-amber);">${d.incidents.filter(i => i.status === 'Contained').length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Contained</div>
+                                </div>
+                                <div style="background: var(--accent-green-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-green);">${d.incidents.filter(i => i.status === 'Resolved').length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Resolved</div>
+                                </div>
+                            </div>
+                            
+                            ${Object.keys(byType).length > 0 ? `
+                                <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Incidents by Type</h4>
+                                <div style="margin-bottom: 24px;">
+                                    ${Object.entries(byType).map(([type, count]) => `
+                                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-subtle);">
+                                            <span style="font-size: 13px;">${type}</span>
+                                            <span class="badge badge-amber">${count}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+                            
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Incident Log</h4>
+                            ${d.incidents.length > 0 ? `
+                                <table>
+                                    <thead><tr><th>ID</th><th>Incident</th><th>Type</th><th>Severity</th><th>Status</th><th>Owner</th></tr></thead>
+                                    <tbody>
+                                        ${d.incidents.map(i => `
+                                            <tr>
+                                                <td><span class="font-mono text-muted">${i.id}</span></td>
+                                                <td class="font-semibold">${i.title}</td>
+                                                <td><span class="badge badge-blue">${i.type}</span></td>
+                                                <td><span class="badge badge-${i.severity === 'Critical' ? 'red' : i.severity === 'High' ? 'amber' : 'green'}">${i.severity}</span></td>
+                                                <td><span class="badge badge-${i.status === 'Resolved' ? 'green' : i.status === 'Investigating' ? 'red' : 'amber'}">${i.status}</span></td>
+                                                <td>${i.owner || '-'}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            ` : '<p style="color: var(--text-muted); text-align: center; padding: 20px;">No incidents recorded.</p>'}
+                        </div>
+                    </div>
+                `;
+            },
+            
+            'executive': () => {
+                const criticalRisks = d.risks.filter(r => r.likelihood * r.impact >= 20).length;
+                const effectiveControls = d.controls.filter(c => c.effectiveness === 'Effective').length;
+                const controlEffectiveness = d.controls.length > 0 ? Math.round((effectiveControls / d.controls.length) * 100) : 0;
+                
+                return `
+                    <div class="card" id="printable-report">
+                        <div class="card-header" style="background: linear-gradient(135deg, var(--accent-cyan-soft), transparent);">
+                            <div>
+                                <h3 class="card-title"><i class="bi bi-graph-up"></i> Executive Summary Report</h3>
+                                <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Generated: ${today}</p>
+                            </div>
+                            <button class="btn btn-secondary btn-sm" onclick="app.exportReportCSV('executive')" style="white-space: nowrap;"><i class="bi bi-download"></i> Export CSV</button>
+                        </div>
+                        <div class="card-body">
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">GRC Program Overview</h4>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                                <div style="background: var(--bg-elevated); padding: 20px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 32px; font-weight: 700; color: var(--accent-blue);">${this.data.assets.length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Total Assets</div>
+                                </div>
+                                <div style="background: var(--bg-elevated); padding: 20px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 32px; font-weight: 700; color: var(--accent-red);">${d.risks.length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Total Risks</div>
+                                </div>
+                                <div style="background: var(--bg-elevated); padding: 20px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 32px; font-weight: 700; color: var(--accent-green);">${d.controls.length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Total Controls</div>
+                                </div>
+                                <div style="background: var(--bg-elevated); padding: 20px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 32px; font-weight: 700; color: var(--accent-purple);">${d.vendors.length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Vendors</div>
+                                </div>
+                            </div>
+                            
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Key Metrics</h4>
+                            <table style="margin-bottom: 24px;">
+                                <tbody>
+                                    <tr><td style="padding: 12px;">Critical Risks</td><td style="padding: 12px;"><span class="badge badge-red">${criticalRisks}</span></td><td style="padding: 12px; color: var(--text-muted);">${criticalRisks > 0 ? 'Requires immediate attention' : 'No critical risks'}</td></tr>
+                                    <tr><td style="padding: 12px;">Control Effectiveness</td><td style="padding: 12px;"><span class="badge badge-${controlEffectiveness >= 80 ? 'green' : controlEffectiveness >= 50 ? 'amber' : 'red'}">${controlEffectiveness}%</span></td><td style="padding: 12px; color: var(--text-muted);">${effectiveControls} of ${d.controls.length} controls effective</td></tr>
+                                    <tr><td style="padding: 12px;">Open Findings</td><td style="padding: 12px;"><span class="badge badge-${d.findings.filter(f => f.status === 'Open').length > 0 ? 'amber' : 'green'}">${d.findings.filter(f => f.status === 'Open').length}</span></td><td style="padding: 12px; color: var(--text-muted);">Pending remediation</td></tr>
+                                    <tr><td style="padding: 12px;">Open Issues</td><td style="padding: 12px;"><span class="badge badge-${d.issues.filter(i => i.status === 'Open').length > 0 ? 'amber' : 'green'}">${d.issues.filter(i => i.status === 'Open').length}</span></td><td style="padding: 12px; color: var(--text-muted);">Require follow-up</td></tr>
+                                    <tr><td style="padding: 12px;">Active Audits</td><td style="padding: 12px;"><span class="badge badge-blue">${d.audits.filter(a => a.status === 'In Progress').length}</span></td><td style="padding: 12px; color: var(--text-muted);">Currently in progress</td></tr>
+                                    <tr><td style="padding: 12px;">Evidence Items</td><td style="padding: 12px;"><span class="badge badge-green">${d.evidence.length}</span></td><td style="padding: 12px; color: var(--text-muted);">Collected for audits</td></tr>
+                                </tbody>
+                            </table>
+                            
+                            <h4 style="font-size: 14px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">Policy Compliance</h4>
+                            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                                <div style="background: var(--accent-green-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-green);">${d.policies.filter(p => p.status === 'Approved').length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Approved Policies</div>
+                                </div>
+                                <div style="background: var(--accent-amber-soft); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--accent-amber);">${d.policies.filter(p => p.status === 'Under Review' || p.status === 'Draft').length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">In Review/Draft</div>
+                                </div>
+                                <div style="background: var(--bg-elevated); padding: 16px; border-radius: var(--radius-md); text-align: center;">
+                                    <div style="font-size: 28px; font-weight: 700; color: var(--text-primary);">${d.policies.length}</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Total Policies</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        };
+        
+        return reports[reportType] ? reports[reportType]() : '<p>Report not found.</p>';
+    }
+    
+    printReport() {
+        const reportEl = document.getElementById('printable-report');
+        if (!reportEl) {
+            this.toast('Please select a report first', 'error');
+            return;
+        }
+        
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>GRC Report - ${new Date().toLocaleDateString()}</title>
+                <style>
+                    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 40px; color: #1a1a2e; }
+                    h3, h4 { margin-top: 0; }
+                    table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+                    th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 12px; }
+                    th { background: #f5f5f5; font-weight: 600; }
+                    .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; }
+                    .badge-red { background: #fee2e2; color: #dc2626; }
+                    .badge-amber { background: #fef3c7; color: #d97706; }
+                    .badge-green { background: #dcfce7; color: #16a34a; }
+                    .badge-blue { background: #dbeafe; color: #2563eb; }
+                    .badge-gray { background: #f3f4f6; color: #6b7280; }
+                    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 16px 0; }
+                    .stat-box { background: #f9fafb; padding: 16px; border-radius: 8px; text-align: center; }
+                    .stat-value { font-size: 24px; font-weight: 700; }
+                    .stat-label { font-size: 11px; color: #6b7280; }
+                    @media print { body { padding: 20px; } }
+                </style>
+            </head>
+            <body>
+                <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #1a1a2e; padding-bottom: 20px;">
+                    <h1 style="margin: 0; font-size: 24px;">GRC Lab Pro Report</h1>
+                    <p style="color: #6b7280; margin: 8px 0 0 0;">Generated: ${new Date().toLocaleString()}</p>
+                </div>
+                ${reportEl.innerHTML}
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+    }
+    
+    exportAllReports() {
+        const d = this.getActiveData();
+        const allData = {
+            exportDate: new Date().toISOString(),
+            summary: {
+                totalAssets: this.data.assets.length,
+                totalRisks: d.risks.length,
+                totalControls: d.controls.length,
+                totalVendors: d.vendors.length,
+                totalPolicies: d.policies.length,
+                totalAudits: d.audits.length
+            },
+            assets: this.data.assets,
+            risks: d.risks,
+            controls: d.controls,
+            vendors: d.vendors,
+            policies: d.policies,
+            audits: d.audits,
+            findings: d.findings,
+            incidents: d.incidents,
+            evidence: d.evidence
+        };
+        
+        const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `grc-complete-report-${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        this.toast('Complete report exported!', 'success');
+    }
+    
+    exportReportCSV(reportType) {
+        const d = this.getActiveData();
+        let csv = '';
+        let filename = '';
+        
+        const csvEscape = (val) => `"${String(val || '').replace(/"/g, '""')}"`;
+        
+        switch(reportType) {
+            case 'risk':
+                csv = 'ID,Title,Category,Likelihood,Impact,Score,Status,Owner\\n';
+                d.risks.forEach(r => {
+                    csv += `${csvEscape(r.id)},${csvEscape(r.title)},${csvEscape(r.category)},${r.likelihood},${r.impact},${r.likelihood * r.impact},${csvEscape(r.status)},${csvEscape(r.owner)}\\n`;
+                });
+                filename = 'risk-report';
+                break;
+            case 'control':
+                csv = 'ID,Name,Framework,Reference,Effectiveness,Frequency,Owner\\n';
+                d.controls.forEach(c => {
+                    csv += `${csvEscape(c.id)},${csvEscape(c.name)},${csvEscape(c.framework)},${csvEscape(c.ref)},${csvEscape(c.effectiveness)},${csvEscape(c.frequency)},${csvEscape(c.owner)}\\n`;
+                });
+                filename = 'control-report';
+                break;
+            case 'vendor':
+                csv = 'ID,Name,Service,Criticality,Status,Owner\\n';
+                d.vendors.forEach(v => {
+                    csv += `${csvEscape(v.id)},${csvEscape(v.name)},${csvEscape(v.service)},${csvEscape(v.criticality)},${csvEscape(v.status)},${csvEscape(v.owner)}\\n`;
+                });
+                filename = 'vendor-report';
+                break;
+            case 'incident':
+                csv = 'ID,Title,Type,Severity,Status,Owner,Date\\n';
+                d.incidents.forEach(i => {
+                    csv += `${csvEscape(i.id)},${csvEscape(i.title)},${csvEscape(i.type)},${csvEscape(i.severity)},${csvEscape(i.status)},${csvEscape(i.owner)},${csvEscape(i.date)}\\n`;
+                });
+                filename = 'incident-report';
+                break;
+            default:
+                csv = 'Metric,Value\\n';
+                csv += `Total Assets,${this.data.assets.length}\\n`;
+                csv += `Total Risks,${d.risks.length}\\n`;
+                csv += `Total Controls,${d.controls.length}\\n`;
+                csv += `Total Vendors,${d.vendors.length}\\n`;
+                filename = 'executive-summary';
+        }
+        
+        const blob = new Blob([csv.replace(/\\\\n/g, '\\n')], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${filename}-${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        this.toast('Report exported as CSV!', 'success');
     }
     renderEmpty(icon, title, text, action) { return `<div class="empty-state"><div class="empty-state-icon"><i class="bi ${icon}"></i></div><h3 class="empty-state-title">${title}</h3><p class="empty-state-text">${text}</p>${action ? `<button class="btn btn-primary" onclick="app.${action}()"><i class="bi bi-plus-lg"></i> Get Started</button>` : ''}</div>`; }
     deleteItem(key, id) { if (confirm('Delete this item?')) { this.data[key] = this.data[key].filter(x => x.id !== id); this.saveData(key); this.renderCurrentTab(); this.toast('Item deleted', 'success'); } }
@@ -2067,84 +3787,120 @@ class GRCLabPro {
     renderFrameworks() {
         const c = document.getElementById('tab-frameworks');
         const frameworks = this.getFrameworkControls();
+        const selectedFw = this.fwFilter || 'all';
+        const selectedCat = this.catFilter || 'all';
+        
         c.innerHTML = `
-            <div class="table-container">
-                <div class="table-header">
-                    <div class="table-title"><i class="bi bi-journal-code"></i> Framework Control Library (${frameworks.length}+ Controls)</div>
-                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                        <select class="form-control" id="fw-filter" onchange="app.filterFrameworks()" style="width: 180px;">
-                            <option value="all">All Frameworks</option>
-                            <option value="ISO 27001">ISO 27001 (93)</option>
-                            <option value="NIST CSF">NIST CSF (20)</option>
-                            <option value="PCI DSS">PCI DSS (20)</option>
-                            <option value="HIPAA">HIPAA (15)</option>
-                            <option value="SOC 2">SOC 2 (20)</option>
-                            <option value="CIS Controls">CIS Controls (20)</option>
-                            <option value="GDPR">GDPR (10)</option>
-                            <option value="CMMC">CMMC (10)</option>
-                            <option value="COBIT">COBIT (10)</option>
-                        </select>
-                        <select class="form-control" id="cat-filter" onchange="app.filterFrameworks()" style="width: 180px;">
-                            <option value="all">All Categories</option>
-                            <option value="Access Control">Access Control</option>
-                            <option value="Asset Management">Asset Management</option>
-                            <option value="Data Protection">Data Protection</option>
-                            <option value="Network Security">Network Security</option>
-                            <option value="Incident Management">Incident Management</option>
-                            <option value="Business Continuity">Business Continuity</option>
-                            <option value="Risk Management">Risk Management</option>
-                            <option value="Compliance">Compliance</option>
-                            <option value="Policy & Governance">Policy & Governance</option>
-                            <option value="Vendor Management">Vendor Management</option>
-                            <option value="Physical Security">Physical Security</option>
-                            <option value="Logging & Monitoring">Logging & Monitoring</option>
-                        </select>
-                        <input type="text" class="form-control" id="fw-search" placeholder="Search controls..." oninput="app.filterFrameworks()" style="width: 200px;">
+            <div style="margin-bottom: 24px;">
+                <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 4px;"><i class="bi bi-journal-code"></i> Framework Control Library</h2>
+                <p style="font-size: 13px; color: var(--text-secondary);">400+ security controls from 9 major compliance frameworks. Use these as reference when implementing your own controls.</p>
+            </div>
+            
+            <!-- Filters Section -->
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="card-body" style="padding: 16px;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+                        <div>
+                            <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Framework</label>
+                            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                                <button class="btn btn-sm ${selectedFw === 'all' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setFwFilter('all')">All</button>
+                                <button class="btn btn-sm ${selectedFw === 'ISO 27001' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setFwFilter('ISO 27001')">ISO 27001</button>
+                                <button class="btn btn-sm ${selectedFw === 'NIST CSF' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setFwFilter('NIST CSF')">NIST CSF</button>
+                                <button class="btn btn-sm ${selectedFw === 'SOC 2' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setFwFilter('SOC 2')">SOC 2</button>
+                                <button class="btn btn-sm ${selectedFw === 'PCI DSS' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setFwFilter('PCI DSS')">PCI DSS</button>
+                                <button class="btn btn-sm ${selectedFw === 'HIPAA' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setFwFilter('HIPAA')">HIPAA</button>
+                                <button class="btn btn-sm ${selectedFw === 'GDPR' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setFwFilter('GDPR')">GDPR</button>
+                                <button class="btn btn-sm ${selectedFw === 'CIS Controls' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setFwFilter('CIS Controls')">CIS</button>
+                                <button class="btn btn-sm ${selectedFw === 'CMMC' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setFwFilter('CMMC')">CMMC</button>
+                                <button class="btn btn-sm ${selectedFw === 'COBIT' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setFwFilter('COBIT')">COBIT</button>
+                            </div>
+                        </div>
+                        <div style="margin-left: auto;">
+                            <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Search</label>
+                            <input type="text" class="form-input" id="fw-search" placeholder="Search controls..." oninput="app.filterFrameworks()" style="width: 220px; padding: 8px 12px; font-size: 13px;">
+                        </div>
                     </div>
-                </div>
-                <div style="max-height: 600px; overflow-y: auto;">
-                    <table>
-                        <thead><tr><th>Control ID</th><th>Name</th><th>Category</th><th>Framework</th><th>Description</th><th>Action</th></tr></thead>
-                        <tbody id="fw-table-body"></tbody>
-                    </table>
+                    
+                    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-subtle);">
+                        <label style="font-size: 12px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">Category</label>
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                            <button class="btn btn-sm ${selectedCat === 'all' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setCatFilter('all')">All Categories</button>
+                            <button class="btn btn-sm ${selectedCat === 'Access Control' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setCatFilter('Access Control')">Access Control</button>
+                            <button class="btn btn-sm ${selectedCat === 'Asset Management' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setCatFilter('Asset Management')">Asset Management</button>
+                            <button class="btn btn-sm ${selectedCat === 'Data Protection' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setCatFilter('Data Protection')">Data Protection</button>
+                            <button class="btn btn-sm ${selectedCat === 'Network Security' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setCatFilter('Network Security')">Network Security</button>
+                            <button class="btn btn-sm ${selectedCat === 'Incident Management' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setCatFilter('Incident Management')">Incident Mgmt</button>
+                            <button class="btn btn-sm ${selectedCat === 'Risk Management' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setCatFilter('Risk Management')">Risk Management</button>
+                            <button class="btn btn-sm ${selectedCat === 'Compliance' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setCatFilter('Compliance')">Compliance</button>
+                            <button class="btn btn-sm ${selectedCat === 'Logging & Monitoring' ? 'btn-primary' : 'btn-secondary'}" onclick="app.setCatFilter('Logging & Monitoring')">Logging</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="card mt-6">
-                <div class="card-header"><div class="card-title"><i class="bi bi-info-circle"></i> About Framework Controls</div></div>
-                <div class="card-body">
-                    <p style="color: var(--text-secondary); margin-bottom: 12px;">This library contains 400+ security controls from 9 major compliance frameworks. Use these as reference when implementing your own controls or preparing for audits.</p>
-                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                        ${['ISO 27001', 'NIST CSF', 'PCI DSS', 'HIPAA', 'SOC 2', 'CIS Controls', 'GDPR', 'CMMC', 'COBIT'].map(fw => `<span class="badge badge-${this.getFrameworkColor(fw)}">${fw}</span>`).join('')}
-                    </div>
+            
+            <!-- Controls Table -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Controls</div>
+                    <span class="badge badge-blue" id="fw-count">0 controls</span>
+                </div>
+                <div style="max-height: 500px; overflow-y: auto;">
+                    <table>
+                        <thead style="position: sticky; top: 0; background: var(--bg-surface); z-index: 10;">
+                            <tr>
+                                <th style="width: 120px;">Control ID</th>
+                                <th>Name</th>
+                                <th style="width: 140px;">Category</th>
+                                <th style="width: 150px;">Framework</th>
+                                <th>Description</th>
+                                <th style="width: 80px;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="fw-table-body"></tbody>
+                    </table>
                 </div>
             </div>`;
         setTimeout(() => this.filterFrameworks(), 0);
     }
     
+    setFwFilter(fw) {
+        this.fwFilter = fw;
+        this.renderFrameworks();
+    }
+    
+    setCatFilter(cat) {
+        this.catFilter = cat;
+        this.renderFrameworks();
+    }
+    
     filterFrameworks() {
-        const fw = document.getElementById('fw-filter')?.value || 'all';
-        const cat = document.getElementById('cat-filter')?.value || 'all';
+        const fw = this.fwFilter || 'all';
+        const cat = this.catFilter || 'all';
         const search = (document.getElementById('fw-search')?.value || '').toLowerCase();
         let controls = this.getFrameworkControls();
         if (fw !== 'all') controls = controls.filter(c => c.frameworks.includes(fw));
         if (cat !== 'all') controls = controls.filter(c => c.category === cat);
         if (search) controls = controls.filter(c => c.name.toLowerCase().includes(search) || c.description.toLowerCase().includes(search) || c.id.toLowerCase().includes(search));
+        
+        const countEl = document.getElementById('fw-count');
+        if (countEl) countEl.textContent = `${controls.length} controls`;
+        
         const tbody = document.getElementById('fw-table-body');
         if (!tbody) return;
         if (controls.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><div class="empty-state-icon"><i class="bi bi-search"></i></div><div class="empty-state-title">No matching controls</div></td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 40px; color: var(--text-muted);"><i class="bi bi-search" style="font-size: 32px; display: block; margin-bottom: 8px; opacity: 0.3;"></i>No matching controls found</td></tr>';
         } else {
             tbody.innerHTML = controls.slice(0, 100).map(c => `
                 <tr>
-                    <td><code style="background: var(--bg-elevated); padding: 2px 6px; border-radius: 4px;">${this.esc(c.id)}</code></td>
-                    <td><strong>${this.esc(c.name)}</strong></td>
-                    <td>${this.esc(c.category)}</td>
+                    <td><code style="background: var(--bg-elevated); padding: 2px 8px; border-radius: 4px; font-size: 11px;">${this.esc(c.id)}</code></td>
+                    <td style="font-weight: 500;">${this.esc(c.name)}</td>
+                    <td><span class="badge badge-gray" style="font-size: 10px;">${this.esc(c.category)}</span></td>
                     <td>${c.frameworks.map(f => `<span class="badge badge-${this.getFrameworkColor(f)}" style="font-size: 10px;">${f}</span>`).join(' ')}</td>
-                    <td style="max-width: 300px; font-size: 13px; color: var(--text-muted);">${this.esc(c.description)}</td>
-                    <td><button class="btn btn-sm btn-secondary" onclick="app.adoptControl('${c.id}')"><i class="bi bi-plus"></i> Adopt</button></td>
+                    <td style="max-width: 280px; font-size: 12px; color: var(--text-muted);">${this.esc(c.description.substring(0, 100))}${c.description.length > 100 ? '...' : ''}</td>
+                    <td><button class="btn btn-sm btn-secondary" onclick="app.adoptControl('${c.id}')"><i class="bi bi-plus"></i> Add</button></td>
                 </tr>`).join('');
             if (controls.length > 100) {
-                tbody.innerHTML += `<tr><td colspan="6" style="text-align: center; padding: 16px; color: var(--text-muted);">Showing 100 of ${controls.length} controls. Refine your search to see more.</td></tr>`;
+                tbody.innerHTML += `<tr><td colspan="6" style="text-align: center; padding: 16px; color: var(--text-muted); font-size: 12px;">Showing 100 of ${controls.length} controls. Refine your search to see more.</td></tr>`;
             }
         }
     }
