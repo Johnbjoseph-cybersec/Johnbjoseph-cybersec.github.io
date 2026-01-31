@@ -801,7 +801,40 @@ tbody tr:last-child td { border-bottom: none; }
     .form-row { grid-template-columns: 1fr; }
 }
 .mobile-toggle { display: none; }
-    </style>
+    
+/* ===== RESPONSIVE FIX: EDU BANNER + TABLES ===== */
+#edu-banner{
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    padding-right: 56px; /* space for close button */
+    text-align: center;
+}
+#edu-banner span{ line-height: 1.4; }
+#edu-banner button{ right: 16px; top: 50%; transform: translateY(-50%); }
+
+.table-container{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.table-container table{
+    min-width: 920px; /* keeps “large screen” layout */
+}
+.table-container th,
+.table-container td{
+    white-space: nowrap;
+}
+
+/* On smaller screens (sidebar collapses), banner should be full width */
+@media (max-width: 1024px){
+    #edu-banner{ margin-left: 0 !important; width: 100% !important; }
+}
+.edu-banner i,
+.edu-banner svg {
+  display: none !important;
+}
+</style>
 </head>
 <body>
     <!-- Main Site Header - Full Width -->
@@ -826,14 +859,24 @@ tbody tr:last-child td { border-bottom: none; }
     <div style="height: 64px;"></div>
 
     <!-- Educational Disclaimer Banner -->
-    <div id="edu-banner" style="background: linear-gradient(90deg, #1e40af, #7c3aed); color: white; padding: 10px 24px; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 12px; position: relative;">
+    <div id="edu-banner" style="background: linear-gradient(90deg, #1e40af, #7c3aed); color: white; padding: 10px 24px; font-size: 12px; display: flex; align-items: center; justify-content: flex-start; gap: 12px; position: relative;; margin-left: 260px; width: calc(100% - 260px); box-sizing: border-box; flex-wrap: wrap; padding-right: 56px;">
         <i class="bi bi-mortarboard-fill" style="font-size: 16px;"></i>
-        <span><strong>Educational / Practice Use Only</strong> — This is a learning simulator for portfolio building and skills practice. All control statements are paraphrased for educational purposes. Not for production compliance decisions or formal audits.</span>
-        <button onclick="document.getElementById('edu-banner').style.display='none'" style="background: none; border: none; color: white; cursor: pointer; position: absolute; right: 16px; font-size: 18px; opacity: 0.7;">&times;</button>
+        <span style="flex: 1 1 auto; min-width: 260px; text-align: left; line-height: 1.4;"><strong>Educational / Practice Use Only</strong> — This is a learning simulator for portfolio building and skills practice. All control statements are paraphrased for educational purposes. Not for production compliance decisions or formal audits.</span>
+        <button onclick="document.getElementById('edu-banner').style.display='none'" style="background: none; border: none; color: white; cursor: pointer; position: absolute; right: 16px; font-size: 18px; opacity: 0.7;; top: 50%; transform: translateY(-50%);">&times;</button>
     </div>
     
     <div class="app-container">
         <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <img src="logo.png" alt="GRC Made Simple" style="height: 40px; width: 40px; border-radius: var(--radius-md); object-fit: contain;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="logo-icon" style="display: none;"><i class="bi bi-shield-check"></i></div>
+                    <div>
+                        <div class="logo-text" style="font-size: 15px; line-height: 1.2;">GRC Made Simple</div>
+                        <div style="font-size: 11px; color: var(--text-muted); font-weight: 500;">Practice Lab</div>
+                    </div>
+                </div>
+            </div>
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <div class="nav-section-title">Overview</div>
@@ -3902,7 +3945,37 @@ class GRCLabPro {
                     .stat-value { font-size: 24px; font-weight: 700; }
                     .stat-label { font-size: 11px; color: #6b7280; }
                     @media print { body { padding: 20px; } }
-                </style>
+                
+/* ===== RESPONSIVE FIX: EDU BANNER + TABLES ===== */
+#edu-banner{
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    padding-right: 56px; /* space for close button */
+    text-align: center;
+}
+#edu-banner span{ line-height: 1.4; }
+#edu-banner button{ right: 16px; top: 50%; transform: translateY(-50%); }
+
+.table-container{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.table-container table{
+    min-width: 920px; /* keeps “large screen” layout */
+}
+.table-container th,
+.table-container td{
+    white-space: nowrap;
+}
+
+/* On smaller screens (sidebar collapses), banner should be full width */
+@media (max-width: 1024px){
+    #edu-banner{ margin-left: 0 !important; width: 100% !important; }
+}
+
+</style>
             </head>
             <body>
                 <div style="text-align: center; margin-bottom: 30px; border-bottom: 2px solid #1a1a2e; padding-bottom: 20px;">
