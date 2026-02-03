@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -123,8 +124,9 @@
 .landing-stat-value { font-size: 48px; font-weight: 800; color: white; line-height: 1; margin-bottom: 4px; }
 .landing-stat-label { font-size: 14px; color: rgba(255,255,255,0.6); font-weight: 500; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.app-wrapper { display: none; }
-.app-wrapper.active { display: block; }
+.landing-page{display:none !important;}
+.app-wrapper{display:block !important;}
+.app-wrapper.active{display:block !important;}
 /* Interactive Flow Styles */
 .flow-container { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 32px; background: var(--bg-elevated); border-radius: var(--radius-xl); overflow-x: auto; margin-bottom: 24px; }
 .flow-node { background: var(--bg-surface); border: 2px solid var(--border-default); border-radius: var(--radius-lg); padding: 20px; min-width: 110px; text-align: center; cursor: pointer; transition: all var(--transition-normal); }
@@ -1014,7 +1016,7 @@ tbody tr:last-child td { border-bottom: none; }
     <header style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-default); position: fixed; top: 0; left: 0; right: 0; z-index: 1001; height: 64px;">
         <div style="padding: 0 24px; height: 100%;">
             <nav style="display: flex; align-items: center; justify-content: space-between; height: 100%;">
-                <a href="#" onclick="app.showLanding(); return false;" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                <a href="#"  style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
                     <div style="width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center; overflow:hidden;">
   <img src="logo.png" alt="GRC Practice Lab Logo" style="width:40px;height:40px;object-fit:contain;display:block;">
 </div>
@@ -1186,20 +1188,20 @@ class GRCLabPro {
         this.projectData = {};
         this.init();
     }
-    init() { 
-        const hasData = localStorage.getItem('grc_assets') || localStorage.getItem('grc_risks');
-        if (hasData) { this.hideLanding(); }
-        this.loadAllData(); 
-        this.loadProjectData(); 
-        this.bindEvents(); 
-        this.renderCurrentTab(); 
-        this.updateAllBadges(); 
+    init() {
+        // App-first: landing disabled
+        try { this.hideLanding(); } catch(e) {}
+        this.loadAllData();
+        this.loadProjectData();
+        this.bindEvents();
+        this.renderCurrentTab();
+        this.updateAllBadges();
     }
     
     // ===== LANDING PAGE METHODS =====
     showLanding() {
-        document.getElementById('landing-page').style.display = 'block';
-        document.getElementById('app-wrapper').classList.remove('active');
+        // Landing disabled
+        this.hideLanding();
     }
     hideLanding() {
         document.getElementById('landing-page').style.display = 'none';
@@ -1982,9 +1984,276 @@ class GRCLabPro {
             </div>
         `;
     }
-    startScenario(id) { this.toast('Scenario mode coming soon! For now, use Load Demo Data to practice with sample data.', 'info'); }
-    
-    renderDonutChart(segments, total) {
+
+    startScenario(id) {
+        const scenarios = this.getPracticeScenarioCatalog();
+        const s = scenarios.find(x => x.id === id);
+        if (!s) { this.toast('Scenario not found', 'error'); return; }
+
+        // Load progress
+        const key = `grc_scenario_${s.id}`;
+        let progress = { startedAt: null, completedSteps: [], notes: {} };
+        const stored = localStorage.getItem(key);
+        if (stored) {
+            try { progress = JSON.parse(stored); } catch(e) {}
+        }
+
+        const stepRows = s.steps.map((step, idx) => {
+            const done = progress.completedSteps.includes(idx);
+            const tabLabel = step.goTo ? ` · Go to: <span class="badge badge-gray">${step.goToLabel}</span>` : '';
+            return `
+              <div class="card" style="border:1px solid var(--border-subtle); margin-bottom:12px;">
+                <div class="card-body" style="padding:14px 16px;">
+                  <div style="display:flex; align-items:flex-start; gap:12px;">
+                    <div style="width:28px; height:28px; border-radius:9999px; background:${done ? 'var(--accent-green-soft)' : 'var(--bg-elevated)'}; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                      <i class="bi ${done ? 'bi-check2' : 'bi-circle'}" style="color:${done ? 'var(--accent-green)' : 'var(--text-muted)'};"></i>
+                    </div>
+                    <div style="flex:1;">
+                      <div style="display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap;">
+                        <div style="font-weight:700; color:var(--text-primary); font-size:13px;">
+                          Step ${idx+1}: ${step.title}${tabLabel}
+                        </div>
+                        <div style="display:flex; gap:8px; align-items:center;">
+                          ${step.goTo ? `<button class="btn btn-secondary btn-xs" onclick="app.switchTab('${step.goTo}'); closeModal();"><i class="bi bi-box-arrow-in-right"></i> Go</button>` : ''}
+                          <button class="btn ${done ? 'btn-secondary' : 'btn-primary'} btn-xs" onclick="app.toggleScenarioStep(${s.id}, ${idx});">
+                            <i class="bi ${done ? 'bi-arrow-counterclockwise' : 'bi-check2'}"></i> ${done ? 'Undo' : 'Mark Done'}
+                          </button>
+                        </div>
+                      </div>
+                      <div class="text-sm" style="margin-top:6px; color:var(--text-secondary);">${step.hint}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+        }).join('');
+
+        const completed = progress.completedSteps.length;
+        const total = s.steps.length;
+        const pct = Math.round((completed / total) * 100);
+
+        const body = `
+          <div style="display:flex; align-items:flex-start; gap:14px; margin-bottom:14px;">
+            <div style="width:44px; height:44px; border-radius: var(--radius-md); background: var(--accent-purple-soft); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <i class="bi ${s.icon}" style="font-size:20px; color: var(--accent-purple);"></i>
+            </div>
+            <div style="flex:1;">
+              <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
+                <span class="badge badge-${s.difficulty.toLowerCase() === 'hard' ? 'red' : (s.difficulty.toLowerCase() === 'easy' ? 'green' : 'amber')}">${s.difficulty}</span>
+                <span class="badge badge-gray">${s.category}</span>
+              </div>
+              <h3 style="font-size:18px; font-weight:800; margin:0; color:var(--text-primary);">${s.title}</h3>
+              <p style="margin-top:6px; margin-bottom:0; color:var(--text-secondary);">${s.desc}</p>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:16px;">
+            <div class="card-body" style="padding:14px 16px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+              <div style="font-size:13px; font-weight:700; color:var(--text-primary);">
+                Progress: ${completed}/${total} (${pct}%)
+              </div>
+              <div style="min-width:220px; flex:1; max-width:420px;">
+                <div class="progress-bar"><div class="progress-fill purple" style="width:${pct}%;"></div></div>
+              </div>
+              <button class="btn btn-ghost btn-xs" onclick="app.resetScenario(${s.id})"><i class="bi bi-trash3"></i> Reset</button>
+            </div>
+          </div>
+
+          <div>${stepRows}</div>
+
+          <div style="margin-top:14px; padding:12px 14px; border:1px dashed var(--border-default); border-radius: var(--radius-lg); background: var(--bg-elevated);">
+            <div style="font-weight:700; font-size:12px; margin-bottom:6px;">How this helps in interviews</div>
+            <div class="text-sm" style="color:var(--text-secondary);">${s.interview}</div>
+          </div>
+        `;
+
+        const footer = `
+          <button class="btn btn-secondary" onclick="closeModal()"><i class="bi bi-x-lg"></i> Close</button>
+          <button class="btn btn-primary" onclick="app.beginScenario(${s.id})"><i class="bi bi-flag-fill"></i> Start / Resume</button>
+        `;
+
+        openModal('Practice Scenario', body, footer);
+    }
+
+    beginScenario(id){
+        const scenarios = this.getPracticeScenarioCatalog();
+        const s = scenarios.find(x => x.id === id);
+        if (!s) return;
+
+        const key = `grc_scenario_${s.id}`;
+        let progress = { startedAt: null, completedSteps: [], notes: {} };
+        const stored = localStorage.getItem(key);
+        if (stored) { try { progress = JSON.parse(stored); } catch(e) {} }
+        if (!progress.startedAt) progress.startedAt = new Date().toISOString();
+        localStorage.setItem(key, JSON.stringify(progress));
+        localStorage.setItem('grc_activeScenario', String(s.id));
+
+        // Take user to first relevant tab
+        const first = s.steps.find(st => !!st.goTo);
+        if (first && first.goTo) {
+            this.switchTab(first.goTo);
+            this.toast(`Scenario started: ${s.title}`, 'success');
+        } else {
+            this.toast(`Scenario started: ${s.title}`, 'success');
+        }
+    }
+
+    toggleScenarioStep(scenarioId, stepIdx){
+        const scenarios = this.getPracticeScenarioCatalog();
+        const s = scenarios.find(x => x.id === scenarioId);
+        if (!s) return;
+
+        const key = `grc_scenario_${s.id}`;
+        let progress = { startedAt: null, completedSteps: [], notes: {} };
+        const stored = localStorage.getItem(key);
+        if (stored) { try { progress = JSON.parse(stored); } catch(e) {} }
+
+        const i = progress.completedSteps.indexOf(stepIdx);
+        if (i >= 0) progress.completedSteps.splice(i, 1);
+        else progress.completedSteps.push(stepIdx);
+
+        localStorage.setItem(key, JSON.stringify(progress));
+        // Re-open modal with updated state
+        this.startScenario(s.id);
+    }
+
+    resetScenario(scenarioId){
+        if (!confirm('Reset this scenario progress?')) return;
+        localStorage.removeItem(`grc_scenario_${scenarioId}`);
+        if (localStorage.getItem('grc_activeScenario') === String(scenarioId)) {
+            localStorage.removeItem('grc_activeScenario');
+        }
+        this.toast('Scenario progress reset', 'success');
+        this.startScenario(scenarioId);
+    }
+
+    getPracticeScenarioCatalog(){
+        return [
+          {
+            id: 1,
+            title: 'Ransomware Attack Response',
+            desc: 'Practice incident response when ransomware encrypts production databases.',
+            difficulty: 'Hard',
+            category: 'Incident Response',
+            icon: 'bi-shield-exclamation',
+            interview: 'You can explain your incident handling workflow: triage → containment → eradication → recovery → lessons learned, plus evidence and reporting.',
+            steps: [
+              { title:'Log the incident', hint:'Create a new incident entry with summary, severity, and initial impact.', goTo:'incidents', goToLabel:'Incidents' },
+              { title:'Capture investigation notes', hint:'Add timeline notes and suspected entry vector in the incident description.', goTo:'incidents', goToLabel:'Incidents' },
+              { title:'Create response tasks', hint:'Add tasks for containment, backups validation, comms, and forensics.', goTo:'tasks', goToLabel:'Tasks' },
+              { title:'Attach evidence', hint:'Add evidence items (screenshots/logs) linked to the incident.', goTo:'evidence', goToLabel:'Evidence' },
+              { title:'Document lessons learned', hint:'Create a finding or issue capturing root cause and preventive actions.', goTo:'findings', goToLabel:'Findings' }
+            ]
+          },
+          {
+            id: 2,
+            title: 'SOC 2 Type II Preparation',
+            desc: 'Prepare for a SOC 2 audit by implementing and testing required controls.',
+            difficulty: 'Medium',
+            category: 'Compliance',
+            icon: 'bi-clipboard-check',
+            interview: 'You can describe how you mapped controls to SOC 2 criteria, collected evidence, tested operating effectiveness, and tracked findings.',
+            steps: [
+              { title:'Confirm audit scope', hint:'List key systems/services in scope and major assumptions.', goTo:'audits', goToLabel:'Audits' },
+              { title:'Select controls to test', hint:'Add control tests tied to SOC 2 criteria.', goTo:'testing', goToLabel:'Control Testing' },
+              { title:'Collect evidence', hint:'Add evidence records and describe what each proves.', goTo:'evidence', goToLabel:'Evidence' },
+              { title:'Record findings', hint:'Log any gaps as findings with remediation recommendations.', goTo:'findings', goToLabel:'Findings' },
+              { title:'Update SoA (optional)', hint:'Document applicability/coverage for key controls.', goTo:'soa', goToLabel:'SoA' }
+            ]
+          },
+          {
+            id: 3,
+            title: 'Vendor Risk Assessment',
+            desc: 'Evaluate a new cloud vendor\'s security posture before onboarding.',
+            difficulty: 'Easy',
+            category: 'Vendor Risk',
+            icon: 'bi-building',
+            interview: 'You can show that you ran a vendor assessment, identified risks, validated evidence (SOC 2/ISO), and documented remediation.',
+            steps: [
+              { title:'Create vendor profile', hint:'Add vendor name, service type, and criticality.', goTo:'vendors', goToLabel:'Vendors' },
+              { title:'Identify vendor risks', hint:'Add risks like data residency, access controls, incident notifications.', goTo:'risks', goToLabel:'Risks' },
+              { title:'Select mitigating controls', hint:'Add controls (e.g., MFA, logging, contractual requirements).', goTo:'controls', goToLabel:'Controls' },
+              { title:'Request/record evidence', hint:'Attach SOC 2 report, ISO cert, or security questionnaire outcomes.', goTo:'evidence', goToLabel:'Evidence' }
+            ]
+          },
+          {
+            id: 4,
+            title: 'Data Breach Investigation',
+            desc: 'Investigate a potential data breach and document findings.',
+            difficulty: 'Hard',
+            category: 'Incident Response',
+            icon: 'bi-bug',
+            interview: 'You can demonstrate investigation discipline: what happened, what data was impacted, containment, notifications, and closure actions.',
+            steps: [
+              { title:'Open a breach incident', hint:'Log severity, affected systems, and current status.', goTo:'incidents', goToLabel:'Incidents' },
+              { title:'Collect evidence', hint:'Add logs/screenshots and describe relevance.', goTo:'evidence', goToLabel:'Evidence' },
+              { title:'Document findings', hint:'Create a finding with root cause hypothesis and impact.', goTo:'findings', goToLabel:'Findings' },
+              { title:'Create remediation tasks', hint:'Add tasks for patching, access review, monitoring.', goTo:'tasks', goToLabel:'Tasks' }
+            ]
+          },
+          {
+            id: 5,
+            title: 'Risk Register Creation',
+            desc: 'Build a risk register from scratch for a healthcare startup.',
+            difficulty: 'Medium',
+            category: 'Risk Management',
+            icon: 'bi-exclamation-triangle',
+            interview: 'You can discuss how you built a risk register, scored likelihood/impact, selected controls, and tracked treatments.',
+            steps: [
+              { title:'Add critical assets', hint:'Add PHI systems, EMR, backups, endpoints.', goTo:'assets', goToLabel:'Assets' },
+              { title:'Add top risks', hint:'Create risks with clear threat/vuln and business impact.', goTo:'risks', goToLabel:'Risks' },
+              { title:'Add controls', hint:'Create controls mapped to risks (access, logging, encryption).', goTo:'controls', goToLabel:'Controls' },
+              { title:'Create treatments', hint:'Add treatment plans with owner, due date, status.', goTo:'treatments', goToLabel:'Treatments' },
+              { title:'Review matrix', hint:'Confirm risk placement and prioritize remediation.', goTo:'matrix', goToLabel:'Risk Matrix' }
+            ]
+          },
+          {
+            id: 6,
+            title: 'Policy Development',
+            desc: 'Write an Information Security Policy aligned with ISO 27001.',
+            difficulty: 'Medium',
+            category: 'Governance',
+            icon: 'bi-file-earmark-text',
+            interview: 'You can show policy drafting skills and how you tied policies to controls and evidence.',
+            steps: [
+              { title:'Draft the policy', hint:'Create a policy record with scope, purpose, and requirements.', goTo:'policies', goToLabel:'Policies' },
+              { title:'Map to controls', hint:'Add key controls the policy supports (access control, logging).', goTo:'controls', goToLabel:'Controls' },
+              { title:'Set review cadence', hint:'Add due dates/owners and update governance activity.', goTo:'reviews', goToLabel:'Due & Activity' }
+            ]
+          },
+          {
+            id: 7,
+            title: 'Access Review Process',
+            desc: 'Design and execute a quarterly access review for privileged accounts.',
+            difficulty: 'Easy',
+            category: 'Access Control',
+            icon: 'bi-person-lock',
+            interview: 'You can explain the access review workflow, evidence collection, and how you tracked exceptions and remediation.',
+            steps: [
+              { title:'Define the control', hint:'Create the access review control with frequency and scope.', goTo:'controls', goToLabel:'Controls' },
+              { title:'Create review tasks', hint:'Add tasks to collect access lists and approvals.', goTo:'tasks', goToLabel:'Tasks' },
+              { title:'Record exceptions', hint:'Log any access exceptions and risk rationale.', goTo:'exceptions', goToLabel:'Exceptions' },
+              { title:'Attach evidence', hint:'Upload screenshots/exports as evidence.', goTo:'evidence', goToLabel:'Evidence' }
+            ]
+          },
+          {
+            id: 8,
+            title: 'Business Impact Analysis',
+            desc: 'Conduct a BIA to identify critical systems and recovery objectives.',
+            difficulty: 'Medium',
+            category: 'Business Continuity',
+            icon: 'bi-graph-down-arrow',
+            interview: 'You can demonstrate continuity thinking: critical services, RTO/RPO, dependencies, and recovery planning.',
+            steps: [
+              { title:'Identify critical assets/services', hint:'Add core systems and dependencies.', goTo:'assets', goToLabel:'Assets' },
+              { title:'Document requirements', hint:'Add BIA requirements (RTO/RPO) as requirements.', goTo:'requirements', goToLabel:'Requirements' },
+              { title:'Create recovery tasks', hint:'Add tasks for backups, DR drills, runbooks.', goTo:'tasks', goToLabel:'Tasks' }
+            ]
+          }
+        ];
+    }
+
+renderDonutChart(segments, total) {
         if (total === 0) return '';
         let currentAngle = 0;
         return segments.map(seg => {
@@ -6451,7 +6720,11 @@ saveEvidence(editId) {
             <td class="font-semibold">${this.escapeHtml(x.type)}</td>
             <td>${this.escapeHtml(x.title || '')} <span class="text-muted">(${this.escapeHtml(x.id)})</span></td>
             <td class="text-muted">${this.escapeHtml(String(x.date || '').slice(0,10))}</td>
-            <td><span class="badge badge-red">${Math.abs(x.delta)}d old</span></td>
+            <td>${
+            (x.delta === -9999 || x.delta === null || x.delta === undefined)
+              ? `<span class="badge badge-gray">Not tested yet</span>`
+              : `<span class="badge badge-red">${Math.abs(x.delta)}d old</span>`
+          }</td>
         </tr>`;
 
         const logs = (d.activityLog || []).slice(0, 60).map(l => {
@@ -6488,7 +6761,8 @@ saveEvidence(editId) {
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 style="margin:0;"><i class="bi bi-clock-history"></i> Stale Evidence & Control Testing</h3>
+                        <h3 style="margin:0;"><i class="bi bi-clock-history"></i> Stale Evidence & Control Testing
+<span class='text-xs text-muted'>(Demo data – some controls have not yet been tested)</span></h3>
                         <div class="text-muted">Evidence older than ${evidenceStaleDays}d and controls without recent tests.</div>
                     </div>
                     <div class="card-content">
