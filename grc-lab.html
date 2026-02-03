@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -1454,9 +1455,12 @@ class GRCLabPro {
             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 24px; max-width: 1200px;">
                 
                 <!-- GRC Health Score -->
-                <div class="card">
+                <div class="card" onclick="app.showGRCHealthModal()" style="cursor: pointer;" title="Click for detailed breakdown" 
+                     onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-lg)'" 
+                     onmouseout="this.style.transform='none';this.style.boxShadow='none'">
                     <div class="card-header" style="padding: 16px;">
                         <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-heart-pulse"></i> GRC Health Score</span>
+                        <span class="badge badge-blue" style="font-size: 10px;"><i class="bi bi-hand-index"></i> Click</span>
                     </div>
                     <div class="card-body" style="padding: 24px; text-align: center;">
                         <div style="position: relative; width: 140px; height: 140px; margin: 0 auto 16px;">
@@ -1484,9 +1488,12 @@ class GRCLabPro {
                 </div>
                 
                 <!-- Risk Distribution -->
-                <div class="card">
+                <div class="card" onclick="app.showRiskDistributionModal()" style="cursor: pointer;" title="Click for detailed breakdown"
+                     onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-lg)'" 
+                     onmouseout="this.style.transform='none';this.style.boxShadow='none'">
                     <div class="card-header" style="padding: 16px;">
                         <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-pie-chart"></i> Risk Distribution</span>
+                        <span class="badge badge-blue" style="font-size: 10px;"><i class="bi bi-hand-index"></i> Click</span>
                     </div>
                     <div class="card-body" style="padding: 20px;">
                         ${d.risks.length > 0 ? `
@@ -1540,9 +1547,12 @@ class GRCLabPro {
                 </div>
                 
                 <!-- Control Effectiveness -->
-                <div class="card">
+                <div class="card" onclick="app.showControlEffectivenessModal()" style="cursor: pointer;" title="Click for detailed breakdown"
+                     onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-lg)'" 
+                     onmouseout="this.style.transform='none';this.style.boxShadow='none'">
                     <div class="card-header" style="padding: 16px;">
                         <span style="font-weight: 600; font-size: 14px;"><i class="bi bi-bar-chart"></i> Control Effectiveness</span>
+                        <span class="badge badge-blue" style="font-size: 10px;"><i class="bi bi-hand-index"></i> Click</span>
                     </div>
                     <div class="card-body" style="padding: 20px;">
                         ${d.controls.length > 0 ? `
@@ -1896,93 +1906,636 @@ class GRCLabPro {
     renderGlossary() {
         const c = document.getElementById('tab-glossary');
         const terms = [
-            { term: 'GRC', def: 'Governance, Risk, and Compliance - an integrated approach to organizational oversight.' },
-            { term: 'Risk', def: 'The effect of uncertainty on objectives. A potential event that could negatively impact an organization.' },
-            { term: 'Control', def: 'A measure or mechanism that modifies risk. Can be preventive, detective, or corrective.' },
-            { term: 'Risk Assessment', def: 'The process of identifying, analyzing, and evaluating risks to determine their likelihood and potential impact.' },
-            { term: 'Risk Treatment', def: 'The process of selecting options to address risk: Accept, Mitigate, Transfer, or Avoid.' },
-            { term: 'Inherent Risk', def: 'The level of risk before any controls are applied.' },
-            { term: 'Residual Risk', def: 'The risk remaining after controls are applied.' },
-            { term: 'Risk Appetite', def: 'The amount and type of risk an organization is willing to accept.' },
-            { term: 'Control Testing', def: 'Evaluating whether controls are operating effectively as designed.' },
-            { term: 'Evidence', def: 'Documentation or artifacts that demonstrate a control exists and operates effectively.' },
-            { term: 'Finding', def: 'A deficiency or gap identified during an audit that requires remediation.' },
-            { term: 'SOA', def: 'Statement of Applicability - a document listing all controls and their applicability status.' },
-            { term: 'Audit', def: 'A systematic examination to verify compliance with requirements or standards.' },
-            { term: 'Compliance', def: 'Adherence to laws, regulations, standards, and internal policies.' },
-            { term: 'Framework', def: 'A structured set of guidelines organizations follow (e.g., ISO 27001, SOC 2, NIST CSF).' },
-            { term: 'Policy', def: 'A high-level document that defines management intent, expectations, and requirements.' },
-            { term: 'Procedure', def: 'Step-by-step instructions for carrying out a policy or control activity.' },
-            { term: 'Vendor Risk', def: 'Risk associated with third-party relationships and outsourcing arrangements.' },
-            { term: 'Incident', def: 'An event that has caused or could cause harm to an organization.' },
-            { term: 'BCP', def: 'Business Continuity Planning - ensuring critical functions can continue during a disaster.' },
-            { term: 'DR', def: 'Disaster Recovery - restoring IT systems and data after a disruptive event.' },
-            { term: 'KRI', def: 'Key Risk Indicator - a metric used to monitor changes in risk levels over time.' },
-            { term: 'KPI', def: 'Key Performance Indicator - a measurable value demonstrating how effectively objectives are achieved.' },
-            { term: 'RACI', def: 'Responsibility matrix: Responsible, Accountable, Consulted, Informed.' }
+            // Core GRC Concepts (A-Z)
+            { term: 'Access Control', def: 'Security measures that regulate who can view or use resources in a computing environment, including authentication, authorization, and accountability mechanisms.', category: 'Security' },
+            { term: 'Accountability', def: 'The obligation to accept responsibility for one\'s actions and decisions. In GRC, it ensures individuals are answerable for their role in risk management and compliance.', category: 'Governance' },
+            { term: 'Accreditation', def: 'Formal recognition that an organization meets specific standards or requirements, often granted by an authoritative body after assessment.', category: 'Compliance' },
+            { term: 'ALE (Annual Loss Expectancy)', def: 'A risk metric calculated as SLE × ARO, representing the expected monetary loss from a risk over one year.', category: 'Risk' },
+            { term: 'APT (Advanced Persistent Threat)', def: 'A sophisticated, long-term cyberattack in which an intruder gains access to a network and remains undetected for an extended period to steal data.', category: 'Security' },
+            { term: 'ARO (Annualized Rate of Occurrence)', def: 'The estimated frequency with which a threat is expected to occur within a year, used in quantitative risk analysis.', category: 'Risk' },
+            { term: 'Asset', def: 'Anything of value to an organization including data, systems, personnel, intellectual property, and physical resources that needs protection.', category: 'Security' },
+            { term: 'Attestation', def: 'A formal declaration or certification that a statement, report, or condition is true, typically provided by an independent auditor.', category: 'Compliance' },
+            { term: 'Audit', def: 'A systematic, independent examination of records, processes, and controls to determine compliance with policies, standards, and regulations.', category: 'Compliance' },
+            { term: 'Audit Committee', def: 'A committee of a company\'s board of directors responsible for oversight of financial reporting, internal controls, and external auditor relationships.', category: 'Governance' },
+            { term: 'Audit Trail', def: 'A chronological record of system activities that enables reconstruction of events related to security-relevant transactions and actions.', category: 'Compliance' },
+            { term: 'Authentication', def: 'The process of verifying the identity of a user, system, or entity before granting access to resources.', category: 'Security' },
+            { term: 'Authorization', def: 'The process of granting or denying access rights and permissions to resources based on authenticated identity.', category: 'Security' },
+            { term: 'Availability', def: 'The property of being accessible and usable on demand by an authorized entity. One of the three pillars of the CIA triad.', category: 'Security' },
+            { term: 'BAA (Business Associate Agreement)', def: 'A HIPAA-required contract between a covered entity and a business associate that handles PHI, ensuring proper safeguards.', category: 'Compliance' },
+            { term: 'Baseline', def: 'A minimum set of security controls or configurations that must be implemented across systems to ensure consistent security posture.', category: 'Security' },
+            { term: 'BCP (Business Continuity Plan)', def: 'A documented plan describing how an organization will continue critical functions during and after a disaster or disruption.', category: 'Resilience' },
+            { term: 'BIA (Business Impact Analysis)', def: 'An assessment that identifies critical business functions, their dependencies, and the potential impact of disruption.', category: 'Resilience' },
+            { term: 'Board of Directors', def: 'The governing body elected by shareholders to oversee management and make major decisions, including risk oversight and compliance strategy.', category: 'Governance' },
+            { term: 'Breach', def: 'An incident that results in unauthorized access, disclosure, or loss of sensitive data or compromise of security controls.', category: 'Security' },
+            { term: 'BYOD (Bring Your Own Device)', def: 'A policy allowing employees to use personal devices for work, requiring specific security controls and risk management.', category: 'Security' },
+            { term: 'CAP (Corrective Action Plan)', def: 'A documented plan describing steps to address audit findings, control deficiencies, or compliance gaps with timelines and owners.', category: 'Compliance' },
+            { term: 'CCPA (California Consumer Privacy Act)', def: 'California state privacy law granting consumers rights over their personal data and imposing obligations on businesses handling such data.', category: 'Privacy' },
+            { term: 'CDR (Critical Detection and Response)', def: 'Security operations capability focused on identifying and responding to critical threats and security incidents.', category: 'Security' },
+            { term: 'CIA Triad', def: 'The three core principles of information security: Confidentiality, Integrity, and Availability.', category: 'Security' },
+            { term: 'CIS Controls', def: 'A prioritized set of cybersecurity best practices from the Center for Internet Security, formerly known as SANS Top 20.', category: 'Framework' },
+            { term: 'CISO (Chief Information Security Officer)', def: 'Executive responsible for establishing and maintaining enterprise vision, strategy, and program to protect information assets.', category: 'Governance' },
+            { term: 'CMMC (Cybersecurity Maturity Model Certification)', def: 'DoD framework measuring cybersecurity maturity of defense contractors across five levels.', category: 'Framework' },
+            { term: 'COBIT', def: 'Control Objectives for Information and Related Technologies - a framework for IT governance and management from ISACA.', category: 'Framework' },
+            { term: 'Compensating Control', def: 'An alternative control implemented when the primary control cannot be met, providing equivalent risk reduction.', category: 'Security' },
+            { term: 'Compliance', def: 'The state of conforming to laws, regulations, standards, policies, and contractual obligations applicable to the organization.', category: 'Compliance' },
+            { term: 'Compliance Risk', def: 'The potential for legal penalties, financial forfeiture, or reputational damage resulting from failure to comply with requirements.', category: 'Risk' },
+            { term: 'Confidentiality', def: 'The property that information is not disclosed to unauthorized individuals, entities, or processes. Part of the CIA triad.', category: 'Security' },
+            { term: 'Configuration Management', def: 'The process of systematically handling changes to systems to maintain integrity over time, including baseline standards.', category: 'Security' },
+            { term: 'Continuous Monitoring', def: 'Ongoing awareness of information security, vulnerabilities, and threats to support organizational risk management decisions.', category: 'Security' },
+            { term: 'Control', def: 'A safeguard or countermeasure designed to avoid, detect, counteract, or minimize security risks and compliance gaps.', category: 'Security' },
+            { term: 'Control Effectiveness', def: 'The degree to which a control achieves its intended objective in reducing risk or ensuring compliance.', category: 'Security' },
+            { term: 'Control Environment', def: 'The set of standards, processes, and structures that provide the basis for carrying out internal control across the organization.', category: 'Governance' },
+            { term: 'Control Framework', def: 'A structured set of controls and guidelines that organizations use to manage risks and ensure compliance (e.g., NIST, ISO 27001).', category: 'Framework' },
+            { term: 'Control Gap', def: 'A deficiency where a required control is missing, not implemented, or not operating effectively.', category: 'Security' },
+            { term: 'Control Objective', def: 'A statement of the desired result or purpose to be achieved by implementing a control.', category: 'Security' },
+            { term: 'Control Owner', def: 'The individual responsible for ensuring a control is properly designed, implemented, and operating effectively.', category: 'Governance' },
+            { term: 'Control Testing', def: 'Procedures to evaluate whether controls are designed appropriately and operating effectively as intended.', category: 'Compliance' },
+            { term: 'Corrective Control', def: 'A control designed to correct or remedy issues after an incident or error has occurred.', category: 'Security' },
+            { term: 'COSO', def: 'Committee of Sponsoring Organizations - framework for enterprise risk management and internal control.', category: 'Framework' },
+            { term: 'Crown Jewels', def: 'The most critical and valuable assets of an organization that require the highest level of protection.', category: 'Security' },
+            { term: 'Cyber Insurance', def: 'Insurance coverage designed to protect businesses from internet-based risks and cyber incidents.', category: 'Risk' },
+            { term: 'Cyber Risk', def: 'The potential for financial loss, disruption, or reputational damage from cyber threats and vulnerabilities.', category: 'Risk' },
+            { term: 'Data Classification', def: 'The process of categorizing data based on sensitivity level (e.g., Public, Internal, Confidential, Restricted) to apply appropriate controls.', category: 'Security' },
+            { term: 'Data Controller', def: 'Under GDPR, the entity that determines the purposes and means of processing personal data.', category: 'Privacy' },
+            { term: 'Data Governance', def: 'The management of data availability, usability, integrity, and security across an organization.', category: 'Governance' },
+            { term: 'Data Processor', def: 'Under GDPR, an entity that processes personal data on behalf of the data controller.', category: 'Privacy' },
+            { term: 'Data Protection', def: 'Security measures and policies implemented to safeguard data from unauthorized access, corruption, or loss.', category: 'Security' },
+            { term: 'Data Retention', def: 'Policies defining how long data is kept and when it must be destroyed, based on legal and business requirements.', category: 'Compliance' },
+            { term: 'Defense in Depth', def: 'A security strategy employing multiple layers of controls to protect information and systems.', category: 'Security' },
+            { term: 'Detective Control', def: 'A control designed to identify and detect when unwanted events, errors, or incidents have occurred.', category: 'Security' },
+            { term: 'DLP (Data Loss Prevention)', def: 'Tools and processes to detect and prevent unauthorized data exfiltration or leakage.', category: 'Security' },
+            { term: 'DPIA (Data Protection Impact Assessment)', def: 'GDPR-required assessment for processing activities likely to result in high risk to individuals\' rights and freedoms.', category: 'Privacy' },
+            { term: 'DR (Disaster Recovery)', def: 'The process, policies, and procedures for recovering IT infrastructure and systems after a catastrophic event.', category: 'Resilience' },
+            { term: 'DRP (Disaster Recovery Plan)', def: 'A documented process describing how to recover technology infrastructure and services after a disaster.', category: 'Resilience' },
+            { term: 'Due Care', def: 'The effort made by a reasonable person to avoid harm to another party, demonstrating responsibility and prudence.', category: 'Governance' },
+            { term: 'Due Diligence', def: 'The investigation or research done before making a decision, such as evaluating a vendor\'s security posture.', category: 'Governance' },
+            { term: 'ERM (Enterprise Risk Management)', def: 'A holistic approach to identifying, assessing, and managing risks across the entire organization.', category: 'Risk' },
+            { term: 'Escalation', def: 'The process of bringing an issue to higher levels of management when it exceeds defined thresholds or cannot be resolved at current level.', category: 'Governance' },
+            { term: 'Exception', def: 'A formal approval to deviate from a policy or control requirement, typically with compensating controls and time limits.', category: 'Compliance' },
+            { term: 'FAIR (Factor Analysis of Information Risk)', def: 'A quantitative risk analysis framework that defines risk in terms of probable frequency and magnitude of loss.', category: 'Framework' },
+            { term: 'FedRAMP', def: 'Federal Risk and Authorization Management Program - US government program for cloud security authorization.', category: 'Framework' },
+            { term: 'Finding', def: 'An identified weakness, deficiency, or non-compliance issue discovered during an audit or assessment.', category: 'Compliance' },
+            { term: 'First Line of Defense', def: 'In the Three Lines Model, operational management responsible for maintaining internal controls and executing risk procedures.', category: 'Governance' },
+            { term: 'Framework', def: 'A structured set of standards, guidelines, and best practices for organizing and prioritizing security and compliance activities.', category: 'Framework' },
+            { term: 'Gap Analysis', def: 'A comparison between current state and desired state to identify what is needed to bridge the difference.', category: 'Compliance' },
+            { term: 'GDPR (General Data Protection Regulation)', def: 'EU regulation protecting the personal data and privacy of EU residents, with extraterritorial scope.', category: 'Privacy' },
+            { term: 'Governance', def: 'The framework of rules, relationships, systems, and processes by which authority is exercised and controlled in organizations.', category: 'Governance' },
+            { term: 'GRC', def: 'Governance, Risk, and Compliance - an integrated approach to achieving reliable objectives, addressing uncertainty, and acting with integrity.', category: 'Core' },
+            { term: 'Heat Map', def: 'A visual representation of risk data where values are depicted using color gradients, commonly used in risk matrices.', category: 'Risk' },
+            { term: 'HIPAA', def: 'Health Insurance Portability and Accountability Act - US law protecting sensitive patient health information.', category: 'Compliance' },
+            { term: 'IAM (Identity and Access Management)', def: 'The discipline of managing digital identities and controlling access to resources within an organization.', category: 'Security' },
+            { term: 'ICS (Industrial Control Systems)', def: 'Systems used to control industrial processes such as manufacturing, power generation, and water treatment.', category: 'Security' },
+            { term: 'Impact', def: 'The effect or consequence that a risk event would have on objectives if it materialized.', category: 'Risk' },
+            { term: 'Incident', def: 'An event that actually or potentially jeopardizes the confidentiality, integrity, or availability of information systems.', category: 'Security' },
+            { term: 'Incident Response', def: 'The organized approach to addressing and managing the aftermath of a security breach or cyberattack.', category: 'Security' },
+            { term: 'Indicator of Compromise (IOC)', def: 'Evidence that suggests a system has been compromised or attacked, such as unusual network traffic or file changes.', category: 'Security' },
+            { term: 'Information Security', def: 'The practice of protecting information by mitigating risks related to unauthorized access, use, disclosure, or destruction.', category: 'Security' },
+            { term: 'Inherent Risk', def: 'The level of risk that exists in the absence of any controls or mitigating factors.', category: 'Risk' },
+            { term: 'Integrity', def: 'The property that data has not been altered in an unauthorized manner. One of the three pillars of the CIA triad.', category: 'Security' },
+            { term: 'Internal Audit', def: 'An independent function that provides assurance and consulting services to improve operations and governance.', category: 'Compliance' },
+            { term: 'Internal Control', def: 'A process designed to provide reasonable assurance regarding achievement of objectives in operations, reporting, and compliance.', category: 'Governance' },
+            { term: 'IRM (Integrated Risk Management)', def: 'A set of practices and processes for managing risks across the enterprise in a coordinated manner.', category: 'Risk' },
+            { term: 'ISO 22301', def: 'International standard specifying requirements for a business continuity management system.', category: 'Framework' },
+            { term: 'ISO 27001', def: 'International standard for information security management systems (ISMS), specifying requirements for establishing, implementing, and improving security.', category: 'Framework' },
+            { term: 'ISO 27002', def: 'Code of practice providing guidelines for organizational information security standards and management practices.', category: 'Framework' },
+            { term: 'ISO 27005', def: 'International standard providing guidelines for information security risk management.', category: 'Framework' },
+            { term: 'ISO 31000', def: 'International standard providing principles and guidelines for risk management applicable to any organization.', category: 'Framework' },
+            { term: 'Issue', def: 'A problem, concern, or matter requiring attention and resolution, often tracked alongside risks and findings.', category: 'Compliance' },
+            { term: 'IT General Controls (ITGC)', def: 'Controls that support the operation and security of IT systems, including access, change management, and operations.', category: 'Security' },
+            { term: 'KPI (Key Performance Indicator)', def: 'A measurable value demonstrating how effectively an organization is achieving key business objectives.', category: 'Governance' },
+            { term: 'KRI (Key Risk Indicator)', def: 'A metric used to provide early warning signals about increasing risk exposures.', category: 'Risk' },
+            { term: 'Least Privilege', def: 'The principle of providing only the minimum access rights necessary for users to perform their job functions.', category: 'Security' },
+            { term: 'Likelihood', def: 'The probability or chance that a risk event will occur, typically rated on a scale (e.g., 1-5).', category: 'Risk' },
+            { term: 'Logging', def: 'The process of recording events that occur in an operating system or application for monitoring and analysis.', category: 'Security' },
+            { term: 'MAD (Maximum Allowable Downtime)', def: 'The longest period a business function can be unavailable before causing unacceptable consequences.', category: 'Resilience' },
+            { term: 'Malware', def: 'Malicious software designed to harm, exploit, or otherwise compromise computer systems and networks.', category: 'Security' },
+            { term: 'Management Override', def: 'The ability of management to circumvent controls, which represents a significant risk in any organization.', category: 'Governance' },
+            { term: 'Materiality', def: 'The threshold above which missing or incorrect information could influence decisions of users of financial statements or compliance reports.', category: 'Compliance' },
+            { term: 'MFA (Multi-Factor Authentication)', def: 'Authentication requiring two or more verification factors to gain access, enhancing security beyond passwords alone.', category: 'Security' },
+            { term: 'MITRE ATT&CK', def: 'A knowledge base of adversary tactics and techniques based on real-world observations of cyberattacks.', category: 'Framework' },
+            { term: 'MTBF (Mean Time Between Failures)', def: 'The average time between system failures, used to measure reliability.', category: 'Resilience' },
+            { term: 'MTTR (Mean Time to Repair)', def: 'The average time required to repair a failed component or restore a system after failure.', category: 'Resilience' },
+            { term: 'Need-to-Know', def: 'A security principle that access to sensitive information should be limited to those who require it for their duties.', category: 'Security' },
+            { term: 'NIST', def: 'National Institute of Standards and Technology - US agency that develops cybersecurity frameworks and standards.', category: 'Framework' },
+            { term: 'NIST CSF', def: 'NIST Cybersecurity Framework - a voluntary framework consisting of standards, guidelines, and practices to manage cybersecurity risk.', category: 'Framework' },
+            { term: 'NIST SP 800-53', def: 'Security and Privacy Controls for Information Systems and Organizations - comprehensive catalog of security controls.', category: 'Framework' },
+            { term: 'Non-Repudiation', def: 'The assurance that someone cannot deny the validity of their actions or transactions.', category: 'Security' },
+            { term: 'Observation', def: 'A noted condition during an audit that may not rise to the level of a finding but warrants management attention.', category: 'Compliance' },
+            { term: 'Operational Risk', def: 'The risk of loss resulting from inadequate or failed internal processes, people, systems, or external events.', category: 'Risk' },
+            { term: 'Patch Management', def: 'The process of identifying, acquiring, testing, and installing software updates to address vulnerabilities.', category: 'Security' },
+            { term: 'PCI DSS', def: 'Payment Card Industry Data Security Standard - security standard for organizations handling credit card data.', category: 'Framework' },
+            { term: 'Penetration Testing', def: 'Authorized simulated cyberattacks to evaluate the security of systems and identify vulnerabilities.', category: 'Security' },
+            { term: 'PHI (Protected Health Information)', def: 'Under HIPAA, individually identifiable health information transmitted or maintained in any form.', category: 'Privacy' },
+            { term: 'PII (Personally Identifiable Information)', def: 'Information that can be used to identify, contact, or locate an individual, requiring protection under privacy laws.', category: 'Privacy' },
+            { term: 'Policy', def: 'A high-level statement of management intent, direction, and expectations regarding a specific topic.', category: 'Governance' },
+            { term: 'POA&M (Plan of Action and Milestones)', def: 'A document identifying tasks needed to remedy security weaknesses, with resources, timelines, and milestones.', category: 'Compliance' },
+            { term: 'Preventive Control', def: 'A control designed to deter or prevent unwanted events from occurring in the first place.', category: 'Security' },
+            { term: 'Privacy', def: 'The right of individuals to control their personal information and how it is collected, used, and disclosed.', category: 'Privacy' },
+            { term: 'Privacy by Design', def: 'An approach requiring privacy to be considered throughout the engineering process and system lifecycle.', category: 'Privacy' },
+            { term: 'Privacy Impact Assessment', def: 'An analysis of how personal information is collected, used, shared, and maintained to ensure privacy protection.', category: 'Privacy' },
+            { term: 'Procedure', def: 'A detailed, step-by-step description of how to perform a specific task or process.', category: 'Governance' },
+            { term: 'Qualitative Risk Analysis', def: 'Risk assessment using descriptive scales (e.g., Low/Medium/High) rather than numeric values.', category: 'Risk' },
+            { term: 'Quantitative Risk Analysis', def: 'Risk assessment using numeric values to calculate probability and impact, often expressed in monetary terms.', category: 'Risk' },
+            { term: 'RACI Matrix', def: 'A responsibility assignment matrix defining who is Responsible, Accountable, Consulted, and Informed for each task.', category: 'Governance' },
+            { term: 'Ransomware', def: 'Malware that encrypts files and demands payment for the decryption key.', category: 'Security' },
+            { term: 'Reasonable Assurance', def: 'A high but not absolute level of assurance that objectives will be achieved, recognizing inherent limitations.', category: 'Compliance' },
+            { term: 'Regulatory Compliance', def: 'Adherence to laws, regulations, guidelines, and specifications relevant to the organization\'s business.', category: 'Compliance' },
+            { term: 'Remediation', def: 'The process of correcting a deficiency, vulnerability, or non-compliance issue.', category: 'Compliance' },
+            { term: 'Reputational Risk', def: 'The potential for negative publicity, public perception, or events to adversely impact an organization\'s standing.', category: 'Risk' },
+            { term: 'Residual Risk', def: 'The risk that remains after controls have been applied. Must be within risk appetite to be acceptable.', category: 'Risk' },
+            { term: 'Resilience', def: 'The ability of an organization to anticipate, prepare for, respond to, and adapt to change and disruption.', category: 'Resilience' },
+            { term: 'Risk', def: 'The effect of uncertainty on objectives, often expressed as a combination of likelihood and impact.', category: 'Risk' },
+            { term: 'Risk Acceptance', def: 'A risk treatment option where the organization acknowledges a risk and decides to retain it without further action.', category: 'Risk' },
+            { term: 'Risk Appetite', def: 'The amount and type of risk an organization is willing to pursue or retain in pursuit of its objectives.', category: 'Risk' },
+            { term: 'Risk Assessment', def: 'The overall process of risk identification, risk analysis, and risk evaluation.', category: 'Risk' },
+            { term: 'Risk Avoidance', def: 'A risk treatment option where activities giving rise to the risk are discontinued or not undertaken.', category: 'Risk' },
+            { term: 'Risk Matrix', def: 'A visual tool plotting risks by likelihood and impact to prioritize risk response activities.', category: 'Risk' },
+            { term: 'Risk Mitigation', def: 'Actions taken to reduce the likelihood or impact of a risk to acceptable levels.', category: 'Risk' },
+            { term: 'Risk Owner', def: 'An individual or entity with accountability and authority to manage a specific risk.', category: 'Risk' },
+            { term: 'Risk Register', def: 'A document or system recording identified risks along with their analysis, treatment plans, and status.', category: 'Risk' },
+            { term: 'Risk Tolerance', def: 'The acceptable variation in outcomes relative to achieving objectives; boundaries of acceptable risk.', category: 'Risk' },
+            { term: 'Risk Transfer', def: 'Shifting the impact of a risk to a third party, such as through insurance or outsourcing.', category: 'Risk' },
+            { term: 'Risk Treatment', def: 'The process of selecting and implementing measures to modify risk (Accept, Mitigate, Transfer, Avoid).', category: 'Risk' },
+            { term: 'RMF (Risk Management Framework)', def: 'NIST\'s approach to integrating security and risk management into the system development lifecycle.', category: 'Framework' },
+            { term: 'RPA (Robotic Process Automation)', def: 'Technology using software robots to automate routine tasks, creating new control and risk considerations.', category: 'Security' },
+            { term: 'RPO (Recovery Point Objective)', def: 'The maximum acceptable amount of data loss measured in time; how much data can be lost before business impact.', category: 'Resilience' },
+            { term: 'RTO (Recovery Time Objective)', def: 'The maximum acceptable time to restore a system or business process after a disaster.', category: 'Resilience' },
+            { term: 'SABSA', def: 'Sherwood Applied Business Security Architecture - a framework for enterprise security architecture.', category: 'Framework' },
+            { term: 'SDLC (Software Development Lifecycle)', def: 'The process of planning, creating, testing, and deploying software, with security integrated throughout.', category: 'Security' },
+            { term: 'Second Line of Defense', def: 'In the Three Lines Model, risk management and compliance functions that provide oversight and expertise.', category: 'Governance' },
+            { term: 'Security Awareness Training', def: 'Programs designed to educate employees about security threats, policies, and best practices.', category: 'Security' },
+            { term: 'Security Control', def: 'A safeguard or countermeasure prescribed for an information system to protect the CIA of information.', category: 'Security' },
+            { term: 'Segregation of Duties (SoD)', def: 'Dividing responsibilities among different people to reduce risk of error or inappropriate actions.', category: 'Security' },
+            { term: 'SIEM (Security Information and Event Management)', def: 'Technology providing real-time analysis of security alerts generated by applications and network hardware.', category: 'Security' },
+            { term: 'SLA (Service Level Agreement)', def: 'A contract defining the expected level of service, including availability, performance, and support.', category: 'Governance' },
+            { term: 'SLE (Single Loss Expectancy)', def: 'The monetary value expected to be lost if a risk event occurs once, used in quantitative risk analysis.', category: 'Risk' },
+            { term: 'SOA (Statement of Applicability)', def: 'A document listing all controls from a framework with their applicability status and justification.', category: 'Compliance' },
+            { term: 'SOC 1', def: 'Service Organization Control report focused on controls relevant to user entities\' internal control over financial reporting.', category: 'Compliance' },
+            { term: 'SOC 2', def: 'Service Organization Control report on controls relevant to security, availability, processing integrity, confidentiality, or privacy.', category: 'Compliance' },
+            { term: 'SOC 3', def: 'A public version of the SOC 2 report that can be freely distributed for marketing purposes.', category: 'Compliance' },
+            { term: 'SOX (Sarbanes-Oxley Act)', def: 'US law mandating certain practices in financial record keeping and reporting for public companies.', category: 'Compliance' },
+            { term: 'SSAE 18', def: 'Statement on Standards for Attestation Engagements - the standard governing SOC examinations.', category: 'Compliance' },
+            { term: 'Stakeholder', def: 'Any party that has an interest in, or may be affected by, the organization\'s activities or decisions.', category: 'Governance' },
+            { term: 'Standard', def: 'Mandatory requirements providing specific implementation guidance for policies.', category: 'Governance' },
+            { term: 'Strategic Risk', def: 'Risks that affect or are created by business strategy decisions and strategic objectives.', category: 'Risk' },
+            { term: 'Tabletop Exercise', def: 'A discussion-based exercise to validate plans and procedures by walking through a simulated incident scenario.', category: 'Resilience' },
+            { term: 'Technical Control', def: 'A control implemented through technology, such as firewalls, encryption, or access control systems.', category: 'Security' },
+            { term: 'Third Line of Defense', def: 'In the Three Lines Model, internal audit providing independent assurance on governance and risk management.', category: 'Governance' },
+            { term: 'Third-Party Risk', def: 'Risk arising from the organization\'s reliance on external parties such as vendors, suppliers, and partners.', category: 'Risk' },
+            { term: 'Threat', def: 'Any potential cause of an unwanted incident that could result in harm to a system or organization.', category: 'Security' },
+            { term: 'Threat Actor', def: 'An individual or group that poses a threat to an organization, including hackers, insiders, and nation-states.', category: 'Security' },
+            { term: 'Threat Intelligence', def: 'Evidence-based knowledge about existing or emerging threats to inform security decisions.', category: 'Security' },
+            { term: 'Threat Modeling', def: 'A structured approach for identifying and prioritizing potential threats and determining mitigations.', category: 'Security' },
+            { term: 'TPRM (Third-Party Risk Management)', def: 'The process of identifying, assessing, and controlling risks associated with third-party relationships.', category: 'Risk' },
+            { term: 'Trust Services Criteria (TSC)', def: 'AICPA criteria for evaluating controls relevant to security, availability, processing integrity, confidentiality, and privacy.', category: 'Framework' },
+            { term: 'Vulnerability', def: 'A weakness in a system that could be exploited by a threat to cause harm.', category: 'Security' },
+            { term: 'Vulnerability Assessment', def: 'The process of identifying, quantifying, and prioritizing vulnerabilities in systems.', category: 'Security' },
+            { term: 'Walkthrough', def: 'A review technique where an auditor traces a transaction through the system to understand controls.', category: 'Compliance' },
+            { term: 'Zero Trust', def: 'A security model based on "never trust, always verify" - requiring strict identity verification for every access request.', category: 'Security' }
         ];
+        
+        // Group terms by category
+        const categories = [...new Set(terms.map(t => t.category))].sort();
+        const selectedCat = this.glossaryFilter || 'all';
+        const searchTerm = (this.glossarySearch || '').toLowerCase();
+        
+        // Filter terms
+        let filteredTerms = terms;
+        if (selectedCat !== 'all') {
+            filteredTerms = filteredTerms.filter(t => t.category === selectedCat);
+        }
+        if (searchTerm) {
+            filteredTerms = filteredTerms.filter(t => 
+                t.term.toLowerCase().includes(searchTerm) || 
+                t.def.toLowerCase().includes(searchTerm)
+            );
+        }
+        
+        const categoryColors = {
+            'Core': 'blue', 'Governance': 'purple', 'Risk': 'red', 'Compliance': 'green',
+            'Security': 'amber', 'Framework': 'cyan', 'Privacy': 'pink', 'Resilience': 'green'
+        };
+        
         c.innerHTML = `
-            <div style="max-width: 900px; margin: 0 auto;">
+            <div style="max-width: 1100px; margin: 0 auto;">
                 <div style="margin-bottom: 24px;">
-                    <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;"><i class="bi bi-book" style="color: var(--accent-blue);"></i> GRC Glossary</h2>
-                    <p style="color: var(--text-muted);">Essential terms every GRC professional should know.</p>
-                </div>
-                <div class="card">
-                    <div class="card-body" style="padding: 0;">
-                        ${terms.map((t, i) => `
-                            <div style="padding: 16px 20px; border-bottom: ${i < terms.length - 1 ? '1px solid var(--border-subtle)' : 'none'};">
-                                <div style="font-size: 15px; font-weight: 600; color: var(--accent-blue); margin-bottom: 4px;">${t.term}</div>
-                                <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">${t.def}</div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+                        <div>
+                            <h2 style="font-size: 22px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 10px;">
+                                <i class="bi bi-book" style="color: var(--accent-blue);"></i> GRC Glossary
+                                <span class="badge badge-blue" style="font-size: 12px;">${terms.length} Terms</span>
+                            </h2>
+                            <p style="color: var(--text-muted); max-width: 600px;">Comprehensive reference of essential GRC terminology. Master these terms to communicate effectively with auditors, executives, and security teams.</p>
+                        </div>
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <div style="position: relative;">
+                                <i class="bi bi-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                                <input type="text" class="form-input" placeholder="Search terms..." value="${this.glossarySearch || ''}"
+                                    style="padding-left: 36px; width: 220px;" 
+                                    oninput="app.glossarySearch = this.value; app.renderGlossary();">
                             </div>
-                        `).join('')}
+                            <button class="btn btn-secondary btn-sm" onclick="app.exportGlossary()"><i class="bi bi-download"></i> Export</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Category Filter -->
+                <div class="card" style="margin-bottom: 20px;">
+                    <div class="card-body" style="padding: 14px 16px;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+                            <span style="font-size: 12px; font-weight: 600; color: var(--text-muted); margin-right: 8px;">Filter by Category:</span>
+                            <button class="btn btn-sm ${selectedCat === 'all' ? 'btn-primary' : 'btn-secondary'}" onclick="app.glossaryFilter = 'all'; app.renderGlossary();">All (${terms.length})</button>
+                            ${categories.map(cat => `
+                                <button class="btn btn-sm ${selectedCat === cat ? 'btn-primary' : 'btn-secondary'}" onclick="app.glossaryFilter = '${cat}'; app.renderGlossary();">
+                                    ${cat} (${terms.filter(t => t.category === cat).length})
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results Count -->
+                <div style="margin-bottom: 16px; font-size: 13px; color: var(--text-muted);">
+                    Showing ${filteredTerms.length} of ${terms.length} terms
+                    ${searchTerm ? ` matching "${searchTerm}"` : ''}
+                    ${selectedCat !== 'all' ? ` in ${selectedCat}` : ''}
+                </div>
+                
+                <!-- Terms Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px;">
+                    ${filteredTerms.map(t => `
+                        <div class="card" style="cursor: pointer; transition: all 0.2s;" 
+                            onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-lg)'" 
+                            onmouseout="this.style.transform='none';this.style.boxShadow='none'"
+                            onclick="app.showGlossaryDetail('${t.term.replace(/'/g, "\\'")}')">
+                            <div class="card-body" style="padding: 16px;">
+                                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                    <div style="font-size: 15px; font-weight: 700; color: var(--accent-blue);">${t.term}</div>
+                                    <span class="badge badge-${categoryColors[t.category] || 'gray'}" style="font-size: 10px;">${t.category}</span>
+                                </div>
+                                <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                                    ${t.def}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                ${filteredTerms.length === 0 ? `
+                    <div style="text-align: center; padding: 60px 20px; color: var(--text-muted);">
+                        <i class="bi bi-search" style="font-size: 48px; opacity: 0.3; margin-bottom: 16px; display: block;"></i>
+                        <p>No terms found matching your criteria</p>
+                        <button class="btn btn-secondary btn-sm" style="margin-top: 12px;" onclick="app.glossaryFilter = 'all'; app.glossarySearch = ''; app.renderGlossary();">Reset Filters</button>
+                    </div>
+                ` : ''}
+                
+                <!-- Quick Reference Section -->
+                <div class="card" style="margin-top: 24px;">
+                    <div class="card-header" style="background: linear-gradient(135deg, var(--accent-blue-soft), transparent);">
+                        <span style="font-weight: 600;"><i class="bi bi-lightbulb"></i> Quick Reference: Key Acronyms</span>
+                    </div>
+                    <div class="card-body" style="padding: 20px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px;">
+                            ${[
+                                { abbr: 'GRC', full: 'Governance, Risk & Compliance' },
+                                { abbr: 'CIA', full: 'Confidentiality, Integrity, Availability' },
+                                { abbr: 'ISMS', full: 'Information Security Management System' },
+                                { abbr: 'ERM', full: 'Enterprise Risk Management' },
+                                { abbr: 'BIA', full: 'Business Impact Analysis' },
+                                { abbr: 'RTO', full: 'Recovery Time Objective' },
+                                { abbr: 'RPO', full: 'Recovery Point Objective' },
+                                { abbr: 'TPRM', full: 'Third-Party Risk Management' },
+                                { abbr: 'SOC', full: 'Service Organization Control' },
+                                { abbr: 'NIST', full: 'National Institute of Standards & Technology' },
+                                { abbr: 'GDPR', full: 'General Data Protection Regulation' },
+                                { abbr: 'PCI DSS', full: 'Payment Card Industry Data Security Standard' }
+                            ].map(a => `
+                                <div style="display: flex; gap: 8px; align-items: baseline; padding: 8px 12px; background: var(--bg-elevated); border-radius: var(--radius-sm);">
+                                    <span style="font-weight: 700; color: var(--accent-blue); font-size: 13px; white-space: nowrap;">${a.abbr}</span>
+                                    <span style="font-size: 11px; color: var(--text-muted);">${a.full}</span>
+                                </div>
+                            `).join('')}
+                        </div>
                     </div>
                 </div>
             </div>
         `;
     }
     
-    // ===== PRACTICE SCENARIOS =====
+    showGlossaryDetail(term) {
+        const terms = this.getGlossaryTerms();
+        const t = terms.find(x => x.term === term);
+        if (!t) return;
+        
+        // Find related terms
+        const keywords = t.def.toLowerCase().split(' ').filter(w => w.length > 4);
+        const related = terms.filter(x => 
+            x.term !== t.term && 
+            (x.category === t.category || keywords.some(k => x.def.toLowerCase().includes(k)))
+        ).slice(0, 5);
+        
+        const categoryColors = {
+            'Core': 'blue', 'Governance': 'purple', 'Risk': 'red', 'Compliance': 'green',
+            'Security': 'amber', 'Framework': 'cyan', 'Privacy': 'pink', 'Resilience': 'green'
+        };
+        
+        openModal('Glossary Term', `
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <h3 style="font-size: 24px; font-weight: 700; color: var(--accent-blue); margin: 0;">${t.term}</h3>
+                    <span class="badge badge-${categoryColors[t.category] || 'gray'}">${t.category}</span>
+                </div>
+                <p style="font-size: 15px; line-height: 1.7; color: var(--text-secondary);">${t.def}</p>
+            </div>
+            
+            ${related.length > 0 ? `
+                <div style="padding-top: 16px; border-top: 1px solid var(--border-subtle);">
+                    <div style="font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 12px;">Related Terms</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        ${related.map(r => `
+                            <span class="badge badge-gray" style="cursor: pointer; padding: 6px 12px;" onclick="closeModal(); setTimeout(() => app.showGlossaryDetail('${r.term.replace(/'/g, "\\'")}'), 100);">
+                                ${r.term}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : ''}
+        `, `
+            <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+            <button class="btn btn-primary" onclick="navigator.clipboard.writeText('${t.term}: ${t.def.replace(/'/g, "\\'")}'); app.toast('Copied to clipboard!', 'success');">
+                <i class="bi bi-clipboard"></i> Copy Definition
+            </button>
+        `);
+    }
+    
+    getGlossaryTerms() {
+        return [
+            { term: 'GRC', def: 'Governance, Risk, and Compliance - an integrated approach to achieving reliable objectives, addressing uncertainty, and acting with integrity.', category: 'Core' },
+            { term: 'Risk', def: 'The effect of uncertainty on objectives, often expressed as a combination of likelihood and impact.', category: 'Risk' },
+            { term: 'Control', def: 'A safeguard or countermeasure designed to avoid, detect, counteract, or minimize security risks and compliance gaps.', category: 'Security' },
+            { term: 'Compliance', def: 'The state of conforming to laws, regulations, standards, policies, and contractual obligations applicable to the organization.', category: 'Compliance' },
+            { term: 'Governance', def: 'The framework of rules, relationships, systems, and processes by which authority is exercised and controlled in organizations.', category: 'Governance' }
+        ];
+    }
+    
+    exportGlossary() {
+        const terms = this.getGlossaryTerms();
+        const csv = 'Term,Category,Definition\n' + terms.map(t => 
+            `"${t.term}","${t.category}","${t.def.replace(/"/g, '""')}"`
+        ).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'grc-glossary.csv';
+        a.click();
+        URL.revokeObjectURL(url);
+        this.toast('Glossary exported!', 'success');
+    }
+    
+    // ===== PRACTICE SCENARIOS - GUIDED LEARNING MODE =====
     renderScenarios() {
         const c = document.getElementById('tab-scenarios');
-        const scenarios = [
-            { id: 1, title: 'Ransomware Attack Response', desc: 'Practice incident response when ransomware encrypts production databases.', difficulty: 'Hard', category: 'Incident Response', icon: 'bi-shield-exclamation' },
-            { id: 2, title: 'SOC 2 Type II Preparation', desc: 'Prepare for a SOC 2 audit by implementing and testing required controls.', difficulty: 'Medium', category: 'Compliance', icon: 'bi-clipboard-check' },
-            { id: 3, title: 'Vendor Risk Assessment', desc: 'Evaluate a new cloud vendor\'s security posture before onboarding.', difficulty: 'Easy', category: 'Vendor Risk', icon: 'bi-building' },
-            { id: 4, title: 'Data Breach Investigation', desc: 'Investigate a potential data breach and document findings.', difficulty: 'Hard', category: 'Incident Response', icon: 'bi-bug' },
-            { id: 5, title: 'Risk Register Creation', desc: 'Build a risk register from scratch for a healthcare startup.', difficulty: 'Medium', category: 'Risk Management', icon: 'bi-exclamation-triangle' },
-            { id: 6, title: 'Policy Development', desc: 'Write an Information Security Policy aligned with ISO 27001.', difficulty: 'Medium', category: 'Governance', icon: 'bi-file-earmark-text' },
-            { id: 7, title: 'Access Review Process', desc: 'Design and execute a quarterly access review for privileged accounts.', difficulty: 'Easy', category: 'Access Control', icon: 'bi-person-lock' },
-            { id: 8, title: 'Business Impact Analysis', desc: 'Conduct a BIA to identify critical systems and recovery objectives.', difficulty: 'Medium', category: 'Business Continuity', icon: 'bi-graph-down-arrow' }
-        ];
+        const scenarios = this.getPracticeScenarioCatalog();
+        const activeScenarioId = localStorage.getItem('grc_activeScenario');
+        
+        // Calculate progress for each scenario
+        const getScenarioProgress = (s) => {
+            const key = `grc_scenario_${s.id}`;
+            const stored = localStorage.getItem(key);
+            if (!stored) return { completed: 0, total: s.steps.length, percent: 0, started: false };
+            try {
+                const progress = JSON.parse(stored);
+                const completed = progress.completedSteps?.length || 0;
+                return { 
+                    completed, 
+                    total: s.steps.length, 
+                    percent: Math.round((completed / s.steps.length) * 100),
+                    started: !!progress.startedAt
+                };
+            } catch(e) { return { completed: 0, total: s.steps.length, percent: 0, started: false }; }
+        };
+        
+        const categories = [...new Set(scenarios.map(s => s.category))];
+        const selectedCat = this.scenarioFilter || 'all';
+        const filteredScenarios = selectedCat === 'all' ? scenarios : scenarios.filter(s => s.category === selectedCat);
+        
+        const categoryIcons = {
+            'Incident Response': 'bi-shield-exclamation',
+            'Compliance': 'bi-clipboard-check',
+            'Vendor Risk': 'bi-building',
+            'Risk Management': 'bi-exclamation-triangle',
+            'Governance': 'bi-file-earmark-text',
+            'Access Control': 'bi-person-lock',
+            'Business Continuity': 'bi-arrow-repeat'
+        };
+        
         c.innerHTML = `
-            <div style="max-width: 1000px; margin: 0 auto;">
-                <div style="margin-bottom: 24px;">
-                    <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;"><i class="bi bi-play-circle" style="color: var(--accent-purple);"></i> Practice Scenarios</h2>
-                    <p style="color: var(--text-muted);">Real-world GRC scenarios to test and build your skills. Click a scenario to start practicing.</p>
+            <div style="max-width: 1200px; margin: 0 auto;">
+                <!-- Header Section -->
+                <div class="welcome-banner" style="margin-bottom: 24px; background: linear-gradient(135deg, var(--accent-purple-soft), var(--accent-blue-soft)); padding: 28px; border-radius: var(--radius-xl);">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px;">
+                        <div style="max-width: 600px;">
+                            <h2 style="font-size: 24px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 12px;">
+                                <i class="bi bi-mortarboard-fill" style="color: var(--accent-purple);"></i>
+                                Practice Scenarios
+                                <span class="badge badge-purple">Guided Learning</span>
+                            </h2>
+                            <p style="color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px;">
+                                <strong>Practice Scenarios are structured, step-by-step exercises</strong> designed to teach you real-world GRC skills. 
+                                Each scenario walks you through a realistic situation with guided tasks, helping you build muscle memory for actual GRC work.
+                            </p>
+                            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <i class="bi bi-check-circle-fill" style="color: var(--accent-green);"></i>
+                                    <span style="font-size: 13px;">Step-by-step guidance</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <i class="bi bi-briefcase-fill" style="color: var(--accent-amber);"></i>
+                                    <span style="font-size: 13px;">Interview-ready skills</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <i class="bi bi-graph-up" style="color: var(--accent-blue);"></i>
+                                    <span style="font-size: 13px;">Track your progress</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background: var(--bg-surface); padding: 20px; border-radius: var(--radius-lg); text-align: center; min-width: 180px;">
+                            <div style="font-size: 42px; font-weight: 800; color: var(--accent-purple);">${scenarios.length}</div>
+                            <div style="font-size: 13px; color: var(--text-muted);">Scenarios Available</div>
+                            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-subtle);">
+                                <div style="font-size: 18px; font-weight: 700; color: var(--accent-green);">
+                                    ${scenarios.filter(s => getScenarioProgress(s).percent === 100).length}
+                                </div>
+                                <div style="font-size: 11px; color: var(--text-muted);">Completed</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
-                    ${scenarios.map(s => `
-                        <div class="card" style="cursor: pointer; transition: all var(--transition-normal);" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';" onclick="app.startScenario(${s.id})">
-                            <div class="card-body" style="padding: 24px;">
-                                <div style="display: flex; align-items: start; gap: 16px;">
-                                    <div style="width: 48px; height: 48px; background: var(--accent-blue-soft); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                        <i class="bi ${s.icon}" style="font-size: 22px; color: var(--accent-blue);"></i>
-                                    </div>
-                                    <div style="flex: 1;">
-                                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                                            <span class="badge badge-${s.difficulty === 'Easy' ? 'green' : s.difficulty === 'Medium' ? 'amber' : 'red'}">${s.difficulty}</span>
-                                            <span class="badge badge-gray">${s.category}</span>
+                
+                <!-- Active Scenario Banner (if any) -->
+                ${activeScenarioId ? (() => {
+                    const activeScenario = scenarios.find(s => String(s.id) === activeScenarioId);
+                    if (!activeScenario) return '';
+                    const prog = getScenarioProgress(activeScenario);
+                    return `
+                        <div class="card" style="margin-bottom: 24px; border: 2px solid var(--accent-purple); background: var(--accent-purple-soft);">
+                            <div class="card-body" style="padding: 16px 20px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <i class="bi bi-play-circle-fill" style="font-size: 24px; color: var(--accent-purple);"></i>
+                                        <div>
+                                            <div style="font-size: 12px; color: var(--text-muted); font-weight: 600;">ACTIVE SCENARIO</div>
+                                            <div style="font-size: 15px; font-weight: 700;">${activeScenario.title}</div>
                                         </div>
-                                        <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">${s.title}</h4>
-                                        <p style="font-size: 13px; color: var(--text-muted); margin: 0;">${s.desc}</p>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 16px;">
+                                        <div style="text-align: right;">
+                                            <div style="font-size: 13px; font-weight: 600;">${prog.completed}/${prog.total} steps</div>
+                                            <div class="progress-bar" style="width: 120px; height: 6px; margin-top: 4px;">
+                                                <div class="progress-fill purple" style="width: ${prog.percent}%;"></div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-primary btn-sm" onclick="app.startScenario(${activeScenario.id})">
+                                            <i class="bi bi-arrow-right"></i> Continue
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    `).join('')}
+                    `;
+                })() : ''}
+                
+                <!-- Category Filter -->
+                <div class="card" style="margin-bottom: 20px;">
+                    <div class="card-body" style="padding: 14px 16px;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+                            <span style="font-size: 12px; font-weight: 600; color: var(--text-muted); margin-right: 8px;">Filter by Category:</span>
+                            <button class="btn btn-sm ${selectedCat === 'all' ? 'btn-primary' : 'btn-secondary'}" onclick="app.scenarioFilter = 'all'; app.renderScenarios();">
+                                All (${scenarios.length})
+                            </button>
+                            ${categories.map(cat => `
+                                <button class="btn btn-sm ${selectedCat === cat ? 'btn-primary' : 'btn-secondary'}" onclick="app.scenarioFilter = '${cat}'; app.renderScenarios();">
+                                    <i class="bi ${categoryIcons[cat] || 'bi-folder'}" style="margin-right: 4px;"></i>
+                                    ${cat} (${scenarios.filter(s => s.category === cat).length})
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Scenarios Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px;">
+                    ${filteredScenarios.map(s => {
+                        const prog = getScenarioProgress(s);
+                        const isActive = String(s.id) === activeScenarioId;
+                        const statusClass = prog.percent === 100 ? 'green' : prog.percent > 0 ? 'purple' : 'gray';
+                        
+                        return `
+                            <div class="card scenario-card" style="transition: all 0.2s; ${isActive ? 'border: 2px solid var(--accent-purple);' : ''}" 
+                                 onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='var(--shadow-lg)'" 
+                                 onmouseout="this.style.transform='none';this.style.boxShadow='none'">
+                                <div class="card-header" style="padding: 16px; background: ${prog.percent === 100 ? 'var(--accent-green-soft)' : prog.percent > 0 ? 'var(--accent-purple-soft)' : 'var(--bg-elevated)'};">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div style="width: 44px; height: 44px; background: var(--bg-surface); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+                                            <i class="bi ${s.icon}" style="font-size: 20px; color: var(--accent-${statusClass});"></i>
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <div style="display: flex; gap: 6px; margin-bottom: 4px;">
+                                                <span class="badge badge-${s.difficulty === 'Easy' ? 'green' : s.difficulty === 'Medium' ? 'amber' : 'red'}">${s.difficulty}</span>
+                                                <span class="badge badge-gray">${s.category}</span>
+                                                ${isActive ? '<span class="badge badge-purple">Active</span>' : ''}
+                                            </div>
+                                            <h4 style="font-size: 15px; font-weight: 700; margin: 0;">${s.title}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body" style="padding: 16px;">
+                                    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6;">${s.desc}</p>
+                                    
+                                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+                                        <i class="bi bi-list-check" style="color: var(--text-muted);"></i>
+                                        <span style="font-size: 12px; color: var(--text-muted);">${s.steps.length} guided steps</span>
+                                    </div>
+                                    
+                                    <div style="margin-bottom: 16px;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                            <span style="font-size: 12px; font-weight: 600;">Progress</span>
+                                            <span style="font-size: 12px; font-weight: 600; color: var(--accent-${statusClass});">${prog.percent}%</span>
+                                        </div>
+                                        <div class="progress-bar" style="height: 8px;">
+                                            <div class="progress-fill ${statusClass}" style="width: ${prog.percent}%; transition: width 0.3s ease;"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="display: flex; gap: 8px;">
+                                        <button class="btn ${prog.percent > 0 ? 'btn-primary' : 'btn-secondary'} btn-sm" style="flex: 1;" onclick="app.startScenario(${s.id})">
+                                            <i class="bi bi-${prog.percent === 100 ? 'arrow-repeat' : prog.percent > 0 ? 'play-fill' : 'play'}"></i>
+                                            ${prog.percent === 100 ? 'Review' : prog.percent > 0 ? 'Continue' : 'Start'}
+                                        </button>
+                                        ${prog.started ? `
+                                            <button class="btn btn-ghost btn-sm" onclick="app.resetScenarioProgress(${s.id})" title="Reset Progress">
+                                                <i class="bi bi-arrow-counterclockwise"></i>
+                                            </button>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+                
+                <!-- Bottom Tips Section -->
+                <div class="card" style="margin-top: 24px;">
+                    <div class="card-header" style="background: linear-gradient(135deg, var(--accent-blue-soft), transparent);">
+                        <span style="font-weight: 600;"><i class="bi bi-lightbulb"></i> Pro Tips for Practice Scenarios</span>
+                    </div>
+                    <div class="card-body" style="padding: 20px;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;">
+                            <div style="display: flex; gap: 12px;">
+                                <div style="width: 32px; height: 32px; background: var(--accent-green-soft); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <i class="bi bi-1-circle" style="color: var(--accent-green);"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 13px; font-weight: 600; margin-bottom: 2px;">Follow the Steps</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Each step builds on the previous one. Complete them in order for best results.</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 12px;">
+                                <div style="width: 32px; height: 32px; background: var(--accent-amber-soft); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <i class="bi bi-2-circle" style="color: var(--accent-amber);"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 13px; font-weight: 600; margin-bottom: 2px;">Use the Hints</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Hints tell you exactly what to do. They're designed to teach you best practices.</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 12px;">
+                                <div style="width: 32px; height: 32px; background: var(--accent-purple-soft); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <i class="bi bi-3-circle" style="color: var(--accent-purple);"></i>
+                                </div>
+                                <div>
+                                    <div style="font-size: 13px; font-weight: 600; margin-bottom: 2px;">Practice for Interviews</div>
+                                    <div style="font-size: 12px; color: var(--text-muted);">Each scenario includes interview tips. Use them to explain your work to employers.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
+    }
+    
+    resetScenarioProgress(id) {
+        if (!confirm('Reset all progress for this scenario? This cannot be undone.')) return;
+        const key = `grc_scenario_${id}`;
+        localStorage.removeItem(key);
+        const activeScenarioId = localStorage.getItem('grc_activeScenario');
+        if (activeScenarioId === String(id)) {
+            localStorage.removeItem('grc_activeScenario');
+        }
+        this.renderScenarios();
+        this.toast('Scenario progress reset', 'success');
     }
 
     startScenario(id) {
@@ -2274,6 +2827,231 @@ renderDonutChart(segments, total) {
             
             return `<path d="M 50 50 L ${x1} ${y1} A 35 35 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${seg.color}" opacity="0.9"/>`;
         }).join('');
+    }
+    
+    // ==================== INTERACTIVE DASHBOARD MODALS ====================
+    showRiskDistributionModal() {
+        const d = this.getActiveData();
+        const criticalRisks = d.risks.filter(r => (r.likelihood * r.impact) >= 20);
+        const highRisks = d.risks.filter(r => (r.likelihood * r.impact) >= 12 && (r.likelihood * r.impact) < 20);
+        const mediumRisks = d.risks.filter(r => (r.likelihood * r.impact) >= 6 && (r.likelihood * r.impact) < 12);
+        const lowRisks = d.risks.filter(r => (r.likelihood * r.impact) < 6);
+        
+        const renderRiskList = (risks, severity, color) => {
+            if (risks.length === 0) return `<div style="padding: 12px; color: var(--text-muted); font-style: italic;">No ${severity.toLowerCase()} risks</div>`;
+            return risks.map(r => `
+                <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border-subtle); cursor: pointer;" 
+                     onclick="closeModal(); app.editRisk('${r.id}');" onmouseover="this.style.background='var(--bg-elevated)'" onmouseout="this.style.background='transparent'">
+                    <div style="width: 32px; height: 32px; background: ${color}20; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 12px; font-weight: 700; color: ${color};">${r.likelihood * r.impact}</span>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; font-weight: 600;">${r.title}</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">${r.category} • ${r.owner || 'Unassigned'}</div>
+                    </div>
+                    <span class="badge badge-${r.status === 'Closed' ? 'green' : r.status === 'In Progress' ? 'amber' : 'red'}">${r.status}</span>
+                </div>
+            `).join('');
+        };
+        
+        openModal('Risk Distribution Details', `
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--text-muted); margin-bottom: 16px;">Click on any risk to view or edit details. Risks are categorized by severity score (Likelihood × Impact).</p>
+            </div>
+            
+            <!-- Critical Risks -->
+            <div class="card" style="margin-bottom: 16px;">
+                <div class="card-header" style="background: rgba(239, 68, 68, 0.1); padding: 12px 16px;">
+                    <span style="font-weight: 600; color: #ef4444;"><i class="bi bi-exclamation-octagon-fill"></i> Critical Risks (Score 20-25)</span>
+                    <span class="badge badge-red">${criticalRisks.length}</span>
+                </div>
+                <div style="max-height: 180px; overflow-y: auto;">${renderRiskList(criticalRisks, 'Critical', '#ef4444')}</div>
+            </div>
+            
+            <!-- High Risks -->
+            <div class="card" style="margin-bottom: 16px;">
+                <div class="card-header" style="background: rgba(245, 158, 11, 0.1); padding: 12px 16px;">
+                    <span style="font-weight: 600; color: #f59e0b;"><i class="bi bi-exclamation-triangle-fill"></i> High Risks (Score 12-19)</span>
+                    <span class="badge badge-amber">${highRisks.length}</span>
+                </div>
+                <div style="max-height: 180px; overflow-y: auto;">${renderRiskList(highRisks, 'High', '#f59e0b')}</div>
+            </div>
+            
+            <!-- Medium Risks -->
+            <div class="card" style="margin-bottom: 16px;">
+                <div class="card-header" style="background: rgba(59, 130, 246, 0.1); padding: 12px 16px;">
+                    <span style="font-weight: 600; color: #3b82f6;"><i class="bi bi-info-circle-fill"></i> Medium Risks (Score 6-11)</span>
+                    <span class="badge badge-blue">${mediumRisks.length}</span>
+                </div>
+                <div style="max-height: 180px; overflow-y: auto;">${renderRiskList(mediumRisks, 'Medium', '#3b82f6')}</div>
+            </div>
+            
+            <!-- Low Risks -->
+            <div class="card">
+                <div class="card-header" style="background: rgba(34, 197, 94, 0.1); padding: 12px 16px;">
+                    <span style="font-weight: 600; color: #22c55e;"><i class="bi bi-check-circle-fill"></i> Low Risks (Score 1-5)</span>
+                    <span class="badge badge-green">${lowRisks.length}</span>
+                </div>
+                <div style="max-height: 180px; overflow-y: auto;">${renderRiskList(lowRisks, 'Low', '#22c55e')}</div>
+            </div>
+        `, `
+            <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+            <button class="btn btn-primary" onclick="closeModal(); app.switchTab('risks');"><i class="bi bi-plus"></i> Add Risk</button>
+        `);
+    }
+    
+    showControlEffectivenessModal() {
+        const d = this.getActiveData();
+        const effective = d.controls.filter(c => c.effectiveness === 'Effective');
+        const partial = d.controls.filter(c => c.effectiveness === 'Partially Effective');
+        const ineffective = d.controls.filter(c => c.effectiveness === 'Ineffective');
+        const notTested = d.controls.filter(c => c.effectiveness === 'Not Tested');
+        
+        const renderControlList = (controls, status, color) => {
+            if (controls.length === 0) return `<div style="padding: 12px; color: var(--text-muted); font-style: italic;">No controls with this status</div>`;
+            return controls.map(c => `
+                <div style="display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--border-subtle); cursor: pointer;" 
+                     onclick="closeModal(); app.editControl('${c.id}');" onmouseover="this.style.background='var(--bg-elevated)'" onmouseout="this.style.background='transparent'">
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; font-weight: 600;">${c.name}</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">${c.framework} • ${c.ref || 'No ref'}</div>
+                    </div>
+                    <span class="badge badge-${this.getFrameworkColor(c.framework)}" style="font-size: 10px;">${c.framework}</span>
+                </div>
+            `).join('');
+        };
+        
+        openModal('Control Effectiveness Details', `
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--text-muted);">Click on any control to view or edit. Effectiveness is determined through control testing.</p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div class="card">
+                    <div class="card-header" style="background: var(--accent-green-soft); padding: 12px 16px;">
+                        <span style="font-weight: 600; color: var(--accent-green);"><i class="bi bi-check-circle-fill"></i> Effective</span>
+                        <span class="badge badge-green">${effective.length}</span>
+                    </div>
+                    <div style="max-height: 200px; overflow-y: auto;">${renderControlList(effective, 'Effective', 'green')}</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header" style="background: var(--accent-amber-soft); padding: 12px 16px;">
+                        <span style="font-weight: 600; color: var(--accent-amber);"><i class="bi bi-dash-circle-fill"></i> Partial</span>
+                        <span class="badge badge-amber">${partial.length}</span>
+                    </div>
+                    <div style="max-height: 200px; overflow-y: auto;">${renderControlList(partial, 'Partial', 'amber')}</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header" style="background: var(--accent-red-soft); padding: 12px 16px;">
+                        <span style="font-weight: 600; color: var(--accent-red);"><i class="bi bi-x-circle-fill"></i> Ineffective</span>
+                        <span class="badge badge-red">${ineffective.length}</span>
+                    </div>
+                    <div style="max-height: 200px; overflow-y: auto;">${renderControlList(ineffective, 'Ineffective', 'red')}</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header" style="background: var(--bg-elevated); padding: 12px 16px;">
+                        <span style="font-weight: 600; color: var(--text-muted);"><i class="bi bi-question-circle-fill"></i> Not Tested</span>
+                        <span class="badge badge-gray">${notTested.length}</span>
+                    </div>
+                    <div style="max-height: 200px; overflow-y: auto;">${renderControlList(notTested, 'Not Tested', 'gray')}</div>
+                </div>
+            </div>
+        `, `
+            <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+            <button class="btn btn-primary" onclick="closeModal(); app.switchTab('testing');"><i class="bi bi-clipboard-check"></i> Test Controls</button>
+        `);
+    }
+    
+    showGRCHealthModal() {
+        const d = this.getActiveData();
+        
+        // Calculate detailed metrics
+        const openRisks = d.risks.filter(r => r.status !== 'Closed').length;
+        const totalRisks = d.risks.length;
+        const criticalRisks = d.risks.filter(r => (r.likelihood * r.impact) >= 20).length;
+        const effectiveControls = d.controls.filter(c => c.effectiveness === 'Effective').length;
+        const totalControls = d.controls.length;
+        const openFindings = d.findings.filter(f => f.status === 'Open').length;
+        const openIssues = d.issues.filter(i => i.status === 'Open').length;
+        const pendingTasks = d.tasks.filter(t => t.status !== 'Completed').length;
+        const overdueFindings = d.findings.filter(f => f.dueDate && new Date(f.dueDate) < new Date() && f.status !== 'Closed').length;
+        
+        // Calculate component scores
+        const riskScore = totalRisks > 0 ? Math.max(0, 100 - (criticalRisks * 20) - (openRisks * 5)) : 100;
+        const controlScore = totalControls > 0 ? Math.round((effectiveControls / totalControls) * 100) : 0;
+        const findingScore = Math.max(0, 100 - (openFindings * 10) - (overdueFindings * 15));
+        const complianceScore = Math.max(0, 100 - (openIssues * 8));
+        const overallHealth = Math.round((riskScore * 0.35 + controlScore * 0.35 + findingScore * 0.15 + complianceScore * 0.15));
+        
+        const getScoreColor = (score) => score >= 80 ? 'green' : score >= 60 ? 'amber' : 'red';
+        
+        openModal('GRC Health Score Breakdown', `
+            <div style="text-align: center; margin-bottom: 24px;">
+                <div style="position: relative; width: 180px; height: 180px; margin: 0 auto;">
+                    <svg viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                        <circle cx="50" cy="50" r="42" fill="none" stroke="var(--bg-elevated)" stroke-width="12"/>
+                        <circle cx="50" cy="50" r="42" fill="none" stroke="var(--accent-${getScoreColor(overallHealth)})" stroke-width="12" 
+                            stroke-dasharray="${overallHealth * 2.64} 264" stroke-linecap="round" style="transition: stroke-dasharray 0.5s ease;"/>
+                    </svg>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                        <div style="font-size: 42px; font-weight: 800; color: var(--accent-${getScoreColor(overallHealth)});">${overallHealth}</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Overall Score</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+                <div class="card">
+                    <div class="card-body" style="padding: 16px; text-align: center;">
+                        <div style="font-size: 28px; font-weight: 700; color: var(--accent-${getScoreColor(riskScore)});">${riskScore}%</div>
+                        <div style="font-size: 13px; font-weight: 600; margin-bottom: 4px;">Risk Management</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">${openRisks} open • ${criticalRisks} critical</div>
+                        <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Weight: 35%</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body" style="padding: 16px; text-align: center;">
+                        <div style="font-size: 28px; font-weight: 700; color: var(--accent-${getScoreColor(controlScore)});">${controlScore}%</div>
+                        <div style="font-size: 13px; font-weight: 600; margin-bottom: 4px;">Control Effectiveness</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">${effectiveControls}/${totalControls} effective</div>
+                        <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Weight: 35%</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body" style="padding: 16px; text-align: center;">
+                        <div style="font-size: 28px; font-weight: 700; color: var(--accent-${getScoreColor(findingScore)});">${findingScore}%</div>
+                        <div style="font-size: 13px; font-weight: 600; margin-bottom: 4px;">Findings & Remediation</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">${openFindings} open • ${overdueFindings} overdue</div>
+                        <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Weight: 15%</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body" style="padding: 16px; text-align: center;">
+                        <div style="font-size: 28px; font-weight: 700; color: var(--accent-${getScoreColor(complianceScore)});">${complianceScore}%</div>
+                        <div style="font-size: 13px; font-weight: 600; margin-bottom: 4px;">Compliance Posture</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">${openIssues} open issues</div>
+                        <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Weight: 15%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="padding: 16px; background: var(--bg-elevated); border-radius: var(--radius-lg);">
+                <div style="font-size: 13px; font-weight: 600; margin-bottom: 8px;">Improvement Recommendations</div>
+                <ul style="margin: 0; padding-left: 20px; font-size: 12px; color: var(--text-secondary);">
+                    ${criticalRisks > 0 ? '<li style="margin-bottom: 4px;">Address critical risks immediately to improve risk score</li>' : ''}
+                    ${effectiveControls < totalControls * 0.8 ? '<li style="margin-bottom: 4px;">Test and remediate controls to improve effectiveness rate</li>' : ''}
+                    ${overdueFindings > 0 ? '<li style="margin-bottom: 4px;">Close overdue findings to improve remediation score</li>' : ''}
+                    ${openIssues > 3 ? '<li style="margin-bottom: 4px;">Prioritize issue resolution to improve compliance posture</li>' : ''}
+                    ${criticalRisks === 0 && effectiveControls >= totalControls * 0.8 && overdueFindings === 0 && openIssues <= 3 ? '<li style="color: var(--accent-green);">Excellent GRC posture! Continue maintaining current practices.</li>' : ''}
+                </ul>
+            </div>
+        `, `
+            <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+            <button class="btn btn-primary" onclick="closeModal(); app.switchTab('reports');"><i class="bi bi-file-earmark-text"></i> Generate Report</button>
+        `);
     }
     
     renderRiskByCategoryChart() {
@@ -2586,15 +3364,16 @@ renderDonutChart(segments, total) {
             <!-- Charts Row -->
             <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); margin-bottom: 24px;">
                 <!-- Risk Distribution Chart -->
-                <div class="card">
+                <div class="card" onclick="app.showRiskDistributionModal()" style="cursor: pointer;" title="Click for detailed breakdown">
                     <div class="card-header">
                         <div class="card-title"><i class="bi bi-pie-chart"></i> Risk Distribution by Severity</div>
+                        <span class="badge badge-blue" style="font-size: 10px;"><i class="bi bi-hand-index"></i> Click for details</span>
                     </div>
                     <div class="card-body">
                         ${totalRisks > 0 ? `
                             <div style="display: flex; align-items: center; gap: 24px;">
                                 <div style="position: relative; width: 160px; height: 160px;">
-                                    <svg viewBox="0 0 36 36" style="width: 100%; height: 100%; transform: rotate(-90deg);">
+                                    <svg viewBox="0 0 100 100" style="width: 100%; height: 100%;">
                                         ${this.renderDonutChart([
                                             { value: criticalRisks, color: '#f87171' },
                                             { value: highRisks, color: '#fb923c' },
@@ -3889,7 +4668,7 @@ saveEvidence(editId) {
                     </div>
                     
                     <!-- Detailed Flow Table -->
-                    <h4 style="font-size: 14px; margin-bottom: 16px;"><i class="bi bi-list-columns-reverse"></i> Detailed Traceability Chain</h4>
+                    <h4 style="font-size: 14px; margin-bottom: 16px;"><i class="bi bi-list-columns-reverse"></i> Detailed Traceability Chain <span style="font-size: 11px; color: var(--text-muted);">(Click any item to view/edit)</span></h4>
                     ${d.risks.length > 0 ? `
                         <div style="max-height: 400px; overflow-y: auto;">
                             ${d.risks.slice(0, 10).map(risk => {
@@ -3901,24 +4680,36 @@ saveEvidence(editId) {
                                 
                                 return `
                                     <div style="display: flex; align-items: stretch; gap: 2px; margin-bottom: 12px; background: var(--bg-elevated); border-radius: var(--radius-md); overflow: hidden;">
-                                        <div style="flex: 1; padding: 12px; border-left: 3px solid var(--accent-${scoreClass}); min-width: 0;">
-                                            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">RISK</div>
+                                        <div style="flex: 1; padding: 12px; border-left: 3px solid var(--accent-${scoreClass}); min-width: 0; cursor: pointer; transition: all 0.15s;" 
+                                             onclick="app.showTraceabilityDetail('risk', '${risk.id}')"
+                                             onmouseover="this.style.background='var(--accent-${scoreClass}-soft)'" 
+                                             onmouseout="this.style.background='transparent'">
+                                            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">RISK <i class="bi bi-box-arrow-up-right" style="font-size: 9px;"></i></div>
                                             <div style="font-size: 12px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${risk.title}</div>
                                             <span class="badge badge-${scoreClass}" style="font-size: 9px; margin-top: 4px;">${score}</span>
                                         </div>
                                         <div style="display: flex; align-items: center; padding: 0 8px;"><i class="bi bi-chevron-right" style="color: var(--text-muted);"></i></div>
-                                        <div style="flex: 1; padding: 12px; background: var(--bg-surface); min-width: 0;">
-                                            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">TREATMENTS</div>
+                                        <div style="flex: 1; padding: 12px; background: var(--bg-surface); min-width: 0; cursor: pointer; transition: all 0.15s;" 
+                                             onclick="app.showTraceabilityDetail('treatment', '${risk.id}')"
+                                             onmouseover="this.style.background='var(--accent-amber-soft)'" 
+                                             onmouseout="this.style.background='var(--bg-surface)'">
+                                            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">TREATMENTS <i class="bi bi-box-arrow-up-right" style="font-size: 9px;"></i></div>
                                             ${treatments.length > 0 ? `<div style="font-size: 12px;">${treatments.length} treatment(s)</div>` : `<div style="font-size: 11px; color: var(--accent-red);">No treatment</div>`}
                                         </div>
                                         <div style="display: flex; align-items: center; padding: 0 8px;"><i class="bi bi-chevron-right" style="color: var(--text-muted);"></i></div>
-                                        <div style="flex: 1; padding: 12px; background: var(--bg-surface); min-width: 0;">
-                                            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">CONTROLS</div>
+                                        <div style="flex: 1; padding: 12px; background: var(--bg-surface); min-width: 0; cursor: pointer; transition: all 0.15s;" 
+                                             onclick="app.showTraceabilityDetail('control', '${risk.id}')"
+                                             onmouseover="this.style.background='var(--accent-green-soft)'" 
+                                             onmouseout="this.style.background='var(--bg-surface)'">
+                                            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">CONTROLS <i class="bi bi-box-arrow-up-right" style="font-size: 9px;"></i></div>
                                             ${linkedControls.length > 0 ? `<div style="font-size: 12px;">${linkedControls.length} control(s)</div>` : `<div style="font-size: 11px; color: var(--text-muted);">-</div>`}
                                         </div>
                                         <div style="display: flex; align-items: center; padding: 0 8px;"><i class="bi bi-chevron-right" style="color: var(--text-muted);"></i></div>
-                                        <div style="flex: 1; padding: 12px; background: var(--bg-surface); min-width: 0;">
-                                            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">EVIDENCE</div>
+                                        <div style="flex: 1; padding: 12px; background: var(--bg-surface); min-width: 0; cursor: pointer; transition: all 0.15s;" 
+                                             onclick="app.showTraceabilityDetail('evidence', '${risk.id}')"
+                                             onmouseover="this.style.background='var(--accent-cyan-soft)'" 
+                                             onmouseout="this.style.background='var(--bg-surface)'">
+                                            <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 4px;">EVIDENCE <i class="bi bi-box-arrow-up-right" style="font-size: 9px;"></i></div>
                                             ${allEvidence.length > 0 ? `<div style="font-size: 12px; color: var(--accent-green);">${allEvidence.length} item(s)</div>` : `<div style="font-size: 11px; color: var(--text-muted);">-</div>`}
                                         </div>
                                     </div>
@@ -3934,6 +4725,100 @@ saveEvidence(editId) {
                 </div>
             </div>
         `;
+    }
+    
+    showTraceabilityDetail(type, riskId) {
+        const d = this.getActiveData();
+        const risk = d.risks.find(r => r.id === riskId);
+        if (!risk) return;
+        
+        const treatments = d.treatments.filter(t => t.riskId === riskId);
+        const linkedControls = treatments.map(t => d.controls.find(c => c.id === t.controlId)).filter(Boolean);
+        const allEvidence = linkedControls.flatMap(c => d.evidence.filter(e => e.controlId === c.id));
+        const score = risk.likelihood * risk.impact;
+        const scoreClass = score >= 20 ? 'red' : score >= 12 ? 'amber' : score >= 6 ? 'blue' : 'green';
+        
+        let content = '';
+        let title = '';
+        let actionButtons = '';
+        
+        if (type === 'risk') {
+            title = 'Risk Details';
+            content = `
+                <div class="card" style="margin-bottom: 16px;">
+                    <div class="card-header" style="background: var(--accent-${scoreClass}-soft);">
+                        <span style="font-weight: 600;">${risk.title}</span>
+                        <span class="badge badge-${scoreClass}">Score: ${score}</span>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px;">
+                            <div><strong>Category:</strong> ${risk.category}</div>
+                            <div><strong>Status:</strong> <span class="badge badge-${risk.status === 'Closed' ? 'green' : 'amber'}">${risk.status}</span></div>
+                            <div><strong>Likelihood:</strong> ${risk.likelihood}/5</div>
+                            <div><strong>Impact:</strong> ${risk.impact}/5</div>
+                            <div><strong>Owner:</strong> ${risk.owner || 'Unassigned'}</div>
+                        </div>
+                        <div><strong>Description:</strong><br>${risk.description || 'No description provided.'}</div>
+                    </div>
+                </div>
+            `;
+            actionButtons = `<button class="btn btn-primary" onclick="closeModal(); app.editRisk('${risk.id}');"><i class="bi bi-pencil"></i> Edit Risk</button>`;
+        } else if (type === 'treatment') {
+            title = 'Treatments for: ' + risk.title;
+            content = treatments.length > 0 ? `
+                ${treatments.map(t => `
+                    <div class="card" style="margin-bottom: 12px;">
+                        <div class="card-body" style="padding: 14px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span class="badge badge-${t.type === 'Mitigate' ? 'green' : t.type === 'Transfer' ? 'purple' : t.type === 'Avoid' ? 'amber' : 'gray'}">${t.type}</span>
+                                <span class="badge badge-${t.status === 'Completed' ? 'green' : t.status === 'In Progress' ? 'amber' : 'gray'}">${t.status}</span>
+                            </div>
+                            <p style="font-size: 13px; margin: 0;">${t.plan || 'No plan documented'}</p>
+                            <div style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">Owner: ${t.owner || 'Unassigned'}</div>
+                        </div>
+                    </div>
+                `).join('')}
+            ` : `<div style="text-align: center; padding: 30px; color: var(--text-muted);"><i class="bi bi-bandaid" style="font-size: 32px; margin-bottom: 12px; display: block; opacity: 0.3;"></i>No treatments defined for this risk</div>`;
+            actionButtons = `<button class="btn btn-primary" onclick="closeModal(); app.switchTab('treatments');"><i class="bi bi-plus"></i> Add Treatment</button>`;
+        } else if (type === 'control') {
+            title = 'Controls for: ' + risk.title;
+            content = linkedControls.length > 0 ? `
+                ${linkedControls.map(c => `
+                    <div class="card" style="margin-bottom: 12px; cursor: pointer;" onclick="closeModal(); app.editControl('${c.id}');">
+                        <div class="card-body" style="padding: 14px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-weight: 600;">${c.name}</span>
+                                <span class="badge badge-${c.effectiveness === 'Effective' ? 'green' : c.effectiveness === 'Partially Effective' ? 'amber' : 'red'}">${c.effectiveness}</span>
+                            </div>
+                            <div style="font-size: 12px; color: var(--text-muted);">${c.framework} • ${c.ref || 'No ref'}</div>
+                        </div>
+                    </div>
+                `).join('')}
+            ` : `<div style="text-align: center; padding: 30px; color: var(--text-muted);"><i class="bi bi-shield" style="font-size: 32px; margin-bottom: 12px; display: block; opacity: 0.3;"></i>No controls linked to treatments for this risk</div>`;
+            actionButtons = `<button class="btn btn-primary" onclick="closeModal(); app.switchTab('controls');"><i class="bi bi-plus"></i> Add Control</button>`;
+        } else if (type === 'evidence') {
+            title = 'Evidence for: ' + risk.title;
+            content = allEvidence.length > 0 ? `
+                ${allEvidence.map(e => `
+                    <div class="card" style="margin-bottom: 12px;">
+                        <div class="card-body" style="padding: 14px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <span style="font-weight: 600;">${e.title}</span>
+                                <span class="badge badge-blue">${e.type || 'Document'}</span>
+                            </div>
+                            <div style="font-size: 12px; color: var(--text-muted);">${e.notes || 'No notes'}</div>
+                            ${e.url ? `<a href="${e.url}" target="_blank" style="font-size: 11px; color: var(--accent-blue);"><i class="bi bi-link-45deg"></i> View attachment</a>` : ''}
+                        </div>
+                    </div>
+                `).join('')}
+            ` : `<div style="text-align: center; padding: 30px; color: var(--text-muted);"><i class="bi bi-file-earmark" style="font-size: 32px; margin-bottom: 12px; display: block; opacity: 0.3;"></i>No evidence linked to controls for this risk</div>`;
+            actionButtons = `<button class="btn btn-primary" onclick="closeModal(); app.switchTab('evidence');"><i class="bi bi-plus"></i> Add Evidence</button>`;
+        }
+        
+        openModal(title, content, `
+            <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+            ${actionButtons}
+        `);
     }
     
     exportTraceabilityMatrix() {
@@ -4917,6 +5802,35 @@ saveEvidence(editId) {
             { id: 'EXC-001', exCode: 'EX-2026-001', title: 'Temporary acceptance: DLP disabled for performance', status: 'Approved', reason: 'DLP agent caused performance issues on key endpoints. Risk accepted short-term while tuning and staged rollout is completed.', scopeType: 'Control', scopeId: 'CTL-015', compensatingControls: ['CTL-002'], owner: 'IT Security', approver: 'CISO', reviewDate: toDateInput(daysFromNow(14)), expiryDate: toDateInput(daysFromNow(45)), notes: 'Increase alerting on data egress and review weekly until DLP re-enabled.', createdAt: daysAgo(10), updatedAt: daysAgo(2) },
             { id: 'EXC-002', exCode: 'EX-2026-002', title: 'Acceptance: Restore test delayed due to DR maintenance', status: 'Draft', reason: 'DR environment maintenance window delayed the quarterly restore test. Seeking approval to extend deadline by 30 days.', scopeType: 'Finding', scopeId: 'FND-001', compensatingControls: ['CTL-003'], owner: 'Infrastructure', approver: 'CISO', reviewDate: toDateInput(daysFromNow(7)), expiryDate: toDateInput(daysFromNow(30)), notes: 'Schedule restore test immediately after maintenance window; attach report as evidence.', createdAt: daysAgo(6), updatedAt: daysAgo(1) },
             { id: 'EXC-003', exCode: 'EX-2026-003', title: 'Exception: Pending BAA with monitoring vendor', status: 'In Review', reason: 'BAA execution is in progress with the monitoring vendor; legal review underway. Risk accepted for limited PHI telemetry until agreement is signed.', scopeType: 'Requirement', scopeId: 'REQ-006', compensatingControls: ['CTL-002'], owner: 'Legal', approver: 'Compliance Officer', reviewDate: toDateInput(daysFromNow(3)), expiryDate: toDateInput(daysFromNow(10)), notes: 'Limit PHI fields in logs and confirm vendor redaction before sending PHI telemetry.', createdAt: daysAgo(4), updatedAt: daysAgo(1) }
+        ];
+
+        // STATEMENT OF APPLICABILITY (SoA) - ISO 27001 Annex A Controls
+        this.data.soa = [
+            { controlId: 'A.5.1', name: 'Policies for information security', applicable: true, justification: 'Required for all organizations handling sensitive data', implementation: 'Implemented', evidence: 'POL-001, POL-002', notes: 'Annual review scheduled' },
+            { controlId: 'A.5.2', name: 'Information security roles and responsibilities', applicable: true, justification: 'Critical for accountability', implementation: 'Implemented', evidence: 'RACI Matrix, Org Chart', notes: 'CISO appointed' },
+            { controlId: 'A.5.3', name: 'Segregation of duties', applicable: true, justification: 'Prevents fraud and errors', implementation: 'Partially Implemented', evidence: 'Access review reports', notes: 'Improvements needed in finance' },
+            { controlId: 'A.5.7', name: 'Threat intelligence', applicable: true, justification: 'Proactive security posture', implementation: 'Implemented', evidence: 'CTL-002, SIEM dashboards', notes: 'Using commercial threat feeds' },
+            { controlId: 'A.5.15', name: 'Access control', applicable: true, justification: 'Core security requirement', implementation: 'Implemented', evidence: 'CTL-001, CTL-006', notes: 'MFA enforced for all users' },
+            { controlId: 'A.5.16', name: 'Identity management', applicable: true, justification: 'User lifecycle management', implementation: 'Implemented', evidence: 'Okta configuration', notes: 'Automated provisioning' },
+            { controlId: 'A.5.17', name: 'Authentication information', applicable: true, justification: 'Password and credential security', implementation: 'Implemented', evidence: 'Password policy', notes: 'Complexity requirements enforced' },
+            { controlId: 'A.5.23', name: 'Information security for cloud services', applicable: true, justification: 'AWS cloud infrastructure', implementation: 'Partially Implemented', evidence: 'CTL-011, CTL-012', notes: 'Additional hardening needed' },
+            { controlId: 'A.5.24', name: 'Incident management planning', applicable: true, justification: 'Mandatory for response readiness', implementation: 'Implemented', evidence: 'CTL-009, IR Plan', notes: 'Tabletop exercise pending' },
+            { controlId: 'A.5.29', name: 'Information security during disruption', applicable: true, justification: 'Business continuity', implementation: 'Partially Implemented', evidence: 'BCP Document', notes: 'DR testing overdue' },
+            { controlId: 'A.5.30', name: 'ICT readiness for business continuity', applicable: true, justification: 'System recovery capability', implementation: 'Partially Implemented', evidence: 'CTL-003', notes: 'Restore testing needed' },
+            { controlId: 'A.5.34', name: 'Privacy and protection of PII', applicable: true, justification: 'GDPR and CCPA compliance', implementation: 'Implemented', evidence: 'Privacy Policy, DPIAs', notes: 'DPO appointed' },
+            { controlId: 'A.6.3', name: 'Information security awareness training', applicable: true, justification: 'Human firewall development', implementation: 'Implemented', evidence: 'CTL-008, Training records', notes: '100% completion rate' },
+            { controlId: 'A.7.1', name: 'Physical security perimeters', applicable: false, justification: 'Cloud-only infrastructure, no physical data centers', implementation: 'Not Applicable', evidence: 'N/A', notes: 'AWS handles physical security' },
+            { controlId: 'A.7.2', name: 'Physical entry', applicable: false, justification: 'Remote workforce, co-working spaces only', implementation: 'Not Applicable', evidence: 'N/A', notes: 'Office security managed by building' },
+            { controlId: 'A.8.1', name: 'User endpoint devices', applicable: true, justification: 'BYOD and corporate devices', implementation: 'Implemented', evidence: 'MDM Policy, Jamf config', notes: 'Encryption enforced' },
+            { controlId: 'A.8.7', name: 'Protection against malware', applicable: true, justification: 'Endpoint protection', implementation: 'Implemented', evidence: 'CrowdStrike deployment', notes: 'EDR active on all endpoints' },
+            { controlId: 'A.8.8', name: 'Management of technical vulnerabilities', applicable: true, justification: 'Vulnerability management program', implementation: 'Implemented', evidence: 'CTL-004, Snyk scans', notes: 'Weekly scanning schedule' },
+            { controlId: 'A.8.9', name: 'Configuration management', applicable: true, justification: 'System hardening', implementation: 'Partially Implemented', evidence: 'Terraform configs', notes: 'Baseline documentation in progress' },
+            { controlId: 'A.8.12', name: 'Data leakage prevention', applicable: true, justification: 'Protect sensitive data', implementation: 'Not Implemented', evidence: 'N/A', notes: 'DLP disabled - performance issues (EXC-001)' },
+            { controlId: 'A.8.15', name: 'Logging', applicable: true, justification: 'Audit trail and forensics', implementation: 'Implemented', evidence: 'CTL-002, CloudTrail', notes: '90-day retention' },
+            { controlId: 'A.8.16', name: 'Monitoring activities', applicable: true, justification: 'Security monitoring', implementation: 'Implemented', evidence: 'SIEM dashboards', notes: '24/7 SOC monitoring' },
+            { controlId: 'A.8.20', name: 'Networks security', applicable: true, justification: 'Network segmentation', implementation: 'Implemented', evidence: 'CTL-005, VPC configs', notes: 'Zero trust network' },
+            { controlId: 'A.8.24', name: 'Use of cryptography', applicable: true, justification: 'Data encryption requirements', implementation: 'Implemented', evidence: 'CTL-007, KMS config', notes: 'AES-256 encryption' },
+            { controlId: 'A.8.25', name: 'Secure development lifecycle', applicable: true, justification: 'Secure coding practices', implementation: 'Implemented', evidence: 'SDLC documentation', notes: 'Code review required' }
         ];
 
         // ACTIVITY LOG (10) - sample work trail
