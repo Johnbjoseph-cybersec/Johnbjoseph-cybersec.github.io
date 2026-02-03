@@ -1,13 +1,14 @@
 
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>GRC Made Simple - Practice Lab | Build Real GRC Skills</title>
+    <title>GRC Practice Lab | The Complete GRC Learning Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
 :root {
@@ -38,24 +39,101 @@
     --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
     --gradient-green: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
     --gradient-purple: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+    --gradient-hero: linear-gradient(135deg, #1e3a8a 0%, #312e81 50%, #581c87 100%);
     --gradient-mesh: radial-gradient(at 40% 20%, rgba(59,130,246,0.08) 0px, transparent 50%),
                      radial-gradient(at 80% 0%, rgba(168,85,247,0.06) 0px, transparent 50%),
                      radial-gradient(at 0% 50%, rgba(34,197,94,0.05) 0px, transparent 50%);
     --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
     --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
     --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+    --shadow-xl: 0 20px 50px rgba(0,0,0,0.15);
     --shadow-glow-blue: 0 0 40px rgba(59,130,246,0.15);
     --shadow-glow-green: 0 0 40px rgba(34,197,94,0.15);
+    --shadow-glow-purple: 0 0 40px rgba(147,51,234,0.2);
     --radius-sm: 6px;
     --radius-md: 8px;
     --radius-lg: 12px;
     --radius-xl: 16px;
+    --radius-2xl: 20px;
     --radius-full: 9999px;
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-mono: 'SF Mono', 'Fira Code', monospace;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
     --transition-fast: 0.15s ease;
     --transition-normal: 0.2s ease;
+    --transition-slow: 0.3s ease;
 }
+/* ===== LANDING PAGE STYLES ===== */
+.landing-page {
+    min-height: 100vh;
+    background: var(--gradient-hero);
+    position: relative;
+    overflow: hidden;
+}
+.landing-page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(59,130,246,0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(168,85,247,0.25) 0%, transparent 40%),
+        radial-gradient(circle at 40% 80%, rgba(34,197,94,0.2) 0%, transparent 40%);
+    pointer-events: none;
+}
+.landing-page::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+}
+.landing-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.landing-nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; }
+.landing-logo { display: flex; align-items: center; gap: 12px; }
+.landing-logo-icon { width: 48px; height: 48px; background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 24px; border: 1px solid rgba(255,255,255,0.2); }
+.landing-logo-text { font-size: 22px; font-weight: 800; color: white; letter-spacing: -0.02em; }
+.landing-nav-links { display: flex; gap: 32px; }
+.landing-nav-links a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; font-weight: 500; transition: color var(--transition-fast); }
+.landing-nav-links a:hover { color: white; }
+.landing-hero { text-align: center; padding: 80px 0 60px; }
+.landing-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: var(--radius-full); font-size: 13px; font-weight: 600; color: white; margin-bottom: 24px; animation: fadeInUp 0.6s ease; }
+.landing-badge i { color: #fbbf24; }
+.landing-title { font-size: clamp(40px, 6vw, 72px); font-weight: 800; color: white; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 24px; animation: fadeInUp 0.6s ease 0.1s both; }
+.landing-title span { background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #34d399 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.landing-subtitle { font-size: clamp(16px, 2vw, 20px); color: rgba(255,255,255,0.8); max-width: 700px; margin: 0 auto 40px; line-height: 1.7; animation: fadeInUp 0.6s ease 0.2s both; }
+.landing-cta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; animation: fadeInUp 0.6s ease 0.3s both; }
+.btn-landing-primary { display: inline-flex; align-items: center; gap: 10px; padding: 16px 32px; background: white; color: var(--text-primary); font-size: 16px; font-weight: 700; border-radius: var(--radius-lg); border: none; cursor: pointer; transition: all var(--transition-normal); box-shadow: var(--shadow-lg); }
+.btn-landing-primary:hover { transform: translateY(-2px); box-shadow: var(--shadow-xl); }
+.btn-landing-secondary { display: inline-flex; align-items: center; gap: 10px; padding: 16px 32px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); color: white; font-size: 16px; font-weight: 600; border-radius: var(--radius-lg); border: 1px solid rgba(255,255,255,0.2); cursor: pointer; transition: all var(--transition-normal); }
+.btn-landing-secondary:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.3); }
+.landing-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; padding: 60px 0; animation: fadeInUp 0.6s ease 0.4s both; }
+.landing-feature-card { background: rgba(255,255,255,0.08); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.15); border-radius: var(--radius-xl); padding: 28px; transition: all var(--transition-normal); }
+.landing-feature-card:hover { background: rgba(255,255,255,0.12); transform: translateY(-4px); border-color: rgba(255,255,255,0.25); }
+.landing-feature-icon { width: 52px; height: 52px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px; }
+.landing-feature-icon.blue { background: var(--accent-blue-soft); color: #60a5fa; }
+.landing-feature-icon.green { background: var(--accent-green-soft); color: #4ade80; }
+.landing-feature-icon.purple { background: var(--accent-purple-soft); color: #c084fc; }
+.landing-feature-icon.amber { background: var(--accent-amber-soft); color: #fbbf24; }
+.landing-feature-icon.red { background: var(--accent-red-soft); color: #f87171; }
+.landing-feature-icon.cyan { background: var(--accent-cyan-soft); color: #22d3ee; }
+.landing-feature-title { font-size: 18px; font-weight: 700; color: white; margin-bottom: 8px; }
+.landing-feature-desc { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+.landing-stats { display: flex; justify-content: center; gap: 60px; padding: 40px 0 80px; flex-wrap: wrap; animation: fadeInUp 0.6s ease 0.5s both; }
+.landing-stat { text-align: center; }
+.landing-stat-value { font-size: 48px; font-weight: 800; color: white; line-height: 1; margin-bottom: 4px; }
+.landing-stat-label { font-size: 14px; color: rgba(255,255,255,0.6); font-weight: 500; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.app-wrapper { display: none; }
+.app-wrapper.active { display: block; }
+/* Interactive Flow Styles */
+.flow-container { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 32px; background: var(--bg-elevated); border-radius: var(--radius-xl); overflow-x: auto; margin-bottom: 24px; }
+.flow-node { background: var(--bg-surface); border: 2px solid var(--border-default); border-radius: var(--radius-lg); padding: 20px; min-width: 110px; text-align: center; cursor: pointer; transition: all var(--transition-normal); }
+.flow-node:hover { border-color: var(--accent-blue); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.flow-node.active { border-color: var(--accent-blue); background: var(--accent-blue-soft); }
+.flow-node-icon { width: 48px; height: 48px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 12px; }
+.flow-node-title { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+.flow-node-count { font-size: 22px; font-weight: 700; }
+.flow-arrow { color: var(--text-muted); font-size: 24px; flex-shrink: 0; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
     font-family: var(--font-sans);
@@ -834,13 +912,110 @@ tbody tr:last-child td { border-bottom: none; }
 </style>
 </head>
 <body>
+    <!-- ==================== LANDING PAGE ==================== -->
+    <div class="landing-page" id="landing-page">
+        <div class="landing-container">
+            <nav class="landing-nav">
+                <div class="landing-logo">
+                    <div class="landing-logo-icon">🛡️</div>
+                    <span class="landing-logo-text">GRC Practice Lab</span>
+                </div>
+                <div class="landing-nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#frameworks">Frameworks</a>
+                    <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank">YouTube</a>
+                </div>
+            </nav>
+
+            <section class="landing-hero">
+                <div class="landing-badge">
+                    <i class="bi bi-star-fill"></i>
+                    <span>The #1 Free GRC Learning Platform</span>
+                </div>
+                
+                <h1 class="landing-title">
+                    Master GRC with<br><span>Hands-On Practice</span>
+                </h1>
+                
+                <p class="landing-subtitle">
+                    The complete Governance, Risk & Compliance practice environment. Learn by doing — manage risks, implement controls, collect evidence, and build your GRC portfolio. No theory only. Real practice.
+                </p>
+                
+                <div class="landing-cta">
+                    <button class="btn-landing-primary" onclick="app.startLab()">
+                        <i class="bi bi-rocket-takeoff"></i>
+                        Get Started — It's Free
+                    </button>
+                    <button class="btn-landing-secondary" onclick="app.startLabWithDemo()">
+                        <i class="bi bi-lightning-fill"></i>
+                        Launch with Demo Data
+                    </button>
+                </div>
+            </section>
+
+            <section class="landing-features" id="features">
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon blue"><i class="bi bi-shield-lock"></i></div>
+                    <h3 class="landing-feature-title">Risk Management</h3>
+                    <p class="landing-feature-desc">Create risk registers, assess likelihood & impact, build heat maps, and track treatments. Learn the full risk lifecycle.</p>
+                </div>
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon green"><i class="bi bi-check2-circle"></i></div>
+                    <h3 class="landing-feature-title">Control Testing</h3>
+                    <p class="landing-feature-desc">Design tests, document results, link to evidence. Practice control assessment like a real auditor.</p>
+                </div>
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon purple"><i class="bi bi-journal-code"></i></div>
+                    <h3 class="landing-feature-title">400+ Framework Controls</h3>
+                    <p class="landing-feature-desc">ISO 27001, NIST CSF, SOC 2, PCI DSS, HIPAA, GDPR, CIS — all pre-loaded and ready to map.</p>
+                </div>
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon amber"><i class="bi bi-folder2-open"></i></div>
+                    <h3 class="landing-feature-title">Evidence Collection</h3>
+                    <p class="landing-feature-desc">Attach screenshots, documents, and logs. Build an audit-ready evidence repository.</p>
+                </div>
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon red"><i class="bi bi-lightning"></i></div>
+                    <h3 class="landing-feature-title">Incident Response</h3>
+                    <p class="landing-feature-desc">Log incidents, track investigations, document lessons learned. Practice IR workflows.</p>
+                </div>
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon cyan"><i class="bi bi-person-badge"></i></div>
+                    <h3 class="landing-feature-title">Portfolio Builder</h3>
+                    <p class="landing-feature-desc">Export your work, generate reports, and showcase your GRC skills to employers.</p>
+                </div>
+            </section>
+
+            <section class="landing-stats" id="frameworks">
+                <div class="landing-stat">
+                    <div class="landing-stat-value">400+</div>
+                    <div class="landing-stat-label">Framework Controls</div>
+                </div>
+                <div class="landing-stat">
+                    <div class="landing-stat-value">7</div>
+                    <div class="landing-stat-label">Major Frameworks</div>
+                </div>
+                <div class="landing-stat">
+                    <div class="landing-stat-value">20+</div>
+                    <div class="landing-stat-label">Practice Modules</div>
+                </div>
+                <div class="landing-stat">
+                    <div class="landing-stat-value">100%</div>
+                    <div class="landing-stat-label">Free Forever</div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- ==================== MAIN APPLICATION ==================== -->
+    <div class="app-wrapper" id="app-wrapper">
     <!-- Main Site Header - Full Width -->
     <header style="background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-default); position: fixed; top: 0; left: 0; right: 0; z-index: 1001; height: 64px;">
         <div style="padding: 0 24px; height: 100%;">
             <nav style="display: flex; align-items: center; justify-content: space-between; height: 100%;">
-                <a href="index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
-                    <img src="logo.png" alt="GRC Made Simple" style="width: 40px; height: 40px; border-radius: 8px; object-fit: cover;" onerror="this.outerHTML='<div style=\\'width:40px;height:40px;background:var(--accent-blue);border-radius:8px;display:flex;align-items:center;justify-content:center;\\'><i class=\\'bi bi-shield-check\\' style=\\'color:white;font-size:20px;\\'></i></div>'">
-                    <span style="font-size: 15px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em;">GRC Made Simple</span>
+                <a href="#" onclick="app.showLanding(); return false;" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                    <div style="width:40px;height:40px;background:var(--gradient-hero);border-radius:8px;display:flex;align-items:center;justify-content:center;"><span style="font-size:20px;">🛡️</span></div>
+                    <span style="font-size: 15px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.01em;">GRC Practice Lab</span>
                 </a>
                 <div style="display: flex; gap: 32px; align-items: center;">
                     <a href="index.html" style="color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-secondary)'">Home</a>
@@ -868,6 +1043,16 @@ tbody tr:last-child td { border-bottom: none; }
                     <div class="nav-section-title">Overview</div>
                     <div class="nav-item active" data-tab="dashboard"><i class="bi bi-grid-1x2-fill"></i><span>Dashboard</span></div>
                 </div>
+                
+                <!-- LEARNING (Moved to top) -->
+                <div class="nav-section">
+                    <div class="nav-section-title">Learning</div>
+                    <div class="nav-item" data-tab="start-here" style="background: linear-gradient(90deg, var(--accent-green-soft), transparent);"><i class="bi bi-rocket-takeoff"></i><span>Start Here</span><span class="nav-badge" style="background: var(--accent-green); color: white;">Guide</span></div>
+                    <div class="nav-item" data-tab="frameworks"><i class="bi bi-journal-code"></i><span>Frameworks</span><span class="nav-badge" style="background: var(--accent-blue); color: white;">400+</span></div>
+                    <div class="nav-item" data-tab="glossary"><i class="bi bi-book"></i><span>GRC Glossary</span></div>
+                    <div class="nav-item" data-tab="scenarios"><i class="bi bi-play-circle"></i><span>Practice Scenarios</span></div>
+                </div>
+                
                 <div class="nav-section">
                     <div class="nav-section-title">Inventory</div>
                     <div class="nav-item" data-tab="assets"><i class="bi bi-hdd-stack"></i><span>Assets</span><span class="nav-badge" id="badge-assets">0</span></div>
@@ -895,16 +1080,23 @@ tbody tr:last-child td { border-bottom: none; }
                     <div class="nav-item" data-tab="findings"><i class="bi bi-search"></i><span>Findings</span><span class="nav-badge" id="badge-findings">0</span></div>
                     <div class="nav-item" data-tab="soa"><i class="bi bi-file-earmark-check"></i><span>Statement of Applicability</span></div>
                 </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Governance</div>
+                    <div class="nav-item" data-tab="requirements"><i class="bi bi-list-check"></i><span>Requirements</span><span class="nav-badge" id="badge-requirements">0</span></div>
+                    <div class="nav-item" data-tab="exceptions"><i class="bi bi-shield-exclamation"></i><span>Exceptions</span><span class="nav-badge" id="badge-exceptions">0</span></div>
+                    <div class="nav-item" data-tab="reviews"><i class="bi bi-calendar2-check"></i><span>Due & Activity</span></div>
+                </div>
+
                 <div class="nav-section">
                     <div class="nav-section-title">Reporting</div>
                     <div class="nav-item" data-tab="traceability"><i class="bi bi-diagram-3"></i><span>Traceability</span></div>
                     <div class="nav-item" data-tab="reports"><i class="bi bi-file-earmark-bar-graph"></i><span>Reports</span></div>
                 </div>
+                
                 <div class="nav-section">
-                    <div class="nav-section-title">Learning</div>
-                    <div class="nav-item" data-tab="start-here" style="background: linear-gradient(90deg, var(--accent-green-soft), transparent);"><i class="bi bi-rocket-takeoff"></i><span>Start Here</span><span class="nav-badge" style="background: var(--accent-green); color: white;">New</span></div>
-                    <div class="nav-item" data-tab="frameworks"><i class="bi bi-journal-code"></i><span>Frameworks</span><span class="nav-badge" style="background: var(--accent-blue); color: white;">400+</span></div>
-                    <div class="nav-item" data-tab="projects"><i class="bi bi-briefcase"></i><span>Projects</span><span class="nav-badge" id="badge-projects" style="background: var(--accent-purple); color: white;">12</span></div>
+                    <div class="nav-section-title">Workspace</div>
+                    <div class="nav-item" data-tab="projects"><i class="bi bi-briefcase"></i><span>Projects</span><span class="nav-badge" id="badge-projects">0</span></div>
                     <div class="nav-item" data-tab="portfolio"><i class="bi bi-person-badge"></i><span>Portfolio</span></div>
                 </div>
             </nav>
@@ -937,6 +1129,8 @@ tbody tr:last-child td { border-bottom: none; }
             <div class="content-body">
                 <div class="tab-content active" id="tab-dashboard"></div>
                 <div class="tab-content" id="tab-start-here"></div>
+                <div class="tab-content" id="tab-glossary"></div>
+                <div class="tab-content" id="tab-scenarios"></div>
                 <div class="tab-content" id="tab-assets"></div>
                 <div class="tab-content" id="tab-vendors"></div>
                 <div class="tab-content" id="tab-policies"></div>
@@ -951,6 +1145,9 @@ tbody tr:last-child td { border-bottom: none; }
                 <div class="tab-content" id="tab-evidence"></div>
                 <div class="tab-content" id="tab-testing"></div>
                 <div class="tab-content" id="tab-findings"></div>
+                <div class="tab-content" id="tab-requirements"></div>
+                <div class="tab-content" id="tab-exceptions"></div>
+                <div class="tab-content" id="tab-reviews"></div>
                 <div class="tab-content" id="tab-soa"></div>
                 <div class="tab-content" id="tab-traceability"></div>
                 <div class="tab-content" id="tab-reports"></div>
@@ -975,12 +1172,42 @@ tbody tr:last-child td { border-bottom: none; }
 class GRCLabPro {
     constructor() {
         this.currentTab = 'dashboard';
-        this.activeProject = null; // null = general mode, project id = project mode
-        this.data = { assets: [], vendors: [], policies: [], risks: [], controls: [], treatments: [], issues: [], incidents: [], tasks: [], audits: [], evidence: [], controlTests: [], findings: [], soaEntries: [] };
-        this.projectData = {}; // Isolated data for each project: { 'project-id': { assets: [], risks: [], ... } }
+        this.activeProject = null;
+        this.traceabilityView = 'overview';
+        this.selectedFlowNode = null;
+        this.data = { assets: [], vendors: [], policies: [], risks: [], controls: [], treatments: [], issues: [], incidents: [], tasks: [], audits: [], evidence: [], controlTests: [], findings: [], soaEntries: [], requirements: [], exceptions: [], activityLog: [] };
+        this.projectData = {};
         this.init();
     }
-    init() { this.loadAllData(); this.loadProjectData(); this.bindEvents(); this.renderCurrentTab(); this.updateAllBadges(); }
+    init() { 
+        const hasData = localStorage.getItem('grc_assets') || localStorage.getItem('grc_risks');
+        if (hasData) { this.hideLanding(); }
+        this.loadAllData(); 
+        this.loadProjectData(); 
+        this.bindEvents(); 
+        this.renderCurrentTab(); 
+        this.updateAllBadges(); 
+    }
+    
+    // ===== LANDING PAGE METHODS =====
+    showLanding() {
+        document.getElementById('landing-page').style.display = 'block';
+        document.getElementById('app-wrapper').classList.remove('active');
+    }
+    hideLanding() {
+        document.getElementById('landing-page').style.display = 'none';
+        document.getElementById('app-wrapper').classList.add('active');
+    }
+    startLab() {
+        this.hideLanding();
+        this.switchTab('start-here');
+    }
+    startLabWithDemo() {
+        this.hideLanding();
+        this.loadDemo();
+        this.switchTab('dashboard');
+    }
+    
     loadAllData() { Object.keys(this.data).forEach(key => { const stored = localStorage.getItem(`grc_${key}`); if (stored) try { this.data[key] = JSON.parse(stored); } catch(e) { this.data[key] = []; } }); }
     loadProjectData() { 
         const stored = localStorage.getItem('grc_projectData'); 
@@ -1002,7 +1229,7 @@ class GRCLabPro {
     }
     initProjectData(projectId) {
         if (!this.projectData[projectId]) {
-            this.projectData[projectId] = { assets: [], vendors: [], policies: [], risks: [], controls: [], treatments: [], issues: [], incidents: [], tasks: [], audits: [], evidence: [], controlTests: [], findings: [] };
+            this.projectData[projectId] = { assets: [], vendors: [], policies: [], risks: [], controls: [], treatments: [], issues: [], incidents: [], tasks: [], audits: [], evidence: [], controlTests: [], findings: [], requirements: [], exceptions: [], activityLog: [] };
             this.saveProjectData();
         }
     }
@@ -1033,12 +1260,13 @@ class GRCLabPro {
     }
     generateId(prefix) { return `${prefix}-${Date.now().toString(36)}`; }
     esc(str) { return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    escapeHtml(str) { return this.esc(str); }
     bindEvents() { document.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', () => this.switchTab(item.dataset.tab))); }
     switchTab(tab) {
         document.querySelectorAll('.nav-item').forEach(item => item.classList.toggle('active', item.dataset.tab === tab));
         document.querySelectorAll('.tab-content').forEach(content => content.classList.toggle('active', content.id === `tab-${tab}`));
-        const titles = { dashboard:'Dashboard', 'start-here':'Start Here', assets:'Asset Inventory', vendors:'Vendor Management', policies:'Policy Library', risks:'Risk Register', controls:'Control Catalog', treatments:'Risk Treatments', matrix:'Risk Matrix', issues:'Issue Tracker', incidents:'Incident Log', tasks:'Task Management', audits:'Audit Schedule', evidence:'Evidence Library', testing:'Control Testing', findings:'Audit Findings', soa:'Statement of Applicability', traceability:'Traceability Matrix', reports:'Reports & Analytics', frameworks:'Framework Library', projects:'GRC Projects', portfolio:'Portfolio Builder' };
-        const icons = { dashboard:'bi-grid-1x2-fill', 'start-here':'bi-rocket-takeoff', assets:'bi-hdd-stack', vendors:'bi-building', policies:'bi-file-earmark-text', risks:'bi-exclamation-triangle', controls:'bi-shield-lock', treatments:'bi-bandaid', matrix:'bi-grid-3x3', issues:'bi-bug', incidents:'bi-lightning', tasks:'bi-check2-square', audits:'bi-clipboard-check', evidence:'bi-folder2-open', testing:'bi-card-checklist', findings:'bi-search', soa:'bi-file-earmark-check', traceability:'bi-diagram-3', reports:'bi-file-earmark-bar-graph', frameworks:'bi-journal-code', projects:'bi-briefcase', portfolio:'bi-person-badge' };
+        const titles = { dashboard:'Dashboard', 'start-here':'Start Here', assets:'Asset Inventory', vendors:'Vendor Management', policies:'Policy Library', risks:'Risk Register', controls:'Control Catalog', treatments:'Risk Treatments', matrix:'Risk Matrix', issues:'Issue Tracker', incidents:'Incident Log', tasks:'Task Management', audits:'Audit Schedule', evidence:'Evidence Library', testing:'Control Testing', findings:'Audit Findings', soa:'Statement of Applicability', traceability:'Traceability Matrix', reports:'Reports & Analytics', frameworks:'Framework Library', projects:'GRC Projects', portfolio:'Portfolio Builder', requirements:'Compliance Requirements', exceptions:'Exceptions', reviews:'Due & Activity' };
+        const icons = { dashboard:'bi-grid-1x2-fill', 'start-here':'bi-rocket-takeoff', assets:'bi-hdd-stack', vendors:'bi-building', policies:'bi-file-earmark-text', risks:'bi-exclamation-triangle', controls:'bi-shield-lock', treatments:'bi-bandaid', matrix:'bi-grid-3x3', issues:'bi-bug', incidents:'bi-lightning', tasks:'bi-check2-square', audits:'bi-clipboard-check', evidence:'bi-folder2-open', testing:'bi-card-checklist', findings:'bi-search', soa:'bi-file-earmark-check', traceability:'bi-diagram-3', reports:'bi-file-earmark-bar-graph', frameworks:'bi-journal-code', projects:'bi-briefcase', portfolio:'bi-person-badge', requirements:'bi-list-check', exceptions:'bi-shield-exclamation', reviews:'bi-calendar2-check' };
         
         let titleHtml = `<i class="bi ${icons[tab] || 'bi-circle'}"></i> ${titles[tab] || tab}`;
         if (this.activeProject) {
@@ -1087,13 +1315,13 @@ class GRCLabPro {
         }
     }
     renderCurrentTab() {
-        const r = { dashboard: () => this.renderDashboard(), 'start-here': () => this.renderStartHere(), assets: () => this.renderAssets(), vendors: () => this.renderVendors(), policies: () => this.renderPolicies(), risks: () => this.renderRisks(), controls: () => this.renderControls(), treatments: () => this.renderTreatments(), matrix: () => this.renderMatrix(), issues: () => this.renderIssues(), incidents: () => this.renderIncidents(), tasks: () => this.renderTasks(), audits: () => this.renderAudits(), evidence: () => this.renderEvidence(), testing: () => this.renderTesting(), findings: () => this.renderFindings(), soa: () => this.renderSoA(), traceability: () => this.renderTraceability(), reports: () => this.renderReports(), frameworks: () => this.renderFrameworks(), projects: () => this.renderProjects(), portfolio: () => this.renderPortfolio() };
+        const r = { dashboard: () => this.renderDashboard(), 'start-here': () => this.renderStartHere(), glossary: () => this.renderGlossary(), scenarios: () => this.renderScenarios(), assets: () => this.renderAssets(), vendors: () => this.renderVendors(), policies: () => this.renderPolicies(), risks: () => this.renderRisks(), controls: () => this.renderControls(), treatments: () => this.renderTreatments(), matrix: () => this.renderMatrix(), issues: () => this.renderIssues(), incidents: () => this.renderIncidents(), tasks: () => this.renderTasks(), audits: () => this.renderAudits(), evidence: () => this.renderEvidence(), testing: () => this.renderTesting(), findings: () => this.renderFindings(), soa: () => this.renderSoA(), traceability: () => this.renderTraceability(), reports: () => this.renderReports(), frameworks: () => this.renderFrameworks(), projects: () => this.renderProjects(), portfolio: () => this.renderPortfolio(), requirements: () => this.renderRequirements(), exceptions: () => this.renderExceptions(), reviews: () => this.renderReviews() };
         if (r[this.currentTab]) r[this.currentTab]();
         this.updateProjectModeIndicator();
     }
     updateAllBadges() {
         const d = this.getActiveData();
-        const b = { assets: d.assets.length, vendors: d.vendors.length, policies: d.policies.length, risks: d.risks.length, controls: d.controls.length, treatments: d.treatments.length, issues: d.issues.length, incidents: d.incidents.length, tasks: d.tasks.length, audits: d.audits.length, evidence: d.evidence.length, testing: d.controlTests.length, findings: d.findings.length };
+        const b = { assets: d.assets.length, vendors: d.vendors.length, policies: d.policies.length, risks: d.risks.length, controls: d.controls.length, treatments: d.treatments.length, issues: d.issues.length, incidents: d.incidents.length, tasks: d.tasks.length, audits: d.audits.length, evidence: d.evidence.length, testing: d.controlTests.length, findings: d.findings.length, requirements: (d.requirements||[]).length, exceptions: (d.exceptions||[]).length };
         Object.entries(b).forEach(([k, v]) => { const el = document.getElementById(`badge-${k}`); if (el) el.textContent = v; });
     }
     renderDashboard() {
@@ -1654,6 +1882,100 @@ class GRCLabPro {
             </div>
         `;
     }
+    
+    // ===== GLOSSARY =====
+    renderGlossary() {
+        const c = document.getElementById('tab-glossary');
+        const terms = [
+            { term: 'GRC', def: 'Governance, Risk, and Compliance - an integrated approach to organizational oversight.' },
+            { term: 'Risk', def: 'The effect of uncertainty on objectives. A potential event that could negatively impact an organization.' },
+            { term: 'Control', def: 'A measure or mechanism that modifies risk. Can be preventive, detective, or corrective.' },
+            { term: 'Risk Assessment', def: 'The process of identifying, analyzing, and evaluating risks to determine their likelihood and potential impact.' },
+            { term: 'Risk Treatment', def: 'The process of selecting options to address risk: Accept, Mitigate, Transfer, or Avoid.' },
+            { term: 'Inherent Risk', def: 'The level of risk before any controls are applied.' },
+            { term: 'Residual Risk', def: 'The risk remaining after controls are applied.' },
+            { term: 'Risk Appetite', def: 'The amount and type of risk an organization is willing to accept.' },
+            { term: 'Control Testing', def: 'Evaluating whether controls are operating effectively as designed.' },
+            { term: 'Evidence', def: 'Documentation or artifacts that demonstrate a control exists and operates effectively.' },
+            { term: 'Finding', def: 'A deficiency or gap identified during an audit that requires remediation.' },
+            { term: 'SOA', def: 'Statement of Applicability - a document listing all controls and their applicability status.' },
+            { term: 'Audit', def: 'A systematic examination to verify compliance with requirements or standards.' },
+            { term: 'Compliance', def: 'Adherence to laws, regulations, standards, and internal policies.' },
+            { term: 'Framework', def: 'A structured set of guidelines organizations follow (e.g., ISO 27001, SOC 2, NIST CSF).' },
+            { term: 'Policy', def: 'A high-level document that defines management intent, expectations, and requirements.' },
+            { term: 'Procedure', def: 'Step-by-step instructions for carrying out a policy or control activity.' },
+            { term: 'Vendor Risk', def: 'Risk associated with third-party relationships and outsourcing arrangements.' },
+            { term: 'Incident', def: 'An event that has caused or could cause harm to an organization.' },
+            { term: 'BCP', def: 'Business Continuity Planning - ensuring critical functions can continue during a disaster.' },
+            { term: 'DR', def: 'Disaster Recovery - restoring IT systems and data after a disruptive event.' },
+            { term: 'KRI', def: 'Key Risk Indicator - a metric used to monitor changes in risk levels over time.' },
+            { term: 'KPI', def: 'Key Performance Indicator - a measurable value demonstrating how effectively objectives are achieved.' },
+            { term: 'RACI', def: 'Responsibility matrix: Responsible, Accountable, Consulted, Informed.' }
+        ];
+        c.innerHTML = `
+            <div style="max-width: 900px; margin: 0 auto;">
+                <div style="margin-bottom: 24px;">
+                    <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;"><i class="bi bi-book" style="color: var(--accent-blue);"></i> GRC Glossary</h2>
+                    <p style="color: var(--text-muted);">Essential terms every GRC professional should know.</p>
+                </div>
+                <div class="card">
+                    <div class="card-body" style="padding: 0;">
+                        ${terms.map((t, i) => `
+                            <div style="padding: 16px 20px; border-bottom: ${i < terms.length - 1 ? '1px solid var(--border-subtle)' : 'none'};">
+                                <div style="font-size: 15px; font-weight: 600; color: var(--accent-blue); margin-bottom: 4px;">${t.term}</div>
+                                <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">${t.def}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    
+    // ===== PRACTICE SCENARIOS =====
+    renderScenarios() {
+        const c = document.getElementById('tab-scenarios');
+        const scenarios = [
+            { id: 1, title: 'Ransomware Attack Response', desc: 'Practice incident response when ransomware encrypts production databases.', difficulty: 'Hard', category: 'Incident Response', icon: 'bi-shield-exclamation' },
+            { id: 2, title: 'SOC 2 Type II Preparation', desc: 'Prepare for a SOC 2 audit by implementing and testing required controls.', difficulty: 'Medium', category: 'Compliance', icon: 'bi-clipboard-check' },
+            { id: 3, title: 'Vendor Risk Assessment', desc: 'Evaluate a new cloud vendor\'s security posture before onboarding.', difficulty: 'Easy', category: 'Vendor Risk', icon: 'bi-building' },
+            { id: 4, title: 'Data Breach Investigation', desc: 'Investigate a potential data breach and document findings.', difficulty: 'Hard', category: 'Incident Response', icon: 'bi-bug' },
+            { id: 5, title: 'Risk Register Creation', desc: 'Build a risk register from scratch for a healthcare startup.', difficulty: 'Medium', category: 'Risk Management', icon: 'bi-exclamation-triangle' },
+            { id: 6, title: 'Policy Development', desc: 'Write an Information Security Policy aligned with ISO 27001.', difficulty: 'Medium', category: 'Governance', icon: 'bi-file-earmark-text' },
+            { id: 7, title: 'Access Review Process', desc: 'Design and execute a quarterly access review for privileged accounts.', difficulty: 'Easy', category: 'Access Control', icon: 'bi-person-lock' },
+            { id: 8, title: 'Business Impact Analysis', desc: 'Conduct a BIA to identify critical systems and recovery objectives.', difficulty: 'Medium', category: 'Business Continuity', icon: 'bi-graph-down-arrow' }
+        ];
+        c.innerHTML = `
+            <div style="max-width: 1000px; margin: 0 auto;">
+                <div style="margin-bottom: 24px;">
+                    <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;"><i class="bi bi-play-circle" style="color: var(--accent-purple);"></i> Practice Scenarios</h2>
+                    <p style="color: var(--text-muted);">Real-world GRC scenarios to test and build your skills. Click a scenario to start practicing.</p>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                    ${scenarios.map(s => `
+                        <div class="card" style="cursor: pointer; transition: all var(--transition-normal);" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';" onclick="app.startScenario(${s.id})">
+                            <div class="card-body" style="padding: 24px;">
+                                <div style="display: flex; align-items: start; gap: 16px;">
+                                    <div style="width: 48px; height: 48px; background: var(--accent-blue-soft); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                        <i class="bi ${s.icon}" style="font-size: 22px; color: var(--accent-blue);"></i>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                            <span class="badge badge-${s.difficulty === 'Easy' ? 'green' : s.difficulty === 'Medium' ? 'amber' : 'red'}">${s.difficulty}</span>
+                                            <span class="badge badge-gray">${s.category}</span>
+                                        </div>
+                                        <h4 style="font-size: 15px; font-weight: 600; margin-bottom: 6px;">${s.title}</h4>
+                                        <p style="font-size: 13px; color: var(--text-muted); margin: 0;">${s.desc}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    startScenario(id) { this.toast('Scenario mode coming soon! For now, use Load Demo Data to practice with sample data.', 'info'); }
     
     renderDonutChart(segments, total) {
         if (total === 0) return '';
@@ -2293,15 +2615,88 @@ class GRCLabPro {
     }
     showEvidenceModal(e = null) {
         const isEdit = e !== null;
-        openModal(isEdit ? 'Edit Evidence' : 'Add Evidence', `<div class="form-group"><label class="form-label">Title *</label><input type="text" class="form-input" id="f-title" value="${e?.title || ''}"></div><div class="form-row"><div class="form-group"><label class="form-label">Type</label><select class="form-select" id="f-type">${['Screenshot', 'Document', 'Report', 'Export', 'Configuration', 'Log'].map(t => `<option value="${t}" ${e?.type === t ? 'selected' : ''}>${t}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Related Control</label><select class="form-select" id="f-related"><option value="">-- None --</option>${this.getActiveData().controls.map(c => `<option value="${c.id}" ${e?.relatedTo === c.id ? 'selected' : ''}>${c.name}</option>`).join('')}</select></div></div><div class="form-group"><label class="form-label">Owner</label><input type="text" class="form-input" id="f-owner" value="${e?.owner || ''}"></div><div class="form-group"><label class="form-label">URL/Location</label><input type="text" class="form-input" id="f-url" value="${e?.url || ''}"></div><div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="f-notes">${e?.notes || ''}</textarea></div>`, `<button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="app.saveEvidence('${e?.id || ''}')">${isEdit ? 'Update' : 'Create'}</button>`);
+        openModal(isEdit ? 'Edit Evidence' : 'Add Evidence', `<div class="form-group"><label class="form-label">Title *</label><input type="text" class="form-input" id="f-title" value="${e?.title || ''}"></div><div class="form-row"><div class="form-group"><label class="form-label">Type</label><select class="form-select" id="f-type">${['Screenshot', 'Document', 'Report', 'Export', 'Configuration', 'Log'].map(t => `<option value="${t}" ${e?.type === t ? 'selected' : ''}>${t}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Related Control</label><select class="form-select" id="f-related"><option value="">-- None --</option>${this.getActiveData().controls.map(c => `<option value="${c.id}" ${e?.relatedTo === c.id ? 'selected' : ''}>${c.name}</option>`).join('')}</select></div></div><div class="form-group"><label class="form-label">Owner</label><input type="text" class="form-input" id="f-owner" value="${e?.owner || ''}"></div><div class="form-group"><label class="form-label">URL/Location</label><input type="text" class="form-input" id="f-url" value="${e?.url || ''}"></div><div class="form-group">
+            <label class="form-label">Attachment (optional — stored locally in your browser)</label>
+            <input type="file" class="form-input" id="f-file" accept=".pdf,.png,.jpg,.jpeg,.webp,.doc,.docx,.xls,.xlsx,.txt">
+            <div class="text-muted" style="margin-top:6px;">
+                ${e?.attachment?.name ? `Current: <span class="font-mono">${e.attachment.name}</span> (${Math.round((e.attachment.size||0)/1024)} KB)` : 'No attachment yet.'}
+            </div>
+            ${e?.attachment ? `<label style="display:flex; align-items:center; gap:8px; margin-top:8px;">
+                <input type="checkbox" id="f-file-remove"> Remove current attachment
+            </label>` : ``}
+        </div><div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="f-notes">${e?.notes || ''}</textarea></div>`, `<button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="app.saveEvidence('${e?.id || ''}')">${isEdit ? 'Update' : 'Create'}</button>`);
     }
-    saveEvidence(editId) {
+    
+saveEvidence(editId) {
+        const d = this.getActiveData();
         const title = document.getElementById('f-title').value.trim();
         if (!title) { this.toast('Please enter title', 'error'); return; }
-        const item = { id: editId || this.generateId('EVD'), title, type: document.getElementById('f-type').value, relatedTo: document.getElementById('f-related').value || null, owner: document.getElementById('f-owner').value, url: document.getElementById('f-url').value, notes: document.getElementById('f-notes').value, createdAt: editId ? this.getActiveData().evidence.find(e => e.id === editId)?.createdAt : new Date().toISOString(), updatedAt: new Date().toISOString() };
-        if (editId) { const idx = this.getActiveData().evidence.findIndex(e => e.id === editId); if (idx !== -1) this.getActiveData().evidence[idx] = item; } else { this.getActiveData().evidence.push(item); }
-        this.saveData('evidence'); closeModal(); this.renderEvidence(); this.toast(editId ? 'Evidence updated' : 'Evidence added', 'success');
+
+        const existing = editId ? d.evidence.find(x => x.id === editId) : null;
+
+        const baseItem = {
+            id: editId || this.generateId('EVD'),
+            title,
+            type: document.getElementById('f-type').value,
+            related: document.getElementById('f-related').value,
+            owner: document.getElementById('f-owner').value.trim(),
+            url: document.getElementById('f-url').value.trim(),
+            notes: document.getElementById('f-notes').value.trim(),
+            createdAt: editId ? (existing?.createdAt || new Date().toISOString()) : new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            uploadedAt: editId ? (existing?.uploadedAt || new Date().toISOString()) : new Date().toISOString(),
+            attachment: existing?.attachment || null
+        };
+
+        const fileInput = document.getElementById('f-file');
+        const removeFlag = document.getElementById('f-file-remove')?.checked;
+
+        const finalizeSave = (item) => {
+            if (editId) {
+                const idx = d.evidence.findIndex(x => x.id === editId);
+                if (idx >= 0) d.evidence[idx] = item;
+            } else {
+                d.evidence.push(item);
+            }
+            this.saveData('evidence');
+            this.logEvent?.('evidence', `${editId ? 'Updated' : 'Added'} evidence ${item.id}`, { id: item.id });
+            closeModal();
+            this.renderEvidence();
+            this.toast(editId ? 'Evidence updated' : 'Evidence added', 'success');
+        };
+
+        // Handle removal
+        if (removeFlag) baseItem.attachment = null;
+
+        // Handle new file (optional)
+        const file = fileInput && fileInput.files && fileInput.files[0] ? fileInput.files[0] : null;
+        if (!file) {
+            finalizeSave(baseItem);
+            return;
+        }
+
+        // Guard: avoid huge localStorage entries
+        const maxBytes = 2.5 * 1024 * 1024; // ~2.5MB
+        if (file.size > maxBytes) {
+            this.toast('File too large for in-browser storage (max ~2.5MB). Use URL/Location instead.', 'error');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            baseItem.attachment = {
+                name: file.name,
+                mime: file.type || 'application/octet-stream',
+                size: file.size,
+                dataUrl: String(reader.result || '')
+            };
+            baseItem.uploadedAt = new Date().toISOString();
+            finalizeSave(baseItem);
+        };
+        reader.onerror = () => this.toast('Failed to read file attachment', 'error');
+        reader.readAsDataURL(file);
     }
+
     editEvidence(id) { const e = this.getActiveData().evidence.find(x => x.id === id); if (e) this.showEvidenceModal(e); }
     renderTesting() {
         const c = document.getElementById('tab-testing');
@@ -4226,6 +4621,41 @@ class GRCLabPro {
             { id: 'FND-005', title: 'Missing Business Associate Agreement', severity: 'Critical', status: 'In Progress', owner: 'Legal', dueDate: daysFromNow(3), description: 'BAA not executed with Datadog for PHI', recommendation: 'Execute BAA immediately, review all PHI vendors', createdAt: daysAgo(14), updatedAt: daysAgo(1) }
         ];
         
+
+
+        // REQUIREMENTS (8) - lightweight compliance tracking
+        this.data.requirements = [
+            { id: 'REQ-001', framework: 'ISO 27001', reqCode: 'A.5.15', title: 'Access control rules', statement: 'Define and enforce access control rules including least privilege, approvals, and periodic review for systems and data.', priority: 'High', status: 'Partial', mappedControls: ['CTL-001','CTL-006'], evidenceIds: ['EVD-001','EVD-006'], findingIds: ['FND-003'], notes: 'Access review process exists but completion is inconsistent.', createdAt: daysAgo(40), updatedAt: daysAgo(3) },
+            { id: 'REQ-002', framework: 'ISO 27001', reqCode: 'A.5.23', title: 'Cloud services security', statement: 'Establish security requirements for use of cloud services including shared responsibility, IAM guardrails, and configuration baselines.', priority: 'High', status: 'Partial', mappedControls: ['CTL-011','CTL-012'], evidenceIds: ['EVD-010'], findingIds: [], notes: 'Baseline is in place; tighten data protection for PHI workloads.', createdAt: daysAgo(35), updatedAt: daysAgo(4) },
+            { id: 'REQ-003', framework: 'SOC 2', reqCode: 'CC6.1', title: 'Logical access security', statement: 'Implement logical access controls including authentication, authorization, and monitoring to restrict access to systems and data.', priority: 'High', status: 'Partial', mappedControls: ['CTL-001','CTL-002','CTL-006'], evidenceIds: ['EVD-001','EVD-002','EVD-006'], findingIds: ['FND-003'], notes: 'Improve timeliness and completeness of access reviews.', createdAt: daysAgo(30), updatedAt: daysAgo(2) },
+            { id: 'REQ-004', framework: 'SOC 2', reqCode: 'CC7.2', title: 'Monitoring for anomalies', statement: 'Detect and respond to anomalous activity using monitoring, alerting, and investigation procedures.', priority: 'Medium', status: 'Met', mappedControls: ['CTL-002'], evidenceIds: ['EVD-002'], findingIds: [], notes: 'Alert rules tested and within SLA.', createdAt: daysAgo(25), updatedAt: daysAgo(10) },
+            { id: 'REQ-005', framework: 'PCI DSS', reqCode: '10.2', title: 'Audit logging for in-scope systems', statement: 'Enable audit logging to track user activities and system events for systems in scope of the cardholder data environment.', priority: 'High', status: 'Not met', mappedControls: ['CTL-002'], evidenceIds: ['EVD-002'], findingIds: [], notes: 'Logging exists; PCI scope + retention/integrity controls not validated.', createdAt: daysAgo(20), updatedAt: daysAgo(7) },
+            { id: 'REQ-006', framework: 'HIPAA', reqCode: '164.308(a)(7)', title: 'Contingency plan', statement: 'Establish and implement procedures for responding to emergencies that damage systems containing ePHI, including backup and disaster recovery.', priority: 'Critical', status: 'Partial', mappedControls: ['CTL-003'], evidenceIds: ['EVD-003'], findingIds: ['FND-001'], notes: 'Restore testing evidence is missing for the last 6 months.', createdAt: daysAgo(18), updatedAt: daysAgo(5) },
+            { id: 'REQ-007', framework: 'HIPAA', reqCode: '164.308(a)(1)', title: 'Risk management', statement: 'Implement security measures to reduce risks and vulnerabilities to a reasonable and appropriate level.', priority: 'High', status: 'Partial', mappedControls: ['CTL-004'], evidenceIds: ['EVD-004'], findingIds: ['FND-002'], notes: 'Scanning exists; remediation SLAs and DLP operationalization need improvement.', createdAt: daysAgo(15), updatedAt: daysAgo(3) },
+            { id: 'REQ-008', framework: 'ISO 27001', reqCode: 'A.5.24', title: 'Incident planning & readiness', statement: 'Maintain an incident response capability including roles, escalation, communication, and readiness activities such as tabletop exercises.', priority: 'High', status: 'Partial', mappedControls: ['CTL-009'], evidenceIds: ['EVD-009'], findingIds: [], notes: 'IR plan exists; tabletop exercise evidence pending.', createdAt: daysAgo(14), updatedAt: daysAgo(1) }
+        ];
+
+        // EXCEPTIONS (3) - risk acceptance with expiry
+        const toDateInput = (iso) => (iso || '').slice(0, 10);
+        this.data.exceptions = [
+            { id: 'EXC-001', exCode: 'EX-2026-001', title: 'Temporary acceptance: DLP disabled for performance', status: 'Approved', reason: 'DLP agent caused performance issues on key endpoints. Risk accepted short-term while tuning and staged rollout is completed.', scopeType: 'Control', scopeId: 'CTL-015', compensatingControls: ['CTL-002'], owner: 'IT Security', approver: 'CISO', reviewDate: toDateInput(daysFromNow(14)), expiryDate: toDateInput(daysFromNow(45)), notes: 'Increase alerting on data egress and review weekly until DLP re-enabled.', createdAt: daysAgo(10), updatedAt: daysAgo(2) },
+            { id: 'EXC-002', exCode: 'EX-2026-002', title: 'Acceptance: Restore test delayed due to DR maintenance', status: 'Draft', reason: 'DR environment maintenance window delayed the quarterly restore test. Seeking approval to extend deadline by 30 days.', scopeType: 'Finding', scopeId: 'FND-001', compensatingControls: ['CTL-003'], owner: 'Infrastructure', approver: 'CISO', reviewDate: toDateInput(daysFromNow(7)), expiryDate: toDateInput(daysFromNow(30)), notes: 'Schedule restore test immediately after maintenance window; attach report as evidence.', createdAt: daysAgo(6), updatedAt: daysAgo(1) },
+            { id: 'EXC-003', exCode: 'EX-2026-003', title: 'Exception: Pending BAA with monitoring vendor', status: 'In Review', reason: 'BAA execution is in progress with the monitoring vendor; legal review underway. Risk accepted for limited PHI telemetry until agreement is signed.', scopeType: 'Requirement', scopeId: 'REQ-006', compensatingControls: ['CTL-002'], owner: 'Legal', approver: 'Compliance Officer', reviewDate: toDateInput(daysFromNow(3)), expiryDate: toDateInput(daysFromNow(10)), notes: 'Limit PHI fields in logs and confirm vendor redaction before sending PHI telemetry.', createdAt: daysAgo(4), updatedAt: daysAgo(1) }
+        ];
+
+        // ACTIVITY LOG (10) - sample work trail
+        this.data.activityLog = [
+            { id: 'LOG-001', ts: daysAgo(7), type: 'demo', message: 'Loaded demo dataset', meta: {}, project: null },
+            { id: 'LOG-002', ts: daysAgo(6), type: 'controls', message: 'Created control CTL-002 (SIEM monitoring)', meta: { id: 'CTL-002' }, project: null },
+            { id: 'LOG-003', ts: daysAgo(5), type: 'evidence', message: 'Added evidence EVD-002 (SIEM rules export)', meta: { id: 'EVD-002' }, project: null },
+            { id: 'LOG-004', ts: daysAgo(5), type: 'testing', message: 'Recorded test TST-003 for CTL-003 (Partial)', meta: { id: 'TST-003' }, project: null },
+            { id: 'LOG-005', ts: daysAgo(4), type: 'findings', message: 'Created finding FND-001 (restore testing missing)', meta: { id: 'FND-001' }, project: null },
+            { id: 'LOG-006', ts: daysAgo(3), type: 'requirements', message: 'Created requirement A.5.15 and mapped to access controls', meta: { id: 'REQ-001' }, project: null },
+            { id: 'LOG-007', ts: daysAgo(2), type: 'exceptions', message: 'Drafted exception EX-2026-002 for restore test delay', meta: { id: 'EXC-002' }, project: null },
+            { id: 'LOG-008', ts: daysAgo(2), type: 'policies', message: 'Set Incident Response Policy to Review', meta: { id: 'POL-004' }, project: null },
+            { id: 'LOG-009', ts: daysAgo(1), type: 'tasks', message: 'Created task TSK-002 to execute restore test', meta: { id: 'TSK-002' }, project: null },
+            { id: 'LOG-010', ts: daysAgo(1), type: 'demo', message: 'Demo ready: explore Requirements, Exceptions, and Due & Activity', meta: {}, project: null }
+        ];
         Object.keys(this.data).forEach(k => this.saveData(k));
         this.renderCurrentTab();
         this.updateAllBadges();
@@ -5555,6 +5985,579 @@ class GRCLabPro {
         this.switchTab('portfolio');
         this.toast(`Portfolio summary generated for project!`, 'success');
     }
+
+    // ===== Governance Add-ons (Static Practice Lab) =====
+    ensureGovernanceKeys() {
+        const d = this.getActiveData();
+        if (!d.requirements) d.requirements = [];
+        if (!d.exceptions) d.exceptions = [];
+        if (!d.activityLog) d.activityLog = [];
+    }
+    logEvent(type, message, meta = {}) {
+        this.ensureGovernanceKeys();
+        const d = this.getActiveData();
+        const entry = {
+            id: this.generateId('LOG'),
+            ts: new Date().toISOString(),
+            type,
+            message,
+            meta,
+            project: this.activeProject || null
+        };
+        d.activityLog.unshift(entry);
+        if (d.activityLog.length > 500) d.activityLog.length = 500;
+        this.saveData('activityLog');
+    }
+
+    // ---------- Requirements ----------
+    renderRequirements() {
+        this.ensureGovernanceKeys();
+        const c = document.getElementById('tab-requirements');
+        const d = this.getActiveData();
+        const controls = d.controls || [];
+        const evidence = d.evidence || [];
+        const findings = d.findings || [];
+
+        const rows = (d.requirements || []).map(req => {
+            const statusBadge = req.status === 'Met' ? 'badge-green'
+                : req.status === 'Partial' ? 'badge-amber'
+                : req.status === 'Not applicable' ? 'badge-blue'
+                : 'badge-red';
+            return `<tr>
+                <td><span class="font-mono text-muted">${this.escapeHtml(req.reqCode || req.id)}</span></td>
+                <td class="font-semibold">${this.escapeHtml(req.title || '')}</td>
+                <td><span class="badge ${statusBadge}">${this.escapeHtml(req.status || 'Not met')}</span></td>
+                <td class="text-muted">${this.escapeHtml(req.framework || '')}</td>
+                <td class="text-muted">${this.escapeHtml(req.priority || 'Medium')}</td>
+                <td style="white-space: nowrap;">
+                    <button class="btn btn-secondary btn-sm" onclick="app.editRequirement('${req.id}')"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="app.deleteRequirement('${req.id}')"><i class="bi bi-trash3"></i></button>
+                </td>
+            </tr>`;
+        }).join('');
+
+        c.innerHTML = `
+            <div class="table-container">
+                <div class="table-header">
+                    <div>
+                        <h2 style="margin:0 0 6px 0;"><i class="bi bi-list-check"></i> Compliance Requirements</h2>
+                        <div class="text-muted">Lightweight requirement tracking (framework → requirement → controls/evidence/findings) for practice.</div>
+                    </div>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button class="btn btn-primary" onclick="app.showRequirementModal()"><i class="bi bi-plus-lg"></i> Add Requirement</button>
+                    </div>
+                </div>
+                ${ (d.requirements || []).length ? `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Req ID</th><th>Title</th><th>Status</th><th>Framework</th><th>Priority</th><th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                ` : `
+                    <div style="padding:18px; color: var(--text-secondary);">
+                        No requirements yet. Add a few ISO/PCI/SOC2/UAE IA requirements and map them to your controls/evidence.
+                    </div>
+                `}
+            </div>
+        `;
+    }
+
+    showRequirementModal(req = null) {
+        this.ensureGovernanceKeys();
+        const d = this.getActiveData();
+        const controls = d.controls || [];
+        const evidence = d.evidence || [];
+        const findings = d.findings || [];
+        const isEdit = !!req;
+
+        const controlOptions = controls.map(c => `<option value="${c.id}" ${req?.mappedControls?.includes(c.id) ? 'selected' : ''}>${this.escapeHtml(c.controlId || c.id)} — ${this.escapeHtml(c.title || c.name || '')}</option>`).join('');
+        const evidenceOptions = evidence.map(e => `<option value="${e.id}" ${req?.evidenceIds?.includes(e.id) ? 'selected' : ''}>${this.escapeHtml(e.id)} — ${this.escapeHtml(e.title || '')}</option>`).join('');
+        const findingOptions = findings.map(f => `<option value="${f.id}" ${req?.findingIds?.includes(f.id) ? 'selected' : ''}>${this.escapeHtml(f.id)} — ${this.escapeHtml(f.title || '')}</option>`).join('');
+
+        openModal(isEdit ? 'Edit Requirement' : 'Add Requirement', `
+            <div class="form-grid">
+                <div>
+                    <label class="form-label">Framework</label>
+                    <input class="form-input" id="req-framework" value="${this.escapeHtml(req?.framework || '')}" placeholder="ISO 27001 / PCI DSS / SOC 2 / UAE IA">
+                </div>
+                <div>
+                    <label class="form-label">Requirement ID</label>
+                    <input class="form-input" id="req-code" value="${this.escapeHtml(req?.reqCode || '')}" placeholder="e.g., A.5.12 / PCI 6.3.2">
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Title</label>
+                    <input class="form-input" id="req-title" value="${this.escapeHtml(req?.title || '')}" placeholder="Short requirement title">
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Statement</label>
+                    <textarea class="form-textarea" id="req-statement" rows="4" placeholder="Write the requirement in your own words (min 20 chars)">${this.escapeHtml(req?.statement || '')}</textarea>
+                </div>
+                <div>
+                    <label class="form-label">Priority</label>
+                    <select class="form-select" id="req-priority">
+                        ${['Low','Medium','High','Critical'].map(p => `<option ${req?.priority===p?'selected':''}>${p}</option>`).join('')}
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="req-status">
+                        ${['Not met','Partial','Met','Not applicable'].map(s => `<option ${req?.status===s?'selected':''}>${s}</option>`).join('')}
+                    </select>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Map to Controls (multi-select)</label>
+                    <select class="form-select" id="req-controls" multiple size="6">${controlOptions || '<option disabled>No controls yet</option>'}</select>
+                    <div class="text-muted" style="margin-top:6px;">Tip: create controls first, then map requirements.</div>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Link Evidence (multi-select)</label>
+                    <select class="form-select" id="req-evidence" multiple size="5">${evidenceOptions || '<option disabled>No evidence yet</option>'}</select>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Link Findings (multi-select)</label>
+                    <select class="form-select" id="req-findings" multiple size="5">${findingOptions || '<option disabled>No findings yet</option>'}</select>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Notes</label>
+                    <textarea class="form-textarea" id="req-notes" rows="3" placeholder="Assumptions, scope notes, auditor notes">${this.escapeHtml(req?.notes || '')}</textarea>
+                </div>
+            </div>
+        `, `
+            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="app.saveRequirement('${req?.id || ''}')">${isEdit ? 'Update' : 'Create'}</button>
+        `);
+    }
+
+    saveRequirement(editId) {
+        this.ensureGovernanceKeys();
+        const d = this.getActiveData();
+        const title = document.getElementById('req-title').value.trim();
+        const statement = document.getElementById('req-statement').value.trim();
+        if (title.length < 5) { this.toast('Title must be at least 5 characters', 'error'); return; }
+        if (statement.length < 20) { this.toast('Statement must be at least 20 characters', 'error'); return; }
+
+        const pickMulti = (id) => Array.from(document.getElementById(id).selectedOptions || []).map(o => o.value);
+        const item = {
+            id: editId || this.generateId('REQ'),
+            framework: document.getElementById('req-framework').value.trim(),
+            reqCode: document.getElementById('req-code').value.trim(),
+            title,
+            statement,
+            priority: document.getElementById('req-priority').value,
+            status: document.getElementById('req-status').value,
+            mappedControls: pickMulti('req-controls'),
+            evidenceIds: pickMulti('req-evidence'),
+            findingIds: pickMulti('req-findings'),
+            notes: document.getElementById('req-notes').value.trim(),
+            createdAt: editId ? (d.requirements.find(x => x.id === editId)?.createdAt || new Date().toISOString()) : new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
+
+        if (editId) {
+            const idx = d.requirements.findIndex(x => x.id === editId);
+            if (idx >= 0) d.requirements[idx] = item;
+        } else {
+            d.requirements.push(item);
+        }
+        this.saveData('requirements');
+        this.logEvent('requirements', `${editId ? 'Updated' : 'Created'} requirement ${item.reqCode || item.id}`, { id: item.id });
+        closeModal();
+        this.renderRequirements();
+        this.toast(editId ? 'Requirement updated' : 'Requirement added', 'success');
+    }
+
+    editRequirement(id) {
+        this.ensureGovernanceKeys();
+        const req = (this.getActiveData().requirements || []).find(r => r.id === id);
+        if (req) this.showRequirementModal(req);
+    }
+    deleteRequirement(id) {
+        this.ensureGovernanceKeys();
+        if (!confirm('Delete this requirement?')) return;
+        const d = this.getActiveData();
+        d.requirements = (d.requirements || []).filter(r => r.id !== id);
+        this.saveData('requirements');
+        this.logEvent('requirements', `Deleted requirement ${id}`, { id });
+        this.renderRequirements();
+        this.toast('Requirement deleted', 'success');
+    }
+
+    // ---------- Exceptions ----------
+    renderExceptions() {
+        this.ensureGovernanceKeys();
+        const c = document.getElementById('tab-exceptions');
+        const d = this.getActiveData();
+
+        const rows = (d.exceptions || []).map(ex => {
+            const statusBadge = ex.status === 'Approved' ? 'badge-green'
+                : ex.status === 'Expired' ? 'badge-red'
+                : ex.status === 'Rejected' ? 'badge-red'
+                : ex.status === 'Draft' ? 'badge-amber'
+                : 'badge-blue';
+            return `<tr>
+                <td><span class="font-mono text-muted">${this.escapeHtml(ex.exCode || ex.id)}</span></td>
+                <td class="font-semibold">${this.escapeHtml(ex.title || '')}</td>
+                <td><span class="badge ${statusBadge}">${this.escapeHtml(ex.status || 'Draft')}</span></td>
+                <td class="text-muted">${this.escapeHtml(ex.scopeType || '')}${ex.scopeId ? ' — ' + this.escapeHtml(ex.scopeId) : ''}</td>
+                <td class="text-muted">${this.escapeHtml(ex.expiryDate || '')}</td>
+                <td style="white-space: nowrap;">
+                    <button class="btn btn-secondary btn-sm" onclick="app.editException('${ex.id}')"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="app.deleteException('${ex.id}')"><i class="bi bi-trash3"></i></button>
+                </td>
+            </tr>`;
+        }).join('');
+
+        c.innerHTML = `
+            <div class="table-container">
+                <div class="table-header">
+                    <div>
+                        <h2 style="margin:0 0 6px 0;"><i class="bi bi-shield-exclamation"></i> Exceptions (Risk Acceptance)</h2>
+                        <div class="text-muted">Use this to practice risk acceptance, compensating controls, approvals, and expiries.</div>
+                    </div>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button class="btn btn-primary" onclick="app.showExceptionModal()"><i class="bi bi-plus-lg"></i> Add Exception</button>
+                    </div>
+                </div>
+                ${ (d.exceptions || []).length ? `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Exception ID</th><th>Title</th><th>Status</th><th>Scope</th><th>Expiry</th><th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rows}</tbody>
+                    </table>
+                ` : `
+                    <div style="padding:18px; color: var(--text-secondary);">
+                        No exceptions yet. Create one linked to a risk or requirement, add expiry and compensating controls.
+                    </div>
+                `}
+            </div>
+        `;
+    }
+
+    showExceptionModal(ex = null) {
+        this.ensureGovernanceKeys();
+        const d = this.getActiveData();
+        const controls = d.controls || [];
+        const isEdit = !!ex;
+
+        const controlOptions = controls.map(c => `<option value="${c.id}" ${ex?.compensatingControls?.includes(c.id) ? 'selected' : ''}>${this.escapeHtml(c.controlId || c.id)} — ${this.escapeHtml(c.title || c.name || '')}</option>`).join('');
+
+        openModal(isEdit ? 'Edit Exception' : 'Add Exception', `
+            <div class="form-grid">
+                <div>
+                    <label class="form-label">Exception ID</label>
+                    <input class="form-input" id="ex-code" value="${this.escapeHtml(ex?.exCode || '')}" placeholder="e.g., EX-001">
+                </div>
+                <div>
+                    <label class="form-label">Status</label>
+                    <select class="form-select" id="ex-status">
+                        ${['Draft','Approved','Rejected','Expired'].map(s => `<option ${ex?.status===s?'selected':''}>${s}</option>`).join('')}
+                    </select>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Title</label>
+                    <input class="form-input" id="ex-title" value="${this.escapeHtml(ex?.title || '')}" placeholder="Exception title">
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Reason / Justification</label>
+                    <textarea class="form-textarea" id="ex-reason" rows="4" placeholder="Explain business reason, scope, and acceptance rationale (min 20 chars)">${this.escapeHtml(ex?.reason || '')}</textarea>
+                </div>
+                <div>
+                    <label class="form-label">Scope Type</label>
+                    <select class="form-select" id="ex-scope-type">
+                        ${['Risk','Control','Requirement','Finding','Other'].map(s => `<option ${ex?.scopeType===s?'selected':''}>${s}</option>`).join('')}
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Scope ID</label>
+                    <input class="form-input" id="ex-scope-id" value="${this.escapeHtml(ex?.scopeId || '')}" placeholder="e.g., RSK-001 / REQ-...">
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Compensating Controls (multi-select)</label>
+                    <select class="form-select" id="ex-controls" multiple size="6">${controlOptions || '<option disabled>No controls yet</option>'}</select>
+                </div>
+                <div>
+                    <label class="form-label">Owner</label>
+                    <input class="form-input" id="ex-owner" value="${this.escapeHtml(ex?.owner || '')}" placeholder="Control/Risk owner">
+                </div>
+                <div>
+                    <label class="form-label">Approver</label>
+                    <input class="form-input" id="ex-approver" value="${this.escapeHtml(ex?.approver || '')}" placeholder="Risk owner / CISO">
+                </div>
+                <div>
+                    <label class="form-label">Review Date</label>
+                    <input class="form-input" type="date" id="ex-review" value="${this.escapeHtml(ex?.reviewDate || '')}">
+                </div>
+                <div>
+                    <label class="form-label">Expiry Date</label>
+                    <input class="form-input" type="date" id="ex-expiry" value="${this.escapeHtml(ex?.expiryDate || '')}">
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label class="form-label">Notes</label>
+                    <textarea class="form-textarea" id="ex-notes" rows="3">${this.escapeHtml(ex?.notes || '')}</textarea>
+                </div>
+            </div>
+        `, `
+            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="app.saveException('${ex?.id || ''}')">${isEdit ? 'Update' : 'Create'}</button>
+        `);
+    }
+
+    saveException(editId) {
+        this.ensureGovernanceKeys();
+        const d = this.getActiveData();
+        const title = document.getElementById('ex-title').value.trim();
+        const reason = document.getElementById('ex-reason').value.trim();
+        if (title.length < 5) { this.toast('Title must be at least 5 characters', 'error'); return; }
+        if (reason.length < 20) { this.toast('Reason must be at least 20 characters', 'error'); return; }
+
+        const pickMulti = (id) => Array.from(document.getElementById(id).selectedOptions || []).map(o => o.value);
+        const item = {
+            id: editId || this.generateId('EXC'),
+            exCode: document.getElementById('ex-code').value.trim(),
+            title,
+            status: document.getElementById('ex-status').value,
+            reason,
+            scopeType: document.getElementById('ex-scope-type').value,
+            scopeId: document.getElementById('ex-scope-id').value.trim(),
+            compensatingControls: pickMulti('ex-controls'),
+            owner: document.getElementById('ex-owner').value.trim(),
+            approver: document.getElementById('ex-approver').value.trim(),
+            reviewDate: document.getElementById('ex-review').value || '',
+            expiryDate: document.getElementById('ex-expiry').value || '',
+            notes: document.getElementById('ex-notes').value.trim(),
+            createdAt: editId ? (d.exceptions.find(x => x.id === editId)?.createdAt || new Date().toISOString()) : new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
+
+        if (editId) {
+            const idx = d.exceptions.findIndex(x => x.id === editId);
+            if (idx >= 0) d.exceptions[idx] = item;
+        } else {
+            d.exceptions.push(item);
+        }
+        this.saveData('exceptions');
+        this.logEvent('exceptions', `${editId ? 'Updated' : 'Created'} exception ${item.exCode || item.id}`, { id: item.id });
+        closeModal();
+        this.renderExceptions();
+        this.toast(editId ? 'Exception updated' : 'Exception added', 'success');
+    }
+
+    editException(id) {
+        this.ensureGovernanceKeys();
+        const ex = (this.getActiveData().exceptions || []).find(x => x.id === id);
+        if (ex) this.showExceptionModal(ex);
+    }
+    deleteException(id) {
+        this.ensureGovernanceKeys();
+        if (!confirm('Delete this exception?')) return;
+        const d = this.getActiveData();
+        d.exceptions = (d.exceptions || []).filter(x => x.id !== id);
+        this.saveData('exceptions');
+        this.logEvent('exceptions', `Deleted exception ${id}`, { id });
+        this.renderExceptions();
+        this.toast('Exception deleted', 'success');
+    }
+
+    // ---------- Due & Activity ----------
+    renderReviews() {
+        this.ensureGovernanceKeys();
+        const c = document.getElementById('tab-reviews');
+        const d = this.getActiveData();
+        const now = new Date();
+        const toDate = (s) => { try { return s ? new Date(s) : null; } catch(e) { return null; } };
+        const daysUntil = (dt) => Math.ceil((dt - now) / (1000*60*60*24));
+        const daysSince = (dt) => Math.floor((now - dt) / (1000*60*60*24));
+
+        const dueSoonWindow = 30;
+
+        // Policies due
+        const policyDue = (d.policies || []).filter(p => p.reviewDate).map(p => {
+            const dt = toDate(p.reviewDate);
+            if (!dt) return null;
+            return { type:'Policy Review', id:p.id, title:p.title, date:p.reviewDate, delta: daysUntil(dt) };
+        }).filter(x => x && x.delta <= dueSoonWindow);
+
+        // Exceptions expiry/review
+        const exDue = (d.exceptions || []).flatMap(ex => {
+            const out = [];
+            const exp = toDate(ex.expiryDate);
+            if (exp) out.push({ type:'Exception Expiry', id:ex.id, title:ex.title, date:ex.expiryDate, delta: daysUntil(exp) });
+            const rev = toDate(ex.reviewDate);
+            if (rev) out.push({ type:'Exception Review', id:ex.id, title:ex.title, date:ex.reviewDate, delta: daysUntil(rev) });
+            return out;
+        }).filter(x => x.delta <= dueSoonWindow);
+
+        // Evidence stale (use updatedAt)
+        const evidenceStaleDays = 90;
+        const evStale = (d.evidence || []).map(e => {
+            const dt = toDate(e.updatedAt || e.createdAt);
+            if (!dt) return null;
+            const age = daysSince(dt);
+            return age >= evidenceStaleDays ? { type:'Evidence Stale', id:e.id, title:e.title, date:(e.updatedAt||e.createdAt||''), delta:-age } : null;
+        }).filter(Boolean);
+
+        // Control testing due (last test date older than 90 days)
+        const testDueDays = 90;
+        const lastTestByControl = {};
+        (d.controlTests || []).forEach(t => {
+            if (!t.controlId) return;
+            const dt = toDate(t.testDate || t.updatedAt || t.createdAt);
+            if (!dt) return;
+            if (!lastTestByControl[t.controlId] || dt > lastTestByControl[t.controlId]) lastTestByControl[t.controlId] = dt;
+        });
+        const testDue = (d.controls || []).map(ctrl => {
+            const last = lastTestByControl[ctrl.id];
+            if (!last) return { type:'Control Test', id:ctrl.id, title:(ctrl.title||ctrl.name||''), date:'(no tests yet)', delta: -9999 };
+            const age = daysSince(last);
+            return age >= testDueDays ? { type:'Control Test', id:ctrl.id, title:(ctrl.title||ctrl.name||''), date:last.toISOString().slice(0,10), delta:-age } : null;
+        }).filter(Boolean);
+
+        // Findings target date due
+        const findingDue = (d.findings || []).filter(f => f.dueDate).map(f => {
+            const dt = toDate(f.dueDate);
+            if (!dt) return null;
+            return { type:'Finding Due', id:f.id, title:f.title, date:f.dueDate, delta: daysUntil(dt) };
+        }).filter(x => x && x.delta <= dueSoonWindow);
+
+        const dueItems = [...policyDue, ...exDue, ...findingDue].sort((a,b)=>a.delta-b.delta);
+        const overdueItems = dueItems.filter(x => x.delta < 0);
+        const dueSoonItems = dueItems.filter(x => x.delta >= 0);
+
+        const renderDueRow = (x) => {
+            const badge = x.delta < 0 ? 'badge-red' : x.delta <= 7 ? 'badge-amber' : 'badge-blue';
+            const when = x.delta < 0 ? `${Math.abs(x.delta)}d overdue` : `${x.delta}d`;
+            return `<tr>
+                <td class="font-semibold">${this.escapeHtml(x.type)}</td>
+                <td>${this.escapeHtml(x.title || '')} <span class="text-muted">(${this.escapeHtml(x.id)})</span></td>
+                <td class="text-muted">${this.escapeHtml(x.date || '')}</td>
+                <td><span class="badge ${badge}">${when}</span></td>
+            </tr>`;
+        };
+
+        const renderStaleRow = (x) => `<tr>
+            <td class="font-semibold">${this.escapeHtml(x.type)}</td>
+            <td>${this.escapeHtml(x.title || '')} <span class="text-muted">(${this.escapeHtml(x.id)})</span></td>
+            <td class="text-muted">${this.escapeHtml(String(x.date || '').slice(0,10))}</td>
+            <td><span class="badge badge-red">${Math.abs(x.delta)}d old</span></td>
+        </tr>`;
+
+        const logs = (d.activityLog || []).slice(0, 60).map(l => {
+            const dt = new Date(l.ts);
+            const when = isNaN(dt.getTime()) ? '' : dt.toLocaleString();
+            return `<tr>
+                <td class="text-muted">${this.escapeHtml(when)}</td>
+                <td><span class="badge badge-blue">${this.escapeHtml(l.type || 'log')}</span></td>
+                <td>${this.escapeHtml(l.message || '')}</td>
+            </tr>`;
+        }).join('');
+
+        c.innerHTML = `
+            <div class="grid-2" style="gap:16px;">
+                <div class="card">
+                    <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <h3 style="margin:0;"><i class="bi bi-calendar2-check"></i> Due & Overdue (next ${dueSoonWindow} days)</h3>
+                            <div class="text-muted">A simple governance queue (no SaaS automation).</div>
+                        </div>
+                        <div class="text-muted" style="font-weight:600;">Overdue: ${overdueItems.length} • Due soon: ${dueSoonItems.length}</div>
+                    </div>
+                    <div class="card-content">
+                        ${(dueItems.length) ? `
+                        <div class="table-container" style="margin:0;">
+                            <table>
+                                <thead><tr><th>Type</th><th>Item</th><th>Date</th><th>Status</th></tr></thead>
+                                <tbody>${dueItems.map(renderDueRow).join('')}</tbody>
+                            </table>
+                        </div>
+                        ` : `<div class="text-muted">Nothing due in the next ${dueSoonWindow} days.</div>`}
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 style="margin:0;"><i class="bi bi-clock-history"></i> Stale Evidence & Control Testing</h3>
+                        <div class="text-muted">Evidence older than ${evidenceStaleDays}d and controls without recent tests.</div>
+                    </div>
+                    <div class="card-content">
+                        ${(evStale.length || testDue.length) ? `
+                        <div class="table-container" style="margin:0;">
+                            <table>
+                                <thead><tr><th>Type</th><th>Item</th><th>Last</th><th>Age</th></tr></thead>
+                                <tbody>
+                                    ${evStale.map(renderStaleRow).join('')}
+                                    ${testDue.map(renderStaleRow).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                        ` : `<div class="text-muted">No stale evidence or overdue testing by the default thresholds.</div>`}
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top:16px;">
+                <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <h3 style="margin:0;"><i class="bi bi-activity"></i> Activity Log</h3>
+                        <div class="text-muted">Lightweight work trail for portfolio/interview proof.</div>
+                    </div>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn btn-secondary" onclick="app.exportActivityLog()"><i class="bi bi-download"></i> Export Log</button>
+                        <button class="btn btn-danger" onclick="app.clearActivityLog()"><i class="bi bi-trash3"></i> Clear</button>
+                    </div>
+                </div>
+                <div class="card-content">
+                    ${(d.activityLog || []).length ? `
+                    <div class="table-container" style="margin:0;">
+                        <table>
+                            <thead><tr><th>Time</th><th>Type</th><th>Message</th></tr></thead>
+                            <tbody>${logs}</tbody>
+                        </table>
+                    </div>` : `<div class="text-muted">No activity yet. Adding requirements/exceptions will log actions here.</div>`}
+                </div>
+            </div>
+        `;
+    }
+
+    exportActivityLog() {
+        this.ensureGovernanceKeys();
+        const d = this.getActiveData();
+        const blob = new Blob([JSON.stringify(d.activityLog || [], null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `grc-activity-log${this.activeProject ? '-' + this.activeProject : ''}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        this.toast('Activity log exported', 'success');
+    }
+    clearActivityLog() {
+        this.ensureGovernanceKeys();
+        if (!confirm('Clear activity log?')) return;
+        const d = this.getActiveData();
+        d.activityLog = [];
+        this.saveData('activityLog');
+        this.toast('Activity log cleared', 'success');
+        this.renderReviews();
+    }
+
+    downloadEvidenceAttachment(id) {
+        const d = this.getActiveData();
+        const e = (d.evidence || []).find(x => x.id === id);
+        if (!e || !e.attachment || !e.attachment.dataUrl) { this.toast('No attachment found', 'error'); return; }
+        const a = document.createElement('a');
+        a.href = e.attachment.dataUrl;
+        a.download = e.attachment.name || `evidence-${id}`;
+        a.click();
+        this.toast('Attachment downloaded', 'success');
+    }
+
+
 }
 function openModal(title, body, footer) { document.getElementById('modal-title').textContent = title; document.getElementById('modal-body').innerHTML = body; document.getElementById('modal-footer').innerHTML = footer; document.getElementById('modal-overlay').classList.add('active'); }
 function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); }
@@ -5564,6 +6567,8 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal
 let app;
 document.addEventListener('DOMContentLoaded', () => { app = new GRCLabPro(); window.app = app; });
 </script>
+
+</div><!-- End app-wrapper -->
 
 <!-- Site Footer -->
 <footer style="background: var(--bg-surface); border-top: 1px solid var(--border-default); padding: 40px 0 32px; margin-top: 0;">
