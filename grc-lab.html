@@ -3,6 +3,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -545,7 +546,7 @@ tbody tr:last-child td { border-bottom: none; }
     color: var(--text-secondary);
     margin-bottom: 8px;
 }
-.form-input, .form-select, .form-textarea {
+.form-input, .form-select, .form-textarea, .form-control {
     width: 100%;
     padding: 10px 14px;
     font-size: 14px;
@@ -555,13 +556,14 @@ tbody tr:last-child td { border-bottom: none; }
     border-radius: var(--radius-md);
     color: var(--text-primary);
     transition: all var(--transition-fast);
+    box-sizing: border-box;
 }
-.form-input:focus, .form-select:focus, .form-textarea:focus {
+.form-input:focus, .form-select:focus, .form-textarea:focus, .form-control:focus {
     outline: none;
     border-color: var(--accent-blue);
     box-shadow: 0 0 0 3px var(--accent-blue-soft);
 }
-.form-input::placeholder { color: var(--text-muted); }
+.form-input::placeholder, .form-control::placeholder { color: var(--text-muted); }
 .form-select {
     cursor: pointer;
     appearance: none;
