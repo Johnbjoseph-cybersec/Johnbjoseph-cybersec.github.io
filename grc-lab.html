@@ -13,7 +13,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <style>
+    
+    <!-- Google tag (gtag.js) — Analytics (GA4) -->
+    <!-- Replace G-QYWFEQ2HTG with your Measurement ID from Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QYWFEQ2HTG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      // SPA mode: we will send page_view events manually on tab changes
+      gtag('config', 'G-QYWFEQ2HTG', { send_page_view: false });
+    </script>
+<style>
 :root {
     --bg-base: #f8fafc;
     --bg-surface: #ffffff;
@@ -1139,6 +1150,25 @@ tbody tr:last-child td { border-bottom: none; }
     #edu-banner{ margin-left: 0 !important; width: 100% !important; }
 }
 
+
+/* ===== Learning Controls (Career Mode) ===== */
+.learning-controls .badge { border: 1px solid var(--border-default); background: var(--bg-surface); }
+#learning-progress-pill { background: var(--bg-surface); }
+.switch { position: relative; display: inline-block; width: 42px; height: 22px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-elevated); transition: .2s; border-radius: 999px; border: 1px solid var(--border-default); }
+.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 2px; bottom: 1px; background: white; transition: .2s; border-radius: 50%; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.switch input:checked + .slider { background: var(--accent-purple-soft); border-color: var(--accent-purple); }
+.switch input:checked + .slider:before { transform: translateX(20px); }
+.slider.round { border-radius: 999px; }
+@media (max-width: 1100px) {
+  .learning-controls { justify-content: flex-end; }
+}
+@media (max-width: 780px) {
+  #learning-controls { display:none !important; } /* Keep header clean on small screens */
+}
+/* Modal title with Example button */
+#modal-title { display:flex; align-items:center; justify-content: space-between; gap: 12px; }
 </style>
 </head>
 <body>
@@ -1359,7 +1389,24 @@ tbody tr:last-child td { border-bottom: none; }
                 <button class="btn btn-ghost mobile-toggle" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
                 <div class="content-title" id="page-title"><i class="bi bi-grid-1x2-fill"></i> Dashboard</div>
                 <div class="header-actions">
-                    <button class="btn btn-secondary btn-sm" onclick="app.exportData()"><i class="bi bi-download"></i> Export</button>
+                    
+                    <div id="learning-controls" class="learning-controls" style="display:flex; align-items:center; gap:10px; margin-right:10px; flex-wrap:wrap;">
+                        <div id="learning-progress-pill" class="badge badge-gray" style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius: 999px;">
+                            <i class="bi bi-mortarboard-fill" style="color: var(--accent-purple);"></i>
+                            <span id="learning-progress-text" style="font-weight:600; font-size:12px;">Learning: 0/9</span>
+                        </div>
+                        <div class="badge badge-blue" style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px;">
+                            <i class="bi bi-toggle2-off" id="learning-mode-icon"></i>
+                            <span style="font-weight:600; font-size:12px;">Career Mode</span>
+                            <label class="switch" style="margin:0;">
+                                <input type="checkbox" id="learning-mode-toggle" />
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" id="learning-continue-btn" style="display:none;" onclick="app.continueLearning()"><i class="bi bi-arrow-right-circle"></i> Continue</button>
+                        <button class="btn btn-secondary btn-sm" id="learning-cert-btn" style="display:none;" onclick="app.generateLearningCertificate()"><i class="bi bi-award"></i> Certificate</button>
+                    </div>
+<button class="btn btn-secondary btn-sm" onclick="app.exportData()"><i class="bi bi-download"></i> Export</button>
                     <button class="btn btn-secondary btn-sm" onclick="app.clearAllData()"><i class="bi bi-trash3"></i> Clear</button>
                 </div>
             </header>
@@ -1424,6 +1471,7 @@ class GRCLabPro {
         this.bindEvents();
         this.renderCurrentTab();
         this.updateAllBadges();
+            this.initLearningMode();
     }
     
     // ===== LANDING PAGE METHODS =====
@@ -1443,6 +1491,7 @@ class GRCLabPro {
         this.hideLanding();
         this.loadDemo();
         this.switchTab('dashboard');
+        this.trackPageView('dashboard');
     }
     
     loadAllData() { Object.keys(this.data).forEach(key => { const stored = localStorage.getItem(`grc_${key}`); if (stored) try { this.data[key] = JSON.parse(stored); } catch(e) { this.data[key] = []; } }); }
@@ -1498,6 +1547,27 @@ class GRCLabPro {
     generateId(prefix) { return `${prefix}-${Date.now().toString(36)}`; }
     esc(str) { return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
     escapeHtml(str) { return this.esc(str); }
+    // ===== Analytics Helpers (GA4) =====
+    trackEvent(name, params = {}) {
+        try {
+            if (typeof window.gtag === 'function') window.gtag('event', name, params);
+        } catch(e) {}
+    }
+    trackPageView(tab) {
+        // Track SPA navigation as page_view + a custom tab_view event
+        try {
+            if (typeof window.gtag === 'function') {
+                const page_path = `/grc-lab/${String(tab || '').replace(/[^a-z0-9\-]/gi,'')}`;
+                window.gtag('event', 'page_view', {
+                    page_title: `GRC Lab — ${tab}`,
+                    page_path,
+                    page_location: window.location.origin + window.location.pathname + '#' + tab
+                });
+                this.trackEvent('tab_view', { tab });
+            }
+        } catch(e) {}
+    }
+
     bindEvents() { document.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', () => this.switchTab(item.dataset.tab))); }
     switchTab(tab) {
         document.querySelectorAll('.nav-item').forEach(item => item.classList.toggle('active', item.dataset.tab === tab));
@@ -1512,6 +1582,7 @@ class GRCLabPro {
         }
         document.getElementById('page-title').innerHTML = titleHtml;
         this.currentTab = tab;
+        this.trackPageView(tab);
         this.renderCurrentTab();
         this.updateProjectModeIndicator();
     }
@@ -3110,6 +3181,7 @@ class GRCLabPro {
         }
         this.renderScenarios();
         this.toast('Scenario progress reset', 'success');
+        try { this.updateLearningUI(); } catch(e) {}
     }
 
     startScenario(id) {
@@ -3213,8 +3285,10 @@ class GRCLabPro {
         if (stored) { try { progress = JSON.parse(stored); } catch(e) {} }
         if (!progress.startedAt) progress.startedAt = new Date().toISOString();
         localStorage.setItem(key, JSON.stringify(progress));
+        try { this.updateLearningUI(); } catch(e) {}
         localStorage.setItem('grc_activeScenario', String(s.id));
 
+        try { this.updateLearningUI(); } catch(e) {}
         // Take user to first relevant tab
         const first = s.steps.find(st => !!st.goTo);
         if (first && first.goTo) {
@@ -3256,6 +3330,53 @@ class GRCLabPro {
 
     getPracticeScenarioCatalog(){
         return [
+           // === Guided Missions (Core Learning Path) ===
+           {
+             id: 101,
+             isMission: true,
+             title: 'Mission 1: Build Your First Risk Register',
+             desc: 'Create a starter risk register by adding assets, identifying risks, and validating the heatmap.',
+             difficulty: 'Easy',
+             category: 'Guided Missions',
+             icon: 'bi-flag-fill',
+             interview: 'You practiced core GRC fundamentals: asset inventory, risk identification, scoring, and prioritization using a risk matrix.',
+             steps: [
+               { title:'Add 3 assets', hint:'Add at least 3 assets (systems/data) you need to protect.', goTo:'assets', goToLabel:'Assets', verify:{ type:'minCount', key:'assets', min:3 } },
+               { title:'Identify 5 risks', hint:'Create 5 risks tied to those assets with clear business impact.', goTo:'risks', goToLabel:'Risks', verify:{ type:'minCount', key:'risks', min:5 } },
+               { title:'Assign likelihood & impact', hint:'Ensure each risk has likelihood and impact selected (scoring matters!).', goTo:'risks', goToLabel:'Risks', verify:{ type:'riskScored', min:5 } },
+               { title:'Observe the heatmap', hint:'Open the Risk Matrix and confirm risks appear in the right severity zones.', goTo:'matrix', goToLabel:'Risk Matrix' }
+             ]
+           },
+           {
+             id: 102,
+             isMission: true,
+             title: 'Mission 2: Control Mapping (ISO 27001)',
+             desc: 'Map ISO 27001 controls to your risks and attach supporting evidence.',
+             difficulty: 'Medium',
+             category: 'Guided Missions',
+             icon: 'bi-link-45deg',
+             interview: 'You mapped controls to risks, aligned to ISO 27001 references, and collected evidence to support audit readiness.',
+             steps: [
+               { title:'Pick ISO 27001 controls', hint:'Create at least 3 controls aligned to ISO 27001 (use Annex A refs like A.5.xx).', goTo:'controls', goToLabel:'Controls', verify:{ type:'minCount', key:'controls', min:3, framework:'ISO 27001' } },
+               { title:'Map controls to risks', hint:'Ensure your risks reference controls (or at minimum, document the mapping in descriptions).', goTo:'controls', goToLabel:'Controls' },
+               { title:'Attach evidence', hint:'Add at least 1 evidence item linked to a control (policy, screenshot, report).', goTo:'evidence', goToLabel:'Evidence', verify:{ type:'minCount', key:'evidence', min:1 } }
+             ]
+           },
+           {
+             id: 103,
+             isMission: true,
+             title: 'Mission 3: Statement of Applicability (SoA)',
+             desc: 'Practice SoA decisions: applicability + justification for ISO 27001 Annex A controls.',
+             difficulty: 'Medium',
+             category: 'Guided Missions',
+             icon: 'bi-file-earmark-check-fill',
+             interview: 'You practiced SoA thinking: applicability decisions and justifications for Annex A controls.',
+             steps: [
+               { title:'Mark controls applicable / not applicable', hint:'Open SoA and mark at least 3 controls as Not Applicable (with valid reasoning).', goTo:'soa', goToLabel:'SoA', verify:{ type:'soaNotApplicable', min:3 } },
+               { title:'Add justification', hint:'For each SoA decision, add a clear justification (scope, systems, risk).', goTo:'soa', goToLabel:'SoA' }
+             ]
+           },
+
           {
             id: 1,
             title: 'Ransomware Attack Response',
@@ -3753,6 +3874,7 @@ renderDonutChart(segments, total) {
     }
     showAssetModal(a = null) {
         const isEdit = a !== null;
+        this.setModalContext('asset', { isEdit, item: a });
         openModal(isEdit ? 'Edit Asset' : 'Add Asset', `<div class="form-group"><label class="form-label">Name *</label><input type="text" class="form-input" id="f-name" value="${a?.name || ''}" placeholder="e.g., Customer Database"></div><div class="form-row"><div class="form-group"><label class="form-label">Type</label><select class="form-select" id="f-type">${['Application', 'Database', 'Server', 'Cloud Account', 'Network Device', 'Data Store', 'Endpoint'].map(t => `<option value="${t}" ${a?.type === t ? 'selected' : ''}>${t}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Classification</label><select class="form-select" id="f-class">${['Critical', 'High', 'Medium', 'Low'].map(c => `<option value="${c}" ${a?.classification === c ? 'selected' : ''}>${c}</option>`).join('')}</select></div></div><div class="form-row"><div class="form-group"><label class="form-label">Owner</label><input type="text" class="form-input" id="f-owner" value="${a?.owner || ''}"></div><div class="form-group"><label class="form-label">Environment</label><select class="form-select" id="f-env">${['Production', 'Staging', 'Development', 'DR'].map(e => `<option value="${e}" ${a?.environment === e ? 'selected' : ''}>${e}</option>`).join('')}</select></div></div><div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="f-desc">${a?.description || ''}</textarea></div>`, `<button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="app.saveAsset('${a?.id || ''}')">${isEdit ? 'Update' : 'Create'}</button>`);
     }
     saveAsset(editId) {
@@ -4037,6 +4159,7 @@ renderDonutChart(segments, total) {
     }
     showRiskModal(r = null) {
         const isEdit = r !== null;
+        this.setModalContext('risk', { isEdit, item: r });
         openModal(isEdit ? 'Edit Risk' : 'Add Risk', `<div class="form-group"><label class="form-label">Title *</label><input type="text" class="form-input" id="f-title" value="${r?.title || ''}"></div><div class="form-row"><div class="form-group"><label class="form-label">Category</label><select class="form-select" id="f-category">${['Access Control', 'Application Security', 'Data Protection', 'Availability', 'Compliance', 'Vendor Risk', 'Physical Security', 'Human Error', 'Other'].map(c => `<option value="${c}" ${r?.category === c ? 'selected' : ''}>${c}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Status</label><select class="form-select" id="f-status">${['Open', 'In Progress', 'Closed'].map(s => `<option value="${s}" ${r?.status === s ? 'selected' : ''}>${s}</option>`).join('')}</select></div></div><div class="form-row"><div class="form-group"><label class="form-label">Likelihood (1-5)</label><select class="form-select" id="f-likelihood">${[1,2,3,4,5].map(l => `<option value="${l}" ${r?.likelihood === l ? 'selected' : ''}>${l} - ${['Rare','Unlikely','Possible','Likely','Almost Certain'][l-1]}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Impact (1-5)</label><select class="form-select" id="f-impact">${[1,2,3,4,5].map(i => `<option value="${i}" ${r?.impact === i ? 'selected' : ''}>${i} - ${['Negligible','Minor','Moderate','Major','Severe'][i-1]}</option>`).join('')}</select></div></div><div class="form-group"><label class="form-label">Owner</label><input type="text" class="form-input" id="f-owner" value="${r?.owner || ''}"></div><div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="f-desc">${r?.description || ''}</textarea></div>`, `<button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="app.saveRisk('${r?.id || ''}')">${isEdit ? 'Update' : 'Create'}</button>`);
     }
     saveRisk(editId) {
@@ -4152,6 +4275,7 @@ renderDonutChart(segments, total) {
     }
     showControlModal(ctrl = null) {
         const isEdit = ctrl !== null;
+        this.setModalContext('control', { isEdit, item: ctrl });
         openModal(isEdit ? 'Edit Control' : 'Add Control', `<div class="form-group"><label class="form-label">Name *</label><input type="text" class="form-input" id="f-name" value="${ctrl?.name || ''}"></div><div class="form-row"><div class="form-group"><label class="form-label">Framework</label><select class="form-select" id="f-framework">${['ISO 27001', 'NIST CSF', 'SOC 2', 'PCI DSS', 'HIPAA', 'GDPR', 'CIS'].map(f => `<option value="${f}" ${ctrl?.framework === f ? 'selected' : ''}>${f}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Reference</label><input type="text" class="form-input" id="f-ref" value="${ctrl?.ref || ''}" placeholder="e.g., A.5.17"></div></div><div class="form-row"><div class="form-group"><label class="form-label">Effectiveness</label><select class="form-select" id="f-effectiveness">${['Effective', 'Partially Effective', 'Ineffective', 'Not Tested'].map(e => `<option value="${e}" ${ctrl?.effectiveness === e ? 'selected' : ''}>${e}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Frequency</label><select class="form-select" id="f-frequency">${['Continuous', 'Monthly', 'Quarterly', 'Annual'].map(f => `<option value="${f}" ${ctrl?.frequency === f ? 'selected' : ''}>${f}</option>`).join('')}</select></div></div><div class="form-group"><label class="form-label">Owner</label><input type="text" class="form-input" id="f-owner" value="${ctrl?.owner || ''}"></div><div class="form-group"><label class="form-label">Description</label><textarea class="form-textarea" id="f-desc">${ctrl?.description || ''}</textarea></div>`, `<button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="app.saveControl('${ctrl?.id || ''}')">${isEdit ? 'Update' : 'Create'}</button>`);
     }
     saveControl(editId) {
@@ -4204,6 +4328,7 @@ renderDonutChart(segments, total) {
     }
     showTreatmentModal(t = null) {
         const isEdit = t !== null;
+        this.setModalContext('treatment', { isEdit, item: t });
         openModal(isEdit ? 'Edit Treatment' : 'Add Treatment', `<div class="form-group"><label class="form-label">Related Risk *</label><select class="form-select" id="f-risk"><option value="">-- Select Risk --</option>${this.getActiveData().risks.map(r => `<option value="${r.id}" ${t?.riskId === r.id ? 'selected' : ''}>${r.title}</option>`).join('')}</select></div><div class="form-row"><div class="form-group"><label class="form-label">Type</label><select class="form-select" id="f-type">${['Mitigate', 'Accept', 'Transfer', 'Avoid'].map(ty => `<option value="${ty}" ${t?.type === ty ? 'selected' : ''}>${ty}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Status</label><select class="form-select" id="f-status">${['Planned', 'In Progress', 'Completed'].map(s => `<option value="${s}" ${t?.status === s ? 'selected' : ''}>${s}</option>`).join('')}</select></div></div><div class="form-row"><div class="form-group"><label class="form-label">Owner</label><input type="text" class="form-input" id="f-owner" value="${t?.owner || ''}"></div><div class="form-group"><label class="form-label">Due Date</label><input type="date" class="form-input" id="f-due" value="${t?.dueDate?.split('T')[0] || ''}"></div></div><div class="form-group"><label class="form-label">Plan</label><textarea class="form-textarea" id="f-plan">${t?.plan || ''}</textarea></div>`, `<button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="app.saveTreatment('${t?.id || ''}')">${isEdit ? 'Update' : 'Create'}</button>`);
     }
     saveTreatment(editId) {
@@ -4795,6 +4920,7 @@ renderDonutChart(segments, total) {
     }
     showEvidenceModal(e = null) {
         const isEdit = e !== null;
+        this.setModalContext('evidence', { isEdit, item: e });
         openModal(isEdit ? 'Edit Evidence' : 'Add Evidence', `<div class="form-group"><label class="form-label">Title *</label><input type="text" class="form-input" id="f-title" value="${e?.title || ''}"></div><div class="form-row"><div class="form-group"><label class="form-label">Type</label><select class="form-select" id="f-type">${['Screenshot', 'Document', 'Report', 'Export', 'Configuration', 'Log'].map(t => `<option value="${t}" ${e?.type === t ? 'selected' : ''}>${t}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Related Control</label><select class="form-select" id="f-related"><option value="">-- None --</option>${this.getActiveData().controls.map(c => `<option value="${c.id}" ${e?.relatedTo === c.id ? 'selected' : ''}>${c.name}</option>`).join('')}</select></div></div><div class="form-group"><label class="form-label">Owner</label><input type="text" class="form-input" id="f-owner" value="${e?.owner || ''}"></div><div class="form-group"><label class="form-label">URL/Location</label><input type="text" class="form-input" id="f-url" value="${e?.url || ''}"></div><div class="form-group">
             <label class="form-label">Attachment (optional — stored locally in your browser)</label>
             <input type="file" class="form-input" id="f-file" accept=".pdf,.png,.jpg,.jpeg,.webp,.doc,.docx,.xls,.xlsx,.txt">
@@ -5238,6 +5364,7 @@ saveEvidence(editId) {
         const justification = existing?.justification || '';
         const applicable = existing ? existing.applicable : true;
         
+        this.setModalContext('soa', { controlId, isEdit: true });
         openModal('Edit SoA Entry', `
             <div style="margin-bottom: 16px;">
                 <div style="font-size: 11px; color: var(--text-muted);">Control ID</div>
@@ -8032,11 +8159,9 @@ saveEvidence(editId) {
                         <i class="bi bi-patch-check-fill"></i>
                         Built for GRC Professionals
                     </div>
-                    <h1 class="portfolio-title">A hands-on GRC Practice Lab that shows how you think <br>— not just what you know.</br></h1>
+                    <h1 class="portfolio-title">A GRC portfolio hiring managers<br>can actually judge.</h1>
                     <p class="portfolio-subtitle">
-                        Work through practical governance, risk, and compliance scenarios with full traceability: assets → risks → controls → treatments → evidence.
-
-Every project shows how choices were made, why risks were accepted or mitigated, and what implementation looks like in practice.
+                        Present real Governance, Risk, and Compliance projects with clear context, decision rationale, and supporting evidence — not just summaries. Built for career changers and early-career professionals preparing for GRC roles.
                     </p>
                     <div class="portfolio-stats-row">
                         <div class="portfolio-stat">
@@ -10048,9 +10173,267 @@ Every project shows how choices were made, why risks were accepted or mitigated,
     }
 
 
+    // ===== LEARNING MODE (Career Mode) =====
+    initLearningMode() {
+        // Default: Practice Mode
+        this.learningMode = localStorage.getItem('grc_learningMode') || 'practice';
+        this.bindLearningUI();
+        this.updateLearningUI();
+    }
+
+    bindLearningUI() {
+        const toggle = document.getElementById('learning-mode-toggle');
+        if (!toggle) return;
+
+        toggle.checked = (this.learningMode === 'career');
+        toggle.addEventListener('change', () => {
+            this.learningMode = toggle.checked ? 'career' : 'practice';
+            localStorage.setItem('grc_learningMode', this.learningMode);
+            this.updateLearningUI();
+            // In career mode, gently steer users to Scenarios (missions)
+            if (this.learningMode === 'career') {
+                this.toast('Career Mode enabled — follow the Guided Missions for a structured path.', 'success');
+            } else {
+                this.toast('Practice Mode enabled — explore freely.', 'success');
+            }
+        });
+    }
+
+    updateLearningUI() {
+        const icon = document.getElementById('learning-mode-icon');
+        if (icon) {
+            icon.className = 'bi ' + (this.learningMode === 'career' ? 'bi-toggle2-on' : 'bi-toggle2-off');
+            icon.style.color = this.learningMode === 'career' ? 'var(--accent-purple)' : 'var(--text-muted)';
+        }
+
+        // Update learning progress pill & action buttons
+        const p = this.getLearningProgress();
+        const txt = document.getElementById('learning-progress-text');
+        if (txt) txt.textContent = `Learning: ${p.completed}/${p.total}`;
+
+        const contBtn = document.getElementById('learning-continue-btn');
+        if (contBtn) contBtn.style.display = (this.learningMode === 'career' && p.completed < p.total) ? 'inline-flex' : 'none';
+
+        const certBtn = document.getElementById('learning-cert-btn');
+        if (certBtn) certBtn.style.display = (p.missionsComplete) ? 'inline-flex' : 'none';
+
+        // If Scenarios tab is open, re-render so the UI reflects mode (optional)
+        if (this.currentTab === 'scenarios') {
+            this.renderScenarios();
+        }
+    }
+
+    getLearningModules() {
+        // 9 learning modules total: 3 core missions + 6 selected scenarios
+        const scenarios = this.getPracticeScenarioCatalog();
+        const missions = scenarios.filter(s => s.isMission);
+        const core = scenarios.filter(s => !s.isMission).slice(0, 6);
+        return [...missions, ...core];
+    }
+
+    getLearningProgress() {
+        const modules = this.getLearningModules();
+        const completed = modules.filter(m => this.isScenarioCompleted(m.id, m.steps.length)).length;
+        const missionsComplete = [101,102,103].every(id => this.isScenarioCompleted(id, (this.getPracticeScenarioCatalog().find(s => s.id===id)?.steps?.length||0)));
+        return { completed, total: modules.length, missionsComplete };
+    }
+
+    isScenarioCompleted(scenarioId, totalSteps) {
+        const key = `grc_scenario_${scenarioId}`;
+        const stored = localStorage.getItem(key);
+        if (!stored) return false;
+        try {
+            const progress = JSON.parse(stored);
+            const done = progress.completedSteps?.length || 0;
+            return totalSteps ? done >= totalSteps : done > 0;
+        } catch(e) { return false; }
+    }
+
+    continueLearning() {
+        // Take user to next incomplete module (prefer missions)
+        const modules = this.getLearningModules();
+        const next = modules.find(m => !this.isScenarioCompleted(m.id, m.steps.length));
+        if (!next) { this.toast('You have completed all learning modules 🎉', 'success'); return; }
+        this.switchTab('scenarios');
+        this.startScenario(next.id);
+    }
+
+    // ===== MODAL EXAMPLES (Load Example) =====
+    setModalContext(type, ctx = {}) { this.modalContext = { type, ...ctx }; }
+    clearModalContext() { this.modalContext = null; }
+    hasModalExample() {
+        const t = this.modalContext?.type;
+        return ['asset','risk','control','evidence','treatment','soa'].includes(t);
+    }
+
+    loadModalExample() {
+        const t = this.modalContext?.type;
+        if (!t) { this.toast('No example available for this form.', 'error'); return; }
+
+        const fill = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
+        const fillSelect = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
+
+        if (t === 'asset') {
+            fill('f-name', 'Customer Database');
+            fillSelect('f-type', 'Database');
+            fillSelect('f-class', 'Critical');
+            fill('f-owner', 'IT Operations');
+            fillSelect('f-env', 'Production');
+            fill('f-desc', 'Primary datastore containing customer PII and transaction metadata.');
+            this.toast('Example loaded (Asset).', 'success');
+            return;
+        }
+        if (t === 'risk') {
+            fill('f-title', 'Unauthorized access to customer data');
+            fillSelect('f-category', 'Access Control');
+            fillSelect('f-likelihood', 'High');
+            fillSelect('f-impact', 'High');
+            fillSelect('f-status', 'Open');
+            fill('f-owner', 'Security Lead');
+            fill('f-desc', 'Weak MFA enforcement and inconsistent access reviews increase risk of account compromise and data exposure.');
+            this.toast('Example loaded (Risk).', 'success');
+            return;
+        }
+        if (t === 'control') {
+            fill('f-name', 'Multi-Factor Authentication (MFA) for privileged access');
+            fillSelect('f-framework', 'ISO 27001');
+            fill('f-ref', 'A.5.17');
+            fillSelect('f-effectiveness', 'Not Tested');
+            fillSelect('f-frequency', 'Continuous');
+            fill('f-owner', 'IAM Team');
+            fill('f-desc', 'Require MFA for all privileged accounts and remote access. Enforce conditional access with device compliance.');
+            this.toast('Example loaded (Control).', 'success');
+            return;
+        }
+        if (t === 'evidence') {
+            fill('f-title', 'MFA enforcement screenshot');
+            fillSelect('f-type', 'Screenshot');
+            // Control / Risk linkage fields vary; try common ids if present
+            fill('f-owner', 'Security Lead');
+            fill('f-desc', 'Screenshot from IdP showing MFA requirement enabled for admin roles; supports MFA control implementation.');
+            this.toast('Example loaded (Evidence).', 'success');
+            return;
+        }
+        if (t === 'treatment') {
+            fillSelect('f-strategy', 'Mitigate');
+            fill('f-owner', 'Security Lead');
+            fillSelect('f-status', 'In Progress');
+            fill('f-desc', 'Implement MFA for privileged accounts, run quarterly access reviews, and monitor anomalous sign-ins.');
+            this.toast('Example loaded (Treatment).', 'success');
+            return;
+        }
+        if (t === 'soa') {
+            fillSelect('f-applicable', 'false');
+            fill('f-justification', 'Not applicable: Organization does not process physical media; all assets are cloud-hosted with no removable storage usage in scope.');
+            this.toast('Example loaded (SoA entry).', 'success');
+            return;
+        }
+
+        this.toast('Example not available for this form yet.', 'error');
+    }
+
+    // ===== CERTIFICATE =====
+    generateLearningCertificate() {
+        const p = this.getLearningProgress();
+        if (!p.missionsComplete) {
+            this.toast('Complete Missions 1–3 to unlock the certificate.', 'error');
+            return;
+        }
+        const name = (localStorage.getItem('grc_studentName') || '').trim() || 'GRC Learner';
+        const today = new Date().toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' });
+
+        const win = window.open('', '_blank');
+        if (!win) { this.toast('Popup blocked — allow popups to download the certificate.', 'error'); return; }
+
+        win.document.write(`
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>GRC Practice Completion Certificate</title>
+<style>
+  body{ margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background:#0b1020; }
+  .wrap{ display:flex; min-height:100vh; align-items:center; justify-content:center; padding:32px; }
+  .card{ width:min(900px, 100%); background:#ffffff; border-radius:28px; padding:44px; box-shadow: 0 30px 80px rgba(0,0,0,.35); position:relative; overflow:hidden; }
+  .badge{ display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px; background:#f3f4f6; font-weight:700; font-size:12px; letter-spacing:.4px; text-transform:uppercase; }
+  h1{ margin:18px 0 10px; font-size:40px; letter-spacing:-.6px; }
+  p{ margin:0; color:#374151; line-height:1.7; font-size:14px; }
+  .name{ margin:18px 0 6px; font-size:30px; font-weight:800; color:#111827; }
+  .meta{ display:flex; gap:18px; flex-wrap:wrap; margin-top:18px; }
+  .meta .box{ border:1px solid #e5e7eb; border-radius:16px; padding:12px 14px; min-width: 220px; }
+  .meta .k{ font-size:11px; color:#6b7280; text-transform:uppercase; letter-spacing:.7px; margin-bottom:6px; }
+  .meta .v{ font-size:14px; font-weight:700; color:#111827; }
+  .sig{ margin-top:28px; display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .line{ width:240px; height:1px; background:#111827; margin-top:32px; }
+  .note{ font-size:12px; color:#6b7280; max-width:520px; }
+  .ribbon{ position:absolute; inset:-120px -120px auto auto; width:280px; height:280px; background: linear-gradient(135deg, #7c3aed, #2563eb); border-radius: 60px; transform: rotate(18deg); opacity:.16; }
+  .btns{ margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; }
+  button{ border:0; padding:10px 14px; border-radius:12px; font-weight:700; cursor:pointer; }
+  .print{ background:#111827; color:#fff; }
+  .close{ background:#e5e7eb; }
+  @media print { .btns{display:none;} body{ background:#fff; } .wrap{ padding:0; } .card{ box-shadow:none; border-radius:0; } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="ribbon"></div>
+      <div class="badge">GRC Practice Lab • Completion Certificate</div>
+      <h1>GRC Practice Completion</h1>
+      <p>This certifies that the learner has successfully completed the guided learning missions in the GRC Practice Lab:</p>
+      <div class="name">${name}</div>
+      <p><strong>Missions Completed:</strong> Risk Register • Control Mapping (ISO 27001) • Statement of Applicability (SoA)</p>
+
+      <div class="meta">
+        <div class="box"><div class="k">Completion Date</div><div class="v">${today}</div></div>
+        <div class="box"><div class="k">Program</div><div class="v">Guided Missions (1–3)</div></div>
+        <div class="box"><div class="k">Platform</div><div class="v">GRC Practice Lab (Local)</div></div>
+      </div>
+
+      <div class="sig">
+        <div>
+          <div class="line"></div>
+          <div style="font-weight:800; margin-top:8px;">Practice Platform</div>
+          <div style="font-size:12px; color:#6b7280;">Auto-generated for learning use</div>
+        </div>
+        <div class="note">
+          Educational / practice use only. This certificate does not represent an accredited certification and is intended to demonstrate guided practice completion within this simulator.
+        </div>
+      </div>
+
+      <div class="btns">
+        <button class="print" onclick="window.print()">Print / Save as PDF</button>
+        <button class="close" onclick="window.close()">Close</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`);
+        win.document.close();
+        this.toast('Certificate opened — use Print to save as PDF.', 'success');
+    }
+
 }
-function openModal(title, body, footer) { document.getElementById('modal-title').textContent = title; document.getElementById('modal-body').innerHTML = body; document.getElementById('modal-footer').innerHTML = footer; document.getElementById('modal-overlay').classList.add('active'); }
-function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); }
+function openModal(title, body, footer) {
+    const mt = document.getElementById('modal-title');
+    // Default title
+    mt.textContent = title;
+    // Append a contextual "Load Example" button if available
+    try {
+        if (window.app && typeof app.hasModalExample === 'function' && app.hasModalExample()) {
+            const btn = document.createElement('button');
+            btn.className = 'btn btn-secondary btn-xs';
+            btn.innerHTML = '<i class="bi bi-lightbulb"></i> Load Example';
+            btn.onclick = () => { try { app.loadModalExample(); } catch(e) { console.error(e); } };
+            mt.appendChild(btn);
+        }
+    } catch(e) {}
+
+    document.getElementById('modal-body').innerHTML = body;
+    document.getElementById('modal-footer').innerHTML = footer;
+    document.getElementById('modal-overlay').classList.add('active');
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); try { if (window.app && typeof app.clearModalContext === 'function') app.clearModalContext(); } catch(e) {} }
 function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
 document.getElementById('modal-overlay')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
