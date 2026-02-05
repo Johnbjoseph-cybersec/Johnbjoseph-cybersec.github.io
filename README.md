@@ -142,4 +142,4 @@ Framework content summarized for learning purposes.
 Built with ❤️ by John B Joseph  
 
 Website: https://johnbjoseph-cybersec.github.io  
-YouTube: GRC Made Simple
+YouTube: https://www.youtube.com/@GRCMadeSimple
