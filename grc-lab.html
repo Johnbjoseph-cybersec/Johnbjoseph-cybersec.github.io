@@ -1618,6 +1618,7 @@ class GRCLabPro {
         this.loadAllData();
         this.loadProjectData();
         this.bindEvents();
+        this.trackPageView(this.currentTab);
         this.renderCurrentTab();
         this.updateAllBadges();
             this.initLearningMode();
