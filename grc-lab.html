@@ -1848,24 +1848,20 @@ class GRCLabPro {
                 document.body.appendChild(indicator);
             }
             indicator.innerHTML = `
-                <div><i class="bi bi-briefcase-fill"></i> Project Mode: <strong>${project?.company || 'Unknown'}</strong> — ${project?.scenario || ''}</div>
-                <button onclick="resetProjectData()" style="
-background:rgba(255,255,255,0.25);
-border:none;
-color:white;
-padding:6px 16px;
-border-radius:4px;
-cursor:pointer;
-font-size:12px;
-font-weight:600;
-transition:background 0.2s;"
-onmouseover="this.style.background='rgba(255,255,255,0.4)'"
-onmouseout="this.style.background='rgba(255,255,255,0.25)'">
-Reset Project
-</button>
-                onclick="app.exitProjectMode()" style="background: rgba(255,255,255,0.25); border: none; color: white; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.4)'" onmouseout="this.style.background='rgba(255,255,255,0.25)'"><i class="bi bi-box-arrow-left"></i> Exit Project</button>
-            `;
-            indicator.style.display = 'flex';
+        <div style="display:flex;align-items:center;gap:10px;">
+          <i class="bi bi-briefcase-fill"></i>
+          <div>Project Mode: <strong>${project?.company || 'Unknown'}</strong> — ${project?.scenario || ''}</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button onclick="resetProjectData()" style="background:rgba(255,255,255,0.25);border:none;color:white;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;transition:background 0.2s;"
+            onmouseover="this.style.background='rgba(255,255,255,0.4)'"
+            onmouseout="this.style.background='rgba(255,255,255,0.25)'">Reset Project</button>
+          <button onclick="app.exitProjectMode()" style="background:rgba(255,255,255,0.25);border:none;color:white;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;transition:background 0.2s;"
+            onmouseover="this.style.background='rgba(255,255,255,0.4)'"
+            onmouseout="this.style.background='rgba(255,255,255,0.25)'">Exit Project</button>
+        </div>
+      `;
+      indicator.style.display = 'flex';
             document.querySelector('.main-content').style.paddingTop = '52px';
         } else {
             // Hide both indicators
