@@ -1645,10 +1645,35 @@ class GRCLabPro {
         this.trackPageView('dashboard');
     }
     
-    loadAllData() { Object.keys(this.data).forEach(key => { const stored = localStorage.getItem(`grc_${key}`); if (stored) try { this.data[key] = JSON.parse(stored); } catch(e) { this.data[key] = []; } }); }
+    loadAllData() {
+        Object.keys(this.data).forEach(key => {
+            const stored = localStorage.getItem(`grc_${key}`);
+            if (!stored) return;
+            try {
+                const parsed = JSON.parse(stored);
+                this.data[key] = Array.isArray(parsed) ? parsed : [];
+            } catch (e) {
+                this.data[key] = [];
+            }
+        });
+    }
     loadProjectData() { 
         const stored = localStorage.getItem('grc_projectData'); 
-        if (stored) try { this.projectData = JSON.parse(stored); } catch(e) { this.projectData = {}; } 
+        if (stored) {
+            try {
+                const parsed = JSON.parse(stored);
+                if (parsed && typeof parsed === 'object') {
+                    this.projectData = {};
+                    Object.keys(parsed).forEach(projectId => {
+                        this.projectData[projectId] = this.normalizeDataStore(parsed[projectId]);
+                    });
+                } else {
+                    this.projectData = {};
+                }
+            } catch(e) {
+                this.projectData = {};
+            }
+        }
     }
     saveProjectData() {
         localStorage.setItem('grc_projectData', JSON.stringify(this.projectData));
@@ -1664,21 +1689,37 @@ class GRCLabPro {
         }
         this.updateAllBadges(); 
     }
+    createEmptyDataStore() {
+        return Object.keys(this.data).reduce((acc, key) => {
+            acc[key] = [];
+            return acc;
+        }, {});
+    }
+    normalizeDataStore(store) {
+        const normalized = this.createEmptyDataStore();
+        if (!store || typeof store !== 'object') return normalized;
+        Object.keys(normalized).forEach(key => {
+            if (Array.isArray(store[key])) normalized[key] = store[key];
+        });
+        return normalized;
+    }
     initProjectData(projectId) {
         if (!this.projectData[projectId]) {
-            this.projectData[projectId] = { assets: [], vendors: [], policies: [], risks: [], controls: [], treatments: [], issues: [], incidents: [], tasks: [], audits: [], evidence: [], controlTests: [], findings: [], requirements: [], exceptions: [], activityLog: [], itgcControls: [], evidenceScores: [], controlLifecycle: [], cloudRiskScenarios: [], biaEntries: [], vendorAssessments: [], soxEntries: [], riskAppetiteStatements: [], kriEntries: [], bcmPlans: [], crosswalkMappings: [] };
+            this.projectData[projectId] = this.createEmptyDataStore();
             this.saveProjectData();
         }
     }
     getActiveData() {
         if (this.activeProject) {
             if (!this.projectData[this.activeProject]) this.initProjectData(this.activeProject);
+            this.projectData[this.activeProject] = this.normalizeDataStore(this.projectData[this.activeProject]);
             return this.projectData[this.activeProject];
         }
         return this.data;
     }
     getProjectData(projectId) {
         if (!this.projectData[projectId]) this.initProjectData(projectId);
+        this.projectData[projectId] = this.normalizeDataStore(this.projectData[projectId]);
         return this.projectData[projectId];
     }
     enterProjectMode(projectId) {
@@ -7354,7 +7395,18 @@ saveEvidence(editId) {
         this.toast('Report exported as CSV!', 'success');
     }
     renderEmpty(icon, title, text, action) { return `<div class="empty-state"><div class="empty-state-icon"><i class="bi ${icon}"></i></div><h3 class="empty-state-title">${title}</h3><p class="empty-state-text">${text}</p>${action ? `<button class="btn btn-primary" onclick="app.${action}()"><i class="bi bi-plus-lg"></i> Get Started</button>` : ''}</div>`; }
-    deleteItem(key, id) { if (confirm('Delete this item?')) { this.data[key] = this.data[key].filter(x => x.id !== id); this.saveData(key); this.renderCurrentTab(); this.toast('Item deleted', 'success'); } }
+    deleteItem(key, id) {
+        if (!confirm('Delete this item?')) return;
+        const activeData = this.getActiveData();
+        if (!Array.isArray(activeData[key])) {
+            this.toast('Unable to delete item from this section', 'error');
+            return;
+        }
+        activeData[key] = activeData[key].filter(x => x.id !== id);
+        this.saveData(key);
+        this.renderCurrentTab();
+        this.toast('Item deleted', 'success');
+    }
     toast(message, type = 'info') { const c = document.getElementById('toast-container'); const t = document.createElement('div'); t.className = `toast toast-${type}`; t.innerHTML = `<div class="toast-icon"><i class="bi ${type === 'success' ? 'bi-check-circle' : type === 'error' ? 'bi-x-circle' : 'bi-info-circle'}"></i></div><div class="toast-content"><div class="toast-message">${message}</div></div>`; c.appendChild(t); setTimeout(() => t.remove(), 4000); }
     exportData() { const d = JSON.stringify(this.data, null, 2); const b = new Blob([d], { type: 'application/json' }); const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = `grc-export-${new Date().toISOString().split('T')[0]}.json`; a.click(); URL.revokeObjectURL(u); this.toast('Data exported', 'success'); }
     clearAllData() { if (confirm('Clear ALL data? This cannot be undone.')) { Object.keys(this.data).forEach(k => { this.data[k] = []; localStorage.removeItem(`grc_${k}`); }); this.renderCurrentTab(); this.updateAllBadges(); this.toast('All data cleared', 'success'); } }
@@ -8471,7 +8523,7 @@ saveEvidence(editId) {
         projects.forEach(p => {
             const prog = this.getProjectProgress(p.id);
             if (prog.percent === 100) totalCompleted++;
-            else if (prog.percent > 0) totalInProgress++;
+            else if (prog.started || prog.percent > 0) totalInProgress++;
         });
         
         c.innerHTML = `
@@ -8502,7 +8554,7 @@ saveEvidence(editId) {
     
     renderProjectCard(p) {
         const progress = this.getProjectProgress(p.id);
-        const statusClass = progress.percent === 100 ? 'green' : progress.percent > 0 ? 'amber' : 'blue';
+        const statusClass = progress.percent === 100 ? 'green' : (progress.started || progress.percent > 0) ? 'amber' : 'blue';
         const self = this;
         
         return `
@@ -8559,10 +8611,17 @@ saveEvidence(editId) {
                             <div class="progress-fill ${statusClass}" style="width: ${progress.percent}%;"></div>
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-sm" onclick="app.startProject('${p.id}')">
-                        <i class="bi bi-${progress.percent > 0 ? 'arrow-right' : 'play-fill'}"></i> 
-                        ${progress.percent === 100 ? 'Review' : progress.percent > 0 ? 'Continue' : 'Start'}
-                    </button>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        ${progress.started ? `
+                            <button class="btn btn-secondary btn-sm" onclick="app.resetProject('${p.id}')" title="Reset project progress and data">
+                                <i class="bi bi-arrow-counterclockwise"></i>
+                            </button>
+                        ` : ''}
+                        <button class="btn btn-primary btn-sm" onclick="app.startProject('${p.id}')">
+                            <i class="bi bi-${progress.started ? 'arrow-right' : 'play-fill'}"></i> 
+                            ${progress.percent === 100 ? 'Review' : progress.started ? 'Continue' : 'Start'}
+                        </button>
+                    </div>
                 </div>
             </div>`;
     }
@@ -8736,10 +8795,19 @@ saveEvidence(editId) {
     
     getProjectProgress(projectId) {
         const project = this.getProjectScenarios().find(p => p.id === projectId);
-        if (!project) return { completed: 0, total: 0, percent: 0 };
+        if (!project) return { completed: 0, total: 0, percent: 0, started: false };
+        const pData = this.getProjectData(projectId);
         const completed = project.tasks.filter(t => this.checkTaskComplete(projectId, t)).length;
         const total = project.tasks.length;
-        return { completed, total, percent: Math.round((completed / total) * 100) };
+        const progressUnits = project.tasks.reduce((sum, t) => {
+            const current = Array.isArray(pData[t.type]) ? pData[t.type].length : 0;
+            const required = Math.max(parseInt(t.required, 10) || 1, 1);
+            return sum + Math.min(current / required, 1);
+        }, 0);
+        const hasTaskData = project.tasks.some(t => (Array.isArray(pData[t.type]) ? pData[t.type].length : 0) > 0);
+        const started = this.activeProject === projectId || hasTaskData;
+        const percent = total > 0 ? Math.round((progressUnits / total) * 100) : 0;
+        return { completed, total, percent, started };
     }
     
     startProject(projectId) {
@@ -8753,10 +8821,36 @@ saveEvidence(editId) {
                 this.switchTab(firstIncomplete.tab);
                 this.toast(`Started "${project.company}" - Complete: ${firstIncomplete.label}`, 'info');
             } else {
-                this.switchTab('dashboard');
-                this.toast(`All tasks completed for "${project.company}"!`, 'success');
+                const reviewTab = project.tasks[0]?.tab || 'dashboard';
+                this.switchTab(reviewTab);
+                this.toast(`"${project.company}" already complete - review or reset to practice again.`, 'info');
             }
         }
+    }
+    
+    resetProject(projectId) {
+        const project = this.getProjectScenarios().find(p => p.id === projectId);
+        if (!project) {
+            this.toast('Project not found', 'error');
+            return;
+        }
+        if (!confirm(`Reset "${project.company}" and clear all project data? This cannot be undone.`)) return;
+        
+        this.projectData[projectId] = this.createEmptyDataStore();
+        this.saveProjectData();
+        
+        if (this.portfolioEvidence?.[projectId]) delete this.portfolioEvidence[projectId];
+        if (this.portfolioNotes?.[projectId]) delete this.portfolioNotes[projectId];
+        
+        if (this.activeProject === projectId) {
+            this.activeProject = null;
+            this.switchTab('projects');
+        } else {
+            this.updateAllBadges();
+            if (this.currentTab === 'projects') this.renderProjects();
+        }
+        
+        this.toast(`Project reset: ${project.company}`, 'success');
     }
     
     // ==================== PORTFOLIO BUILDER ====================
