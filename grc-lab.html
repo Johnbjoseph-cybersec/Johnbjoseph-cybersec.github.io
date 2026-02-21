@@ -7354,7 +7354,20 @@ saveEvidence(editId) {
         this.toast('Report exported as CSV!', 'success');
     }
     renderEmpty(icon, title, text, action) { return `<div class="empty-state"><div class="empty-state-icon"><i class="bi ${icon}"></i></div><h3 class="empty-state-title">${title}</h3><p class="empty-state-text">${text}</p>${action ? `<button class="btn btn-primary" onclick="app.${action}()"><i class="bi bi-plus-lg"></i> Get Started</button>` : ''}</div>`; }
-    deleteItem(key, id) { if (confirm('Delete this item?')) { this.data[key] = this.data[key].filter(x => x.id !== id); this.saveData(key); this.renderCurrentTab(); this.toast('Item deleted', 'success'); } }
+deleteItem(key, id) {
+    if (!confirm('Delete this item?')) return;
+
+    const d = this.getActiveData();   // IMPORTANT FIX
+
+    if (!d[key]) return;
+
+    d[key] = d[key].filter(x => x.id !== id);
+
+    this.saveData(key);
+    this.renderCurrentTab();
+    this.updateAllBadges?.();
+    this.toast('Item deleted', 'success');
+}
     toast(message, type = 'info') { const c = document.getElementById('toast-container'); const t = document.createElement('div'); t.className = `toast toast-${type}`; t.innerHTML = `<div class="toast-icon"><i class="bi ${type === 'success' ? 'bi-check-circle' : type === 'error' ? 'bi-x-circle' : 'bi-info-circle'}"></i></div><div class="toast-content"><div class="toast-message">${message}</div></div>`; c.appendChild(t); setTimeout(() => t.remove(), 4000); }
     exportData() { const d = JSON.stringify(this.data, null, 2); const b = new Blob([d], { type: 'application/json' }); const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = `grc-export-${new Date().toISOString().split('T')[0]}.json`; a.click(); URL.revokeObjectURL(u); this.toast('Data exported', 'success'); }
     clearAllData() { if (confirm('Clear ALL data? This cannot be undone.')) { Object.keys(this.data).forEach(k => { this.data[k] = []; localStorage.removeItem(`grc_${k}`); }); this.renderCurrentTab(); this.updateAllBadges(); this.toast('All data cleared', 'success'); } }
