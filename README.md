@@ -143,3 +143,11 @@ Built with ❤️ by John B Joseph
 
 Website: https://johnbjoseph-cybersec.github.io  
 YouTube: https://www.youtube.com/@GRCMadeSimple
+
+This project is licensed under Creative Commons BY-NC 4.0.
+
+Educational and personal use is permitted.
+Commercial use, redistribution, or SaaS integration is prohibited without written permission.
+
+For commercial licensing or partnerships, contact:
+johnbjoseph.cybersec@gmail.com
