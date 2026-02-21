@@ -5,6 +5,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -24,7 +25,7 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       // SPA mode: we will send page_view events manually on tab changes
-      gtag('config', 'G-QYWFEQ2HTG' );
+      gtag('config', 'G-QYWFEQ2HTG', { send_page_view: false });
     </script>
 <style>
 :root {
@@ -1618,7 +1619,6 @@ class GRCLabPro {
         this.loadAllData();
         this.loadProjectData();
         this.bindEvents();
-        this.trackPageView(this.currentTab);
         this.renderCurrentTab();
         this.updateAllBadges();
             this.initLearningMode();
@@ -1695,7 +1695,50 @@ class GRCLabPro {
         this.updateAllBadges();
         this.toast('Exited project mode - back to general workspace', 'info');
     }
-    generateId(prefix) { return `${prefix}-${Date.now().toString(36)}`; }
+
+    resetActiveProject() {
+        const projectId = this.activeProject;
+        if (!projectId) {
+            this.toast('No active project to reset', 'warning');
+            return;
+        }
+        // Simple confirmation to prevent accidental wipes during demo
+        const ok = confirm('Reset this project? This will clear all assets, risks, controls, treatments, evidence and tasks for the active project.');
+        if (!ok) return;
+
+        this.resetProjectData(projectId);
+        // Re-enter project mode to refresh UI cleanly
+        this.enterProjectMode(projectId);
+        this.toast('Project reset successfully', 'success');
+    }
+
+    resetProjectData(projectId) {
+        if (!projectId) return;
+        this.projectData = this.projectData || {};
+        this.projectData[projectId] = {
+            assets: [],
+            risks: [],
+            controls: [],
+            evidence: [],
+            treatments: [],
+            tasks: [],
+            vendorProfile: null,
+            vendorRisks: [],
+            vendorControls: [],
+            auditFindings: [],
+            policies: [],
+            notes: []
+        };
+        this.saveProjectData();
+        this.updateAllBadges();
+        this.renderProjects();
+        // If we are currently viewing a project, refresh current tab contents
+        if (this.activeProject === projectId) {
+            this.renderCurrentTab();
+        }
+    }
+
+        generateId(prefix) { return `${prefix}-${Date.now().toString(36)}`; }
     esc(str) { return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
     escapeHtml(str) { return this.esc(str); }
     // ===== Analytics Helpers (GA4) =====
@@ -1806,7 +1849,21 @@ class GRCLabPro {
             }
             indicator.innerHTML = `
                 <div><i class="bi bi-briefcase-fill"></i> Project Mode: <strong>${project?.company || 'Unknown'}</strong> — ${project?.scenario || ''}</div>
-                <button onclick="app.exitProjectMode()" style="background: rgba(255,255,255,0.25); border: none; color: white; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.4)'" onmouseout="this.style.background='rgba(255,255,255,0.25)'"><i class="bi bi-box-arrow-left"></i> Exit Project</button>
+                <button onclick="resetProjectData()" style="
+background:rgba(255,255,255,0.25);
+border:none;
+color:white;
+padding:6px 16px;
+border-radius:4px;
+cursor:pointer;
+font-size:12px;
+font-weight:600;
+transition:background 0.2s;"
+onmouseover="this.style.background='rgba(255,255,255,0.4)'"
+onmouseout="this.style.background='rgba(255,255,255,0.25)'">
+Reset Project
+</button>
+                onclick="app.exitProjectMode()" style="background: rgba(255,255,255,0.25); border: none; color: white; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.4)'" onmouseout="this.style.background='rgba(255,255,255,0.25)'"><i class="bi bi-box-arrow-left"></i> Exit Project</button>
             `;
             indicator.style.display = 'flex';
             document.querySelector('.main-content').style.paddingTop = '52px';
@@ -7354,20 +7411,7 @@ saveEvidence(editId) {
         this.toast('Report exported as CSV!', 'success');
     }
     renderEmpty(icon, title, text, action) { return `<div class="empty-state"><div class="empty-state-icon"><i class="bi ${icon}"></i></div><h3 class="empty-state-title">${title}</h3><p class="empty-state-text">${text}</p>${action ? `<button class="btn btn-primary" onclick="app.${action}()"><i class="bi bi-plus-lg"></i> Get Started</button>` : ''}</div>`; }
-deleteItem(key, id) {
-    if (!confirm('Delete this item?')) return;
-
-    const d = this.getActiveData();   // IMPORTANT FIX
-
-    if (!d[key]) return;
-
-    d[key] = d[key].filter(x => x.id !== id);
-
-    this.saveData(key);
-    this.renderCurrentTab();
-    this.updateAllBadges?.();
-    this.toast('Item deleted', 'success');
-}
+    deleteItem(key, id) { if (confirm('Delete this item?')) { this.data[key] = this.data[key].filter(x => x.id !== id); this.saveData(key); this.renderCurrentTab(); this.toast('Item deleted', 'success'); } }
     toast(message, type = 'info') { const c = document.getElementById('toast-container'); const t = document.createElement('div'); t.className = `toast toast-${type}`; t.innerHTML = `<div class="toast-icon"><i class="bi ${type === 'success' ? 'bi-check-circle' : type === 'error' ? 'bi-x-circle' : 'bi-info-circle'}"></i></div><div class="toast-content"><div class="toast-message">${message}</div></div>`; c.appendChild(t); setTimeout(() => t.remove(), 4000); }
     exportData() { const d = JSON.stringify(this.data, null, 2); const b = new Blob([d], { type: 'application/json' }); const u = URL.createObjectURL(b); const a = document.createElement('a'); a.href = u; a.download = `grc-export-${new Date().toISOString().split('T')[0]}.json`; a.click(); URL.revokeObjectURL(u); this.toast('Data exported', 'success'); }
     clearAllData() { if (confirm('Clear ALL data? This cannot be undone.')) { Object.keys(this.data).forEach(k => { this.data[k] = []; localStorage.removeItem(`grc_${k}`); }); this.renderCurrentTab(); this.updateAllBadges(); this.toast('All data cleared', 'success'); } }
