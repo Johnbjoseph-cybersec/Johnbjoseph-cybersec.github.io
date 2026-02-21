@@ -9,7 +9,7 @@ Cybersecurity | GRC & AI Governance | ISO/IEC 27001 & 42001 Lead Auditor
 
 ## 🚀 Why I Built This
 
-Over the last 3 months, I spoke with **50+ CISOs and GRC leaders**, studied real enterprise workflows, and spent hundreds of hours designing and building this platform.
+Over the last 4 months, I spoke with **50+ CISOs and GRC leaders**, studied real enterprise workflows, and spent hundreds of hours designing and building this platform.
 
 Most GRC resources today are:
 
