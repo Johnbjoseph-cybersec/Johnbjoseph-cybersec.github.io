@@ -29,3 +29,81 @@ Please ensure:
 
 1. Fork the repository.
 2. Create a feature branch:
+3. Make clear, documented changes.
+4. Test functionality thoroughly.
+5. Submit a pull request with:
+- Description of change
+- Screenshots (if UI-related)
+- Explanation of why it improves the platform
+
+---
+
+## 🎯 Contribution Guidelines
+
+We prioritize:
+
+- Practical GRC realism
+- Clean, readable code
+- Modular structure
+- Educational value
+- Performance stability
+- No unnecessary framework bloat
+
+Please avoid:
+
+- Overengineering
+- Breaking existing workflows
+- Adding heavy external dependencies
+- Turning the platform into a production compliance system
+
+---
+
+## 📚 Licensing of Contributions
+
+By submitting a pull request, you agree that:
+
+- Your contribution is original work.
+- You have the right to submit it.
+- Your contribution may be licensed under the same license as the project.
+- Ownership of the overall platform remains with the project owner.
+
+All contributions become part of GRC Practice Lab and may be used in:
+- Educational deployments
+- Public releases
+- Commercial licensing versions (if applicable)
+
+---
+
+## 🚫 Contributor Ownership
+
+Submitting a contribution does not grant:
+- Ownership stake in the project
+- Revenue share
+- Licensing rights beyond the project license
+- Patent claims over the combined work
+
+---
+
+## 🧠 Philosophy
+
+This platform exists to:
+
+- Bridge theory and real-world GRC practice
+- Help career switchers build demonstrable experience
+- Provide structured simulation of enterprise governance workflows
+
+Contributions should strengthen this mission.
+
+---
+
+## 💬 Questions?
+
+Open a discussion thread or email:
+
+John Bommeraveni Joseph  
+Email: [your-email@example.com]
+
+---
+
+© 2026 John Bommeraveni Joseph  
+GRC Practice Lab
