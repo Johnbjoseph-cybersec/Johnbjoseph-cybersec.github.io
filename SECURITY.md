@@ -38,7 +38,8 @@ Do NOT create a public issue describing the vulnerability.
 Instead, email:
 
 **John Bommeraveni Joseph**  
-Email: [your-email@example.com]
+Email: johnbjoseph.cybersec@gmail.com
+
 
 Please include:
 - Description of the issue
