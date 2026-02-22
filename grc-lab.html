@@ -6,6 +6,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -13232,7 +13233,7 @@ document.addEventListener('DOMContentLoaded', () => { app = new GRCLabPro(); win
     <div style="max-width: 1400px; margin: 0 auto; padding: 0 24px;">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
             <div style="font-size: 13px; color: var(--text-muted);">
-                © <span id="footer-year">2026</span> John Bommeraveni Joseph. All rights reserved. Educational use only.
+                © <span id="footer-year">2025</span> John Bommeraveni Joseph. Educational use only.
             </div>
             <div style="display: flex; gap: 24px;">
                 <a href="index.html" style="font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-muted)'">Home</a>
@@ -13244,5 +13245,42 @@ document.addEventListener('DOMContentLoaded', () => { app = new GRCLabPro(); win
     </div>
 </footer>
 <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+
+<script>
+/* === Evidence Scoring Hard Guard (0–20 per field, Total max 100%) === */
+function clampEvidenceScores() {
+  document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('input', () => {
+      let v = parseInt(input.value || 0);
+
+      if (isNaN(v)) v = 0;
+      if (v < 0) v = 0;
+      if (v > 20) v = 20;
+
+      input.value = v;
+      safeUpdateEvidenceTotal();
+    });
+  });
+}
+
+function safeUpdateEvidenceTotal() {
+  let total = 0;
+
+  document.querySelectorAll('input[type="number"]').forEach(i => {
+    let v = parseInt(i.value || 0);
+    if (!isNaN(v)) total += v;
+  });
+
+  const percent = Math.min(100, Math.round(total));
+
+  const el = document.getElementById("evidence-total");
+  if (el) el.innerText = percent + "%";
+}
+
+// Attach after modal renders (dynamic DOM)
+document.addEventListener("click", () => {
+  setTimeout(clampEvidenceScores, 200);
+});
+</script>
 </body>
 </html>
