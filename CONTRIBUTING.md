@@ -101,7 +101,8 @@ Contributions should strengthen this mission.
 Open a discussion thread or email:
 
 John Bommeraveni Joseph  
-Email: [your-email@example.com]
+Email: johnbjoseph.cybersec@gmail.com
+
 
 ---
 
