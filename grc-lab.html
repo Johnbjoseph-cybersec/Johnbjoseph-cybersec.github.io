@@ -2498,19 +2498,267 @@ tbody tr:hover {
   }
 }
 
+/* Footer should follow main shell width and not hide under fixed sidebar */
+#site-footer {
+  margin-left: 260px;
+  width: calc(100% - 260px);
+  background: var(--bg-surface);
+  border-top: 1px solid var(--border-default);
+  padding: 40px 0 32px;
+  position: relative;
+  z-index: 20;
+}
+
+#site-footer .site-footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+#site-footer .site-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+#site-footer .site-footer-copy,
+#site-footer .site-footer-links a {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+#site-footer .site-footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+#site-footer .site-footer-links a {
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+#site-footer .site-footer-links a:hover {
+  color: var(--text-primary);
+}
+
+/* Mobile sidebar backdrop + shell behavior */
+#sidebar-backdrop {
+  position: fixed;
+  inset: 64px 0 0 0;
+  background: rgba(15, 23, 42, 0.34);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 1101;
+}
+
+#sidebar-backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: min(90vw, 340px);
+    z-index: 1102;
+  }
+
+  #site-footer {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  #edu-banner {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 10px 14px !important;
+    padding-right: 44px !important;
+  }
+
+  #edu-banner span {
+    min-width: 0 !important;
+  }
+}
+
 @media (max-width: 760px) {
+  html,
+  body,
+  .app-wrapper,
+  .app-container,
+  .main-content,
+  .content-body,
+  .tab-content {
+    max-width: 100%;
+    overflow-x: hidden !important;
+  }
+
+  .app-wrapper > header nav {
+    flex-wrap: wrap;
+    align-items: flex-start !important;
+    gap: 8px;
+    padding: 8px 0;
+  }
+
+  .app-wrapper > header nav > a {
+    min-width: 0;
+  }
+
   .app-wrapper > header nav > div:last-child {
+    width: 100%;
+    justify-content: flex-start;
     gap: 4px !important;
     padding: 2px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .app-wrapper > header nav > div:last-child > a {
+    flex: 0 0 auto;
     padding: 5px 8px;
     font-size: 12px !important;
   }
 
+  .content-header {
+    margin: 8px 10px 0 !important;
+    max-width: calc(100% - 20px) !important;
+    padding: 12px !important;
+    gap: 10px;
+  }
+
+  .content-title {
+    font-size: 18px !important;
+  }
+
+  .header-actions {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+  }
+
+  .content-body {
+    padding: 14px 10px 20px !important;
+  }
+
+  .content-body [style*="display: flex"][style*="justify-content: space-between"] {
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+
+  .content-body [style*="min-width: 300px"],
+  .content-body [style*="min-width:300px"],
+  .content-body [style*="min-width: 280px"],
+  .content-body [style*="min-width:280px"],
+  .content-body [style*="min-width: 260px"],
+  .content-body [style*="min-width:260px"],
+  .content-body [style*="min-width: 250px"],
+  .content-body [style*="min-width:250px"],
+  .content-body [style*="min-width: 220px"],
+  .content-body [style*="min-width:220px"] {
+    min-width: 0 !important;
+  }
+
+  .content-body [style*="grid-template-columns: 1fr 1fr"],
+  .content-body [style*="grid-template-columns:1fr 1fr"],
+  .content-body [style*="grid-template-columns: 1fr 1fr 1fr"],
+  .content-body [style*="grid-template-columns:1fr 1fr 1fr"],
+  .content-body [style*="grid-template-columns: 1fr 1fr 1fr 1fr"],
+  .content-body [style*="grid-template-columns:1fr 1fr 1fr 1fr"],
+  .content-body [style*="grid-template-columns: repeat(2, 1fr)"],
+  .content-body [style*="grid-template-columns:repeat(2, 1fr)"],
+  .content-body [style*="grid-template-columns: repeat(2,1fr)"],
+  .content-body [style*="grid-template-columns:repeat(2,1fr)"],
+  .content-body [style*="grid-template-columns: 340px 1fr"],
+  .content-body [style*="grid-template-columns:340px 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .content-body [style*="grid-template-columns: repeat(3, 1fr)"],
+  .content-body [style*="grid-template-columns:repeat(3, 1fr)"],
+  .content-body [style*="grid-template-columns: repeat(3,1fr)"],
+  .content-body [style*="grid-template-columns:repeat(3,1fr)"],
+  .content-body [style*="grid-template-columns: repeat(4, 1fr)"],
+  .content-body [style*="grid-template-columns:repeat(4, 1fr)"],
+  .content-body [style*="grid-template-columns: repeat(4,1fr)"],
+  .content-body [style*="grid-template-columns:repeat(4,1fr)"],
+  .content-body [style*="grid-template-columns: repeat(5, 1fr)"],
+  .content-body [style*="grid-template-columns:repeat(5, 1fr)"],
+  .content-body [style*="grid-template-columns: repeat(5,1fr)"],
+  .content-body [style*="grid-template-columns:repeat(5,1fr)"] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .content-body [style*="minmax(350px, 1fr)"],
+  .content-body [style*="minmax(350px,1fr)"],
+  .content-body [style*="minmax(320px, 1fr)"],
+  .content-body [style*="minmax(320px,1fr)"],
+  .content-body [style*="minmax(300px, 1fr)"],
+  .content-body [style*="minmax(300px,1fr)"],
+  .content-body [style*="minmax(280px, 1fr)"],
+  .content-body [style*="minmax(280px,1fr)"],
+  .content-body [style*="minmax(250px, 1fr)"],
+  .content-body [style*="minmax(250px,1fr)"],
+  .content-body [style*="minmax(220px, 1fr)"],
+  .content-body [style*="minmax(220px,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  #tab-dashboard .dash-kpi-grid,
+  #tab-dashboard .dash-charts-grid,
+  #tab-dashboard .dash-actions-grid,
+  #tab-dashboard .dash-bottom-grid,
+  #tab-matrix .matrix-kpi-grid,
+  #tab-matrix .matrix-heatmap-container,
+  #tab-matrix .matrix-stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  #tab-matrix .modern-heatmap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+
+  #tab-matrix .modern-heatmap-grid {
+    min-width: 260px;
+  }
+
+  .table-container table {
+    min-width: 640px !important;
+  }
+
+  #site-footer .site-footer-inner {
+    padding: 0 14px;
+  }
+
+  #site-footer .site-footer-row {
+    align-items: flex-start;
+  }
+
+  #site-footer .site-footer-links {
+    width: 100%;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
   .sidebar .nav-section {
     border-radius: 12px;
+  }
+
+  .coach-fab {
+    right: 14px;
+    bottom: 14px;
+  }
+}
+
+@media (min-width: 1025px) {
+  #sidebar-backdrop {
+    display: none !important;
   }
 }
 
@@ -2751,6 +2999,7 @@ tbody tr:hover {
                 </div>
             </div>
         </aside>
+        <div id="sidebar-backdrop" onclick="closeSidebar()"></div>
 
         <!-- Coach FAB Button -->
         <button class="coach-fab" onclick="app.toggleCoach()" title="GRC Coach"><i class="bi bi-mortarboard-fill"></i><div class="coach-pulse"></div></button>
@@ -3027,7 +3276,10 @@ class GRCLabPro {
     }
 
     bindEvents() {
-        document.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', () => this.switchTab(item.dataset.tab)));
+        document.querySelectorAll('.nav-item').forEach(item => item.addEventListener('click', () => {
+            this.switchTab(item.dataset.tab);
+            if (window.innerWidth <= 1024) closeSidebar();
+        }));
         this.coachOpen = false;
         this.syncSidebarSections(this.currentTab);
         this.assignSidebarNavIndices();
@@ -3304,6 +3556,7 @@ class GRCLabPro {
         this.renderCurrentTab();
         this.animateTabEntrance(tab);
         this.updateProjectModeIndicator();
+        if (window.innerWidth <= 1024 && document.getElementById('sidebar')?.classList.contains('open')) closeSidebar();
         if (this.coachOpen) this.renderCoach();
         if (this.devMode) this.updateDevPanel();
     }
@@ -20381,9 +20634,32 @@ function openModal(title, body, footer) {
     document.body.classList.add('modal-open');
 }
 function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); document.body.classList.remove('modal-open'); try { if (window.app && typeof app.clearModalContext === 'function') app.clearModalContext(); } catch(e) {} }
-function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+function closeSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    if (sidebar) sidebar.classList.remove('open');
+    if (backdrop) backdrop.classList.remove('show');
+    document.body.classList.remove('sidebar-open');
+}
+function toggleSidebar(forceState) {
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    if (!sidebar) return;
+    const shouldOpen = typeof forceState === 'boolean' ? forceState : !sidebar.classList.contains('open');
+    sidebar.classList.toggle('open', shouldOpen);
+    if (backdrop) backdrop.classList.toggle('show', shouldOpen);
+    document.body.classList.toggle('sidebar-open', shouldOpen);
+}
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 1024) closeSidebar();
+});
 document.getElementById('modal-overlay')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) closeModal(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeModal();
+        closeSidebar();
+    }
+});
 let app;
 document.addEventListener('DOMContentLoaded', () => { app = new GRCLabPro(); window.app = app; });
 </script>
@@ -20391,17 +20667,17 @@ document.addEventListener('DOMContentLoaded', () => { app = new GRCLabPro(); win
 </div><!-- End app-wrapper -->
 
 <!-- Site Footer -->
-<footer style="background: var(--bg-surface); border-top: 1px solid var(--border-default); padding: 40px 0 32px; margin-top: 0;">
-    <div style="max-width: 1400px; margin: 0 auto; padding: 0 24px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-            <div style="font-size: 13px; color: var(--text-muted);">
+<footer id="site-footer">
+    <div class="site-footer-inner">
+        <div class="site-footer-row">
+            <div class="site-footer-copy">
                 © <span id="footer-year">2025</span> John Bommeraveni Joseph. Educational use only.
             </div>
-            <div style="display: flex; gap: 24px;">
-                <a href="index.html" style="font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-muted)'">Home</a>
-                <a href="grc-lab.html" style="font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-muted)'">GRC Lab</a>
-                <a href="terms.html" style="font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-muted)'">Terms</a>
-                <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" style="font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--text-primary)'" onmouseout="this.style.color='var(--text-muted)'">YouTube</a>
+            <div class="site-footer-links">
+                <a href="index.html">Home</a>
+                <a href="grc-lab.html">GRC Lab</a>
+                <a href="terms.html">Terms</a>
+                <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank">YouTube</a>
             </div>
         </div>
     </div>
