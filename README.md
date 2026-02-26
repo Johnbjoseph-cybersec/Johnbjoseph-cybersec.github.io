@@ -8,6 +8,8 @@ Cybersecurity | GRC & AI Governance | ISO/IEC 27001 & 42001 Lead Auditor
 
 🌐 Live Platform: https://johnbjoseph-cybersec.github.io/
 
+
+
 🚀 Why This Platform Exists
 
 Most GRC learning today is:
@@ -23,6 +25,8 @@ Not portfolio-friendly
 You can pass ISO 27001.
 You can memorize SOC 2.
 
+
+
 But can you:
 
 Build a structured risk register?
@@ -34,6 +38,7 @@ Defend evidence during an audit?
 Explain residual risk to leadership?
 
 This lab bridges that gap.
+
 
 🎯 What You Can Do Inside the Lab
 
@@ -65,6 +70,7 @@ All directly in the browser.
 
 All data stays local in your browser.
 
+
 ⚡ GRC AI Agent (WebGPU + WebLLM Powered)
 
 Version 3 introduces a fully integrated on-device GRC AI Agent built using:
@@ -90,6 +96,7 @@ Your evidence
 Your framework mappings
 
 Your project structure
+
 
 You can ask:
 
