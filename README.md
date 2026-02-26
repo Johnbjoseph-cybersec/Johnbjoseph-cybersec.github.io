@@ -151,3 +151,6 @@ Commercial use, redistribution, or SaaS integration is prohibited without writte
 
 For commercial licensing or partnerships, contact:
 johnbjoseph.cybersec@gmail.com
+
+<img width="1905" height="1006" alt="AI Command" src="https://github.com/user-attachments/assets/2f43a3a0-1159-447b-8bbc-f1186a06785f" />
+
