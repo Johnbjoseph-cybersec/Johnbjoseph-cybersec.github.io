@@ -1,156 +1,138 @@
-# 🛡️ GRC Made Simple – Practice Lab
+**🛡️ GRC Practice Lab
+From Theory to Real-World GRC Execution**
 
-A free, offline, hands-on Governance, Risk & Compliance (GRC) learning platform.
+A browser-based, hands-on Governance, Risk & Compliance (GRC) simulation platform designed to help professionals **practice real workflows** — not just study frameworks.
 
-Built by **John B Joseph**  
-Cybersecurity | GRC & AI Governance | ISO/IEC 27001 & 42001 Lead Auditor
+**Built by John B Joseph
+Cybersecurity | GRC & AI Governance | ISO/IEC 27001 & 42001 Lead Auditor**
 
----
+**🌐 Live Lab: https://johnbjoseph-cybersec.github.io/**
 
-## 🚀 Why I Built This
+**🚀 Why This Exists**
 
-Over the last 4 months, I spoke with **50+ CISOs and GRC leaders**, studied real enterprise workflows, and spent hundreds of hours designing and building this platform.
+Most GRC learning today is:
+Theory-heavy
+Certification-focused
+Tool-dependent
+Not portfolio-ready
 
-Most GRC resources today are:
+You can pass ISO 27001.
+You can memorize SOC 2.
 
-- Theory-heavy  
-- Locked behind tools  
-- Hidden behind paywalls  
-- Not portfolio-friendly  
+But can you build a risk register?
+Map controls?
+Defend evidence during an audit?
 
-So I built something practical.
+This lab bridges that gap.
 
-This lab helps you **practice real GRC workflows**, not just read about them.
+**🎯 What This Platform Enables**
 
----
+Inside the lab, users can:
+Build structured Risk Registers
+Map Controls to Risks
+Generate Statement of Applicability (SoA)
+Track Evidence
+Simulate Audit Reviews
+Run full compliance projects
+Visualize Risk Heatmaps
+Use an AI-powered GRC Copilot
+All directly in the browser.
 
-## 🧠 What This Is
+No backend.
+No signup.
+No cloud storage.
 
-A fully offline GRC Practice Platform packed into a single HTML file (10,000+ lines of code).
+100% client-side execution.
 
-- No installation  
-- No signup  
-- No backend  
-- No cloud  
+**⚡ GRC AI Agent (WebGPU + WebLLM Powered)**
 
-Just open the file and start practicing.
+Version 3 introduces a fully integrated on-device GRC AI Agent built using:
 
-All data stays 100% local in your browser.
+WebGPU
+WebLLM
+Local model inference
+Embedded knowledge retrieval
 
----
+The agent can:
+Analyze your risk entries
+Evaluate control sufficiency
+Identify audit gaps
+Review evidence defensibility
+Assess project readiness
 
-## ✨ Key Features
+Runs entirely inside your browser.
+No external APIs.
+No data transmission.
 
-### 🔐 Framework Coverage (400+ Controls)
+This changes the learning loop:
+Practice → Feedback → Refine → Elevate
 
-Mapped across 9 major frameworks:
+**🧩 Framework Coverage (480+ Controls)**
 
-- ISO/IEC 27001  
-- NIST CSF  
-- CIS Controls  
-- SOC 2  
-- PCI DSS  
-- HIPAA  
-- COBIT  
-- GDPR  
-- UAE IA (practice aligned)
+Aligned across major standards:
 
----
+ISO/IEC 27001
+NIST CSF
+CIS Controls
+SOC 2
+PCI DSS
+HIPAA
+COBIT
+GDPR
+UAE IA (practice aligned)
 
-### 🧩 Hands-On GRC Workflows
+**📷 Platform Screenshots**
+**🏠 GRC Command Center Dashboard**
+<p align="center"> <img src="screenshots/dashboard.png" width="900"> </p>
+**📊 Community Growth & Engagement**
+<p align="center"> <img src="screenshots/stats.png" width="900"> </p>
 
-- Asset Inventory  
-- Risk Register + Heatmaps  
-- Statement of Applicability (SoA)  
-- Control Mapping  
-- Vendor Risk  
-- Traceability Chains  
-- Evidence Tracking  
-- Executive Dashboards  
-- Interactive Reports  
+**Launched February 2026
+2,800+ active users
+79,000+ hands-on interactions
+150+ GRC practitioners validating the platform**
 
----
+**🎯 Guided Practice Scenarios**
+<p align="center"> <img src="screenshots/scenarios.png" width="900"> </p>
 
-### 📚 Learning & Portfolio
+**Structured step-by-step missions designed to simulate real-world GRC workflows.**
 
-- 11 Guided Practice Scenarios  
-- 12 Portfolio-Ready Projects  
-- Resume Bullet Point Generator  
-- GitHub / LinkedIn Sharing  
-- Executive Summary Exports  
+**🔥 Risk Matrix & Heatmap Analytics**
+<p align="center"> <img src="screenshots/risk-matrix.png" width="900"> </p>
+**Interactive inherent vs residual risk visualization with analytics.**
 
-Designed for:
+**⚡ WebGPU Runtime Setup**
+<p align="center"> <img src="screenshots/webgpu.png" width="900"> </p>
+On-device model loading and runtime configuration using WebGPU.
 
-- Career switchers  
-- Entry & mid-level GRC professionals  
-- Students & self-learners  
+**🤖 GRC AI Command Console**
+<p align="center"> <img src="screenshots/ai-command.png" width="900"> </p>
+Command-based GRC copilot with structured evaluation outputs.
 
----
-
-## 🖥️ How To Use
-
-1. Download or clone this repository  
-2. Open `grc-lab.html` in any modern browser  
-3. Start practicing  
-
+**🖥️ How To Use**
+Clone or download this repository
+Open grc-lab.html in any modern browser
+Start building your GRC environment
 That’s it.
 
----
+**📌 Who This Is For**
+Career switchers entering GRC
+Entry-level analysts
+Mid-level compliance professionals
+Students building portfolios
+Audit-focused practitioners
 
-## 📊 Analytics
+**⚠️ Disclaimer**
+This platform is intended for educational and portfolio-building purposes only.
+Not intended for production compliance decisions or certification reliance.
 
-Basic Google Analytics is used only to understand usage patterns (visits and engagement).
+**Framework language summarized for learning purposes.**
 
-No personal or practice data is transmitted.  
-All lab data remains local.
+📬 Connect
+🌐 Website: https://johnbjoseph-cybersec.github.io/
+🎥 YouTube: https://www.youtube.com/@GRCMadeSimple
+🔗 LinkedIn: https://www.linkedin.com/in/john-bj/
+📧 Contact: johnbjoseph.cybersec@gmail.com
 
----
-
-## 🛣️ Roadmap
-
-- Industry projects (Finance, Healthcare, Cloud)  
-- ISO 27001 implementation walkthroughs  
-- UAE IA & CSC scenarios  
-- Advanced audit simulations  
-- Evidence maturity scoring  
-- Risk treatment automation  
-
----
-
-## 🙏 Feedback
-
-This is Version 1.
-
-If you are a GRC professional, CISO, or learner:
-
-- What should be improved?
-- What scenarios should be added?
-- What would make this more useful?
-
-Please open an issue or message me.
-
----
-
-## ⚠️ Disclaimer
-
-Educational and portfolio practice only.  
-Not intended for production compliance or certification decisions.  
-Framework content summarized for learning purposes.
-
----
-
-Built with ❤️ by John B Joseph  
-
-Website: https://johnbjoseph-cybersec.github.io  
-YouTube: https://www.youtube.com/@GRCMadeSimple
-
-This project is licensed under Creative Commons BY-NC 4.0.
-
-Educational and personal use is permitted.
-Commercial use, redistribution, or SaaS integration is prohibited without written permission.
-
-For commercial licensing or partnerships, contact:
-johnbjoseph.cybersec@gmail.com
-
-<img width="1905" height="1006" alt="AI Command" src="https://github.com/user-attachments/assets/2f43a3a0-1159-447b-8bbc-f1186a06785f" />
-
+**Licensed under Creative Commons BY-NC 4.0
+Commercial use requires written permission.**
