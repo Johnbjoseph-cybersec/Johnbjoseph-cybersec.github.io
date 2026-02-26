@@ -13,13 +13,9 @@ Cybersecurity | GRC & AI Governance | ISO/IEC 27001 & 42001 Lead Auditor
 🚀 Why This Platform Exists
 
 Most GRC learning today is:
-
 Theory-heavy
-
 Certification-focused
-
 Tool-dependent
-
 Not portfolio-friendly
 
 You can pass ISO 27001.
