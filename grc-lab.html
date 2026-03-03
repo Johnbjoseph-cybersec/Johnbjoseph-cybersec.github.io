@@ -7,6 +7,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -10270,6 +10271,7 @@ saveEvidence(editId) {
     renderProjects() {
         const c = document.getElementById('tab-projects');
         const projects = this.getProjectScenarios();
+        const runtime = this.ensureAiRuntime();
         
         // Calculate overall stats
         let totalCompleted = 0;
@@ -20471,6 +20473,7 @@ saveEvidence(editId) {
     renderComplianceCalendar() {
         const c = document.getElementById('tab-compliance-calendar');
         const d = this.getActiveData();
+        const runtime = this.ensureAiRuntime();
         const now = new Date();
         const events = [];
         // Gather all dated items across the program
