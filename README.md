@@ -142,3 +142,18 @@ Educational and portfolio practice only.
 Not intended for production compliance decisions.
 
 Licensed under **Creative Commons BY-NC 4.0** (commercial use requires written permission).
+
+## License
+
+This project uses a dual-license model:
+
+| Component | License |
+|---|---|
+| Platform code (HTML/CSS/JS, scripts) | [MIT License](./LICENSE-CODE) |
+| Course content, modules & frameworks | [CC BY-NC 4.0](./LICENSE-CONTENT) |
+
+**In plain terms:**
+- You're free to use, fork
+- Course content and curriculum may not be used for commercial purposes without permission
+
+© GRC Made Simple 
