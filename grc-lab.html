@@ -8,6 +8,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -6488,12 +6489,47 @@ renderDonutChart(segments, total) {
         if (!editId) this.showWorkflowPrompt('Control Created — Next Step', 'Now collect evidence that proves this control works. Screenshots, logs, policy docs — whatever an auditor would need to see.', 'evidence', 'Add Evidence →');
     }
     editControl(id) { const c = this.getActiveData().controls.find(x => x.id === id); if (c) this.showControlModal(c); }
+    getTreatmentLinkConfig(projectId = this.activeProject) {
+        const project = projectId ? this.getProjectScenarios().find(p => p.id === projectId) : null;
+        const taskTypes = new Set(project?.tasks?.map(t => t.type) || []);
+        const data = projectId ? this.getProjectData(projectId) : this.getActiveData();
+        const riskCount = Array.isArray(data?.risks) ? data.risks.length : 0;
+        const issueCount = Array.isArray(data?.issues) ? data.issues.length : 0;
+
+        if (taskTypes.has('risks') && !taskTypes.has('issues')) {
+            return { relationType: 'risk', label: 'Related Risk', selectId: 'f-risk', emptyText: 'Add a risk first to create a treatment plan.' };
+        }
+        if (taskTypes.has('issues') && !taskTypes.has('risks')) {
+            return { relationType: 'issue', label: 'Related Gap / Issue', selectId: 'f-issue', emptyText: 'Add an issue or gap first to create a remediation plan.' };
+        }
+        if (riskCount > 0) {
+            return { relationType: 'risk', label: 'Related Risk', selectId: 'f-risk', emptyText: 'Add a risk first to create a treatment plan.' };
+        }
+        return { relationType: 'issue', label: 'Related Gap / Issue', selectId: 'f-issue', emptyText: 'Add an issue or gap first to create a remediation plan.' };
+    }
+    getTreatmentLinkedRecord(treatment, data = this.getActiveData()) {
+        if (treatment?.riskId) {
+            const risk = (data.risks || []).find(r => r.id === treatment.riskId);
+            if (risk) return { kind: 'risk', title: risk.title, id: risk.id };
+            return { kind: 'risk', title: treatment.riskId, id: treatment.riskId };
+        }
+        if (treatment?.issueId) {
+            const issue = (data.issues || []).find(i => i.id === treatment.issueId);
+            if (issue) return { kind: 'issue', title: issue.title, id: issue.id };
+            return { kind: 'issue', title: treatment.issueId, id: treatment.issueId };
+        }
+        return { kind: 'item', title: 'Unlinked treatment', id: '' };
+    }
     renderTreatments() {
         const c = document.getElementById('tab-treatments');
-        const treatments = this.getActiveData().treatments;
+        const data = this.getActiveData();
+        const treatments = data.treatments;
         const completed = treatments.filter(t => t.status === 'Completed').length;
         const inProgress = treatments.filter(t => t.status === 'In Progress').length;
-        
+        const linkConfig = this.getTreatmentLinkConfig();
+        const linkedHeader = linkConfig.relationType === 'issue' ? 'Gap / Issue' : 'Risk';
+        const emptyText = linkConfig.relationType === 'issue' ? 'Create remediation plans linked to identified issues and gaps.' : 'Create treatment plans to address identified risks.';
+
         c.innerHTML = `
             <div class="modern-page-hero" style="background: linear-gradient(-45deg, #701a75, #86198f, #a21caf, #c026d3); background-size: 400% 400%; animation: modern-gradient 15s ease infinite;">
                 <div class="modern-page-hero-content">
@@ -6524,19 +6560,51 @@ renderDonutChart(segments, total) {
             
             <div class="modern-card">
                 <div class="modern-card-header"><span class="modern-card-title"><i class="bi bi-list-ul" style="color: var(--accent-purple);"></i> All Treatments</span><span class="badge badge-purple">${treatments.length} items</span></div>
-                ${treatments.length > 0 ? `<div style="overflow-x: auto;"><table class="modern-table"><thead><tr><th>Risk</th><th>Type</th><th>Status</th><th>Owner</th><th>Due Date</th><th style="width: 100px;">Actions</th></tr></thead><tbody>${treatments.map(t => { const risk = this.getActiveData().risks.find(r => r.id === t.riskId); return `<tr onclick="app.editTreatment('${t.id}')"><td style="font-weight: 500;">${risk?.title || t.riskId}</td><td><span class="badge badge-${t.type === 'Mitigate' ? 'blue' : t.type === 'Accept' ? 'green' : t.type === 'Transfer' ? 'purple' : 'amber'}">${t.type}</span></td><td><span class="badge badge-${t.status === 'Completed' ? 'green' : t.status === 'In Progress' ? 'amber' : 'gray'}">${t.status}</span></td><td style="color: var(--text-secondary);">${t.owner || '-'}</td><td style="color: var(--text-secondary);">${t.dueDate ? new Date(t.dueDate).toLocaleDateString() : '-'}</td><td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); app.editTreatment('${t.id}')" title="Edit"><i class="bi bi-pencil"></i></button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); app.deleteItem('treatments','${t.id}')" title="Delete"><i class="bi bi-trash3"></i></button></td></tr>`; }).join('')}</tbody></table></div>` : `<div class="modern-empty"><div class="modern-empty-icon"><i class="bi bi-bandaid"></i></div><h3>No Treatments Yet</h3><p>Create treatment plans to address identified risks.</p><button class="btn btn-primary" onclick="app.showTreatmentModal()"><i class="bi bi-plus-lg"></i> Add Your First Treatment</button></div>`}
+                ${treatments.length > 0 ? `<div style="overflow-x: auto;"><table class="modern-table"><thead><tr><th>${linkedHeader}</th><th>Type</th><th>Status</th><th>Owner</th><th>Due Date</th><th style="width: 100px;">Actions</th></tr></thead><tbody>${treatments.map(t => { const linked = this.getTreatmentLinkedRecord(t, data); return `<tr onclick="app.editTreatment('${t.id}')"><td style="font-weight: 500;">${this.esc(linked.title)}</td><td><span class="badge badge-${t.type === 'Mitigate' ? 'blue' : t.type === 'Accept' ? 'green' : t.type === 'Transfer' ? 'purple' : 'amber'}">${t.type}</span></td><td><span class="badge badge-${t.status === 'Completed' ? 'green' : t.status === 'In Progress' ? 'amber' : 'gray'}">${t.status}</span></td><td style="color: var(--text-secondary);">${t.owner || '-'}</td><td style="color: var(--text-secondary);">${t.dueDate ? new Date(t.dueDate).toLocaleDateString() : '-'}</td><td><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); app.editTreatment('${t.id}')" title="Edit"><i class="bi bi-pencil"></i></button><button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); app.deleteItem('treatments','${t.id}')" title="Delete"><i class="bi bi-trash3"></i></button></td></tr>`; }).join('')}</tbody></table></div>` : `<div class="modern-empty"><div class="modern-empty-icon"><i class="bi bi-bandaid"></i></div><h3>No Treatments Yet</h3><p>${emptyText}</p><button class="btn btn-primary" onclick="app.showTreatmentModal()"><i class="bi bi-plus-lg"></i> Add Your First Treatment</button></div>`}
             </div>
         `;
     }
     showTreatmentModal(t = null) {
         const isEdit = t !== null;
         this.setModalContext('treatment', { isEdit, item: t });
-        openModal(isEdit ? 'Edit Treatment' : 'Add Treatment', `<div class="form-group"><label class="form-label">Related Risk *</label><select class="form-select" id="f-risk"><option value="">-- Select Risk --</option>${this.getActiveData().risks.map(r => `<option value="${r.id}" ${t?.riskId === r.id ? 'selected' : ''}>${r.title}</option>`).join('')}</select></div><div class="form-row"><div class="form-group"><label class="form-label">Type</label><select class="form-select" id="f-type">${['Mitigate', 'Accept', 'Transfer', 'Avoid'].map(ty => `<option value="${ty}" ${t?.type === ty ? 'selected' : ''}>${ty}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Status</label><select class="form-select" id="f-status">${['Planned', 'In Progress', 'Completed'].map(s => `<option value="${s}" ${t?.status === s ? 'selected' : ''}>${s}</option>`).join('')}</select></div></div><div class="form-row"><div class="form-group"><label class="form-label">Owner</label><input type="text" class="form-input" id="f-owner" value="${t?.owner || ''}"></div><div class="form-group"><label class="form-label">Due Date</label><input type="date" class="form-input" id="f-due" value="${t?.dueDate?.split('T')[0] || ''}"></div></div><div class="form-group"><label class="form-label">Plan</label><textarea class="form-textarea" id="f-plan">${t?.plan || ''}</textarea></div>`, `<button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="app.saveTreatment('${t?.id || ''}')">${isEdit ? 'Update' : 'Create'}</button>`);
+        const config = this.getTreatmentLinkConfig();
+        const data = this.getActiveData();
+        const records = config.relationType === 'issue' ? (data.issues || []) : (data.risks || []);
+        const selectedId = config.relationType === 'issue' ? (t?.issueId || '') : (t?.riskId || '');
+        const placeholder = config.relationType === 'issue' ? '-- Select Gap / Issue --' : '-- Select Risk --';
+        const optionLabel = config.relationType === 'issue' ? (record => record.title) : (record => record.title);
+        const relationFieldHtml = `
+            <div class="form-group">
+                <label class="form-label">${config.label} *</label>
+                <select class="form-select" id="${config.selectId}">
+                    <option value="">${placeholder}</option>
+                    ${records.map(record => `<option value="${record.id}" ${selectedId === record.id ? 'selected' : ''}>${this.esc(optionLabel(record))}</option>`).join('')}
+                </select>
+                ${records.length === 0 ? `<div class="beginner-tip" style="display:block; margin-top:8px;"><i class="bi bi-info-circle"></i> ${config.emptyText}</div>` : ''}
+            </div>
+        `;
+        openModal(isEdit ? 'Edit Treatment' : 'Add Treatment', `${relationFieldHtml}<div class="form-row"><div class="form-group"><label class="form-label">Type</label><select class="form-select" id="f-type">${['Mitigate', 'Accept', 'Transfer', 'Avoid'].map(ty => `<option value="${ty}" ${t?.type === ty ? 'selected' : ''}>${ty}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Status</label><select class="form-select" id="f-status">${['Planned', 'In Progress', 'Completed'].map(s => `<option value="${s}" ${t?.status === s ? 'selected' : ''}>${s}</option>`).join('')}</select></div></div><div class="form-row"><div class="form-group"><label class="form-label">Owner</label><input type="text" class="form-input" id="f-owner" value="${t?.owner || ''}"></div><div class="form-group"><label class="form-label">Due Date</label><input type="date" class="form-input" id="f-due" value="${t?.dueDate?.split('T')[0] || ''}"></div></div><div class="form-group"><label class="form-label">Plan</label><textarea class="form-textarea" id="f-plan">${t?.plan || ''}</textarea></div>`, `<button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="app.saveTreatment('${t?.id || ''}')">${isEdit ? 'Update' : 'Create'}</button>`);
     }
     saveTreatment(editId) {
-        const riskId = document.getElementById('f-risk').value;
-        if (!riskId) { this.toast('Please select a risk', 'error'); return; }
-        const item = { id: editId || this.generateId('TRT'), riskId, type: document.getElementById('f-type').value, status: document.getElementById('f-status').value, owner: document.getElementById('f-owner').value, dueDate: document.getElementById('f-due').value || null, plan: document.getElementById('f-plan').value, createdAt: editId ? this.getActiveData().treatments.find(t => t.id === editId)?.createdAt : new Date().toISOString(), updatedAt: new Date().toISOString() };
+        const config = this.getTreatmentLinkConfig();
+        const relationId = document.getElementById(config.selectId)?.value || '';
+        if (!relationId) {
+            this.toast(config.relationType === 'issue' ? 'Please select an issue or gap' : 'Please select a risk', 'error');
+            return;
+        }
+        const existing = editId ? this.getActiveData().treatments.find(t => t.id === editId) : null;
+        const item = {
+            id: editId || this.generateId('TRT'),
+            riskId: config.relationType === 'risk' ? relationId : null,
+            issueId: config.relationType === 'issue' ? relationId : null,
+            type: document.getElementById('f-type').value,
+            status: document.getElementById('f-status').value,
+            owner: document.getElementById('f-owner').value,
+            dueDate: document.getElementById('f-due').value || null,
+            plan: document.getElementById('f-plan').value,
+            createdAt: existing?.createdAt || new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
         if (editId) { const idx = this.getActiveData().treatments.findIndex(t => t.id === editId); if (idx !== -1) this.getActiveData().treatments[idx] = item; } else { this.getActiveData().treatments.push(item); }
         this.saveData('treatments'); closeModal(); this.renderTreatments(); this.toast(editId ? 'Treatment updated' : 'Treatment created', 'success');
     }
@@ -10347,7 +10415,7 @@ saveEvidence(editId) {
                     </div>
                     
                     <div class="project-card-tasks">
-                        ${p.tasks.slice(0, 3).map(t => {
+                        ${p.tasks.map(t => {
                             const isComplete = self.checkTaskComplete(p.id, t);
                             return `
                                 <div class="project-card-task ${isComplete ? 'complete' : 'incomplete'}">
@@ -10356,7 +10424,6 @@ saveEvidence(editId) {
                                 </div>
                             `;
                         }).join('')}
-                        ${p.tasks.length > 3 ? `<div style="font-size: 11px; color: var(--text-muted); padding: 4px 0;">+${p.tasks.length - 3} more tasks</div>` : ''}
                     </div>
                 </div>
                 
