@@ -9,6 +9,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -8467,12 +8468,9 @@ saveEvidence(editId) {
     renderReports() {
         const c = document.getElementById('tab-reports');
         const d = this.getActiveData();
-        
-        // Calculate statistics
         const totalRisks = d.risks.length;
-        const criticalRisks = d.risks.filter(r => r.likelihood * r.impact >= 20).length;
-        const highRisks = d.risks.filter(r => r.likelihood * r.impact >= 12 && r.likelihood * r.impact < 20).length;
-        const openRisks = d.risks.filter(r => r.status !== 'Closed').length;
+        const criticalRisks = d.risks.filter(r => (Number(r.likelihood || 0) * Number(r.impact || 0)) >= 20).length;
+        const highRisks = d.risks.filter(r => { const score = Number(r.likelihood || 0) * Number(r.impact || 0); return score >= 12 && score < 20; }).length;
         const totalControls = d.controls.length;
         const effectiveControls = d.controls.filter(ct => ct.effectiveness === 'Effective').length;
         const partialControls = d.controls.filter(ct => ct.effectiveness === 'Partially Effective').length;
@@ -8480,160 +8478,83 @@ saveEvidence(editId) {
         const closedFindings = d.findings.filter(f => f.status === 'Closed').length;
         const openIssues = d.issues.filter(i => i.status === 'Open').length;
         const criticalVendors = d.vendors.filter(v => v.criticality === 'Critical').length;
-        
+        const evidenceCoverage = Math.round((d.evidence.length / Math.max(1, d.controls.length)) * 100);
+        const testingCoverage = Math.round((d.controlTests.length / Math.max(1, d.controls.length)) * 100);
+        const treatmentCoverage = Math.round((d.treatments.length / Math.max(1, d.risks.length)) * 100);
+        const resilienceCount = d.biaEntries.length + d.bcmPlans.length;
+        const programSurface = d.assets.length + d.risks.length + d.controls.length + d.policies.length + d.evidence.length + d.findings.length + d.incidents.length + d.tasks.length + d.audits.length + d.requirements.length + d.exceptions.length + d.kriEntries.length + d.vendorAssessments.length;
         const selectedReport = this.selectedReport || null;
-        
+
+        const reportCards = [
+            { id:'program360', icon:'bi-stars', iconBg:'var(--accent-purple-soft)', iconColor:'var(--accent-purple)', title:'Program 360 Report', desc:'Full lab coverage across all workstreams', stats:[{v:programSurface,l:'Records'},{v:d.requirements.length,l:'Requirements'},{v:d.exceptions.length,l:'Exceptions'}] },
+            { id:'risk', icon:'bi-exclamation-triangle', iconBg:'var(--accent-red-soft)', iconColor:'var(--accent-red)', title:'Risk Assessment Report', desc:'Complete risk register analysis', stats:[{v:totalRisks,l:'Total'},{v:criticalRisks,l:'Critical'},{v:highRisks,l:'High'}] },
+            { id:'control', icon:'bi-shield-check', iconBg:'var(--accent-green-soft)', iconColor:'var(--accent-green)', title:'Control Effectiveness', desc:'Control status and testing results', stats:[{v:totalControls,l:'Total'},{v:effectiveControls,l:'Effective'},{v:partialControls,l:'Partial'}] },
+            { id:'compliance', icon:'bi-clipboard-check', iconBg:'var(--accent-blue-soft)', iconColor:'var(--accent-blue)', title:'Compliance Status', desc:'Framework and audit overview', stats:[{v:d.audits.length,l:'Audits'},{v:closedFindings,l:'Closed'},{v:openFindings,l:'Open'}] },
+            { id:'assurance', icon:'bi-patch-check', iconBg:'var(--accent-cyan-soft)', iconColor:'var(--accent-cyan)', title:'Assurance & Evidence', desc:'Evidence, testing, and traceability posture', stats:[{v:d.evidence.length,l:'Evidence'},{v:`${testingCoverage}%`,l:'Testing'},{v:`${evidenceCoverage}%`,l:'Proof'}] },
+            { id:'vendor', icon:'bi-building', iconBg:'var(--accent-purple-soft)', iconColor:'var(--accent-purple)', title:'Third-Party Risk', desc:'Vendor criticality and oversight', stats:[{v:d.vendors.length,l:'Vendors'},{v:criticalVendors,l:'Critical'},{v:d.vendorAssessments.length,l:'Assessments'}] },
+            { id:'resilience', icon:'bi-heart-pulse', iconBg:'var(--accent-amber-soft)', iconColor:'var(--accent-amber)', title:'Resilience & Recovery', desc:'BIA, BCM, incidents, and continuity view', stats:[{v:resilienceCount,l:'BIA/BCM'},{v:d.incidents.length,l:'Incidents'},{v:d.kriEntries.length,l:'KRIs'}] },
+            { id:'incident', icon:'bi-lightning-charge', iconBg:'var(--accent-red-soft)', iconColor:'var(--accent-red)', title:'Incident Report', desc:'Security event and response summary', stats:[{v:d.incidents.length,l:'Incidents'},{v:openIssues,l:'Issues'},{v:d.tasks.length,l:'Tasks'}] },
+            { id:'executive', icon:'bi-graph-up-arrow', iconBg:'var(--accent-green-soft)', iconColor:'var(--accent-green)', title:'Executive Summary', desc:'Leadership-ready posture snapshot', stats:[{v:d.assets.length,l:'Assets'},{v:d.policies.length,l:'Policies'},{v:`${treatmentCoverage}%`,l:'Treatment'}] }
+        ];
+
         c.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-                <div>
-                    <h2 style="font-size: 20px; font-weight: 600; margin-bottom: 4px;"><i class="bi bi-file-earmark-bar-graph"></i> Reports & Analytics</h2>
-                    <p style="color: var(--text-muted); font-size: 13px;">Generate detailed reports for compliance, audits, and management review.</p>
-                </div>
-                <div style="display: flex; gap: 8px;">
-                    <button class="btn btn-secondary" onclick="app.exportAllReports()" style="white-space: nowrap;"><i class="bi bi-download"></i> Export All</button>
-                    <button class="btn btn-primary" onclick="app.printReport()" style="white-space: nowrap;"><i class="bi bi-printer"></i> Print to PDF</button>
-                </div>
-            </div>
-            
-            <!-- Report Cards Grid -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px;">
-                
-                <!-- Risk Report Card -->
-                <div class="card" onclick="app.showReport('risk')" style="cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
-                    <div class="card-body" style="padding: 20px;">
-                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-                            <div style="width: 50px; height: 50px; background: var(--accent-red-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                <i class="bi bi-exclamation-triangle" style="font-size: 24px; color: var(--accent-red);"></i>
-                            </div>
-                            <div>
-                                <h4 style="font-size: 16px; margin-bottom: 2px;">Risk Assessment Report</h4>
-                                <p style="font-size: 12px; color: var(--text-muted);">Complete risk register analysis</p>
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${totalRisks}</div><div style="font-size: 11px; color: var(--text-muted);">Total</div></div>
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-red);">${criticalRisks}</div><div style="font-size: 11px; color: var(--text-muted);">Critical</div></div>
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-amber);">${highRisks}</div><div style="font-size: 11px; color: var(--text-muted);">High</div></div>
+            <div class="modern-page-hero" style="background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 45%, #4c1d95 100%); border-radius: var(--radius-2xl); padding: 22px 24px; margin-bottom: 18px;">
+                <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+                    <div style="color:white;max-width:760px;">
+                        <h2 style="font-size:22px;font-weight:700;margin:0 0 6px;"><i class="bi bi-file-earmark-bar-graph"></i> Reports & Analytics</h2>
+                        <p style="font-size:13px;opacity:0.82;margin:0 0 12px;">Turn the entire lab into leadership-ready reporting. v4 reporting now captures operational work, assurance signals, resilience posture, and portfolio proof — not just a few tables.</p>
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                            <span class="badge badge-blue">${programSurface} total records in scope</span>
+                            <span class="badge badge-green">${d.controls.length} controls tracked</span>
+                            <span class="badge badge-purple">${d.requirements.length} requirements mapped</span>
+                            <span class="badge badge-cyan">${d.evidence.length} evidence items</span>
+                            <span class="badge badge-amber">${resilienceCount} resilience records</span>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Control Report Card -->
-                <div class="card" onclick="app.showReport('control')" style="cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
-                    <div class="card-body" style="padding: 20px;">
-                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-                            <div style="width: 50px; height: 50px; background: var(--accent-green-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                <i class="bi bi-shield-check" style="font-size: 24px; color: var(--accent-green);"></i>
-                            </div>
-                            <div>
-                                <h4 style="font-size: 16px; margin-bottom: 2px;">Control Effectiveness Report</h4>
-                                <p style="font-size: 12px; color: var(--text-muted);">Control status and testing results</p>
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${totalControls}</div><div style="font-size: 11px; color: var(--text-muted);">Total</div></div>
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-green);">${effectiveControls}</div><div style="font-size: 11px; color: var(--text-muted);">Effective</div></div>
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-amber);">${partialControls}</div><div style="font-size: 11px; color: var(--text-muted);">Partial</div></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Compliance Report Card -->
-                <div class="card" onclick="app.showReport('compliance')" style="cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
-                    <div class="card-body" style="padding: 20px;">
-                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-                            <div style="width: 50px; height: 50px; background: var(--accent-blue-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                <i class="bi bi-clipboard-check" style="font-size: 24px; color: var(--accent-blue);"></i>
-                            </div>
-                            <div>
-                                <h4 style="font-size: 16px; margin-bottom: 2px;">Compliance Status Report</h4>
-                                <p style="font-size: 12px; color: var(--text-muted);">Framework compliance overview</p>
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${d.audits.length}</div><div style="font-size: 11px; color: var(--text-muted);">Audits</div></div>
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-green);">${closedFindings}</div><div style="font-size: 11px; color: var(--text-muted);">Closed</div></div>
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-amber);">${openFindings}</div><div style="font-size: 11px; color: var(--text-muted);">Open</div></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Vendor Report Card -->
-                <div class="card" onclick="app.showReport('vendor')" style="cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
-                    <div class="card-body" style="padding: 20px;">
-                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-                            <div style="width: 50px; height: 50px; background: var(--accent-purple-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                <i class="bi bi-building" style="font-size: 24px; color: var(--accent-purple);"></i>
-                            </div>
-                            <div>
-                                <h4 style="font-size: 16px; margin-bottom: 2px;">Third-Party Risk Report</h4>
-                                <p style="font-size: 12px; color: var(--text-muted);">Vendor risk assessment summary</p>
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${d.vendors.length}</div><div style="font-size: 11px; color: var(--text-muted);">Vendors</div></div>
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-red);">${criticalVendors}</div><div style="font-size: 11px; color: var(--text-muted);">Critical</div></div>
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-green);">${d.vendors.filter(v => v.status === 'Active').length}</div><div style="font-size: 11px; color: var(--text-muted);">Active</div></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Incident Report Card -->
-                <div class="card" onclick="app.showReport('incident')" style="cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
-                    <div class="card-body" style="padding: 20px;">
-                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-                            <div style="width: 50px; height: 50px; background: var(--accent-amber-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                <i class="bi bi-lightning" style="font-size: 24px; color: var(--accent-amber);"></i>
-                            </div>
-                            <div>
-                                <h4 style="font-size: 16px; margin-bottom: 2px;">Incident Summary Report</h4>
-                                <p style="font-size: 12px; color: var(--text-muted);">Security incident analysis</p>
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${d.incidents.length}</div><div style="font-size: 11px; color: var(--text-muted);">Total</div></div>
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-green);">${d.incidents.filter(i => i.status === 'Resolved').length}</div><div style="font-size: 11px; color: var(--text-muted);">Resolved</div></div>
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-red);">${d.incidents.filter(i => i.status === 'Investigating').length}</div><div style="font-size: 11px; color: var(--text-muted);">Active</div></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Executive Summary Card -->
-                <div class="card" onclick="app.showReport('executive')" style="cursor: pointer; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
-                    <div class="card-body" style="padding: 20px;">
-                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-                            <div style="width: 50px; height: 50px; background: var(--accent-cyan-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-                                <i class="bi bi-graph-up" style="font-size: 24px; color: var(--accent-cyan);"></i>
-                            </div>
-                            <div>
-                                <h4 style="font-size: 16px; margin-bottom: 2px;">Executive Summary</h4>
-                                <p style="font-size: 12px; color: var(--text-muted);">High-level GRC overview</p>
-                            </div>
-                        </div>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--text-primary);">${this.data.assets.length}</div><div style="font-size: 11px; color: var(--text-muted);">Assets</div></div>
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-blue);">${d.policies.length}</div><div style="font-size: 11px; color: var(--text-muted);">Policies</div></div>
-                            <div><div style="font-size: 20px; font-weight: 700; color: var(--accent-purple);">${openIssues}</div><div style="font-size: 11px; color: var(--text-muted);">Issues</div></div>
-                        </div>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <button class="btn btn-secondary" onclick="app.switchTab('ai-agent'); app.setAiInput('Analyze my full lab and turn it into a leadership-ready summary with top strengths, top gaps, and next actions.');" style="white-space: nowrap;"><i class="bi bi-stars"></i> AI Review</button>
+                        <button class="btn btn-secondary" onclick="app.switchTab('ai-agent'); app.setAiInput('Give me an executive brief for this full GRC lab in plain English with business impact and priorities.');" style="white-space: nowrap;"><i class="bi bi-briefcase"></i> Exec Brief</button>
+                        <button class="btn btn-secondary" onclick="app.exportAllReports()" style="white-space: nowrap;"><i class="bi bi-download"></i> Export Full Pack</button>
+                        <button class="btn btn-primary" onclick="app.printReport()" style="white-space: nowrap;"><i class="bi bi-printer"></i> Print to PDF</button>
                     </div>
                 </div>
             </div>
-            
-            <!-- Report Detail View -->
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:24px;">
+                ${reportCards.map(card => `
+                    <div class="card" onclick="app.showReport('${card.id}')" style="cursor:pointer;transition:transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
+                        <div class="card-body" style="padding:20px;">
+                            <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+                                <div style="width:50px;height:50px;background:${card.iconBg};border-radius:12px;display:flex;align-items:center;justify-content:center;">
+                                    <i class="bi ${card.icon}" style="font-size:24px;color:${card.iconColor};"></i>
+                                </div>
+                                <div>
+                                    <h4 style="font-size:16px;margin-bottom:2px;">${card.title}</h4>
+                                    <p style="font-size:12px;color:var(--text-muted);">${card.desc}</p>
+                                </div>
+                            </div>
+                            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
+                                ${card.stats.map(stat => `<div><div style="font-size:20px;font-weight:700;color:var(--text-primary);">${stat.v}</div><div style="font-size:11px;color:var(--text-muted);">${stat.l}</div></div>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+
             <div id="report-detail-container">
                 ${selectedReport ? this.renderReportDetail(selectedReport) : `
                     <div class="card">
-                        <div class="card-body" style="padding: 60px; text-align: center;">
-                            <i class="bi bi-file-earmark-text" style="font-size: 48px; color: var(--text-muted); opacity: 0.4; margin-bottom: 16px; display: block;"></i>
-                            <h4 style="font-size: 16px; margin-bottom: 8px;">Select a Report</h4>
-                            <p style="color: var(--text-muted); font-size: 13px;">Click on any report card above to view detailed information.</p>
+                        <div class="card-body" style="padding:60px;text-align:center;">
+                            <i class="bi bi-file-earmark-text" style="font-size:48px;color:var(--text-muted);opacity:0.4;margin-bottom:16px;display:block;"></i>
+                            <h4 style="font-size:16px;margin-bottom:8px;">Select a Report</h4>
+                            <p style="color:var(--text-muted);font-size:13px;">Choose any report card above to open a richer, more complete view of your lab.</p>
                         </div>
                     </div>
                 `}
             </div>
         `;
     }
-    
+
     showReport(reportType) {
         this.selectedReport = reportType;
         const container = document.getElementById('report-detail-container');
@@ -8646,6 +8567,142 @@ saveEvidence(editId) {
         const d = this.getActiveData();
         const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
         
+        if (reportType === 'program360') {
+            const coverageCards = [
+                { label: 'Core inventory', value: d.assets.length + d.risks.length + d.controls.length, detail: `${d.assets.length} assets · ${d.risks.length} risks · ${d.controls.length} controls`, bg: 'var(--accent-blue-soft)', color: 'var(--accent-blue)' },
+                { label: 'Assurance surface', value: d.evidence.length + d.controlTests.length + d.findings.length + d.audits.length, detail: `${d.evidence.length} evidence · ${d.controlTests.length} tests · ${d.findings.length} findings · ${d.audits.length} audits`, bg: 'var(--accent-green-soft)', color: 'var(--accent-green)' },
+                { label: 'Governance fabric', value: d.policies.length + d.requirements.length + d.exceptions.length + d.crosswalkMappings.length, detail: `${d.policies.length} policies · ${d.requirements.length} requirements · ${d.exceptions.length} exceptions`, bg: 'var(--accent-purple-soft)', color: 'var(--accent-purple)' },
+                { label: 'Operations + resilience', value: d.tasks.length + d.issues.length + d.incidents.length + d.biaEntries.length + d.bcmPlans.length + d.kriEntries.length, detail: `${d.tasks.length} tasks · ${d.issues.length} issues · ${d.incidents.length} incidents`, bg: 'var(--accent-amber-soft)', color: 'var(--accent-amber)' }
+            ];
+            return `
+                <div class="card" id="printable-report">
+                    <div class="card-header" style="background: linear-gradient(135deg, var(--accent-purple-soft), transparent);">
+                        <div>
+                            <h3 class="card-title"><i class="bi bi-stars"></i> Program 360 Report</h3>
+                            <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Generated: ${today}</p>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" onclick="app.exportReportCSV('program360')"><i class="bi bi-download"></i> Export CSV</button>
+                    </div>
+                    <div class="card-body">
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px;">
+                            ${coverageCards.map(card => `<div style="background:${card.bg}; padding:16px; border-radius:var(--radius-md);"><div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">${card.label}</div><div style="font-size:28px;font-weight:700;color:${card.color};">${card.value}</div><div style="font-size:12px;color:var(--text-secondary);margin-top:6px;">${card.detail}</div></div>`).join('')}
+                        </div>
+                        <div style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:20px;">
+                            <div>
+                                <h4 style="font-size:14px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border-subtle);">What this report now captures</h4>
+                                <div style="display:grid;gap:10px;">
+                                    ${[
+                                        'Assets, risks, controls, treatments, and policies',
+                                        'Evidence, testing, findings, and audit activity',
+                                        'Requirements, exceptions, crosswalk mappings, and vendor oversight',
+                                        'Tasks, issues, incidents, BIA, BCM plans, and KRIs',
+                                        'Traceability and portfolio-ready proof points'
+                                    ].map(item => `<div style="padding:12px 14px;border:1px solid var(--border-subtle);border-radius:12px;background:var(--bg-elevated);font-size:13px;color:var(--text-secondary);"><i class="bi bi-check2-circle" style="color:var(--accent-green);margin-right:8px;"></i>${item}</div>`).join('')}
+                                </div>
+                            </div>
+                            <div>
+                                <h4 style="font-size:14px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border-subtle);">Leadership snapshot</h4>
+                                <div style="display:grid;gap:10px;">
+                                    <div style="padding:14px;border-radius:12px;background:var(--bg-elevated);"><div style="font-size:12px;color:var(--text-muted);">Top risk pressure</div><div style="font-size:15px;font-weight:700;margin-top:4px;">${d.risks.length ? d.risks.slice().sort((a,b)=>(Number(b.likelihood||0)*Number(b.impact||0))-(Number(a.likelihood||0)*Number(a.impact||0)))[0].title : 'No risks yet'}</div></div>
+                                    <div style="padding:14px;border-radius:12px;background:var(--bg-elevated);"><div style="font-size:12px;color:var(--text-muted);">Strongest reporting area</div><div style="font-size:15px;font-weight:700;margin-top:4px;">${d.evidence.length >= d.controls.length ? 'Evidence depth is ahead of control volume' : 'Control inventory is ahead of assurance proof'}</div></div>
+                                    <div style="padding:14px;border-radius:12px;background:var(--bg-elevated);"><div style="font-size:12px;color:var(--text-muted);">Best next improvement</div><div style="font-size:15px;font-weight:700;margin-top:4px;">${d.controlTests.length < d.controls.length ? 'Expand control testing coverage' : d.treatments.length < d.risks.length ? 'Close treatment gaps across open risks' : 'Strengthen executive reporting cadence and evidence freshness'}</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        if (reportType === 'assurance') {
+            const linkedEvidence = d.evidence.filter(e => e.relatedTo).length;
+            const linkedTests = d.controlTests.filter(t => t.controlId).length;
+            const openFindingsCount = d.findings.filter(f => f.status !== 'Closed').length;
+            const assuranceGaps = [
+                { ok: d.evidence.length >= d.controls.length, text: d.evidence.length >= d.controls.length ? 'Evidence depth is keeping pace with control inventory.' : 'Evidence library is lighter than control inventory — add proof for key controls first.' },
+                { ok: d.controlTests.length >= Math.ceil(d.controls.length * 0.6), text: d.controlTests.length >= Math.ceil(d.controls.length * 0.6) ? 'Testing coverage is moving toward an audit-ready level.' : 'Testing coverage is still thin relative to the number of controls in the lab.' },
+                { ok: linkedTests >= Math.ceil(Math.max(1,d.controlTests.length) * 0.7), text: linkedTests >= Math.ceil(Math.max(1,d.controlTests.length) * 0.7) ? 'Most tests are linked back to controls.' : 'More test records should be tied directly to controls for traceability.' },
+                { ok: openFindingsCount === 0, text: openFindingsCount === 0 ? 'No open findings at the moment.' : 'Open findings need remediation ownership and target dates.' }
+            ];
+            return `
+                <div class="card" id="printable-report">
+                    <div class="card-header" style="background: linear-gradient(135deg, var(--accent-cyan-soft), transparent);">
+                        <div>
+                            <h3 class="card-title"><i class="bi bi-patch-check"></i> Assurance & Evidence Report</h3>
+                            <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Generated: ${today}</p>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" onclick="app.exportReportCSV('assurance')"><i class="bi bi-download"></i> Export CSV</button>
+                    </div>
+                    <div class="card-body">
+                        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
+                            <div style="background: var(--accent-cyan-soft); padding: 16px; border-radius: var(--radius-md); text-align:center;"><div style="font-size:28px;font-weight:700;color:var(--accent-cyan);">${d.evidence.length}</div><div style="font-size:12px;color:var(--text-muted);">Evidence items</div></div>
+                            <div style="background: var(--accent-blue-soft); padding: 16px; border-radius: var(--radius-md); text-align:center;"><div style="font-size:28px;font-weight:700;color:var(--accent-blue);">${d.controlTests.length}</div><div style="font-size:12px;color:var(--text-muted);">Tests logged</div></div>
+                            <div style="background: var(--accent-green-soft); padding: 16px; border-radius: var(--radius-md); text-align:center;"><div style="font-size:28px;font-weight:700;color:var(--accent-green);">${linkedEvidence}</div><div style="font-size:12px;color:var(--text-muted);">Linked proof</div></div>
+                            <div style="background: var(--accent-red-soft); padding: 16px; border-radius: var(--radius-md); text-align:center;"><div style="font-size:28px;font-weight:700;color:var(--accent-red);">${openFindingsCount}</div><div style="font-size:12px;color:var(--text-muted);">Open findings</div></div>
+                        </div>
+                        <h4 style="font-size:14px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border-subtle);">Coverage gaps to focus on</h4>
+                        <div style="display:grid;gap:10px;margin-bottom:22px;">
+                            ${assuranceGaps.map(item => `<div style="padding:12px 14px;border-radius:12px;background:${item.ok ? 'var(--accent-green-soft)' : 'var(--accent-amber-soft)'};font-size:13px;color:var(--text-secondary);"><i class="bi ${item.ok ? 'bi-check2-circle' : 'bi-exclamation-triangle'}" style="margin-right:8px;color:${item.ok ? 'var(--accent-green)' : 'var(--accent-amber)'};"></i>${item.text}</div>`).join('')}
+                        </div>
+                        <h4 style="font-size:14px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border-subtle);">Recent assurance records</h4>
+                        <table>
+                            <thead><tr><th>Type</th><th>Name</th><th>Linked To</th><th>Owner</th><th>Status / Note</th></tr></thead>
+                            <tbody>
+                                ${[
+                                    ...d.evidence.slice(0,5).map(e => ({ type:'Evidence', name:e.title, linked:e.relatedTo || '-', owner:e.owner || '-', note:e.type || 'Document' })),
+                                    ...d.controlTests.slice(0,5).map(t => ({ type:'Test', name:t.controlName || t.controlId || t.id, linked:t.controlId || '-', owner:t.tester || t.owner || '-', note:t.result || t.status || '-' })),
+                                    ...d.findings.slice(0,5).map(f => ({ type:'Finding', name:f.title || f.name || f.id, linked:f.relatedTo || f.controlId || '-', owner:f.owner || '-', note:f.status || '-' }))
+                                ].slice(0,10).map(row => `<tr><td>${row.type}</td><td class="font-semibold">${row.name}</td><td>${row.linked}</td><td>${row.owner}</td><td>${row.note}</td></tr>`).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--text-muted);">No assurance records available yet.</td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>`;
+        }
+
+        if (reportType === 'resilience') {
+            return `
+                <div class="card" id="printable-report">
+                    <div class="card-header" style="background: linear-gradient(135deg, var(--accent-amber-soft), transparent);">
+                        <div>
+                            <h3 class="card-title"><i class="bi bi-heart-pulse"></i> Resilience & Recovery Report</h3>
+                            <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Generated: ${today}</p>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" onclick="app.exportReportCSV('resilience')"><i class="bi bi-download"></i> Export CSV</button>
+                    </div>
+                    <div class="card-body">
+                        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;">
+                            <div style="background: var(--accent-amber-soft); padding: 16px; border-radius: var(--radius-md); text-align:center;"><div style="font-size:28px;font-weight:700;color:var(--accent-amber);">${d.biaEntries.length}</div><div style="font-size:12px;color:var(--text-muted);">BIA entries</div></div>
+                            <div style="background: var(--accent-blue-soft); padding: 16px; border-radius: var(--radius-md); text-align:center;"><div style="font-size:28px;font-weight:700;color:var(--accent-blue);">${d.bcmPlans.length}</div><div style="font-size:12px;color:var(--text-muted);">BCM plans</div></div>
+                            <div style="background: var(--accent-red-soft); padding: 16px; border-radius: var(--radius-md); text-align:center;"><div style="font-size:28px;font-weight:700;color:var(--accent-red);">${d.incidents.length}</div><div style="font-size:12px;color:var(--text-muted);">Incidents</div></div>
+                            <div style="background: var(--accent-green-soft); padding: 16px; border-radius: var(--radius-md); text-align:center;"><div style="font-size:28px;font-weight:700;color:var(--accent-green);">${d.kriEntries.length}</div><div style="font-size:12px;color:var(--text-muted);">KRIs</div></div>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                            <div>
+                                <h4 style="font-size:14px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border-subtle);">Recovery readiness</h4>
+                                <div style="display:grid;gap:10px;">
+                                    <div style="padding:12px 14px;border-radius:12px;background:var(--bg-elevated);font-size:13px;"><strong>BIA coverage:</strong> ${d.biaEntries.length ? 'Critical processes have been identified.' : 'No business impact records yet.'}</div>
+                                    <div style="padding:12px 14px;border-radius:12px;background:var(--bg-elevated);font-size:13px;"><strong>BCM depth:</strong> ${d.bcmPlans.length ? 'Recovery plans exist for part of the environment.' : 'No BCM / DR plans documented yet.'}</div>
+                                    <div style="padding:12px 14px;border-radius:12px;background:var(--bg-elevated);font-size:13px;"><strong>Operational signal:</strong> ${d.incidents.length ? 'Incident history is available to inform resilience priorities.' : 'No incident trend data yet.'}</div>
+                                    <div style="padding:12px 14px;border-radius:12px;background:var(--bg-elevated);font-size:13px;"><strong>Early warning:</strong> ${d.kriEntries.length ? 'KRI tracking exists for ongoing monitoring.' : 'Add KRIs to monitor recovery and risk drift.'}</div>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 style="font-size:14px;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border-subtle);">Continuity records</h4>
+                                <table>
+                                    <thead><tr><th>Record</th><th>Name</th><th>Owner</th><th>Key Target</th></tr></thead>
+                                    <tbody>
+                                        ${[
+                                            ...d.biaEntries.slice(0,5).map(b => ({ type:'BIA', name:b.process || b.name || b.id, owner:b.owner || '-', target:`RTO ${b.rto || '-'} / RPO ${b.rpo || '-'}` })),
+                                            ...d.bcmPlans.slice(0,5).map(b => ({ type:'BCM', name:b.name || b.process || b.id, owner:b.owner || '-', target:b.status || b.testFrequency || '-' })),
+                                            ...d.incidents.slice(0,5).map(i => ({ type:'Incident', name:i.title || i.id, owner:i.owner || '-', target:i.severity || i.status || '-' }))
+                                        ].slice(0,10).map(row => `<tr><td>${row.type}</td><td class="font-semibold">${row.name}</td><td>${row.owner}</td><td>${row.target}</td></tr>`).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);">No resilience records available yet.</td></tr>'}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
         const reports = {
             'risk': () => {
                 const criticalRisks = d.risks.filter(r => r.likelihood * r.impact >= 20);
@@ -9117,37 +9174,74 @@ saveEvidence(editId) {
     
     exportAllReports() {
         const d = this.getActiveData();
-        const allData = {
+        const bundle = {
             exportDate: new Date().toISOString(),
+            appVersion: 'v4',
             summary: {
-                totalAssets: this.data.assets.length,
+                totalAssets: d.assets.length,
                 totalRisks: d.risks.length,
                 totalControls: d.controls.length,
-                totalVendors: d.vendors.length,
+                totalTreatments: d.treatments.length,
                 totalPolicies: d.policies.length,
-                totalAudits: d.audits.length
+                totalVendors: d.vendors.length,
+                totalEvidence: d.evidence.length,
+                totalTests: d.controlTests.length,
+                totalFindings: d.findings.length,
+                totalAudits: d.audits.length,
+                totalRequirements: d.requirements.length,
+                totalExceptions: d.exceptions.length,
+                totalIncidents: d.incidents.length,
+                totalTasks: d.tasks.length,
+                totalBiaEntries: d.biaEntries.length,
+                totalBcmPlans: d.bcmPlans.length,
+                totalKriEntries: d.kriEntries.length,
+                totalVendorAssessments: d.vendorAssessments.length,
+                totalCrosswalkMappings: d.crosswalkMappings.length,
+                totalProgramRecords: d.assets.length + d.risks.length + d.controls.length + d.treatments.length + d.vendors.length + d.policies.length + d.evidence.length + d.controlTests.length + d.findings.length + d.audits.length + d.requirements.length + d.exceptions.length + d.incidents.length + d.tasks.length + d.biaEntries.length + d.bcmPlans.length + d.kriEntries.length + d.vendorAssessments.length + d.crosswalkMappings.length
             },
-            assets: this.data.assets,
+            leadershipSnapshot: {
+                topRisk: d.risks.length ? d.risks.slice().sort((a,b)=>(Number(b.likelihood||0)*Number(b.impact||0))-(Number(a.likelihood||0)*Number(a.impact||0)))[0] : null,
+                strongestArea: d.evidence.length >= d.controls.length ? 'Evidence depth' : 'Control inventory',
+                nextBestMove: d.controlTests.length < d.controls.length ? 'Increase test coverage' : d.treatments.length < d.risks.length ? 'Close treatment gaps' : 'Increase executive and assurance reporting cadence'
+            },
+            assets: d.assets,
             risks: d.risks,
             controls: d.controls,
+            treatments: d.treatments,
             vendors: d.vendors,
+            vendorAssessments: d.vendorAssessments,
             policies: d.policies,
-            audits: d.audits,
+            evidence: d.evidence,
+            controlTests: d.controlTests,
             findings: d.findings,
+            audits: d.audits,
+            requirements: d.requirements,
+            exceptions: d.exceptions,
             incidents: d.incidents,
-            evidence: d.evidence
+            issues: d.issues,
+            tasks: d.tasks,
+            traceability: d.crosswalkMappings,
+            riskAppetite: d.riskAppetiteStatements,
+            kri: d.kriEntries,
+            bia: d.biaEntries,
+            bcm: d.bcmPlans,
+            itgc: d.itgcControls,
+            sox: d.soxEntries,
+            evidenceScoring: d.evidenceScores,
+            controlLifecycle: d.controlLifecycle,
+            cloudRisks: d.cloudRiskScenarios
         };
-        
-        const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+
+        const blob = new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `grc-complete-report-${new Date().toISOString().split('T')[0]}.json`;
+        a.download = `grc-v4-full-report-pack-${new Date().toISOString().split('T')[0]}.json`;
         a.click();
         URL.revokeObjectURL(url);
-        this.toast('Complete report exported!', 'success');
+        this.toast('Full v4 report pack exported!', 'success');
     }
-    
+
     exportReportCSV(reportType) {
         const d = this.getActiveData();
         let csv = '';
@@ -19221,6 +19315,37 @@ saveEvidence(editId) {
         const routeInput = raw;
         const analysisInput = attachment ? this.buildAiInputWithAttachment(raw, attachment) : raw;
         this.addAiMessage('user', userDisplay, attachment ? { attachment: { name: attachment.name, type: attachment.type, size: attachment.size } } : {});
+        const aiSideColumn = c.querySelector('.ai-side-column');
+        if (aiSideColumn) {
+            const d = this.getActiveData();
+            const activeProject = Array.isArray(this.projects) ? this.projects.find(p => p.id === this.activeProjectId) : null;
+            aiSideColumn.insertAdjacentHTML('beforeend', `
+                <div class="card">
+                    <div class="card-header"><div class="card-title"><i class="bi bi-magic"></i> Workflow Copilot</div></div>
+                    <div class="card-body" style="padding:12px;display:flex;flex-direction:column;gap:12px;">
+                        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
+                            <button class="btn btn-secondary btn-sm" onclick="app.setAiInput('Analyze my full lab and give me top 5 strengths, top 5 gaps, and my next best actions.');app.runAiPrompt();"><i class="bi bi-stars"></i> Full Lab Review</button>
+                            <button class="btn btn-secondary btn-sm" onclick="app.setAiInput('Give me an executive brief for my current GRC lab with business impact, strengths, concerns, and priorities.');app.runAiPrompt();"><i class="bi bi-briefcase"></i> Exec Brief</button>
+                            <button class="btn btn-secondary btn-sm" onclick="app.setAiInput('Review my current module and tell me what is missing, weak, or unrealistic.');app.runAiPrompt();"><i class="bi bi-search"></i> Review Current Work</button>
+                            <button class="btn btn-secondary btn-sm" onclick="app.setAiInput('Turn this lab work into 4 portfolio bullets and 3 interview talking points.');app.runAiPrompt();"><i class="bi bi-person-badge"></i> Portfolio Boost</button>
+                        </div>
+                        <div style="padding:12px;border-radius:12px;background:var(--bg-elevated);font-size:12px;color:var(--text-secondary);">
+                            <div style="font-weight:700;color:var(--text-primary);margin-bottom:6px;">Current workspace snapshot</div>
+                            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                                <span class="badge badge-blue">${d.assets.length} assets</span>
+                                <span class="badge badge-red">${d.risks.length} risks</span>
+                                <span class="badge badge-green">${d.controls.length} controls</span>
+                                <span class="badge badge-cyan">${d.evidence.length} evidence</span>
+                                <span class="badge badge-purple">${d.requirements.length} requirements</span>
+                            </div>
+                            <div style="margin-top:8px;"><strong>Active scenario:</strong> ${activeProject ? this.esc(activeProject.scenario || activeProject.title || activeProject.id) : 'Default lab workspace'}</div>
+                            <div style="margin-top:6px;color:var(--text-muted);">Use the buttons above to get instant lab reviews, leadership summaries, realistic feedback, and portfolio-ready outputs.</div>
+                        </div>
+                    </div>
+                </div>
+            `);
+        }
+
         this.renderAiTranscript();
         this.updateAiStatusChips();
         const quick = attachment ? '' : this.getAiQuickResponse(routeInput);
