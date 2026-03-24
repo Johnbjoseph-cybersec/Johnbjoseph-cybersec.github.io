@@ -3122,6 +3122,9 @@ class GRCLabPro {
         this.activeProject = null;
         this.traceabilityView = 'overview';
         this.selectedFlowNode = null;
+        this.glossaryFilter = 'all';
+        this.glossarySearch = '';
+        this.scenarioFilter = 'all';
         this.data = { assets: [], vendors: [], policies: [], risks: [], controls: [], treatments: [], issues: [], incidents: [], tasks: [], audits: [], evidence: [], controlTests: [], findings: [], soaEntries: [], requirements: [], exceptions: [], activityLog: [], itgcControls: [], evidenceScores: [], controlLifecycle: [], cloudRiskScenarios: [], biaEntries: [], vendorAssessments: [], soxEntries: [], riskAppetiteStatements: [], kriEntries: [], bcmPlans: [], crosswalkMappings: [] };
         this.projectData = {};
         this.init();
@@ -3146,8 +3149,10 @@ class GRCLabPro {
         this.hideLanding();
     }
     hideLanding() {
-        document.getElementById('landing-page').style.display = 'none';
-        document.getElementById('app-wrapper').classList.add('active');
+        const landing = document.getElementById('landing-page');
+        const appWrapper = document.getElementById('app-wrapper');
+        if (landing) landing.style.display = 'none';
+        if (appWrapper) appWrapper.classList.add('active');
     }
     startLab() {
         this.hideLanding();
@@ -3592,17 +3597,32 @@ class GRCLabPro {
                 <button onclick="app.exitProjectMode()" style="background: rgba(255,255,255,0.25); border: none; color: white; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.4)'" onmouseout="this.style.background='rgba(255,255,255,0.25)'"><i class="bi bi-box-arrow-left"></i> Exit Project</button>
             `;
             indicator.style.display = 'flex';
-            document.querySelector('.main-content').style.paddingTop = '52px';
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent) mainContent.style.paddingTop = '52px';
         } else {
             // Hide both indicators
             if (sidebarIndicator) sidebarIndicator.style.display = 'none';
             if (indicator) indicator.style.display = 'none';
-            document.querySelector('.main-content').style.paddingTop = '0';
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent) mainContent.style.paddingTop = '0';
         }
     }
     renderCurrentTab() {
         const r = { dashboard: () => this.renderDashboard(), 'start-here': () => this.renderStartHere(), glossary: () => this.renderGlossary(), scenarios: () => this.renderScenarios(), assets: () => this.renderAssets(), vendors: () => this.renderVendors(), policies: () => this.renderPolicies(), risks: () => this.renderRisks(), controls: () => this.renderControls(), treatments: () => this.renderTreatments(), matrix: () => this.renderMatrix(), issues: () => this.renderIssues(), incidents: () => this.renderIncidents(), tasks: () => this.renderTasks(), audits: () => this.renderAudits(), evidence: () => this.renderEvidence(), testing: () => this.renderTesting(), findings: () => this.renderFindings(), soa: () => this.renderSoA(), traceability: () => this.renderTraceability(), reports: () => this.renderReports(), frameworks: () => this.renderFrameworks(), projects: () => this.renderProjects(), portfolio: () => this.renderPortfolio(), requirements: () => this.renderRequirements(), exceptions: () => this.renderExceptions(), reviews: () => this.renderReviews(), 'itgc': () => this.renderItgc(), 'sox': () => this.renderSox(), 'evidence-scoring': () => this.renderEvidenceScoring(), 'control-lifecycle': () => this.renderControlLifecycle(), 'cloud-risks': () => this.renderCloudRisks(), 'risk-appetite': () => this.renderRiskAppetite(), 'kri': () => this.renderKRI(), 'bia': () => this.renderBIA(), 'bcm': () => this.renderBCM(), 'crosswalk': () => this.renderCrosswalk(), 'vendor-risk': () => this.renderVendorRisk(), 'compliance-calendar': () => this.renderComplianceCalendar(), 'audit-sim': () => this.renderAuditSim(), 'missions': () => this.renderMissions(), 'interview-prep': () => this.renderInterviewPrep(), 'roadmap': () => this.renderRoadmap(), 'ai-agent': () => this.renderGrcAiAgent(), 'ai-agent-setup': () => this.renderAiAgentSetup() };
-        if (r[this.currentTab]) r[this.currentTab]();
+        try {
+            if (r[this.currentTab]) {
+                r[this.currentTab]();
+            } else {
+                console.warn('No renderer found for tab:', this.currentTab);
+            }
+        } catch (error) {
+            console.error('Tab render failed:', this.currentTab, error);
+            const activeTab = document.getElementById(`tab-${this.currentTab}`);
+            if (activeTab) {
+                activeTab.innerHTML = `<div class="card"><div class="card-body" style="padding:24px;"><h3 style="margin-bottom:8px;">This tab hit an error</h3><p style="color:var(--text-secondary);margin-bottom:16px;">${this.esc(error?.message || 'Unknown render error')}</p><button class="btn btn-primary" onclick="app.renderCurrentTab()"><i class="bi bi-arrow-clockwise"></i> Retry</button></div></div>`;
+            }
+            try { this.toast(`Tab "${this.currentTab}" hit an error. Check console for details.`, 'warning'); } catch (_) {}
+        }
         this.ensureUniformTabHero(this.currentTab);
         this.updateProjectModeIndicator();
     }
@@ -5806,7 +5826,7 @@ renderDonutChart(segments, total) {
             </div>
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                <div class="card">
+                <div class="card" data-ai-workflow-copilot="true">
                     <div class="card-header" style="background: var(--accent-green-soft); padding: 12px 16px;">
                         <span style="font-weight: 600; color: var(--accent-green);"><i class="bi bi-check-circle-fill"></i> Effective</span>
                         <span class="badge badge-green">${effective.length}</span>
@@ -20812,6 +20832,13 @@ saveEvidence(editId) {
 }
 function openModal(title, body, footer) {
     const mt = document.getElementById('modal-title');
+    const mb = document.getElementById('modal-body');
+    const mf = document.getElementById('modal-footer');
+    const mo = document.getElementById('modal-overlay');
+    if (!mt || !mb || !mf || !mo) {
+        console.warn('Modal elements not found; openModal skipped for:', title);
+        return;
+    }
     // Default title
     mt.textContent = title;
     // Append a contextual "Load Example" button if available
@@ -20825,12 +20852,12 @@ function openModal(title, body, footer) {
         }
     } catch(e) {}
 
-    document.getElementById('modal-body').innerHTML = body;
-    document.getElementById('modal-footer').innerHTML = footer;
-    document.getElementById('modal-overlay').classList.add('active');
+    mb.innerHTML = body;
+    mf.innerHTML = footer;
+    mo.classList.add('active');
     document.body.classList.add('modal-open');
 }
-function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); document.body.classList.remove('modal-open'); try { if (window.app && typeof app.clearModalContext === 'function') app.clearModalContext(); } catch(e) {} }
+function closeModal() { const modalOverlay = document.getElementById('modal-overlay'); if (modalOverlay) modalOverlay.classList.remove('active'); document.body.classList.remove('modal-open'); try { if (window.app && typeof app.clearModalContext === 'function') app.clearModalContext(); } catch(e) {} }
 function closeSidebar() {
     const sidebar = document.getElementById('sidebar');
     const backdrop = document.getElementById('sidebar-backdrop');
@@ -20858,7 +20885,34 @@ document.addEventListener('keydown', (e) => {
     }
 });
 let app;
-document.addEventListener('DOMContentLoaded', () => { app = new GRCLabPro(); window.app = app; });
+window.addEventListener('error', (event) => {
+    console.error('Unhandled error:', event.error || event.message || event);
+    try {
+        if (window.app && typeof app.ensureAiRuntime === 'function') {
+            const runtime = app.ensureAiRuntime();
+            runtime.busy = false;
+            app.updateAiStatusChips?.();
+        }
+    } catch (_) {}
+});
+window.addEventListener('unhandledrejection', (event) => {
+    console.error('Unhandled promise rejection:', event.reason || event);
+    try {
+        if (window.app && typeof app.ensureAiRuntime === 'function') {
+            const runtime = app.ensureAiRuntime();
+            runtime.busy = false;
+            app.updateAiStatusChips?.();
+        }
+    } catch (_) {}
+});
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        app = new GRCLabPro();
+        window.app = app;
+    } catch (error) {
+        console.error('App bootstrap failed:', error);
+    }
+});
 </script>
 
 </div><!-- End app-wrapper -->
