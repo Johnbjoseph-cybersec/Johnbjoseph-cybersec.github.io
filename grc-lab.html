@@ -10,6 +10,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -19315,12 +19316,13 @@ saveEvidence(editId) {
         const routeInput = raw;
         const analysisInput = attachment ? this.buildAiInputWithAttachment(raw, attachment) : raw;
         this.addAiMessage('user', userDisplay, attachment ? { attachment: { name: attachment.name, type: attachment.type, size: attachment.size } } : {});
-        const aiSideColumn = c.querySelector('.ai-side-column');
-        if (aiSideColumn) {
+        const aiAgentTab = document.getElementById('tab-ai-agent');
+        const aiSideColumn = aiAgentTab ? aiAgentTab.querySelector('.ai-side-column') : null;
+        if (aiSideColumn && !document.getElementById('ai-workflow-copilot')) {
             const d = this.getActiveData();
             const activeProject = Array.isArray(this.projects) ? this.projects.find(p => p.id === this.activeProjectId) : null;
             aiSideColumn.insertAdjacentHTML('beforeend', `
-                <div class="card">
+                <div class="card" id="ai-workflow-copilot">
                     <div class="card-header"><div class="card-title"><i class="bi bi-magic"></i> Workflow Copilot</div></div>
                     <div class="card-body" style="padding:12px;display:flex;flex-direction:column;gap:12px;">
                         <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
