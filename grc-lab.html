@@ -30,8 +30,8 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      // SPA mode: we will send page_view events manually on tab changes
-      gtag('config', 'G-QYWFEQ2HTG', { send_page_view: false });
+      // Track the first page load. Internal tab/module views are tracked later by trackPageView().
+      gtag('config', 'G-QYWFEQ2HTG');
     </script>
 <style>
 :root {
@@ -3418,7 +3418,6 @@ class GRCLabPro {
         this.hideLanding();
         this.loadDemo();
         this.switchTab('dashboard');
-        this.trackPageView('dashboard');
     }
     
     loadAllData() {
