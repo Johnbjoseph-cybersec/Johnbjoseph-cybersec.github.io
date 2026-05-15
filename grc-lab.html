@@ -22591,7 +22591,9 @@ details.iso14-check .check-body .answer-label { display:inline-block; padding:3p
 .iso14-tag i { color:#3b82f6; }
 
 /* Cliffhanger / transition to next section */
-.iso14-next { display:flex; align-items:center; gap:14px; padding:14px 18px; background:linear-gradient(135deg,#1e1b4b 0%,#3730a3 100%); color:#e0e7ff; border-radius:14px; margin:22px 0 8px; font-size:13px; line-height:1.6; }
+.iso14-next { display:flex; align-items:center; gap:14px; padding:14px 18px; background:linear-gradient(135deg,#1e1b4b 0%,#3730a3 100%); color:#e0e7ff; border-radius:14px; margin:22px 0 8px; font-size:13px; line-height:1.6; cursor:pointer; transition:transform .15s ease, box-shadow .15s ease; }
+.iso14-next:hover { transform:translateY(-2px); box-shadow:0 12px 28px rgba(55,48,163,.4); }
+.iso14-next:hover > i { transform:translateX(3px); transition:transform .15s ease; }
 .iso14-next > i { font-size:22px; color:#a5b4fc; flex-shrink:0; }
 .iso14-next strong { color:#fff; }
 
@@ -28287,6 +28289,41 @@ body:has(.nav-item.active[data-tab="iso27001-li"]) #iso14-return-badge { display
     // scroll modal body to top on tab switch
     root.scrollTop = 0;
   };
+
+  /* ===== "Coming next" banners → jump to the referenced tab ===== */
+  if (!window.__iso14NextWired) {
+    window.__iso14NextWired = true;
+    document.addEventListener('click', function(e){
+      const next = e.target.closest('.iso14-next');
+      if (!next) return;
+      const root = next.closest('#modal-body');
+      if (!root) return;
+      // Read only the banner heading, e.g. "Coming next — Playbook tab:"
+      const headEl = next.querySelector('strong');
+      const head = ((headEl ? headEl.textContent : next.textContent) || '').toLowerCase();
+      // Map the banner's referenced tab name to a tab id
+      const map = [
+        ['expert review', 'expert'],
+        ['scenario', 'scenario'],
+        ['playbook', 'playbook'],
+        ['audit lens', 'audit'],
+        ['audit', 'audit'],
+        ['common mistakes', 'mistakes'],
+        ['mistakes', 'mistakes'],
+        ['interview', 'interview'],
+        ['knowledge check', 'kc'],
+        ['lab', 'lab'],
+        ['learn', 'learn']
+      ];
+      let tabId = null;
+      for (const [needle, id] of map) {
+        if (head.includes(needle)) { tabId = id; break; }
+      }
+      if (!tabId) return;
+      const btn = root.querySelector('.iso14-tab[data-tab="' + tabId + '"]');
+      if (btn) { btn.click(); }  // click the real tab button so visit tracking still fires
+    });
+  }
 
   GRCLabPro.prototype.iso14MarkComplete = function(modId, options){
     options = options || {};
