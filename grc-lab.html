@@ -1226,8 +1226,18 @@ tbody tr:last-child td { border-bottom: none; }
 
 .table-container{
     overflow-x: auto;
+    overflow-y: visible;
     -webkit-overflow-scrolling: touch;
+    /* Always show horizontal scrollbar so users on macOS (where scrollbars auto-hide)
+       discover that more columns exist to the right. */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-gutter: stable;
 }
+/* WebKit (Chrome/Safari/Edge) — force the horizontal scrollbar to always render */
+.table-container::-webkit-scrollbar { height: 10px; -webkit-appearance: none; }
+.table-container::-webkit-scrollbar-track { background: rgba(221, 231, 246, 0.7); border-radius: 99px; }
+.table-container::-webkit-scrollbar-thumb { background: linear-gradient(90deg, #93a7cf, #7c91bb); border-radius: 99px; border: 2px solid rgba(221, 231, 246, 0.7); }
+
 .table-container table{
     min-width: 920px; /* keeps “large screen” layout */
 }
@@ -1236,10 +1246,175 @@ tbody tr:last-child td { border-bottom: none; }
     white-space: nowrap;
 }
 
+/* Right-edge fade hint — tells users there is more content to scroll to.
+   Unconditional inset shadow on the right edge (subtle, only visible when content overflows
+   because if no overflow the table fully covers the container background). */
+.table-container { position: relative; }
+.table-container.has-overflow-right::before {
+    content: "";
+    position: absolute;
+    top: 0; right: 0; bottom: 10px; /* leave room for scrollbar */
+    width: 36px;
+    pointer-events: none;
+    background: linear-gradient(to right, rgba(255,255,255,0), rgba(15,32,63,0.10));
+    z-index: 2;
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
+
+/* For BCM and other tabs that wrap tables in their own scroll wrapper, apply the
+   same always-visible scrollbar treatment so users on macOS see the indicator. */
+.card-body > div[style*="overflow-x"]::-webkit-scrollbar,
+.card-body > div[style*="overflow-x"]::-webkit-scrollbar-thumb,
+.card-body > div[style*="overflow-x"]::-webkit-scrollbar-track {
+    /* inherits global ::-webkit-scrollbar styles */
+}
+.card-body > div[style*="overflow-x"]::-webkit-scrollbar {
+    height: 10px;
+    -webkit-appearance: none;
+}
+
 /* On smaller screens (sidebar collapses), banner should be full width */
 @media (max-width: 1024px){
     #edu-banner{ margin-left: 0 !important; width: 100% !important; }
 }
+
+
+/* =============================================================
+   CARD-GRID LAYOUT (used by Evidence & Findings tabs)
+   Replaces wide horizontal-scrolling tables. Each item gets its
+   own card; full content visible without horizontal scrolling.
+   ============================================================= */
+.item-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    padding: 14px 16px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+}
+.item-toolbar-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.item-toolbar-title { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.item-toolbar-count {
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--bg-elevated);
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: 500;
+}
+.item-toolbar-search {
+    flex: 1;
+    min-width: 200px;
+    max-width: 320px;
+    padding: 8px 12px;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    background: var(--bg-base);
+}
+.item-toolbar-search:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(30, 79, 209, 0.12); }
+.item-toolbar-filter {
+    padding: 8px 12px;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    background: var(--bg-base);
+    cursor: pointer;
+}
+
+.item-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 14px;
+}
+@media (max-width: 680px) {
+    .item-grid { grid-template-columns: 1fr; }
+}
+
+.item-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    position: relative;
+}
+.item-card:hover {
+    border-color: rgba(30, 79, 209, 0.32);
+    box-shadow: 0 14px 28px -22px rgba(15, 32, 63, 0.5);
+    transform: translateY(-1px);
+}
+.item-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+.item-card-id {
+    font-family: var(--font-mono, monospace);
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--bg-elevated);
+    padding: 2px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+}
+.item-card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.item-card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+.item-card-meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 12px;
+    font-size: 12px;
+    align-items: baseline;
+}
+.item-card-meta dt {
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 10px;
+    font-weight: 600;
+    padding-top: 2px;
+}
+.item-card-meta dd {
+    color: var(--text-secondary);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    min-width: 0;
+}
+.item-card-actions {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-subtle);
+    margin-top: auto;
+}
+.item-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 24px;
+    color: var(--text-muted);
+}
+.item-empty i { font-size: 44px; opacity: 0.3; display: block; margin-bottom: 14px; }
+.item-empty h3 { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+.item-empty p { font-size: 13px; margin-bottom: 18px; }
 
 
 /* ===== Learning Controls (Career Mode) ===== */
@@ -3973,6 +4148,35 @@ class GRCLabPro {
         }
         this.ensureUniformTabHero(this.currentTab);
         this.updateProjectModeIndicator();
+        // After the tab renders, mark any horizontally-overflowing table containers so the
+        // right-edge fade hint appears. Re-run on resize. (See CSS rule for .has-overflow-right.)
+        this.refreshTableOverflowHints();
+    }
+    refreshTableOverflowHints() {
+        const updateOne = (el) => {
+            const more = el.scrollWidth - el.clientWidth > 4
+                && el.scrollLeft + el.clientWidth < el.scrollWidth - 4;
+            el.classList.toggle('has-overflow-right', more);
+        };
+        const run = () => {
+            const activeTab = document.querySelector('.tab-content.active');
+            if (!activeTab) return;
+            activeTab.querySelectorAll('.table-container').forEach(el => {
+                updateOne(el);
+                if (!el._overflowHintBound) {
+                    el._overflowHintBound = true;
+                    el.addEventListener('scroll', () => updateOne(el));
+                }
+            });
+        };
+        // Run now and on the next frame (table layout may finish async)
+        run();
+        requestAnimationFrame(run);
+        // Attach a single resize listener (once)
+        if (!this._tableOverflowResizeAttached) {
+            this._tableOverflowResizeAttached = true;
+            window.addEventListener('resize', () => this.refreshTableOverflowHints());
+        }
     }
     updateAllBadges() {
         const d = this.getActiveData();
@@ -7828,7 +8032,92 @@ renderDonutChart(segments, total) {
     renderEvidence() {
         const c = document.getElementById('tab-evidence');
         const d = this.getActiveData();
-        c.innerHTML = `<div class="table-container"><div class="table-header"><h3 class="table-title">Evidence Library</h3><button class="btn btn-primary btn-sm" onclick="app.showEvidenceModal()"><i class="bi bi-plus-lg"></i> Add Evidence</button></div>${d.evidence.length > 0 ? `<table><thead><tr><th>ID</th><th>Title</th><th>Type</th><th>Related Control</th><th>Owner</th><th>Actions</th></tr></thead><tbody>${d.evidence.map(e => { const relId = e.relatedTo || e.related; const ctrl = relId ? d.controls.find(c => c.id === relId) : null; return `<tr><td><span class="font-mono text-muted">${this.esc(e.id)}</span></td><td class="font-semibold">${this.esc(e.title)}</td><td><span class="badge badge-blue">${this.esc(e.type || '')}</span></td><td>${ctrl ? this.esc(ctrl.name) : (relId ? `<span class="text-muted">${this.esc(relId)}</span>` : '-')}</td><td>${this.esc(e.owner || '-')}</td><td><button class="btn btn-ghost btn-sm" onclick="app.editEvidence('${e.id}')"><i class="bi bi-pencil"></i></button><button class="btn btn-ghost btn-sm" onclick="app.deleteItem('evidence','${e.id}')"><i class="bi bi-trash3"></i></button></td></tr>`; }).join('')}</tbody></table>` : this.renderEmpty('bi-folder2-open', 'No Evidence Yet', 'Upload and organize audit evidence.', 'showEvidenceModal')}</div>`;
+        const items = d.evidence || [];
+        const query = (this.evidenceQuery || '').toLowerCase().trim();
+        const typeFilter = this.evidenceTypeFilter || '';
+
+        // Apply search + filter
+        const filtered = items.filter(e => {
+            const relId = e.relatedTo || e.related;
+            const ctrl = relId ? d.controls.find(c => c.id === relId) : null;
+            const haystack = [e.id, e.title, e.type, e.owner, ctrl?.name, relId].filter(Boolean).join(' ').toLowerCase();
+            if (query && !haystack.includes(query)) return false;
+            if (typeFilter && e.type !== typeFilter) return false;
+            return true;
+        });
+
+        const types = [...new Set(items.map(e => e.type).filter(Boolean))].sort();
+
+        const typeBadgeColor = (t) => {
+            const map = { Screenshot: 'blue', Document: 'purple', Report: 'green', Export: 'amber', Configuration: 'gray', Log: 'red' };
+            return map[t] || 'blue';
+        };
+
+        c.innerHTML = `
+            <div class="item-toolbar">
+                <div class="item-toolbar-left">
+                    <div class="item-toolbar-title"><i class="bi bi-folder2-open"></i> Evidence Library</div>
+                    <span class="item-toolbar-count">${filtered.length}${filtered.length !== items.length ? ` of ${items.length}` : ''}</span>
+                </div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                    <input type="search" class="item-toolbar-search" id="evidence-search"
+                        placeholder="Search by title, owner, control..."
+                        value="${this.esc(this.evidenceQuery || '')}"
+                        oninput="app.evidenceQuery = this.value; app.renderEvidence();">
+                    <select class="item-toolbar-filter" onchange="app.evidenceTypeFilter = this.value; app.renderEvidence();">
+                        <option value="">All Types</option>
+                        ${types.map(t => `<option value="${this.esc(t)}" ${typeFilter === t ? 'selected' : ''}>${this.esc(t)}</option>`).join('')}
+                    </select>
+                    <button class="btn btn-primary btn-sm" onclick="app.showEvidenceModal()"><i class="bi bi-plus-lg"></i> Add Evidence</button>
+                </div>
+            </div>
+
+            <div class="item-grid">
+                ${filtered.length === 0 ? `
+                    <div class="item-empty">
+                        <i class="bi bi-folder2-open"></i>
+                        <h3>${items.length === 0 ? 'No Evidence Yet' : 'No matches'}</h3>
+                        <p>${items.length === 0 ? 'Upload and organize audit evidence.' : 'Try adjusting your search or filter.'}</p>
+                        ${items.length === 0 ? `<button class="btn btn-primary" onclick="app.showEvidenceModal()"><i class="bi bi-plus-lg"></i> Add Your First Evidence</button>` : ''}
+                    </div>
+                ` : filtered.map(e => {
+                    const relId = e.relatedTo || e.related;
+                    const ctrl = relId ? d.controls.find(c => c.id === relId) : null;
+                    const ctrlText = ctrl ? `${this.esc(ctrl.id)} — ${this.esc(ctrl.name)}` : (relId ? this.esc(relId) : '—');
+                    return `
+                        <div class="item-card">
+                            <div class="item-card-top">
+                                <span class="item-card-id">${this.esc(e.id)}</span>
+                                <div class="item-card-badges">
+                                    ${e.type ? `<span class="badge badge-${typeBadgeColor(e.type)}">${this.esc(e.type)}</span>` : ''}
+                                </div>
+                            </div>
+                            <div class="item-card-title">${this.esc(e.title)}</div>
+                            <dl class="item-card-meta">
+                                <dt>Control</dt><dd>${ctrlText}</dd>
+                                <dt>Owner</dt><dd>${this.esc(e.owner || '—')}</dd>
+                                ${e.url ? `<dt>Link</dt><dd><a href="${this.esc(e.url)}" target="_blank" rel="noopener" style="color: var(--accent-blue); text-decoration: none; word-break: break-all;">${this.esc(e.url.length > 40 ? e.url.substring(0, 40) + '…' : e.url)}</a></dd>` : ''}
+                                ${e.attachment?.name ? `<dt>File</dt><dd><i class="bi bi-paperclip"></i> ${this.esc(e.attachment.name)} <span style="color: var(--text-muted);">(${Math.round((e.attachment.size||0)/1024)} KB)</span></dd>` : ''}
+                            </dl>
+                            <div class="item-card-actions">
+                                <button class="btn btn-ghost btn-sm" onclick="app.editEvidence('${e.id}')" title="Edit"><i class="bi bi-pencil"></i> Edit</button>
+                                <button class="btn btn-ghost btn-sm" onclick="app.deleteItem('evidence','${e.id}')" title="Delete"><i class="bi bi-trash3"></i></button>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        `;
+
+        // Restore focus to search if user was typing
+        const searchEl = document.getElementById('evidence-search');
+        if (searchEl && query) {
+            searchEl.focus();
+            // Move cursor to end
+            const v = searchEl.value;
+            searchEl.value = '';
+            searchEl.value = v;
+        }
     }
     showEvidenceModal(e = null) {
         const isEdit = e !== null;
@@ -7943,7 +8232,124 @@ saveEvidence(editId) {
     renderFindings() {
         const c = document.getElementById('tab-findings');
         const d = this.getActiveData();
-        c.innerHTML = `<div class="table-container"><div class="table-header"><h3 class="table-title">Audit Findings</h3><button class="btn btn-primary btn-sm" onclick="app.showFindingModal()"><i class="bi bi-plus-lg"></i> Add Finding</button></div>${d.findings.length > 0 ? `<table><thead><tr><th>ID</th><th>Title</th><th>Severity</th><th>Status</th><th>Source</th><th>Related Control</th><th>Owner</th><th>Due Date</th><th>Actions</th></tr></thead><tbody>${d.findings.map(f => { const ctrl = d.controls.find(c => c.id === f.relatedControl); const statusColor = (f.status === 'Closed' || f.status === 'Resolved') ? 'green' : f.status === 'In Progress' || f.status === 'In Remediation' ? 'amber' : 'red'; return `<tr><td><span class="font-mono text-muted">${this.esc(f.id)}</span></td><td class="font-semibold">${this.esc(f.title)}</td><td><span class="badge badge-${f.severity === 'Critical' ? 'red' : f.severity === 'High' ? 'amber' : f.severity === 'Medium' ? 'blue' : 'green'}">${this.esc(f.severity || '')}</span></td><td><span class="badge badge-${statusColor}">${this.esc(f.status || '')}</span></td><td style="color: var(--text-secondary); font-size: 12px;">${this.esc(f.source || '-')}</td><td style="color: var(--text-secondary); font-size: 12px;">${ctrl ? this.esc(ctrl.name) : (f.relatedControl ? `<span class="text-muted">${this.esc(f.relatedControl)}</span>` : '-')}</td><td>${this.esc(f.owner || '-')}</td><td>${f.dueDate ? new Date(f.dueDate).toLocaleDateString() : '-'}</td><td><button class="btn btn-ghost btn-sm" onclick="app.editFinding('${f.id}')"><i class="bi bi-pencil"></i></button><button class="btn btn-ghost btn-sm" onclick="app.deleteItem('findings','${f.id}')"><i class="bi bi-trash3"></i></button></td></tr>`; }).join('')}</tbody></table>` : this.renderEmpty('bi-search', 'No Findings Yet', 'Document audit findings.', 'showFindingModal')}</div>`;
+        const items = d.findings || [];
+        const query = (this.findingsQuery || '').toLowerCase().trim();
+        const severityFilter = this.findingsSeverityFilter || '';
+        const statusFilter = this.findingsStatusFilter || '';
+
+        const filtered = items.filter(f => {
+            const ctrl = d.controls.find(c => c.id === f.relatedControl);
+            const haystack = [f.id, f.title, f.severity, f.status, f.source, f.owner, ctrl?.name, f.relatedControl].filter(Boolean).join(' ').toLowerCase();
+            if (query && !haystack.includes(query)) return false;
+            if (severityFilter && f.severity !== severityFilter) return false;
+            if (statusFilter && f.status !== statusFilter) return false;
+            return true;
+        });
+
+        // Sort: open findings first, then by severity (critical → low), then by due date
+        const sevRank = { Critical: 0, High: 1, Medium: 2, Low: 3 };
+        const statusRank = { Open: 0, 'In Progress': 1, 'In Remediation': 1, Closed: 2, Resolved: 2 };
+        filtered.sort((a, b) => {
+            const sa = statusRank[a.status] ?? 9;
+            const sb = statusRank[b.status] ?? 9;
+            if (sa !== sb) return sa - sb;
+            const ra = sevRank[a.severity] ?? 9;
+            const rb = sevRank[b.severity] ?? 9;
+            if (ra !== rb) return ra - rb;
+            const da = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
+            const db = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
+            return da - db;
+        });
+
+        const severityColor = (s) => s === 'Critical' ? 'red' : s === 'High' ? 'amber' : s === 'Medium' ? 'blue' : 'green';
+        const statusColor = (s) => (s === 'Closed' || s === 'Resolved') ? 'green' : (s === 'In Progress' || s === 'In Remediation') ? 'amber' : 'red';
+
+        // Overdue check
+        const today = new Date(); today.setHours(0,0,0,0);
+        const isOverdue = (f) => {
+            if (!f.dueDate) return false;
+            if (f.status === 'Closed' || f.status === 'Resolved') return false;
+            return new Date(f.dueDate) < today;
+        };
+
+        // Quick stats
+        const openCount = items.filter(f => f.status !== 'Closed' && f.status !== 'Resolved').length;
+        const overdueCount = items.filter(isOverdue).length;
+        const criticalOpenCount = items.filter(f => f.severity === 'Critical' && f.status !== 'Closed' && f.status !== 'Resolved').length;
+
+        c.innerHTML = `
+            <div class="item-toolbar">
+                <div class="item-toolbar-left">
+                    <div class="item-toolbar-title"><i class="bi bi-search"></i> Audit Findings</div>
+                    <span class="item-toolbar-count">${filtered.length}${filtered.length !== items.length ? ` of ${items.length}` : ''}</span>
+                    ${openCount > 0 ? `<span class="badge badge-red" style="font-size: 11px;">${openCount} Open</span>` : ''}
+                    ${overdueCount > 0 ? `<span class="badge badge-amber" style="font-size: 11px;">${overdueCount} Overdue</span>` : ''}
+                    ${criticalOpenCount > 0 ? `<span class="badge badge-red" style="font-size: 11px;">${criticalOpenCount} Critical</span>` : ''}
+                </div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                    <input type="search" class="item-toolbar-search" id="findings-search"
+                        placeholder="Search by title, owner, control..."
+                        value="${this.esc(this.findingsQuery || '')}"
+                        oninput="app.findingsQuery = this.value; app.renderFindings();">
+                    <select class="item-toolbar-filter" onchange="app.findingsSeverityFilter = this.value; app.renderFindings();">
+                        <option value="">All Severity</option>
+                        ${['Critical', 'High', 'Medium', 'Low'].map(s => `<option value="${s}" ${severityFilter === s ? 'selected' : ''}>${s}</option>`).join('')}
+                    </select>
+                    <select class="item-toolbar-filter" onchange="app.findingsStatusFilter = this.value; app.renderFindings();">
+                        <option value="">All Status</option>
+                        ${['Open', 'In Progress', 'In Remediation', 'Closed'].map(s => `<option value="${s}" ${statusFilter === s ? 'selected' : ''}>${s}</option>`).join('')}
+                    </select>
+                    <button class="btn btn-primary btn-sm" onclick="app.showFindingModal()"><i class="bi bi-plus-lg"></i> Add Finding</button>
+                </div>
+            </div>
+
+            <div class="item-grid">
+                ${filtered.length === 0 ? `
+                    <div class="item-empty">
+                        <i class="bi bi-search"></i>
+                        <h3>${items.length === 0 ? 'No Findings Yet' : 'No matches'}</h3>
+                        <p>${items.length === 0 ? 'Document audit findings.' : 'Try adjusting your search or filters.'}</p>
+                        ${items.length === 0 ? `<button class="btn btn-primary" onclick="app.showFindingModal()"><i class="bi bi-plus-lg"></i> Add Your First Finding</button>` : ''}
+                    </div>
+                ` : filtered.map(f => {
+                    const ctrl = d.controls.find(c => c.id === f.relatedControl);
+                    const ctrlText = ctrl ? `${this.esc(ctrl.id)} — ${this.esc(ctrl.name)}` : (f.relatedControl ? this.esc(f.relatedControl) : '—');
+                    const overdue = isOverdue(f);
+                    const dueText = f.dueDate ? new Date(f.dueDate).toLocaleDateString() : '—';
+                    return `
+                        <div class="item-card" ${overdue ? 'style="border-left: 3px solid var(--accent-red);"' : ''}>
+                            <div class="item-card-top">
+                                <span class="item-card-id">${this.esc(f.id)}</span>
+                                <div class="item-card-badges">
+                                    ${f.severity ? `<span class="badge badge-${severityColor(f.severity)}">${this.esc(f.severity)}</span>` : ''}
+                                    ${f.status ? `<span class="badge badge-${statusColor(f.status)}">${this.esc(f.status)}</span>` : ''}
+                                </div>
+                            </div>
+                            <div class="item-card-title">${this.esc(f.title)}</div>
+                            <dl class="item-card-meta">
+                                <dt>Source</dt><dd>${this.esc(f.source || '—')}</dd>
+                                <dt>Control</dt><dd>${ctrlText}</dd>
+                                <dt>Owner</dt><dd>${this.esc(f.owner || '—')}</dd>
+                                <dt>Due</dt><dd ${overdue ? 'style="color: var(--accent-red); font-weight: 600;"' : ''}>${dueText}${overdue ? ' <span style="font-size: 10px; text-transform: uppercase;">(Overdue)</span>' : ''}</dd>
+                            </dl>
+                            <div class="item-card-actions">
+                                <button class="btn btn-ghost btn-sm" onclick="app.editFinding('${f.id}')" title="Edit"><i class="bi bi-pencil"></i> Edit</button>
+                                <button class="btn btn-ghost btn-sm" onclick="app.deleteItem('findings','${f.id}')" title="Delete"><i class="bi bi-trash3"></i></button>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        `;
+
+        // Restore focus to search if user was typing
+        const searchEl = document.getElementById('findings-search');
+        if (searchEl && query) {
+            searchEl.focus();
+            const v = searchEl.value;
+            searchEl.value = '';
+            searchEl.value = v;
+        }
     }
     showFindingModal(f = null) {
         const isEdit = f !== null;
@@ -8107,7 +8513,10 @@ saveEvidence(editId) {
                         <tbody>
                             ${(selectedCategory ? controlsByCategory[selectedCategory] : annexAControls).map(ac => {
                                 const soaEntry = this.data.soaEntries?.find(e => e.controlId === ac.id);
-                                const isApplicable = soaEntry ? soaEntry.applicable : false; // Default to NOT applicable
+                                // Default to APPLICABLE — matches the stat calculation above (lines 7997-7999)
+                                // and ISO 27001 SoA methodology (every Annex A control is applicable unless
+                                // explicitly excluded with documented justification per Clause 6.1.3 d).
+                                const isApplicable = soaEntry ? soaEntry.applicable : true;
                                 const isImplemented = isApplicable && this.getActiveData().controls.some(c => c.controlId === ac.id || c.name === ac.name);
                                 const justification = soaEntry?.justification || '';
                                 
@@ -15110,6 +15519,61 @@ saveEvidence(editId) {
         const tested = items.filter(i => getLastTest(i)).length;
         const approved = items.filter(i => i.status === 'Approved' || i.status === 'Active').length;
 
+        // Search + filters
+        const query = (this.bcmQuery || '').toLowerCase().trim();
+        const typeFilter = this.bcmTypeFilter || '';
+        const statusFilter = this.bcmStatusFilter || '';
+
+        // Overdue helper — next test date in the past and status is approved/active
+        const today = new Date(); today.setHours(0,0,0,0);
+        const isTestOverdue = (item) => {
+            const nt = getNextTest(item);
+            if (!nt) return false;
+            const next = new Date(nt);
+            if (isNaN(next.getTime())) return false;
+            return next < today;
+        };
+        const overdueCount = items.filter(isTestOverdue).length;
+
+        // Filter chain
+        const filtered = items.filter(i => {
+            const bia = biaEntries.find(b => b.id === i.biaId);
+            const haystack = [
+                getName(i), getType(i), i.status, getStrategy(i), i.owner,
+                bia?.processName, getLastTest(i), getNextTest(i)
+            ].filter(Boolean).join(' ').toLowerCase();
+            if (query && !haystack.includes(query)) return false;
+            if (typeFilter && getType(i) !== typeFilter) return false;
+            if (statusFilter && i.status !== statusFilter) return false;
+            return true;
+        });
+
+        // Sort: overdue first, then by next test ascending
+        filtered.sort((a, b) => {
+            const ao = isTestOverdue(a) ? 0 : 1;
+            const bo = isTestOverdue(b) ? 0 : 1;
+            if (ao !== bo) return ao - bo;
+            const an = getNextTest(a); const bn = getNextTest(b);
+            const at = an ? new Date(an).getTime() : Infinity;
+            const bt = bn ? new Date(bn).getTime() : Infinity;
+            return at - bt;
+        });
+
+        const types = [...new Set(items.map(getType).filter(Boolean))].sort();
+        const statuses = [...new Set(items.map(i => i.status).filter(Boolean))].sort();
+
+        const typeBadgeColor = (t) =>
+            t === 'BCP' ? 'blue' : t === 'DRP' ? 'purple' : t === 'Crisis Communication' ? 'amber' : 'green';
+        const statusBadgeColor = (s) =>
+            (s === 'Approved' || s === 'Active') ? 'green' : s === 'Draft' ? 'amber' : 'blue';
+
+        const fmtDate = (s) => {
+            if (!s) return '';
+            const dt = new Date(s);
+            if (isNaN(dt.getTime())) return this.esc(s);
+            return dt.toLocaleDateString();
+        };
+
         c.innerHTML = `
             <div class="modern-page-hero" style="background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 50%, #3b82f6 100%); border-radius: var(--radius-2xl); padding: 28px 32px; margin-bottom: 24px; position: relative; overflow: hidden;">
                 <div style="position: absolute; inset: 0; background: url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\"); opacity: 0.3;"></div>
@@ -15128,27 +15592,67 @@ saveEvidence(editId) {
                 <div class="card"><div class="card-body" style="padding: 18px; text-align: center;"><div style="font-size: 28px; font-weight: 700; color: var(--accent-amber);">${biaEntries.length}</div><div style="font-size: 12px; color: var(--text-muted);">BIA Entries (input)</div></div></div>
             </div>
 
-            <div class="card"><div class="card-header" style="padding: 16px;"><span style="font-weight: 600;"><i class="bi bi-shield-fill-plus"></i> BCM / DR Plan Register</span></div>
-            <div class="card-body" style="padding: 0;">
-                ${items.length > 0 ? `<div style="overflow-x: auto;"><table style="margin:0;"><thead><tr><th>Plan Name</th><th>Type</th><th>Status</th><th>Recovery Strategy / Scope</th><th>BIA Process</th><th>Owner</th><th>Last Tested</th><th>Next Test</th><th style="width:80px;">Actions</th></tr></thead><tbody>
-                ${items.map(item => {
+            <div class="item-toolbar">
+                <div class="item-toolbar-left">
+                    <div class="item-toolbar-title"><i class="bi bi-shield-fill-plus"></i> BCM / DR Plan Register</div>
+                    <span class="item-toolbar-count">${filtered.length}${filtered.length !== items.length ? ` of ${items.length}` : ''}</span>
+                    ${overdueCount > 0 ? `<span class="badge badge-red" style="font-size: 11px;">${overdueCount} Test Overdue</span>` : ''}
+                </div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                    <input type="search" class="item-toolbar-search" id="bcm-search"
+                        placeholder="Search by name, owner, BIA process..."
+                        value="${this.esc(this.bcmQuery || '')}"
+                        oninput="app.bcmQuery = this.value; app.renderBCM();">
+                    <select class="item-toolbar-filter" onchange="app.bcmTypeFilter = this.value; app.renderBCM();">
+                        <option value="">All Types</option>
+                        ${types.map(t => `<option value="${this.esc(t)}" ${typeFilter === t ? 'selected' : ''}>${this.esc(t)}</option>`).join('')}
+                    </select>
+                    <select class="item-toolbar-filter" onchange="app.bcmStatusFilter = this.value; app.renderBCM();">
+                        <option value="">All Status</option>
+                        ${statuses.map(s => `<option value="${this.esc(s)}" ${statusFilter === s ? 'selected' : ''}>${this.esc(s)}</option>`).join('')}
+                    </select>
+                </div>
+            </div>
+
+            <div class="item-grid">
+                ${filtered.length === 0 ? `
+                    <div class="item-empty">
+                        <i class="bi bi-shield-fill-plus"></i>
+                        <h3>${items.length === 0 ? 'No BCM/DR Plans Yet' : 'No matches'}</h3>
+                        <p>${items.length === 0 ? 'Start by completing your BIA, then create plans for critical processes.' : 'Try adjusting your search or filters.'}</p>
+                        ${items.length === 0 ? `<button class="btn btn-primary" onclick="app.showBCMModal()"><i class="bi bi-plus-lg"></i> Add Your First Plan</button>` : ''}
+                    </div>
+                ` : filtered.map(item => {
                     const bia = biaEntries.find(b => b.id === item.biaId);
                     const planType = getType(item);
-                    return `<tr>
-                    <td style="font-weight: 600;">${this.esc(getName(item))}</td>
-                    <td><span class="badge badge-${planType === 'BCP' ? 'blue' : planType === 'DRP' ? 'purple' : planType === 'Crisis Communication' ? 'amber' : 'green'}">${this.esc(planType)}</span></td>
-                    <td><span class="badge badge-${item.status === 'Approved' || item.status === 'Active' ? 'green' : item.status === 'Draft' ? 'amber' : 'blue'}">${this.esc(item.status || '')}</span></td>
-                    <td style="font-size: 12px; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${this.esc(getStrategy(item) || '-')}</td>
-                    <td style="font-size: 12px;">${this.esc(bia?.processName || '-')}</td>
-                    <td style="font-size: 12px;">${this.esc(item.owner || '-')}</td>
-                    <td style="font-size: 12px;">${this.esc(getLastTest(item) || 'Never')}</td>
-                    <td style="font-size: 12px;">${this.esc(getNextTest(item) || '-')}</td>
-                    <td><div style="display: flex; gap: 4px;">
-                        <button class="btn btn-ghost btn-sm" onclick="app.editBCM('${item.id}')" title="Edit"><i class="bi bi-pencil"></i></button>
-                        <button class="btn btn-ghost btn-sm" onclick="app.deleteBCM('${item.id}')" title="Delete"><i class="bi bi-trash3"></i></button>
-                    </div></td></tr>`}).join('')}
-                </tbody></table></div>` : `<div style="padding: 50px; text-align: center; color: var(--text-muted);"><i class="bi bi-shield-fill-plus" style="font-size: 40px; opacity: 0.3; display: block; margin-bottom: 12px;"></i><p>No BCM/DR plans yet. Start by completing your BIA, then create plans for critical processes.</p></div>`}
-            </div></div>
+                    const overdue = isTestOverdue(item);
+                    const strategy = getStrategy(item);
+                    const lastTest = getLastTest(item);
+                    const nextTest = getNextTest(item);
+                    return `
+                        <div class="item-card" ${overdue ? 'style="border-left: 3px solid var(--accent-red);"' : ''}>
+                            <div class="item-card-top">
+                                <div class="item-card-badges">
+                                    <span class="badge badge-${typeBadgeColor(planType)}">${this.esc(planType)}</span>
+                                    ${item.status ? `<span class="badge badge-${statusBadgeColor(item.status)}">${this.esc(item.status)}</span>` : ''}
+                                </div>
+                            </div>
+                            <div class="item-card-title">${this.esc(getName(item)) || '<span style="color: var(--text-muted);">(Unnamed plan)</span>'}</div>
+                            ${strategy ? `<div style="font-size: 12px; color: var(--text-secondary); line-height: 1.5; padding: 8px 10px; background: var(--bg-elevated); border-radius: var(--radius-md);">${this.esc(strategy)}</div>` : ''}
+                            <dl class="item-card-meta">
+                                <dt>BIA Process</dt><dd>${this.esc(bia?.processName || '—')}</dd>
+                                <dt>Owner</dt><dd>${this.esc(item.owner || '—')}</dd>
+                                <dt>Last Tested</dt><dd>${lastTest ? fmtDate(lastTest) : '<span style="color: var(--accent-amber);">Never</span>'}</dd>
+                                <dt>Next Test</dt><dd ${overdue ? 'style="color: var(--accent-red); font-weight: 600;"' : ''}>${nextTest ? fmtDate(nextTest) : '—'}${overdue ? ' <span style="font-size: 10px; text-transform: uppercase;">(Overdue)</span>' : ''}</dd>
+                            </dl>
+                            <div class="item-card-actions">
+                                <button class="btn btn-ghost btn-sm" onclick="app.editBCM('${item.id}')" title="Edit"><i class="bi bi-pencil"></i> Edit</button>
+                                <button class="btn btn-ghost btn-sm" onclick="app.deleteBCM('${item.id}')" title="Delete"><i class="bi bi-trash3"></i></button>
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
 
             <!-- Learning Callout -->
             <div class="card" style="margin-top: 20px; border-left: 4px solid var(--accent-blue);">
@@ -15164,6 +15668,15 @@ saveEvidence(editId) {
                 </div>
             </div>
         `;
+
+        // Restore focus to search if user was typing
+        const searchEl = document.getElementById('bcm-search');
+        if (searchEl && query) {
+            searchEl.focus();
+            const v = searchEl.value;
+            searchEl.value = '';
+            searchEl.value = v;
+        }
     }
     showBCMModal(item) {
         const isEdit = !!item;
