@@ -3195,8 +3195,7 @@ body.modal-open {
                     <div class="nav-item" data-tab="controls"><i class="bi bi-shield-lock"></i><span>Controls</span><span class="nav-badge" id="badge-controls">0</span></div>
                     <div class="nav-item" data-tab="treatments"><i class="bi bi-bandaid"></i><span>Treatments</span><span class="nav-badge" id="badge-treatments">0</span></div>
                     <div class="nav-item" data-tab="matrix"><i class="bi bi-grid-3x3"></i><span>Risk Matrix</span></div>
-                    <div class="nav-item" data-tab="crosswalk"><i class="bi bi-intersect"></i><span>Control Crosswalk</span></div>
-                    <div class="nav-item" data-tab="control-mapping"><i class="bi bi-diagram-3-fill"></i><span>Control Mapping</span><span class="nav-badge" style="background: linear-gradient(135deg, #4338ca, #a855f7); color: white;">NEW</span></div>
+                    <div class="nav-item" data-tab="control-mapping"><i class="bi bi-diagram-3-fill"></i><span>Control Mapping</span></div>
                     <div class="nav-item" data-tab="control-lifecycle"><i class="bi bi-arrow-repeat"></i><span>Control Lifecycle</span></div>
                     <div class="nav-item" data-tab="cloud-risks"><i class="bi bi-cloud-haze2"></i><span>Cloud Risk Scenarios</span></div>
                 </div>
@@ -3337,7 +3336,6 @@ body.modal-open {
                 <div class="tab-content" id="tab-itgc"></div>
                 <div class="tab-content" id="tab-sox"></div>
                 <div class="tab-content" id="tab-evidence-scoring"></div>
-                <div class="tab-content" id="tab-crosswalk"></div>
                 <div class="tab-content" id="tab-control-mapping"></div>
                 <div class="tab-content" id="tab-control-lifecycle"></div>
                 <div class="tab-content" id="tab-cloud-risks"></div>
@@ -3708,7 +3706,6 @@ class GRCLabPro {
             kri: 'Key Risk Indicators',
             bia: 'Business Impact Analysis',
             bcm: 'BCM / DR Plans',
-            crosswalk: 'Control Crosswalk',
             'vendor-risk': 'Vendor Risk Assessment',
             'compliance-calendar': 'Compliance Calendar',
             'audit-sim': 'Audit Simulator',
@@ -3755,7 +3752,6 @@ class GRCLabPro {
             kri: 'bi-graph-up-arrow',
             bia: 'bi-heart-pulse',
             bcm: 'bi-shield-fill-plus',
-            crosswalk: 'bi-intersect',
             'vendor-risk': 'bi-clipboard2-pulse',
             'compliance-calendar': 'bi-calendar3-range',
             'audit-sim': 'bi-clipboard2-data',
@@ -3846,7 +3842,7 @@ class GRCLabPro {
         if (!this.devMode) return;
         const tab = this.currentTab || 'dashboard';
         const d = this.getActiveData();
-        const dataMap = { 'risks': d.risks, 'controls': d.controls, 'assets': d.assets, 'vendors': d.vendors, 'policies': d.policies, 'evidence': d.evidence, 'findings': d.findings, 'testing': d.controlTests, 'issues': d.issues, 'incidents': d.incidents, 'tasks': d.tasks, 'audits': d.audits, 'treatments': d.treatments, 'requirements': d.requirements, 'exceptions': d.exceptions, 'itgc': d.itgcControls, 'sox': d.soxEntries, 'risk-appetite': d.riskAppetiteStatements, 'kri': d.kriEntries, 'bia': d.biaEntries, 'bcm': d.bcmPlans, 'crosswalk': d.crosswalkMappings, 'control-mapping': d.controls, 'vendor-risk': d.vendorAssessments, 'evidence-scoring': d.evidenceScores, 'control-lifecycle': d.controlLifecycle, 'cloud-risks': d.cloudRiskScenarios };
+        const dataMap = { 'risks': d.risks, 'controls': d.controls, 'assets': d.assets, 'vendors': d.vendors, 'policies': d.policies, 'evidence': d.evidence, 'findings': d.findings, 'testing': d.controlTests, 'issues': d.issues, 'incidents': d.incidents, 'tasks': d.tasks, 'audits': d.audits, 'treatments': d.treatments, 'requirements': d.requirements, 'exceptions': d.exceptions, 'itgc': d.itgcControls, 'sox': d.soxEntries, 'risk-appetite': d.riskAppetiteStatements, 'kri': d.kriEntries, 'bia': d.biaEntries, 'bcm': d.bcmPlans, 'control-mapping': d.controls, 'vendor-risk': d.vendorAssessments, 'evidence-scoring': d.evidenceScores, 'control-lifecycle': d.controlLifecycle, 'cloud-risks': d.cloudRiskScenarios };
         const records = dataMap[tab] || [];
         document.getElementById('dev-current-tab').textContent = tab;
         document.getElementById('dev-record-count').textContent = Array.isArray(records) ? records.length : 0;
@@ -3867,8 +3863,8 @@ class GRCLabPro {
         // Keep sidebar sections in accordion mode: active tab section open, others closed.
         this.syncSidebarSections(tab);
         this.animateNavSelection(tab);
-        const titles = { dashboard:'Dashboard', 'start-here':'Start Here', assets:'Asset Inventory', vendors:'Vendor Management', policies:'Policy Library', risks:'Risk Register', controls:'Control Catalog', treatments:'Risk Treatments', matrix:'Risk Matrix', issues:'Issue Tracker', incidents:'Incident Log', tasks:'Task Management', audits:'Audit Schedule', evidence:'Evidence Library', testing:'Control Testing', findings:'Audit Findings', soa:'Statement of Applicability', traceability:'Traceability Matrix', reports:'Reports & Analytics', frameworks:'Framework Library', projects:'GRC Projects', portfolio:'Portfolio Builder', requirements:'Compliance Requirements', exceptions:'Exceptions', reviews:'Due & Activity', 'itgc':'IT General Controls', 'sox':'SOX Compliance', 'evidence-scoring':'Evidence Scoring', 'control-lifecycle':'Control Lifecycle', 'cloud-risks':'Cloud Risk Scenarios', 'risk-appetite':'Risk Appetite Statement', 'kri':'Key Risk Indicators', 'bia':'Business Impact Analysis', 'bcm':'BCM / DR Plans', 'crosswalk':'Control Crosswalk', 'control-mapping':'Control Mapping', 'vendor-risk':'Vendor Risk Assessment', 'compliance-calendar':'Compliance Calendar', 'audit-sim':'Audit Simulator', 'missions':'Guided Missions', 'iso27001-li':'ISO 27001 Lead Implementer', 'interview-prep':'Interview Prep', 'roadmap':'Community Roadmap', 'ai-agent':'GRC AI Agent Command', 'ai-agent-setup':'WebGPU Agent Setup' };
-        const icons = { dashboard:'bi-grid-1x2-fill', 'start-here':'bi-rocket-takeoff', assets:'bi-hdd-stack', vendors:'bi-building', policies:'bi-file-earmark-text', risks:'bi-exclamation-triangle', controls:'bi-shield-lock', treatments:'bi-bandaid', matrix:'bi-grid-3x3', issues:'bi-bug', incidents:'bi-lightning', tasks:'bi-check2-square', audits:'bi-clipboard-check', evidence:'bi-folder2-open', testing:'bi-card-checklist', findings:'bi-search', soa:'bi-file-earmark-check', traceability:'bi-diagram-3', reports:'bi-file-earmark-bar-graph', frameworks:'bi-journal-code', projects:'bi-briefcase', portfolio:'bi-person-badge', requirements:'bi-list-check', exceptions:'bi-shield-exclamation', reviews:'bi-calendar2-check', 'itgc':'bi-bank2', 'sox':'bi-briefcase-fill', 'evidence-scoring':'bi-star-half', 'control-lifecycle':'bi-arrow-repeat', 'cloud-risks':'bi-cloud-haze2', 'risk-appetite':'bi-speedometer2', 'kri':'bi-graph-up-arrow', 'bia':'bi-heart-pulse', 'bcm':'bi-shield-fill-plus', 'crosswalk':'bi-intersect', 'control-mapping':'bi-diagram-3-fill', 'vendor-risk':'bi-clipboard2-pulse', 'compliance-calendar':'bi-calendar3-range', 'audit-sim':'bi-clipboard2-data', 'missions':'bi-flag-fill', 'iso27001-li':'bi-shield-check', 'interview-prep':'bi-person-video3', 'roadmap':'bi-kanban', 'ai-agent':'bi-stars', 'ai-agent-setup':'bi-cpu-fill' };
+        const titles = { dashboard:'Dashboard', 'start-here':'Start Here', assets:'Asset Inventory', vendors:'Vendor Management', policies:'Policy Library', risks:'Risk Register', controls:'Control Catalog', treatments:'Risk Treatments', matrix:'Risk Matrix', issues:'Issue Tracker', incidents:'Incident Log', tasks:'Task Management', audits:'Audit Schedule', evidence:'Evidence Library', testing:'Control Testing', findings:'Audit Findings', soa:'Statement of Applicability', traceability:'Traceability Matrix', reports:'Reports & Analytics', frameworks:'Framework Library', projects:'GRC Projects', portfolio:'Portfolio Builder', requirements:'Compliance Requirements', exceptions:'Exceptions', reviews:'Due & Activity', 'itgc':'IT General Controls', 'sox':'SOX Compliance', 'evidence-scoring':'Evidence Scoring', 'control-lifecycle':'Control Lifecycle', 'cloud-risks':'Cloud Risk Scenarios', 'risk-appetite':'Risk Appetite Statement', 'kri':'Key Risk Indicators', 'bia':'Business Impact Analysis', 'bcm':'BCM / DR Plans', 'control-mapping':'Control Mapping', 'vendor-risk':'Vendor Risk Assessment', 'compliance-calendar':'Compliance Calendar', 'audit-sim':'Audit Simulator', 'missions':'Guided Missions', 'iso27001-li':'ISO 27001 Lead Implementer', 'interview-prep':'Interview Prep', 'roadmap':'Community Roadmap', 'ai-agent':'GRC AI Agent Command', 'ai-agent-setup':'WebGPU Agent Setup' };
+        const icons = { dashboard:'bi-grid-1x2-fill', 'start-here':'bi-rocket-takeoff', assets:'bi-hdd-stack', vendors:'bi-building', policies:'bi-file-earmark-text', risks:'bi-exclamation-triangle', controls:'bi-shield-lock', treatments:'bi-bandaid', matrix:'bi-grid-3x3', issues:'bi-bug', incidents:'bi-lightning', tasks:'bi-check2-square', audits:'bi-clipboard-check', evidence:'bi-folder2-open', testing:'bi-card-checklist', findings:'bi-search', soa:'bi-file-earmark-check', traceability:'bi-diagram-3', reports:'bi-file-earmark-bar-graph', frameworks:'bi-journal-code', projects:'bi-briefcase', portfolio:'bi-person-badge', requirements:'bi-list-check', exceptions:'bi-shield-exclamation', reviews:'bi-calendar2-check', 'itgc':'bi-bank2', 'sox':'bi-briefcase-fill', 'evidence-scoring':'bi-star-half', 'control-lifecycle':'bi-arrow-repeat', 'cloud-risks':'bi-cloud-haze2', 'risk-appetite':'bi-speedometer2', 'kri':'bi-graph-up-arrow', 'bia':'bi-heart-pulse', 'bcm':'bi-shield-fill-plus', 'control-mapping':'bi-diagram-3-fill', 'vendor-risk':'bi-clipboard2-pulse', 'compliance-calendar':'bi-calendar3-range', 'audit-sim':'bi-clipboard2-data', 'missions':'bi-flag-fill', 'iso27001-li':'bi-shield-check', 'interview-prep':'bi-person-video3', 'roadmap':'bi-kanban', 'ai-agent':'bi-stars', 'ai-agent-setup':'bi-cpu-fill' };
         
         let titleHtml = `<i class="bi ${icons[tab] || 'bi-circle'}"></i> ${titles[tab] || tab}`;
         if (this.activeProject) {
@@ -3942,7 +3938,7 @@ class GRCLabPro {
         }
     }
     renderCurrentTab() {
-        const r = { dashboard: () => this.renderDashboard(), 'start-here': () => this.renderStartHere(), glossary: () => this.renderGlossary(), scenarios: () => this.renderScenarios(), assets: () => this.renderAssets(), vendors: () => this.renderVendors(), policies: () => this.renderPolicies(), risks: () => this.renderRisks(), controls: () => this.renderControls(), treatments: () => this.renderTreatments(), matrix: () => this.renderMatrix(), issues: () => this.renderIssues(), incidents: () => this.renderIncidents(), tasks: () => this.renderTasks(), audits: () => this.renderAudits(), evidence: () => this.renderEvidence(), testing: () => this.renderTesting(), findings: () => this.renderFindings(), soa: () => this.renderSoA(), traceability: () => this.renderTraceability(), reports: () => this.renderReports(), frameworks: () => this.renderFrameworks(), projects: () => this.renderProjects(), portfolio: () => this.renderPortfolio(), requirements: () => this.renderRequirements(), exceptions: () => this.renderExceptions(), reviews: () => this.renderReviews(), 'itgc': () => this.renderItgc(), 'sox': () => this.renderSox(), 'evidence-scoring': () => this.renderEvidenceScoring(), 'control-lifecycle': () => this.renderControlLifecycle(), 'cloud-risks': () => this.renderCloudRisks(), 'risk-appetite': () => this.renderRiskAppetite(), 'kri': () => this.renderKRI(), 'bia': () => this.renderBIA(), 'bcm': () => this.renderBCM(), 'crosswalk': () => this.renderCrosswalk(), 'control-mapping': () => this.renderControlMapping(), 'vendor-risk': () => this.renderVendorRisk(), 'compliance-calendar': () => this.renderComplianceCalendar(), 'audit-sim': () => this.renderAuditSim(), 'missions': () => this.renderMissions(), 'iso27001-li': () => this.renderISO27001LeadImplementer(), 'interview-prep': () => this.renderInterviewPrep(), 'roadmap': () => this.renderRoadmap(), 'ai-agent': () => this.renderGrcAiAgent(), 'ai-agent-setup': () => this.renderAiAgentSetup() };
+        const r = { dashboard: () => this.renderDashboard(), 'start-here': () => this.renderStartHere(), glossary: () => this.renderGlossary(), scenarios: () => this.renderScenarios(), assets: () => this.renderAssets(), vendors: () => this.renderVendors(), policies: () => this.renderPolicies(), risks: () => this.renderRisks(), controls: () => this.renderControls(), treatments: () => this.renderTreatments(), matrix: () => this.renderMatrix(), issues: () => this.renderIssues(), incidents: () => this.renderIncidents(), tasks: () => this.renderTasks(), audits: () => this.renderAudits(), evidence: () => this.renderEvidence(), testing: () => this.renderTesting(), findings: () => this.renderFindings(), soa: () => this.renderSoA(), traceability: () => this.renderTraceability(), reports: () => this.renderReports(), frameworks: () => this.renderFrameworks(), projects: () => this.renderProjects(), portfolio: () => this.renderPortfolio(), requirements: () => this.renderRequirements(), exceptions: () => this.renderExceptions(), reviews: () => this.renderReviews(), 'itgc': () => this.renderItgc(), 'sox': () => this.renderSox(), 'evidence-scoring': () => this.renderEvidenceScoring(), 'control-lifecycle': () => this.renderControlLifecycle(), 'cloud-risks': () => this.renderCloudRisks(), 'risk-appetite': () => this.renderRiskAppetite(), 'kri': () => this.renderKRI(), 'bia': () => this.renderBIA(), 'bcm': () => this.renderBCM(), 'control-mapping': () => this.renderControlMapping(), 'vendor-risk': () => this.renderVendorRisk(), 'compliance-calendar': () => this.renderComplianceCalendar(), 'audit-sim': () => this.renderAuditSim(), 'missions': () => this.renderMissions(), 'iso27001-li': () => this.renderISO27001LeadImplementer(), 'interview-prep': () => this.renderInterviewPrep(), 'roadmap': () => this.renderRoadmap(), 'ai-agent': () => this.renderGrcAiAgent(), 'ai-agent-setup': () => this.renderAiAgentSetup() };
         try {
             if (r[this.currentTab]) {
                 r[this.currentTab]();
@@ -3980,8 +3976,7 @@ class GRCLabPro {
             'traceability': { title: 'See the Full Chain', why: 'This is the single most important view in GRC. It shows how every risk links to controls, evidence, tests, and findings. Gaps in this chain are audit failures.', steps: ['Review each risk row — does it have linked controls?', 'Does each control have evidence and test results?', 'Look for gaps: risks with no controls, controls with no evidence', 'Use this view to prepare for audits and management reviews'], mistakes: ['Ignoring gaps — every broken link is a finding waiting to happen', 'Not using this view before audit prep — it shows exactly what is missing'], next: null },
             'kri': { title: 'Monitor Risk in Real Time', why: 'KRIs are your early warning system. They detect risk trends before they become incidents. This is what a GRC analyst checks every day.', steps: ['Define KRIs that link to your Risk Appetite categories', 'Set RAG thresholds: Green (within appetite), Amber (approaching), Red (breached)', 'Classify as Leading (predictive) or Lagging (reactive)', 'Update values regularly and track trends'], mistakes: ['All lagging indicators — you need leading indicators to predict, not just react', 'Thresholds not tied to appetite — KRI red should equal appetite breach', 'Not updating values — stale KRIs provide false assurance'], next: { text: 'Check your Risk Appetite alignment →', tab: 'risk-appetite' } },
             'sox': { title: 'SOX Section 302/404 Compliance', why: 'SOX applies to publicly traded companies. Understanding COSO and ICFR is essential for anyone working in financial services GRC. Even private companies adopt these frameworks.', steps: ['Load the SOX templates to see the COSO components', 'Understand the 5 COSO components and how they interact', 'Classify controls as Preventive, Detective, or Corrective', 'Map controls to financial assertions (Completeness, Existence, Valuation)'], mistakes: ['Treating SOX as an IT-only exercise — SOX is fundamentally about financial reporting', 'Not understanding material weakness vs significant deficiency', 'Skipping walkthrough documentation — auditors need this'], next: { text: 'Review IT General Controls that support SOX →', tab: 'itgc' } },
-            'itgc': { title: 'IT General Controls', why: 'ITGCs are the foundation under application controls. If your ITGC environment is weak, auditors cannot rely on ANY automated controls. ITGCs are tested in every SOX and SOC 2 audit.', steps: ['Load the 16 ITGC templates across 4 domains', 'Understand each domain: Access, Change Management, Operations, SDLC', 'Test each control and record results', 'Failed ITGC tests have cascading impact on all dependent controls'], mistakes: ['Testing ITGCs in isolation — failed access management affects everything', 'Not documenting compensating controls when an ITGC fails'], next: { text: 'Map controls across frameworks with Crosswalk →', tab: 'crosswalk' } },
-            'crosswalk': { title: 'The #1 Skill Employers Want', why: 'Control crosswalking maps one control to multiple framework requirements. This is how organizations reduce audit fatigue by 30-50%. Employers specifically hire for this skill.', steps: ['Select a control from your catalog', 'Check all frameworks it satisfies', 'Add reference IDs (e.g., ISO A.8.5, NIST PR.AC-7, SOC 2 CC6.1)', 'Document the rationale — why does this one control satisfy multiple requirements?'], mistakes: ['Forcing mappings that do not fit — a control should genuinely address each requirement', 'Not documenting reference IDs — auditors need the specific clause/section'], next: null },
+            'itgc': { title: 'IT General Controls', why: 'ITGCs are the foundation under application controls. If your ITGC environment is weak, auditors cannot rely on ANY automated controls. ITGCs are tested in every SOX and SOC 2 audit.', steps: ['Load the 16 ITGC templates across 4 domains', 'Understand each domain: Access, Change Management, Operations, SDLC', 'Test each control and record results', 'Failed ITGC tests have cascading impact on all dependent controls'], mistakes: ['Testing ITGCs in isolation — failed access management affects everything', 'Not documenting compensating controls when an ITGC fails'], next: { text: 'Map controls across frameworks with Control Mapping →', tab: 'control-mapping' } },
             'bia': { title: 'What Breaks If Systems Go Down?', why: 'BIA determines which business processes are critical and how quickly they must be recovered. This drives your entire BCM/DR strategy.', steps: ['Identify critical business processes', 'Set RTO (Recovery Time Objective) and RPO (Recovery Point Objective)', 'Determine MTPD (Maximum Tolerable Period of Disruption)', 'Map dependencies between processes and assets'], mistakes: ['Setting all RTOs to 0 — even critical systems have some acceptable downtime', 'Not involving business stakeholders — IT cannot determine business criticality alone'], next: { text: 'Now create BCM/DR Plans for critical processes →', tab: 'bcm' } },
             'bcm': { title: 'Plans for When Things Go Wrong', why: 'BCM and DR plans define HOW you recover when disruptions happen. BIA tells you WHAT is critical and HOW FAST to recover — BCM plans define the actual recovery strategy.', steps: ['Create plans for your most critical BIA processes', 'Link each plan to a BIA entry', 'Define the recovery strategy in detail', 'Set test schedules and track results'], mistakes: ['Plans that have never been tested are not plans — they are documents', 'Not updating plans after organizational changes', 'No crisis communication plan — this is always forgotten'], next: null },
             'vendor-risk': { title: 'Assess Your Third-Party Risk', why: 'Your vendors are an extension of your risk surface. A breach at a critical vendor IS your breach. Vendor risk assessment scores vendors across 4 dimensions.', steps: ['Score each vendor on Security, Compliance, Financial, and Operational (0-25 each)', 'Focus on critical/high vendors first', 'Request SOC 2 reports, pentest results, and compliance certifications', 'Set review schedules — annual for low risk, quarterly for critical'], mistakes: ['Assessing vendors only at onboarding — risk changes over the contract lifecycle', 'Not considering fourth-party risk (your vendor\'s vendors)', 'Accepting self-assessment questionnaires without verification'], next: null },
@@ -4072,8 +4067,6 @@ class GRCLabPro {
         if (risksOverAppetite.length > 0) gaps.push({ severity: 'critical', icon: 'bi-speedometer2', text: `${risksOverAppetite.length} risk(s) exceed your stated risk appetite tolerance. Board-level escalation required.`, action: 'Review Risks →', tab: 'risks' });
         // No assets
         if (d.assets.length === 0) gaps.push({ severity: 'info', icon: 'bi-hdd-stack', text: 'No assets inventoried. Start by documenting what you are protecting.', action: 'Add Assets →', tab: 'assets' });
-        // No crosswalk mappings
-        if ((d.crosswalkMappings || []).length === 0 && d.controls.length > 0) gaps.push({ severity: 'info', icon: 'bi-intersect', text: 'No control crosswalk mappings. Map controls to multiple frameworks to demonstrate audit efficiency.', action: 'Create Crosswalk →', tab: 'crosswalk' });
 
         if (gaps.length === 0) return `<div class="card" style="margin-bottom: 20px; border-left: 4px solid var(--accent-green);"><div style="padding: 20px; display: flex; align-items: center; gap: 12px;"><i class="bi bi-patch-check-fill" style="font-size: 24px; color: var(--accent-green);"></i><div><div style="font-weight: 700; font-size: 14px; color: var(--accent-green);">Program Health: Strong</div><div style="font-size: 12px; color: var(--text-secondary);">No critical gaps detected. Keep monitoring KRIs and testing controls.</div></div></div></div>`;
 
@@ -4730,9 +4723,9 @@ class GRCLabPro {
                         <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;"><i class="bi bi-shield-fill-plus" style="color: var(--accent-blue); font-size: 13px;"></i><span style="font-size: 10px; font-weight: 600;">BCM/DR</span></div>
                         <div style="font-size: 18px; font-weight: 700;">${(d.bcmPlans||[]).length}</div>
                     </div>
-                    <div style="background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 12px; cursor: pointer; transition: all 0.2s;" onclick="app.switchTab('crosswalk')" onmouseover="this.style.borderColor='var(--accent-purple)'" onmouseout="this.style.borderColor='var(--border-default)'">
-                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;"><i class="bi bi-intersect" style="color: var(--accent-purple); font-size: 13px;"></i><span style="font-size: 10px; font-weight: 600;">Crosswalk</span></div>
-                        <div style="font-size: 18px; font-weight: 700;">${(d.crosswalkMappings||[]).length}</div>
+                    <div style="background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 12px; cursor: pointer; transition: all 0.2s;" onclick="app.switchTab('control-mapping')" onmouseover="this.style.borderColor='var(--accent-purple)'" onmouseout="this.style.borderColor='var(--border-default)'">
+                        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;"><i class="bi bi-diagram-3-fill" style="color: var(--accent-purple); font-size: 13px;"></i><span style="font-size: 10px; font-weight: 600;">Ctrl Mapping</span></div>
+                        <div style="font-size: 18px; font-weight: 700;">${(d.controls||[]).reduce((sum, ctrl) => sum + ((ctrl.frameworkRefs || []).length), 0)}</div>
                     </div>
                     <div style="background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 12px; cursor: pointer; transition: all 0.2s;" onclick="app.switchTab('control-lifecycle')" onmouseover="this.style.borderColor='var(--accent-cyan)'" onmouseout="this.style.borderColor='var(--border-default)'">
                         <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;"><i class="bi bi-arrow-repeat" style="color: var(--accent-cyan); font-size: 13px;"></i><span style="font-size: 10px; font-weight: 600;">Lifecycle</span></div>
@@ -15069,97 +15062,6 @@ saveEvidence(editId) {
     editBCM(id) { const item = (this.getActiveData().bcmPlans || []).find(x => x.id === id); if (item) this.showBCMModal(item); }
     deleteBCM(id) { if (!confirm('Delete?')) return; const d = this.getActiveData(); d.bcmPlans = (d.bcmPlans || []).filter(x => x.id !== id); this.saveData('bcmPlans'); this.renderBCM(); this.toast('Deleted', 'success'); }
 
-    // ==================== CONTROL CROSSWALK ====================
-    renderCrosswalk() {
-        const c = document.getElementById('tab-crosswalk');
-        const d = this.getActiveData();
-        const items = d.crosswalkMappings || [];
-        const controls = d.controls || [];
-        const frameworks = ['ISO 27001', 'NIST CSF', 'SOC 2', 'PCI DSS', 'HIPAA', 'GDPR', 'CIS Controls', 'COBIT'];
-        const fwCounts = {};
-        frameworks.forEach(fw => { fwCounts[fw] = items.filter(i => (i.frameworks || []).includes(fw)).length; });
-
-        c.innerHTML = `
-            <div class="modern-page-hero" style="background: linear-gradient(135deg, #4338ca 0%, #6d28d9 50%, #a855f7 100%); border-radius: var(--radius-2xl); padding: 28px 32px; margin-bottom: 24px; position: relative; overflow: hidden;">
-                <div style="position: absolute; inset: 0; background: url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\"); opacity: 0.3;"></div>
-                <div style="position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-                    <div>
-                        <h2 style="font-size: 22px; font-weight: 700; color: white; margin: 0 0 6px;"><i class="bi bi-intersect"></i> Control Crosswalk</h2>
-                        <p style="font-size: 13px; color: rgba(255,255,255,0.7); margin: 0;">Map one control to multiple frameworks. This is the #1 skill GRC employers look for &mdash; reducing audit fatigue through unified controls.</p>
-                    </div>
-                    <button class="btn" style="background: white; color: #4338ca; font-weight: 600;" onclick="app.showCrosswalkModal()"><i class="bi bi-plus-lg"></i> Add Mapping</button>
-                </div>
-            </div>
-
-            <!-- Framework Coverage -->
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px;">
-                ${frameworks.map(fw => `<div class="card"><div class="card-body" style="padding: 14px; text-align: center;">
-                    <div style="font-size: 22px; font-weight: 700; color: var(--accent-purple);">${fwCounts[fw]}</div>
-                    <div style="font-size: 11px; color: var(--text-muted); font-weight: 600;">${fw}</div>
-                </div></div>`).join('')}
-            </div>
-
-            <div class="card"><div class="card-header" style="padding: 16px;"><span style="font-weight: 600;"><i class="bi bi-intersect"></i> Crosswalk Mappings</span><span class="badge badge-purple" style="margin-left: 8px;">${items.length}</span></div>
-            <div class="card-body" style="padding: 0;">
-                ${items.length > 0 ? `<div style="overflow-x: auto;"><table style="margin:0;"><thead><tr><th>Control</th><th>Frameworks Mapped</th><th>References</th><th>Coverage Ratio</th><th style="width:80px;">Actions</th></tr></thead><tbody>
-                ${items.map(item => {
-                    const ctrl = controls.find(ct => ct.id === item.controlId);
-                    const fwCount = (item.frameworks || []).length;
-                    return `<tr>
-                    <td style="font-weight: 600;">${ctrl?.name || item.controlName || 'Unknown'}</td>
-                    <td>${(item.frameworks || []).map(fw => `<span class="badge badge-purple" style="font-size: 9px; margin: 1px;">${fw}</span>`).join(' ')}</td>
-                    <td style="font-size: 11px; max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.references || '-'}</td>
-                    <td><div style="display: flex; align-items: center; gap: 8px;"><div style="flex: 1; background: var(--bg-elevated); border-radius: 4px; height: 8px; max-width: 80px;"><div style="height: 100%; width: ${(fwCount/frameworks.length)*100}%; background: var(--accent-purple); border-radius: 4px;"></div></div><span style="font-size: 11px;">${fwCount}/${frameworks.length}</span></div></td>
-                    <td><div style="display: flex; gap: 4px;">
-                        <button class="btn btn-ghost btn-sm" onclick="app.editCrosswalk('${item.id}')" title="Edit"><i class="bi bi-pencil"></i></button>
-                        <button class="btn btn-ghost btn-sm" onclick="app.deleteCrosswalk('${item.id}')" title="Delete"><i class="bi bi-trash3"></i></button>
-                    </div></td></tr>`}).join('')}
-                </tbody></table></div>` : `<div style="padding: 50px; text-align: center; color: var(--text-muted);"><i class="bi bi-intersect" style="font-size: 40px; opacity: 0.3; display: block; margin-bottom: 12px;"></i><p>No crosswalk mappings yet. Map your controls across frameworks to show audit efficiency.</p></div>`}
-            </div></div>
-
-            <!-- Learning Callout -->
-            <div class="card" style="margin-top: 20px; border-left: 4px solid var(--accent-purple);">
-                <div style="padding: 20px;">
-                    <div style="font-weight: 700; margin-bottom: 8px;"><i class="bi bi-mortarboard"></i> Crosswalk Learning Notes</div>
-                    <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.7;">
-                        <strong>A crosswalk</strong> maps one control to multiple regulatory and industry frameworks simultaneously.<br>
-                        <strong>Why it matters</strong>: If your MFA control satisfies ISO 27001 A.8.5, NIST CSF PR.AC-7, SOC 2 CC6.1, and PCI DSS 8.3 &mdash; you only need to test it <em>once</em>.<br>
-                        <strong>Audit efficiency</strong>: Organizations with good crosswalks reduce audit time by 30-50% because one piece of evidence supports multiple framework requirements.<br>
-                        This is the <strong>most in-demand GRC skill</strong> for career switchers. Employers want people who can consolidate compliance workloads.
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-    showCrosswalkModal(item) {
-        const isEdit = !!item;
-        const d = this.getActiveData();
-        const frameworks = ['ISO 27001', 'NIST CSF', 'SOC 2', 'PCI DSS', 'HIPAA', 'GDPR', 'CIS Controls', 'COBIT'];
-        const selectedFws = item?.frameworks || [];
-        openModal(isEdit ? 'Edit Crosswalk Mapping' : 'New Crosswalk Mapping', `
-            <div class="form-group"><label class="form-label">Control *</label><select class="form-input" id="f-controlId">${d.controls.length ? d.controls.map(ct => `<option value="${ct.id}" ${item?.controlId===ct.id?'selected':''}>${ct.name} (${ct.ref || ct.framework})</option>`).join('') : '<option value="">-- Add controls first --</option>'}</select></div>
-            <div class="form-group"><label class="form-label">Frameworks (check all that apply) *</label>
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 8px;">
-                    ${frameworks.map(fw => `<label style="display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer;"><input type="checkbox" class="fw-check" value="${fw}" ${selectedFws.includes(fw)?'checked':''}> ${fw}</label>`).join('')}
-                </div>
-            </div>
-            <div class="form-group"><label class="form-label">Reference IDs</label><input class="form-input" id="f-references" value="${item?.references || ''}" placeholder="e.g. A.8.5, PR.AC-7, CC6.1, 8.3"></div>
-            <div class="form-group"><label class="form-label">Rationale</label><textarea class="form-textarea" id="f-rationale" rows="2">${item?.rationale || ''}</textarea></div>
-        `, `<button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="app.saveCrosswalk('${item?.id || ''}')">${isEdit ? 'Update' : 'Create'}</button>`);
-    }
-    saveCrosswalk(editId) {
-        const controlId = document.getElementById('f-controlId')?.value; if (!controlId) { this.toast('Select a control', 'error'); return; }
-        const fws = [...document.querySelectorAll('.fw-check:checked')].map(cb => cb.value); if (fws.length === 0) { this.toast('Select at least one framework', 'error'); return; }
-        const ctrl = this.getActiveData().controls.find(c => c.id === controlId);
-        const entry = { controlId, controlName: ctrl?.name || '', frameworks: fws, references: document.getElementById('f-references')?.value?.trim(), rationale: document.getElementById('f-rationale')?.value?.trim() };
-        const d = this.getActiveData(); if (!d.crosswalkMappings) d.crosswalkMappings = [];
-        if (editId) { const idx = d.crosswalkMappings.findIndex(x => x.id === editId); if (idx >= 0) Object.assign(d.crosswalkMappings[idx], entry); }
-        else { entry.id = this.generateId('CW'); entry.createdAt = new Date().toISOString(); d.crosswalkMappings.push(entry); }
-        this.saveData('crosswalkMappings'); closeModal(); this.renderCrosswalk(); this.toast(editId ? 'Mapping updated' : 'Mapping created', 'success');
-    }
-    editCrosswalk(id) { const item = (this.getActiveData().crosswalkMappings || []).find(x => x.id === id); if (item) this.showCrosswalkModal(item); }
-    deleteCrosswalk(id) { if (!confirm('Delete?')) return; const d = this.getActiveData(); d.crosswalkMappings = (d.crosswalkMappings || []).filter(x => x.id !== id); this.saveData('crosswalkMappings'); this.renderCrosswalk(); this.toast('Deleted', 'success'); }
-
     // ==================== CONTROL MAPPING (ENTERPRISE) ====================
     // Unified data model: d.controls[] is single source of truth.
     // Each control: { id, name, description, owner, frequency, status, effectiveness, category,
@@ -17291,11 +17193,11 @@ saveEvidence(editId) {
                 { task: 'Document any findings from testing', check: () => d.findings.length >= 1, goTo: 'findings', hint: 'If a test failed, create a finding with severity, owner, and due date.' },
                 { task: 'Run the Audit Simulator', check: () => !!this.auditSimState?.phase && this.auditSimState.phase !== 'planning', goTo: 'audit-sim', hint: 'Walk through all 5 phases: planning, scoping, sampling, fieldwork, reporting.' }
               ]},
-            { id: 'M3', title: 'Build a Compliance Crosswalk', difficulty: 'Advanced', time: '20 min', desc: 'Map your controls across multiple frameworks. This is the #1 skill employers look for in GRC professionals.', icon: 'bi-intersect', color: 'green',
+            { id: 'M3', title: 'Build a Compliance Crosswalk', difficulty: 'Advanced', time: '20 min', desc: 'Map your controls across multiple frameworks. This is the #1 skill employers look for in GRC professionals.', icon: 'bi-diagram-3-fill', color: 'green',
               steps: [
                 { task: 'Ensure you have 5+ controls', check: () => d.controls.length >= 5, goTo: 'controls', hint: 'Add controls for MFA, logging, encryption, access reviews, backup.' },
-                { task: 'Create 3+ crosswalk mappings', check: () => (d.crosswalkMappings||[]).length >= 3, goTo: 'crosswalk', hint: 'Map each control to every framework it satisfies. MFA maps to ISO, NIST, SOC 2, PCI DSS.' },
-                { task: 'Add framework reference IDs', check: () => (d.crosswalkMappings||[]).filter(m => m.references).length >= 2, goTo: 'crosswalk', hint: 'e.g. ISO A.8.5, NIST PR.AC-7, SOC 2 CC6.1' },
+                { task: 'Map 3+ controls across frameworks', check: () => (d.controls||[]).filter(c => (c.frameworkRefs||[]).length >= 2).length >= 3, goTo: 'control-mapping', hint: 'Open Control Mapping and add multiple frameworkRefs per control. MFA maps to ISO, NIST, SOC 2, PCI DSS.' },
+                { task: 'Add framework reference IDs', check: () => (d.controls||[]).filter(c => (c.frameworkRefs||[]).filter(r => r.ref).length >= 2).length >= 2, goTo: 'control-mapping', hint: 'e.g. ISO A.8.5, NIST PR.AC-7, SOC 2 CC6.1' },
                 { task: 'Review traceability for gaps', check: () => true, goTo: 'traceability', hint: 'Look for risks with no controls, controls with no evidence — these are audit gaps.' }
               ]},
             { id: 'M4', title: 'Risk Appetite to KRI Pipeline', difficulty: 'Intermediate', time: '20 min', desc: 'Build the complete risk governance pipeline: appetite → risks → KRIs → monitoring.', icon: 'bi-speedometer2', color: 'red',
@@ -17487,7 +17389,7 @@ saveEvidence(editId) {
             { title: 'Vendor Risk Assessment', status: 'Released', desc: 'Vendor tiering, risk scoring across 4 dimensions, SLA tracking.', votes: 29 },
             { title: 'Key Risk Indicators (KRI)', status: 'Released', desc: 'Leading/lagging indicators with RAG thresholds and trend tracking.', votes: 26 },
             { title: 'Risk Appetite & Tolerance', status: 'Released', desc: 'Board-level appetite statements linked to risk scoring.', votes: 24 },
-            { title: 'Control Crosswalk', status: 'Released', desc: 'Map single controls to ISO, NIST, SOC 2, PCI DSS, HIPAA, GDPR.', votes: 22 },
+            { title: 'Control Mapping (Unified CCF)', status: 'Released', desc: 'Define a control once, map it across ISO, NIST, SOC 2, PCI DSS, HIPAA, GDPR with relationship types + gap analysis.', votes: 22 },
             { title: 'Guided Missions', status: 'Released', desc: 'Step-by-step interactive missions with progress tracking.', votes: 41 },
             { title: 'Interview Prep Generator', status: 'Released', desc: 'Generate interview Q&A from your actual lab work.', votes: 44 },
             { title: 'Export / Import (JSON)', status: 'Released', desc: 'Save and share your lab data across sessions and devices.', votes: 33 },
@@ -18505,7 +18407,7 @@ saveEvidence(editId) {
             kriEntries: 'kri',
             biaEntries: 'bia',
             bcmPlans: 'bcm',
-            crosswalkMappings: 'crosswalk',
+            crosswalkMappings: 'control-mapping',
             evidenceScores: 'evidence-scoring',
             controlLifecycle: 'control-lifecycle',
             cloudRiskScenarios: 'cloud-risks'
@@ -18557,7 +18459,7 @@ saveEvidence(editId) {
             kriEntries: 'kri',
             biaEntries: 'bia',
             bcmPlans: 'bcm',
-            crosswalkMappings: 'crosswalk',
+            crosswalkMappings: 'control-mapping',
             evidenceScores: 'evidence-scoring',
             controlLifecycle: 'control-lifecycle',
             cloudRiskScenarios: 'cloud-risks'
@@ -18587,7 +18489,7 @@ saveEvidence(editId) {
             { key: 'controls', label: 'Controls', aliases: ['control'] },
             { key: 'treatments', label: 'Treatments', aliases: ['treatment', 'mitigation'] },
             { key: 'matrix', label: 'Risk Matrix', aliases: ['heatmap'] },
-            { key: 'crosswalk', label: 'Control Crosswalk', aliases: ['mapping'] },
+            { key: 'control-mapping', label: 'Control Mapping', aliases: ['mapping', 'crosswalk'] },
             { key: 'control-lifecycle', label: 'Control Lifecycle', aliases: ['lifecycle'] },
             { key: 'cloud-risks', label: 'Cloud Risk Scenarios', aliases: ['cloud'] },
             { key: 'issues', label: 'Issues', aliases: ['issue'] },
@@ -19179,8 +19081,8 @@ saveEvidence(editId) {
                 title: 'Build a Compliance Crosswalk',
                 steps: [
                     { task: 'Ensure you have 5+ controls', done: (d.controls || []).length >= 5, goTo: 'controls', hint: 'A crosswalk is only useful with solid controls.' },
-                    { task: 'Create 3+ crosswalk mappings', done: (d.crosswalkMappings || []).length >= 3, goTo: 'crosswalk', hint: 'Map one control to multiple framework clauses.' },
-                    { task: 'Add framework references', done: (d.crosswalkMappings || []).filter(m => m.references).length >= 2, goTo: 'crosswalk', hint: 'Clause-level references improve audit defensibility.' },
+                    { task: 'Map 3+ controls across frameworks', done: (d.controls || []).filter(c => (c.frameworkRefs||[]).length >= 2).length >= 3, goTo: 'control-mapping', hint: 'In Control Mapping, give each control multiple frameworkRefs.' },
+                    { task: 'Add framework references', done: (d.controls || []).filter(c => (c.frameworkRefs||[]).filter(r => r.ref).length >= 2).length >= 2, goTo: 'control-mapping', hint: 'Clause-level references improve audit defensibility.' },
                     { task: 'Review traceability gaps', done: true, goTo: 'traceability', hint: 'Close risks-without-controls and controls-without-evidence first.' }
                 ]
             },
@@ -20677,7 +20579,8 @@ saveEvidence(editId) {
                 kri: 'kri',
                 bia: 'bia',
                 bcm: 'bcm',
-                crosswalk: 'crosswalk',
+                crosswalk: 'control-mapping',
+                'control mapping': 'control-mapping',
                 'control lifecycle': 'control-lifecycle',
                 'evidence scoring': 'evidence-scoring',
                 'cloud risks': 'cloud-risks'
