@@ -3953,7 +3953,8 @@ class GRCLabPro {
             this.aiRuntime.corpusCache = null;
             this.aiRuntime.corpusCacheKey = '';
         }
-        this.updateAllBadges(); 
+        this.updateAllBadges();
+        try { this.onProjectDataSaved(key); } catch (e) {}
     }
     createEmptyDataStore() {
         return Object.keys(this.data).reduce((acc, key) => {
@@ -4366,9 +4367,16 @@ class GRCLabPro {
                 indicator.style.cssText = 'position: fixed; top: 85px; left: 260px; right: 0; background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue)); color: white; padding: 10px 20px; font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: space-between; z-index: 999; box-shadow: var(--shadow-md);';
                 document.body.appendChild(indicator);
             }
+            const _prog = this.getProjectProgress(this.activeProject);
+            const _cur = this.getNextIncompleteTask(this.activeProject);
+            const _curCount = _cur ? ((this.getProjectData(this.activeProject)[_cur.type] || []).length) : 0;
+            const _curChip = _cur
+                ? `<span style="background: rgba(255,255,255,0.18); padding: 4px 12px; border-radius: 20px; white-space: nowrap;"><i class="bi bi-flag-fill"></i> Current: ${this.esc(_cur.label)} <strong>(${Math.min(_curCount, _cur.required)}/${_cur.required})</strong></span>
+                   <button onclick="app.switchTab('${_cur.tab}')" style="background: #fff; color: var(--accent-purple); border: none; padding: 5px 14px; border-radius: 5px; cursor: pointer; font-size: 12px; font-weight: 700; white-space: nowrap;">Go <i class="bi bi-arrow-right"></i></button>`
+                : `<span style="background: rgba(255,255,255,0.18); padding: 4px 12px; border-radius: 20px; white-space: nowrap;"><i class="bi bi-check-circle-fill"></i> All ${_prog.total} tasks complete</span>`;
             indicator.innerHTML = `
-                <div><i class="bi bi-briefcase-fill"></i> Project Mode: <strong>${project?.company || 'Unknown'}</strong> — ${project?.scenario || ''}</div>
-                <button onclick="app.exitProjectMode()" style="background: rgba(255,255,255,0.25); border: none; color: white; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.4)'" onmouseout="this.style.background='rgba(255,255,255,0.25)'"><i class="bi bi-box-arrow-left"></i> Exit Project</button>
+                <div style="display: flex; align-items: center; gap: 12px; min-width: 0; overflow: hidden;"><span style="white-space: nowrap;"><i class="bi bi-briefcase-fill"></i> <strong>${this.esc(project?.company || 'Unknown')}</strong> · ${_prog.completed}/${_prog.total} tasks</span>${_curChip}</div>
+                <button onclick="app.exitProjectMode()" style="background: rgba(255,255,255,0.25); border: none; color: white; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 600; transition: background 0.2s; flex-shrink: 0;" onmouseover="this.style.background='rgba(255,255,255,0.4)'" onmouseout="this.style.background='rgba(255,255,255,0.25)'"><i class="bi bi-box-arrow-left"></i> Exit</button>
             `;
             indicator.style.display = 'flex';
             const mainContent = document.querySelector('.main-content');
@@ -8008,7 +8016,16 @@ renderDonutChart(segments, total) {
         // Multi-framework mapping banner
         const refsCount = isEdit ? ((ctrl?.frameworkRefs || []).length) : 0;
         const mappingBanner = isEdit ? `<div style="background: linear-gradient(135deg, #eef2ff, #ede9fe); border: 1px solid #c7d2fe; border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px;"><div style="display: flex; align-items: center; gap: 10px; min-width: 0;"><div style="width: 32px; height: 32px; border-radius: 7px; background: #4338ca; color: white; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><i class="bi bi-diagram-3-fill" style="font-size: 16px;"></i></div><div style="min-width: 0;"><div style="font-size: 12px; font-weight: 700; color: #4338ca;">${refsCount} framework mapping${refsCount === 1 ? '' : 's'}</div><div style="font-size: 11px; color: var(--text-secondary);">Below shows the primary mapping. Manage multi-framework refs in the Control Mapping tab.</div></div></div><button type="button" class="btn btn-sm btn-primary" style="font-size: 11px; flex-shrink: 0;" onclick="closeModal(); app.switchTab('control-mapping'); setTimeout(() => app.cmShowControlModal(app.cmGetControls().find(c => c.id === '${ctrl.id}')), 200);"><i class="bi bi-pencil-square"></i> Edit Mapping</button></div>` : `<div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 7px; padding: 8px 11px; margin-bottom: 14px; font-size: 11px; color: #92400e;"><i class="bi bi-info-circle-fill"></i> This control will appear in both <strong>Controls</strong> and <strong>Control Mapping</strong>. After creation, open Control Mapping to add additional framework references.</div>`;
-        openModal(isEdit ? 'Edit Control' : 'Add Control', `${coachBanner}${mappingBanner}<div class="form-group"><label class="form-label">Name *</label><input type="text" class="form-input" id="f-name" value="${this.esc(ctrl?.name || '')}" placeholder="e.g. Enforce MFA on all privileged accounts"><div class="beginner-tip"><i class="bi bi-lightbulb"></i> A control is a safeguard. What specific action reduces a risk? Be precise enough that someone could test it.</div></div><div class="form-row"><div class="form-group"><label class="form-label">Primary Framework</label><select class="form-select" id="f-framework">${allFwOptions.map(f => `<option value="${this.esc(f)}" ${ctrl?.framework === f ? 'selected' : ''}>${this.esc(f)}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Reference</label><input type="text" class="form-input" id="f-ref" value="${this.esc(ctrl?.ref || '')}" placeholder="e.g., A.5.17"></div></div><div class="form-row"><div class="form-group"><label class="form-label">Effectiveness</label><select class="form-select" id="f-effectiveness">${['Effective', 'Partially Effective', 'Ineffective', 'Not Tested'].map(e => `<option value="${e}" ${(ctrl?.effectiveness || ctrl?.status) === e ? 'selected' : ''}>${e}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Frequency</label><select class="form-select" id="f-frequency">${['Continuous', 'Monthly', 'Quarterly', 'Annual'].map(f => `<option value="${f}" ${ctrl?.frequency === f ? 'selected' : ''}>${f}</option>`).join('')}</select></div></div><div class="form-group"><label class="form-label">Owner</label><input type="text" class="form-input" id="f-owner" value="${this.esc(ctrl?.owner || '')}" placeholder="e.g. IAM Team, Security Operations"></div><div class="form-group adv-field"><label class="form-label">Description</label><textarea class="form-textarea" id="f-desc" placeholder="Describe exactly what this control does, how it is implemented, and how you would test it">${this.esc(ctrl?.description || '')}</textarea></div><div class="rationale-prompt"><label><i class="bi bi-chat-square-text"></i> Decision Rationale — WHY this effectiveness rating?</label><textarea id="f-ctrl-rationale" placeholder="e.g. Rated Effective because MFA is enforced via Okta SSO. Last tested 2025-01-15 with 100% pass rate.">${this.esc(ctrl?.rationale || '')}</textarea></div>`, `<button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="app.saveControl('${ctrl?.id || ''}')">${isEdit ? 'Update' : 'Create'}</button>`);
+        openModal(isEdit ? 'Edit Control' : 'Add Control', `${coachBanner}${mappingBanner}<div class="form-group"><label class="form-label">Name *</label><input type="text" class="form-input" id="f-name" value="${this.esc(ctrl?.name || '')}" placeholder="e.g. Enforce MFA on all privileged accounts"><div class="beginner-tip"><i class="bi bi-lightbulb"></i> A control is a safeguard. What specific action reduces a risk? Be precise enough that someone could test it.</div></div><div class="form-row"><div class="form-group"><label class="form-label">Primary Framework</label><select class="form-select" id="f-framework" onchange="app.updateCtrlRefList()">${allFwOptions.map(f => `<option value="${this.esc(f)}" ${ctrl?.framework === f ? 'selected' : ''}>${this.esc(f)}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Reference</label><input type="text" class="form-input" id="f-ref" list="f-ref-list" autocomplete="off" value="${this.esc(ctrl?.ref || '')}" placeholder="Type or pick — e.g. A.5.17"><datalist id="f-ref-list">${this.ctrlRefOptions((isEdit && ctrl?.framework) ? ctrl.framework : allFwOptions[0])}</datalist><div class="beginner-tip" style="margin-top:5px"><i class="bi bi-lightbulb"></i> Pick a code from the list so it maps <strong>exactly</strong> — a typo here won't count toward framework coverage.</div></div></div><div class="form-row"><div class="form-group"><label class="form-label">Effectiveness</label><select class="form-select" id="f-effectiveness">${['Effective', 'Partially Effective', 'Ineffective', 'Not Tested'].map(e => `<option value="${e}" ${(ctrl?.effectiveness || ctrl?.status) === e ? 'selected' : ''}>${e}</option>`).join('')}</select></div><div class="form-group"><label class="form-label">Frequency</label><select class="form-select" id="f-frequency">${['Continuous', 'Monthly', 'Quarterly', 'Annual'].map(f => `<option value="${f}" ${ctrl?.frequency === f ? 'selected' : ''}>${f}</option>`).join('')}</select></div></div><div class="form-group"><label class="form-label">Owner</label><input type="text" class="form-input" id="f-owner" value="${this.esc(ctrl?.owner || '')}" placeholder="e.g. IAM Team, Security Operations"></div><div class="form-group adv-field"><label class="form-label">Description</label><textarea class="form-textarea" id="f-desc" placeholder="Describe exactly what this control does, how it is implemented, and how you would test it">${this.esc(ctrl?.description || '')}</textarea></div><div class="rationale-prompt"><label><i class="bi bi-chat-square-text"></i> Decision Rationale — WHY this effectiveness rating?</label><textarea id="f-ctrl-rationale" placeholder="e.g. Rated Effective because MFA is enforced via Okta SSO. Last tested 2025-01-15 with 100% pass rate.">${this.esc(ctrl?.rationale || '')}</textarea></div>`, `<button class="btn btn-secondary" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="app.saveControl('${ctrl?.id || ''}')">${isEdit ? 'Update' : 'Create'}</button>`);
+    }
+    ctrlRefOptions(fwId) {
+        const cat = (this.cmFrameworkCatalog && this.cmFrameworkCatalog()[fwId]) || [];
+        return cat.map(r => `<option value="${this.esc(r.ref)}">${this.esc(r.name)}</option>`).join('');
+    }
+    updateCtrlRefList() {
+        const fw = document.getElementById('f-framework')?.value;
+        const dl = document.getElementById('f-ref-list');
+        if (dl) dl.innerHTML = this.ctrlRefOptions(fw);
     }
     saveControl(editId) {
         const name = document.getElementById('f-name').value.trim();
@@ -15095,7 +15112,8 @@ saveEvidence(editId) {
         const progress = this.getProjectProgress(p.id);
         const statusClass = progress.percent === 100 ? 'green' : (progress.started || progress.percent > 0) ? 'amber' : 'blue';
         const self = this;
-        
+        let foundCurrent = false;
+
         return `
             <div class="project-card">
                 <div class="project-card-header" style="border-left: 4px solid var(--accent-${statusClass});">
@@ -15129,11 +15147,17 @@ saveEvidence(editId) {
                     <div class="project-card-tasks">
                         ${p.tasks.map(t => {
                             const isComplete = self.checkTaskComplete(p.id, t);
+                            const isCurrent = !isComplete && !foundCurrent;
+                            if (isCurrent) foundCurrent = true;
+                            const cnt = Math.min((self.getProjectData(p.id)[t.type] || []).length, t.required);
+                            const icon = isComplete ? 'bi-check-circle-fill' : (isCurrent ? 'bi-arrow-right-circle-fill' : 'bi-circle');
                             return `
-                                <div class="project-card-task ${isComplete ? 'complete' : 'incomplete'}">
-                                    <i class="bi ${isComplete ? 'bi-check-circle-fill' : 'bi-circle'}"></i>
-                                    <span style="${isComplete ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${t.label}</span>
+                                <div class="project-card-task ${isComplete ? 'complete' : 'incomplete'}" style="${isCurrent ? 'background: var(--accent-purple-soft); border-radius: 6px; padding: 6px 8px; display: flex; align-items: center; gap: 8px;' : ''}">
+                                    <i class="bi ${icon}" ${isCurrent ? 'style="color: var(--accent-purple);"' : ''}></i>
+                                    <span style="${isComplete ? 'text-decoration: line-through; opacity: 0.6;' : ''}">${t.label} <span style="opacity: 0.55; font-size: 11px;">(${cnt}/${t.required})</span></span>
+                                    ${isCurrent ? `<button class="btn btn-primary btn-sm" style="margin-left: auto; font-size: 10px; padding: 3px 10px;" onclick="event.stopPropagation(); app.startProjectAt('${p.id}', '${t.tab}')">Go <i class="bi bi-arrow-right"></i></button>` : ''}
                                 </div>
+                                ${isCurrent ? `<div style="font-size: 11px; color: var(--text-secondary); margin: 3px 0 8px 28px; line-height: 1.45;"><i class="bi bi-info-circle"></i> ${self.taskGuide(t).hint}</div>` : ''}
                             `;
                         }).join('')}
                     </div>
@@ -15351,6 +15375,50 @@ saveEvidence(editId) {
         return { completed, total, percent, started };
     }
     
+    // Plain-language guidance for what each task actually asks the learner to do.
+    // These labs start EMPTY — the learner creates the records, and that creation IS the exercise.
+    taskGuide(task) {
+        const n = task.required;
+        const map = {
+            vendors:   { hint: `Open <strong>Vendor Management</strong> and add the vendor's profile (name, service, criticality, SOC 2 / attestation status).` },
+            risks:     { hint: `Open <strong>Risk Register</strong> and log ${n} risk${n>1?'s':''} this scenario poses — score each one's likelihood & impact.` },
+            controls:  { hint: `Open <strong>Control Catalog</strong> and create ${n} control${n>1?'s':''}, setting each one's <em>Effectiveness</em>. The lab is empty — you create &amp; rate them, and that IS the "verify" step. (In a real engagement you'd verify these against the vendor's SOC 2 Type II report and PCI AOC.)` },
+            issues:    { hint: `Open <strong>Issue Tracker</strong> and document ${n} issue${n>1?'s':''} / finding${n>1?'s':''} — the gaps you'd raise from your assessment (e.g. an exception in the SOC 2 report, a missing PCI requirement).` },
+            policies:  { hint: `Open <strong>Policy Library</strong> and create ${n} polic${n>1?'ies':'y'}.` },
+            assets:    { hint: `Open <strong>Asset Inventory</strong> and add ${n} asset${n>1?'s':''} / data-processing activit${n>1?'ies':'y'}.` },
+            incidents: { hint: `Open <strong>Incident Log</strong> and record ${n} incident${n>1?'s':''}.` },
+            evidence:  { hint: `Open <strong>Evidence Library</strong> and attach ${n} piece${n>1?'s':''} of evidence.` },
+            treatments:{ hint: `Open <strong>Risk Treatments</strong> and define ${n} treatment plan${n>1?'s':''}.` }
+        };
+        return map[task.type] || { hint: `Open the <strong>${task.tab}</strong> tab and add ${n} ${task.type}.` };
+    }
+    getNextIncompleteTask(projectId) {
+        const project = this.getProjectScenarios().find(p => p.id === projectId);
+        if (!project) return null;
+        return project.tasks.find(t => !this.checkTaskComplete(projectId, t)) || null;
+    }
+    // Called after every save while in project mode — celebrates a finished task and points to the next one.
+    onProjectDataSaved(key) {
+        if (!this.activeProject) return;
+        const project = this.getProjectScenarios().find(p => p.id === this.activeProject);
+        if (!project) { return; }
+        const pData = this.getProjectData(this.activeProject);
+        const task = project.tasks.find(t => t.type === key);
+        if (task && Array.isArray(pData[key]) && pData[key].length === task.required) {
+            const next = project.tasks.find(t => !this.checkTaskComplete(this.activeProject, t));
+            if (next) {
+                this.showWorkflowPrompt(`✓ "${task.label}" — done!`, `Nice work — that task is complete. <strong>Next up: ${next.label}.</strong><br>${this.taskGuide(next).hint}`, next.tab, `Go to: ${next.label} →`);
+            } else {
+                this.showWorkflowPrompt(`🎉 All tasks complete!`, `You've finished every task for <strong>${this.esc(project.company)}</strong>. Review your work, export a report from Reports, or reset to practice again.`, 'projects', 'Back to Projects →');
+            }
+        }
+        this.updateProjectModeIndicator();
+    }
+    // Enter a project (if needed) and jump straight to a specific task's tab.
+    startProjectAt(projectId, tab) {
+        if (this.activeProject !== projectId) this.enterProjectMode(projectId);
+        this.switchTab(tab);
+    }
     startProject(projectId) {
         // Enter project mode first
         this.enterProjectMode(projectId);
@@ -20477,7 +20545,7 @@ saveEvidence(editId) {
                 { ref: 'ID.IM-02', name: 'Improvements identified from security tests and exercises', category: 'Identify' },
                 { ref: 'ID.IM-03', name: 'Improvements identified from execution of operational processes', category: 'Identify' },
                 { ref: 'ID.IM-04', name: 'Incident response plans and other plans improved', category: 'Identify' },
-                // PROTECT (PR) — 23 subcategories
+                // PROTECT (PR) — 22 subcategories
                 { ref: 'PR.AA-01', name: 'Identities and credentials for authorized users, services, hardware managed', category: 'Protect' },
                 { ref: 'PR.AA-02', name: 'Identities proofed and bound to credentials based on interactions', category: 'Protect' },
                 { ref: 'PR.AA-03', name: 'Users, services, hardware authenticated', category: 'Protect' },
@@ -20526,14 +20594,15 @@ saveEvidence(editId) {
                 { ref: 'RS.CO-03', name: 'Information shared with designated stakeholders', category: 'Respond' },
                 { ref: 'RS.MI-01', name: 'Incidents contained', category: 'Respond' },
                 { ref: 'RS.MI-02', name: 'Incidents eradicated', category: 'Respond' },
-                // RECOVER (RC) — 7 subcategories
+                // RECOVER (RC) — 8 subcategories
                 { ref: 'RC.RP-01', name: 'Recovery portion of incident response plan executed', category: 'Recover' },
                 { ref: 'RC.RP-02', name: 'Recovery actions selected, scoped, prioritized, performed', category: 'Recover' },
                 { ref: 'RC.RP-03', name: 'Integrity of backups and other restoration assets verified before use', category: 'Recover' },
                 { ref: 'RC.RP-04', name: 'Critical mission functions and risk management considered to establish post-incident operations', category: 'Recover' },
                 { ref: 'RC.RP-05', name: 'Integrity of restored assets verified, systems and services restored, operational status confirmed', category: 'Recover' },
                 { ref: 'RC.RP-06', name: 'End of incident recovery declared based on criteria; related documentation completed', category: 'Recover' },
-                { ref: 'RC.CO-03', name: 'Recovery activities and progress in restoring operational capabilities communicated to stakeholders', category: 'Recover' }
+                { ref: 'RC.CO-03', name: 'Recovery activities and progress in restoring operational capabilities communicated to stakeholders', category: 'Recover' },
+                { ref: 'RC.CO-04', name: 'Public updates on incident recovery shared using approved methods and messaging', category: 'Recover' }
             ],
             'SOC 2': [
                 // Common Criteria — Control Environment (CC1)
