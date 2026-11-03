@@ -113,7 +113,6 @@
     gsap.from('.stage__me', { yPercent: 12, autoAlpha: 0, duration: 1.5, ease: 'expo.out', delay: INTRO + 0.15, clearProps: 'opacity,visibility' });
     gsap.from('.hero__word', { xPercent: 18, autoAlpha: 0, duration: 2, ease: 'expo.out', delay: INTRO, clearProps: 'opacity,visibility' });
     gsap.from('.glass', { scale: 0.85, autoAlpha: 0, duration: 0.9, ease: 'back.out(1.7)', stagger: 0.14, delay: INTRO + 0.9, clearProps: 'opacity,visibility,scale' });
-    gsap.from('.stage__name', { y: 20, autoAlpha: 0, duration: 0.9, ease: 'expo.out', delay: INTRO + 1.1, clearProps: 'opacity,visibility' });
     gsap.to('.stage__me', { yPercent: 10, scale: 1.04, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.5 } });
     gsap.to('.hero__word', { xPercent: -14, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.5 } });
     gsap.to('.hero__copy', { yPercent: -12, autoAlpha: 0.2, ease: 'none', scrollTrigger: { trigger: '.hero', start: '30% top', end: 'bottom top', scrub: 0.5 } });
@@ -354,6 +353,16 @@
 
   function initTilt() {
     if (!FINE) return;
+    var stage = document.querySelector('.stage'), st = document.getElementById('stageTilt');
+    if (stage && st) {
+      var srx = gsap.quickTo(st, 'rotationX', { duration: 0.9, ease: 'power3' }), sry = gsap.quickTo(st, 'rotationY', { duration: 0.9, ease: 'power3' });
+      stage.addEventListener('pointermove', function (e) {
+        var r = stage.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        sry((px - 0.5) * 18); srx(-(py - 0.5) * 12);
+        stage.style.setProperty('--gx', (px * 100).toFixed(1) + '%'); stage.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
+      });
+      stage.addEventListener('pointerleave', function () { srx(0); sry(0); });
+    }
     document.querySelectorAll('.chapter, .vid, .ledger__row, .news__card, .speak').forEach(function (c) {
       c.classList.add('tilt');
       var max = c.classList.contains('ledger__row') ? 2 : (c.classList.contains('speak') || c.classList.contains('news__card') ? 3 : 7);

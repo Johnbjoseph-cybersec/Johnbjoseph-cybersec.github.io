@@ -346,3 +346,30 @@ body::after { content: ""; position: fixed; inset: -50%; z-index: 90; pointer-ev
 
 @media (max-width: 900px) { .nav__links { display: none; } }
 .nav__links a { white-space: nowrap; }
+
+/* =================== hero v3: photo left, copy right, tags never on the photo =================== */
+.hero__grid { grid-template-columns: .95fr 1.05fr; }
+.hero__word { right: auto; left: -3vw; }
+.stage { perspective: 1200px; }
+.stage__tilt { position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform; }
+.stage__halo { transform: translateX(-50%) translateZ(-60px); }
+.stage__me { transform: translateZ(40px); }
+.stage__glare { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s;
+  background: radial-gradient(520px circle at var(--gx, 50%) var(--gy, 30%), rgba(254, 189, 89, .16), transparent 55%);
+  -webkit-mask-image: url(img/john-cutout.webp); mask-image: url(img/john-cutout.webp); -webkit-mask-size: auto 100%; mask-size: auto 100%; -webkit-mask-position: 50% 100%; mask-position: 50% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+.stage:hover .stage__glare { opacity: 1; }
+.hero__chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.hero__chips .glass { position: relative; left: auto; right: auto; top: auto; }
+@media (max-width: 1020px) {
+  .hero__grid { grid-template-columns: 1fr; }
+  .hero__copy { order: -1; }
+  .hero__word { left: auto; right: -4vw; }
+}
+@media (max-width: 640px) { .hero__chips .glass--c { display: flex; } }
+
+/* glow dissolves naturally: halo lives outside the tilt layer, no blur filter, no hard bounds */
+.stage__halo { left: 50%; top: 2%; width: 150%; aspect-ratio: 1; transform: translateX(-50%); filter: none; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(254, 189, 89, .34), rgba(254, 189, 89, .14) 34%, rgba(254, 189, 89, .05) 56%, transparent 76%); }
+.stage__halo::after { display: none; }
+.stage__tilt { will-change: auto; }
+.stage__me { filter: drop-shadow(-1.5px -1px 0 rgba(254, 189, 89, .5)) drop-shadow(0 0 14px rgba(254, 189, 89, .16)); }
