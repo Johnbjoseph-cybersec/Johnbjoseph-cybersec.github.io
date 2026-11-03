@@ -390,3 +390,13 @@ body::after { content: ""; position: fixed; inset: -50%; z-index: 90; pointer-ev
   .stage__me { height: 100%; }
   .stage__glare { -webkit-mask-size: auto 100%; mask-size: auto 100%; }
 }
+
+/* =================== v5 professional (John 2026-11-04): restraint over tricks =================== */
+body::after { display: none; }                     /* no film grain */
+.cursor, .cursor__dot { display: none !important; }
+.stage { perspective: none; }
+.stage__tilt { transform: none !important; transform-style: flat; }
+.stage__me { transform: none; filter: drop-shadow(0 30px 60px rgba(0, 0, 0, .45)); }
+.stage__halo { top: 6%; width: 120%;
+  background: radial-gradient(closest-side, rgba(254, 189, 89, .20), rgba(254, 189, 89, .07) 45%, transparent 75%); }
+.tilt::after { display: none; }
