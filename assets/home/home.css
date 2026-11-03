@@ -373,3 +373,20 @@ body::after { content: ""; position: fixed; inset: -50%; z-index: 90; pointer-ev
 .stage__halo::after { display: none; }
 .stage__tilt { will-change: auto; }
 .stage__me { filter: drop-shadow(-1.5px -1px 0 rgba(254, 189, 89, .5)) drop-shadow(0 0 14px rgba(254, 189, 89, .16)); }
+
+/* hero v4 (John 2026-11-04): no floating tags; photo fills the hero and stands on the stats line */
+.hero { min-height: 100svh; padding-top: 0; }
+.hero::after { display: none; }
+.hero__grid { min-height: 100svh; align-items: stretch; }
+.hero__copy { align-self: center; padding: 110px 0 40px; }
+.stage { height: auto; align-self: stretch; min-height: 560px; }
+.stage__me { height: calc(100% - 84px); top: auto; bottom: 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 97%, transparent); mask-image: linear-gradient(to bottom, #000 97%, transparent); }
+.stage__glare { -webkit-mask-size: auto calc(100% - 84px); mask-size: auto calc(100% - 84px); }
+@media (max-width: 1020px) {
+  .hero__grid { min-height: 0; }
+  .hero__copy { padding: 104px 0 8px; }
+  .stage { height: min(72svh, 560px); min-height: 0; align-self: auto; }
+  .stage__me { height: 100%; }
+  .stage__glare { -webkit-mask-size: auto 100%; mask-size: auto 100%; }
+}

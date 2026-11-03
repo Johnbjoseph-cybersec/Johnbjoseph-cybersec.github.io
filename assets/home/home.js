@@ -112,8 +112,7 @@
     gsap.from('.stage__halo', { scale: 0.5, autoAlpha: 0, duration: 1.6, ease: 'expo.out', delay: INTRO + 0.05, clearProps: 'all' });
     gsap.from('.stage__me', { yPercent: 12, autoAlpha: 0, duration: 1.5, ease: 'expo.out', delay: INTRO + 0.15, clearProps: 'opacity,visibility' });
     gsap.from('.hero__word', { xPercent: 18, autoAlpha: 0, duration: 2, ease: 'expo.out', delay: INTRO, clearProps: 'opacity,visibility' });
-    gsap.from('.glass', { scale: 0.85, autoAlpha: 0, duration: 0.9, ease: 'back.out(1.7)', stagger: 0.14, delay: INTRO + 0.9, clearProps: 'opacity,visibility,scale' });
-    gsap.to('.stage__me', { yPercent: 10, scale: 1.04, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.5 } });
+    gsap.to('.stage__me', { yPercent: 4, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.5 } });
     gsap.to('.hero__word', { xPercent: -14, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.5 } });
     gsap.to('.hero__copy', { yPercent: -12, autoAlpha: 0.2, ease: 'none', scrollTrigger: { trigger: '.hero', start: '30% top', end: 'bottom top', scrub: 0.5 } });
     var eb = document.querySelector('[data-scramble]');
