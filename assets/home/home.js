@@ -58,7 +58,7 @@
         var t = el('span'); t.appendChild(el('span', 'news__t', e.title)); if (e.subtitle) t.appendChild(el('span', 'news__s', e.subtitle));
         a.appendChild(t); a.appendChild(icon('out', 16)); box.appendChild(a);
       });
-      document.getElementById('newsCount').textContent = nl.published + ' editions published · new every weekday';
+      document.getElementById('newsCount').textContent = nl.published + ' editions published · new every day';
     });
     safe('videos', function () {
       var yt = d.youtube; if (!yt || !yt.latest || !yt.latest.length) return;
