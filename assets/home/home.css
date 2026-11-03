@@ -300,3 +300,49 @@ body::after { content: ""; position: fixed; inset: -50%; z-index: 90; pointer-ev
 .chip-float .gms { width: 22px; height: 22px; }
 .foot__brand { display: inline-flex; align-items: center; gap: 10px; }
 .foot__brand img { border-radius: 50%; }
+
+/* =================== hero stage: layered depth =================== */
+.hero { overflow: clip; padding-bottom: 0; align-items: stretch; }
+.hero__grid { align-items: end; min-height: calc(100svh - 120px); }
+.hero__copy { padding-bottom: clamp(48px, 12vh, 130px); position: relative; z-index: 2; }
+.hero h1 { font-size: clamp(38px, 4.7vw, 70px); }
+.hero__word { position: absolute; right: -2vw; bottom: 4vh; z-index: -1; pointer-events: none; font: 400 clamp(150px, 24vw, 380px)/.8 var(--serif); font-style: italic; letter-spacing: -.04em; color: transparent; -webkit-text-stroke: 1px rgba(254, 189, 89, .18); white-space: nowrap; }
+.stage { position: relative; height: min(84svh, 780px); align-self: end; }
+.stage__halo { position: absolute; left: 50%; top: 14%; width: 78%; aspect-ratio: 1; transform: translateX(-50%); border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(254, 189, 89, .30), rgba(254, 189, 89, .08) 55%, transparent 72%); filter: blur(6px); }
+.stage__halo::after { content: ""; position: absolute; inset: 9%; border-radius: 50%; border: 1px solid rgba(254, 189, 89, .22); }
+.stage__me { position: absolute; left: 50%; bottom: 0; height: 100%; width: auto; max-width: none; translate: -50% 0;
+  filter: drop-shadow(-1.5px -1px 0 rgba(254, 189, 89, .55)) drop-shadow(-20px -10px 46px rgba(254, 189, 89, .22)) drop-shadow(0 50px 70px rgba(0, 0, 0, .55));
+  -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 99%); mask-image: linear-gradient(to bottom, #000 80%, transparent 99%); }
+.glass { position: absolute; z-index: 3; display: flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 16px; white-space: nowrap;
+  background: linear-gradient(135deg, rgba(28, 44, 61, .78), rgba(15, 25, 37, .62)); backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, .12); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 24px 50px -20px rgba(0, 0, 0, .8); font-size: 13.5px; }
+.glass .mono { color: var(--accent); font-weight: 600; } .glass em { font-style: normal; }
+.glass--a { left: -16%; top: 16%; animation: floaty 6s ease-in-out infinite; }
+.glass--b { right: -14%; top: 38%; animation: floaty 7s ease-in-out -2s infinite; }
+.glass--c { right: -16%; left: auto; top: 64%; animation: floaty 6.5s ease-in-out -4s infinite; }
+.glass__pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 0 rgba(60, 207, 145, .6); animation: pulse 2s infinite; }
+@keyframes floaty { 50% { translate: 0 -10px; } }
+@keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(60, 207, 145, 0); } 100% { box-shadow: 0 0 0 0 rgba(60, 207, 145, 0); } }
+.stage__name { position: absolute; right: 0; bottom: 34px; z-index: 3; text-align: right; }
+.stage__name span { display: block; font: 400 clamp(26px, 2.4vw, 36px)/1 var(--serif); font-style: italic; }
+.stage__name small { display: block; margin-top: 6px; font: 500 11.5px/1.4 var(--mono); color: var(--accent); letter-spacing: .04em; }
+@media (max-width: 1020px) {
+  .hero__grid { min-height: 0; }
+  .hero__copy { padding-bottom: 24px; }
+  .stage { height: min(78vh, 600px); width: 100%; max-width: 520px; justify-self: center; }
+  .glass--a { left: 0; } .glass--b { right: 0; } .glass--c { right: 0; top: 66%; }
+  .hero__word { font-size: 40vw; bottom: 30%; }
+}
+@media (max-width: 640px) { .glass { font-size: 12px; padding: 9px 12px; } .glass--c { display: none; } .stage__name { bottom: 18px; } }
+@media (prefers-reduced-motion: reduce) { .glass { animation: none; } .glass__pulse { animation: none; } }
+
+/* 3D tilt + glare on cards */
+.tilt { transform-style: preserve-3d; will-change: transform; }
+.tilt::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 50%), rgba(254, 189, 89, .14), transparent 45%); }
+.tilt:hover::after { opacity: 1; }
+.vid, .ledger__row { position: relative; }
+
+@media (max-width: 900px) { .nav__links { display: none; } }
+.nav__links a { white-space: nowrap; }

@@ -109,13 +109,14 @@
       gsap.from(split.lines, { yPercent: 110, duration: 1.1, ease: 'expo.out', stagger: 0.09, delay: INTRO + 0.15 });
     }
     gsap.from('.hero__lede, .hero__cta, .hero__meta', { y: 18, autoAlpha: 0, duration: 0.9, ease: 'expo.out', stagger: 0.08, delay: INTRO + 0.45, clearProps: 'all' });
-    gsap.from('.portrait__img', { clipPath: 'inset(100% 0 0 0 round 24px)', duration: 1.3, ease: 'expo.inOut', delay: INTRO + 0.1, clearProps: 'clipPath' });
-    gsap.from('.portrait__img img', { scale: 1.18, duration: 1.8, ease: 'expo.out', delay: INTRO + 0.1, clearProps: 'transform' });
-    gsap.from('.portrait__cap', { y: 16, autoAlpha: 0, duration: 0.8, ease: 'expo.out', delay: INTRO + 0.8, clearProps: 'all' });
-    gsap.from('.chip-float', { y: 20, autoAlpha: 0, duration: 0.9, ease: 'back.out(1.6)', stagger: 0.15, delay: INTRO + 1.0, clearProps: 'all' });
-    gsap.to('.chip-float--a', { y: -8, duration: 3.2, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 2 });
-    gsap.to('.chip-float--b', { y: 8, duration: 3.6, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 2.2 });
-    gsap.to('.portrait__img img', { yPercent: 6, ease: 'none', scrollTrigger: { trigger: '.portrait', start: 'top top', end: 'bottom top', scrub: 0.5 } });
+    gsap.from('.stage__halo', { scale: 0.5, autoAlpha: 0, duration: 1.6, ease: 'expo.out', delay: INTRO + 0.05, clearProps: 'all' });
+    gsap.from('.stage__me', { yPercent: 12, autoAlpha: 0, duration: 1.5, ease: 'expo.out', delay: INTRO + 0.15, clearProps: 'opacity,visibility' });
+    gsap.from('.hero__word', { xPercent: 18, autoAlpha: 0, duration: 2, ease: 'expo.out', delay: INTRO, clearProps: 'opacity,visibility' });
+    gsap.from('.glass', { scale: 0.85, autoAlpha: 0, duration: 0.9, ease: 'back.out(1.7)', stagger: 0.14, delay: INTRO + 0.9, clearProps: 'opacity,visibility,scale' });
+    gsap.from('.stage__name', { y: 20, autoAlpha: 0, duration: 0.9, ease: 'expo.out', delay: INTRO + 1.1, clearProps: 'opacity,visibility' });
+    gsap.to('.stage__me', { yPercent: 10, scale: 1.04, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.5 } });
+    gsap.to('.hero__word', { xPercent: -14, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.5 } });
+    gsap.to('.hero__copy', { yPercent: -12, autoAlpha: 0.2, ease: 'none', scrollTrigger: { trigger: '.hero', start: '30% top', end: 'bottom top', scrub: 0.5 } });
     var eb = document.querySelector('[data-scramble]');
     if (eb && typeof window.ScrambleTextPlugin !== 'undefined') {
       gsap.registerPlugin(ScrambleTextPlugin);
@@ -339,6 +340,34 @@
     gsap.to('.signature', { backgroundSize: '100% 100%', ease: 'none', scrollTrigger: { trigger: '.foot', start: 'top 95%', end: 'bottom bottom', scrub: 0.8 } });
   }
 
+  function initDepth() {
+    if (!FINE) return;
+    var layers = gsap.utils.toArray('[data-depth]').map(function (n) {
+      var d = parseFloat(n.getAttribute('data-depth')) || 0;
+      return { d: d, x: gsap.quickTo(n, 'x', { duration: 1.1, ease: 'power3' }), y: gsap.quickTo(n, 'y', { duration: 1.1, ease: 'power3' }) };
+    });
+    window.addEventListener('pointermove', function (e) {
+      var mx = e.clientX / window.innerWidth - 0.5, my = e.clientY / window.innerHeight - 0.5;
+      layers.forEach(function (l) { l.x(mx * l.d * 1.8); l.y(my * l.d * 1.2); });
+    }, { passive: true });
+  }
+
+  function initTilt() {
+    if (!FINE) return;
+    document.querySelectorAll('.chapter, .vid, .ledger__row, .news__card, .speak').forEach(function (c) {
+      c.classList.add('tilt');
+      var max = c.classList.contains('ledger__row') ? 2 : (c.classList.contains('speak') || c.classList.contains('news__card') ? 3 : 7);
+      var rx = gsap.quickTo(c, 'rotationX', { duration: 0.6, ease: 'power3' }), ry = gsap.quickTo(c, 'rotationY', { duration: 0.6, ease: 'power3' });
+      gsap.set(c, { transformPerspective: 900 });
+      c.addEventListener('pointermove', function (e) {
+        var r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        ry((px - 0.5) * max * 2); rx(-(py - 0.5) * max * 2);
+        c.style.setProperty('--gx', (px * 100).toFixed(1) + '%'); c.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
+      });
+      c.addEventListener('pointerleave', function () { rx(0); ry(0); });
+    });
+  }
+
   /* ---------------- boot ---------------- */
   function boot() {
     safe('year', function () { document.getElementById('year').textContent = new Date().getFullYear(); });
@@ -356,6 +385,8 @@
       safe('story', initStory);
       safe('labReveal', initLabReveal);
       safe('signature', initSignature);
+      safe('depth', initDepth);
+      safe('tilt', initTilt);
       safe('reveals', initReveals);
       safe('counts', initCounts);
       safe('lab', initLab);
