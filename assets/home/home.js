@@ -281,9 +281,29 @@
     });
   }
 
-  function initLabReveal() {
-    gsap.fromTo('.lab', { clipPath: 'circle(12% at 50% 60%)' }, { clipPath: 'circle(150% at 50% 50%)', ease: 'none',
-      scrollTrigger: { trigger: '.lab', start: 'top 95%', end: 'top 15%', scrub: 0.6 } });
+  function initLabReveal() {             // Apple-style product zoom: oversized, settles as you scroll
+    gsap.fromTo('.shots', { scale: 1.35, yPercent: 14, autoAlpha: 0.35 }, { scale: 1, yPercent: 0, autoAlpha: 1, ease: 'none',
+      scrollTrigger: { trigger: '.lab', start: 'top 85%', end: 'top 15%', scrub: 0.8 } });
+  }
+
+  function initStatement() {             // words brighten one by one while the line holds on screen
+    var p = document.querySelector('[data-statement]'); if (!p) return;
+    var words = [];
+    (function wrap(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+        if (n.nodeType === 3) {
+          var frag = document.createDocumentFragment();
+          n.nodeValue.split(/(\s+)/).forEach(function (part) {
+            if (!part) return;
+            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+            var s = el('span', 'w', part); words.push(s); frag.appendChild(s);
+          });
+          n.parentNode.replaceChild(frag, n);
+        } else if (n.nodeType === 1) wrap(n);
+      });
+    })(p);
+    ScrollTrigger.create({ trigger: '#statement', start: 'top top', end: '+=120%', pin: '.statement__pin', scrub: true,
+      onUpdate: function (s) { var k = Math.round(s.progress * words.length * 1.08); words.forEach(function (w, i) { w.classList.toggle('on', i < k); }); } });
   }
 
   function initSignature() {
@@ -301,12 +321,14 @@
       safe('marquee', initMarquee);
       safe('hero', initHero);
       safe('headings', initHeadings);
+      safe('statement', initStatement);
       safe('story', initStory);
       safe('labReveal', initLabReveal);
       safe('signature', initSignature);
       safe('reveals', initReveals);
       safe('counts', initCounts);
       safe('lab', initLab);
+      safe('sort', function () { ScrollTrigger.sort(); ScrollTrigger.refresh(); });
       safe('refresh', function () { if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); }); });
     }
   }
