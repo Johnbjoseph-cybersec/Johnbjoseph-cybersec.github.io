@@ -296,3 +296,7 @@ body::after { content: ""; position: fixed; inset: -50%; z-index: 90; pointer-ev
 @media (prefers-reduced-motion: reduce) { body::after { animation: none; } }
 
 .chip-float em { font-style: normal; }
+.gms { width: 20px; height: 20px; border-radius: 50%; flex: none; }
+.chip-float .gms { width: 22px; height: 22px; }
+.foot__brand { display: inline-flex; align-items: center; gap: 10px; }
+.foot__brand img { border-radius: 50%; }
