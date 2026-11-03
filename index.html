@@ -1,841 +1,207 @@
-
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>John Bommeraveni Joseph — Cybersecurity, GRC & AI Governance</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Portfolio of John Bommeraveni Joseph (CCEP) — Cybersecurity, GRC & AI Governance. ISO/IEC 27001 & 42001 Lead Auditor." />
-  
-  <!-- Fonts: Editorial + Clean Sans -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>John B Joseph | Co-founder & CPTO, Purplecop Security</title>
+  <meta name="description" content="John B Joseph, Co-founder and CPTO of Purplecop Security. AI security, AI governance and post-quantum readiness. Creator of the free GRC Practice Lab (10,000+ active users) and the GRC Made Simple Daily newsletter.">
+  <link rel="canonical" href="https://johnbjoseph-cybersec.github.io/">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="John B Joseph | Co-founder & CPTO, Purplecop Security">
+  <meta property="og:description" content="AI security, AI governance and post-quantum readiness. Creator of the GRC Practice Lab, used by 10,000+ people in 34 countries.">
+  <meta property="og:url" content="https://johnbjoseph-cybersec.github.io/">
+  <meta property="og:image" content="https://johnbjoseph-cybersec.github.io/assets/home/img/john.jpg">
+  <meta name="twitter:card" content="summary">
+  <meta name="theme-color" content="#07060b">
+  <link rel="icon" href="assets/home/img/john.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --bg: #0A0A0A;
-      --surface: #121212;
-      --surface-elevated: #1A1A1A;
-      --border: rgba(255,255,255,0.08);
-      --border-elevated: rgba(255,255,255,0.12);
-      --text-primary: rgba(255,255,255,0.95);
-      --text-secondary: rgba(255,255,255,0.65);
-      --text-tertiary: rgba(255,255,255,0.45);
-      --accent: #E8E8E8;
-      --gold: #D4AF37;
-      --spacing-unit: 8px;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      height: 100%;
-      background: var(--bg);
-      color: var(--text-primary);
-      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* Typography */
-    .serif {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-    }
-
-    /* Layout Container */
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 clamp(24px, 5vw, 80px);
-    }
-
-    /* Header Navigation */
-    .header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(10, 10, 10, 0.9);
-      backdrop-filter: blur(20px) saturate(180%);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: calc(var(--spacing-unit) * 3) 0;
-    }
-
-    .logo-section {
-      display: flex;
-      align-items: center;
-      gap: calc(var(--spacing-unit) * 2);
-    }
-
-    .logo-text {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--text-primary);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: calc(var(--spacing-unit) * 4);
-      align-items: center;
-    }
-
-    .nav-link {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      transition: color 0.2s ease;
-      position: relative;
-    }
-
-    .nav-link:hover {
-      color: var(--text-primary);
-    }
-
-    .nav-link.active::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: var(--text-primary);
-    }
-
-    /* Hero Section */
-    .hero {
-      padding: calc(var(--spacing-unit) * 12) 0 calc(var(--spacing-unit) * 15);
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: calc(var(--spacing-unit) * 10);
-      align-items: start;
-    }
-
-    .hero-content h1 {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(42px, 5.5vw, 72px);
-      font-weight: 300;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: calc(var(--spacing-unit) * 4);
-      color: var(--text-primary);
-    }
-
-    .hero-content h1 strong {
-      font-weight: 600;
-      display: block;
-    }
-
-    .hero-lead {
-      font-size: 18px;
-      line-height: 1.7;
-      color: var(--text-secondary);
-      margin-bottom: calc(var(--spacing-unit) * 5);
-      max-width: 600px;
-    }
-
-    .credentials {
-      display: flex;
-      flex-wrap: wrap;
-      gap: calc(var(--spacing-unit) * 2);
-      margin-bottom: calc(var(--spacing-unit) * 6);
-    }
-
-    .credential-badge {
-      padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2.5);
-      background: var(--surface-elevated);
-      border: 1px solid var(--border-elevated);
-      border-radius: 4px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      letter-spacing: 0.02em;
-    }
-
-    .cta-group {
-      display: flex;
-      gap: calc(var(--spacing-unit) * 2);
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      padding: calc(var(--spacing-unit) * 2) calc(var(--spacing-unit) * 4);
-      font-size: 14px;
-      font-weight: 600;
-      text-decoration: none;
-      border-radius: 4px;
-      transition: all 0.2s ease;
-      letter-spacing: 0.01em;
-    }
-
-    .btn-primary {
-      background: var(--text-primary);
-      color: var(--bg);
-      border: 1px solid var(--text-primary);
-    }
-
-    .btn-primary:hover {
-      background: transparent;
-      color: var(--text-primary);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text-primary);
-      border: 1px solid var(--border-elevated);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--text-primary);
-      background: rgba(255,255,255,0.03);
-    }
-
-    /* Profile Card */
-    .profile-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      position: sticky;
-      top: calc(var(--spacing-unit) * 12);
-    }
-
-    .profile-image-container {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 3/4;
-      overflow: hidden;
-      background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
-    }
-
-    .profile-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 20%;
-    }
-
-    .profile-overlay {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: calc(var(--spacing-unit) * 4);
-      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
-    }
-
-    .profile-name {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 26px;
-      font-weight: 600;
-      margin-bottom: calc(var(--spacing-unit) * 1);
-      color: var(--text-primary);
-    }
-
-    .profile-title {
-      font-size: 13px;
-      color: var(--text-secondary);
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
-
-    .profile-info {
-      padding: calc(var(--spacing-unit) * 4);
-    }
-
-    .info-section {
-      margin-bottom: calc(var(--spacing-unit) * 4);
-    }
-
-    .info-section:last-child {
-      margin-bottom: 0;
-    }
-
-    .info-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-tertiary);
-      margin-bottom: calc(var(--spacing-unit) * 1.5);
-      font-weight: 600;
-    }
-
-    .info-value {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    .social-links {
-      display: flex;
-      gap: calc(var(--spacing-unit) * 3);
-      padding-top: calc(var(--spacing-unit) * 3);
-      border-top: 1px solid var(--border);
-    }
-
-    .social-link {
-      color: var(--text-tertiary);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 500;
-      transition: color 0.2s ease;
-    }
-
-    .social-link:hover {
-      color: var(--text-primary);
-    }
-
-    /* Work Section */
-    .work-section {
-      padding: calc(var(--spacing-unit) * 10) 0;
-      border-top: 1px solid var(--border);
-    }
-
-    .section-header {
-      margin-bottom: calc(var(--spacing-unit) * 8);
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(32px, 4vw, 48px);
-      font-weight: 400;
-      letter-spacing: -0.01em;
-      margin-bottom: calc(var(--spacing-unit) * 2);
-    }
-
-    .section-description {
-      font-size: 16px;
-      color: var(--text-secondary);
-      max-width: 600px;
-    }
-
-    .work-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-      gap: calc(var(--spacing-unit) * 4);
-    }
-
-    .work-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: calc(var(--spacing-unit) * 5);
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .work-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .work-card:hover {
-      border-color: var(--border-elevated);
-      transform: translateY(-4px);
-    }
-
-    .work-card:hover::before {
-      opacity: 1;
-    }
-
-    .work-number {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 14px;
-      color: var(--text-tertiary);
-      margin-bottom: calc(var(--spacing-unit) * 3);
-      font-weight: 300;
-    }
-
-    .work-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 28px;
-      font-weight: 600;
-      margin-bottom: calc(var(--spacing-unit) * 2);
-      letter-spacing: -0.01em;
-    }
-
-    .work-description {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      margin-bottom: calc(var(--spacing-unit) * 3);
-    }
-
-    .work-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: calc(var(--spacing-unit) * 1.5);
-    }
-
-    .work-tag {
-      font-size: 12px;
-      color: var(--text-tertiary);
-      padding: calc(var(--spacing-unit) * 0.75) calc(var(--spacing-unit) * 1.5);
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      font-weight: 500;
-    }
-
-    /* Footer */
-    .footer {
-      padding: calc(var(--spacing-unit) * 10) 0 calc(var(--spacing-unit) * 8);
-      border-top: 1px solid var(--border);
-      margin-top: calc(var(--spacing-unit) * 15);
-    }
-
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: calc(var(--spacing-unit) * 3);
-    }
-
-    .footer-text {
-      font-size: 13px;
-      color: var(--text-tertiary);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: calc(var(--spacing-unit) * 4);
-    }
-
-    .footer-link {
-      font-size: 13px;
-      color: var(--text-tertiary);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .footer-link:hover {
-      color: var(--text-primary);
-    }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: calc(var(--spacing-unit) * 6);
-      }
-
-      .profile-card {
-        position: static;
-      }
-
-      .work-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .nav-links {
-        gap: calc(var(--spacing-unit) * 2);
-      }
-
-      .nav-link {
-        font-size: 13px;
-      }
-
-      .hero {
-        padding: calc(var(--spacing-unit) * 8) 0 calc(var(--spacing-unit) * 10);
-      }
-
-      .cta-group {
-        flex-direction: column;
-        width: 100%;
-      }
-
-      .btn {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-
-    /* Subtle animations */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hero-content > * {
-      animation: fadeInUp 0.8s ease-out backwards;
-    }
-
-    .hero-content h1 { animation-delay: 0.1s; }
-    .hero-lead { animation-delay: 0.2s; }
-    .credentials { animation-delay: 0.3s; }
-    .cta-group { animation-delay: 0.4s; }
-  
-    /* ===== Unified Card & Title Style (matches Featured Work) ===== */
-    .unified-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: calc(var(--spacing-unit) * 4);
-      position: relative;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
-
-    .unified-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .unified-card:hover {
-      border-color: var(--border-elevated);
-      transform: translateY(-4px);
-    }
-
-    .unified-card:hover::before {
-      opacity: 1;
-    }
-
-    .unified-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 28px;
-      font-weight: 600;
-      margin-bottom: calc(var(--spacing-unit) * 2);
-      letter-spacing: -0.01em;
-      color: var(--text-primary);
-    }
-
-    .unified-body {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      margin-bottom: calc(var(--spacing-unit) * 2);
-    }
-
-    .unified-subline {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-tertiary);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-  
-    /* ===== Unified Width Alignment ===== */
-    .unified-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-      gap: calc(var(--spacing-unit) * 3);
-    }
-
-    @media (max-width: 1024px) {
-      .unified-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;650;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/home/home.css">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"John B Joseph","alternateName":"John Bommeraveni Joseph",
+   "jobTitle":"Co-founder & Chief Product and Technology Officer","worksFor":{"@type":"Organization","name":"Purplecop Security"},
+   "image":"https://johnbjoseph-cybersec.github.io/assets/home/img/john.jpg","url":"https://johnbjoseph-cybersec.github.io/",
+   "knowsAbout":["AI security","AI governance","ISO/IEC 42001","EU AI Act","Post-quantum cryptography","GRC engineering"],
+   "sameAs":["https://www.linkedin.com/in/john-bj/","https://github.com/Johnbjoseph-cybersec","https://www.youtube.com/@GRCMadeSimple"]}
+  </script>
 </head>
 <body>
-  <!-- Header -->
-  <header class="header">
-    <div class="container">
-      <nav class="nav" aria-label="Main navigation">
-        <div class="logo-section">
-          <img src="logo.png" alt="GRC Made Simple Logo - John Bommeraveni Joseph" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover;">
-          <div class="logo-text">JOHN BOMMERAVENI JOSEPH</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="out" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="John B Joseph, home">
+      <span class="brand__dot"><img src="assets/home/img/john.jpg" alt="" width="30" height="30"></span>
+      <span>John B Joseph<small>Co-founder &amp; CPTO</small></span>
+    </a>
+    <nav class="nav__links" aria-label="Sections">
+      <a href="#work">Work</a><a href="#open">Standards</a><a href="#newsletter">Newsletter</a><a href="#lab">GRC Lab</a><a href="#speaking">Speaking</a>
+    </nav>
+    <a class="btn btn--primary btn--sm" href="https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/" data-newsletter-link>Subscribe<svg><use href="#arrow"/></svg></a>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="wrap hero__grid">
+      <div>
+        <p class="eyebrow" data-scramble>Co-founder &amp; CPTO <b>/</b> Purplecop Security</p>
+        <h1 data-split>One control.<br>Every framework.<br><span class="soft">Proof that it holds.</span></h1>
+        <p class="hero__lede">I build the software compliance teams run on, and I work in the open on the standards for <strong>AI agents</strong>, <strong>AI governance</strong> and <strong>post-quantum readiness</strong>.</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary" href="https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/" data-newsletter-link>Read GRC Made Simple Daily<svg><use href="#arrow"/></svg></a>
+          <a class="btn btn--ghost" href="https://grclab.purplecop.io/">Open the GRC Lab<svg><use href="#out"/></svg></a>
         </div>
-        <div class="nav-links" role="menubar">
-          <a href="index.html" class="nav-link active" role="menuitem" aria-current="page">Home</a>
-          <a href="https://grclab.purplecop.io/" class="nav-link" role="menuitem">GRC Lab</a>
-<a href="terms.html" class="nav-link" role="menuitem">Terms</a>
-          <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" rel="noopener noreferrer" class="nav-link" role="menuitem">YouTube</a>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-grid">
-        <!-- Left: Content -->
-        <div class="hero-content">
-          <h1 class="serif">
-            Governance works best when it's practical.<br>
-            <em style="font-style: italic; font-weight: 300;">Not just on paper.</em>
-          </h1>
-          
-          <p class="hero-lead">
-            Cybersecurity, GRC & AI Governance professional with ISO/IEC 27001 & 42001 Lead Auditor credentials. 
-            Over a decade in HR & Recruitment before transitioning to build evidence-driven security programs focused on governance, risk, compliance, and data privacy.
-          </p>
-
-          <!-- Role Targets - Clear Hiring Signal -->
-          <div style="background: var(--surface-elevated); border: 1px solid var(--border-elevated); border-radius: var(--radius-md); padding: 20px; margin-bottom: 24px;">
-            <h3 style="font-family: var(--font-sans); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin: 0 0 12px 0;">Open to Roles</h3>
-            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-              <span style="padding: 8px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; color: var(--text-primary);">Cybersecurity Analyst</span>
-              <span style="padding: 8px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; color: var(--text-primary);">GRC Analyst</span>
-              <span style="padding: 8px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; color: var(--text-primary);">Risk & Compliance Analyst</span>
-              <span style="padding: 8px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; color: var(--text-primary);">AI Governance Analyst</span>
-              <span style="padding: 8px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; color: var(--text-primary);">Junior Security Operations</span>
-
-              <span style="padding: 8px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; color: var(--text-primary);">Internal Auditor (IT / IS)</span>
-                          </div>
-          </div>
-
-          <div class="credentials">
-            <span class="credential-badge">ISO/IEC 27001:2022 Lead Auditor</span>
-            <span class="credential-badge">ISO/IEC 42001:2023 Lead Auditor</span>
-            <span class="credential-badge">CCEP Certified</span>
-            <span class="credential-badge">AWS Solutions Architect Associate</span>
-            <span class="credential-badge">AWS Cloud Practitioner</span>
-            <span class="credential-badge">NIST CSF</span>
-            <span class="credential-badge">IBM Certified GRC, Data Privacy</span>
-            <span class="credential-badge">Certified Qualys VMDR Specialist</span>
-          </div>
-
-          <div class="cta-group">
-            <a href="https://grclab.purplecop.io/" class="btn btn-primary">Explore My GRC Lab</a>
-<a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" class="btn btn-secondary">Watch on YouTube</a>
-          </div>
-        </div>
-
-        <!-- Right: Profile Card -->
-        <div class="profile-card">
-          <div class="profile-image-container">
-            <img src="profile_clean.png" alt="Professional headshot of John Bommeraveni Joseph, Cybersecurity and GRC professional" class="profile-image">
-            <div class="profile-overlay">
-              <h2 class="profile-name">John Bommeraveni Joseph</h2>
-              <p class="profile-title">CCEP, Lead Auditor</p>
-            </div>
-          </div>
-          
-          <div class="profile-info">
-            <div class="info-section">
-              <div class="info-label">Expertise</div>
-              <div class="info-value">
-                Cybersecurity Analyst • GRC Analyst • Risk & Compliance • AI Governance
-              </div>
-            </div>
-
-            <div class="info-section">
-              <div class="info-label">Approach</div>
-              <div class="info-value">
-                Risk → Controls → Evidence → Reporting. Clean, audit-ready documentation that connects governance frameworks to real-world execution.
-              </div>
-            </div>
-
-            <div class="info-section">
-              <div class="info-label">Credentials</div>
-              <div class="info-value">
-                ISO/IEC 27001:2022 Lead Auditor • ISO/IEC 42001:2023 Lead Auditor • IBM GRC & Data Privacy • Securiti PrivacyOps / AI Security & Governance • Qualys VMDR
-              </div>
-            </div>
-
-            <div class="social-links">
-              <a href="https://www.linkedin.com/in/john-bj" target="_blank" class="social-link">LinkedIn</a>
-              <a href="https://github.com/Johnbjoseph-cybersec" target="_blank" class="social-link">GitHub</a>
-              <a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" class="social-link">YouTube</a>
-            </div>
-          </div>
-        </div>
+        <div class="hero__meta"><span>Open-standards work with OWASP and the PQC Alliance</span><span>Based in India, speaking worldwide</span></div>
+      </div>
+      <div class="graph" aria-label="Diagram: one control at the centre, evidenced across nine frameworks">
+        <canvas id="graph"></canvas>
+        <div class="graph__photo"><img src="assets/home/img/john.jpg" alt="John B Joseph" width="400" height="400"></div>
+        <p class="graph__cap">one piece of evidence, mapped to nine frameworks</p>
       </div>
     </div>
   </section>
 
-  <!-- Featured Work -->
-  <section class="work-section">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title serif">Featured Work</h2>
-        <p class="section-description">
-          Practical work samples, tools, and proof of execution. Not just a portfolio site — a demonstration of how I approach governance, risk, controls, and reporting.
-        </p>
+  <section class="stats" aria-label="By the numbers">
+    <div class="wrap stats__grid">
+      <div class="stat" data-reveal><div class="stat__n" data-count="lab_active_users">10,000<em>+</em></div><div class="stat__l">active users of the free GRC Practice Lab</div><div class="stat__src" data-src="lab_active_users">Google Analytics · Oct 2026</div></div>
+      <div class="stat" data-reveal><div class="stat__n" data-count="countries">34</div><div class="stat__l">countries where people learn GRC with it</div><div class="stat__src" data-src="countries">Google Analytics · Oct 2026</div></div>
+      <div class="stat" data-reveal><div class="stat__n" data-count="linkedin_followers">32,401</div><div class="stat__l">people follow the work on LinkedIn</div><div class="stat__src" data-src="linkedin_followers">LinkedIn analytics · Nov 2026</div></div>
+      <div class="stat" data-reveal><div class="stat__n" data-count="controls">400<em>+</em></div><div class="stat__l">controls across 9 frameworks in the lab</div><div class="stat__src" data-src="controls">GRC Practice Lab · Nov 2026</div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="work">
+    <div class="wrap">
+      <div class="sec__head">
+        <div><p class="eyebrow">Where I work</p><h2 data-reveal>Three shifts, one question for every security leader.</h2></div>
+        <p class="sec__intro" data-reveal>AI agents are acting on real systems, AI regulation is becoming enforceable, and cryptography is moving to post-quantum algorithms. Each one asks the same thing: which control proves this is safe, and what evidence shows it is working?</p>
       </div>
-
-      <div class="work-grid">
-        <a href="https://grclab.purplecop.io/" class="work-card">
-          <div class="work-number">01</div>
-          <h3 class="work-title serif">GRC Lab</h3>
-          <p class="work-description">
-            A simulated security program for a fictional SaaS company. Demonstrates how I structure governance artifacts and connect risks to controls and evidence in a realistic environment.
-          </p>
-          <div class="work-tags">
-            <span class="work-tag">Risk Register</span>
-            <span class="work-tag">SoA Logic</span>
-            <span class="work-tag">Evidence Workflow</span>
-          </div>
-        </a>
-<a href="https://www.youtube.com/@GRCMadeSimple" target="_blank" class="work-card">
-          <div class="work-number">02</div>
-          <h3 class="work-title serif">GRC Made Simple</h3>
-          <p class="work-description">
-            Weekly YouTube channel teaching ISO 27001, ISO 42001, NIST CSF, risk, compliance, and career growth in accessible language. Practical guidance without the fluff.
-          </p>
-          <div class="work-tags">
-            <span class="work-tag">Education</span>
-            <span class="work-tag">Standards</span>
-            <span class="work-tag">Career Guidance</span>
-          </div>
-        </a>
-
-        <a href="about.html" class="work-card">
-          <div class="work-number">03</div>
-          <h3 class="work-title serif">Background: HR to Cybersecurity</h3>
-          <p class="work-description">
-            10+ years in HR & Recruitment brought stakeholder management, documentation discipline, and process ownership. Now applied to GRC and security programs with a focus on clear communication and execution.
-          </p>
-          <div class="work-tags">
-            <span class="work-tag">Stakeholder Management</span>
-            <span class="work-tag">Process Design</span>
-            <span class="work-tag">Documentation</span>
-          </div>
-        </a>
+      <div class="rail">
+        <article class="rail__item" data-reveal>
+          <span class="rail__n">01</span><h3>AI security for agents</h3>
+          <p>Controls for agents that call tools: authorization per action, runtime governance, agent identity, and audit trails that hold up under review.</p>
+          <div class="rail__tags"><span class="tag">OWASP Agent Control Standard</span><span class="tag">Agentic Top 10</span><span class="tag">MCP</span></div>
+        </article>
+        <article class="rail__item" data-reveal>
+          <span class="rail__n">02</span><h3>AI governance that operates</h3>
+          <p>ISO/IEC 42001, the EU AI Act, NIST AI RMF and India's DPDP Act, turned into controls a team can run on a Tuesday, with evidence an auditor can sample.</p>
+          <div class="rail__tags"><span class="tag">ISO/IEC 42001</span><span class="tag">EU AI Act</span><span class="tag">DPDP</span><span class="tag">RBI FREE-AI</span></div>
+        </article>
+        <article class="rail__item" data-reveal>
+          <span class="rail__n">03</span><h3>Post-quantum readiness</h3>
+          <p>Cryptographic inventory, crypto-agility and migration governance, framed as a risk programme the board can follow rather than an algorithm swap.</p>
+          <div class="rail__tags"><span class="tag">ML-KEM</span><span class="tag">ML-DSA</span><span class="tag">NIST IR 8547</span><span class="tag">CISA categories</span></div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- What I Bring to a Team -->
-  <section style="padding: calc(var(--spacing-unit) * 8) 0; border-top: 1px solid var(--border);">
-    <div class="container">
-      <div style="margin: 0 auto;">
-        <h2 class="serif" style="font-size: clamp(28px, 3.5vw, 42px); margin-bottom: calc(var(--spacing-unit) * 3); text-align: center;">What I Bring to a Team</h2>
-        <p style="font-size: 16px; line-height: 1.7; color: var(--text-secondary); text-align: center; margin-bottom: calc(var(--spacing-unit) * 6); max-width: 700px; margin-left: auto; margin-right: auto;">
-          Beyond certifications and technical knowledge, here's how I add value from day one.
-        </p>
+  <section class="sec" id="open" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec__head">
+        <div><p class="eyebrow">In the open</p><h2 data-reveal>Standards work, on the public record.</h2></div>
+        <p class="sec__intro" data-reveal>Contributions to the open standards that will define how AI agents and post-quantum systems are governed. Every entry links to the thread where the work lives.</p>
+      </div>
+      <div class="ledger" id="ledger">
+        <a class="ledger__row" data-reveal href="https://github.com/GenAI-Security-Project/agent-control-standard/issues/33#issuecomment-6611206742"><span class="ledger__date">2026-11-03</span><span class="ledger__proj">OWASP Agent Control Standard<small>OWASP GenAI Security Project</small></span><span class="ledger__what">Normative-requirement ledger for ACS v0.1.0: 105 requirements classified by role, profile and applicability</span><span class="chip">Proposed</span><svg class="ledger__go" width="18" height="18"><use href="#out"/></svg></a>
+        <a class="ledger__row" data-reveal href="https://github.com/massivescale-ai/agentic-trust-framework/issues/22"><span class="ledger__date">2026-11-03</span><span class="ledger__proj">Agentic Trust Framework<small>MassiveScale.AI (CC BY 4.0)</small></span><span class="ledger__what">Crosswalk to the EU AI Act as amended by the Digital Omnibus, India's DPDP Act and RBI FREE-AI</span><span class="chip">Proposed</span><svg class="ledger__go" width="18" height="18"><use href="#out"/></svg></a>
+        <a class="ledger__row" data-reveal href="https://github.com/PQCA/wg-readiness-tracking/issues/6#issuecomment-6610783195"><span class="ledger__date">2026-11-03</span><span class="ledger__proj">PQC Readiness Tracking WG<small>Post-Quantum Cryptography Alliance (Linux Foundation)</small></span><span class="ledger__what">Tracker taxonomy aligned to CISA's PQC product categories (Tables 2 and 3)</span><span class="chip">Proposed</span><svg class="ledger__go" width="18" height="18"><use href="#out"/></svg></a>
+      </div>
+      <p class="ledger__foot" id="ledgerFoot">3 contributions · status is taken from each public thread</p>
+    </div>
+  </section>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: calc(var(--spacing-unit) * 3);">
-          <!-- Card 1 -->
-          <div class="unified-card">
-            <h3 class="unified-title">Documentation That Works</h3>
-            <p class="unified-body">
-              I create clear policies, SOPs, and evidence packs that auditors and stakeholders actually understand. No jargon walls—just clean documentation that supports certification and daily operations.
-            </p>
-            <div class="unified-subline">Policy Writing • Process Documentation • Evidence Management</div>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="unified-card">
-            <h3 class="unified-title">Stakeholder Translation</h3>
-            <p class="unified-body">
-              From HR leadership to cybersecurity operations, I bridge technical and non-technical conversations. I explain risk in business terms and present controls as enablers, not blockers.
-            </p>
-            <div class="unified-subline">Executive Communication • Cross-Team Collaboration • Risk Translation</div>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="unified-card">
-            <h3 class="unified-title">Frameworks in Action</h3>
-            <p class="unified-body">
-              I map controls to ISO 27001, NIST CSF, SOC 2, and regulatory requirements. Not just checkboxes—I connect frameworks to real workflows, making compliance operational and measurable.
-            </p>
-            <div class="unified-subline">ISO 27001/42001 • NIST CSF • Compliance Mapping</div>
-          </div>
-
-          <!-- Card 4 -->
-          <div class="unified-card">
-            <h3 class="unified-title">Process Ownership Mindset</h3>
-            <p class="unified-body">
-              I own processes end-to-end: design, document, implement, measure. From risk registers to incident response workflows, I ensure controls are documented, tested, and audit-ready.
-            </p>
-            <div class="unified-subline">Process Design • Ownership • Continuous Improvement</div>
-          </div>
-
-          <!-- Card 5 -->
-          <div class="unified-card">
-            <h3 class="unified-title">Quick Learner, Fast Executor</h3>
-            <p class="unified-body">
-              Career pivot from HR to Cybersecurity in under 2 years while earning Lead Auditor credentials. I learn fast, execute faster, and bring a hunger to prove value in every task.
-            </p>
-            <div class="unified-subline">Self-Directed Learning • Rapid Skill Acquisition • Results-Driven</div>
-          </div>
-
-          <!-- Card 6 -->
-          <div class="unified-card">
-            <h3 class="unified-title">Tool Proficiency</h3>
-            <p class="unified-body">
-              Hands-on with Qualys VMDR, GRC platforms, risk assessment tools, and compliance automation. I adapt quickly to new tools and integrate them into existing security workflows.
-            </p>
-            <div class="unified-subline">Qualys VMDR • GRC Platforms • Risk Tools • Quick Onboarding</div>
-          </div>
-        </div>
-
-        <!-- Bottom CTA -->
-        <div style="margin-top: calc(var(--spacing-unit) * 6); text-align: center; padding: calc(var(--spacing-unit) * 4); background: var(--surface-elevated); border: 1px solid var(--border-elevated); border-radius: var(--radius-md);">
-          <p style="font-size: 16px; line-height: 1.7; color: var(--text-secondary); margin-bottom: calc(var(--spacing-unit) * 3);">
-            <strong style="color: var(--text-primary);">Ready to contribute from day one.</strong><br>
-            Whether it's documenting controls, running risk assessments, or supporting audit readiness—I bring structured execution and a commitment to clean, operational security programs.
-          </p>
-          <div style="display: flex; gap: calc(var(--spacing-unit) * 2); justify-content: center; flex-wrap: wrap;">
-            <a href="https://www.linkedin.com/in/john-bj" target="_blank" class="btn btn-primary">Connect on LinkedIn</a>
-            <a href="https://grclab.purplecop.io/" class="btn btn-secondary">See My Work</a>
-          </div>
-        </div>
+  <section class="sec" id="newsletter" style="padding-top:0">
+    <div class="wrap news">
+      <div>
+        <p class="eyebrow">Newsletter</p>
+        <h2 data-reveal>GRC Made Simple Daily</h2>
+        <p class="sec__intro" style="margin-top:18px" data-reveal>A weekday brief on AI security, AI governance and post-quantum cryptography. Three sourced stories, what they mean for your controls, and what to do this week. Every number is checked against its source before it ships.</p>
+        <div class="hero__cta"><a class="btn btn--primary" href="https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/" data-newsletter-link>Subscribe on LinkedIn<svg><use href="#arrow"/></svg></a></div>
+        <p class="news__count" id="newsCount">7 editions published</p>
+      </div>
+      <div class="news__card" id="newsList">
+        <a class="news__item" href="https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"><span class="news__date">2026-11-03</span><span><span class="news__t">The safest AI agent isn't the smartest one. It's the one that can't delete production</span></span><svg width="16" height="16"><use href="#out"/></svg></a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-text">
-          © <span id="year"></span> John Bommeraveni Joseph. Educational use only.
-        </div>
-        <div class="footer-links">
-          <a href="terms.html" class="footer-link">Terms</a>
-          <a href="https://grclab.purplecop.io/" class="footer-link">GRC Lab</a>
-<a href="https://www.linkedin.com/in/john-bj" target="_blank" class="footer-link">LinkedIn</a>
-          <a href="https://github.com/Johnbjoseph-cybersec" target="_blank" class="footer-link">GitHub</a>
-        </div>
+  <section class="sec lab" id="lab">
+    <div class="wrap lab__grid">
+      <div>
+        <p class="eyebrow">GRC Practice Lab · free</p>
+        <div class="lab__big"><span data-count="lab_active_users">10,000</span><em>+</em></div>
+        <p class="sec__intro">active users in <span data-count="countries">34</span> countries practise GRC in a lab I built: real frameworks, real artefacts, no signup and nothing leaves the browser.</p>
+        <ul class="lab__list">
+          <li><svg><use href="#check"/></svg>400+ controls across 9 frameworks, including ISO 27001, NIST CSF, SOC 2, PCI DSS and GDPR</li>
+          <li><svg><use href="#check"/></svg>Risk register, Statement of Applicability, traceability and vendor risk you build yourself</li>
+          <li><svg><use href="#check"/></svg>11 guided scenarios, 12 portfolio projects and a full ISO 27001 Lead Implementer course</li>
+        </ul>
+        <a class="btn btn--primary" href="https://grclab.purplecop.io/">Open the GRC Lab<svg><use href="#out"/></svg></a>
+      </div>
+      <div class="shots" aria-hidden="true">
+        <div class="shot shot--a"><div class="shot__bar"><i></i><i></i><i></i></div><img src="assets/home/img/lab-dashboard.jpg" alt="" loading="lazy" width="1400" height="732"></div>
+        <div class="shot shot--b"><div class="shot__bar"><i></i><i></i><i></i></div><img src="assets/home/img/lab-risk-matrix.jpg" alt="" loading="lazy" width="1400" height="740"></div>
       </div>
     </div>
-  </footer>
+  </section>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <section class="sec" id="videos">
+    <div class="wrap">
+      <div class="sec__head">
+        <div><p class="eyebrow">GRC Made Simple on YouTube</p><h2 data-reveal>Explained without the jargon.</h2></div>
+        <p class="sec__intro" data-reveal>Frameworks, AI risk and real conversations with practitioners. <a href="https://www.youtube.com/@GRCMadeSimple" style="color:var(--text);border-bottom:1px solid var(--line-2)">See the channel</a>.</p>
+      </div>
+      <div class="vids" id="vids">
+        <a class="vid" data-reveal href="https://www.youtube.com/watch?v=4errQPTkgDA"><div class="vid__img" style="background-image:url(https://i.ytimg.com/vi/4errQPTkgDA/hqdefault.jpg)"></div><div class="vid__b"><div class="vid__d">2026-10-26</div><div class="vid__t">ISO 27090 Explained: The 9 Ways Attackers Target Your AI</div></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="speaking" style="padding-top:0">
+    <div class="wrap">
+      <div class="speak">
+        <div>
+          <p class="eyebrow">Speaking</p>
+          <h2 data-reveal>Virtual keynotes, panels and podcasts.</h2>
+          <p class="sec__intro" style="margin-top:18px">For security, GRC and engineering audiences who need the practical version: what to control, what evidence to keep, and what changes this year.</p>
+          <div class="hero__cta"><a class="btn btn--primary" href="https://www.linkedin.com/in/john-bj/">Invite me to speak<svg><use href="#arrow"/></svg></a></div>
+        </div>
+        <ul class="topics">
+          <li data-reveal><span class="mono">01</span><div><b>Securing AI agents that act</b><span>Tool-call authorization, runtime control and the evidence trail.</span></div></li>
+          <li data-reveal><span class="mono">02</span><div><b>ISO/IEC 42001 and the EU AI Act in practice</b><span>From obligation to operating control, with the 2026 amendments.</span></div></li>
+          <li data-reveal><span class="mono">03</span><div><b>Post-quantum migration for GRC leaders</b><span>Inventory, crypto-agility and a board-level roadmap.</span></div></li>
+          <li data-reveal><span class="mono">04</span><div><b>One control, many frameworks</b><span>Crosswalks that cut audit effort instead of multiplying it.</span></div></li>
+        </ul>
+      </div>
+      <div class="creds" aria-label="Credentials">
+        <span class="tag">ISO/IEC 27001:2022 Lead Auditor</span><span class="tag">ISO/IEC 42001:2023 Lead Auditor</span><span class="tag">ISO/IEC 27701 Lead Auditor</span><span class="tag">CCEP</span><span class="tag">PrivacyOps</span><span class="tag">AI Security &amp; Governance</span><span class="tag">AWS Solutions Architect</span><span class="tag">Qualys VMDR</span><span class="tag">TryHackMe Top 1%</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <span>© <span id="year">2026</span> John B Joseph · Co-founder &amp; CPTO, Purplecop Security</span>
+    <nav aria-label="Elsewhere"><a href="https://www.linkedin.com/in/john-bj/">LinkedIn</a><a href="https://github.com/Johnbjoseph-cybersec">GitHub</a><a href="https://www.youtube.com/@GRCMadeSimple">YouTube</a><a href="https://grclab.purplecop.io/">GRC Lab</a><a href="terms.html">Terms</a></nav>
+    <span class="mono" id="updated" style="font-size:12px">Page data updated 2026-11-03</span>
+  </div>
+</footer>
+
+<script src="vendor/gsap/gsap.min.js"></script>
+<script src="vendor/gsap/ScrollTrigger.min.js"></script>
+<script src="vendor/gsap/SplitText.min.js"></script>
+<script src="vendor/gsap/ScrambleTextPlugin.min.js"></script>
+<script src="vendor/lenis/lenis.min.js"></script>
+<script src="assets/home/home.js"></script>
 </body>
 </html>

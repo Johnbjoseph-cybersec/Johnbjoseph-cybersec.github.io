@@ -1,0 +1,134 @@
+{
+  "stats": {
+    "lab_active_users": {
+      "value": 10000,
+      "display": "10,000+",
+      "label": "active users of the GRC Practice Lab",
+      "as_of": "2026-10-22",
+      "source": "Google Analytics, reported by John"
+    },
+    "countries": {
+      "value": 34,
+      "display": "34",
+      "label": "countries",
+      "as_of": "2026-10-22",
+      "source": "Google Analytics, reported by John"
+    },
+    "linkedin_followers": {
+      "value": 32401,
+      "display": null,
+      "label": "LinkedIn followers",
+      "as_of": "2026-11-02",
+      "source": "LinkedIn analytics"
+    },
+    "controls": {
+      "value": 400,
+      "display": "400+",
+      "label": "controls across 9 frameworks in the lab",
+      "as_of": "2026-11-03",
+      "source": "GRC Practice Lab"
+    }
+  },
+  "contributions": [
+    {
+      "id": "owasp-acs-33",
+      "project": "OWASP Agent Control Standard",
+      "org": "OWASP GenAI Security Project",
+      "area": "AI security",
+      "title": "Normative-requirement ledger for ACS v0.1.0: 105 requirements classified by role, profile and applicability",
+      "url": "https://github.com/GenAI-Security-Project/agent-control-standard/issues/33#issuecomment-6611206742",
+      "date": "2026-11-03",
+      "status": "proposed"
+    },
+    {
+      "id": "atf-22",
+      "project": "Agentic Trust Framework",
+      "org": "MassiveScale.AI (CC BY 4.0)",
+      "area": "AI governance",
+      "title": "Crosswalk to the EU AI Act as amended by the Digital Omnibus, India's DPDP Act and RBI FREE-AI",
+      "url": "https://github.com/massivescale-ai/agentic-trust-framework/issues/22",
+      "date": "2026-11-03",
+      "status": "proposed"
+    },
+    {
+      "id": "pqca-6",
+      "project": "PQC Readiness Tracking WG",
+      "org": "Post-Quantum Cryptography Alliance (Linux Foundation)",
+      "area": "Post-quantum",
+      "title": "Tracker taxonomy aligned to CISA's PQC product categories (Tables 2 and 3)",
+      "url": "https://github.com/PQCA/wg-readiness-tracking/issues/6#issuecomment-6610783195",
+      "date": "2026-11-03",
+      "status": "proposed"
+    }
+  ],
+  "newsletter": {
+    "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
+    "name": "GRC Made Simple Daily",
+    "published": 7,
+    "latest": [
+      {
+        "edition": 6,
+        "date": "2026-11-03",
+        "title": "The safest AI agent isn't the smartest one. It's the one that can't delete.",
+        "subtitle": "Why agents cause damage without an attacker, why tool descriptions are instructions, and where human approval has to live",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
+      {
+        "edition": 5,
+        "date": "2026-11-02",
+        "title": "250 poisoned documents backdoored every AI model size tested. Three controls for your data",
+        "subtitle": "Count not percentage, the knowledge base as an attack path, and a data register an auditor can sample",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
+      {
+        "edition": 24,
+        "date": "2026-11-01",
+        "title": "Banned, high-risk or just disclose it? Sort your AI systems under the EU AI Act",
+        "subtitle": "One banned use to check before you sign, the \"not high-risk\" decision the law wants in writing, and who owes the Article 50 notice",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
+      {
+        "edition": 12,
+        "date": "2026-10-31",
+        "title": "Your leaver process starts in HR. The access failures start where HR can't see",
+        "subtitle": "Leavers, movers and access reviews, and how to test each one before an auditor does",
+        "url": "https://www.linkedin.com/pulse/your-leaver-process-starts-hr-access-failures-start-where-joseph-vczcc"
+      },
+      {
+        "edition": 4,
+        "date": "2026-10-30",
+        "title": "Alpine Linux patched GitLab and stayed exploitable: the fix was in Ruby",
+        "subtitle": "The version number said fixed and the server was not. Plus 23 more stories from GRC, AI security and privacy",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
+      {
+        "edition": 2,
+        "date": "2026-10-28",
+        "title": "Post-quantum in plain English: three standards, a patient attacker and a board test",
+        "subtitle": "What FIPS 203, 204 and 205 replace, why the risk starts before the quantum computer exists, and a three-number test for the board",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      }
+    ]
+  },
+  "youtube": {
+    "url": "https://www.youtube.com/@GRCMadeSimple",
+    "latest": [
+      {
+        "id": "4errQPTkgDA",
+        "title": "ISO 27090 Explained: The 9 Ways Attackers Target Your AI",
+        "date": "2026-10-26"
+      },
+      {
+        "id": "K5dwdPedoMA",
+        "title": "WHEN AI GOES WRONG, WHO'S RESPONSIBLE? | Deepika Sharma | GCS Unplugged Ep 01",
+        "date": "2026-10-16"
+      },
+      {
+        "id": "jJhbZxygi1Q",
+        "title": "CSAT Nigeria: Know Your Gap Before the CBN Does | MitigateIT × Purplecop Security",
+        "date": "2026-09-28"
+      }
+    ]
+  },
+  "updated": "2026-11-03"
+}
