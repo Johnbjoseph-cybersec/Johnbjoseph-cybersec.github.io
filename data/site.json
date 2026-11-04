@@ -64,8 +64,15 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 7,
+    "published": 8,
     "latest": [
+      {
+        "edition": 7,
+        "date": "2026-11-04",
+        "title": "Prompt injection may never be patched, so take away what the attacker needs",
+        "subtitle": "Why prompt injection stays open, how to audit your AI tools for the lethal trifecta, and three example agents that each control a different leg",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 6,
         "date": "2026-11-03",
@@ -100,13 +107,6 @@
         "title": "Alpine Linux patched GitLab and stayed exploitable: the fix was in Ruby",
         "subtitle": "The version number said fixed and the server was not. Plus 23 more stories from GRC, AI security and privacy",
         "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
-      },
-      {
-        "edition": 2,
-        "date": "2026-10-28",
-        "title": "Post-quantum in plain English: three standards, a patient attacker and a board test",
-        "subtitle": "What FIPS 203, 204 and 205 replace, why the risk starts before the quantum computer exists, and a three-number test for the board",
-        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
       }
     ]
   },
@@ -130,5 +130,5 @@
       }
     ]
   },
-  "updated": "2026-11-03"
+  "updated": "2026-11-04"
 }
