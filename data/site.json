@@ -51,6 +51,16 @@
       "status": "proposed"
     },
     {
+      "id": "pkic-cbom-12",
+      "project": "CBOM Profiles Working Group",
+      "org": "PKI Consortium",
+      "area": "Post-quantum",
+      "title": "Regulatory alignment proposal for cryptographic inventories: versioned mappings, the RBI Q-SAFE mandate and audit-safe wording",
+      "url": "https://github.com/pkic/cbom/issues/12#issuecomment-6626132686",
+      "date": "2026-11-04",
+      "status": "proposed"
+    },
+    {
       "id": "owasp-acs-33",
       "project": "OWASP Agent Control Standard",
       "org": "OWASP GenAI Security Project",
