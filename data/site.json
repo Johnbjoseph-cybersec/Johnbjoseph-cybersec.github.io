@@ -31,6 +31,26 @@
   },
   "contributions": [
     {
+      "id": "sbom-tools-450",
+      "project": "sbom-tools",
+      "org": "sbom-tool (MIT)",
+      "area": "AI governance",
+      "title": "Confirmed EU AI Act Annex IV against the Official Journal text of Regulation (EU) 2026/1744, closing an open item in the project's standards record",
+      "url": "https://github.com/sbom-tool/sbom-tools/pull/450",
+      "date": "2026-11-04",
+      "status": "proposed"
+    },
+    {
+      "id": "cosai-ws4-297",
+      "project": "CoSAI Secure Design for Agentic Systems",
+      "org": "Coalition for Secure AI (OASIS)",
+      "area": "AI security",
+      "title": "Framework alignment review of the Modality-Agnostic Taxonomy: identifier corrections and NIST IR 8477 relationship mapping",
+      "url": "https://github.com/cosai-oasis/ws4-secure-design-agentic-systems/issues/297#issuecomment-6624935891",
+      "date": "2026-11-04",
+      "status": "proposed"
+    },
+    {
       "id": "owasp-acs-33",
       "project": "OWASP Agent Control Standard",
       "org": "OWASP GenAI Security Project",
