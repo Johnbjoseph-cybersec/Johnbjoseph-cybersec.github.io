@@ -94,8 +94,15 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 9,
+    "published": 10,
     "latest": [
+      {
+        "edition": 9,
+        "date": "2026-11-05",
+        "title": "Binance traces USD 6.34 billion theft through a fake interview and an AI tool",
+        "subtitle": "A deployment token on an engineer's computer, and an off switch that could not stop everything. Plus 26 more stories from GRC, AI security and privacy",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 7,
         "date": "2026-11-04",
@@ -130,13 +137,6 @@
         "title": "Your leaver process starts in HR. The access failures start where HR can't see",
         "subtitle": "Leavers, movers and access reviews, and how to test each one before an auditor does",
         "url": "https://www.linkedin.com/pulse/your-leaver-process-starts-hr-access-failures-start-where-joseph-vczcc"
-      },
-      {
-        "edition": 4,
-        "date": "2026-10-30",
-        "title": "Alpine Linux patched GitLab and stayed exploitable: the fix was in Ruby",
-        "subtitle": "The version number said fixed and the server was not. Plus 23 more stories from GRC, AI security and privacy",
-        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
       }
     ]
   },
@@ -160,5 +160,5 @@
       }
     ]
   },
-  "updated": "2026-11-04"
+  "updated": "2026-11-05"
 }
