@@ -94,8 +94,15 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 10,
+    "published": 11,
     "latest": [
+      {
+        "edition": 8,
+        "date": "2026-11-06",
+        "title": "French blood service: supplier hack alters cold rooms at 3 sites, no blood lost",
+        "subtitle": "The service says it wasn't directly targeted, and that's the lesson on supplier remote access. Plus 20 more stories from operational technology (OT), GRC, AI governance and privacy",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 9,
         "date": "2026-11-05",
@@ -130,13 +137,6 @@
         "title": "Banned, high-risk or just disclose it? Sort your AI systems under the EU AI Act",
         "subtitle": "One banned use to check before you sign, the \"not high-risk\" decision the law wants in writing, and who owes the Article 50 notice",
         "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
-      },
-      {
-        "edition": 12,
-        "date": "2026-10-31",
-        "title": "Your leaver process starts in HR. The access failures start where HR can't see",
-        "subtitle": "Leavers, movers and access reviews, and how to test each one before an auditor does",
-        "url": "https://www.linkedin.com/pulse/your-leaver-process-starts-hr-access-failures-start-where-joseph-vczcc"
       }
     ]
   },
@@ -160,5 +160,5 @@
       }
     ]
   },
-  "updated": "2026-11-05"
+  "updated": "2026-11-06"
 }
