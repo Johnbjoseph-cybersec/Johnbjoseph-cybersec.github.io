@@ -94,8 +94,29 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 11,
+    "published": 14,
     "latest": [
+      {
+        "edition": 10,
+        "date": "2026-11-09",
+        "title": "FINRA fines Webull USD 4.2 million after landscape photos passed as ID",
+        "subtitle": "When your vendor says no, who can still say yes? Plus 20 more stories from GRC, AI security and privacy",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
+      {
+        "edition": 26,
+        "date": "2026-11-08",
+        "title": "Singapore warns AI agent users they may be liable for what agents do",
+        "subtitle": "A chat instruction isn't a control. Plus 16 more stories from GRC, AI security and privacy",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
+      {
+        "edition": 25,
+        "date": "2026-11-07",
+        "title": "UK plans police facial recognition law, a watchdog and a code for shops",
+        "subtitle": "Nothing is law yet, and the private-sector duty already exists. Plus 26 more stories from GRC, AI security and privacy",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 8,
         "date": "2026-11-06",
@@ -115,27 +136,6 @@
         "date": "2026-11-04",
         "title": "Prompt injection may never be patched, so take away what the attacker needs",
         "subtitle": "Why prompt injection stays open, how to audit your AI tools for the lethal trifecta, and three example agents that each control a different leg",
-        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
-      },
-      {
-        "edition": 6,
-        "date": "2026-11-03",
-        "title": "The safest AI agent isn't the smartest one. It's the one that can't delete.",
-        "subtitle": "Why agents cause damage without an attacker, why tool descriptions are instructions, and where human approval has to live",
-        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
-      },
-      {
-        "edition": 5,
-        "date": "2026-11-02",
-        "title": "250 poisoned documents backdoored every AI model size tested. Three controls for your data",
-        "subtitle": "Count not percentage, the knowledge base as an attack path, and a data register an auditor can sample",
-        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
-      },
-      {
-        "edition": 24,
-        "date": "2026-11-01",
-        "title": "Banned, high-risk or just disclose it? Sort your AI systems under the EU AI Act",
-        "subtitle": "One banned use to check before you sign, the \"not high-risk\" decision the law wants in writing, and who owes the Article 50 notice",
         "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
       }
     ]
@@ -160,5 +160,5 @@
       }
     ]
   },
-  "updated": "2026-11-06"
+  "updated": "2026-11-09"
 }
