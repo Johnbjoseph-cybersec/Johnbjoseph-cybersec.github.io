@@ -15,10 +15,10 @@
       "source": "Google Analytics, reported by John"
     },
     "linkedin_followers": {
-      "value": 32401,
+      "value": 32512,
       "display": null,
       "label": "LinkedIn followers",
-      "as_of": "2026-11-02",
+      "as_of": "2026-11-09",
       "source": "LinkedIn analytics"
     },
     "controls": {
@@ -38,7 +38,8 @@
       "title": "Confirmed EU AI Act Annex IV against the Official Journal text of Regulation (EU) 2026/1744, closing an open item in the project's standards record",
       "url": "https://github.com/sbom-tool/sbom-tools/pull/450",
       "date": "2026-11-04",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-09"
     },
     {
       "id": "cosai-ws4-297",
