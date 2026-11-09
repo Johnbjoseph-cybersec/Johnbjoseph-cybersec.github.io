@@ -31,6 +31,26 @@
   },
   "contributions": [
     {
+      "id": "qrp-mcp-15",
+      "project": "qrp-mcp",
+      "org": "quantumreadiness.eu (Apache-2.0)",
+      "area": "Post-quantum cryptography",
+      "title": "Made the scanner read a post-quantum key's parameter set (ML-KEM-768, ML-DSA-65) from its identifier, so CNSA 2.0 and national profile checks see key and certificate files",
+      "url": "https://github.com/StanimirTenev/qrp-mcp/pull/15",
+      "date": "2026-11-09",
+      "status": "proposed"
+    },
+    {
+      "id": "cryptoscan-95",
+      "project": "CryptoScan",
+      "org": "CSNP (Apache-2.0)",
+      "area": "Post-quantum cryptography",
+      "title": "Closed the open item on the executive order behind the CISA/NIST CBOM minimum elements (EO 14412 Sec. 5(d)) and corrected OMB M-23-02 and NIST IR 8547 dates in the docs",
+      "url": "https://github.com/csnp/cryptoscan/issues/95",
+      "date": "2026-11-09",
+      "status": "proposed"
+    },
+    {
       "id": "sbom-tools-450",
       "project": "sbom-tools",
       "org": "sbom-tool (MIT)",
@@ -161,5 +181,5 @@
       }
     ]
   },
-  "updated": "2026-11-09"
+  "updated": "2026-11-10"
 }
