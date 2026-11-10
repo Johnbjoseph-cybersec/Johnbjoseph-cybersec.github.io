@@ -156,11 +156,14 @@
   }
   function initCounts() {
     document.querySelectorAll('[data-count]').forEach(function (n) {
-      var target = +n.getAttribute('data-value') || parseInt((n.textContent || '').replace(/[^0-9]/g, ''), 10);
-      if (!target || !n.firstChild || n.firstChild.nodeType !== 3) return;
+      function live() { return +n.getAttribute('data-value') || parseInt((n.firstChild && n.firstChild.nodeValue || '').replace(/[^0-9]/g, ''), 10); }
+      if (!live() || !n.firstChild || n.firstChild.nodeType !== 3) return;
       var o = { v: 0 };
       ScrollTrigger.create({ trigger: n, start: 'top 92%', once: true, onEnter: function () {
-        gsap.to(o, { v: target, duration: 1.8, ease: 'expo.out', onUpdate: function () { n.firstChild.nodeValue = fmt(o.v); } });
+        var target = live();
+        gsap.to(o, { v: target, duration: 1.8, ease: 'expo.out',
+          onUpdate: function () { var now = live(); n.firstChild.nodeValue = fmt(now !== target ? o.v * now / target : o.v); },
+          onComplete: function () { n.firstChild.nodeValue = fmt(live()); } });
       } });
     });
   }
@@ -364,14 +367,24 @@
       safe('refresh', function () { if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); }); });
     }
   }
-  var done = false;
-  function go() { if (done) return; done = true; if (DATA) safe('hydrate', function () { hydrate(DATA); }); boot(); }
+  var done = false, hydrated = false;
+  function go() { if (done) return; done = true; if (DATA) { hydrated = true; safe('hydrate', function () { hydrate(DATA); }); } boot(); }
+  // data that lands after the cut-off (slow phone, throttled network) is still drawn, just without entrance motion
+  function late(d) {
+    if (!d || hydrated) return; hydrated = true; DATA = d;
+    safe('hydrate-late', function () { hydrate(d); });
+    safe('refresh-late', function () { if (hasGSAP && window.ScrollTrigger) ScrollTrigger.refresh(); });
+  }
+  function got(d) { if (done) { late(d); return; } DATA = d; clearTimeout(timer); go(); }
   // data first (hydrated rows join the reveal batch), but never wait longer than 1.5 s for it
   var timer = setTimeout(go, 1500);
   fetch('data/site.json?v=' + Date.now(), { cache: 'no-store' })
     .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (d) { DATA = d; clearTimeout(timer); go(); })
-    .catch(function () { clearTimeout(timer); go(); });
-  // late data after the 1.5 s cut-off still lands, just without entrance motion
-  window.addEventListener('load', function () { if (done && DATA === null) fetch('data/site.json', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) { safe('hydrate-late', function () { hydrate(d); }); }).catch(function () {}); });
+    .then(got)
+    .catch(function () {
+      if (!done) { clearTimeout(timer); go(); }
+      // one retry once the page has loaded: a dropped first request should not leave the HTML figures in place
+      var retry = function () { fetch('data/site.json?v=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(late).catch(function () {}); };
+      if (document.readyState === 'complete') retry(); else window.addEventListener('load', retry);
+    });
 })();
