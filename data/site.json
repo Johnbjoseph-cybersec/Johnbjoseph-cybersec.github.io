@@ -31,6 +31,16 @@
   },
   "contributions": [
     {
+      "id": "prowler-13332",
+      "project": "prowler",
+      "org": "prowler-cloud",
+      "area": "Security compliance",
+      "title": "Corrected Prowler's RBI compliance framework, which was named as RBI-wide but is RBI's repealed framework for urban cooperative banks",
+      "url": "https://github.com/prowler-cloud/prowler/issues/13332",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
       "id": "grc-skills-62",
       "project": "Claude Skills for GRC",
       "org": "Sushegaad",
