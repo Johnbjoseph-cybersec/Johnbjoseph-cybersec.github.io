@@ -115,8 +115,15 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 14,
+    "published": 15,
     "latest": [
+      {
+        "edition": 11,
+        "date": "2026-11-10",
+        "title": "Loading an AI model can run someone else's code. Three controls that cut the risk",
+        "subtitle": "Pickle files, model names that move, and the asset register row that answers an incident in minutes",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 10,
         "date": "2026-11-09",
@@ -150,13 +157,6 @@
         "date": "2026-11-05",
         "title": "Binance traces USD 6.34 billion theft through a fake interview and an AI tool",
         "subtitle": "A deployment token on an engineer's computer, and an off switch that could not stop everything. Plus 26 more stories from GRC, AI security and privacy",
-        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
-      },
-      {
-        "edition": 7,
-        "date": "2026-11-04",
-        "title": "Prompt injection may never be patched, so take away what the attacker needs",
-        "subtitle": "Why prompt injection stays open, how to audit your AI tools for the lethal trifecta, and three example agents that each control a different leg",
         "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
       }
     ]
