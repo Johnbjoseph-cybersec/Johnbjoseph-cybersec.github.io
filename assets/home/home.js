@@ -32,21 +32,53 @@
       });
     });
     safe('ledger', function () {
-      var list = d.contributions || []; if (!list.length) return;
-      var box = document.getElementById('ledger'); box.textContent = '';
-      list.forEach(function (c) {
-        var a = el('a', 'ledger__row'); a.href = c.url; a.setAttribute('data-reveal', '');
+      var list = (d.contributions || []).slice(); if (!list.length) return;
+      var box = document.getElementById('ledger');
+      function isWon(c) { return /merged|accepted/.test((c.status || '').toLowerCase()); }
+      list.sort(function (a, b) { return (isWon(b) - isWon(a)) || (a.date < b.date ? 1 : a.date > b.date ? -1 : 0); });
+      var won = list.filter(isWon), open = list.filter(function (c) { return !isWon(c); });
+      var projects = {}; list.forEach(function (c) { projects[c.project] = 1; });
+      var LIMIT = 5, view = won.length ? 'won' : 'all', expanded = false;
+      var sets = { won: won, open: open, all: list };
+      var bar = el('div', 'ledger__bar');
+      var sum = el('p', 'ledger__sum');
+      [[list.length, 'contributions'], [won.length, 'merged or accepted'], [Object.keys(projects).length, 'projects']].forEach(function (x, i) {
+        if (i) sum.appendChild(el('span', 'ledger__dot', '\u00b7'));
+        var b = el('b', null, String(x[0])); sum.appendChild(b); sum.appendChild(document.createTextNode(' ' + x[1]));
+      });
+      var tabs = el('div', 'ledger__tabs'); tabs.setAttribute('role', 'tablist');
+      [['won', 'Merged & accepted'], ['open', 'In review'], ['all', 'All']].forEach(function (t) {
+        var b = el('button', 'ledger__tab', t[1] + ' (' + sets[t[0]].length + ')'); b.type = 'button';
+        b.setAttribute('role', 'tab'); b.setAttribute('data-view', t[0]);
+        b.addEventListener('click', function () { view = t[0]; expanded = false; draw(); });
+        tabs.appendChild(b);
+      });
+      bar.appendChild(sum); bar.appendChild(tabs);
+      box.parentNode.insertBefore(bar, box);
+      var more = el('button', 'ledger__more'); more.type = 'button';
+      more.addEventListener('click', function () { expanded = !expanded; draw(); });
+      box.parentNode.insertBefore(more, box.nextSibling);
+      function row(c) {
+        var a = el('a', 'ledger__row'); a.href = c.url; a.target = '_blank'; a.rel = 'noopener';
         a.appendChild(el('span', 'ledger__date', c.date));
         var p = el('span', 'ledger__proj', c.project); p.appendChild(el('small', null, c.org)); a.appendChild(p);
         a.appendChild(el('span', 'ledger__what', c.title));
         var st = (c.status || 'proposed').toLowerCase();
         a.appendChild(el('span', 'chip chip--' + st, st.charAt(0).toUpperCase() + st.slice(1)));
         a.appendChild(icon('out', 18, 'ledger__go'));
-        box.appendChild(a);
-      });
-      var merged = list.filter(function (c) { return /merged|accepted/.test(c.status); }).length;
-      document.getElementById('ledgerFoot').textContent = list.length + ' contribution' + (list.length === 1 ? '' : 's') +
-        (merged ? ' · ' + merged + ' accepted' : '') + ' · status is taken from each public thread';
+        return a;
+      }
+      function draw() {
+        var rows = sets[view]; box.textContent = '';
+        tabs.querySelectorAll('.ledger__tab').forEach(function (b) {
+          var on = b.getAttribute('data-view') === view; b.classList.toggle('is-on', on); b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        (expanded ? rows : rows.slice(0, LIMIT)).forEach(function (c) { box.appendChild(row(c)); });
+        more.hidden = rows.length <= LIMIT;
+        more.textContent = expanded ? 'Show fewer' : 'Show all ' + rows.length;
+      }
+      draw();
+      document.getElementById('ledgerFoot').textContent = 'Status is taken from each public thread, and every row links to it.';
     });
     safe('newsletter', function () {
       var nl = d.newsletter; if (!nl || !nl.latest || !nl.latest.length) return;

@@ -49,7 +49,8 @@
       "title": "Corrected the EU AI Act specialist skill's Article 43(1) conformity route for Annex III biometrics systems",
       "url": "https://github.com/alirezarezvani/claude-skills/pull/1121",
       "date": "2026-11-10",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-10"
     },
     {
       "id": "promptfoo-12367",
@@ -79,7 +80,8 @@
       "title": "Added 11 rows to ShorList for generic PEM keys and certificates and for ML-KEM-768 and ML-DSA-65 key files as OpenSSL writes them, each with a primary source",
       "url": "https://github.com/shorlist/shorlist/pull/2",
       "date": "2026-11-10",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-10"
     },
     {
       "id": "qrp-mcp-15",
