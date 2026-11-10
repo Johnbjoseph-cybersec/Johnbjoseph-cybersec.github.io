@@ -31,6 +31,47 @@
   },
   "contributions": [
     {
+      "id": "grc-skills-62",
+      "project": "Claude Skills for GRC",
+      "org": "Sushegaad",
+      "area": "AI governance",
+      "title": "Corrected the NIST AI RMF skill's GOVERN 3, 5 and 6 subcategories against NIST AI 100-1 Table 1 (19 subcategories, not 21)",
+      "url": "https://github.com/Sushegaad/Claude-Skills-Governance-Risk-and-Compliance/issues/62",
+      "date": "2026-11-10",
+      "status": "accepted",
+      "status_changed": "2026-11-10"
+    },
+    {
+      "id": "claude-skills-1121",
+      "project": "claude-skills",
+      "org": "alirezarezvani",
+      "area": "AI governance",
+      "title": "Corrected the EU AI Act specialist skill's Article 43(1) conformity route for Annex III biometrics systems",
+      "url": "https://github.com/alirezarezvani/claude-skills/pull/1121",
+      "date": "2026-11-10",
+      "status": "proposed"
+    },
+    {
+      "id": "promptfoo-12367",
+      "project": "promptfoo",
+      "org": "promptfoo (MIT)",
+      "area": "AI governance",
+      "title": "Updated promptfoo's EU AI Act application dates to match Regulation (EU) 2026/1744",
+      "url": "https://github.com/promptfoo/promptfoo/pull/12367",
+      "date": "2026-11-10",
+      "status": "proposed"
+    },
+    {
+      "id": "wshobson-agents-821",
+      "project": "agents",
+      "org": "wshobson",
+      "area": "Security compliance",
+      "title": "Flagged PCI DSS requirement titles in the pci-compliance skill that are no longer current",
+      "url": "https://github.com/wshobson/agents/issues/821",
+      "date": "2026-11-10",
+      "status": "proposed"
+    },
+    {
       "id": "qrp-mcp-15",
       "project": "qrp-mcp",
       "org": "quantumreadiness.eu (Apache-2.0)",
@@ -38,7 +79,8 @@
       "title": "Made the scanner read a post-quantum key's parameter set (ML-KEM-768, ML-DSA-65) from its identifier, so CNSA 2.0 and national profile checks see key and certificate files",
       "url": "https://github.com/StanimirTenev/qrp-mcp/pull/15",
       "date": "2026-11-09",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-10"
     },
     {
       "id": "cryptoscan-95",
@@ -47,6 +89,16 @@
       "area": "Post-quantum cryptography",
       "title": "Closed the open item on the executive order behind the CISA/NIST CBOM minimum elements (EO 14412 Sec. 5(d)) and corrected OMB M-23-02 and NIST IR 8547 dates in the docs",
       "url": "https://github.com/csnp/cryptoscan/issues/95",
+      "date": "2026-11-09",
+      "status": "proposed"
+    },
+    {
+      "id": "app-store-compliance-626",
+      "project": "app-store-compliance",
+      "org": "mjmirza",
+      "area": "AI governance",
+      "title": "Showed the EU AI Act Article 5(1a) ban is narrower than the project's deadline entry, and that Article 4 on AI literacy was replaced by Regulation (EU) 2026/1744",
+      "url": "https://github.com/mjmirza/app-store-compliance/issues/626#issuecomment-6747725334",
       "date": "2026-11-09",
       "status": "proposed"
     },
