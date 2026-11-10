@@ -72,6 +72,16 @@
       "status": "proposed"
     },
     {
+      "id": "shorlist-2",
+      "project": "ShorList",
+      "org": "shorlist (CC BY 4.0 / Apache-2.0)",
+      "area": "Post-quantum cryptography",
+      "title": "Added 11 rows to ShorList for generic PEM keys and certificates and for ML-KEM-768 and ML-DSA-65 key files as OpenSSL writes them, each with a primary source",
+      "url": "https://github.com/shorlist/shorlist/pull/2",
+      "date": "2026-11-10",
+      "status": "proposed"
+    },
+    {
       "id": "qrp-mcp-15",
       "project": "qrp-mcp",
       "org": "quantumreadiness.eu (Apache-2.0)",
