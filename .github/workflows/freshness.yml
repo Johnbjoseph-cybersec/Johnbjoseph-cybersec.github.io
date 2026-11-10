@@ -1,0 +1,71 @@
+# Dude: is the SERVED front page current? (owner: Dude, ~/.claude/dude/DUDE.md)
+# Fetches https://johnbjoseph-cybersec.github.io/data/site.json as a visitor gets it and fails when the newest
+# newsletter edition on it is older than the one due. A failed scheduled run makes GitHub email John.
+# Due: editions go out at 08:00 IST; from 12:00 IST today's edition must be on the page, before 12:00 yesterday's.
+# REQUIRE_WEEKENDS "false" = weekday editions only (Saturday/Sunday fall back to Friday). Set "true" to also hold
+# the page to the weekend editions. No third-party actions: nothing to pin, nothing that can be swapped upstream.
+name: Site freshness
+
+on:
+  schedule:
+    - cron: '45 6 * * *'    # 12:15 IST
+    - cron: '45 10 * * *'   # 16:15 IST
+    - cron: '45 14 * * *'   # 20:15 IST
+    - cron: '45 2 * * *'    # 08:15 IST (checks yesterday's edition)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-freshness
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      SITE_JSON: https://johnbjoseph-cybersec.github.io/data/site.json
+      REQUIRE_WEEKENDS: 'false'
+    steps:
+      - name: Newest edition on the served page is the one due
+        shell: python3 {0}
+        run: |
+          import json, os, sys, time, urllib.request
+          from datetime import datetime, timedelta, timezone
+          IST = timezone(timedelta(hours=5, minutes=30))
+          now = datetime.now(IST)
+          due = now.date() if now.hour >= 12 else now.date() - timedelta(days=1)
+          if os.environ.get('REQUIRE_WEEKENDS', 'false').lower() != 'true':
+              while due.weekday() >= 5:
+                  due -= timedelta(days=1)
+          url = f"{os.environ['SITE_JSON']}?t={int(time.time())}"
+          data, err = None, None
+          for attempt in range(3):
+              try:
+                  req = urllib.request.Request(url, headers={'Cache-Control': 'no-cache', 'User-Agent': 'dude-freshness'})
+                  with urllib.request.urlopen(req, timeout=30) as r:
+                      data = json.loads(r.read().decode('utf-8'))
+                  break
+              except Exception as e:
+                  err = e; time.sleep(20)
+          out = []
+          def report(ok, msg):
+              out.append(('PASS ' if ok else 'FAIL ') + msg)
+              print(out[-1])
+              with open(os.environ.get('GITHUB_STEP_SUMMARY', os.devnull), 'a') as f:
+                  f.write('\n'.join(out) + '\n')
+              sys.exit(0 if ok else 1)
+          if data is None:
+              report(False, f'could not read {url}: {err}')
+          latest = ((data.get('newsletter') or {}).get('latest')) or []
+          dates = sorted(e.get('date', '') for e in latest if isinstance(e, dict))
+          if not dates:
+              report(False, 'site.json has no newsletter editions')
+          newest = dates[-1]
+          msg = (f"newest edition on the served page {newest}, due {due.isoformat()} "
+                 f"(checked {now:%Y-%m-%d %H:%M} IST, page data updated {data.get('updated')})")
+          if newest < due.isoformat():
+              report(False, msg + '. The page is behind: check that the Mac mini is on and ~/team-agents/logs/team-<today>.log has a run in the last 3 hours.')
+          report(True, msg)
