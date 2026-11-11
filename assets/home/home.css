@@ -164,14 +164,7 @@ a { color: inherit; text-decoration: none; }
 
 /* lab band */
 .lab { background: linear-gradient(180deg, var(--bg), var(--s1) 18%, var(--s1) 82%, var(--bg)); overflow: clip; }
-.lab__grid { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
-.lab__grid > * { min-width: 0; }
-.lab__big { font: 600 clamp(56px, 6.4vw, 100px)/.9 var(--mono); letter-spacing: -.06em; margin: 22px 0 10px; white-space: nowrap; }
-.lab__big em { font-style: normal; color: var(--accent); }
-.lab__list { margin: 28px 0 34px; display: grid; gap: 12px; list-style: none; }
-.lab__list li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; color: var(--muted); font-size: 15.5px; }
-.lab__list svg { width: 16px; height: 16px; margin-top: 4px; color: var(--accent); }
-.labstage { position: relative; width: 100%; padding: 26px 0 0; }
+.labstage { position: relative; width: 100%; padding: 0; }
 .labstage__glow { position: absolute; inset: -14% -16% -10%; background: radial-gradient(55% 50% at 55% 35%, rgba(254, 189, 89, .16), transparent 72%); filter: blur(14px); pointer-events: none; }
 .labstage__grid { position: absolute; inset: 0; opacity: .7; pointer-events: none; background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 44px 44px; -webkit-mask-image: radial-gradient(70% 70% at 50% 50%, #000 25%, transparent 72%); mask-image: radial-gradient(70% 70% at 50% 50%, #000 25%, transparent 72%); }
 .win { position: relative; margin: 0; border-radius: 14px; overflow: hidden; background: var(--s2); border: 1px solid var(--line-2); box-shadow: 0 30px 80px -24px rgba(0, 0, 0, .9), 0 0 0 1px rgba(0, 0, 0, .35); }
@@ -221,10 +214,9 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1020px) {
-  .hero__grid, .sec__head, .news, .lab__grid, .speak, .xwalk__grid { grid-template-columns: minmax(0, 1fr); }
+  .hero__grid, .sec__head, .news, .speak, .xwalk__grid { grid-template-columns: minmax(0, 1fr); }
   .portrait { justify-self: center; max-width: 420px; }
   .chip-float--a { left: -8px; } .chip-float--b { right: -8px; }
-  .labstage { margin-top: 20px; }
   .rail { grid-template-columns: 1fr; }
   .rail__item + .rail__item { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
   .ledger__row { grid-template-columns: 90px 1fr 28px; }
@@ -640,3 +632,110 @@ body::after { display: none; }                     /* no film grain */
 .spot:hover::before { opacity: 1; }
 .btn--primary svg:first-child:not(:last-child) { margin-right: 2px; }
 @media (prefers-reduced-motion: reduce) { .scroll-cue svg { animation: none; } .jm__bar::after { transform: scaleX(1); transition: none; } }
+
+
+/* ---------- lab bento (2026-11-11): dense tiles, each with its own motion graphic ---------- */
+.bento { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 14px; }
+.tile { position: relative; min-width: 0; overflow: clip; border-radius: 18px; background: var(--s2); border: 1px solid var(--line); padding: 24px 26px; display: flex; flex-direction: column; transition: border-color .35s, transform .5s var(--ease-out), box-shadow .5s; }
+.tile:hover { border-color: var(--line-2); transform: translateY(-2px); box-shadow: 0 24px 60px -30px rgba(0, 0, 0, .9); }
+.tile--copy { grid-column: span 4; grid-row: span 2; justify-content: center; align-items: flex-start; background: linear-gradient(160deg, var(--s2), var(--s1)); }
+.tile--screens { grid-column: span 8; grid-row: span 2; padding: 22px; background: var(--s1); }
+.tile--growth { grid-column: span 5; }
+.tile--globe { grid-column: span 3; }
+.tile--controls { grid-column: span 4; }
+.tile--missions { grid-column: span 4; }
+.tile--modules { grid-column: span 5; }
+.tile--course { grid-column: span 3; align-items: flex-start; }
+.tile--copy h2 { font-size: clamp(28px, 2.5vw, 40px); line-height: 1.06; letter-spacing: -.03em; font-weight: 650; margin: 14px 0 16px; }
+.tile--copy .sec__intro { font-size: 16.5px; }
+.tile__note { margin: 14px 0 26px; color: var(--muted); font-size: 15px; line-height: 1.55; }
+.tile__head { display: flex; align-items: center; gap: 9px; font: 500 11.5px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+.tile__head svg { width: 15px; height: 15px; color: var(--accent); flex: none; }
+.tile__n { margin-top: 16px; font: 600 clamp(40px, 3.6vw, 58px)/1 var(--mono); letter-spacing: -.045em; font-feature-settings: "tnum" 1; }
+.tile__n em { font-style: normal; color: var(--accent); }
+.tile__l { margin-top: 8px; color: var(--muted); font-size: 14.5px; line-height: 1.45; }
+.tile__src { margin-top: auto; padding-top: 14px; font: 400 11px/1.3 var(--mono); color: var(--dim); }
+.tile__foot { margin-top: 14px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.tile__big { margin-top: 16px; font: 600 20px/1.15 var(--font); letter-spacing: -.02em; }
+
+/* growth: the real milestone line draws itself, then the milestones pop in order */
+.growth { margin-top: 14px; width: 100%; flex: 1; display: flex; align-items: flex-end; }
+.growth svg { display: block; width: 100%; height: auto; overflow: visible; }
+.growth__grid { stroke: var(--line); stroke-width: 1; }
+.growth__area { fill: url(#growthFill); opacity: 0; transition: opacity 1s 1.2s; }
+.growth__line { fill: none; stroke: var(--accent); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.growth__ms { opacity: 0; transform-box: fill-box; transform-origin: center; }
+.growth__ms circle { fill: var(--bg); stroke: var(--accent); stroke-width: 2; }
+.growth__ms text { font: 500 10.5px var(--mono); fill: var(--text); letter-spacing: .02em; }
+.growth__ms text.dim { fill: var(--dim); font-size: 9.5px; }
+.growth__ax { font: 400 9.5px var(--mono); fill: var(--dim); letter-spacing: .06em; }
+.tile.is-in .growth__line { animation: spark-draw 1.8s cubic-bezier(.16, 1, .3, 1) .2s forwards; }
+.tile.is-in .growth__area { opacity: 1; }
+.tile.is-in .growth__ms { animation: ms-pop .6s var(--ease-out) forwards; animation-delay: var(--d); }
+@keyframes ms-pop { from { opacity: 0; transform: translateY(8px) scale(.6); } to { opacity: 1; transform: none; } }
+
+/* globe: a dotted earth turning, with login pings */
+.globe { display: block; width: 100%; aspect-ratio: 1; max-width: 230px; margin: 8px auto 0; }
+
+/* controls: 200 cells light up in a diagonal sweep */
+.cells { margin-top: 16px; display: grid; grid-template-columns: repeat(20, minmax(0, 1fr)); gap: 3px; }
+.cell { aspect-ratio: 1; border-radius: 1.5px; background: rgba(255, 255, 255, .10); }
+.tile.is-in .cell { animation: cell-sweep 5.2s ease-in-out infinite; animation-delay: var(--d); }
+@keyframes cell-sweep { 0%, 100% { background: rgba(255, 255, 255, .10); } 6% { background: var(--accent); } 16% { background: rgba(254, 189, 89, .35); } 30% { background: rgba(255, 255, 255, .10); } }
+.chips { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; list-style: none; }
+.chips li { font: 500 10.5px/1 var(--mono); letter-spacing: .06em; padding: 6px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.chips--sm li { padding: 5px 8px; font-size: 10px; }
+
+/* missions: each check draws itself, then the active mission sweeps down the list */
+.missions { margin-top: 16px; list-style: none; display: grid; gap: 4px; counter-reset: m; }
+.mission { display: grid; grid-template-columns: 20px 1fr auto; gap: 10px; align-items: center; padding: 8px 10px; margin: 0 -10px; border-radius: 10px; font-size: 14px; color: var(--text); border: 1px solid transparent; }
+.mission svg { width: 18px; height: 18px; fill: none; stroke: var(--dim); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.mission svg path { stroke: var(--accent); stroke-width: 2; stroke-dasharray: 20; stroke-dashoffset: 20; }
+.mission small { font: 400 10.5px/1 var(--mono); color: var(--dim); white-space: nowrap; }
+.tile.is-in .mission svg path { animation: tick-draw .5s var(--ease-out) forwards; animation-delay: calc(.3s + var(--i) * .18s); }
+.tile.is-in .mission svg circle { animation: tick-ring .5s var(--ease-out) forwards; animation-delay: calc(.3s + var(--i) * .18s); }
+.tile.is-in .mission { animation: mission-glow 11s linear infinite; animation-delay: calc(1.6s + var(--i) * 2.2s); }
+@keyframes tick-draw { to { stroke-dashoffset: 0; } }
+@keyframes tick-ring { to { stroke: var(--accent); } }
+@keyframes mission-glow { 0%, 22%, 100% { background: transparent; border-color: transparent; } 3%, 14% { background: rgba(254, 189, 89, .09); border-color: rgba(254, 189, 89, .25); } }
+
+/* modules: two columns of real module names, scrolling opposite ways */
+.modticker { position: relative; margin-top: 14px; height: 200px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; overflow: hidden; -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent); mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent); }
+.modcol { display: flex; flex-direction: column; gap: 6px; min-width: 0; will-change: transform; }
+.modcol span { display: block; min-width: 0; padding: 7px 10px; border-radius: 8px; background: var(--s3); border: 1px solid var(--line); font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.modcol span::before { content: ""; display: inline-block; width: 5px; height: 5px; margin: 0 8px 1px 0; border-radius: 50%; background: var(--accent); opacity: .8; }
+.tile.is-in .modcol--a { animation: tick-up 36s linear infinite; }
+.tile.is-in .modcol--b { animation: tick-down 42s linear infinite; }
+.tile--modules:hover .modcol { animation-play-state: paused; }
+@keyframes tick-up { to { transform: translateY(-50%); } }
+@keyframes tick-down { from { transform: translateY(-50%); } to { transform: translateY(0); } }
+
+/* course ring */
+.ring { position: relative; width: 108px; height: 108px; margin-top: 14px; }
+.ring svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring__bg { fill: none; stroke: var(--line-2); stroke-width: 6; }
+.ring__fg { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.ring__check { position: absolute; inset: 30%; width: 40%; height: 40%; transform: none; color: var(--accent); opacity: 0; }
+.tile.is-in .ring__fg { animation: spark-draw 1.6s var(--ease-out) .3s forwards; }
+.tile.is-in .ring__check { animation: ms-pop .5s var(--ease-out) 1.7s forwards; }
+
+@media (max-width: 1020px) {
+  .bento { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .tile--copy, .tile--screens, .tile--growth, .tile--missions { grid-column: span 6; grid-row: auto; }
+  .tile--globe, .tile--controls, .tile--modules, .tile--course { grid-column: span 3; }
+}
+@media (max-width: 640px) {
+  .bento { gap: 10px; }
+  .tile { grid-column: span 6 !important; padding: 20px; border-radius: 14px; }
+  .tile--screens { padding: 12px; }
+  .cells { grid-template-columns: repeat(16, minmax(0, 1fr)); }
+  .modticker { height: 150px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tile:hover { transform: none; }
+  .growth__line, .ring__fg { stroke-dashoffset: 0; animation: none !important; }
+  .growth__area { opacity: 1; }
+  .growth__ms, .ring__check { opacity: 1; animation: none !important; }
+  .cell, .mission, .modcol { animation: none !important; }
+  .mission svg path { stroke-dashoffset: 0; } .mission svg circle { stroke: var(--accent); }
+}

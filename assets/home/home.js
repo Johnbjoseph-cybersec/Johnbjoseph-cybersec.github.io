@@ -251,11 +251,11 @@
 
   /* ---------------- motion graphics: run only while on screen ---------------- */
   function initInView() {
-    if (!('IntersectionObserver' in window)) { document.querySelectorAll('.stat, .rail__art').forEach(function (n) { n.classList.add('is-in'); }); return; }
+    if (!('IntersectionObserver' in window)) { document.querySelectorAll('.stat, .rail__art, .tile').forEach(function (n) { n.classList.add('is-in'); }); return; }
     var once = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); once.unobserve(e.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
     document.querySelectorAll('.stat').forEach(function (n) { once.observe(n); });
     var toggle = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('is-in', e.isIntersecting); }); }, { rootMargin: '80px 0px' });
-    document.querySelectorAll('.rail__art').forEach(function (n) { toggle.observe(n); });
+    document.querySelectorAll('.rail__art, .tile').forEach(function (n) { toggle.observe(n); });
   }
   /* milestone videos preview muted while on screen; sound stays one tap away on the controls */
   function initVideoPreviews() {
@@ -325,7 +325,7 @@
 
   /* ---------------- craft: spotlight, back to top, journey bars ---------------- */
   function initSpotlight() {
-    var cards = [].slice.call(document.querySelectorAll('.quote, .rail__item, .stat, .news__card'));
+    var cards = [].slice.call(document.querySelectorAll('.quote, .rail__item, .stat, .news__card, .tile'));
     cards.forEach(function (c) { c.classList.add('spot'); });
     document.addEventListener('pointermove', function (e) {
       var c = e.target.closest && e.target.closest('.spot'); if (!c) return;
@@ -484,11 +484,12 @@
     });
   }
 
-  function initLabReveal() {             // Apple-style product zoom: oversized, settles as you scroll
-    var wide = window.matchMedia('(min-width: 1021px)').matches;   // on one column the copy sits above the stage, so no oversizing there
-    gsap.fromTo('.labstage', { scale: wide ? 1.28 : 1, yPercent: wide ? 12 : 0, autoAlpha: 0.35 }, { scale: 1, yPercent: 0, autoAlpha: 1, ease: 'none',
-      scrollTrigger: { trigger: '.lab', start: 'top 85%', end: 'top 15%', scrub: 0.8 } });
+  function initLabReveal() {             // the screens tile settles from slightly oversized as the bento arrives
+    var wide = window.matchMedia('(min-width: 1021px)').matches;
+    gsap.fromTo('.tile--screens .labstage', { scale: wide ? 1.08 : 1, autoAlpha: 0.4 }, { scale: 1, autoAlpha: 1, ease: 'none',
+      scrollTrigger: { trigger: '.lab', start: 'top 85%', end: 'top 25%', scrub: 0.8 } });
   }
+
 
   function initStatement() {             // words brighten one by one while the line holds on screen
     var p = document.querySelector('[data-statement]'); if (!p) return;
@@ -514,6 +515,83 @@
     gsap.to('.signature', { backgroundSize: '100% 100%', ease: 'none', scrollTrigger: { trigger: '.foot', start: 'top 95%', end: 'bottom bottom', scrub: 0.8 } });
   }
 
+
+  /* ---------------- lab bento: growth line, dotted globe, control cells, module ticker ---------------- */
+  var LAB_MODULES = ['Dashboard', 'Start Here', 'Asset Inventory', 'Vendor Management', 'Policy Library', 'Risk Register', 'Control Catalog', 'Risk Treatments', 'Risk Matrix', 'Issue Tracker', 'Incident Log', 'Task Management', 'Audit Schedule', 'Evidence Library', 'Control Testing', 'Audit Findings', 'Statement of Applicability', 'Traceability Matrix', 'Reports & Analytics', 'Framework Library', 'GRC Projects', 'Portfolio Builder', 'Compliance Requirements', 'Exceptions', 'Due & Activity', 'IT General Controls', 'SOX Compliance', 'Evidence Scoring', 'Control Lifecycle', 'Cloud Risk Scenarios', 'Risk Appetite Statement', 'Key Risk Indicators', 'Business Impact Analysis', 'BCM / DR Plans', 'Control Mapping', 'Vendor Risk Assessment', 'Compliance Calendar', 'Audit Simulator', 'Guided Missions', 'ISO 27001 Lead Implementer', 'Interview Prep', 'GRC AI Agent Command', 'WebGPU Agent Setup'];
+  var LAB_MILESTONES = [ // LinkedIn post dates (urn ids decode to these days); launch size from the February launch post
+    { d: '2026-02-05', v: 1200, k: 'Launch' }, { d: '2026-07-28', v: 7000, k: '7K' }, { d: '2026-08-26', v: 8000, k: '8K' }, { d: '2026-09-29', v: 10000, k: '10K' }, { d: '2026-11-11', v: 12000, k: '12K' }];
+  function initGrowth() {
+    var box = document.getElementById('growth'); if (!box) return;
+    var built = 0;
+    function build() {
+    var W = Math.max(260, Math.round(box.clientWidth || 480)); if (Math.abs(W - built) < 24) return; built = W;   // 1 unit = 1px so the labels stay legible at every width
+    var small = W < 420, H = small ? 150 : 200, L = 16, R = 34, T = 30, B = 26, t0 = Date.UTC(2026, 1, 1), t1 = Date.UTC(2026, 10, 30), vmax = 13200;
+    var x = function (iso) { var p = iso.split('-'); return L + (Date.UTC(+p[0], p[1] - 1, +p[2]) - t0) / (t1 - t0) * (W - L - R); };
+    var y = function (v) { return T + (1 - v / vmax) * (H - T - B); };
+    var pts = LAB_MILESTONES.map(function (m) { return [x(m.d), y(m.v)]; });
+    var line = pts.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
+    var area = line + ' L' + pts[pts.length - 1][0].toFixed(1) + ' ' + (H - B) + ' L' + pts[0][0].toFixed(1) + ' ' + (H - B) + ' Z';
+    var months = 'FMAMJJASON'.split(''), ax = '';
+    months.forEach(function (m, i) { var xx = L + (Date.UTC(2026, i + 1, 1) - t0) / (t1 - t0) * (W - L - R); ax += '<line class="growth__grid" x1="' + xx.toFixed(1) + '" y1="' + T + '" x2="' + xx.toFixed(1) + '" y2="' + (H - B) + '"/><text class="growth__ax" x="' + xx.toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle">' + m + '</text>'; });
+    var ms = '';
+    LAB_MILESTONES.forEach(function (m, i) {
+      var p = pts[i], last = i === LAB_MILESTONES.length - 1, above = i % 2 === 0 || last, ty = above ? p[1] - 12 : p[1] + 20, anchor = last ? 'end' : i === 0 ? 'start' : 'middle', tx = i === 0 ? p[0] - 6 : p[0];
+      var mon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][+m.d.split('-')[1] - 1];
+      ms += '<g class="growth__ms" style="--d:' + (1.0 + i * 0.18).toFixed(2) + 's"><circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="4"/><text x="' + tx.toFixed(1) + '" y="' + ty + '" text-anchor="' + anchor + '">' + m.k + (small ? '' : ' <tspan class="dim">· ' + mon + '</tspan>') + '</text></g>';
+    });
+    box.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true"><defs><linearGradient id="growthFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#febd59" stop-opacity=".22"/><stop offset="1" stop-color="#febd59" stop-opacity="0"/></linearGradient></defs>' + ax + '<path class="growth__area" d="' + area + '"/><path class="growth__line" d="' + line + '" pathLength="1"/>' + ms + '</svg>';
+    }
+    build();
+    var t; window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(build, 160); }, { passive: true });
+  }
+  function initCells() {
+    var box = document.getElementById('cells'); if (!box) return;
+    var cols = window.matchMedia('(max-width: 640px)').matches ? 16 : 20, rows = 10, html = '';
+    for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) html += '<i class="cell" style="--d:' + (((c + r) * 0.11) + ((c * 7 + r * 13) % 5) * 0.05).toFixed(2) + 's"></i>';
+    box.innerHTML = html;
+  }
+  function initModTicker() {
+    var box = document.getElementById('modticker'); if (!box) return;
+    var half = Math.ceil(LAB_MODULES.length / 2), a = LAB_MODULES.slice(0, half), b = LAB_MODULES.slice(half);
+    function col(list, cls) { var items = list.concat(list).map(function (n) { return '<span>' + n + '</span>'; }).join(''); return '<div class="modcol ' + cls + '">' + items + '</div>'; }
+    box.innerHTML = col(a, 'modcol--a') + col(b, 'modcol--b');
+  }
+  function initGlobe() {
+    var cv = document.getElementById('globeCv'); if (!cv || !cv.getContext) return;
+    var ctx = cv.getContext('2d'), N = 900, pts = [], dpr = Math.min(2, window.devicePixelRatio || 1), size = 0, rot = 0, pings = [], last = 0, running = false, raf = 0;
+    var ga = Math.PI * (3 - Math.sqrt(5));
+    for (var i = 0; i < N; i++) { var yy = 1 - (i / (N - 1)) * 2, rr = Math.sqrt(1 - yy * yy), th = ga * i; pts.push([Math.cos(th) * rr, yy, Math.sin(th) * rr]); }
+    function fit() { var w = cv.clientWidth || 200; if (w === size) return; size = w; cv.width = w * dpr; cv.height = w * dpr; }
+    var tilt = -0.42, ct = Math.cos(tilt), st = Math.sin(tilt);
+    function draw(now) {
+      fit(); var w = cv.width, cx = w / 2, cy = w / 2, Rg = w * 0.44, dt = last ? Math.min(50, now - last) : 16; last = now; rot += dt * 0.00022;
+      ctx.clearRect(0, 0, w, w);
+      var cr = Math.cos(rot), sr = Math.sin(rot), front = [];
+      for (var i = 0; i < N; i++) {
+        var p = pts[i], x1 = p[0] * cr + p[2] * sr, z1 = -p[0] * sr + p[2] * cr, y1 = p[1];
+        var y2 = y1 * ct - z1 * st, z2 = y1 * st + z1 * ct;
+        if (z2 < -0.15) continue;
+        var a = 0.12 + (z2 + 0.15) / 1.15 * 0.62, px = cx + x1 * Rg, py = cy - y2 * Rg;
+        ctx.fillStyle = 'rgba(242,243,240,' + a.toFixed(3) + ')'; ctx.beginPath(); ctx.arc(px, py, dpr * (0.9 + z2 * 0.6), 0, 6.283); ctx.fill();
+        if (z2 > 0.55) front.push([px, py]);
+      }
+      if (now - (pings.t || 0) > 1300 && front.length) { var f = front[(Math.random() * front.length) | 0]; pings.push({ x: f[0], y: f[1], t: now }); pings.t = now; }
+      for (var k = pings.length - 1; k >= 0; k--) {
+        var g = pings[k], u = (now - g.t) / 1400; if (u >= 1) { pings.splice(k, 1); continue; }
+        ctx.strokeStyle = 'rgba(254,189,89,' + (0.9 * (1 - u)).toFixed(3) + ')'; ctx.lineWidth = dpr * 1.3; ctx.beginPath(); ctx.arc(g.x, g.y, dpr * (3 + u * 22), 0, 6.283); ctx.stroke();
+        ctx.fillStyle = 'rgba(254,189,89,' + (1 - u * 0.6).toFixed(3) + ')'; ctx.beginPath(); ctx.arc(g.x, g.y, dpr * 2.2, 0, 6.283); ctx.fill();
+      }
+      ctx.strokeStyle = 'rgba(254,189,89,.18)'; ctx.lineWidth = dpr; ctx.beginPath(); ctx.arc(cx, cy, Rg + dpr * 4, 0, 6.283); ctx.stroke();
+      if (running) raf = requestAnimationFrame(draw);
+    }
+    function start() { if (running) return; running = true; last = 0; raf = requestAnimationFrame(draw); }
+    function stop() { running = false; cancelAnimationFrame(raf); }
+    if (REDUCED) { draw(performance.now()); return; }
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { if (es[0].isIntersecting) start(); else stop(); }, { rootMargin: '60px 0px' }).observe(cv); else start();
+    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else if (cv.getBoundingClientRect().bottom > 0) start(); });
+  }
+  function initBento() { initGrowth(); initCells(); initModTicker(); initGlobe(); }
+
   /* ---------------- boot ---------------- */
   function boot() {
     safe('year', function () { document.getElementById('year').textContent = new Date().getFullYear(); });
@@ -523,6 +601,7 @@
     safe('journeyUi', initJourneyUi);
     safe('spotlight', initSpotlight);
     safe('toTop', initToTop);
+    safe('bento', initBento);
     safe('inView', initInView);
     safe('videoPreviews', initVideoPreviews);
     safe('journeyDrift', initJourneyDrift);
