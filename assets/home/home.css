@@ -622,6 +622,7 @@ body::after { display: none; }                     /* no film grain */
 .quote__ic { display: block; width: 24px; height: 24px; color: var(--accent); opacity: .75; margin-bottom: -6px; }
 .quote footer { grid-template-columns: 38px 1fr; column-gap: 12px; align-items: center; }
 .quote footer b, .quote footer span, .quote footer a { grid-column: 2; }
+.quote footer .quote__av { grid-column: 1; grid-row: 1 / span 3; }
 .quote__av { grid-column: 1; grid-row: 1 / span 3; align-self: center; width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(145deg, rgba(254, 189, 89, .28), rgba(254, 189, 89, .08)); border: 1px solid rgba(254, 189, 89, .35); color: var(--accent); font: 600 12px/1 var(--mono); letter-spacing: .04em; }
 .scroll-cue { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 3; display: inline-flex; flex-direction: column; align-items: center; gap: 6px; color: var(--dim); font: 500 10px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; transition: opacity .5s, transform .5s; }
 .scroll-cue svg { width: 22px; height: 22px; animation: cue-bob 2.2s ease-in-out infinite; }
