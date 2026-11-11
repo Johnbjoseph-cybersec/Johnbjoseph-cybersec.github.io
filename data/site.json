@@ -31,6 +31,16 @@
   },
   "contributions": [
     {
+      "id": "claude-code-templates-1521",
+      "project": "claude-code-templates",
+      "org": "davila7",
+      "area": "Security compliance",
+      "title": "Corrected the OWASP ASVS 5.0 logging chapter reference in claude-code-templates' AI agent audit specialist from V7 (Session Management) to V16 (Security Logging and Error Handling)",
+      "url": "https://github.com/davila7/claude-code-templates/pull/1521",
+      "date": "2026-11-12",
+      "status": "proposed"
+    },
+    {
       "id": "prowler-13332",
       "project": "prowler",
       "org": "prowler-cloud",
@@ -436,5 +446,5 @@
       }
     ]
   },
-  "updated": "2026-11-11"
+  "updated": "2026-11-12"
 }
