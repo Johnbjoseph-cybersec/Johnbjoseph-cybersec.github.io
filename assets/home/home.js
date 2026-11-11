@@ -219,6 +219,34 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { if (es[0].isIntersecting) start(); else stop(); }).observe(stage); else start();
   }
 
+
+  /* ---------------- journey rail: arrows, drag to scroll, staggered entrance ---------------- */
+  function initJourneyUi() {
+    var rail = document.querySelector('.journey__rail'); if (!rail) return;
+    var step = function () { return Math.max(240, rail.clientWidth * 0.8); };
+    var prev = document.querySelector('.jbtn--prev'), next = document.querySelector('.journey__nav .jbtn:not(.jbtn--prev)');
+    if (prev) prev.addEventListener('click', function () { rail.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    if (next) next.addEventListener('click', function () { rail.scrollBy({ left: step(), behavior: 'smooth' }); });
+    var down = false, startX = 0, startLeft = 0, moved = false;
+    rail.addEventListener('pointerdown', function (e) { if (e.pointerType === 'touch') return; down = true; moved = false; startX = e.clientX; startLeft = rail.scrollLeft; rail.style.scrollBehavior = 'auto'; });
+    window.addEventListener('pointermove', function (e) { if (!down) return; var dx = e.clientX - startX; if (Math.abs(dx) > 4 && !moved) { moved = true; rail.classList.add('is-dragging'); } if (moved) rail.scrollLeft = startLeft - dx; }, { passive: true });
+    window.addEventListener('pointerup', function () { if (!down) return; down = false; rail.style.scrollBehavior = ''; setTimeout(function () { rail.classList.remove('is-dragging'); }, 50); });
+  }
+  function initJourneyReveal() {
+    var cards = gsap.utils.toArray('.jm'); if (!cards.length) return;
+    gsap.from(cards, { y: 18, autoAlpha: 0, duration: 0.8, ease: 'expo.out', stagger: 0.045, clearProps: 'transform',
+      scrollTrigger: { trigger: '.journey', start: 'top 85%', once: true } });
+  }
+  /* ---------------- nav: underline follows the section on screen ---------------- */
+  function initNavActive() {
+    var links = [].slice.call(document.querySelectorAll('.nav__links a[href^="#"]')); if (!links.length) return;
+    links.forEach(function (a) {
+      var sec = document.querySelector(a.getAttribute('href')); if (!sec) return;
+      ScrollTrigger.create({ trigger: sec, start: 'top 45%', end: 'bottom 45%',
+        onToggle: function (st) { if (st.isActive) { links.forEach(function (l) { l.classList.remove('is-active'); }); a.classList.add('is-active'); } else a.classList.remove('is-active'); } });
+    });
+  }
+
   /* ---------------- crosswalk: one control, nine frameworks ---------------- */
   function initGraph() {
     var cv = document.getElementById('graph'); if (!cv || !cv.getContext) return;
@@ -399,6 +427,7 @@
     safe('graph', initGraph);
     safe('field', initField);
     safe('nav', initNav);
+    safe('journeyUi', initJourneyUi);
     if (hasGSAP && !REDUCED) {
       safe('scroll', initScroll);
       safe('marquee', initMarquee);
@@ -412,6 +441,8 @@
       safe('counts', initCounts);
       safe('lab', initLab);
       safe('labSlides', initLabSlides);
+      safe('journeyReveal', initJourneyReveal);
+      safe('navActive', initNavActive);
       safe('sort', function () { ScrollTrigger.sort(); ScrollTrigger.refresh(); });
       safe('refresh', function () { if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); }); });
     }
