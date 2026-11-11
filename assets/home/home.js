@@ -38,6 +38,12 @@
       list.sort(function (a, b) { return (isWon(b) - isWon(a)) || (a.date < b.date ? 1 : a.date > b.date ? -1 : 0); });
       var won = list.filter(isWon), open = list.filter(function (c) { return !isWon(c); });
       var projects = {}; list.forEach(function (c) { projects[c.project] = 1; });
+      safe('scoreboard', function () {
+        var n1 = document.getElementById('openN1'), n2 = document.getElementById('openN2'), n3 = document.getElementById('openN3'), bar = document.getElementById('openBar');
+        [[n1, list.length], [n2, won.length], [n3, Object.keys(projects).length]].forEach(function (x) { if (x[0]) { x[0].textContent = String(x[1]); x[0].setAttribute('data-value', x[1]); } });
+        if (bar) bar.style.setProperty('--p', (list.length ? won.length / list.length : 0).toFixed(3));
+        var wall = document.getElementById('openWall'); if (wall) ticker(wall, Object.keys(projects), 3);
+      });
       var LIMIT = 5, view = won.length ? 'won' : 'all', expanded = false;
       var sets = { won: won, open: open, all: list };
       var bar = el('div', 'ledger__bar');
@@ -550,11 +556,22 @@
     for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) html += '<i class="cell" style="--d:' + (((c + r) * 0.11) + ((c * 7 + r * 13) % 5) * 0.05).toFixed(2) + 's"></i>';
     box.innerHTML = html;
   }
-  function initModTicker() {
-    var box = document.getElementById('modticker'); if (!box) return;
-    var half = Math.ceil(LAB_MODULES.length / 2), a = LAB_MODULES.slice(0, half), b = LAB_MODULES.slice(half);
-    function col(list, cls) { var items = list.concat(list).map(function (n) { return '<span>' + n + '</span>'; }).join(''); return '<div class="modcol ' + cls + '">' + items + '</div>'; }
-    box.innerHTML = col(a, 'modcol--a') + col(b, 'modcol--b');
+  function ticker(box, names, cols) {       // vertical columns of real names, alternating direction, duplicated for a seamless loop
+    if (!box || !names.length) return;
+    var per = Math.ceil(names.length / cols), html = '';
+    for (var k = 0; k < cols; k++) {
+      var list = names.slice(k * per, (k + 1) * per); if (list.length < 4) list = list.concat(names.slice(0, 4 - list.length));
+      html += '<div class="modcol ' + (k % 2 ? 'modcol--b' : 'modcol--a') + '">' + list.concat(list).map(function (n) { return '<span>' + n.replace(/</g, '&lt;') + '</span>'; }).join('') + '</div>';
+    }
+    box.innerHTML = html;
+  }
+  function initModTicker() { ticker(document.getElementById('modticker'), LAB_MODULES, 2); }
+  function initStatDots() { var b = document.getElementById('statDots'); if (!b) return; var h = ''; for (var i = 0; i < 34; i++) h += '<i style="--i:' + i + '"></i>'; b.innerHTML = h; }
+  function initOpenWall() {              // without data the wall is read from the ledger rows already on the page
+    var box = document.getElementById('openWall'); if (!box || box.children.length) return;
+    var seen = {}, names = [];
+    document.querySelectorAll('#ledger .ledger__proj').forEach(function (n) { var t = (n.firstChild && n.firstChild.nodeValue || '').trim(); if (t && !seen[t]) { seen[t] = 1; names.push(t); } });
+    ticker(box, names, 3);
   }
   function initGlobe() {
     var cv = document.getElementById('globeCv'); if (!cv || !cv.getContext) return;
@@ -590,7 +607,7 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { if (es[0].isIntersecting) start(); else stop(); }, { rootMargin: '60px 0px' }).observe(cv); else start();
     document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else if (cv.getBoundingClientRect().bottom > 0) start(); });
   }
-  function initBento() { initGrowth(); initCells(); initModTicker(); initGlobe(); }
+  function initBento() { initGrowth(); initCells(); initModTicker(); initGlobe(); initStatDots(); initOpenWall(); }
 
   /* ---------------- boot ---------------- */
   function boot() {
