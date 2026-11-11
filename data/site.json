@@ -192,6 +192,36 @@
       "coauthor": "tausif-ahmed-guardian"
     },
     {
+      "id": "ai-governance-framework-449",
+      "project": "ai-governance-framework",
+      "org": "finos",
+      "area": "AI governance",
+      "title": "Added an India obligation reference set (RBI FREE-AI, DPDP Act and Rules, CERT-In Directions) to the FINOS AI Governance Framework, mapped to 14 risks",
+      "url": "https://github.com/finos/ai-governance-framework/pull/449",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
+      "id": "obscura-1530",
+      "project": "obscura",
+      "org": "h4ckf0r0day",
+      "area": "AI governance",
+      "title": "perf(render): opacity and color inline style writes force a full relayout on the next read, transform writes do not",
+      "url": "https://github.com/h4ckf0r0day/obscura/issues/1530",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
+      "id": "obscura-1531",
+      "project": "obscura",
+      "org": "h4ckf0r0day",
+      "area": "AI governance",
+      "title": "fetch: writing to a closed pipe panics and exits 1 (| head, | grep -q)",
+      "url": "https://github.com/h4ckf0r0day/obscura/issues/1531",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
       "id": "grc-skills-62",
       "project": "Claude Skills for GRC",
       "org": "Sushegaad",
