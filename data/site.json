@@ -151,6 +151,16 @@
       "status": "proposed"
     },
     {
+      "id": "stack-diagram-8",
+      "project": "stack-diagram",
+      "org": "caru-ini",
+      "area": "Developer tooling",
+      "title": "Fixed a proof-of-work parity bug in stack-diagram's gallery (server clamped to 32 bits while its own Python client refuses over 26); added a regression test, full suite green",
+      "url": "https://github.com/caru-ini/stack-diagram/pull/8",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
       "id": "grc-skills-62",
       "project": "Claude Skills for GRC",
       "org": "Sushegaad",
