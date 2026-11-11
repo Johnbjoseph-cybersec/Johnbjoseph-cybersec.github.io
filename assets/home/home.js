@@ -68,14 +68,42 @@
         a.appendChild(icon('out', 18, 'ledger__go'));
         return a;
       }
+      function groupStatus(items) {
+        var s = items.map(function (c) { return (c.status || 'proposed').toLowerCase(); });
+        if (s.some(function (x) { return /merged/.test(x); })) return 'merged';
+        if (s.some(function (x) { return /accepted/.test(x); })) return 'accepted';
+        return 'proposed';
+      }
+      function groupRow(items) {
+        var det = el('details', 'ledger__group');
+        var sum = document.createElement('summary'); sum.className = 'ledger__row ledger__summary';
+        sum.appendChild(el('span', 'ledger__date', items[0].date));
+        var p = el('span', 'ledger__proj', items[0].project); p.appendChild(el('small', null, items[0].org)); sum.appendChild(p);
+        var won = items.filter(isWon).length;
+        var sameArea = items.every(function (c) { return c.area === items[0].area; });
+        var what = items.length + ' contributions' + (sameArea && items[0].area ? ' in ' + items[0].area : '') + (won ? ' · ' + won + ' merged or accepted' : '');
+        sum.appendChild(el('span', 'ledger__what', what));
+        var st = groupStatus(items), label = st === 'merged' ? 'Merged' : st === 'accepted' ? 'Accepted' : 'Open';
+        sum.appendChild(el('span', 'chip chip--' + st, label));
+        sum.appendChild(icon('arrow', 18, 'ledger__go ledger__chev'));
+        det.appendChild(sum);
+        var sub = el('div', 'ledger__sub');
+        items.forEach(function (c) { sub.appendChild(row(c)); });
+        det.appendChild(sub);
+        return det;
+      }
       function draw() {
-        var rows = sets[view]; box.textContent = '';
+        var items = sets[view]; box.textContent = '';
         tabs.querySelectorAll('.ledger__tab').forEach(function (b) {
           var on = b.getAttribute('data-view') === view; b.classList.toggle('is-on', on); b.setAttribute('aria-selected', on ? 'true' : 'false');
         });
-        (expanded ? rows : rows.slice(0, LIMIT)).forEach(function (c) { box.appendChild(row(c)); });
-        more.hidden = rows.length <= LIMIT;
-        more.textContent = expanded ? 'Show fewer' : 'Show all ' + rows.length;
+        // Group by project so one repo (e.g. Nick's grokbot-clone) is a single expandable row, not a long list.
+        var order = [], groups = {};
+        items.forEach(function (c) { var k = c.org + '/' + c.project; if (!groups[k]) { groups[k] = []; order.push(k); } groups[k].push(c); });
+        var units = order.map(function (k) { return groups[k]; });
+        (expanded ? units : units.slice(0, LIMIT)).forEach(function (g) { box.appendChild(g.length === 1 ? row(g[0]) : groupRow(g)); });
+        more.hidden = units.length <= LIMIT;
+        more.textContent = expanded ? 'Show fewer' : 'Show all ' + units.length + ' projects';
       }
       draw();
       document.getElementById('ledgerFoot').textContent = 'Status is taken from each public thread, and every row links to it.';

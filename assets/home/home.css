@@ -422,3 +422,15 @@ body::after { display: none; }                     /* no film grain */
 .statement__em .w { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -.01em; }
 .lab { clip-path: none !important; }
 .shots { transform-origin: 50% 40%; }
+
+/* Grouped ledger: one expandable row per project (e.g. all of one repo's proposals). */
+.ledger__group { border-bottom: 1px solid var(--line); }
+.ledger__group > summary { list-style: none; cursor: pointer; border-bottom: 0; }
+.ledger__group > summary::-webkit-details-marker { display: none; }
+.ledger__chev { transition: transform .25s var(--ease-out); }
+.ledger__group[open] > summary .ledger__chev { transform: rotate(90deg); }
+.ledger__sub { padding-left: 134px; }
+.ledger__sub .ledger__row { grid-template-columns: 90px 2fr 120px 28px; border-bottom: 1px dashed var(--line); }
+.ledger__sub .ledger__row:last-child { border-bottom: 0; }
+.ledger__sub .ledger__proj { display: none; }
+@media (max-width: 760px) { .ledger__sub { padding-left: 16px; } }
