@@ -158,6 +158,7 @@
       nav.classList.toggle('is-solid', y > 24);
       nav.classList.toggle('is-hidden', y > last && y > 400);
       last = y; bar.style.transform = 'scaleX(' + (h > 0 ? y / h : 0) + ')';
+      document.body.classList.toggle('is-scrolled', y > 80); document.body.classList.toggle('is-deep', y > 900);
     }
     window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
   }
@@ -319,6 +320,24 @@
     gsap.utils.toArray('.sec__head').forEach(function (h) {
       ScrollTrigger.create({ trigger: h, start: 'top 80%', once: true, onEnter: function () { h.classList.add('is-in'); } });
     });
+  }
+
+
+  /* ---------------- craft: spotlight, back to top, journey bars ---------------- */
+  function initSpotlight() {
+    var cards = [].slice.call(document.querySelectorAll('.quote, .rail__item, .stat, .news__card'));
+    cards.forEach(function (c) { c.classList.add('spot'); });
+    document.addEventListener('pointermove', function (e) {
+      var c = e.target.closest && e.target.closest('.spot'); if (!c) return;
+      var r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+  }
+  function initToTop() {
+    var b = document.getElementById('totop'); if (!b) return;
+    b.addEventListener('click', function () { if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.2 }); else window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    var jr = document.querySelector('.journey');
+    if (jr && 'IntersectionObserver' in window) new IntersectionObserver(function (es) { if (es[0].isIntersecting) { jr.classList.add('is-in'); } }, { rootMargin: '0px 0px -15% 0px' }).observe(jr);
+    else if (jr) jr.classList.add('is-in');
   }
 
   /* ---------------- crosswalk: one control, nine frameworks ---------------- */
@@ -502,6 +521,8 @@
     safe('field', initField);
     safe('nav', initNav);
     safe('journeyUi', initJourneyUi);
+    safe('spotlight', initSpotlight);
+    safe('toTop', initToTop);
     safe('inView', initInView);
     safe('videoPreviews', initVideoPreviews);
     safe('journeyDrift', initJourneyDrift);
