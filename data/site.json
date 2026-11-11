@@ -91,6 +91,26 @@
       "status": "proposed"
     },
     {
+      "id": "obscura-1513",
+      "project": "obscura",
+      "org": "h4ckf0r0day",
+      "area": "AI security",
+      "title": "Corrected Obscura's documented SSRF deny-set against the engine's is_forbidden_ip, adding the CGNAT, IPv6 link-local and special-purpose ranges it actually blocks",
+      "url": "https://github.com/h4ckf0r0day/obscura/pull/1513",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
+      "id": "bama-19",
+      "project": "bama",
+      "org": "daveebbelaar",
+      "area": "Developer tooling",
+      "title": "Fixed a SIGPIPE crash in bama's agent-cli template so the generated app survives an early CLI disconnect; reproduced and fixed with a focused Swift harness",
+      "url": "https://github.com/daveebbelaar/bama/pull/19",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
       "id": "grc-skills-62",
       "project": "Claude Skills for GRC",
       "org": "Sushegaad",
@@ -239,8 +259,15 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 15,
+    "published": 16,
     "latest": [
+      {
+        "edition": 27,
+        "date": "2026-11-11",
+        "title": "A scan that found nothing, Guest Edition: Stanimir Tenev",
+        "subtitle": "A collaboration edition with Stanimir Tenev, who builds qrp-mcp and maintains ShorList",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 11,
         "date": "2026-11-10",
@@ -275,13 +302,6 @@
         "title": "French blood service: supplier hack alters cold rooms at 3 sites, no blood lost",
         "subtitle": "The service says it wasn't directly targeted, and that's the lesson on supplier remote access. Plus 20 more stories from operational technology (OT), GRC, AI governance and privacy",
         "url": "https://www.linkedin.com/pulse/french-blood-service-supplier-hack-alters-cold-rooms-3-joseph-glttc"
-      },
-      {
-        "edition": 9,
-        "date": "2026-11-05",
-        "title": "Binance traces USD 6.34 billion theft through a fake interview and an AI tool",
-        "subtitle": "A deployment token on an engineer's computer, and an off switch that could not stop everything. Plus 26 more stories from GRC, AI security and privacy",
-        "url": "https://www.linkedin.com/pulse/binance-traces-usd-634-billion-theft-through-fake-interview-joseph-qrfnc"
       }
     ]
   },
