@@ -216,37 +216,89 @@
   </section>
 
   <section class="sec lab" id="lab">
-    <div class="wrap lab__grid">
-      <div>
-        <p class="eyebrow">GRC Practice Lab · free</p>
-        <div class="lab__big"><span data-count="lab_active_users">12,000</span><em>+</em></div>
-        <p class="sec__intro">people in <span data-count="countries">34</span> countries use it. It's the thing I needed when I was starting out: somewhere to practise GRC before being responsible for it.</p>
-        <ul class="lab__list">
-          <li><svg><use href="#layers"/></svg>400+ controls across 9 frameworks: ISO 27001, NIST CSF, CIS, SOC 2, PCI DSS, HIPAA, COBIT and GDPR</li>
-          <li><svg><use href="#filecheck"/></svg>Build a risk register, a Statement of Applicability and vendor risk yourself, then export it as proof</li>
-          <li><svg><use href="#cap"/></svg>11 guided scenarios, 12 portfolio projects and a full ISO 27001 Lead Implementer course</li>
-        </ul>
-        <p class="sec__intro" style="margin-bottom:28px">If you're trying to break into GRC and can't get past the experience paradox, the lab is free and the door is open.</p>
-        <a class="btn btn--primary" href="https://grclab.purplecop.io/">Open the GRC Lab<svg><use href="#out"/></svg></a>
-      </div>
-      <div class="labstage" aria-label="Screens from the GRC Practice Lab">
-        <div class="labstage__glow"></div>
-        <div class="labstage__grid"></div>
-        <figure class="win win--show">
-          <div class="win__bar"><i></i><i></i><i></i><span class="win__url" id="labSlideUrl">grclab.purplecop.io/dashboard</span></div>
-          <div class="slides">
-            <img class="slide is-on" src="assets/home/img/lab-dashboard.jpg" alt="GRC Practice Lab dashboard: command centre, health score and control status" width="1400" height="732" data-path="dashboard">
-            <img class="slide" src="assets/home/img/lab-risk-matrix.jpg" alt="GRC Practice Lab risk matrix: inherent and residual heatmaps" width="1400" height="740" loading="lazy" data-path="risk-matrix">
-            <img class="slide" src="assets/home/img/lab-scenarios.jpg" alt="GRC Practice Lab practice scenarios: 12 guided missions" width="1400" height="725" loading="lazy" data-path="scenarios">
-            <img class="slide" src="assets/home/img/lab-ai-agent.jpg" alt="GRC Practice Lab AI agent command console" width="1400" height="739" loading="lazy" data-path="ai-agent">
+    <div class="wrap">
+      <div class="bento" id="bento">
+        <article class="tile tile--copy" data-reveal>
+          <p class="eyebrow">GRC Practice Lab · <b>free with an account</b></p>
+          <h2>Practise GRC before you're responsible for it.</h2>
+          <p class="sec__intro">It's the thing I needed when I was starting out: a full GRC workspace with real controls, real registers and real audits, where mistakes cost nothing.</p>
+          <p class="tile__note">11 guided scenarios, 12 portfolio projects and a full ISO 27001 Lead Implementer course. If you're trying to break into GRC and can't get past the experience paradox, the door is open.</p>
+          <a class="btn btn--primary" href="https://grclab.purplecop.io/">Open the GRC Lab<svg><use href="#out"/></svg></a>
+        </article>
+
+        <article class="tile tile--screens">
+          <div class="labstage" aria-label="Screens from the GRC Practice Lab">
+            <div class="labstage__glow"></div>
+            <div class="labstage__grid"></div>
+            <figure class="win win--show">
+              <div class="win__bar"><i></i><i></i><i></i><span class="win__url" id="labSlideUrl">grclab.purplecop.io/dashboard</span></div>
+              <div class="slides">
+                <img class="slide is-on" src="assets/home/img/lab-dashboard.jpg" alt="GRC Practice Lab dashboard: command centre, health score and control status" width="1400" height="732" data-path="dashboard">
+                <img class="slide" src="assets/home/img/lab-risk-matrix.jpg" alt="GRC Practice Lab risk matrix: inherent and residual heatmaps" width="1400" height="740" loading="lazy" data-path="risk-matrix">
+                <img class="slide" src="assets/home/img/lab-scenarios.jpg" alt="GRC Practice Lab practice scenarios: 12 guided missions" width="1400" height="725" loading="lazy" data-path="scenarios">
+                <img class="slide" src="assets/home/img/lab-ai-agent.jpg" alt="GRC Practice Lab AI agent command console" width="1400" height="739" loading="lazy" data-path="ai-agent">
+              </div>
+            </figure>
+            <div class="ltabs" role="tablist" aria-label="Choose a screen">
+              <button class="ltab is-on" type="button" role="tab" aria-selected="true"><svg><use href="#dash"/></svg>Dashboard</button>
+              <button class="ltab" type="button" role="tab" aria-selected="false"><svg><use href="#grid"/></svg>Risk matrix</button>
+              <button class="ltab" type="button" role="tab" aria-selected="false"><svg><use href="#listchecks"/></svg>Practice scenarios</button>
+              <button class="ltab" type="button" role="tab" aria-selected="false"><svg><use href="#bot"/></svg>AI agent</button>
+            </div>
           </div>
-        </figure>
-        <div class="ltabs" role="tablist" aria-label="Choose a screen">
-          <button class="ltab is-on" type="button" role="tab" aria-selected="true"><svg><use href="#dash"/></svg>Dashboard</button>
-          <button class="ltab" type="button" role="tab" aria-selected="false"><svg><use href="#grid"/></svg>Risk matrix</button>
-          <button class="ltab" type="button" role="tab" aria-selected="false"><svg><use href="#listchecks"/></svg>Practice scenarios</button>
-          <button class="ltab" type="button" role="tab" aria-selected="false"><svg><use href="#bot"/></svg>AI agent</button>
-        </div>
+        </article>
+
+        <article class="tile tile--growth" data-reveal>
+          <header class="tile__head"><svg><use href="#users"/></svg><span>People practising in the lab</span></header>
+          <div class="tile__n"><span data-count="lab_active_users">12,000</span><em>+</em></div>
+          <div class="growth" id="growth" role="img" aria-label="Lab growth: launch in February 2026, 7,000 users in July, 8,000 in August, 10,000 in September, 12,000 in November"></div>
+          <p class="tile__src" data-src="lab_active_users">Google Analytics · Nov 2026</p>
+        </article>
+
+        <article class="tile tile--globe" data-reveal>
+          <header class="tile__head"><svg><use href="#globe"/></svg><span>Countries</span></header>
+          <div class="tile__n"><span data-count="countries">34</span></div>
+          <p class="tile__l">they log in from</p>
+          <canvas class="globe" id="globeCv" aria-hidden="true"></canvas>
+          <p class="tile__src" data-src="countries">Google Analytics · Oct 2026</p>
+        </article>
+
+        <article class="tile tile--controls" data-reveal>
+          <header class="tile__head"><svg><use href="#shield"/></svg><span>Controls to practise on</span></header>
+          <div class="tile__n"><span data-count="controls">400</span><em>+</em></div>
+          <div class="cells" id="cells" aria-hidden="true"></div>
+          <ul class="chips" aria-label="Frameworks"><li>ISO 27001</li><li>NIST CSF</li><li>CIS</li><li>SOC 2</li><li>PCI DSS</li><li>HIPAA</li><li>COBIT</li><li>GDPR</li></ul>
+          <p class="tile__src">9 frameworks · GRC Practice Lab</p>
+        </article>
+
+        <article class="tile tile--missions" data-reveal>
+          <header class="tile__head"><svg><use href="#listchecks"/></svg><span>Guided missions</span></header>
+          <ol class="missions">
+            <li class="mission" style="--i:0"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5"/><path d="m7 12.5 3.2 3.2L17 9"/></svg><span>Build Your First Risk Register</span><small>Beginner · 15 min</small></li>
+            <li class="mission" style="--i:1"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5"/><path d="m7 12.5 3.2 3.2L17 9"/></svg><span>Prepare for Your First Audit</span><small>Intermediate · 25 min</small></li>
+            <li class="mission" style="--i:2"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5"/><path d="m7 12.5 3.2 3.2L17 9"/></svg><span>Build a Compliance Crosswalk</span><small>Advanced · 20 min</small></li>
+            <li class="mission" style="--i:3"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5"/><path d="m7 12.5 3.2 3.2L17 9"/></svg><span>Risk Appetite to KRI Pipeline</span><small>Intermediate · 20 min</small></li>
+            <li class="mission" style="--i:4"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5"/><path d="m7 12.5 3.2 3.2L17 9"/></svg><span>Business Continuity Lifecycle</span><small>Advanced · 25 min</small></li>
+          </ol>
+          <p class="tile__src">Each mission checks your own registers, not a quiz</p>
+        </article>
+
+        <article class="tile tile--modules" data-reveal>
+          <header class="tile__head"><svg><use href="#dash"/></svg><span>44 modules, one workspace</span></header>
+          <div class="modticker" id="modticker" aria-hidden="true"></div>
+          <p class="tile__foot">Build the risk register, the Statement of Applicability and the vendor assessments yourself, then export them as proof.</p>
+        </article>
+
+        <article class="tile tile--course" data-reveal>
+          <header class="tile__head"><svg><use href="#cap"/></svg><span>Course</span></header>
+          <div class="ring" aria-hidden="true">
+            <svg viewBox="0 0 120 120"><circle class="ring__bg" cx="60" cy="60" r="50"/><circle class="ring__fg" cx="60" cy="60" r="50" pathLength="1"/></svg>
+            <svg class="ring__check" viewBox="0 0 24 24"><use href="#check"/></svg>
+          </div>
+          <p class="tile__big">ISO 27001 Lead Implementer</p>
+          <p class="tile__l">The full course, inside the lab. Clause by clause, with the audit stories that go wrong.</p>
+          <ul class="chips chips--sm" aria-label="Clauses covered in the stories"><li>5.1</li><li>6.1.3</li><li>6.2</li><li>7.5</li><li>9.2</li><li>10.1</li></ul>
+        </article>
       </div>
     </div>
   </section>
