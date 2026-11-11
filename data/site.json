@@ -41,6 +41,26 @@
       "status": "proposed"
     },
     {
+      "id": "grokbot-clone-2",
+      "project": "grokbot-clone",
+      "org": "nickvasilescu",
+      "area": "AI agent security",
+      "title": "Fixed a cross-site scripting hole in grokbot-clone's app-connect callback, reproduced before and after on a local server",
+      "url": "https://github.com/nickvasilescu/grokbot-clone/pull/2",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
+      "id": "grokbot-clone-3",
+      "project": "grokbot-clone",
+      "org": "nickvasilescu",
+      "area": "AI agent security",
+      "title": "Made grokbot-clone listen on localhost by default, closing a same-network account takeover through the dev login",
+      "url": "https://github.com/nickvasilescu/grokbot-clone/pull/3",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
       "id": "grc-skills-62",
       "project": "Claude Skills for GRC",
       "org": "Sushegaad",
