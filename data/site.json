@@ -81,6 +81,16 @@
       "status": "proposed"
     },
     {
+      "id": "claude-skill-2",
+      "project": "claude-skill",
+      "org": "Motionsites-AI",
+      "area": "Developer tooling",
+      "title": "Fixed shoot.py argument parsing in MotionSites' claude-skill so --wait no longer sends screenshots to the wrong folder; verified before/after",
+      "url": "https://github.com/Motionsites-AI/claude-skill/pull/2",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
       "id": "grc-skills-62",
       "project": "Claude Skills for GRC",
       "org": "Sushegaad",
