@@ -171,6 +171,16 @@
       "status": "proposed"
     },
     {
+      "id": "liboqs-2468",
+      "project": "liboqs",
+      "org": "open-quantum-safe",
+      "area": "Post-quantum",
+      "title": "Answered a researcher's question on real-world PQC migration challenges with a practitioner breakdown across discovery, inventory, migration and compliance",
+      "url": "https://github.com/open-quantum-safe/liboqs/discussions/2468#discussioncomment-19536128",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
       "id": "grc-skills-62",
       "project": "Claude Skills for GRC",
       "org": "Sushegaad",
