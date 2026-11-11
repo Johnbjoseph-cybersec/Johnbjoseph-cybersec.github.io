@@ -591,3 +591,13 @@ body::after { display: none; }                     /* no film grain */
   .aurora i, .labstage__glow, .stories::before, .rail__art *, .spark__dot, .svid__live i { animation: none !important; }
   .spark__line { stroke-dashoffset: 0; } .stat::after { transform: scaleX(1); transition: none; }
 }
+
+/* ================= section transitions (2026-11-11) ================= */
+.sec, .stats, .marquee { position: relative; }
+.stats { z-index: 3; box-shadow: 0 -40px 80px -30px rgba(0, 0, 0, .6); }
+.marquee { z-index: 3; }
+.sec { background-color: var(--bg); will-change: transform, opacity; }
+.sec__head { position: relative; padding-bottom: 28px; }
+.sec__head::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, var(--accent), var(--line-2) 35%, transparent); transform: scaleX(0); transform-origin: left; transition: transform 1.4s var(--ease-out) .15s; }
+.sec__head.is-in::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) { .sec__head::after { transform: scaleX(1); transition: none; } .sec { will-change: auto; } }

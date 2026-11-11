@@ -293,6 +293,34 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) start(); else stop(); }).observe(rail); else { visible = true; start(); }
   }
 
+
+  /* ---------------- transitions between sections ---------------- */
+  // Leaving sections shrink, lift and dim under the next one, so each band hands over instead of just ending.
+  function initSectionLeave() {
+    var secs = gsap.utils.toArray('#work, #crosswalk, #open, #newsletter, #lab, #lab-stories, #videos, #speaking');
+    secs.forEach(function (sec) {
+      gsap.fromTo(sec, { scale: 1, autoAlpha: 1, yPercent: 0 }, { scale: 0.95, autoAlpha: 0.3, yPercent: -3, transformOrigin: '50% 100%', ease: 'none',
+        scrollTrigger: { trigger: sec, start: 'bottom 70%', end: 'bottom 2%', scrub: 0.5 } });
+    });
+    // the hero hands over to the stats band: copy drifts up and fades, the photo settles back
+    gsap.to('.hero__copy', { yPercent: -14, autoAlpha: 0.15, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'bottom 90%', end: 'bottom 30%', scrub: 0.5 } });
+    gsap.to('.stage', { scale: 0.94, yPercent: 5, transformOrigin: '50% 100%', ease: 'none', scrollTrigger: { trigger: '.hero', start: 'bottom 90%', end: 'bottom 30%', scrub: 0.5 } });
+  }
+  // Visuals arrive with a clip wipe, in order; headings get a drawn rule underneath.
+  function initClipReveals() {
+    function wipe(sel, stagger) {
+      var els = gsap.utils.toArray(sel).filter(function (n) { return !n.hasAttribute('data-reveal'); }); if (!els.length) return;   // data-reveal tweens overwrite; never share a target
+      gsap.set(els, { clipPath: 'inset(100% 0% 0% 0%)', webkitClipPath: 'inset(100% 0% 0% 0%)' });
+      ScrollTrigger.batch(els, { start: 'top 88%', once: true, onEnter: function (b) {
+        gsap.to(b, { clipPath: 'inset(0% 0% 0% 0%)', webkitClipPath: 'inset(0% 0% 0% 0%)', duration: 1.1, ease: 'expo.out', stagger: stagger || 0.12, clearProps: 'clipPath,webkitClipPath' });
+      } });
+    }
+    wipe('.win--show'); wipe('.svid video', 0.14); wipe('.vid__img', 0.12); wipe('.news__card'); wipe('.speak');
+    gsap.utils.toArray('.sec__head').forEach(function (h) {
+      ScrollTrigger.create({ trigger: h, start: 'top 80%', once: true, onEnter: function () { h.classList.add('is-in'); } });
+    });
+  }
+
   /* ---------------- crosswalk: one control, nine frameworks ---------------- */
   function initGraph() {
     var cv = document.getElementById('graph'); if (!cv || !cv.getContext) return;
@@ -492,6 +520,8 @@
       safe('labSlides', initLabSlides);
       safe('journeyReveal', initJourneyReveal);
       safe('navActive', initNavActive);
+      safe('sectionLeave', initSectionLeave);
+      safe('clipReveals', initClipReveals);
       safe('sort', function () { ScrollTrigger.sort(); ScrollTrigger.refresh(); });
       safe('refresh', function () { if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); }); });
     }
