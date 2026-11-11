@@ -196,8 +196,8 @@
     });
   }
   function initLab() {
-    gsap.to('.shot--a', { yPercent: -10, rotateY: -3, ease: 'none', scrollTrigger: { trigger: '.shots', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
-    gsap.to('.shot--b', { yPercent: 12, rotateY: -14, ease: 'none', scrollTrigger: { trigger: '.shots', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
+    gsap.to('.win--main', { yPercent: 5, ease: 'none', scrollTrigger: { trigger: '.labstage', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
+    gsap.to('.win--float', { yPercent: -16, ease: 'none', scrollTrigger: { trigger: '.labstage', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
   }
 
   /* ---------------- crosswalk: one control, nine frameworks ---------------- */
@@ -345,7 +345,8 @@
   }
 
   function initLabReveal() {             // Apple-style product zoom: oversized, settles as you scroll
-    gsap.fromTo('.shots', { scale: 1.35, yPercent: 14, autoAlpha: 0.35 }, { scale: 1, yPercent: 0, autoAlpha: 1, ease: 'none',
+    var wide = window.matchMedia('(min-width: 1021px)').matches;   // on one column the copy sits above the stage, so no oversizing there
+    gsap.fromTo('.labstage', { scale: wide ? 1.28 : 1, yPercent: wide ? 12 : 0, autoAlpha: 0.35 }, { scale: 1, yPercent: 0, autoAlpha: 1, ease: 'none',
       scrollTrigger: { trigger: '.lab', start: 'top 85%', end: 'top 15%', scrub: 0.8 } });
   }
 
