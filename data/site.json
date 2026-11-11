@@ -111,6 +111,36 @@
       "status": "proposed"
     },
     {
+      "id": "grokbot-clone-6",
+      "project": "grokbot-clone",
+      "org": "nickvasilescu",
+      "area": "AI agent security",
+      "title": "Hardened grokbot-clone's approval handling so a missing or unknown decision can no longer silently approve a tool call",
+      "url": "https://github.com/nickvasilescu/grokbot-clone/pull/6",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
+      "id": "grokbot-clone-7",
+      "project": "grokbot-clone",
+      "org": "nickvasilescu",
+      "area": "AI agent security",
+      "title": "Stopped grokbot-clone routines from being scheduled to run every second (unbounded model-API cost)",
+      "url": "https://github.com/nickvasilescu/grokbot-clone/pull/7",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
+      "id": "grokbot-clone-8",
+      "project": "grokbot-clone",
+      "org": "nickvasilescu",
+      "area": "AI agent security",
+      "title": "Clamped grokbot-clone's conversation row limit so a negative or non-numeric value can't return the whole history",
+      "url": "https://github.com/nickvasilescu/grokbot-clone/pull/8",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
       "id": "grc-skills-62",
       "project": "Claude Skills for GRC",
       "org": "Sushegaad",
