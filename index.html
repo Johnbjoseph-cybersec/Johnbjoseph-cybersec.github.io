@@ -205,11 +205,24 @@
         <p class="sec__intro" style="margin-bottom:28px">If you're trying to break into GRC and can't get past the experience paradox, the lab is free and the door is open.</p>
         <a class="btn btn--primary" href="https://grclab.purplecop.io/">Open the GRC Lab<svg><use href="#out"/></svg></a>
       </div>
-      <div class="labstage" aria-hidden="true">
+      <div class="labstage" aria-label="Screens from the GRC Practice Lab">
         <div class="labstage__glow"></div>
         <div class="labstage__grid"></div>
-        <figure class="win win--main"><div class="win__bar"><i></i><i></i><i></i><span class="win__url">grclab.purplecop.io</span></div><div class="win__img"><img src="assets/home/img/lab-dashboard.jpg" alt="GRC Practice Lab dashboard" loading="lazy" width="1400" height="732"></div></figure>
-        <figure class="win win--float"><div class="win__bar"><i></i><i></i><i></i><span class="win__url">Risk matrix</span></div><div class="win__img"><img src="assets/home/img/lab-risk-matrix.jpg" alt="GRC Practice Lab risk matrix" loading="lazy" width="1400" height="740"></div></figure>
+        <figure class="win win--show">
+          <div class="win__bar"><i></i><i></i><i></i><span class="win__url" id="labSlideUrl">grclab.purplecop.io/dashboard</span></div>
+          <div class="slides">
+            <img class="slide is-on" src="assets/home/img/lab-dashboard.jpg" alt="GRC Practice Lab dashboard: command centre, health score and control status" width="1400" height="732" data-path="dashboard">
+            <img class="slide" src="assets/home/img/lab-risk-matrix.jpg" alt="GRC Practice Lab risk matrix: inherent and residual heatmaps" width="1400" height="740" loading="lazy" data-path="risk-matrix">
+            <img class="slide" src="assets/home/img/lab-scenarios.jpg" alt="GRC Practice Lab practice scenarios: 12 guided missions" width="1400" height="725" loading="lazy" data-path="scenarios">
+            <img class="slide" src="assets/home/img/lab-ai-agent.jpg" alt="GRC Practice Lab AI agent command console" width="1400" height="739" loading="lazy" data-path="ai-agent">
+          </div>
+        </figure>
+        <div class="ltabs" role="tablist" aria-label="Choose a screen">
+          <button class="ltab is-on" type="button" role="tab" aria-selected="true">Dashboard</button>
+          <button class="ltab" type="button" role="tab" aria-selected="false">Risk matrix</button>
+          <button class="ltab" type="button" role="tab" aria-selected="false">Practice scenarios</button>
+          <button class="ltab" type="button" role="tab" aria-selected="false">AI agent</button>
+        </div>
       </div>
     </div>
   </section>

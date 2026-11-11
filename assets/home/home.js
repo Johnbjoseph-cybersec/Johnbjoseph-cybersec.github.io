@@ -196,8 +196,27 @@
     });
   }
   function initLab() {
-    gsap.to('.win--main', { yPercent: 5, ease: 'none', scrollTrigger: { trigger: '.labstage', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
-    gsap.to('.win--float', { yPercent: -16, ease: 'none', scrollTrigger: { trigger: '.labstage', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
+    gsap.to('.win--show', { yPercent: -4, ease: 'none', scrollTrigger: { trigger: '.labstage', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
+  }
+
+
+  /* ---------------- lab slideshow: whole screenshots, one at a time ---------------- */
+  function initLabSlides() {
+    var stage = document.querySelector('.labstage'); if (!stage) return;
+    var slides = [].slice.call(stage.querySelectorAll('.slide')), tabs = [].slice.call(stage.querySelectorAll('.ltab')), url = document.getElementById('labSlideUrl');
+    if (slides.length < 2) return;
+    var i = 0, timer = null, reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function go(n) {
+      i = (n + slides.length) % slides.length;
+      slides.forEach(function (s, k) { s.classList.toggle('is-on', k === i); });
+      tabs.forEach(function (t, k) { t.classList.toggle('is-on', k === i); t.setAttribute('aria-selected', k === i ? 'true' : 'false'); });
+      if (url) url.textContent = 'grclab.purplecop.io/' + (slides[i].getAttribute('data-path') || '');
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function start() { stop(); if (!reduce) timer = setInterval(function () { go(i + 1); }, 4500); }
+    tabs.forEach(function (t, k) { t.addEventListener('click', function () { go(k); start(); }); });
+    stage.addEventListener('mouseenter', stop); stage.addEventListener('mouseleave', start);
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { if (es[0].isIntersecting) start(); else stop(); }).observe(stage); else start();
   }
 
   /* ---------------- crosswalk: one control, nine frameworks ---------------- */
@@ -392,6 +411,7 @@
       safe('reveals', initReveals);
       safe('counts', initCounts);
       safe('lab', initLab);
+      safe('labSlides', initLabSlides);
       safe('sort', function () { ScrollTrigger.sort(); ScrollTrigger.refresh(); });
       safe('refresh', function () { if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); }); });
     }
