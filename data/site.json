@@ -161,6 +161,16 @@
       "status": "proposed"
     },
     {
+      "id": "trivy-11528",
+      "project": "trivy",
+      "org": "aquasecurity",
+      "area": "AI governance",
+      "title": "Confirmed with primary sources that Trivy v0.76.2 ships the go-jose v4.1.6 fix for CVE-2026-116587 (GHSA-mgcc-cww5-fp2q)",
+      "url": "https://github.com/aquasecurity/trivy/discussions/11528#discussioncomment-19535994",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
       "id": "grc-skills-62",
       "project": "Claude Skills for GRC",
       "org": "Sushegaad",
@@ -316,7 +326,7 @@
         "date": "2026-11-11",
         "title": "A scan that found nothing, Guest Edition: Stanimir Tenev",
         "subtitle": "A collaboration edition with Stanimir Tenev, who builds qrp-mcp and maintains ShorList",
-        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+        "url": "https://www.linkedin.com/pulse/scan-found-nothing-guest-edition-stanimir-tenev-joseph-vmtvf"
       },
       {
         "edition": 11,
