@@ -61,6 +61,26 @@
       "status": "proposed"
     },
     {
+      "id": "grokbot-clone-4",
+      "project": "grokbot-clone",
+      "org": "nickvasilescu",
+      "area": "AI agent security",
+      "title": "Stopped a malformed WebSocket upgrade from crashing grokbot-clone's server, reproduced the crash and the fix on a local run",
+      "url": "https://github.com/nickvasilescu/grokbot-clone/pull/4",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
+      "id": "grokbot-clone-5",
+      "project": "grokbot-clone",
+      "org": "nickvasilescu",
+      "area": "AI agent security",
+      "title": "Closed an approval bypass where grokbot-clone's Composio sandbox tools could act without the user's approval",
+      "url": "https://github.com/nickvasilescu/grokbot-clone/pull/5",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
       "id": "grc-skills-62",
       "project": "Claude Skills for GRC",
       "org": "Sushegaad",
