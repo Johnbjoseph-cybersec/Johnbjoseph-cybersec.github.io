@@ -141,6 +141,16 @@
       "status": "proposed"
     },
     {
+      "id": "specification-1123",
+      "project": "specification",
+      "org": "CycloneDX",
+      "area": "AI governance",
+      "title": "Answered the CycloneDX discussion on representing a component bundled inside another (HBase bundling a.jar) with a spec-cited recommendation",
+      "url": "https://github.com/CycloneDX/specification/discussions/1123#discussioncomment-19534342",
+      "date": "2026-11-11",
+      "status": "proposed"
+    },
+    {
       "id": "grc-skills-62",
       "project": "Claude Skills for GRC",
       "org": "Sushegaad",
