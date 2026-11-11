@@ -247,6 +247,52 @@
     });
   }
 
+
+  /* ---------------- motion graphics: run only while on screen ---------------- */
+  function initInView() {
+    if (!('IntersectionObserver' in window)) { document.querySelectorAll('.stat, .rail__art').forEach(function (n) { n.classList.add('is-in'); }); return; }
+    var once = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); once.unobserve(e.target); } }); }, { rootMargin: '0px 0px -10% 0px' });
+    document.querySelectorAll('.stat').forEach(function (n) { once.observe(n); });
+    var toggle = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle('is-in', e.isIntersecting); }); }, { rootMargin: '80px 0px' });
+    document.querySelectorAll('.rail__art').forEach(function (n) { toggle.observe(n); });
+  }
+  /* milestone videos preview muted while on screen; sound stays one tap away on the controls */
+  function initVideoPreviews() {
+    var vids = [].slice.call(document.querySelectorAll('video[data-preview]')); if (!vids.length) return;
+    var conn = navigator.connection || {}; if (REDUCED || conn.saveData) return;
+    vids.forEach(function (v) {
+      var card = v.closest('.svid'); if (card && !card.querySelector('.svid__live')) { var b = el('span', 'svid__live'); b.appendChild(el('i')); b.appendChild(document.createTextNode('Preview')); card.appendChild(b); }
+      v.addEventListener('playing', function () { if (card) card.classList.toggle('is-playing', v.muted); });
+      v.addEventListener('pause', function () { if (card) card.classList.remove('is-playing'); });
+      v.addEventListener('volumechange', function () { if (card) card.classList.toggle('is-playing', !v.paused && v.muted); });
+    });
+    if (!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var v = e.target;
+        if (e.isIntersecting) { if (v.paused && v.muted) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } }
+        else if (!v.paused && v.muted) v.pause();
+      });
+    }, { threshold: 0.45 });
+    vids.forEach(function (v) { io.observe(v); });
+  }
+  /* the journey rail drifts one card at a time until someone touches it */
+  function initJourneyDrift() {
+    var rail = document.querySelector('.journey__rail'); if (!rail || REDUCED) return;
+    var timer = null, idle = true, visible = false;
+    function cardW() { var c = rail.querySelector('.jm'); return c ? c.getBoundingClientRect().width + 12 : 220; }
+    function tick() { if (!idle || !visible) return; var max = rail.scrollWidth - rail.clientWidth; if (rail.scrollLeft >= max - 4) rail.scrollTo({ left: 0, behavior: 'smooth' }); else rail.scrollBy({ left: cardW(), behavior: 'smooth' }); }
+    function start() { stop(); timer = setInterval(tick, 3200); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function pause() { idle = false; stop(); }
+    function resume() { idle = true; start(); }
+    rail.addEventListener('pointerenter', pause); rail.addEventListener('pointerleave', resume);
+    rail.addEventListener('focusin', pause); rail.addEventListener('focusout', resume);
+    rail.addEventListener('touchstart', pause, { passive: true });
+    [].slice.call(document.querySelectorAll('.jbtn')).forEach(function (b) { b.addEventListener('click', function () { idle = false; stop(); setTimeout(function () { idle = true; start(); }, 9000); }); });
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) start(); else stop(); }).observe(rail); else { visible = true; start(); }
+  }
+
   /* ---------------- crosswalk: one control, nine frameworks ---------------- */
   function initGraph() {
     var cv = document.getElementById('graph'); if (!cv || !cv.getContext) return;
@@ -428,6 +474,9 @@
     safe('field', initField);
     safe('nav', initNav);
     safe('journeyUi', initJourneyUi);
+    safe('inView', initInView);
+    safe('videoPreviews', initVideoPreviews);
+    safe('journeyDrift', initJourneyDrift);
     if (hasGSAP && !REDUCED) {
       safe('scroll', initScroll);
       safe('marquee', initMarquee);

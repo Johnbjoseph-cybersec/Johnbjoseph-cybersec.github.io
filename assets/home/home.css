@@ -42,7 +42,7 @@ a { color: inherit; text-decoration: none; }
 .nav__links a:hover::after, .nav__links a.is-active::after { transform: scaleX(1); }
 .nav__links a.is-active { color: var(--text); }
 .nav__links a:hover { color: var(--text); }
-.progress { position: absolute; left: 0; bottom: -1px; height: 1px; width: 100%; background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); }
+.progress { position: absolute; left: 0; bottom: -2px; height: 3px; box-shadow: 0 0 12px var(--accent-glow); width: 100%; background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); }
 
 .btn { display: inline-flex; align-items: center; gap: 10px; height: 46px; padding: 0 20px; border-radius: 999px; font: 600 14.5px/1 var(--font); letter-spacing: -.005em; transition: transform .25s var(--ease-out), background .25s, border-color .25s, box-shadow .25s; white-space: nowrap; }
 .btn svg { width: 16px; height: 16px; transition: transform .25s var(--ease-out); }
@@ -482,7 +482,8 @@ body::after { display: none; }                     /* no film grain */
 .journey__rail.is-dragging { cursor: grabbing; scroll-snap-type: none; }
 .journey__rail.is-dragging .jm { pointer-events: none; }
 .journey__rail { display: flex; gap: 12px; overflow-x: auto; cursor: grab; scroll-behavior: smooth; overscroll-behavior-x: contain; padding: 34px 2px 18px; position: relative; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: var(--s3) transparent; }
-.journey__rail::before { content: ""; position: absolute; left: 0; right: 0; top: 12px; height: 1px; background: var(--line-2); }
+.jm::after { content: ""; position: absolute; left: -12px; right: -12px; top: -23px; height: 1px; background: var(--line-2); pointer-events: none; }
+.jm:first-child::after { left: 0; } .jm:last-child::after { right: 0; }
 .jm { flex: 0 0 200px; scroll-snap-align: start; position: relative; display: grid; gap: 8px; align-content: start; padding: 18px 16px; background: var(--bg); border: 1px solid var(--line); border-radius: 14px; transition: border-color .25s, transform .35s var(--ease-out); }
 .jm::before { content: ""; position: absolute; left: 16px; top: -27px; width: 9px; height: 9px; border-radius: 50%; background: var(--dim); box-shadow: 0 0 0 4px var(--s1); }
 .jm--video::before { background: var(--accent); box-shadow: 0 0 0 4px var(--s1), 0 0 16px var(--accent-glow); animation: jm-pulse 2.6s ease-in-out infinite; }
@@ -509,3 +510,84 @@ body::after { display: none; }                     /* no film grain */
 .quote footer a:hover { color: var(--text); }
 @media (max-width: 1020px) { .quotes__grid { grid-template-columns: 1fr 1fr; } .stories__vids { gap: 14px; } }
 @media (max-width: 640px) { .stories__vids, .quotes__grid { grid-template-columns: 1fr; } .jm { flex-basis: 180px; } .svid video { aspect-ratio: 4 / 5; } }
+
+
+/* ================= motion graphics (2026-11-11) ================= */
+/* hero: drifting amber aurora behind the copy */
+.aurora { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.aurora i { position: absolute; width: 46vw; height: 46vw; max-width: 760px; max-height: 760px; border-radius: 50%; filter: blur(70px); opacity: .55; mix-blend-mode: screen;
+  background: radial-gradient(circle at 50% 50%, rgba(254, 189, 89, .22), transparent 62%); animation: aurora 22s ease-in-out infinite alternate; }
+.aurora i:nth-child(1) { left: 42%; top: -12%; }
+.aurora i:nth-child(2) { left: 58%; top: 38%; animation-duration: 28s; animation-delay: -9s; background: radial-gradient(circle at 50% 50%, rgba(254, 189, 89, .14), transparent 62%); }
+.aurora i:nth-child(3) { left: -14%; top: 30%; width: 34vw; height: 34vw; animation-duration: 31s; animation-delay: -17s; opacity: .35; }
+@keyframes aurora { 0% { transform: translate3d(0, 0, 0) scale(1); } 50% { transform: translate3d(-8%, 10%, 0) scale(1.12); } 100% { transform: translate3d(9%, -6%, 0) scale(.94); } }
+/* stats: the real growth line draws itself */
+.spark { display: block; width: 100%; max-width: 220px; height: 44px; margin: 14px 0 6px; overflow: visible; }
+.spark__area { fill: rgba(254, 189, 89, .10); opacity: 0; transition: opacity .8s .9s; }
+.spark__line { fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.spark__dot { fill: var(--accent); opacity: 0; }
+.stat.is-in .spark__line { animation: spark-draw 1.6s cubic-bezier(.16, 1, .3, 1) .2s forwards; }
+.stat.is-in .spark__area { opacity: 1; }
+.stat.is-in .spark__dot { animation: spark-dot 2.4s ease-in-out 1.6s infinite; }
+@keyframes spark-draw { to { stroke-dashoffset: 0; } }
+@keyframes spark-dot { 0%, 100% { opacity: 1; r: 3; } 50% { opacity: .55; r: 5; } }
+.stat { overflow: hidden; }
+.stat::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 1.2s var(--ease-out) .1s; opacity: .55; }
+.stat { position: relative; }
+.stat:first-child::after { left: 0; }
+.stat.is-in::after { transform: scaleX(1); }
+/* work: three looping line illustrations */
+.rail__art { margin: 0 0 18px; }
+.rail__art svg { width: 100%; max-width: 320px; height: auto; display: block; overflow: visible; }
+.art__wire { fill: none; stroke: var(--line-2); stroke-width: 1.5; }
+.art__node { fill: var(--s2); stroke: var(--dim); stroke-width: 1.5; }
+.art__t { font: 500 9px/1 var(--mono); letter-spacing: .12em; fill: var(--dim); text-anchor: middle; }
+.art__t--l { text-anchor: start; } .art__t--r { text-anchor: end; }
+.rail__art * { animation-play-state: paused; }
+.rail__art.is-in * { animation-play-state: running; }
+/* 01 agent gate: a request travels to the gate, gets checked, then proceeds */
+.gate__box { fill: var(--s2); stroke: var(--line-2); stroke-width: 1.5; animation: gate-box 4s ease-in-out infinite; }
+.gate__shield { fill: none; stroke: var(--accent); stroke-width: 1.5; animation: gate-shield 4s ease-in-out infinite; }
+.gate__check { fill: none; stroke: var(--ok); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 30; stroke-dashoffset: 30; animation: gate-check 4s ease-in-out infinite; }
+.gate__dot { fill: var(--accent); filter: drop-shadow(0 0 6px var(--accent-glow)); offset-path: path('M24 60 H296'); offset-rotate: 0deg; animation: gate-dot 4s cubic-bezier(.4, 0, .2, 1) infinite; }
+.art__node--end { animation: gate-end 4s ease-in-out infinite; }
+@keyframes gate-dot { 0% { offset-distance: 0%; opacity: 0; } 8% { opacity: 1; } 34% { offset-distance: 44%; } 56% { offset-distance: 44%; } 86% { offset-distance: 100%; opacity: 1; } 92%, 100% { offset-distance: 100%; opacity: 0; } }
+@keyframes gate-box { 0%, 30% { stroke: var(--line-2); } 42%, 60% { stroke: var(--ok); } 75%, 100% { stroke: var(--line-2); } }
+@keyframes gate-shield { 0%, 30% { opacity: 1; } 42%, 60% { opacity: 0; } 75%, 100% { opacity: 1; } }
+@keyframes gate-check { 0%, 36% { stroke-dashoffset: 30; opacity: 1; } 48%, 62% { stroke-dashoffset: 0; opacity: 1; } 70%, 100% { stroke-dashoffset: 0; opacity: 0; } }
+@keyframes gate-end { 0%, 80% { stroke: var(--dim); fill: var(--s2); } 88%, 94% { stroke: var(--ok); fill: rgba(60, 207, 145, .25); } 100% { stroke: var(--dim); fill: var(--s2); } }
+/* 02 governance loop: obligation -> control -> owner -> evidence, round and round */
+.loop__ring { fill: none; stroke: var(--line-2); stroke-width: 1.5; }
+.loop__ring--spin { stroke: var(--accent); stroke-dasharray: .22 .78; stroke-linecap: round; transform-origin: 160px 60px; animation: loop-spin 6s linear infinite; }
+.loop__n circle { fill: var(--s2); stroke: var(--dim); stroke-width: 1.5; animation: loop-node 6s ease-in-out infinite; }
+.loop__n text { animation: loop-text 6s ease-in-out infinite; }
+.loop__n--2 circle, .loop__n--2 text { animation-delay: 1.5s; } .loop__n--3 circle, .loop__n--3 text { animation-delay: 3s; } .loop__n--4 circle, .loop__n--4 text { animation-delay: 4.5s; }
+.loop__tick { fill: none; stroke: var(--ok); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 30; stroke-dashoffset: 30; animation: loop-tick 6s ease-in-out infinite; }
+@keyframes loop-spin { to { transform: rotate(360deg); } }
+@keyframes loop-node { 0%, 4% { fill: var(--s2); stroke: var(--dim); } 10%, 22% { fill: var(--accent); stroke: var(--accent); } 30%, 100% { fill: var(--s2); stroke: var(--dim); } }
+@keyframes loop-text { 0%, 4% { fill: var(--dim); } 10%, 22% { fill: var(--text); } 30%, 100% { fill: var(--dim); } }
+@keyframes loop-tick { 0%, 78% { stroke-dashoffset: 30; } 86%, 94% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 30; } }
+/* 03 inventory: a scan sweeps the estate and each key turns post-quantum */
+.inv__bar { fill: var(--s3); stroke: var(--line-2); stroke-width: 1; animation: inv-bar 5s ease-in-out infinite; animation-delay: var(--d); }
+.inv__scan { fill: var(--accent); filter: drop-shadow(0 0 8px var(--accent-glow)); animation: inv-scan 5s cubic-bezier(.4, 0, .2, 1) infinite; }
+@keyframes inv-scan { 0% { transform: translateX(0); opacity: 0; } 6% { opacity: 1; } 56% { transform: translateX(238px); opacity: 1; } 62% { opacity: 0; } 100% { transform: translateX(238px); opacity: 0; } }
+@keyframes inv-bar { 0%, 10% { fill: var(--s3); stroke: var(--line-2); } 20%, 70% { fill: rgba(254, 189, 89, .28); stroke: var(--accent); } 82%, 100% { fill: var(--s3); stroke: var(--line-2); } }
+/* ambient light drifts slowly in the lab and stories bands */
+.labstage__glow { animation: glow-drift 16s ease-in-out infinite alternate; }
+.stories::before { animation: glow-drift 20s ease-in-out infinite alternate; }
+@keyframes glow-drift { from { transform: translate3d(-3%, -2%, 0) scale(1); } to { transform: translate3d(3%, 3%, 0) scale(1.08); } }
+.stories::before { transform-origin: 50% 0; }
+/* primary button: light sweep on hover */
+.btn--primary { position: relative; overflow: hidden; }
+.btn--primary::before { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, .45) 50%, transparent 70%); transform: translateX(-120%); transition: transform .7s var(--ease-out); pointer-events: none; }
+.btn--primary:hover::before { transform: translateX(120%); }
+/* video previews: a small "playing" badge while a muted preview runs */
+.svid { position: relative; }
+.svid__live { position: absolute; top: 14px; left: 14px; z-index: 2; display: none; align-items: center; gap: 6px; padding: 6px 9px; border-radius: 999px; background: rgba(10, 17, 25, .72); backdrop-filter: blur(8px); font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--text); pointer-events: none; }
+.svid__live i { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); animation: live-pulse 1.6s ease-in-out infinite; }
+.svid.is-playing .svid__live { display: inline-flex; }
+@keyframes live-pulse { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) {
+  .aurora i, .labstage__glow, .stories::before, .rail__art *, .spark__dot, .svid__live i { animation: none !important; }
+  .spark__line { stroke-dashoffset: 0; } .stat::after { transform: scaleX(1); transition: none; }
+}
