@@ -181,6 +181,17 @@
       "status": "proposed"
     },
     {
+      "id": "uncut-6",
+      "project": "uncut",
+      "org": "Balanov",
+      "area": "Developer tooling",
+      "title": "Fixed a hang in uncut where cancelling a running tool command leaked the shell's child processes (co-authored with Tausif Ahmed); regression test proves 20s hang -> 0.5s",
+      "url": "https://github.com/Balanov/uncut/pull/6",
+      "date": "2026-11-11",
+      "status": "proposed",
+      "coauthor": "tausif-ahmed-guardian"
+    },
+    {
       "id": "grc-skills-62",
       "project": "Claude Skills for GRC",
       "org": "Sushegaad",
