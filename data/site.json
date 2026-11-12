@@ -559,11 +559,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 85447448043,
-    "sessions": 2760,
-    "messages": 445971,
-    "avg_30d": -2642805928,
-    "as_of": "2026-11-13 00:02 IST",
+    "tokens": 86389585837,
+    "sessions": 2795,
+    "messages": 453897,
+    "avg_30d": -2612392513,
+    "as_of": "2026-11-13 02:01 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "youtube": {
