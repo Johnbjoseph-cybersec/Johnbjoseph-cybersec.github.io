@@ -121,6 +121,36 @@
       "status": "proposed"
     },
     {
+      "id": "scubagear-2577",
+      "project": "ScubaGear",
+      "org": "cisagov",
+      "area": "GRC engineering",
+      "title": "Proposed an OSCAL catalog release artifact for CISA ScubaGear's Microsoft 365 secure configuration baselines, carrying the NIST SP 800-53 mappings (port of ScubaGoggles #1058); trial run produced 162 controls passing OSCAL CLI",
+      "url": "https://github.com/cisagov/ScubaGear/issues/2577",
+      "date": "2026-11-12",
+      "status": "proposed"
+    },
+    {
+      "id": "oscal-2292",
+      "project": "OSCAL",
+      "org": "usnistgov",
+      "area": "GRC engineering",
+      "title": "Contributed an ISO/IEC 27001 design for modelling the Statement of Applicability and risk assessment in NIST OSCAL v2 (gap analysis, minimal proposal, open questions)",
+      "url": "https://github.com/usnistgov/OSCAL/issues/2292#issuecomment-6821371096",
+      "date": "2026-11-12",
+      "status": "proposed"
+    },
+    {
+      "id": "oscal-content-356",
+      "project": "oscal-content",
+      "org": "usnistgov",
+      "area": "GRC engineering",
+      "title": "Reported a broken risk reference in NIST's official IFA POA&M example (risk-uuid points at a mitigating factor), found while testing OSCAL #2296 constraints",
+      "url": "https://github.com/usnistgov/oscal-content/issues/356",
+      "date": "2026-11-12",
+      "status": "proposed"
+    },
+    {
       "id": "prowler-13332",
       "project": "prowler",
       "org": "prowler-cloud",
@@ -507,6 +537,14 @@
         "url": "https://www.linkedin.com/pulse/uk-plans-police-facial-recognition-law-watchdog-code-shops-joseph-5c7bc"
       }
     ]
+  },
+  "mindledger": {
+    "tokens": 320213328493,
+    "sessions": 11221,
+    "messages": 1860138,
+    "avg_30d": 4995189143,
+    "as_of": "2026-11-12 14:06 IST",
+    "source": "My token ledger, synced every 2 hours"
   },
   "youtube": {
     "url": "https://www.youtube.com/@GRCMadeSimple",
