@@ -108,7 +108,8 @@
       "title": "Corrected Obscura's documented SSRF deny-set against the engine's is_forbidden_ip, adding the CGNAT, IPv6 link-local and special-purpose ranges it actually blocks",
       "url": "https://github.com/h4ckf0r0day/obscura/pull/1513",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-11"
     },
     {
       "id": "bama-19",
