@@ -381,8 +381,15 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 16,
+    "published": 17,
     "latest": [
+      {
+        "edition": 28,
+        "date": "2026-11-12",
+        "title": "I read the EU's AI Act amendment to check one annex. Annex IV did not change",
+        "subtitle": "My first merged fix to sbom-tools, and what Regulation (EU) 2026/1744 means for your technical file",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 27,
         "date": "2026-11-11",
@@ -417,13 +424,6 @@
         "title": "UK plans police facial recognition law, a watchdog and a code for shops",
         "subtitle": "Nothing is law yet, and the private-sector duty already exists. Plus 26 more stories from GRC, AI security and privacy",
         "url": "https://www.linkedin.com/pulse/uk-plans-police-facial-recognition-law-watchdog-code-shops-joseph-5c7bc"
-      },
-      {
-        "edition": 8,
-        "date": "2026-11-06",
-        "title": "French blood service: supplier hack alters cold rooms at 3 sites, no blood lost",
-        "subtitle": "The service says it wasn't directly targeted, and that's the lesson on supplier remote access. Plus 20 more stories from operational technology (OT), GRC, AI governance and privacy",
-        "url": "https://www.linkedin.com/pulse/french-blood-service-supplier-hack-alters-cold-rooms-3-joseph-glttc"
       }
     ]
   },
