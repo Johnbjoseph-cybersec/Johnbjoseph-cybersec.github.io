@@ -3449,6 +3449,29 @@ body.modal-open {
 .iso-family-card{background:#fff;border:1px solid rgba(148,163,184,.35);border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 12px 30px rgba(15,23,42,.06)}
 .iso-family-card h4{margin:0 0 8px;font-size:16px;color:#0f172a;font-weight:900}.iso-family-card p{margin:0 0 12px;color:#475569;line-height:1.6}.iso-choice-grid{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.iso-choice-pill{border:1px solid rgba(148,163,184,.55);background:#f8fafc;color:#334155;border-radius:999px;padding:9px 13px;font-size:12px;font-weight:800;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:6px}.iso-choice-pill:hover{transform:translateY(-1px);border-color:#2563eb;background:#eff6ff}.iso-choice-pill.active{background:linear-gradient(135deg,#2563eb,#0891b2);border-color:transparent;color:#fff;box-shadow:0 10px 22px rgba(37,99,235,.22)}.iso-family-answer{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin-top:10px}.iso-family-answer textarea{width:100%;min-height:84px;border:1px solid rgba(148,163,184,.45);border-radius:14px;padding:12px 14px;font:inherit;resize:vertical;background:#fff;color:#0f172a}.iso-family-answer label{font-size:12px;text-transform:uppercase;letter-spacing:.06em;font-weight:900;color:#64748b}.iso-family-score{background:#0f172a;color:#fff;border-radius:18px;padding:16px;margin:14px 0}.iso-family-score .bar{height:10px;background:rgba(255,255,255,.14);border-radius:999px;overflow:hidden;margin-top:10px}.iso-family-score .fill{height:100%;background:linear-gradient(135deg,#38bdf8,#22c55e);width:0%;transition:.25s}.iso-family-controls{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.iso-family-controls .btn{border-radius:12px!important}.iso-status-badge{font-size:11px;font-weight:900;border-radius:999px;padding:5px 8px;background:#ecfeff;color:#0e7490;border:1px solid #a5f3fc;display:inline-flex;gap:5px;align-items:center}.iso-reference-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:14px 0}.iso-ref-card{border:1px solid rgba(148,163,184,.32);border-radius:16px;padding:12px;background:#f8fafc}.iso-ref-card strong{font-size:13px;color:#0f172a}.iso-ref-card span{display:block;font-size:12px;line-height:1.5;color:#64748b;margin-top:4px}
 </style>
+<style id="nl-cta-css">
+.nl-cta { display:flex; align-items:center; gap:16px; padding:16px 18px; margin:0 0 24px; background:var(--bg-surface); border:1px solid var(--border-default); border-left:4px solid var(--accent-purple); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); }
+.nl-cta-ico { flex:0 0 auto; width:40px; height:40px; border-radius:10px; background:var(--accent-purple-soft); color:var(--accent-purple); display:flex; align-items:center; justify-content:center; }
+.nl-cta-body { flex:1 1 auto; min-width:0; }
+.nl-cta-title { font-size:14px; font-weight:700; color:var(--text-primary); margin:0 0 2px; }
+.nl-cta-text { font-size:13px; color:var(--text-secondary); line-height:1.5; margin:0; }
+.nl-cta-btn { flex:0 0 auto; text-decoration:none; }
+.nl-cta-btn svg { flex:0 0 auto; }
+.nl-cta-close { flex:0 0 auto; align-self:flex-start; width:28px; height:28px; display:flex; align-items:center; justify-content:center; background:transparent; border:none; border-radius:8px; color:var(--text-muted); cursor:pointer; }
+.nl-cta-close:hover { background:var(--bg-elevated); color:var(--text-primary); }
+.nl-cta-close:focus-visible { outline:2px solid var(--accent-purple); outline-offset:2px; }
+.nl-cta-inline { display:flex; align-items:flex-start; gap:10px; margin:0 0 16px; padding:10px 14px; background:var(--accent-purple-soft); border-radius:var(--radius-lg); font-size:13px; color:var(--text-primary); line-height:1.5; }
+.nl-cta-inline svg { flex:0 0 auto; margin-top:2px; color:var(--accent-purple); }
+.nl-cta-inline span { flex:1 1 auto; min-width:0; }
+.nl-cta-inline a { color:#6b21a8; font-weight:700; text-decoration:underline; white-space:nowrap; }
+.nl-cta-inline a:focus-visible { outline:2px solid var(--accent-purple); outline-offset:2px; border-radius:4px; }
+@media (max-width: 600px) {
+    .nl-cta { flex-wrap:wrap; padding:14px; gap:12px; }
+    .nl-cta-body { flex-basis:calc(100% - 100px); }
+    .nl-cta-btn { order:3; width:100%; }
+    .nl-cta-close { order:2; margin-left:auto; }
+}
+</style>
 </head>
 <body>
     <!-- ==================== LANDING PAGE ==================== -->
@@ -4959,6 +4982,8 @@ class GRCLabPro {
                 </div>
               </div>
             </div>
+
+            ${this.nlCtaCard()}
 
             <!-- KPI Cards -->
             <div class="dash-kpi-grid">
@@ -6598,6 +6623,8 @@ class GRCLabPro {
             </div>
           </div>
 
+          ${(total > 0 && completed >= total) ? this.nlCtaInline() : ''}
+
           <div>${stepRows}</div>
 
           <div style="margin-top:14px; padding:12px 14px; border:1px dashed var(--border-default); border-radius: var(--radius-lg); background: var(--bg-elevated);">
@@ -6637,6 +6664,35 @@ class GRCLabPro {
         } else {
             this.toast(`Scenario started: ${s.title}`, 'success');
         }
+    }
+
+    // ---- Newsletter prompt (GRC Made Simple Daily) -------------------------------------------
+    // Dismissal lives in localStorage under its own key (not a grc_ data key); every access is guarded.
+    nlCtaDismissed() {
+        try { return localStorage.getItem('nl_cta_dismissed_v1') === '1'; } catch (e) { return false; }
+    }
+    dismissNlCta() {
+        try { localStorage.setItem('nl_cta_dismissed_v1', '1'); } catch (e) { /* storage blocked: hide for this view only */ }
+        document.querySelectorAll('[data-nl-cta]').forEach(el => el.remove());
+    }
+    nlCtaMailIcon() {
+        return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>';
+    }
+    nlCtaCard() {
+        if (this.nlCtaDismissed()) return '';
+        return `<div class="nl-cta" data-nl-cta role="region" aria-label="GRC Made Simple Daily newsletter">
+            <div class="nl-cta-ico">${this.nlCtaMailIcon()}</div>
+            <div class="nl-cta-body">
+                <p class="nl-cta-title">GRC Made Simple Daily</p>
+                <p class="nl-cta-text">Get the weekday GRC brief: AI security, AI governance and post-quantum news in 5 minutes.</p>
+            </div>
+            <a class="btn btn-primary btn-sm nl-cta-btn" href="https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/" target="_blank" rel="noopener">Subscribe on LinkedIn <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>
+            <button type="button" class="nl-cta-close" onclick="app.dismissNlCta()" aria-label="Dismiss newsletter prompt" title="Dismiss"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        </div>`;
+    }
+    nlCtaInline() {
+        if (this.nlCtaDismissed()) return '';
+        return `<div class="nl-cta-inline" data-nl-cta>${this.nlCtaMailIcon().replace('width="20" height="20"', 'width="16" height="16"')}<span>Get the weekday GRC brief: AI security, AI governance and post-quantum news in 5 minutes. <a href="https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/" target="_blank" rel="noopener">Subscribe on LinkedIn</a></span></div>`;
     }
 
     toggleScenarioStep(scenarioId, stepIdx){
