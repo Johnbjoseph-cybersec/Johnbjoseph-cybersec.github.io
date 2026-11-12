@@ -31,6 +31,26 @@
   },
   "contributions": [
     {
+      "id": "security-study-plan-42",
+      "project": "security-study-plan",
+      "org": "jassics",
+      "area": "AI governance",
+      "title": "Corrected the EU AI Act timeline in two security-study-plan guides against Regulation (EU) 2026/1744",
+      "url": "https://github.com/jassics/security-study-plan/pull/42",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "mcp-for-beginners-1255",
+      "project": "mcp-for-beginners",
+      "org": "microsoft",
+      "area": "AI security",
+      "title": "Corrected Microsoft's MCP for Beginners security lesson, which quoted a retired 2025-11-25 session rule as a requirement of MCP spec 2026-07-28",
+      "url": "https://github.com/microsoft/mcp-for-beginners/pull/1255",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
       "id": "claude-code-templates-1521",
       "project": "claude-code-templates",
       "org": "davila7",
@@ -539,11 +559,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 84547088856,
-    "sessions": 2724,
-    "messages": 438223,
-    "avg_30d": -2671926749,
-    "as_of": "2026-11-12 22:02 IST",
+    "tokens": 85447448043,
+    "sessions": 2760,
+    "messages": 445971,
+    "avg_30d": -2642805928,
+    "as_of": "2026-11-13 00:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "youtube": {
@@ -566,5 +586,5 @@
       }
     ]
   },
-  "updated": "2026-11-12"
+  "updated": "2026-11-13"
 }
