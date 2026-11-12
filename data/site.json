@@ -81,6 +81,46 @@
       "status": "proposed"
     },
     {
+      "id": "osv-scanner-97",
+      "project": "osv-scanner",
+      "org": "google",
+      "area": "AI security",
+      "title": "Proposed opt-in exploit intelligence (CISA KEV + FIRST EPSS) for Google osv-scanner findings, with a three-PR design (flagship F4)",
+      "url": "https://github.com/google/osv-scanner/issues/97#issuecomment-6818032744",
+      "date": "2026-11-12",
+      "status": "proposed"
+    },
+    {
+      "id": "trivy-discussion-11625",
+      "project": "trivy",
+      "org": "aquasecurity",
+      "area": "Post-quantum readiness",
+      "title": "Proposed filesystem/repo scanning and ML-KEM/SLH-DSA support for Trivy's cryptographic asset (CBOM) scanner (flagship F3)",
+      "url": "https://github.com/aquasecurity/trivy/discussions/11625",
+      "date": "2026-11-12",
+      "status": "proposed"
+    },
+    {
+      "id": "fedramp-rfc0035",
+      "project": "FedRAMP community",
+      "org": "FedRAMP",
+      "area": "Post-quantum readiness",
+      "title": "Public comment on FedRAMP RFC-0035 (cryptographic module rules): proposed CycloneDX CBOM as the module inventory format, with per-algorithm validation and NIST post-quantum security levels",
+      "url": "https://github.com/FedRAMP/community/discussions/179#discussioncomment-19559831",
+      "date": "2026-11-12",
+      "status": "proposed"
+    },
+    {
+      "id": "oscal-2296",
+      "project": "OSCAL",
+      "org": "usnistgov",
+      "area": "GRC engineering",
+      "title": "Tested the proposed assessment-results reference constraints for NIST OSCAL (#2296) against develop and the official examples, offered tests and extra risk checks, and reported a broken reference in the official POA&M example",
+      "url": "https://github.com/usnistgov/OSCAL/issues/2296#issuecomment-6819379676",
+      "date": "2026-11-12",
+      "status": "proposed"
+    },
+    {
       "id": "prowler-13332",
       "project": "prowler",
       "org": "prowler-cloud",
