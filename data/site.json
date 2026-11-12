@@ -41,6 +41,26 @@
       "status": "proposed"
     },
     {
+      "id": "endoflife.date-11593",
+      "project": "endoflife.date",
+      "org": "endoflife-date",
+      "area": "Security compliance",
+      "title": "Added Suricata's release and end-of-life data to endoflife.date, sourced from OISF's EOL policy and ChangeLog",
+      "url": "https://github.com/endoflife-date/endoflife.date/pull/11593",
+      "date": "2026-11-12",
+      "status": "proposed"
+    },
+    {
+      "id": "mcp-scanner-308",
+      "project": "mcp-scanner",
+      "org": "cisco-ai-defense",
+      "area": "AI security",
+      "title": "Fixed Cisco mcp-scanner's credential-harvesting YARA rule so it detects RSA, OpenSSH, EC and DSA private key headers, with tests",
+      "url": "https://github.com/cisco-ai-defense/mcp-scanner/pull/308",
+      "date": "2026-11-12",
+      "status": "proposed"
+    },
+    {
       "id": "prowler-13332",
       "project": "prowler",
       "org": "prowler-cloud",
@@ -388,7 +408,7 @@
         "date": "2026-11-12",
         "title": "I read the EU's AI Act amendment to check one annex. Annex IV did not change",
         "subtitle": "My first merged fix to sbom-tools, and what Regulation (EU) 2026/1744 means for your technical file",
-        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+        "url": "https://www.linkedin.com/pulse/i-read-eus-ai-act-amendment-check-one-annex-iv-did-change-joseph-rbytf"
       },
       {
         "edition": 27,
