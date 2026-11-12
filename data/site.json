@@ -61,6 +61,26 @@
       "status": "proposed"
     },
     {
+      "id": "github-mcp-server-3825",
+      "project": "github-mcp-server",
+      "org": "github",
+      "area": "AI governance",
+      "title": "Corrected the GitHub MCP Server governance guide's description of organization controls for fine-grained personal access tokens against GitHub's own PAT policy documentation",
+      "url": "https://github.com/github/github-mcp-server/pull/3825",
+      "date": "2026-11-12",
+      "status": "proposed"
+    },
+    {
+      "id": "promptfoo-12396",
+      "project": "promptfoo",
+      "org": "promptfoo",
+      "area": "AI governance",
+      "title": "Added an India DPDP Act 2023 and DPDP Rules 2025 red-team preset to promptfoo, mapping seven obligations to its existing attack plugins (flagship F1)",
+      "url": "https://github.com/promptfoo/promptfoo/pull/12396",
+      "date": "2026-11-12",
+      "status": "proposed"
+    },
+    {
       "id": "prowler-13332",
       "project": "prowler",
       "org": "prowler-cloud",
@@ -189,7 +209,8 @@
       "title": "Fixed a proof-of-work parity bug in stack-diagram's gallery (server clamped to 32 bits while its own Python client refuses over 26); added a regression test, full suite green",
       "url": "https://github.com/caru-ini/stack-diagram/pull/8",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-12"
     },
     {
       "id": "trivy-11528",
