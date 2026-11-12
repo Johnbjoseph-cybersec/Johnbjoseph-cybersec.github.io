@@ -6684,7 +6684,7 @@ class GRCLabPro {
             <div class="nl-cta-ico">${this.nlCtaMailIcon()}</div>
             <div class="nl-cta-body">
                 <p class="nl-cta-title">GRC Made Simple Daily</p>
-                <p class="nl-cta-text">Get the weekday GRC brief: AI security, AI governance and post-quantum news in 5 minutes.</p>
+                <p class="nl-cta-text">Get the weekday GRC brief: AI security, AI governance, post-quantum and OT security news in 5 minutes.</p>
             </div>
             <a class="btn btn-primary btn-sm nl-cta-btn" href="https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/" target="_blank" rel="noopener">Subscribe on LinkedIn <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg></a>
             <button type="button" class="nl-cta-close" onclick="app.dismissNlCta()" aria-label="Dismiss newsletter prompt" title="Dismiss"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -6692,7 +6692,7 @@ class GRCLabPro {
     }
     nlCtaInline() {
         if (this.nlCtaDismissed()) return '';
-        return `<div class="nl-cta-inline" data-nl-cta>${this.nlCtaMailIcon().replace('width="20" height="20"', 'width="16" height="16"')}<span>Get the weekday GRC brief: AI security, AI governance and post-quantum news in 5 minutes. <a href="https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/" target="_blank" rel="noopener">Subscribe on LinkedIn</a></span></div>`;
+        return `<div class="nl-cta-inline" data-nl-cta>${this.nlCtaMailIcon().replace('width="20" height="20"', 'width="16" height="16"')}<span>Get the weekday GRC brief: AI security, AI governance, post-quantum and OT security news in 5 minutes. <a href="https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/" target="_blank" rel="noopener">Subscribe on LinkedIn</a></span></div>`;
     }
 
     toggleScenarioStep(scenarioId, stepIdx){
