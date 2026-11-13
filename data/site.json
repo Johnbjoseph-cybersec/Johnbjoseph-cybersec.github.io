@@ -91,6 +91,46 @@
       "status": "proposed"
     },
     {
+      "id": "trivy-11635",
+      "project": "trivy",
+      "org": "aquasecurity",
+      "area": "Post-quantum",
+      "title": "Added ML-KEM, SLH-DSA and HashSLH-DSA (FIPS 203/205) to Trivy's cryptographic asset catalog, as agreed with the maintainers",
+      "url": "https://github.com/aquasecurity/trivy/pull/11635",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "oscal-content-358",
+      "project": "oscal-content",
+      "org": "usnistgov",
+      "area": "AI governance",
+      "title": "Fixed the risk reference in NIST's IFA POA&M example (bug John reported in #356)",
+      "url": "https://github.com/usnistgov/oscal-content/pull/358",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "bot-hq-1",
+      "project": "bot-hq",
+      "org": "nickvasilescu",
+      "area": "AI security",
+      "title": "Fixed a crash: a malformed session cookie stopped the Bot HQ agent server (now treated as signed out)",
+      "url": "https://github.com/nickvasilescu/bot-hq/pull/1",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "oc-137",
+      "project": "oc",
+      "org": "only-cli",
+      "area": "AI security",
+      "title": "Fixed site-verb lookup in the oc AI-agent web CLI so inherited object names get the proper usage message, with a test",
+      "url": "https://github.com/only-cli/oc/pull/137",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
       "id": "claude-code-templates-1521",
       "project": "claude-code-templates",
       "org": "davila7",
@@ -599,11 +639,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 333050946492,
-    "sessions": 11980,
-    "messages": 1974675,
-    "avg_30d": 5240843145,
-    "as_of": "2026-11-13 15:38 IST",
+    "tokens": 333738047500,
+    "sessions": 12037,
+    "messages": 1982078,
+    "avg_30d": 5246806830,
+    "as_of": "2026-11-13 17:56 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "youtube": {
