@@ -71,6 +71,26 @@
       "status": "proposed"
     },
     {
+      "id": "nist-sp800-82r4-comment",
+      "project": "NIST SP 800-82 Rev. 4",
+      "org": "NIST",
+      "area": "OT security",
+      "title": "Submitted 12 public comments on the initial public draft of NIST SP 800-82 Rev. 4 (OT security), with an OSCAL OT overlay",
+      "url": "https://csrc.nist.gov/pubs/sp/800/82/r4/ipd",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "inspect_ai-6545",
+      "project": "inspect_ai",
+      "org": "UKGovernmentBEIS",
+      "area": "AI governance",
+      "title": "Listed John's inspect-oscal (on PyPI) in the UK AI Security Institute's Inspect extensions catalogue: eval logs to OSCAL assessment-results mapped to NIST AI RMF",
+      "url": "https://github.com/UKGovernmentBEIS/inspect_ai/pull/6545",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
       "id": "claude-code-templates-1521",
       "project": "claude-code-templates",
       "org": "davila7",
@@ -579,11 +599,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 89595357435,
-    "sessions": 2997,
-    "messages": 484039,
-    "avg_30d": -2543538918,
-    "as_of": "2026-11-13 14:00 IST",
+    "tokens": 333050946492,
+    "sessions": 11980,
+    "messages": 1974675,
+    "avg_30d": 5240843145,
+    "as_of": "2026-11-13 15:38 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "youtube": {
