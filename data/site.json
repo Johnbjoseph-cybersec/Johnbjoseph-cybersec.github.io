@@ -517,9 +517,9 @@
       {
         "edition": 29,
         "date": "2026-11-13",
-        "title": "Microsoft moves the fix for a Windows Paint flaw to a new Store build",
-        "subtitle": "Your patch report may count Paint as fixed when it isn't. Plus 15 more stories from GRC, AI security and privacy",
-        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+        "title": "Your privacy policy is not a notice, and a ticked box is not proof of consent",
+        "subtitle": "What India's DPDP Rules ask of a notice, how to prove consent, and why withdrawal must be as easy as giving it",
+        "url": "https://www.linkedin.com/pulse/your-privacy-policy-notice-ticked-box-proof-consent-joseph-vxxbc"
       },
       {
         "edition": 28,
@@ -559,11 +559,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 87841676355,
-    "sessions": 2885,
-    "messages": 467250,
-    "avg_30d": -2570141230,
-    "as_of": "2026-11-13 08:00 IST",
+    "tokens": 88180232271,
+    "sessions": 2919,
+    "messages": 471283,
+    "avg_30d": -2559964767,
+    "as_of": "2026-11-13 10:00 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "youtube": {
