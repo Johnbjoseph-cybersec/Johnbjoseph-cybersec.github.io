@@ -31,6 +31,16 @@
   },
   "contributions": [
     {
+      "id": "wstg-1680",
+      "project": "wstg",
+      "org": "OWASP",
+      "area": "Post-quantum cryptography",
+      "title": "Corrected the OWASP Web Security Testing Guide's post-quantum certificate advice against the CA/Browser Forum Baseline Requirements",
+      "url": "https://github.com/OWASP/wstg/pull/1680",
+      "date": "2026-11-14",
+      "status": "proposed"
+    },
+    {
       "id": "security-study-plan-42",
       "project": "security-study-plan",
       "org": "jassics",
@@ -88,7 +98,8 @@
       "title": "Listed John's inspect-oscal (on PyPI) in the UK AI Security Institute's Inspect extensions catalogue: eval logs to OSCAL assessment-results mapped to NIST AI RMF",
       "url": "https://github.com/UKGovernmentBEIS/inspect_ai/pull/6545",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-13"
     },
     {
       "id": "trivy-11635",
@@ -819,11 +830,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 334936341043,
-    "sessions": 12129,
-    "messages": 1994534,
-    "avg_30d": 5268106803,
-    "as_of": "2026-11-13 22:02 IST",
+    "tokens": 335499455976,
+    "sessions": 12151,
+    "messages": 1998830,
+    "avg_30d": 5266293542,
+    "as_of": "2026-11-14 00:05 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -881,7 +892,7 @@
           "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v0.0.7"
         },
         "last_commit": "2026-11-13",
-        "as_of": "2026-11-13 23:13 IST",
+        "as_of": "2026-11-14 01:15 IST",
         "source": "GitHub API"
       }
     }
@@ -906,5 +917,5 @@
       }
     ]
   },
-  "updated": "2026-11-13"
+  "updated": "2026-11-14"
 }
