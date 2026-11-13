@@ -131,6 +131,146 @@
       "status": "proposed"
     },
     {
+      "id": "CheatSheetSeries-2963",
+      "project": "CheatSheetSeries",
+      "org": "OWASP",
+      "area": "Post-quantum",
+      "title": "TLS Cheat Sheet: post-quantum X25519MLKEM768 configs need OpenSSL 3.5+; reproduced the failure on OpenSSL 3.0 for NGINX, Apache and openssl.cnf",
+      "url": "https://github.com/OWASP/CheatSheetSeries/pull/2963",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "agent-governance-toolkit-4541-ans",
+      "project": "agent-governance-toolkit",
+      "org": "microsoft",
+      "area": "AI governance",
+      "title": "Answered how to bind an exported EU AI Act Annex IV evidence report to its evidence; found the per-source digest is never written",
+      "url": "https://github.com/microsoft/agent-governance-toolkit/discussions/4541#discussioncomment-19590526",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "agent-governance-toolkit-4564-ans",
+      "project": "agent-governance-toolkit",
+      "org": "microsoft",
+      "area": "AI governance",
+      "title": "Answered where downstream relying-party review claims belong relative to AGT compliance receipts (in-toto + SCITT)",
+      "url": "https://github.com/microsoft/agent-governance-toolkit/discussions/4564#discussioncomment-19590528",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "go-chain-18-ans",
+      "project": "go-chain",
+      "org": "bams-repo",
+      "area": "Post-quantum",
+      "title": "Answered how to add separate witness data and SLH-DSA post-quantum signatures to go-chain, with the consensus limits that block them today",
+      "url": "https://github.com/bams-repo/go-chain/discussions/18#discussioncomment-19590524",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "google_workspace_mcp-1390",
+      "project": "google_workspace_mcp",
+      "org": "taylorwilsdon",
+      "area": "AI security",
+      "title": "Closed a credential-file gap in the Google Workspace MCP server: Docker registry credentials (.docker/config.json) were never blocked from file reads",
+      "url": "https://github.com/taylorwilsdon/google_workspace_mcp/pull/1390",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "fastmcp-526",
+      "project": "fastmcp",
+      "org": "punkpeye",
+      "area": "AI security",
+      "title": "Capped the EdgeFastMCP request body at 4 MiB so an unauthenticated caller cannot make the MCP server buffer an unbounded body",
+      "url": "https://github.com/punkpeye/fastmcp/pull/526",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "crosswalk-378",
+      "project": "crosswalk",
+      "org": "GenAI-Security-Project",
+      "area": "AI governance",
+      "title": "Proposed adding India's DPDP Act, DPDP Rules 2025 and RBI FREE-AI to the OWASP GenAI Crosswalk (first APAC jurisdiction)",
+      "url": "https://github.com/GenAI-Security-Project/crosswalk/issues/378",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "sonar-cryptography-567",
+      "project": "sonar-cryptography",
+      "org": "cbomkit",
+      "area": "Post-quantum",
+      "title": "Proposed PyCryptodome detection rules for the CBOMkit sonar-cryptography scanner, so Python code using it gets a full cryptographic inventory",
+      "url": "https://github.com/cbomkit/sonar-cryptography/issues/567",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "cdxgen-4793",
+      "project": "cdxgen",
+      "org": "cdxgen",
+      "area": "Post-quantum",
+      "title": "Found and fixed (fix branch linked) a cdxgen CBOM bug: DSA signature names took their digest family, so the post-quantum risk check skipped them",
+      "url": "https://github.com/cdxgen/cdxgen/issues/4793",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "cdxgen-4794",
+      "project": "cdxgen",
+      "org": "cdxgen",
+      "area": "Post-quantum",
+      "title": "Found and fixed (fix branch linked) a cdxgen CBOM bug: OpenSSL CCM8 TLS cipher suites were recorded as AES-CBC",
+      "url": "https://github.com/cdxgen/cdxgen/issues/4794",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "conpot-686",
+      "project": "conpot",
+      "org": "mushorg",
+      "area": "OT security",
+      "title": "Made the Conpot ICS honeypot answer malformed Modbus function 43 requests as the Modbus specification requires, so one bad request no longer reveals the honeypot",
+      "url": "https://github.com/mushorg/conpot/pull/686",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "icsnpp-modbus-27",
+      "project": "icsnpp-modbus",
+      "org": "cisagov",
+      "area": "OT security",
+      "title": "Fixed Modbus Read Device Identification logging in CISA's Zeek package used by Malcolm: wrong conformity level and wrong object names",
+      "url": "https://github.com/cisagov/icsnpp-modbus/pull/27",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "mastg-4039",
+      "project": "mastg",
+      "org": "OWASP",
+      "area": "Post-quantum",
+      "title": "Reported that the OWASP MASTG says FIPS 203 specifies CRYSTALS-Kyber; it specifies ML-KEM (fix branch ready)",
+      "url": "https://github.com/OWASP/mastg/issues/4039",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "specification-1214",
+      "project": "specification",
+      "org": "CycloneDX",
+      "area": "Post-quantum",
+      "title": "Proposed adding composite ML-DSA (RFC 10073) to the CycloneDX cryptography registry used by CBOM tools",
+      "url": "https://github.com/CycloneDX/specification/issues/1214",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
       "id": "claude-code-templates-1521",
       "project": "claude-code-templates",
       "org": "davila7",
@@ -639,11 +779,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 333738047500,
-    "sessions": 12037,
-    "messages": 1982078,
-    "avg_30d": 5246806830,
-    "as_of": "2026-11-13 17:56 IST",
+    "tokens": 333931171673,
+    "sessions": 12049,
+    "messages": 1983680,
+    "avg_30d": 5233157416,
+    "as_of": "2026-11-13 18:28 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "youtube": {
