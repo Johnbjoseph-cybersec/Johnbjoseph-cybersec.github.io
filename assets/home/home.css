@@ -919,3 +919,32 @@ body::after { display: none; }                     /* no film grain */
 @media (max-width: 640px) { .built__grid, .dl__list { grid-template-columns: 1fr; } .built__ml { grid-column: auto; } }
 .built__ml p.built__asof, .built__tmpl p.tile__src { font: 400 11.5px/1.4 var(--mono); color: var(--dim); }
 @media (max-width: 1020px) and (min-width: 641px) { .built__tmpl { order: 5; } }
+/* #projects: John's own open-source projects (cards rendered by Dude between dude:projects markers). Calm: fade-in only, no tilt. */
+.proj__list { display: grid; gap: 14px; }
+.proj { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 28px; padding: 22px; background: linear-gradient(160deg, var(--s2), var(--s1)); }
+.proj:hover { transform: none; }
+.proj__media { display: grid; gap: 12px; align-content: start; min-width: 0; }
+.proj__main, .proj__shot { display: block; border-radius: 12px; overflow: hidden; border: 1px solid var(--line-2); background: #f3f3f0; }
+.proj__img { display: block; width: 100%; height: auto; }
+.proj__strip { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; }
+.proj__shot .proj__img { aspect-ratio: 16 / 9; object-fit: cover; object-position: top; }
+.proj__demo { margin: 0; min-width: 0; }
+.proj__demo video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 12px; border: 1px solid var(--line-2); background: var(--bg); }
+.proj__demo figcaption { margin-top: 7px; font: 400 11px/1.3 var(--mono); color: var(--dim); }
+.proj__body { display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 4px 4px 0 0; }
+.proj__body h3 { font: 600 30px/1.1 var(--font); letter-spacing: -.02em; margin: 6px 0 0; }
+.proj__tag { color: var(--muted); font-size: 16px; line-height: 1.55; margin: 0; }
+.proj__figs { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 20px; margin-top: 6px; padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.proj__fig b { display: block; font: 600 26px/1 var(--font); letter-spacing: -.02em; color: var(--accent); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.proj__fig b a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(254, 189, 89, .35); }
+.proj__fig b a:hover { border-bottom-color: var(--accent); }
+.proj__fig span { display: block; margin-top: 7px; font: 500 11px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--dim); }
+.proj__fig small { display: block; margin-top: 4px; font: 400 12px/1.3 var(--mono); color: var(--muted); }
+.proj__src { font: 400 11.5px/1.4 var(--mono); color: var(--dim); margin: 0; overflow-wrap: anywhere; }
+.proj__cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.proj__credit { margin: auto 0 0; padding-top: 6px; font: 400 12px/1.3 var(--mono); color: var(--dim); }
+.proj__none { color: var(--muted); }
+@media (max-width: 1020px) { .proj { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .proj { padding: 16px; gap: 20px; } .proj__strip { grid-template-columns: 1fr; } .proj__body h3 { font-size: 26px; } }
+.proj__fig b, .proj__fig small { white-space: nowrap; }
+@media (max-width: 640px) { .proj__fig b { font-size: 22px; } .proj__figs { gap: 16px 14px; } }

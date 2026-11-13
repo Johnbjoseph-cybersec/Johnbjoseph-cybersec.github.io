@@ -826,6 +826,66 @@
     "as_of": "2026-11-13 20:01 IST",
     "source": "My token ledger, synced every 2 hours"
   },
+  "projects": [
+    {
+      "slug": "rewindagents",
+      "name": "rewindagents",
+      "repo": "Johnbjoseph-cybersec/rewindagents",
+      "repo_url": "https://github.com/Johnbjoseph-cybersec/rewindagents",
+      "site": "https://rewindagents.com",
+      "tagline": "Rewind to any step of an AI coding agent's session, fork it for another agent, compare the runs.",
+      "facts": [
+        "Apache-2.0",
+        "Python 3.10+, standard library only",
+        "Not on PyPI yet",
+        "Not Windows yet"
+      ],
+      "credit": "made by John B Joseph",
+      "media": [
+        {
+          "role": "main",
+          "type": "image",
+          "src": "assets/home/img/projects/rewindagents/main-1200.webp",
+          "srcset": "assets/home/img/projects/rewindagents/main-1200.webp 1200w, assets/home/img/projects/rewindagents/main-640.webp 640w",
+          "w": 1200,
+          "h": 672,
+          "alt": "The rewindagents home page: the headline 'Rewind to any step. Let another agent take it from there.' beside a terminal running rewindagents fork 2 and compare --check, where the first run fails and the fork passes."
+        },
+        {
+          "role": "demo",
+          "type": "video",
+          "src": "assets/home/img/projects/rewindagents/demo-960.mp4",
+          "poster": "assets/home/img/projects/rewindagents/demo-poster-960.webp",
+          "w": 960,
+          "h": 540,
+          "alt": "18-second screen recording: rewindagents fork 2 starts a second attempt from step 2, compare --check shows the first run failing and the fork passing, then compare --diff shows the one-line change."
+        },
+        {
+          "role": "shot",
+          "type": "image",
+          "src": "assets/home/img/projects/rewindagents/shot-800.webp",
+          "srcset": "assets/home/img/projects/rewindagents/shot-800.webp 800w, assets/home/img/projects/rewindagents/shot-400.webp 400w",
+          "w": 800,
+          "h": 516,
+          "alt": "The Fork and compare page of rewindagents.com: the commands to fork a recorded step and compare the runs as a git diff."
+        }
+      ],
+      "live": {
+        "stars": 0,
+        "open_issues": 0,
+        "language": "Python",
+        "release": {
+          "tag": "v0.0.7",
+          "date": "2026-11-13",
+          "prerelease": true,
+          "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v0.0.7"
+        },
+        "last_commit": "2026-11-13",
+        "as_of": "2026-11-13 21:45 IST",
+        "source": "GitHub API"
+      }
+    }
+  ],
   "youtube": {
     "url": "https://www.youtube.com/@GRCMadeSimple",
     "latest": [
