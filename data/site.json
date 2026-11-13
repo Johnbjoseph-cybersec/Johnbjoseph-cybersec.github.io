@@ -41,6 +41,16 @@
       "status": "proposed"
     },
     {
+      "id": "uncut-8",
+      "project": "uncut",
+      "org": "Balanov",
+      "area": "Developer tooling",
+      "title": "Follow-up to the uncut cancellation fix: probe the process group before signalling, so a cancel that races with Wait never hits a recycled pid; two new tests",
+      "url": "https://github.com/Balanov/uncut/pull/8",
+      "date": "2026-11-14",
+      "status": "proposed"
+    },
+    {
       "id": "security-study-plan-42",
       "project": "security-study-plan",
       "org": "jassics",
@@ -229,7 +239,8 @@
       "title": "Found and fixed (fix branch linked) a cdxgen CBOM bug: DSA signature names took their digest family, so the post-quantum risk check skipped them",
       "url": "https://github.com/cdxgen/cdxgen/issues/4793",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "accepted",
+      "note": "Closed as completed by the maintainer; fixed upstream in cdxgen #4799 (merged 2026-11-13)."
     },
     {
       "id": "cdxgen-4794",
@@ -239,7 +250,8 @@
       "title": "Found and fixed (fix branch linked) a cdxgen CBOM bug: OpenSSL CCM8 TLS cipher suites were recorded as AES-CBC",
       "url": "https://github.com/cdxgen/cdxgen/issues/4794",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "accepted",
+      "note": "Closed as completed by the maintainer; fixed upstream in cdxgen #4799 (merged 2026-11-13)."
     },
     {
       "id": "conpot-686",
@@ -601,8 +613,9 @@
       "title": "Fixed a hang in uncut where cancelling a running tool command leaked the shell's child processes (co-authored with Tausif Ahmed); regression test proves 20s hang -> 0.5s",
       "url": "https://github.com/Balanov/uncut/pull/6",
       "date": "2026-11-11",
-      "status": "proposed",
-      "coauthor": "tausif-ahmed-guardian"
+      "status": "merged",
+      "coauthor": "tausif-ahmed-guardian",
+      "note": "The maintainer merged the code verbatim as uncut #7 (2026-11-13), because the branch lived in a fork."
     },
     {
       "id": "ai-governance-framework-449",
@@ -830,11 +843,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 336022422891,
-    "sessions": 12187,
-    "messages": 2005014,
-    "avg_30d": 5304211186,
-    "as_of": "2026-11-14 02:05 IST",
+    "tokens": 336849853047,
+    "sessions": 12212,
+    "messages": 2011141,
+    "avg_30d": 5316883480,
+    "as_of": "2026-11-14 04:03 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -892,7 +905,7 @@
           "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v0.0.7"
         },
         "last_commit": "2026-11-13",
-        "as_of": "2026-11-14 03:15 IST",
+        "as_of": "2026-11-14 04:32 IST",
         "source": "GitHub API"
       }
     }
