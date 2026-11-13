@@ -512,8 +512,15 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 17,
+    "published": 18,
     "latest": [
+      {
+        "edition": 29,
+        "date": "2026-11-13",
+        "title": "Microsoft moves the fix for a Windows Paint flaw to a new Store build",
+        "subtitle": "Your patch report may count Paint as fixed when it isn't. Plus 15 more stories from GRC, AI security and privacy",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 28,
         "date": "2026-11-12",
@@ -548,22 +555,15 @@
         "title": "Singapore warns AI agent users they may be liable for what agents do",
         "subtitle": "A chat instruction isn't a control. Plus 16 more stories from GRC, AI security and privacy",
         "url": "https://www.linkedin.com/pulse/singapore-warns-ai-agent-users-may-liable-what-agents-joseph-socwc"
-      },
-      {
-        "edition": 25,
-        "date": "2026-11-07",
-        "title": "UK plans police facial recognition law, a watchdog and a code for shops",
-        "subtitle": "Nothing is law yet, and the private-sector duty already exists. Plus 26 more stories from GRC, AI security and privacy",
-        "url": "https://www.linkedin.com/pulse/uk-plans-police-facial-recognition-law-watchdog-code-shops-joseph-5c7bc"
       }
     ]
   },
   "mindledger": {
-    "tokens": 87198884874,
-    "sessions": 2834,
-    "messages": 460668,
-    "avg_30d": -2590436637,
-    "as_of": "2026-11-13 06:00 IST",
+    "tokens": 87841676355,
+    "sessions": 2885,
+    "messages": 467250,
+    "avg_30d": -2570141230,
+    "as_of": "2026-11-13 08:00 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "youtube": {
