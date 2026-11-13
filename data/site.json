@@ -51,6 +51,26 @@
       "status": "proposed"
     },
     {
+      "id": "ai-engineering-from-scratch-794",
+      "project": "ai-engineering-from-scratch",
+      "org": "rohitg00",
+      "area": "AI governance",
+      "title": "Corrected the EU AI Act high-risk dates in AI Engineering from Scratch's regulation lesson against Regulation (EU) 2026/1744",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch/pull/794",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "OSCAL-2298-tests",
+      "project": "OSCAL",
+      "org": "usnistgov",
+      "area": "AI governance",
+      "title": "Contributed constraint tests and two risk-response checks to NIST OSCAL PR #2298 (fixes #2296, raised by John), offered co-authorship by the PR author",
+      "url": "https://github.com/usnistgov/OSCAL/pull/2298#issuecomment-6848375068",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
       "id": "claude-code-templates-1521",
       "project": "claude-code-templates",
       "org": "davila7",
@@ -559,11 +579,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 88638471475,
-    "sessions": 2967,
-    "messages": 476395,
-    "avg_30d": -2581346156,
-    "as_of": "2026-11-13 12:00 IST",
+    "tokens": 89595357435,
+    "sessions": 2997,
+    "messages": 484039,
+    "avg_30d": -2543538918,
+    "as_of": "2026-11-13 14:00 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "youtube": {
