@@ -271,6 +271,46 @@
       "status": "proposed"
     },
     {
+      "id": "zeek-slmp",
+      "project": "zeek-slmp",
+      "org": "Johnbjoseph-cybersec",
+      "area": "OT security",
+      "title": "Published an open-source Zeek analyzer for SLMP (Mitsubishi MELSEC) 3E/4E frames, the first public parser for that traffic",
+      "url": "https://github.com/Johnbjoseph-cybersec/zeek-slmp",
+      "date": "2026-11-13",
+      "status": "published"
+    },
+    {
+      "id": "packages-285",
+      "project": "packages",
+      "org": "zeek",
+      "area": "OT security",
+      "title": "Listed the SLMP analyzer in the Zeek package index",
+      "url": "https://github.com/zeek/packages/pull/285",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "Malcolm-1302",
+      "project": "Malcolm",
+      "org": "cisagov",
+      "area": "OT security",
+      "title": "Proposed adding MELSEC SLMP parsing to CISA Malcolm",
+      "url": "https://github.com/cisagov/Malcolm/discussions/1302",
+      "date": "2026-11-13",
+      "status": "proposed"
+    },
+    {
+      "id": "attack-ics-T0873",
+      "project": "ATT&CK for ICS",
+      "org": "MITRE",
+      "area": "OT security",
+      "title": "Submitted a procedure example for T0873 Project File Infection (CyberAv3ngers, CISA AA26-097A) and reported a broken campaign link",
+      "url": "https://attack.mitre.org/techniques/T0873/",
+      "date": "2026-11-13",
+      "status": "submitted by email"
+    },
+    {
       "id": "claude-code-templates-1521",
       "project": "claude-code-templates",
       "org": "davila7",
@@ -779,11 +819,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 333931171673,
-    "sessions": 12049,
-    "messages": 1983680,
-    "avg_30d": 5233157416,
-    "as_of": "2026-11-13 18:28 IST",
+    "tokens": 334290701915,
+    "sessions": 12078,
+    "messages": 1988282,
+    "avg_30d": 5247443773,
+    "as_of": "2026-11-13 20:01 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "youtube": {
