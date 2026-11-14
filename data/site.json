@@ -48,7 +48,8 @@
       "title": "Follow-up to the uncut cancellation fix: probe the process group before signalling, so a cancel that races with Wait never hits a recycled pid; two new tests",
       "url": "https://github.com/Balanov/uncut/pull/8",
       "date": "2026-11-14",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-14"
     },
     {
       "id": "pytm-394",
@@ -853,11 +854,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 339108933787,
-    "sessions": 12371,
-    "messages": 2032385,
-    "avg_30d": 5231361653,
-    "as_of": "2026-11-14 18:02 IST",
+    "tokens": 339417619089,
+    "sessions": 12397,
+    "messages": 2035123,
+    "avg_30d": 5241463362,
+    "as_of": "2026-11-14 20:01 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -915,7 +916,7 @@
           "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v0.0.7"
         },
         "last_commit": "2026-11-13",
-        "as_of": "2026-11-14 19:34 IST",
+        "as_of": "2026-11-14 21:33 IST",
         "source": "GitHub API"
       }
     }
