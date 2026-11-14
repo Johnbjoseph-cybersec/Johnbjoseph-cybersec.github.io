@@ -35,25 +35,28 @@
       var list = (d.contributions || []).slice(); if (!list.length) return;
       var box = document.getElementById('ledger');
       function isWon(c) { return /merged|accepted/.test((c.status || '').toLowerCase()); }
-      list.sort(function (a, b) { return (isWon(b) - isWon(a)) || (a.date < b.date ? 1 : a.date > b.date ? -1 : 0); });
+      // Newest first everywhere (John, 2026-11-14: a won-first default hid every new proposal, so the page looked stale).
+      list.sort(function (a, b) { return (a.date < b.date ? 1 : a.date > b.date ? -1 : 0) || (isWon(b) - isWon(a)); });
       var won = list.filter(isWon), open = list.filter(function (c) { return !isWon(c); });
-      var projects = {}; list.forEach(function (c) { projects[c.project] = 1; });
+      // projects = display names (wall ticker); nProj counts org/project so it agrees with the grouped rows and the static foot
+      var projects = {}, keys = {}; list.forEach(function (c) { projects[c.project] = 1; keys[c.org + '/' + c.project] = 1; });
+      var nProj = Object.keys(keys).length;
       safe('scoreboard', function () {
         var n1 = document.getElementById('openN1'), n2 = document.getElementById('openN2'), n3 = document.getElementById('openN3'), bar = document.getElementById('openBar');
-        [[n1, list.length], [n2, won.length], [n3, Object.keys(projects).length]].forEach(function (x) { if (x[0]) { x[0].textContent = String(x[1]); x[0].setAttribute('data-value', x[1]); } });
+        [[n1, list.length], [n2, won.length], [n3, nProj]].forEach(function (x) { if (x[0]) { x[0].textContent = String(x[1]); x[0].setAttribute('data-value', x[1]); } });
         if (bar) bar.style.setProperty('--p', (list.length ? won.length / list.length : 0).toFixed(3));
         var wall = document.getElementById('openWall'); if (wall) ticker(wall, Object.keys(projects), 3);
       });
-      var LIMIT = 5, view = won.length ? 'won' : 'all', expanded = false;
+      var LIMIT = 5, view = 'all', expanded = false;
       var sets = { won: won, open: open, all: list };
       var bar = el('div', 'ledger__bar');
       var sum = el('p', 'ledger__sum');
-      [[list.length, 'contributions'], [won.length, 'merged or accepted'], [Object.keys(projects).length, 'projects']].forEach(function (x, i) {
+      [[list.length, 'contributions'], [won.length, 'merged or accepted'], [nProj, 'projects']].forEach(function (x, i) {
         if (i) sum.appendChild(el('span', 'ledger__dot', '\u00b7'));
         var b = el('b', null, String(x[0])); sum.appendChild(b); sum.appendChild(document.createTextNode(' ' + x[1]));
       });
       var tabs = el('div', 'ledger__tabs'); tabs.setAttribute('role', 'tablist');
-      [['won', 'Merged & accepted'], ['open', 'In review'], ['all', 'All']].forEach(function (t) {
+      [['all', 'Latest'], ['won', 'Merged & accepted'], ['open', 'In review']].forEach(function (t) {
         var b = el('button', 'ledger__tab', t[1] + ' (' + sets[t[0]].length + ')'); b.type = 'button';
         b.setAttribute('role', 'tab'); b.setAttribute('data-view', t[0]);
         b.addEventListener('click', function () { view = t[0]; expanded = false; draw(); });
