@@ -51,6 +51,16 @@
       "status": "proposed"
     },
     {
+      "id": "pytm-394",
+      "project": "pytm",
+      "org": "OWASP",
+      "area": "AI security threat modeling",
+      "title": "Add LLM10: personal data retained by a third-party LLM provider (new pytm threat + 3 tests; makes LLM.retainsUserData produce a finding)",
+      "url": "https://github.com/OWASP/pytm/pull/394",
+      "date": "2026-11-14",
+      "status": "proposed"
+    },
+    {
       "id": "security-study-plan-42",
       "project": "security-study-plan",
       "org": "jassics",
@@ -843,11 +853,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 338340571123,
-    "sessions": 12320,
-    "messages": 2025934,
-    "avg_30d": 5265571765,
-    "as_of": "2026-11-14 14:06 IST",
+    "tokens": 338705515668,
+    "sessions": 12333,
+    "messages": 2028682,
+    "avg_30d": 5236321183,
+    "as_of": "2026-11-14 16:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -905,7 +915,7 @@
           "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v0.0.7"
         },
         "last_commit": "2026-11-13",
-        "as_of": "2026-11-14 15:34 IST",
+        "as_of": "2026-11-14 17:34 IST",
         "source": "GitHub API"
       }
     }
