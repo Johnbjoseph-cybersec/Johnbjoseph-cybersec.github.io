@@ -796,8 +796,15 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 18,
+    "published": 19,
     "latest": [
+      {
+        "edition": 30,
+        "date": "2026-11-14",
+        "title": "A post-quantum key file names its own strength. My fix teaches one open-source scanner to read it",
+        "subtitle": "My first code contribution to qrp-mcp, merged by Stanimir Tenev, and what it means for your post-quantum inventory",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 29,
         "date": "2026-11-13",
@@ -832,22 +839,15 @@
         "title": "FINRA fines Webull USD 4.2 million after landscape photos passed as ID",
         "subtitle": "When your vendor says no, who can still say yes? Plus 20 more stories from GRC, AI security and privacy",
         "url": "https://www.linkedin.com/pulse/finra-fines-webull-usd-42-million-after-landscape-photos-joseph-lk0cc"
-      },
-      {
-        "edition": 26,
-        "date": "2026-11-08",
-        "title": "Singapore warns AI agent users they may be liable for what agents do",
-        "subtitle": "A chat instruction isn't a control. Plus 16 more stories from GRC, AI security and privacy",
-        "url": "https://www.linkedin.com/pulse/singapore-warns-ai-agent-users-may-liable-what-agents-joseph-socwc"
       }
     ]
   },
   "mindledger": {
-    "tokens": 337432611741,
-    "sessions": 12232,
-    "messages": 2015741,
-    "avg_30d": 5313020033,
-    "as_of": "2026-11-14 06:02 IST",
+    "tokens": 337579268789,
+    "sessions": 12268,
+    "messages": 2018064,
+    "avg_30d": 5295980759,
+    "as_of": "2026-11-14 08:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -905,7 +905,7 @@
           "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v0.0.7"
         },
         "last_commit": "2026-11-13",
-        "as_of": "2026-11-14 07:16 IST",
+        "as_of": "2026-11-14 09:33 IST",
         "source": "GitHub API"
       }
     }
