@@ -59,7 +59,8 @@
       "title": "Add LLM10: personal data retained by a third-party LLM provider (new pytm threat + 3 tests; makes LLM.retainsUserData produce a finding)",
       "url": "https://github.com/OWASP/pytm/pull/394",
       "date": "2026-11-14",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-14"
     },
     {
       "id": "security-study-plan-42",
@@ -854,11 +855,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 339417619089,
-    "sessions": 12397,
-    "messages": 2035123,
-    "avg_30d": 5241463362,
-    "as_of": "2026-11-14 20:01 IST",
+    "tokens": 339484680303,
+    "sessions": 12421,
+    "messages": 2036128,
+    "avg_30d": 5243632409,
+    "as_of": "2026-11-14 22:01 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -916,7 +917,7 @@
           "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v0.0.7"
         },
         "last_commit": "2026-11-13",
-        "as_of": "2026-11-14 21:35 IST",
+        "as_of": "2026-11-14 23:02 IST",
         "source": "GitHub API"
       }
     }
