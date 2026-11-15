@@ -31,6 +31,16 @@
   },
   "contributions": [
     {
+      "id": "AI-Infra-Guard-768",
+      "project": "AI-Infra-Guard",
+      "org": "Tencent",
+      "area": "AI security",
+      "title": "Added MCP Inspector detection and its critical CVE-2025-49596 rule to Tencent's AI-Infra-Guard scanner",
+      "url": "https://github.com/Tencent/AI-Infra-Guard/pull/768",
+      "date": "2026-11-16",
+      "status": "proposed"
+    },
+    {
       "id": "semgrep-rules-4146",
       "project": "semgrep-rules",
       "org": "semgrep",
@@ -988,7 +998,7 @@
           "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v0.0.7"
         },
         "last_commit": "2026-11-13",
-        "as_of": "2026-11-16 02:19 IST",
+        "as_of": "2026-11-16 02:56 IST",
         "source": "GitHub API"
       }
     }
