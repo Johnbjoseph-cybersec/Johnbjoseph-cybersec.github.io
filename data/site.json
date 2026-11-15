@@ -171,7 +171,8 @@
       "title": "TLS Cheat Sheet: post-quantum X25519MLKEM768 configs need OpenSSL 3.5+; reproduced the failure on OpenSSL 3.0 for NGINX, Apache and openssl.cnf",
       "url": "https://github.com/OWASP/CheatSheetSeries/pull/2963",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-15"
     },
     {
       "id": "agent-governance-toolkit-4541-ans",
@@ -917,7 +918,7 @@
           "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v0.0.7"
         },
         "last_commit": "2026-11-13",
-        "as_of": "2026-11-15 06:36 IST",
+        "as_of": "2026-11-15 07:01 IST",
         "source": "GitHub API"
       }
     }
