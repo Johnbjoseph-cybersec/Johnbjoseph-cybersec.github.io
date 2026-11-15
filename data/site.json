@@ -61,6 +61,46 @@
       "status": "proposed"
     },
     {
+      "id": "common-cloud-controls-1316",
+      "project": "common-cloud-controls",
+      "org": "finos",
+      "area": "Cloud security controls",
+      "title": "Moved every NIST CSF mapping in FINOS Common Cloud Controls (13 catalogs, 38 entries) from CSF 1.1 to CSF 2.0 using NIST's official 1.1-to-2.0 crosswalk",
+      "url": "https://github.com/finos/common-cloud-controls/pull/1316",
+      "date": "2026-11-15",
+      "status": "proposed"
+    },
+    {
+      "id": "fprime-6395",
+      "project": "fprime",
+      "org": "nasa",
+      "area": "Space systems security",
+      "title": "Reported to NASA JPL F Prime that its CCSDS TM framer lets an out-of-range virtual channel ID silently overwrite the spacecraft ID in telemetry frames, and proposed a tested fix",
+      "url": "https://github.com/nasa/fprime/issues/6395",
+      "date": "2026-11-15",
+      "status": "proposed"
+    },
+    {
+      "id": "liboqs-2706",
+      "project": "liboqs",
+      "org": "open-quantum-safe",
+      "area": "Post-quantum cryptography",
+      "title": "Proposed a fix to restore NIST ACVP test coverage for 24 SLH-DSA (FIPS 205) pre-hash parameter sets in liboqs that had been running zero vectors while reporting green",
+      "url": "https://github.com/open-quantum-safe/liboqs/pull/2706",
+      "date": "2026-11-15",
+      "status": "proposed"
+    },
+    {
+      "id": "liboqs-2707",
+      "project": "liboqs",
+      "org": "open-quantum-safe",
+      "area": "Post-quantum cryptography",
+      "title": "Proposed a fix to liboqs's ACVP harness so external-interface SLH-DSA (FIPS 205) signature-verification vectors actually verify in builds without ML-DSA, instead of exiting 0 untested",
+      "url": "https://github.com/open-quantum-safe/liboqs/pull/2707",
+      "date": "2026-11-15",
+      "status": "proposed"
+    },
+    {
       "id": "wstg-1680",
       "project": "wstg",
       "org": "OWASP",
@@ -886,11 +926,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 339962781261,
-    "sessions": 12549,
-    "messages": 2044983,
-    "avg_30d": 5217135191,
-    "as_of": "2026-11-15 16:02 IST",
+    "tokens": 340276279625,
+    "sessions": 12586,
+    "messages": 2048476,
+    "avg_30d": 5227274844,
+    "as_of": "2026-11-15 18:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -948,7 +988,7 @@
           "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v0.0.7"
         },
         "last_commit": "2026-11-13",
-        "as_of": "2026-11-15 16:18 IST",
+        "as_of": "2026-11-15 18:09 IST",
         "source": "GitHub API"
       }
     }
