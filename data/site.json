@@ -809,8 +809,15 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 19,
+    "published": 20,
     "latest": [
+      {
+        "edition": 31,
+        "date": "2026-11-15",
+        "title": "FAA ground stop halts US flights for over four hours on 13 November",
+        "subtitle": "Officials see no sign of an attack so far, and that is exactly why your outage plan needs a holding line. Plus 19 more stories from AI security, privacy, OT and GRC",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 30,
         "date": "2026-11-14",
@@ -845,22 +852,15 @@
         "title": "Loading an AI model can run someone else's code. Three controls that cut the risk",
         "subtitle": "Pickle files, model names that move, and the asset register row that answers an incident in minutes",
         "url": "https://www.linkedin.com/pulse/loading-ai-model-can-run-someone-elses-code-three-controls-joseph-9trhc"
-      },
-      {
-        "edition": 10,
-        "date": "2026-11-09",
-        "title": "FINRA fines Webull USD 4.2 million after landscape photos passed as ID",
-        "subtitle": "When your vendor says no, who can still say yes? Plus 20 more stories from GRC, AI security and privacy",
-        "url": "https://www.linkedin.com/pulse/finra-fines-webull-usd-42-million-after-landscape-photos-joseph-lk0cc"
       }
     ]
   },
   "mindledger": {
-    "tokens": 339666605374,
-    "sessions": 12466,
-    "messages": 2039396,
-    "avg_30d": 5269821288,
-    "as_of": "2026-11-15 06:01 IST",
+    "tokens": 339746799857,
+    "sessions": 12497,
+    "messages": 2041101,
+    "avg_30d": 5258177856,
+    "as_of": "2026-11-15 08:01 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -918,7 +918,7 @@
           "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v0.0.7"
         },
         "last_commit": "2026-11-13",
-        "as_of": "2026-11-15 07:01 IST",
+        "as_of": "2026-11-15 08:37 IST",
         "source": "GitHub API"
       }
     }
