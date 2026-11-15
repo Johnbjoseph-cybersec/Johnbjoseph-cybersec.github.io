@@ -816,7 +816,7 @@
         "date": "2026-11-15",
         "title": "FAA ground stop halts US flights for over four hours on 13 November",
         "subtitle": "Officials see no sign of an attack so far, and that is exactly why your outage plan needs a holding line. Plus 19 more stories from AI security, privacy, OT and GRC",
-        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+        "url": "https://www.linkedin.com/pulse/faa-ground-stop-halts-us-flights-over-four-hours-13-november-joseph-djmac"
       },
       {
         "edition": 30,
@@ -856,11 +856,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 339746799857,
-    "sessions": 12497,
-    "messages": 2041101,
-    "avg_30d": 5258177856,
-    "as_of": "2026-11-15 08:01 IST",
+    "tokens": 339817093213,
+    "sessions": 12519,
+    "messages": 2042856,
+    "avg_30d": 5226627828,
+    "as_of": "2026-11-15 14:01 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -918,7 +918,7 @@
           "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v0.0.7"
         },
         "last_commit": "2026-11-13",
-        "as_of": "2026-11-15 08:37 IST",
+        "as_of": "2026-11-15 14:18 IST",
         "source": "GitHub API"
       }
     }
