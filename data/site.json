@@ -31,6 +31,36 @@
   },
   "contributions": [
     {
+      "id": "semgrep-rules-4146",
+      "project": "semgrep-rules",
+      "org": "semgrep",
+      "area": "Post-quantum cryptography",
+      "title": "Fixed Semgrep's API Gateway TLS rule so it no longer flags AWS's TLS 1.3 and post-quantum security policies as insecure",
+      "url": "https://github.com/semgrep/semgrep-rules/pull/4146",
+      "date": "2026-11-15",
+      "status": "proposed"
+    },
+    {
+      "id": "steampipe-mod-aws-compliance-1020",
+      "project": "steampipe-mod-aws-compliance",
+      "org": "turbot",
+      "area": "Security compliance",
+      "title": "Added the RBI NBFC Cybersecurity, Technology Risk, Resilience and Assurance Directions, 2026 benchmark to Turbot's AWS Compliance mod, replacing a framework RBI repealed in July 2026",
+      "url": "https://github.com/turbot/steampipe-mod-aws-compliance/pull/1020",
+      "date": "2026-11-15",
+      "status": "proposed"
+    },
+    {
+      "id": "cybernetic-agent-governance-engine-763",
+      "project": "cybernetic-agent-governance-engine",
+      "org": "google",
+      "area": "AI governance",
+      "title": "Fixed card-number redaction in Google's CAGE agent-governance engine so JCB, Diners and Discover 644-649 numbers no longer reach the audit ledger unredacted",
+      "url": "https://github.com/google/cybernetic-agent-governance-engine/pull/763",
+      "date": "2026-11-15",
+      "status": "proposed"
+    },
+    {
       "id": "wstg-1680",
       "project": "wstg",
       "org": "OWASP",
@@ -809,7 +839,7 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 20,
+    "published": 19,
     "latest": [
       {
         "edition": 31,
@@ -817,13 +847,6 @@
         "title": "FAA ground stop halts US flights for over four hours on 13 November",
         "subtitle": "Officials see no sign of an attack so far, and that is exactly why your outage plan needs a holding line. Plus 19 more stories from AI security, privacy, OT and GRC",
         "url": "https://www.linkedin.com/pulse/faa-ground-stop-halts-us-flights-over-four-hours-13-november-joseph-djmac"
-      },
-      {
-        "edition": 30,
-        "date": "2026-11-14",
-        "title": "A post-quantum key file names its own strength. My fix teaches one open-source scanner to read it",
-        "subtitle": "My first code contribution to qrp-mcp, merged by Stanimir Tenev, and what it means for your post-quantum inventory",
-        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
       },
       {
         "edition": 29,
@@ -852,15 +875,22 @@
         "title": "Loading an AI model can run someone else's code. Three controls that cut the risk",
         "subtitle": "Pickle files, model names that move, and the asset register row that answers an incident in minutes",
         "url": "https://www.linkedin.com/pulse/loading-ai-model-can-run-someone-elses-code-three-controls-joseph-9trhc"
+      },
+      {
+        "edition": 10,
+        "date": "2026-11-09",
+        "title": "FINRA fines Webull USD 4.2 million after landscape photos passed as ID",
+        "subtitle": "When your vendor says no, who can still say yes? Plus 20 more stories from GRC, AI security and privacy",
+        "url": "https://www.linkedin.com/pulse/finra-fines-webull-usd-42-million-after-landscape-photos-joseph-lk0cc"
       }
     ]
   },
   "mindledger": {
-    "tokens": 339817093213,
-    "sessions": 12519,
-    "messages": 2042856,
-    "avg_30d": 5226627828,
-    "as_of": "2026-11-15 14:01 IST",
+    "tokens": 339962781261,
+    "sessions": 12549,
+    "messages": 2044983,
+    "avg_30d": 5217135191,
+    "as_of": "2026-11-15 16:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -918,7 +948,7 @@
           "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v0.0.7"
         },
         "last_commit": "2026-11-13",
-        "as_of": "2026-11-15 14:18 IST",
+        "as_of": "2026-11-15 16:18 IST",
         "source": "GitHub API"
       }
     }
