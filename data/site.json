@@ -926,11 +926,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 340276279625,
-    "sessions": 12586,
-    "messages": 2048476,
-    "avg_30d": 5227274844,
-    "as_of": "2026-11-15 18:02 IST",
+    "tokens": 340997669240,
+    "sessions": 12633,
+    "messages": 2054504,
+    "avg_30d": 5249269784,
+    "as_of": "2026-11-15 20:03 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -988,7 +988,7 @@
           "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v0.0.7"
         },
         "last_commit": "2026-11-13",
-        "as_of": "2026-11-15 18:18 IST",
+        "as_of": "2026-11-15 20:18 IST",
         "source": "GitHub API"
       }
     }
