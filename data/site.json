@@ -71,6 +71,16 @@
       "status": "proposed"
     },
     {
+      "id": "fprime-6400",
+      "project": "fprime",
+      "org": "nasa",
+      "area": "Space systems security",
+      "title": "Proposed a fix to NASA JPL F Prime's CCSDS TM framer so an out-of-range virtual channel ID can no longer silently corrupt the spacecraft ID in downlinked telemetry frames",
+      "url": "https://github.com/nasa/fprime/pull/6400",
+      "date": "2026-11-16",
+      "status": "proposed"
+    },
+    {
       "id": "semgrep-rules-4146",
       "project": "semgrep-rules",
       "org": "semgrep",
@@ -960,11 +970,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 342389247299,
-    "sessions": 12750,
-    "messages": 2068346,
-    "avg_30d": 5291691195,
-    "as_of": "2026-11-16 06:03 IST",
+    "tokens": 342809255346,
+    "sessions": 12779,
+    "messages": 2072552,
+    "avg_30d": 5312146850,
+    "as_of": "2026-11-16 08:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
