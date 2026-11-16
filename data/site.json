@@ -81,6 +81,26 @@
       "status": "proposed"
     },
     {
+      "id": "skillspector-1134",
+      "project": "SkillSpector",
+      "org": "NVIDIA",
+      "area": "AI security",
+      "title": "Fixed NVIDIA SkillSpector's MCP tool-poisoning rules to tag findings with the correct MITRE ATLAS technique (AML.T0110, not AML.T0080), with a regression test",
+      "url": "https://github.com/NVIDIA/SkillSpector/pull/1134",
+      "date": "2026-11-16",
+      "status": "proposed"
+    },
+    {
+      "id": "awesome-copilot-6451",
+      "project": "awesome-copilot",
+      "org": "github",
+      "area": "AI security",
+      "title": "Corrected GitHub awesome-copilot's OWASP agent compliance skill to the published OWASP Top 10 for Agentic Applications 2026",
+      "url": "https://github.com/github/awesome-copilot/pull/6451",
+      "date": "2026-11-16",
+      "status": "proposed"
+    },
+    {
       "id": "semgrep-rules-4146",
       "project": "semgrep-rules",
       "org": "semgrep",
@@ -970,11 +990,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 342809255346,
-    "sessions": 12779,
-    "messages": 2072552,
-    "avg_30d": 5312146850,
-    "as_of": "2026-11-16 08:02 IST",
+    "tokens": 343173315434,
+    "sessions": 12799,
+    "messages": 2075931,
+    "avg_30d": 5309607175,
+    "as_of": "2026-11-16 10:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
