@@ -41,6 +41,36 @@
       "status": "proposed"
     },
     {
+      "id": "checkov-7803",
+      "project": "checkov",
+      "org": "bridgecrewio",
+      "area": "Post-quantum cryptography",
+      "title": "Fixed Checkov's CloudFormation TLS check so it stops failing load balancers that use AWS's post-quantum and FIPS TLS 1.3 policies",
+      "url": "https://github.com/bridgecrewio/checkov/pull/7803",
+      "date": "2026-11-16",
+      "status": "proposed"
+    },
+    {
+      "id": "circl-721",
+      "project": "circl",
+      "org": "cloudflare",
+      "area": "Post-quantum cryptography",
+      "title": "Added RFC 9909 X.509 identifiers and key encodings for all twelve SLH-DSA parameter sets to Cloudflare's CIRCL, tested against the RFC's example keys",
+      "url": "https://github.com/cloudflare/circl/pull/721",
+      "date": "2026-11-16",
+      "status": "proposed"
+    },
+    {
+      "id": "agentic_security-385",
+      "project": "agentic_security",
+      "org": "msoedov",
+      "area": "AI security",
+      "title": "Moved agentic_security's OWASP probe badges from the superseded 2023/24 LLM Top 10 to the 2025 list, with tests per mapping",
+      "url": "https://github.com/msoedov/agentic_security/pull/385",
+      "date": "2026-11-16",
+      "status": "proposed"
+    },
+    {
       "id": "semgrep-rules-4146",
       "project": "semgrep-rules",
       "org": "semgrep",
@@ -671,11 +701,12 @@
       "id": "trivy-11528",
       "project": "trivy",
       "org": "aquasecurity",
-      "area": "AI governance",
+      "area": "Developer tooling",
       "title": "Confirmed with primary sources that Trivy v0.76.2 ships the go-jose v4.1.6 fix for CVE-2026-116587 (GHSA-mgcc-cww5-fp2q)",
       "url": "https://github.com/aquasecurity/trivy/discussions/11528#discussioncomment-19535994",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "area_was": "AI governance"
     },
     {
       "id": "liboqs-2468",
@@ -713,21 +744,25 @@
       "id": "obscura-1530",
       "project": "obscura",
       "org": "h4ckf0r0day",
-      "area": "AI governance",
-      "title": "perf(render): opacity and color inline style writes force a full relayout on the next read, transform writes do not",
+      "area": "Developer tooling",
+      "title": "Reported that changing an element's opacity or colour in Obscura's renderer forces a full page relayout on the next size read, while a transform change does not",
       "url": "https://github.com/h4ckf0r0day/obscura/issues/1530",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "area_was": "AI governance",
+      "title_raw": "perf(render): opacity and color inline style writes force a full relayout on the next read, transform writes do not"
     },
     {
       "id": "obscura-1531",
       "project": "obscura",
       "org": "h4ckf0r0day",
-      "area": "AI governance",
-      "title": "fetch: writing to a closed pipe panics and exits 1 (| head, | grep -q)",
+      "area": "Developer tooling",
+      "title": "Reported that Obscura's fetch command crashes with exit code 1 when its output is piped to a command that stops reading early, such as head or grep -q",
       "url": "https://github.com/h4ckf0r0day/obscura/issues/1531",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "area_was": "AI governance",
+      "title_raw": "fetch: writing to a closed pipe panics and exits 1 (| head, | grep -q)"
     },
     {
       "id": "grc-skills-62",
@@ -878,8 +913,15 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 19,
+    "published": 20,
     "latest": [
+      {
+        "edition": 32,
+        "date": "2026-11-16",
+        "title": "N-able takes N-central offline after 33 unpatched flaws go public",
+        "subtitle": "Your vendor's access is your attack surface. Plus 17 more stories from GRC, AI security and privacy",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 31,
         "date": "2026-11-15",
@@ -914,13 +956,6 @@
         "title": "Loading an AI model can run someone else's code. Three controls that cut the risk",
         "subtitle": "Pickle files, model names that move, and the asset register row that answers an incident in minutes",
         "url": "https://www.linkedin.com/pulse/loading-ai-model-can-run-someone-elses-code-three-controls-joseph-9trhc"
-      },
-      {
-        "edition": 10,
-        "date": "2026-11-09",
-        "title": "FINRA fines Webull USD 4.2 million after landscape photos passed as ID",
-        "subtitle": "When your vendor says no, who can still say yes? Plus 20 more stories from GRC, AI security and privacy",
-        "url": "https://www.linkedin.com/pulse/finra-fines-webull-usd-42-million-after-landscape-photos-joseph-lk0cc"
       }
     ]
   },
