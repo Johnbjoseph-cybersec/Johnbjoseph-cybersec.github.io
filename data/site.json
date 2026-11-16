@@ -950,7 +950,7 @@
         "date": "2026-11-16",
         "title": "N-able takes N-central offline after 33 unpatched flaws go public",
         "subtitle": "Your vendor's access is your attack surface. Plus 17 more stories from GRC, AI security and privacy",
-        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+        "url": "https://www.linkedin.com/pulse/n-able-takes-n-central-offline-after-33-unpatched-flaws-joseph-7vpfc"
       },
       {
         "edition": 31,
@@ -990,11 +990,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 343173315434,
-    "sessions": 12799,
-    "messages": 2075931,
-    "avg_30d": 5309607175,
-    "as_of": "2026-11-16 10:02 IST",
+    "tokens": 343533797331,
+    "sessions": 12824,
+    "messages": 2079953,
+    "avg_30d": 5290743290,
+    "as_of": "2026-11-16 12:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
