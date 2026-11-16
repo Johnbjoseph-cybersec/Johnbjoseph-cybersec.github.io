@@ -101,6 +101,16 @@
       "status": "proposed"
     },
     {
+      "id": "cyclonedx-spec-1219",
+      "project": "specification",
+      "org": "CycloneDX",
+      "area": "Post-quantum cryptography",
+      "title": "Added the Composite ML-DSA signature family (RFC 10073, all 18 registered combinations) to the CycloneDX cryptography registry so a CBOM can name composite post-quantum certificates instead of recording them as other",
+      "url": "https://github.com/CycloneDX/specification/pull/1219",
+      "date": "2026-11-16",
+      "status": "proposed"
+    },
+    {
       "id": "semgrep-rules-4146",
       "project": "semgrep-rules",
       "org": "semgrep",
