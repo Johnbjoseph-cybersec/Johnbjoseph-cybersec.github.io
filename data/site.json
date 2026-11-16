@@ -15,10 +15,10 @@
       "source": "Google Analytics, reported by John"
     },
     "linkedin_followers": {
-      "value": 32512,
+      "value": 32530,
       "display": null,
       "label": "LinkedIn followers",
-      "as_of": "2026-11-09",
+      "as_of": "2026-11-16",
       "source": "LinkedIn analytics"
     },
     "controls": {
@@ -990,11 +990,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 343533797331,
-    "sessions": 12824,
-    "messages": 2079953,
-    "avg_30d": 5290743290,
-    "as_of": "2026-11-16 12:02 IST",
+    "tokens": 343669031773,
+    "sessions": 12835,
+    "messages": 2081626,
+    "avg_30d": 5282903897,
+    "as_of": "2026-11-16 14:03 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
