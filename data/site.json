@@ -1020,11 +1020,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 345091845345,
-    "sessions": 13006,
-    "messages": 2097973,
-    "avg_30d": 5328206240,
-    "as_of": "2026-11-16 20:02 IST",
+    "tokens": 345126369729,
+    "sessions": 13041,
+    "messages": 2098927,
+    "avg_30d": 5329442586,
+    "as_of": "2026-11-16 22:01 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
