@@ -68,7 +68,8 @@
       "title": "Moved agentic_security's OWASP probe badges from the superseded 2023/24 LLM Top 10 to the 2025 list, with tests per mapping",
       "url": "https://github.com/msoedov/agentic_security/pull/385",
       "date": "2026-11-16",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-16"
     },
     {
       "id": "fprime-6400",
@@ -757,18 +758,6 @@
       "url": "https://github.com/open-quantum-safe/liboqs/discussions/2468#discussioncomment-19536128",
       "date": "2026-11-11",
       "status": "proposed"
-    },
-    {
-      "id": "uncut-6",
-      "project": "uncut",
-      "org": "Balanov",
-      "area": "Developer tooling",
-      "title": "Fixed a hang in uncut where cancelling a running tool command leaked the shell's child processes (co-authored with Tausif Ahmed); regression test proves 20s hang -> 0.5s",
-      "url": "https://github.com/Balanov/uncut/pull/6",
-      "date": "2026-11-11",
-      "status": "merged",
-      "coauthor": "tausif-ahmed-guardian",
-      "note": "The maintainer merged the code verbatim as uncut #7 (2026-11-13), because the branch lived in a fork."
     },
     {
       "id": "ai-governance-framework-449",
