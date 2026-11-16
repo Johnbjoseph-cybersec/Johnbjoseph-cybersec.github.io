@@ -1,0 +1,31 @@
+# John B Joseph
+
+> Personal site of John B Joseph, co-founder of Purplecop Security. He works on AI security for AI agents and on governance, risk and compliance (GRC) software, publishes the GRC Made Simple Daily newsletter, and built the GRC Practice Lab.
+
+This file lists the pages on this site and the public records behind it.
+
+## This site
+
+- [Home](https://johnbjoseph-cybersec.github.io/): profile, open-source contributions, projects, newsletter and speaking
+- [Site data](https://johnbjoseph-cybersec.github.io/data/site.json): the figures the home page shows, as JSON
+
+## Profiles and channels
+
+- [GitHub](https://github.com/Johnbjoseph-cybersec)
+- [GRC Made Simple on YouTube](https://www.youtube.com/@GRCMadeSimple)
+
+## GRC Practice Lab
+
+- [GRC Practice Lab](https://grclab.purplecop.io/): a GRC learning platform with hands-on practice
+
+## Merged open-source pull requests (author: Johnbjoseph-cybersec)
+
+- [sbom-tool/sbom-tools #450](https://github.com/sbom-tool/sbom-tools/pull/450): docs(standards): confirm EU AI Act Annex IV against the Official Journal text (merged 2026-11-06)
+- [StanimirTenev/qrp-mcp #15](https://github.com/StanimirTenev/qrp-mcp/pull/15): Read a post-quantum key's parameter set from its identifier (merged 2026-11-10)
+- [alirezarezvani/claude-skills #1121](https://github.com/alirezarezvani/claude-skills/pull/1121): docs(eu-ai-act-specialist): correct Article 43(1) conformity route for biometrics (merged 2026-11-10)
+- [shorlist/shorlist #2](https://github.com/shorlist/shorlist/pull/2): PEM rows for PKCS #8, SPKI and certificates; ML-KEM-768 and ML-DSA-65 key files (SL-3637 to SL-3647) (merged 2026-11-10)
+- [h4ckf0r0day/obscura #1513](https://github.com/h4ckf0r0day/obscura/pull/1513): docs: list the full SSRF deny-set under OBSCURA_ALLOW_PRIVATE_NETWORK (merged 2026-11-11)
+- [UKGovernmentBEIS/inspect_ai #6545](https://github.com/UKGovernmentBEIS/inspect_ai/pull/6545): docs: add inspect-oscal to the extensions listing (merged 2026-11-13)
+- [Balanov/uncut #8](https://github.com/Balanov/uncut/pull/8): fix(tools): probe the process group before cancelling run_command (merged 2026-11-14)
+- [OWASP/pytm #394](https://github.com/OWASP/pytm/pull/394): Add LLM10: personal data retained by a third-party LLM provider (merged 2026-11-14)
+- [OWASP/CheatSheetSeries #2963](https://github.com/OWASP/CheatSheetSeries/pull/2963): Transport Layer Security Cheat Sheet: note X25519MLKEM768 requires OpenSSL 3.5 or later (merged 2026-11-15)
