@@ -112,6 +112,16 @@
       "status": "proposed"
     },
     {
+      "id": "agent-control-standard-566",
+      "project": "agent-control-standard",
+      "org": "GenAI-Security-Project",
+      "area": "Post-quantum cryptography",
+      "title": "Reported that ACS's signature registry names no FIPS 205 parameter set for SLH-DSA and leaves ML-DSA/SLH-DSA mode and context string open, so two conforming implementations can fail to verify each other; proposed the FIPS 205 names and the RFC 9964 pure, empty-context rule",
+      "url": "https://github.com/GenAI-Security-Project/agent-control-standard/issues/566",
+      "date": "2026-11-16",
+      "status": "proposed"
+    },
+    {
       "id": "semgrep-rules-4146",
       "project": "semgrep-rules",
       "org": "semgrep",
@@ -739,6 +749,17 @@
       "status": "proposed"
     },
     {
+      "id": "stack-diagram-8",
+      "project": "stack-diagram",
+      "org": "caru-ini",
+      "area": "Developer tooling",
+      "title": "Fixed a proof-of-work parity bug in stack-diagram's gallery (server clamped to 32 bits while its own Python client refuses over 26); added a regression test, full suite green",
+      "url": "https://github.com/caru-ini/stack-diagram/pull/8",
+      "date": "2026-11-11",
+      "status": "merged",
+      "status_changed": "2026-11-12"
+    },
+    {
       "id": "trivy-11528",
       "project": "trivy",
       "org": "aquasecurity",
@@ -989,11 +1010,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 343669031773,
-    "sessions": 12835,
-    "messages": 2081626,
-    "avg_30d": 5282903897,
-    "as_of": "2026-11-16 14:03 IST",
+    "tokens": 344465126434,
+    "sessions": 12896,
+    "messages": 2089565,
+    "avg_30d": 5307935919,
+    "as_of": "2026-11-16 16:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
