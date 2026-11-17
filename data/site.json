@@ -564,6 +564,18 @@
       "status": "submitted by email"
     },
     {
+      "id": "uncut-6",
+      "project": "uncut",
+      "org": "Balanov",
+      "area": "Developer tooling",
+      "title": "Fixed uncut's cancel so it stops the whole process group, not just the parent process; merged as-is by the maintainer via PR #7",
+      "url": "https://github.com/Balanov/uncut/pull/6",
+      "date": "2026-11-13",
+      "status": "merged",
+      "status_changed": "2026-11-13",
+      "note": "PR #6 lived in a fork, so maintainer Balanov merged the same commits as PR #7 (merged 2026-11-13T14:43:53Z) and said so in the thread"
+    },
+    {
       "id": "claude-code-templates-1521",
       "project": "claude-code-templates",
       "org": "davila7",
@@ -866,9 +878,11 @@
       "title": "Reported that Obscura's fetch command crashes with exit code 1 when its output is piped to a command that stops reading early, such as head or grep -q",
       "url": "https://github.com/h4ckf0r0day/obscura/issues/1531",
       "date": "2026-11-11",
-      "status": "proposed",
+      "status": "accepted",
       "area_was": "AI governance",
-      "title_raw": "fetch: writing to a closed pipe panics and exits 1 (| head, | grep -q)"
+      "title_raw": "fetch: writing to a closed pipe panics and exits 1 (| head, | grep -q)",
+      "status_changed": "2026-11-17",
+      "note": "closed as completed by maintainer SGavrl via fix PR #1607 (merged 2026-11-17)"
     },
     {
       "id": "grc-skills-62",
@@ -1153,5 +1167,5 @@
       }
     ]
   },
-  "updated": "2026-11-17"
+  "updated": "2026-11-18"
 }
