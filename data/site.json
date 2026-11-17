@@ -375,7 +375,8 @@
       "title": "Fixed site-verb lookup in the oc AI-agent web CLI so inherited object names get the proper usage message, with a test",
       "url": "https://github.com/only-cli/oc/pull/137",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-17"
     },
     {
       "id": "CheatSheetSeries-2963",
