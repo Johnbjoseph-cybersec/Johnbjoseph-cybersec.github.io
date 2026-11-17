@@ -1017,8 +1017,15 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 20,
+    "published": 21,
     "latest": [
+      {
+        "edition": 55,
+        "date": "2026-11-17",
+        "title": "Your incident plan breaks at the hand-off. Rehearse it in forty-five minutes",
+        "subtitle": "A short tabletop, a notification clock to rehearse, and the breach record a regulator will ask for",
+        "url": "https://www.linkedin.com/pulse/your-incident-plan-breaks-hand-off-rehearse-minutes-joseph-ti4gc"
+      },
       {
         "edition": 32,
         "date": "2026-11-16",
@@ -1053,22 +1060,15 @@
         "title": "A scan that found nothing, Guest Edition: Stanimir Tenev",
         "subtitle": "A collaboration edition with Stanimir Tenev, who builds qrp-mcp and maintains ShorList",
         "url": "https://www.linkedin.com/pulse/scan-found-nothing-guest-edition-stanimir-tenev-joseph-vmtvf"
-      },
-      {
-        "edition": 11,
-        "date": "2026-11-10",
-        "title": "Loading an AI model can run someone else's code. Three controls that cut the risk",
-        "subtitle": "Pickle files, model names that move, and the asset register row that answers an incident in minutes",
-        "url": "https://www.linkedin.com/pulse/loading-ai-model-can-run-someone-elses-code-three-controls-joseph-9trhc"
       }
     ]
   },
   "mindledger": {
-    "tokens": 345759357888,
-    "sessions": 13168,
-    "messages": 2107268,
-    "avg_30d": 5351194985,
-    "as_of": "2026-11-17 08:02 IST",
+    "tokens": 345880996306,
+    "sessions": 13201,
+    "messages": 2109449,
+    "avg_30d": 5340706146,
+    "as_of": "2026-11-17 10:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
