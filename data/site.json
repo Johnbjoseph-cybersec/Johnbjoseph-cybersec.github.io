@@ -79,7 +79,8 @@
       "title": "Added MCP Inspector detection and its critical CVE-2025-49596 rule to Tencent's AI-Infra-Guard scanner",
       "url": "https://github.com/Tencent/AI-Infra-Guard/pull/768",
       "date": "2026-11-16",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-17"
     },
     {
       "id": "checkov-7803",
