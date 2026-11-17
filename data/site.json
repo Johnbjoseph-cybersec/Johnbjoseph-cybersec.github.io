@@ -251,7 +251,8 @@
       "title": "Corrected the OWASP Web Security Testing Guide's post-quantum certificate advice against the CA/Browser Forum Baseline Requirements",
       "url": "https://github.com/OWASP/wstg/pull/1680",
       "date": "2026-11-14",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-17"
     },
     {
       "id": "uncut-8",
