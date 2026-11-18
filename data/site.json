@@ -48,7 +48,8 @@
       "title": "Updated the pci-compliance skill in wshobson/agents to the PCI DSS v4.0.1 requirement titles and goal headings, at the maintainer's request",
       "url": "https://github.com/wshobson/agents/pull/831",
       "date": "2026-11-18",
-      "status": "proposed"
+      "status": "merged",
+      "merged": "2026-11-18"
     },
     {
       "id": "trivy-11014",
@@ -191,7 +192,8 @@
       "title": "Fixed an expiry boundary in Google's CAGE engine so a single-use authority token is refused at its expiry second, matching RFC 7519",
       "url": "https://github.com/google/cybernetic-agent-governance-engine/pull/777",
       "date": "2026-11-16",
-      "status": "proposed"
+      "status": "merged",
+      "merged": "2026-11-18"
     },
     {
       "id": "semgrep-rules-4146",
