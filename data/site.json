@@ -122,6 +122,16 @@
       "status": "proposed"
     },
     {
+      "id": "google-adk-python-8237",
+      "project": "adk-python",
+      "org": "google",
+      "area": "AI agent security",
+      "title": "Stopped Google ADK's AutoTracingPlugin from writing secret_key, aws_secret_access_key and passwd argument values into OpenTelemetry spans, with a drift guard against the debug logger's redaction list",
+      "url": "https://github.com/google/adk-python/pull/8237",
+      "date": "2026-11-18",
+      "status": "proposed"
+    },
+    {
       "id": "trivy-11014",
       "project": "trivy",
       "org": "aquasecurity",
