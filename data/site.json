@@ -31,6 +31,16 @@
   },
   "contributions": [
     {
+      "id": "openssl-33179",
+      "project": "openssl",
+      "org": "openssl",
+      "area": "Post-quantum cryptography",
+      "title": "Answered OpenSSL's question on whether expanded-only ML-DSA/ML-KEM private keys are used in practice, citing PKCS#11 3.2, RFC 9881 and NIST's ACVP vectors",
+      "url": "https://github.com/openssl/openssl/discussions/33179#discussioncomment-19709212",
+      "date": "2026-11-18",
+      "status": "proposed"
+    },
+    {
       "id": "trivy-11014",
       "project": "trivy",
       "org": "aquasecurity",
