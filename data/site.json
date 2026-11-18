@@ -52,6 +52,16 @@
       "merged": "2026-11-18"
     },
     {
+      "id": "cybernetic-agent-governance-engine-812",
+      "project": "cybernetic-agent-governance-engine",
+      "org": "google",
+      "area": "AI agent security",
+      "title": "Fixed Google CAGE's routing seal so an HMAC seal is rejected at its exact expiry second, matching the JWT branch",
+      "url": "https://github.com/google/cybernetic-agent-governance-engine/pull/812",
+      "date": "2026-11-18",
+      "status": "proposed"
+    },
+    {
       "id": "trivy-11014",
       "project": "trivy",
       "org": "aquasecurity",
