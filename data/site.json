@@ -1098,8 +1098,9 @@
       "facts": [
         "Apache-2.0",
         "Python 3.10+, standard library only",
-        "pipx, Homebrew, npm, Claude Code plugin, VS Code extension",
-        "Not Windows yet"
+        "5 of 7 agent hooks verified in live sessions",
+        "Full test suite passes on macOS, Linux and Windows CI",
+        "pipx, Homebrew, npm, Claude Code plugin, VS Code extension"
       ],
       "credit": "made by John B Joseph",
       "media": [
@@ -1136,13 +1137,13 @@
         "open_issues": 0,
         "language": "Python",
         "release": {
-          "tag": "v1.1.1",
+          "tag": "v1.2.0",
           "date": "2026-11-18",
           "prerelease": false,
-          "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v1.1.1"
+          "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v1.2.0"
         },
         "last_commit": "2026-11-18",
-        "as_of": "2026-11-18 13:05 IST",
+        "as_of": "2026-11-18 15:18 IST",
         "source": "GitHub API"
       }
     }
