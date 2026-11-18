@@ -1094,11 +1094,11 @@
       "repo": "Johnbjoseph-cybersec/rewindagents",
       "repo_url": "https://github.com/Johnbjoseph-cybersec/rewindagents",
       "site": "https://rewindagents.com",
-      "tagline": "Rewind to any step of an AI coding agent's session, fork it for another agent, compare the runs.",
+      "tagline": "Undo for AI coding agents, including rm -rf: record every step, then take back one step, one file or a whole session.",
       "facts": [
         "Apache-2.0",
         "Python 3.10+, standard library only",
-        "Not on PyPI yet",
+        "pipx, Homebrew, npm, Claude Code plugin, VS Code extension",
         "Not Windows yet"
       ],
       "credit": "made by John B Joseph",
@@ -1109,8 +1109,8 @@
           "src": "assets/home/img/projects/rewindagents/main-1200.webp",
           "srcset": "assets/home/img/projects/rewindagents/main-1200.webp 1200w, assets/home/img/projects/rewindagents/main-640.webp 640w",
           "w": 1200,
-          "h": 672,
-          "alt": "The rewindagents home page: the headline 'Rewind to any step. Let another agent take it from there.' beside a terminal running rewindagents fork 2 and compare --check, where the first run fails and the fork passes."
+          "h": 555,
+          "alt": "The rewindagents home page: the headline 'Your coding agent ran rm -rf. Take it back.' beside the install command, above a 14-step timeline whose last two steps wrecked the repo."
         },
         {
           "role": "demo",
@@ -1119,7 +1119,7 @@
           "poster": "assets/home/img/projects/rewindagents/demo-poster-960.webp",
           "w": 960,
           "h": 540,
-          "alt": "18-second screen recording: rewindagents fork 2 starts a second attempt from step 2, compare --check shows the first run failing and the fork passing, then compare --diff shows the one-line change."
+          "alt": "20-second screen recording: rewindagents replay lists 14 steps, the last two deleted the tests and overwrote the config, then rewindagents rewind 12 puts the four files back."
         },
         {
           "role": "shot",
@@ -1127,8 +1127,8 @@
           "src": "assets/home/img/projects/rewindagents/shot-800.webp",
           "srcset": "assets/home/img/projects/rewindagents/shot-800.webp 800w, assets/home/img/projects/rewindagents/shot-400.webp 400w",
           "w": 800,
-          "h": 516,
-          "alt": "The Fork and compare page of rewindagents.com: the commands to fork a recorded step and compare the runs as a git diff."
+          "h": 385,
+          "alt": "The Install section of rewindagents.com: pipx from PyPI, or Homebrew, npm and the Claude Code plugin."
         }
       ],
       "live": {
