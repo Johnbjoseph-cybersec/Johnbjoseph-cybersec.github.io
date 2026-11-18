@@ -946,7 +946,8 @@
       "title": "Flagged PCI DSS requirement titles in the pci-compliance skill that are no longer current",
       "url": "https://github.com/wshobson/agents/issues/821",
       "date": "2026-11-10",
-      "status": "proposed"
+      "status": "accepted",
+      "status_changed": "2026-11-18"
     },
     {
       "id": "shorlist-2",
