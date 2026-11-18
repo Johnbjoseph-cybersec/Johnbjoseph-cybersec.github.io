@@ -41,6 +41,16 @@
       "status": "proposed"
     },
     {
+      "id": "wshobson-agents-831",
+      "project": "agents",
+      "org": "wshobson",
+      "area": "GRC / compliance",
+      "title": "Updated the pci-compliance skill in wshobson/agents to the PCI DSS v4.0.1 requirement titles and goal headings, at the maintainer's request",
+      "url": "https://github.com/wshobson/agents/pull/831",
+      "date": "2026-11-18",
+      "status": "proposed"
+    },
+    {
       "id": "trivy-11014",
       "project": "trivy",
       "org": "aquasecurity",
