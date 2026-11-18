@@ -1136,13 +1136,13 @@
         "open_issues": 0,
         "language": "Python",
         "release": {
-          "tag": "v1.0.0",
-          "date": "2026-11-17",
+          "tag": "v1.1.0",
+          "date": "2026-11-18",
           "prerelease": false,
-          "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v1.0.0"
+          "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v1.1.0"
         },
-        "last_commit": "2026-11-17",
-        "as_of": "2026-11-18 03:01 IST",
+        "last_commit": "2026-11-18",
+        "as_of": "2026-11-18 11:05 IST",
         "source": "GitHub API"
       }
     }
