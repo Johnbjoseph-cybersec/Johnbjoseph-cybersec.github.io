@@ -223,7 +223,8 @@
       "title": "Fixed card-number redaction in Google's CAGE agent-governance engine so JCB, Diners and Discover 644-649 numbers no longer reach the audit ledger unredacted",
       "url": "https://github.com/google/cybernetic-agent-governance-engine/pull/763",
       "date": "2026-11-15",
-      "status": "proposed"
+      "status": "merged",
+      "merged": "2026-11-18"
     },
     {
       "id": "common-cloud-controls-1316",
