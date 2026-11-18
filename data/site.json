@@ -99,7 +99,8 @@
       "title": "Scoped the W3C DID Resolution HTTPS-binding conformance requirement to network-based resolvers, the fix agreed in #360",
       "url": "https://github.com/w3c/did-resolution/pull/406",
       "date": "2026-11-18",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-18"
     },
     {
       "id": "w3c-vc-bitstring-status-list-201",
