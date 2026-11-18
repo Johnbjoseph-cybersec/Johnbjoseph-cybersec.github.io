@@ -1033,8 +1033,15 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 21,
+    "published": 22,
     "latest": [
+      {
+        "edition": 54,
+        "date": "2026-11-18",
+        "title": "Everyone Is Scanning. Nobody Is Asking, Guest Edition: Vikram Das",
+        "subtitle": "A collaboration edition with Vikram Das, Principal Cloud Security Architect working on post-quantum cryptography and CBOM",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 55,
         "date": "2026-11-17",
@@ -1069,13 +1076,6 @@
         "title": "I read the EU's AI Act amendment to check one annex. Annex IV did not change",
         "subtitle": "My first merged fix to sbom-tools, and what Regulation (EU) 2026/1744 means for your technical file",
         "url": "https://www.linkedin.com/pulse/i-read-eus-ai-act-amendment-check-one-annex-iv-did-change-joseph-rbytf"
-      },
-      {
-        "edition": 27,
-        "date": "2026-11-11",
-        "title": "A scan that found nothing, Guest Edition: Stanimir Tenev",
-        "subtitle": "A collaboration edition with Stanimir Tenev, who builds qrp-mcp and maintains ShorList",
-        "url": "https://www.linkedin.com/pulse/scan-found-nothing-guest-edition-stanimir-tenev-joseph-vmtvf"
       }
     ]
   },
