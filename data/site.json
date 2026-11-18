@@ -62,6 +62,16 @@
       "status": "proposed"
     },
     {
+      "id": "asvs-3361-proposal",
+      "project": "ASVS",
+      "org": "OWASP",
+      "area": "Post-quantum cryptography",
+      "title": "Proposed adding the post-quantum rows (ML-KEM, ML-DSA, SLH-DSA, LMS/XMSS, RFC 10024 hybrid TLS groups) to OWASP ASVS 5.0 Appendix C, answering the maintainer's ask in #3361",
+      "url": "https://github.com/OWASP/ASVS/issues/3361#issuecomment-6981667854",
+      "date": "2026-11-18",
+      "status": "proposed"
+    },
+    {
       "id": "trivy-11014",
       "project": "trivy",
       "org": "aquasecurity",
@@ -1114,11 +1124,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 348837752059,
-    "sessions": 13716,
-    "messages": 2147095,
-    "avg_30d": 5333077228,
-    "as_of": "2026-11-18 16:01 IST",
+    "tokens": 349217057001,
+    "sessions": 13783,
+    "messages": 2152684,
+    "avg_30d": 5326845065,
+    "as_of": "2026-11-18 20:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
