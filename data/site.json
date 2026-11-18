@@ -112,6 +112,16 @@
       "status": "proposed"
     },
     {
+      "id": "tractusx-sdk-256",
+      "project": "tractusx-sdk",
+      "org": "eclipse-tractusx",
+      "area": "Data sovereignty (Catena-X)",
+      "title": "Fixed Eclipse Tractus-X SDK's PostgresConnectionManager, which could not be instantiated, by implementing clear_connections_by_party (maintainer-filed #256)",
+      "url": "https://github.com/eclipse-tractusx/tractusx-sdk/pull/309",
+      "date": "2026-11-18",
+      "status": "proposed"
+    },
+    {
       "id": "trivy-11014",
       "project": "trivy",
       "org": "aquasecurity",
