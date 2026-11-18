@@ -72,6 +72,16 @@
       "status": "proposed"
     },
     {
+      "id": "complianceascode-content-nist-rev5",
+      "project": "content",
+      "org": "ComplianceAsCode",
+      "area": "GRC / compliance",
+      "title": "Updated 57 SCAP Security Guide rules (the upstream of RHEL/Fedora/Ubuntu/OpenShift compliance content) from NIST SP 800-53 controls withdrawn in Rev. 5 to their NIST-named successors",
+      "url": "https://github.com/ComplianceAsCode/content/pull/15365",
+      "date": "2026-11-18",
+      "status": "proposed"
+    },
+    {
       "id": "trivy-11014",
       "project": "trivy",
       "org": "aquasecurity",
