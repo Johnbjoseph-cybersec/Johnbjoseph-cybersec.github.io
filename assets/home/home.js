@@ -267,7 +267,7 @@
   /* ---------------- nav: solid on scroll, hides going down, progress, active section ---------------- */
   function initNav() {
     var nav = document.getElementById('nav'), bar = document.getElementById('progress'), last = 0, tick = false;
-    var links = [].slice.call(document.querySelectorAll('.nav__links a')), box = document.querySelector('.nav__links');
+    var links = [].slice.call(document.querySelectorAll('.nav__links a[href^="#"]')), box = document.querySelector('.nav__links');
     var ind = el('span', 'nav__ind'); ind.setAttribute('aria-hidden', 'true'); if (box) box.appendChild(ind);
     // chapter rail: a dot per section on the left edge, filled up to where you are
     var rail = el('nav', 'rail-x'); rail.setAttribute('aria-label', 'Chapters'); var fill = el('i', 'rail-x__fill'); rail.appendChild(fill);
