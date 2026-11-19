@@ -42,6 +42,56 @@
       "kind": "hall-of-fame"
     },
     {
+      "id": "agent-control-standard-573",
+      "project": "agent-control-standard",
+      "org": "GenAI-Security-Project",
+      "area": "AI agent security standards",
+      "title": "Answered the ACS scope-fit question on a post-action Work Closure profile from CONTRIBUTING's Priority Scope, Spec Review Principle 3 and the conformance-profile definition",
+      "url": "https://github.com/GenAI-Security-Project/agent-control-standard/discussions/573#discussioncomment-19729671",
+      "date": "2026-11-19",
+      "status": "proposed"
+    },
+    {
+      "id": "cdxgen-4062",
+      "project": "cdxgen",
+      "org": "cdxgen",
+      "area": "SBOM / CBOM",
+      "title": "Closed out cdxgen #4062 (Alpine apk keys emitted as cryptographic-asset breaking CycloneDX 1.5 / Dependency-Track): which release fixed it, reproduced on 12.9.2 and 13.8.0, and the v13 path",
+      "url": "https://github.com/cdxgen/cdxgen/discussions/4062#discussioncomment-19729673",
+      "date": "2026-11-19",
+      "status": "proposed"
+    },
+    {
+      "id": "cdxgen-4499",
+      "project": "cdxgen",
+      "org": "cdxgen",
+      "area": "SBOM / supply chain",
+      "title": "Reproduced cdxgen #4499 (node_modules walk lists subpath package.json manifests as components) on 13.8.0 and master 9b5f786, with root cause, a structural filter and a lockfile workaround",
+      "url": "https://github.com/cdxgen/cdxgen/discussions/4499#discussioncomment-19729676",
+      "date": "2026-11-19",
+      "status": "proposed"
+    },
+    {
+      "id": "agent-governance-toolkit-4560",
+      "project": "agent-governance-toolkit",
+      "org": "microsoft",
+      "area": "AI agent security",
+      "title": "Mapped Agentmetry's AGT FileAuditSink importer against AGT HEAD: decision-vs-execution conflation, unkeyed chain checks, and the fields FileAuditSink drops",
+      "url": "https://github.com/microsoft/agent-governance-toolkit/discussions/4560#discussioncomment-19729679",
+      "date": "2026-11-19",
+      "status": "proposed"
+    },
+    {
+      "id": "openssl-33480",
+      "project": "openssl",
+      "org": "openssl",
+      "area": "Cryptography / TLS library",
+      "title": "Answered the OpenSSL 3.5 LTS backport question for the method-store lock removal from the Stable Release Updates Policy, the 3.5.9 vs 4.1.0 code, and the project's explicit-fetch guidance",
+      "url": "https://github.com/openssl/openssl/discussions/33480#discussioncomment-19729681",
+      "date": "2026-11-19",
+      "status": "proposed"
+    },
+    {
       "id": "openssl-33179",
       "project": "openssl",
       "org": "openssl",
