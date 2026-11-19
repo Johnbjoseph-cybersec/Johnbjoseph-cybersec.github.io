@@ -1138,8 +1138,15 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 22,
+    "published": 23,
     "latest": [
+      {
+        "edition": 35,
+        "date": "2026-11-19",
+        "title": "EU sanctions pro-Russian DDoS group NoName057(16), in force 16 Nov",
+        "subtitle": "The Council added NoName057(16) to its cyber-attacks sanctions list, naming energy, industry, transport and water among its targets. Plus 15 more stories from AI security, patches, standards and enforcement",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 54,
         "date": "2026-11-18",
@@ -1174,22 +1181,15 @@
         "title": "Your privacy policy is not a notice, and a ticked box is not proof of consent",
         "subtitle": "What India's DPDP Rules ask of a notice, how to prove consent, and why withdrawal must be as easy as giving it",
         "url": "https://www.linkedin.com/pulse/your-privacy-policy-notice-ticked-box-proof-consent-joseph-vxxbc"
-      },
-      {
-        "edition": 28,
-        "date": "2026-11-12",
-        "title": "I read the EU's AI Act amendment to check one annex. Annex IV did not change",
-        "subtitle": "My first merged fix to sbom-tools, and what Regulation (EU) 2026/1744 means for your technical file",
-        "url": "https://www.linkedin.com/pulse/i-read-eus-ai-act-amendment-check-one-annex-iv-did-change-joseph-rbytf"
       }
     ]
   },
   "mindledger": {
-    "tokens": 350171607722,
-    "sessions": 13879,
-    "messages": 2163015,
-    "avg_30d": 5333715367,
-    "as_of": "2026-11-19 06:02 IST",
+    "tokens": 350191224811,
+    "sessions": 13887,
+    "messages": 2163419,
+    "avg_30d": 5315920684,
+    "as_of": "2026-11-19 08:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
