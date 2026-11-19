@@ -1265,6 +1265,516 @@
       }
     }
   ],
+  "achievements": {
+    "badges": [
+      {
+        "slug": "quickdraw",
+        "name": "Quickdraw",
+        "tier": "",
+        "img": "assets/home/img/achievements/gh-quickdraw-default-39c6aec8ff89.png",
+        "blurb": "Closed an issue within five minutes of opening it"
+      },
+      {
+        "slug": "galaxy-brain",
+        "name": "Galaxy Brain",
+        "tier": "",
+        "img": "assets/home/img/achievements/gh-galaxy-brain-default-847262c21056.png",
+        "blurb": "Answers accepted in GitHub Discussions"
+      },
+      {
+        "slug": "starstruck",
+        "name": "Starstruck",
+        "tier": "",
+        "img": "assets/home/img/achievements/gh-starstruck-default-b6610abad518.png",
+        "blurb": "A repository that people starred"
+      },
+      {
+        "slug": "pull-shark",
+        "name": "Pull Shark",
+        "tier": "x2",
+        "img": "assets/home/img/achievements/gh-pull-shark-bronze-a37accb528d1.png",
+        "blurb": "Pull requests merged by maintainers"
+      }
+    ],
+    "tiles": [
+      {
+        "key": "security.utexas.edu",
+        "name": "University of Texas at Austin",
+        "sub": "Security Hall of Fame",
+        "logo": "assets/home/img/achievements/site-security-utexas-edu.png",
+        "kinds": [
+          "recognised"
+        ],
+        "items": [
+          {
+            "title": "Recognised in the University of Texas at Austin Security Hall of Fame (2026) for responsibly disclosing a dangling AWS Elastic Beanstalk CNAME (subdomain takeover candidate) on a utexas.edu host; UT ISO removed the record",
+            "url": "https://security.utexas.edu/hall-of-fame",
+            "date": "2026-11-19",
+            "kind": "recognised",
+            "project": "University of Texas at Austin - Security Hall of Fame"
+          }
+        ],
+        "merged": 0,
+        "accepted": 0,
+        "recognised": 1,
+        "date": "2026-11-19"
+      },
+      {
+        "key": "owasp",
+        "name": "OWASP",
+        "sub": "github.com/OWASP",
+        "logo": "assets/home/img/achievements/org-owasp.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Corrected the OWASP AI Exchange privacy page to the adopted EU AI Act (Regulation (EU) 2024/1689) and fixed EDPB and Article 29 Working Party attributions",
+            "url": "https://github.com/OWASP/www-project-ai-security-and-privacy-guide/pull/285",
+            "date": "2026-11-17",
+            "kind": "merged",
+            "project": "www-project-ai-security-and-privacy-guide"
+          },
+          {
+            "title": "Corrected the OWASP Web Security Testing Guide's post-quantum certificate advice against the CA/Browser Forum Baseline Requirements",
+            "url": "https://github.com/OWASP/wstg/pull/1680",
+            "date": "2026-11-14",
+            "kind": "merged",
+            "project": "wstg"
+          },
+          {
+            "title": "Add LLM10: personal data retained by a third-party LLM provider (new pytm threat + 3 tests; makes LLM.retainsUserData produce a finding)",
+            "url": "https://github.com/OWASP/pytm/pull/394",
+            "date": "2026-11-14",
+            "kind": "merged",
+            "project": "pytm"
+          },
+          {
+            "title": "TLS Cheat Sheet: post-quantum X25519MLKEM768 configs need OpenSSL 3.5+; reproduced the failure on OpenSSL 3.0 for NGINX, Apache and openssl.cnf",
+            "url": "https://github.com/OWASP/CheatSheetSeries/pull/2963",
+            "date": "2026-11-13",
+            "kind": "merged",
+            "project": "CheatSheetSeries"
+          }
+        ],
+        "merged": 4,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-17"
+      },
+      {
+        "key": "wshobson",
+        "name": "agents",
+        "sub": "by wshobson on GitHub",
+        "logo": "assets/home/img/achievements/org-wshobson.png",
+        "kinds": [
+          "merged",
+          "accepted"
+        ],
+        "items": [
+          {
+            "title": "Updated the pci-compliance skill in wshobson/agents to the PCI DSS v4.0.1 requirement titles and goal headings, at the maintainer's request",
+            "url": "https://github.com/wshobson/agents/pull/831",
+            "date": "2026-11-18",
+            "kind": "merged",
+            "project": "agents"
+          },
+          {
+            "title": "Flagged PCI DSS requirement titles in the pci-compliance skill that are no longer current",
+            "url": "https://github.com/wshobson/agents/issues/821",
+            "date": "2026-11-10",
+            "kind": "accepted",
+            "project": "agents"
+          }
+        ],
+        "merged": 1,
+        "accepted": 1,
+        "recognised": 0,
+        "date": "2026-11-18"
+      },
+      {
+        "key": "google",
+        "name": "Google",
+        "sub": "github.com/google",
+        "logo": "assets/home/img/achievements/org-google.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Fixed an expiry boundary in Google's CAGE engine so a single-use authority token is refused at its expiry second, matching RFC 7519",
+            "url": "https://github.com/google/cybernetic-agent-governance-engine/pull/777",
+            "date": "2026-11-16",
+            "kind": "merged",
+            "project": "cybernetic-agent-governance-engine"
+          },
+          {
+            "title": "Fixed card-number redaction in Google's CAGE agent-governance engine so JCB, Diners and Discover 644-649 numbers no longer reach the audit ledger unredacted",
+            "url": "https://github.com/google/cybernetic-agent-governance-engine/pull/763",
+            "date": "2026-11-15",
+            "kind": "merged",
+            "project": "cybernetic-agent-governance-engine"
+          }
+        ],
+        "merged": 2,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-16"
+      },
+      {
+        "key": "balanov",
+        "name": "uncut",
+        "sub": "by Balanov on GitHub",
+        "logo": "assets/home/img/achievements/org-balanov.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Follow-up to the uncut cancellation fix: probe the process group before signalling, so a cancel that races with Wait never hits a recycled pid; two new tests",
+            "url": "https://github.com/Balanov/uncut/pull/8",
+            "date": "2026-11-14",
+            "kind": "merged",
+            "project": "uncut"
+          },
+          {
+            "title": "Fixed uncut's cancel so it stops the whole process group, not just the parent process; merged as-is by the maintainer via PR #7",
+            "url": "https://github.com/Balanov/uncut/pull/6",
+            "date": "2026-11-13",
+            "kind": "merged",
+            "project": "uncut"
+          }
+        ],
+        "merged": 2,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-14"
+      },
+      {
+        "key": "cdxgen",
+        "name": "OWASP cdxgen",
+        "sub": "github.com/cdxgen",
+        "logo": "assets/home/img/achievements/org-cdxgen.png",
+        "kinds": [
+          "accepted"
+        ],
+        "items": [
+          {
+            "title": "Found and fixed (fix branch linked) a cdxgen CBOM bug: DSA signature names took their digest family, so the post-quantum risk check skipped them",
+            "url": "https://github.com/cdxgen/cdxgen/issues/4793",
+            "date": "2026-11-13",
+            "kind": "accepted",
+            "project": "cdxgen"
+          },
+          {
+            "title": "Found and fixed (fix branch linked) a cdxgen CBOM bug: OpenSSL CCM8 TLS cipher suites were recorded as AES-CBC",
+            "url": "https://github.com/cdxgen/cdxgen/issues/4794",
+            "date": "2026-11-13",
+            "kind": "accepted",
+            "project": "cdxgen"
+          }
+        ],
+        "merged": 0,
+        "accepted": 2,
+        "recognised": 0,
+        "date": "2026-11-13"
+      },
+      {
+        "key": "h4ckf0r0day",
+        "name": "obscura",
+        "sub": "by h4ckf0r0day on GitHub",
+        "logo": "assets/home/img/achievements/org-h4ckf0r0day.png",
+        "kinds": [
+          "merged",
+          "accepted"
+        ],
+        "items": [
+          {
+            "title": "Corrected Obscura's documented SSRF deny-set against the engine's is_forbidden_ip, adding the CGNAT, IPv6 link-local and special-purpose ranges it actually blocks",
+            "url": "https://github.com/h4ckf0r0day/obscura/pull/1513",
+            "date": "2026-11-11",
+            "kind": "merged",
+            "project": "obscura"
+          },
+          {
+            "title": "Reported that Obscura's fetch command crashes with exit code 1 when its output is piped to a command that stops reading early, such as head or grep -q",
+            "url": "https://github.com/h4ckf0r0day/obscura/issues/1531",
+            "date": "2026-11-11",
+            "kind": "accepted",
+            "project": "obscura"
+          }
+        ],
+        "merged": 1,
+        "accepted": 1,
+        "recognised": 0,
+        "date": "2026-11-11"
+      },
+      {
+        "key": "w3c",
+        "name": "World Wide Web Consortium",
+        "sub": "github.com/w3c",
+        "logo": "assets/home/img/achievements/org-w3c.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Scoped the W3C DID Resolution HTTPS-binding conformance requirement to network-based resolvers, the fix agreed in #360",
+            "url": "https://github.com/w3c/did-resolution/pull/406",
+            "date": "2026-11-18",
+            "kind": "merged",
+            "project": "did-resolution"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-18"
+      },
+      {
+        "key": "tencent",
+        "name": "Tencent",
+        "sub": "github.com/Tencent",
+        "logo": "assets/home/img/achievements/org-tencent.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Added MCP Inspector detection and its critical CVE-2025-49596 rule to Tencent's AI-Infra-Guard scanner",
+            "url": "https://github.com/Tencent/AI-Infra-Guard/pull/768",
+            "date": "2026-11-16",
+            "kind": "merged",
+            "project": "AI-Infra-Guard"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-16"
+      },
+      {
+        "key": "msoedov",
+        "name": "agentic_security",
+        "sub": "by msoedov on GitHub",
+        "logo": "assets/home/img/achievements/org-msoedov.jpg",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Moved agentic_security's OWASP probe badges from the superseded 2023/24 LLM Top 10 to the 2025 list, with tests per mapping",
+            "url": "https://github.com/msoedov/agentic_security/pull/385",
+            "date": "2026-11-16",
+            "kind": "merged",
+            "project": "agentic_security"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-16"
+      },
+      {
+        "key": "ukgovernmentbeis",
+        "name": "UK AI Security Institute",
+        "sub": "github.com/UKGovernmentBEIS",
+        "logo": "assets/home/img/achievements/org-ukgovernmentbeis.jpg",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Listed John's inspect-oscal (on PyPI) in the UK AI Security Institute's Inspect extensions catalogue: eval logs to OSCAL assessment-results mapped to NIST AI RMF",
+            "url": "https://github.com/UKGovernmentBEIS/inspect_ai/pull/6545",
+            "date": "2026-11-13",
+            "kind": "merged",
+            "project": "inspect_ai"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-13"
+      },
+      {
+        "key": "only-cli",
+        "name": "oc",
+        "sub": "by only-cli on GitHub",
+        "logo": "assets/home/img/achievements/org-only-cli.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Fixed site-verb lookup in the oc AI-agent web CLI so inherited object names get the proper usage message, with a test",
+            "url": "https://github.com/only-cli/oc/pull/137",
+            "date": "2026-11-13",
+            "kind": "merged",
+            "project": "oc"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-13"
+      },
+      {
+        "key": "punkpeye",
+        "name": "fastmcp",
+        "sub": "by punkpeye on GitHub",
+        "logo": "assets/home/img/achievements/org-punkpeye.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Capped the EdgeFastMCP request body at 4 MiB so an unauthenticated caller cannot make the MCP server buffer an unbounded body",
+            "url": "https://github.com/punkpeye/fastmcp/pull/526",
+            "date": "2026-11-13",
+            "kind": "merged",
+            "project": "fastmcp"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-13"
+      },
+      {
+        "key": "caru-ini",
+        "name": "stack-diagram",
+        "sub": "by caru-ini on GitHub",
+        "logo": "assets/home/img/achievements/org-caru-ini.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Fixed a proof-of-work parity bug in stack-diagram's gallery (server clamped to 32 bits while its own Python client refuses over 26); added a regression test, full suite green",
+            "url": "https://github.com/caru-ini/stack-diagram/pull/8",
+            "date": "2026-11-11",
+            "kind": "merged",
+            "project": "stack-diagram"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-11"
+      },
+      {
+        "key": "sushegaad",
+        "name": "Claude Skills for GRC",
+        "sub": "by Sushegaad on GitHub",
+        "logo": "assets/home/img/achievements/org-sushegaad.jpg",
+        "kinds": [
+          "accepted"
+        ],
+        "items": [
+          {
+            "title": "Corrected the NIST AI RMF skill's GOVERN 3, 5 and 6 subcategories against NIST AI 100-1 Table 1 (19 subcategories, not 21)",
+            "url": "https://github.com/Sushegaad/Claude-Skills-Governance-Risk-and-Compliance/issues/62",
+            "date": "2026-11-10",
+            "kind": "accepted",
+            "project": "Claude Skills for GRC"
+          }
+        ],
+        "merged": 0,
+        "accepted": 1,
+        "recognised": 0,
+        "date": "2026-11-10"
+      },
+      {
+        "key": "alirezarezvani",
+        "name": "claude-skills",
+        "sub": "by alirezarezvani on GitHub",
+        "logo": "assets/home/img/achievements/org-alirezarezvani.jpg",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Corrected the EU AI Act specialist skill's Article 43(1) conformity route for Annex III biometrics systems",
+            "url": "https://github.com/alirezarezvani/claude-skills/pull/1121",
+            "date": "2026-11-10",
+            "kind": "merged",
+            "project": "claude-skills"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-10"
+      },
+      {
+        "key": "shorlist",
+        "name": "ShorList",
+        "sub": "github.com/shorlist",
+        "logo": "assets/home/img/achievements/org-shorlist.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Added 11 rows to ShorList for generic PEM keys and certificates and for ML-KEM-768 and ML-DSA-65 key files as OpenSSL writes them, each with a primary source",
+            "url": "https://github.com/shorlist/shorlist/pull/2",
+            "date": "2026-11-10",
+            "kind": "merged",
+            "project": "ShorList"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-10"
+      },
+      {
+        "key": "stanimirtenev",
+        "name": "qrp-mcp",
+        "sub": "by StanimirTenev on GitHub",
+        "logo": "assets/home/img/achievements/org-stanimirtenev.jpg",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Made the scanner read a post-quantum key's parameter set (ML-KEM-768, ML-DSA-65) from its identifier, so CNSA 2.0 and national profile checks see key and certificate files",
+            "url": "https://github.com/StanimirTenev/qrp-mcp/pull/15",
+            "date": "2026-11-09",
+            "kind": "merged",
+            "project": "qrp-mcp"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-09"
+      },
+      {
+        "key": "sbom-tool",
+        "name": "SBOM-Tools",
+        "sub": "github.com/sbom-tool",
+        "logo": "assets/home/img/achievements/org-sbom-tool.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Confirmed EU AI Act Annex IV against the Official Journal text of Regulation (EU) 2026/1744, closing an open item in the project's standards record",
+            "url": "https://github.com/sbom-tool/sbom-tools/pull/450",
+            "date": "2026-11-04",
+            "kind": "merged",
+            "project": "sbom-tools"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-04"
+      }
+    ]
+  },
   "youtube": {
     "url": "https://www.youtube.com/@GRCMadeSimple",
     "latest": [

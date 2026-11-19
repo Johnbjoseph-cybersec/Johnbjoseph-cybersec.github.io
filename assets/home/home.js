@@ -59,13 +59,13 @@
       [['all', 'Latest'], ['won', 'Contributions accepted'], ['open', 'In review']].forEach(function (t) {
         var b = el('button', 'ledger__tab', t[1] + ' (' + sets[t[0]].length + ')'); b.type = 'button';
         b.setAttribute('role', 'tab'); b.setAttribute('data-view', t[0]);
-        b.addEventListener('click', function () { view = t[0]; expanded = false; draw(); });
+        b.addEventListener('click', function () { view = t[0]; expanded = false; redraw(); });
         tabs.appendChild(b);
       });
       bar.appendChild(sum); bar.appendChild(tabs);
       box.parentNode.insertBefore(bar, box);
       var more = el('button', 'ledger__more'); more.type = 'button';
-      more.addEventListener('click', function () { expanded = !expanded; draw(); });
+      more.addEventListener('click', function () { expanded = !expanded; redraw(); });
       box.parentNode.insertBefore(more, box.nextSibling);
       function row(c) {
         var a = el('a', 'ledger__row'); a.href = c.url; a.target = '_blank'; a.rel = 'noopener';
@@ -114,6 +114,8 @@
         more.hidden = units.length <= LIMIT;
         more.textContent = expanded ? 'Show fewer' : 'Show all ' + units.length + ' projects';
       }
+      // the list changes height: re-measure every scroll trigger below it so nothing fires early
+      function redraw() { draw(); if (window.ScrollTrigger) requestAnimationFrame(function () { ScrollTrigger.refresh(); }); }
       draw();
       document.getElementById('ledgerFoot').textContent = 'Status is taken from each public thread, and every row links to it.';
     });
@@ -307,7 +309,8 @@
   /* ---------------- transitions between sections ---------------- */
   // Leaving sections shrink, lift and dim under the next one, so each band hands over instead of just ending.
   function initSectionLeave() {
-    var secs = gsap.utils.toArray('#work, #crosswalk, #open, #newsletter, #lab, #lab-stories, #videos, #speaking');
+    // #open and #achievements are lists people read to the end: never fade them (John, 2026-11-19)
+    var secs = gsap.utils.toArray('#work, #crosswalk, #newsletter, #lab, #lab-stories, #videos, #speaking');
     secs.forEach(function (sec) {
       gsap.fromTo(sec, { scale: 1, autoAlpha: 1, yPercent: 0 }, { scale: 0.95, autoAlpha: 0.3, yPercent: -3, transformOrigin: '50% 100%', ease: 'none',
         scrollTrigger: { trigger: sec, start: 'bottom 70%', end: 'bottom 2%', scrub: 0.5 } });
@@ -646,6 +649,18 @@
       safe('refresh', function () { if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ScrollTrigger.refresh(); }); });
     }
   }
+  // achievements wall filter (static HTML from the builder; works without data or GSAP)
+  (function () {
+    var wall = document.getElementById('achWall'); if (!wall) return;
+    wall.addEventListener('click', function (e) {
+      var b = e.target.closest('.ach__tab'); if (!b) return;
+      var f = b.getAttribute('data-f');
+      wall.querySelectorAll('.ach__tab').forEach(function (x) { var on = x === b; x.classList.toggle('is-on', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      wall.querySelectorAll('.ach').forEach(function (t) { t.hidden = !(f === 'all' || (' ' + t.getAttribute('data-kind') + ' ').indexOf(' ' + f + ' ') > -1); });
+      var bw = wall.querySelector('.ach__badges'); if (bw) bw.hidden = !(f === 'all' || f === 'badges');
+      if (window.ScrollTrigger) requestAnimationFrame(function () { ScrollTrigger.refresh(); });
+    });
+  })();
   var done = false, hydrated = false;
   function go() { if (done) return; done = true; if (DATA) { hydrated = true; safe('hydrate', function () { hydrate(DATA); }); } boot(); }
   // data that lands after the cut-off (slow phone, throttled network) is still drawn, just without entrance motion
