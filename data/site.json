@@ -79,7 +79,9 @@
       "title": "Mapped Agentmetry's AGT FileAuditSink importer against AGT HEAD: decision-vs-execution conflation, unkeyed chain checks, and the fields FileAuditSink drops",
       "url": "https://github.com/microsoft/agent-governance-toolkit/discussions/4560#discussioncomment-19729679",
       "date": "2026-11-19",
-      "status": "proposed"
+      "status": "proposed",
+      "maintainer_engaged": "2026-11-19",
+      "engagement_note": "Agentmetry author (Ioannis Loutsis) confirmed both reported issues (mapping and verification) and is building a govern() fixture plus separate chain-consistency and HMAC reporting from John's cases."
     },
     {
       "id": "openssl-33480",
@@ -88,6 +90,26 @@
       "area": "Cryptography / TLS library",
       "title": "Answered the OpenSSL 3.5 LTS backport question for the method-store lock removal from the Stable Release Updates Policy, the 3.5.9 vs 4.1.0 code, and the project's explicit-fetch guidance",
       "url": "https://github.com/openssl/openssl/discussions/33480#discussioncomment-19729681",
+      "date": "2026-11-19",
+      "status": "proposed"
+    },
+    {
+      "id": "lynis-1821",
+      "project": "lynis",
+      "org": "CISOfy",
+      "area": "PQC",
+      "title": "SSH-7410: check that sshd offers a post-quantum hybrid key exchange",
+      "url": "https://github.com/CISOfy/lynis/pull/1821",
+      "date": "2026-11-19",
+      "status": "proposed"
+    },
+    {
+      "id": "ai-atlas-nexus-335",
+      "project": "ai-atlas-nexus",
+      "org": "IBM",
+      "area": "AI governance",
+      "title": "Added India's RBI FREE-AI Seven Sutras to IBM's AI Atlas Nexus knowledge graph, next to the Australian, OECD and UN AI principles",
+      "url": "https://github.com/IBM/ai-atlas-nexus/pull/335",
       "date": "2026-11-19",
       "status": "proposed"
     },
@@ -1247,11 +1269,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 350855892440,
-    "sessions": 13946,
-    "messages": 2169226,
-    "avg_30d": 5274409883,
-    "as_of": "2026-11-19 12:03 IST",
+    "tokens": 351357830118,
+    "sessions": 13989,
+    "messages": 2174378,
+    "avg_30d": 5147819642,
+    "as_of": "2026-11-19 14:04 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
