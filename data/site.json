@@ -116,7 +116,7 @@
       "maintainer_engaged": "2026-11-19",
       "note": "Maintainer ingelise (Inge) approved then MERGED into main 2026-11-19 (compilation + tests passing). India's RBI FREE-AI Seven Sutras now in IBM AI Atlas Nexus beside OECD/UN/Australian AI principles. Inge invited a follow-on issue linking the Sutras to OECD principles via sssom.tsv + the Recommendation class.",
       "merged": "2026-11-19",
-      "followon_status": "issue drafted + fact-gate CLEAR (RBI rbi.org.in ID=1306 + cited OECD verified 2026-11-20); 9-row SSSOM crosswalk, 3 close/1 broad/5 related; Sutra 1 unmapped, Sutra 3->1.1 flagged droppable; Recommendation-class question raised for Inge. Awaiting John go to open the issue."
+      "followon_status": "Issue #336 opened 2026-11-20 at maintainer @ingelise's invitation: https://github.com/IBM/ai-atlas-nexus/issues/336 - SSSOM crosswalk + Recommendation-class question. Fact-gate CLEAR."
     },
     {
       "id": "icsnpp-dnp3-20",
@@ -619,7 +619,8 @@
       "status": "accepted",
       "accepted": "2026-11-18",
       "maintainer_engaged": "2026-11-19",
-      "engagement_note": "OP cullenmeyers MARKED John answer as THE accepted answer 2026-11-18 (where a downstream relying-party claim belongs relative to AGT receipts: a separate in-toto/SCITT attestation whose subject is the evidence digest, not inside the receipt). On 2026-11-19 zambodotdev (Brennan Zambo) publicly corroborated it with a production handover system (AER-1 receipts; separate handover object; claim as a separate recorded act bound to receipt digests) and raised the multi-reviewer design edge for BoundaryAttest to pin down. | John replied to zambodotdev 2026-11-19 distinguishing custody-acceptance (exclusive) from reliance/review claims (plural, append-only) - resolves the multi-reviewer edge: https://github.com/microsoft/agent-governance-toolkit/discussions/4564#discussioncomment-19757907"
+      "engagement_note": "OP cullenmeyers MARKED John answer as THE accepted answer 2026-11-18 (where a downstream relying-party claim belongs relative to AGT receipts: a separate in-toto/SCITT attestation whose subject is the evidence digest, not inside the receipt). On 2026-11-19 zambodotdev (Brennan Zambo) publicly corroborated it with a production handover system (AER-1 receipts; separate handover object; claim as a separate recorded act bound to receipt digests) and raised the multi-reviewer design edge for BoundaryAttest to pin down. | John replied to zambodotdev 2026-11-19 distinguishing custody-acceptance (exclusive) from reliance/review claims (plural, append-only) - resolves the multi-reviewer edge: https://github.com/microsoft/agent-governance-toolkit/discussions/4564#discussioncomment-19757907",
+      "closing_reply": "Closing reply posted 2026-11-20 (discussioncomment-19760006) after @zambodotdev publicly confirmed the custody-vs-reliance split; answer remains accepted."
     },
     {
       "id": "go-chain-18-ans",
@@ -2102,7 +2103,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-20 02:08 IST"
+    "as_of": "2026-11-20 03:47 IST"
   },
   "updated": "2026-11-20"
 }
