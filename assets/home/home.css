@@ -72,7 +72,7 @@ h1, h2, h3, .panel__h, .feed__h, .eyebrow, .proof__l, .proof__src, .ach__count, 
 @media (max-width: 1080px) { .nav__links { display: none; } }
 
 /* ---------- hero + proof strip ---------- */
-.hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding-top: 64px; isolation: isolate; overflow: clip; }
+.hero { position: relative; min-height: min(100svh, 960px); display: flex; flex-direction: column; justify-content: flex-end; padding-top: 64px; isolation: isolate; overflow: clip; }
 .hero::before { content: ""; position: absolute; inset: 0; z-index: -2; background: radial-gradient(55% 60% at 26% 46%, rgba(254, 189, 89, .08), transparent 70%); }
 .hero__field { position: absolute; left: 0; right: 0; bottom: 0; height: 62%; width: 100%; z-index: -1; opacity: .75; pointer-events: none; }
 .hero__grid { flex: 1; display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); align-items: center; gap: clamp(20px, 3vw, 56px); width: 100%; }
