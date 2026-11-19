@@ -111,10 +111,11 @@
       "title": "Added India's RBI FREE-AI Seven Sutras to IBM's AI Atlas Nexus knowledge graph, next to the Australian, OECD and UN AI principles",
       "url": "https://github.com/IBM/ai-atlas-nexus/pull/335",
       "date": "2026-11-19",
-      "status": "approved",
+      "status": "merged",
       "approved": "2026-11-19",
       "maintainer_engaged": "2026-11-19",
-      "note": "Maintainer ingelise (Inge) approved - compilation + tests passing; invited follow-on linking the Sutras to OECD principles (sssom.tsv) + Recommendation class. Awaiting merge."
+      "note": "Maintainer ingelise (Inge) approved then MERGED into main 2026-11-19 (compilation + tests passing). India's RBI FREE-AI Seven Sutras now in IBM AI Atlas Nexus beside OECD/UN/Australian AI principles. Inge invited a follow-on issue linking the Sutras to OECD principles via sssom.tsv + the Recommendation class.",
+      "merged": "2026-11-19"
     },
     {
       "id": "icsnpp-dnp3-20",
@@ -1613,6 +1614,28 @@
         "date": "2026-11-11"
       },
       {
+        "key": "ibm",
+        "name": "International Business Machines",
+        "sub": "github.com/IBM",
+        "logo": "assets/home/img/achievements/org-ibm.jpg",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Added India's RBI FREE-AI Seven Sutras to IBM's AI Atlas Nexus knowledge graph, next to the Australian, OECD and UN AI principles",
+            "url": "https://github.com/IBM/ai-atlas-nexus/pull/335",
+            "date": "2026-11-19",
+            "kind": "merged",
+            "project": "ai-atlas-nexus"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-19"
+      },
+      {
         "key": "w3c",
         "name": "World Wide Web Consortium",
         "sub": "github.com/w3c",
@@ -1971,7 +1994,7 @@
         "id": "VsZ54SHovJU",
         "title": "How to Build a Practical GRC Program from Scratch | With Moses Omolaiye (Founder, MitigateIT)",
         "date": "2026-02-21",
-        "views": 2386
+        "views": 2387
       },
       {
         "id": "BGTiXGaMhLU",
@@ -2006,7 +2029,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-19 20:40 IST"
+    "as_of": "2026-11-19 21:51 IST"
   },
   "updated": "2026-11-19"
 }
