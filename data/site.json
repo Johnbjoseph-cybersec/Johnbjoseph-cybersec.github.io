@@ -114,6 +114,16 @@
       "status": "proposed"
     },
     {
+      "id": "icsnpp-dnp3-20",
+      "project": "icsnpp-dnp3",
+      "org": "cisagov",
+      "area": "OT monitoring (DNP3)",
+      "title": "Log DNP3 point values to dnp3_point_values.log",
+      "url": "https://github.com/cisagov/icsnpp-dnp3/pull/20",
+      "date": "2026-11-19",
+      "status": "proposed"
+    },
+    {
       "id": "openssl-33179",
       "project": "openssl",
       "org": "openssl",
