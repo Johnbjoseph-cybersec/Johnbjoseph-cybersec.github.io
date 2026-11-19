@@ -115,7 +115,8 @@
       "approved": "2026-11-19",
       "maintainer_engaged": "2026-11-19",
       "note": "Maintainer ingelise (Inge) approved then MERGED into main 2026-11-19 (compilation + tests passing). India's RBI FREE-AI Seven Sutras now in IBM AI Atlas Nexus beside OECD/UN/Australian AI principles. Inge invited a follow-on issue linking the Sutras to OECD principles via sssom.tsv + the Recommendation class.",
-      "merged": "2026-11-19"
+      "merged": "2026-11-19",
+      "followon_status": "issue drafted + fact-gate CLEAR (RBI rbi.org.in ID=1306 + cited OECD verified 2026-11-20); 9-row SSSOM crosswalk, 3 close/1 broad/5 related; Sutra 1 unmapped, Sutra 3->1.1 flagged droppable; Recommendation-class question raised for Inge. Awaiting John go to open the issue."
     },
     {
       "id": "icsnpp-dnp3-20",
@@ -1299,11 +1300,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 352078408620,
-    "sessions": 14172,
-    "messages": 2183403,
-    "avg_30d": 5030320126,
-    "as_of": "2026-11-20 00:03 IST",
+    "tokens": 352136565002,
+    "sessions": 14201,
+    "messages": 2184669,
+    "avg_30d": 5032314096,
+    "as_of": "2026-11-20 02:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -2078,7 +2079,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-20 01:28 IST"
+    "as_of": "2026-11-20 02:05 IST"
   },
   "updated": "2026-11-20"
 }
