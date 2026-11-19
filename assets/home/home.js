@@ -51,12 +51,12 @@
       var sets = { won: won, open: open, all: list };
       var bar = el('div', 'ledger__bar');
       var sum = el('p', 'ledger__sum');
-      [[list.length, 'contributions'], [won.length, 'merged or accepted'], [nProj, 'projects']].forEach(function (x, i) {
+      [[list.length, 'contributions'], [won.length, 'accepted'], [nProj, 'projects']].forEach(function (x, i) {
         if (i) sum.appendChild(el('span', 'ledger__dot', '\u00b7'));
         var b = el('b', null, String(x[0])); sum.appendChild(b); sum.appendChild(document.createTextNode(' ' + x[1]));
       });
       var tabs = el('div', 'ledger__tabs'); tabs.setAttribute('role', 'tablist');
-      [['all', 'Latest'], ['won', 'Merged & accepted'], ['open', 'In review']].forEach(function (t) {
+      [['all', 'Latest'], ['won', 'Contributions accepted'], ['open', 'In review']].forEach(function (t) {
         var b = el('button', 'ledger__tab', t[1] + ' (' + sets[t[0]].length + ')'); b.type = 'button';
         b.setAttribute('role', 'tab'); b.setAttribute('data-view', t[0]);
         b.addEventListener('click', function () { view = t[0]; expanded = false; draw(); });
@@ -90,7 +90,7 @@
         var p = el('span', 'ledger__proj', items[0].project); p.appendChild(el('small', null, items[0].org)); sum.appendChild(p);
         var won = items.filter(isWon).length;
         var sameArea = items.every(function (c) { return c.area === items[0].area; });
-        var what = items.length + ' contributions' + (sameArea && items[0].area ? ' in ' + items[0].area : '') + (won ? ' · ' + won + ' merged or accepted' : '');
+        var what = items.length + ' contributions' + (sameArea && items[0].area ? ' in ' + items[0].area : '') + (won ? ' · ' + won + ' accepted' : '');
         sum.appendChild(el('span', 'ledger__what', what));
         var st = groupStatus(items), label = st === 'merged' ? 'Merged' : st === 'accepted' ? 'Accepted' : 'Open';
         sum.appendChild(el('span', 'chip chip--' + st, label));
