@@ -998,7 +998,7 @@ body::after { display: none; }                     /* no film grain */
 .ach__who b { font-weight: 650; font-size: 17px; letter-spacing: -.015em; line-height: 1.2; overflow-wrap: anywhere; }
 .ach__who small { font: 400 12px/1.3 var(--mono); color: var(--dim); overflow-wrap: anywhere; }
 .ach__count { font: 500 11.5px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ok); }
-.ach--star .ach__count { color: var(--accent); }
+.ach--star .ach__count { color: var(--ok); }
 .ach__list { list-style: none; display: flex; flex-direction: column; gap: 2px; margin: 0 -10px; }
 .ach__list a { display: grid; gap: 5px; padding: 10px; border-radius: 10px; transition: background .2s; }
 .ach__list a:hover { background: rgba(255, 255, 255, .035); }
@@ -1007,7 +1007,7 @@ body::after { display: none; }                     /* no film grain */
 .ach--star .ach__t { font-size: 16px; -webkit-line-clamp: 4; }
 .ach__meta { display: flex; align-items: center; gap: 10px; font: 400 11.5px/1 var(--mono); color: var(--dim); }
 .ach__meta .chip { padding: 5px 8px; font-size: 10px; }
-.chip--recognised { border-color: rgba(254, 189, 89, .55); color: var(--accent); }
+.chip--recognised { border-color: rgba(60, 207, 145, .55); color: var(--ok); }
 .ach__more { font: 400 12px/1.4 var(--mono); color: var(--dim); margin-top: auto; }
 .ach__src { margin-top: 22px; font: 400 12px/1.5 var(--mono); color: var(--dim); }
 .ach[hidden], .badge[hidden], .ach__badges[hidden] { display: none; }
