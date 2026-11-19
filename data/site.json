@@ -615,7 +615,10 @@
       "title": "Answered where downstream relying-party review claims belong relative to AGT compliance receipts (in-toto + SCITT)",
       "url": "https://github.com/microsoft/agent-governance-toolkit/discussions/4564#discussioncomment-19590528",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "accepted",
+      "accepted": "2026-11-18",
+      "maintainer_engaged": "2026-11-19",
+      "engagement_note": "OP cullenmeyers MARKED John answer as THE accepted answer 2026-11-18 (where a downstream relying-party claim belongs relative to AGT receipts: a separate in-toto/SCITT attestation whose subject is the evidence digest, not inside the receipt). On 2026-11-19 zambodotdev (Brennan Zambo) publicly corroborated it with a production handover system (AER-1 receipts; separate handover object; claim as a separate recorded act bound to receipt digests) and raised the multi-reviewer design edge for BoundaryAttest to pin down."
     },
     {
       "id": "go-chain-18-ans",
@@ -1790,6 +1793,28 @@
         "date": "2026-11-13"
       },
       {
+        "key": "microsoft",
+        "name": "Microsoft",
+        "sub": "github.com/microsoft",
+        "logo": "assets/home/img/achievements/org-microsoft.png",
+        "kinds": [
+          "accepted"
+        ],
+        "items": [
+          {
+            "title": "Answered where downstream relying-party review claims belong relative to AGT compliance receipts (in-toto + SCITT)",
+            "url": "https://github.com/microsoft/agent-governance-toolkit/discussions/4564#discussioncomment-19590528",
+            "date": "2026-11-13",
+            "kind": "accepted",
+            "project": "agent-governance-toolkit"
+          }
+        ],
+        "merged": 0,
+        "accepted": 1,
+        "recognised": 0,
+        "date": "2026-11-13"
+      },
+      {
         "key": "punkpeye",
         "name": "fastmcp",
         "sub": "by punkpeye on GitHub",
@@ -1994,7 +2019,7 @@
         "id": "VsZ54SHovJU",
         "title": "How to Build a Practical GRC Program from Scratch | With Moses Omolaiye (Founder, MitigateIT)",
         "date": "2026-02-21",
-        "views": 2387
+        "views": 2386
       },
       {
         "id": "BGTiXGaMhLU",
@@ -2029,7 +2054,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-19 21:51 IST"
+    "as_of": "2026-11-19 21:58 IST"
   },
   "updated": "2026-11-19"
 }
