@@ -7,6 +7,7 @@ This file lists the pages on this site and the public records behind it.
 ## This site
 
 - [Home](https://johnbjoseph-cybersec.github.io/): profile, open-source contributions, projects, newsletter and speaking
+- [Achievements](https://johnbjoseph-cybersec.github.io/#achievements): merged and accepted open-source work by organisation, the University of Texas at Austin Security Hall of Fame recognition, and GitHub achievement badges, each linked to its public record
 - [Site data](https://johnbjoseph-cybersec.github.io/data/site.json): the figures the home page shows, as JSON
 
 ## Profiles and channels
