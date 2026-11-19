@@ -618,7 +618,7 @@
       "status": "accepted",
       "accepted": "2026-11-18",
       "maintainer_engaged": "2026-11-19",
-      "engagement_note": "OP cullenmeyers MARKED John answer as THE accepted answer 2026-11-18 (where a downstream relying-party claim belongs relative to AGT receipts: a separate in-toto/SCITT attestation whose subject is the evidence digest, not inside the receipt). On 2026-11-19 zambodotdev (Brennan Zambo) publicly corroborated it with a production handover system (AER-1 receipts; separate handover object; claim as a separate recorded act bound to receipt digests) and raised the multi-reviewer design edge for BoundaryAttest to pin down."
+      "engagement_note": "OP cullenmeyers MARKED John answer as THE accepted answer 2026-11-18 (where a downstream relying-party claim belongs relative to AGT receipts: a separate in-toto/SCITT attestation whose subject is the evidence digest, not inside the receipt). On 2026-11-19 zambodotdev (Brennan Zambo) publicly corroborated it with a production handover system (AER-1 receipts; separate handover object; claim as a separate recorded act bound to receipt digests) and raised the multi-reviewer design edge for BoundaryAttest to pin down. | John replied to zambodotdev 2026-11-19 distinguishing custody-acceptance (exclusive) from reliance/review claims (plural, append-only) - resolves the multi-reviewer edge: https://github.com/microsoft/agent-governance-toolkit/discussions/4564#discussioncomment-19757907"
     },
     {
       "id": "go-chain-18-ans",
@@ -2078,7 +2078,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-20 00:23 IST"
+    "as_of": "2026-11-20 01:28 IST"
   },
   "updated": "2026-11-20"
 }
