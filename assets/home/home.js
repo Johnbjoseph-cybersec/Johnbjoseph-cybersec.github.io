@@ -165,7 +165,7 @@
       var who = t.querySelector('.ach__who b'), cnt = t.querySelector('.ach__count');
       if (who) t.setAttribute('aria-label', who.textContent + (cnt ? ', ' + cnt.textContent : '') + '. Press Tab to read each item.');
     });
-    // modules tile: all 44 names, opened in place
+    // modules tile: all 43 names, opened in place
     var mod = document.querySelector('.tile--modules');
     if (mod && !mod.querySelector('.xp__in')) {
       var w = el('div', 'xp__in'); while (mod.firstChild) w.appendChild(mod.firstChild); mod.appendChild(w);
