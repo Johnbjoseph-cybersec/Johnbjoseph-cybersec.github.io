@@ -111,7 +111,10 @@
       "title": "Added India's RBI FREE-AI Seven Sutras to IBM's AI Atlas Nexus knowledge graph, next to the Australian, OECD and UN AI principles",
       "url": "https://github.com/IBM/ai-atlas-nexus/pull/335",
       "date": "2026-11-19",
-      "status": "proposed"
+      "status": "approved",
+      "approved": "2026-11-19",
+      "maintainer_engaged": "2026-11-19",
+      "note": "Maintainer ingelise (Inge) approved - compilation + tests passing; invited follow-on linking the Sutras to OECD principles (sssom.tsv) + Recommendation class. Awaiting merge."
     },
     {
       "id": "icsnpp-dnp3-20",
@@ -327,7 +330,10 @@
       "title": "Fixed NVIDIA SkillSpector's MCP tool-poisoning rules to tag findings with the correct MITRE ATLAS technique (AML.T0110, not AML.T0080), with a regression test",
       "url": "https://github.com/NVIDIA/SkillSpector/pull/1134",
       "date": "2026-11-16",
-      "status": "proposed"
+      "status": "approved",
+      "maintainer_engaged": "2026-11-19",
+      "approved": "2026-11-19",
+      "note": "Maintainer rng1995 (Narendran Raghavan) approved; TP1-TP4 tool-poisoning findings now tagged MITRE ATLAS AML.T0110 (AI Agent Tool Poisoning). Awaiting merge."
     },
     {
       "id": "awesome-copilot-6451",
@@ -1977,7 +1983,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-19 20:06 IST"
+    "as_of": "2026-11-19 20:11 IST"
   },
   "updated": "2026-11-19"
 }
