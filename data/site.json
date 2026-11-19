@@ -1268,6 +1268,13 @@
   "achievements": {
     "badges": [
       {
+        "slug": "yolo",
+        "name": "YOLO",
+        "tier": "",
+        "img": "assets/home/img/achievements/gh-yolo-default-be0bbff04951.png",
+        "blurb": "Merged a pull request without a review"
+      },
+      {
         "slug": "quickdraw",
         "name": "Quickdraw",
         "tier": "",
