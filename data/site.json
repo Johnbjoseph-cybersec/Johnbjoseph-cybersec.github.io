@@ -820,7 +820,8 @@
       "title": "Fixed Cisco mcp-scanner's credential-harvesting YARA rule so it detects RSA, OpenSSH, EC and DSA private key headers, with tests",
       "url": "https://github.com/cisco-ai-defense/mcp-scanner/pull/308",
       "date": "2026-11-12",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-19"
     },
     {
       "id": "github-mcp-server-3825",
@@ -1862,6 +1863,28 @@
         "date": "2026-11-13"
       },
       {
+        "key": "cisco-ai-defense",
+        "name": "Cisco AI Defense",
+        "sub": "github.com/cisco-ai-defense",
+        "logo": "assets/home/img/achievements/org-cisco-ai-defense.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Fixed Cisco mcp-scanner's credential-harvesting YARA rule so it detects RSA, OpenSSH, EC and DSA private key headers, with tests",
+            "url": "https://github.com/cisco-ai-defense/mcp-scanner/pull/308",
+            "date": "2026-11-12",
+            "kind": "merged",
+            "project": "mcp-scanner"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-12"
+      },
+      {
         "key": "github",
         "name": "GitHub",
         "sub": "github.com/github",
@@ -2079,7 +2102,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-20 02:05 IST"
+    "as_of": "2026-11-20 02:08 IST"
   },
   "updated": "2026-11-20"
 }
