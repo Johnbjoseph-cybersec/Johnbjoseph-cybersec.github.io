@@ -31,6 +31,17 @@
   },
   "contributions": [
     {
+      "id": "utexas-hof-2026",
+      "project": "University of Texas at Austin - Security Hall of Fame",
+      "org": "utexas.edu",
+      "area": "Responsible disclosure",
+      "title": "Recognised in the University of Texas at Austin Security Hall of Fame (2026) for responsibly disclosing a dangling AWS Elastic Beanstalk CNAME (subdomain takeover candidate) on a utexas.edu host; UT ISO removed the record",
+      "url": "https://security.utexas.edu/hall-of-fame",
+      "date": "2026-11-19",
+      "status": "recognised",
+      "kind": "hall-of-fame"
+    },
+    {
       "id": "openssl-33179",
       "project": "openssl",
       "org": "openssl",
@@ -100,7 +111,8 @@
       "url": "https://github.com/w3c/did-resolution/pull/406",
       "date": "2026-11-18",
       "status": "merged",
-      "status_changed": "2026-11-18"
+      "status_changed": "2026-11-18",
+      "merged": "2026-11-19"
     },
     {
       "id": "w3c-vc-bitstring-status-list-201",
