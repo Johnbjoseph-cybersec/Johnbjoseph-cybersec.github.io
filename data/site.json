@@ -347,7 +347,9 @@
       "title": "Added the Composite ML-DSA signature family (RFC 10073, all 18 registered combinations) to the CycloneDX cryptography registry so a CBOM can name composite post-quantum certificates instead of recording them as other",
       "url": "https://github.com/CycloneDX/specification/pull/1219",
       "date": "2026-11-16",
-      "status": "proposed"
+      "status": "merged",
+      "merged": "2026-11-19",
+      "note": "Merged into master by Steve Springett (CycloneDX lead); approved by Basil Hess + Springett. Adds Composite ML-DSA (RFC 10073, post-quantum) to the CycloneDX cryptography registry."
     },
     {
       "id": "agent-control-standard-566",
@@ -1670,6 +1672,28 @@
         "date": "2026-11-16"
       },
       {
+        "key": "cyclonedx",
+        "name": "CycloneDX BOM Standard",
+        "sub": "github.com/CycloneDX",
+        "logo": "assets/home/img/achievements/org-cyclonedx.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Added the Composite ML-DSA signature family (RFC 10073, all 18 registered combinations) to the CycloneDX cryptography registry so a CBOM can name composite post-quantum certificates instead of recording them as other",
+            "url": "https://github.com/CycloneDX/specification/pull/1219",
+            "date": "2026-11-16",
+            "kind": "merged",
+            "project": "specification"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-16"
+      },
+      {
         "key": "ukgovernmentbeis",
         "name": "UK AI Security Institute",
         "sub": "github.com/UKGovernmentBEIS",
@@ -1898,7 +1922,7 @@
         "id": "4errQPTkgDA",
         "title": "ISO 27090 Explained: The 9 Ways Attackers Target Your AI",
         "date": "2026-10-26",
-        "views": 182
+        "views": 183
       },
       {
         "id": "K5dwdPedoMA",
@@ -1918,13 +1942,13 @@
         "id": "VsZ54SHovJU",
         "title": "How to Build a Practical GRC Program from Scratch | With Moses Omolaiye (Founder, MitigateIT)",
         "date": "2026-02-21",
-        "views": 2385
+        "views": 2386
       },
       {
         "id": "BGTiXGaMhLU",
         "title": "I Built a FREE GRC Practice Lab… You Won’t Believe What Happened Next...",
         "date": "2026-02-13",
-        "views": 2314
+        "views": 2315
       },
       {
         "id": "yo4xZccg940",
@@ -1953,7 +1977,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-19 18:06 IST"
+    "as_of": "2026-11-19 19:47 IST"
   },
   "updated": "2026-11-19"
 }
