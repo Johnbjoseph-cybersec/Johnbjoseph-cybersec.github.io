@@ -740,9 +740,10 @@
       "title": "Listed the SLMP analyzer in the Zeek package index",
       "url": "https://github.com/zeek/packages/pull/285",
       "date": "2026-11-13",
-      "status": "approved",
+      "status": "merged",
       "approved": "2026-11-19",
-      "note": "Maintainer bbannier (Benjamin Bannier) approved; awaiting merge."
+      "note": "Merged into master by maintainer bbannier 2026-11-19. zeek-slmp now in the official Zeek package source.",
+      "merged": "2026-11-19"
     },
     {
       "id": "Malcolm-1302",
@@ -1735,6 +1736,28 @@
         "date": "2026-11-13"
       },
       {
+        "key": "zeek",
+        "name": "Zeek Network Monitoring Project",
+        "sub": "github.com/zeek",
+        "logo": "assets/home/img/achievements/org-zeek.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Listed the SLMP analyzer in the Zeek package index",
+            "url": "https://github.com/zeek/packages/pull/285",
+            "date": "2026-11-13",
+            "kind": "merged",
+            "project": "packages"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-13"
+      },
+      {
         "key": "caru-ini",
         "name": "stack-diagram",
         "sub": "by caru-ini on GitHub",
@@ -1930,7 +1953,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-19 14:36 IST"
+    "as_of": "2026-11-19 14:39 IST"
   },
   "updated": "2026-11-19"
 }
