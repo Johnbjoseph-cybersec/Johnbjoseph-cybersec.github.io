@@ -330,10 +330,11 @@
       "title": "Fixed NVIDIA SkillSpector's MCP tool-poisoning rules to tag findings with the correct MITRE ATLAS technique (AML.T0110, not AML.T0080), with a regression test",
       "url": "https://github.com/NVIDIA/SkillSpector/pull/1134",
       "date": "2026-11-16",
-      "status": "approved",
+      "status": "merged",
       "maintainer_engaged": "2026-11-19",
       "approved": "2026-11-19",
-      "note": "Maintainer rng1995 (Narendran Raghavan) approved; TP1-TP4 tool-poisoning findings now tagged MITRE ATLAS AML.T0110 (AI Agent Tool Poisoning). Awaiting merge."
+      "note": "Merged into main by maintainer rng1995. Tool-poisoning findings (TP1-TP4) now tagged MITRE ATLAS AML.T0110 across all 16 finding sites. NVIDIA repo, AI-security lane.",
+      "merged": "2026-11-19"
     },
     {
       "id": "awesome-copilot-6451",
@@ -1678,6 +1679,28 @@
         "date": "2026-11-16"
       },
       {
+        "key": "nvidia",
+        "name": "NVIDIA Corporation",
+        "sub": "github.com/NVIDIA",
+        "logo": "assets/home/img/achievements/org-nvidia.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Fixed NVIDIA SkillSpector's MCP tool-poisoning rules to tag findings with the correct MITRE ATLAS technique (AML.T0110, not AML.T0080), with a regression test",
+            "url": "https://github.com/NVIDIA/SkillSpector/pull/1134",
+            "date": "2026-11-16",
+            "kind": "merged",
+            "project": "SkillSpector"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-16"
+      },
+      {
         "key": "cyclonedx",
         "name": "CycloneDX BOM Standard",
         "sub": "github.com/CycloneDX",
@@ -1983,7 +2006,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-19 20:14 IST"
+    "as_of": "2026-11-19 20:40 IST"
   },
   "updated": "2026-11-19"
 }
