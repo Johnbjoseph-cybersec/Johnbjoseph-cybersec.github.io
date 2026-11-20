@@ -1302,11 +1302,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 352240549490,
-    "sessions": 14237,
-    "messages": 2186398,
-    "avg_30d": 5035338031,
-    "as_of": "2026-11-20 04:05 IST",
+    "tokens": 352344118830,
+    "sessions": 14253,
+    "messages": 2187627,
+    "avg_30d": 5030332025,
+    "as_of": "2026-11-20 06:04 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -2086,7 +2086,7 @@
         "id": "NG2w4D6VPDw",
         "title": "I Built a Free GRC AI Agent for My GRC Practice Lab Using WebGPU + WebLLM",
         "date": "2026-03-24",
-        "views": 1251
+        "views": 1253
       },
       {
         "id": "_8DzH-mjYug",
@@ -2098,12 +2098,12 @@
         "id": "4ftBGaUufA8",
         "title": "I Built the ISO 27001 Practical Course, I Wish Existed",
         "date": "2026-05-19",
-        "views": 925
+        "views": 926
       }
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-20 05:11 IST"
+    "as_of": "2026-11-20 06:09 IST"
   },
   "updated": "2026-11-20"
 }
