@@ -31,6 +31,16 @@
   },
   "contributions": [
     {
+      "id": "awesome-claude-code-subagents-344",
+      "project": "awesome-claude-code-subagents",
+      "org": "VoltAgent",
+      "area": "Security compliance",
+      "title": "Corrected the CCPA business thresholds in VoltAgent's GDPR/CCPA compliance subagent against Cal. Civ. Code 1798.140(d)(1)",
+      "url": "https://github.com/VoltAgent/awesome-claude-code-subagents/pull/344",
+      "date": "2026-11-21",
+      "status": "proposed"
+    },
+    {
       "id": "utexas-hof-2026",
       "project": "University of Texas at Austin - Security Hall of Fame",
       "org": "utexas.edu",
@@ -503,7 +513,8 @@
       "title": "Corrected Microsoft's MCP for Beginners security lesson, which quoted a retired 2025-11-25 session rule as a requirement of MCP spec 2026-07-28",
       "url": "https://github.com/microsoft/mcp-for-beginners/pull/1255",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "merged",
+      "status_changed": "2026-11-20"
     },
     {
       "id": "ai-engineering-from-scratch-794",
@@ -1302,11 +1313,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 352531110768,
-    "sessions": 14304,
-    "messages": 2190425,
-    "avg_30d": 4969477425,
-    "as_of": "2026-11-20 10:03 IST",
+    "tokens": 352651354340,
+    "sessions": 14335,
+    "messages": 2192111,
+    "avg_30d": 4934501926,
+    "as_of": "2026-11-21 00:04 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -1563,6 +1574,36 @@
         "date": "2026-11-14"
       },
       {
+        "key": "microsoft",
+        "name": "Microsoft",
+        "sub": "github.com/microsoft",
+        "logo": "assets/home/img/achievements/org-microsoft.png",
+        "kinds": [
+          "merged",
+          "accepted"
+        ],
+        "items": [
+          {
+            "title": "Corrected Microsoft's MCP for Beginners security lesson, which quoted a retired 2025-11-25 session rule as a requirement of MCP spec 2026-07-28",
+            "url": "https://github.com/microsoft/mcp-for-beginners/pull/1255",
+            "date": "2026-11-13",
+            "kind": "merged",
+            "project": "mcp-for-beginners"
+          },
+          {
+            "title": "Answered where downstream relying-party review claims belong relative to AGT compliance receipts (in-toto + SCITT)",
+            "url": "https://github.com/microsoft/agent-governance-toolkit/discussions/4564#discussioncomment-19590528",
+            "date": "2026-11-13",
+            "kind": "accepted",
+            "project": "agent-governance-toolkit"
+          }
+        ],
+        "merged": 1,
+        "accepted": 1,
+        "recognised": 0,
+        "date": "2026-11-13"
+      },
+      {
         "key": "cdxgen",
         "name": "OWASP cdxgen",
         "sub": "github.com/cdxgen",
@@ -1794,28 +1835,6 @@
         ],
         "merged": 1,
         "accepted": 0,
-        "recognised": 0,
-        "date": "2026-11-13"
-      },
-      {
-        "key": "microsoft",
-        "name": "Microsoft",
-        "sub": "github.com/microsoft",
-        "logo": "assets/home/img/achievements/org-microsoft.png",
-        "kinds": [
-          "accepted"
-        ],
-        "items": [
-          {
-            "title": "Answered where downstream relying-party review claims belong relative to AGT compliance receipts (in-toto + SCITT)",
-            "url": "https://github.com/microsoft/agent-governance-toolkit/discussions/4564#discussioncomment-19590528",
-            "date": "2026-11-13",
-            "kind": "accepted",
-            "project": "agent-governance-toolkit"
-          }
-        ],
-        "merged": 0,
-        "accepted": 1,
         "recognised": 0,
         "date": "2026-11-13"
       },
@@ -2054,7 +2073,7 @@
         "id": "K5dwdPedoMA",
         "title": "WHEN AI GOES WRONG, WHO'S RESPONSIBLE? | Deepika Sharma | GCS Unplugged Ep 01",
         "date": "2026-10-16",
-        "views": 189
+        "views": 190
       },
       {
         "id": "jJhbZxygi1Q",
@@ -2074,7 +2093,7 @@
         "id": "BGTiXGaMhLU",
         "title": "I Built a FREE GRC Practice Lab… You Won’t Believe What Happened Next...",
         "date": "2026-02-13",
-        "views": 2330
+        "views": 2331
       },
       {
         "id": "yo4xZccg940",
@@ -2103,7 +2122,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-20 23:42 IST"
+    "as_of": "2026-11-21 00:47 IST"
   },
-  "updated": "2026-11-20"
+  "updated": "2026-11-21"
 }
