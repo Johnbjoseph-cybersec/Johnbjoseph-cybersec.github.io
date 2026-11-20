@@ -1313,11 +1313,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 352651354340,
-    "sessions": 14335,
-    "messages": 2192111,
-    "avg_30d": 4934501926,
-    "as_of": "2026-11-21 00:04 IST",
+    "tokens": 352922872853,
+    "sessions": 14388,
+    "messages": 2195456,
+    "avg_30d": 4943394434,
+    "as_of": "2026-11-21 02:03 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -2073,7 +2073,7 @@
         "id": "K5dwdPedoMA",
         "title": "WHEN AI GOES WRONG, WHO'S RESPONSIBLE? | Deepika Sharma | GCS Unplugged Ep 01",
         "date": "2026-10-16",
-        "views": 189
+        "views": 190
       },
       {
         "id": "jJhbZxygi1Q",
@@ -2087,13 +2087,13 @@
         "id": "VsZ54SHovJU",
         "title": "How to Build a Practical GRC Program from Scratch | With Moses Omolaiye (Founder, MitigateIT)",
         "date": "2026-02-21",
-        "views": 2400
+        "views": 2402
       },
       {
         "id": "BGTiXGaMhLU",
         "title": "I Built a FREE GRC Practice Lab… You Won’t Believe What Happened Next...",
         "date": "2026-02-13",
-        "views": 2330
+        "views": 2333
       },
       {
         "id": "yo4xZccg940",
@@ -2122,7 +2122,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-21 01:38 IST"
+    "as_of": "2026-11-21 03:38 IST"
   },
   "updated": "2026-11-21"
 }
