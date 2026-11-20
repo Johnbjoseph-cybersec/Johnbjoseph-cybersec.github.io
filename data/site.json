@@ -1302,11 +1302,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 352423797809,
-    "sessions": 14278,
-    "messages": 2188898,
-    "avg_30d": 5004109147,
-    "as_of": "2026-11-20 08:03 IST",
+    "tokens": 352531110768,
+    "sessions": 14304,
+    "messages": 2190425,
+    "avg_30d": 4969477425,
+    "as_of": "2026-11-20 10:03 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -2048,19 +2048,19 @@
         "id": "4errQPTkgDA",
         "title": "ISO 27090 Explained: The 9 Ways Attackers Target Your AI",
         "date": "2026-10-26",
-        "views": 183
+        "views": 185
       },
       {
         "id": "K5dwdPedoMA",
         "title": "WHEN AI GOES WRONG, WHO'S RESPONSIBLE? | Deepika Sharma | GCS Unplugged Ep 01",
         "date": "2026-10-16",
-        "views": 188
+        "views": 189
       },
       {
         "id": "jJhbZxygi1Q",
         "title": "CSAT Nigeria: Know Your Gap Before the CBN Does | MitigateIT × Purplecop Security",
         "date": "2026-09-28",
-        "views": 149
+        "views": 150
       }
     ],
     "top": [
@@ -2068,25 +2068,25 @@
         "id": "VsZ54SHovJU",
         "title": "How to Build a Practical GRC Program from Scratch | With Moses Omolaiye (Founder, MitigateIT)",
         "date": "2026-02-21",
-        "views": 2390
+        "views": 2393
       },
       {
         "id": "BGTiXGaMhLU",
         "title": "I Built a FREE GRC Practice Lab… You Won’t Believe What Happened Next...",
         "date": "2026-02-13",
-        "views": 2317
+        "views": 2325
       },
       {
         "id": "yo4xZccg940",
         "title": "Why GRC Jobs Are Recession-Proof (Even During Layoffs)",
         "date": "2025-12-19",
-        "views": 1472
+        "views": 1473
       },
       {
         "id": "NG2w4D6VPDw",
         "title": "I Built a Free GRC AI Agent for My GRC Practice Lab Using WebGPU + WebLLM",
         "date": "2026-03-24",
-        "views": 1253
+        "views": 1254
       },
       {
         "id": "_8DzH-mjYug",
@@ -2098,12 +2098,12 @@
         "id": "4ftBGaUufA8",
         "title": "I Built the ISO 27001 Practical Course, I Wish Existed",
         "date": "2026-05-19",
-        "views": 926
+        "views": 927
       }
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-20 08:09 IST"
+    "as_of": "2026-11-20 13:28 IST"
   },
   "updated": "2026-11-20"
 }
