@@ -1266,8 +1266,15 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 24,
+    "published": 25,
     "latest": [
+      {
+        "edition": 37,
+        "date": "2026-11-21",
+        "title": "Already ISO 27001 certified? What carries over to ISO 42001, and what doesn't",
+        "subtitle": "The machinery transfers, the subject changes, and a joint audit saves less time than you think",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 36,
         "date": "2026-11-20",
@@ -1302,22 +1309,15 @@
         "title": "N-able takes N-central offline after 33 unpatched flaws go public",
         "subtitle": "Your vendor's access is your attack surface. Plus 17 more stories from GRC, AI security and privacy",
         "url": "https://www.linkedin.com/pulse/n-able-takes-n-central-offline-after-33-unpatched-flaws-joseph-7vpfc"
-      },
-      {
-        "edition": 31,
-        "date": "2026-11-15",
-        "title": "FAA ground stop halts US flights for over four hours on 13 November",
-        "subtitle": "Officials see no sign of an attack so far, and that is exactly why your outage plan needs a holding line. Plus 19 more stories from AI security, privacy, OT and GRC",
-        "url": "https://www.linkedin.com/pulse/faa-ground-stop-halts-us-flights-over-four-hours-13-november-joseph-djmac"
       }
     ]
   },
   "mindledger": {
-    "tokens": 352995400625,
-    "sessions": 14416,
-    "messages": 2196619,
-    "avg_30d": 4945740188,
-    "as_of": "2026-11-21 06:03 IST",
+    "tokens": 353047764295,
+    "sessions": 14436,
+    "messages": 2197519,
+    "avg_30d": 4947322659,
+    "as_of": "2026-11-21 08:04 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -2122,7 +2122,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-21 07:39 IST"
+    "as_of": "2026-11-21 09:12 IST"
   },
   "updated": "2026-11-21"
 }
