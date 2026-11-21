@@ -1313,11 +1313,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 353177921900,
-    "sessions": 14484,
-    "messages": 2199775,
-    "avg_30d": 4930999781,
-    "as_of": "2026-11-21 12:03 IST",
+    "tokens": 353227021322,
+    "sessions": 14511,
+    "messages": 2200754,
+    "avg_30d": 4932516229,
+    "as_of": "2026-11-21 14:03 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -2122,7 +2122,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-21 13:13 IST"
+    "as_of": "2026-11-21 15:14 IST"
   },
   "updated": "2026-11-21"
 }
