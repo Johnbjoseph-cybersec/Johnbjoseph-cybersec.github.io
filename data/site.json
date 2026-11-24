@@ -1266,8 +1266,29 @@
   "newsletter": {
     "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/",
     "name": "GRC Made Simple Daily",
-    "published": 25,
+    "published": 28,
     "latest": [
+      {
+        "edition": 40,
+        "date": "2026-11-24",
+        "title": "Supplier risk without the spreadsheet theatre: tier by reach, not by spend",
+        "subtitle": "Why your riskiest supplier might be fixing the fridges, why \"do you have MFA?\" is the wrong question, and why an annual review is only a calendar",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
+      {
+        "edition": 39,
+        "date": "2026-11-23",
+        "title": "Every 'not applicable' in your Statement of Applicability is a claim someone can check",
+        "subtitle": "Exclusions that hold, justifications that survive an auditor, and keeping the document alive between audits",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
+      {
+        "edition": 38,
+        "date": "2026-11-22",
+        "title": "Finding shadow AI: follow the money, follow the data, then ask",
+        "subtitle": "Three ways to find the AI your staff already use, and why you need all three",
+        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
+      },
       {
         "edition": 37,
         "date": "2026-11-21",
@@ -1288,36 +1309,15 @@
         "title": "EU sanctions pro-Russian DDoS group NoName057(16), in force 16 Nov",
         "subtitle": "The Council added NoName057(16) to its cyber-attacks sanctions list, naming energy, industry, transport and water among its targets. Plus 15 more stories from AI security, patches, standards and enforcement",
         "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
-      },
-      {
-        "edition": 54,
-        "date": "2026-11-18",
-        "title": "Everyone Is Scanning. Nobody Is Asking, Guest Edition: Vikram Das",
-        "subtitle": "A collaboration edition with Vikram Das, Principal Cloud Security Architect working on post-quantum cryptography and CBOM",
-        "url": "https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/"
-      },
-      {
-        "edition": 55,
-        "date": "2026-11-17",
-        "title": "Your incident plan breaks at the hand-off. Rehearse it in forty-five minutes",
-        "subtitle": "A short tabletop, a notification clock to rehearse, and the breach record a regulator will ask for",
-        "url": "https://www.linkedin.com/pulse/your-incident-plan-breaks-hand-off-rehearse-minutes-joseph-ti4gc"
-      },
-      {
-        "edition": 32,
-        "date": "2026-11-16",
-        "title": "N-able takes N-central offline after 33 unpatched flaws go public",
-        "subtitle": "Your vendor's access is your attack surface. Plus 17 more stories from GRC, AI security and privacy",
-        "url": "https://www.linkedin.com/pulse/n-able-takes-n-central-offline-after-33-unpatched-flaws-joseph-7vpfc"
       }
     ]
   },
   "mindledger": {
-    "tokens": 353227021322,
-    "sessions": 14511,
-    "messages": 2200754,
-    "avg_30d": 4932516229,
-    "as_of": "2026-11-21 14:03 IST",
+    "tokens": 353266520627,
+    "sessions": 14539,
+    "messages": 2201541,
+    "avg_30d": 4947127425,
+    "as_of": "2026-11-21 16:03 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -2067,7 +2067,7 @@
         "id": "4errQPTkgDA",
         "title": "ISO 27090 Explained: The 9 Ways Attackers Target Your AI",
         "date": "2026-10-26",
-        "views": 185
+        "views": 192
       },
       {
         "id": "K5dwdPedoMA",
@@ -2087,42 +2087,42 @@
         "id": "VsZ54SHovJU",
         "title": "How to Build a Practical GRC Program from Scratch | With Moses Omolaiye (Founder, MitigateIT)",
         "date": "2026-02-21",
-        "views": 2404
+        "views": 2430
       },
       {
         "id": "BGTiXGaMhLU",
         "title": "I Built a FREE GRC Practice Lab… You Won’t Believe What Happened Next...",
         "date": "2026-02-13",
-        "views": 2333
+        "views": 2354
       },
       {
         "id": "yo4xZccg940",
         "title": "Why GRC Jobs Are Recession-Proof (Even During Layoffs)",
         "date": "2025-12-19",
-        "views": 1473
+        "views": 1474
       },
       {
         "id": "NG2w4D6VPDw",
         "title": "I Built a Free GRC AI Agent for My GRC Practice Lab Using WebGPU + WebLLM",
         "date": "2026-03-24",
-        "views": 1257
+        "views": 1279
+      },
+      {
+        "id": "4ftBGaUufA8",
+        "title": "I Built the ISO 27001 Practical Course, I Wish Existed",
+        "date": "2026-05-19",
+        "views": 946
       },
       {
         "id": "_8DzH-mjYug",
         "title": "GRC Practice Lab Has Been Acquired! Here's What It Means For You",
         "date": "2026-08-06",
         "views": 945
-      },
-      {
-        "id": "4ftBGaUufA8",
-        "title": "I Built the ISO 27001 Practical Course, I Wish Existed",
-        "date": "2026-05-19",
-        "views": 931
       }
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-21 15:14 IST"
+    "as_of": "2026-11-24 11:00 IST"
   },
-  "updated": "2026-11-21"
+  "updated": "2026-11-24"
 }
