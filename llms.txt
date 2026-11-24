@@ -12,7 +12,12 @@ This file lists the pages on this site and the public records behind it.
 
 ## Profiles and channels
 
+- [LinkedIn](https://www.linkedin.com/in/john-bj/)
+- [Purplecop Security team page](https://purplecop.com/team/)
 - [GitHub](https://github.com/Johnbjoseph-cybersec)
+- [GRC Made Simple Daily newsletter](https://www.linkedin.com/newsletters/grc-made-simple-7493284804747251713/)
+- [rewindagents](https://rewindagents.com/): open-source undo for AI coding agents
+- [GRC Made Simple Templates](https://johnbjoseph-cybersec.github.io/grc-made-simple-templates/)
 - [GRC Made Simple on YouTube](https://www.youtube.com/@GRCMadeSimple)
 
 ## GRC Practice Lab
