@@ -31,6 +31,16 @@
   },
   "contributions": [
     {
+      "id": "agent-control-standard-33",
+      "project": "agent-control-standard",
+      "org": "GenAI-Security-Project",
+      "area": "AI governance / conformance",
+      "title": "Offered to own the normative-requirement ledger sub-item of the ACS-Core conformance milestone (#33); posted a 105-row first pass on a fork branched from integration, and cross-checked every row against narko4u's witness_scope Axis C (SELF 83 / PEER 22 / EXTERNAL 0) as early input to the column discussion",
+      "url": "https://github.com/GenAI-Security-Project/agent-control-standard/issues/33#issuecomment-7123254202",
+      "date": "2026-11-24",
+      "status": "proposed"
+    },
+    {
       "id": "awesome-claude-code-subagents-344",
       "project": "awesome-claude-code-subagents",
       "org": "VoltAgent",
@@ -2122,7 +2132,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-24 11:00 IST"
+    "as_of": "2026-11-24 11:25 IST"
   },
   "updated": "2026-11-24"
 }
