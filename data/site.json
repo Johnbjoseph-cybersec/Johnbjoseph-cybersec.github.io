@@ -38,7 +38,30 @@
       "title": "Offered to own the normative-requirement ledger sub-item of the ACS-Core conformance milestone (#33); posted a 105-row first pass on a fork branched from integration, and cross-checked every row against narko4u's witness_scope Axis C (SELF 83 / PEER 22 / EXTERNAL 0) as early input to the column discussion",
       "url": "https://github.com/GenAI-Security-Project/agent-control-standard/issues/33#issuecomment-7123254202",
       "date": "2026-11-24",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
+    },
+    {
+      "id": "gosec-g402-curvepreferences",
+      "project": "gosec",
+      "org": "securego",
+      "area": "PQC / security tooling",
+      "title": "gosec G402: flag TLS CurvePreferences lists that disable Go's post-quantum key exchange (tests verified fail-before/pass-after on go1.27.4)",
+      "url": "https://github.com/securego/gosec/pull/1844",
+      "date": "2026-11-24",
+      "status": "proposed",
+      "landed": false
+    },
+    {
+      "id": "icsnpp-opcua-call-service",
+      "project": "icsnpp-opcua-binary",
+      "org": "cisagov",
+      "area": "OT security (OPC UA)",
+      "title": "Added OPC UA Call (method invocation) logging to CISA's ICSNPP OPC UA Binary Zeek analyzer; resolves #47 (btest 8/8 on clean rebuild)",
+      "url": "https://github.com/cisagov/icsnpp-opcua-binary/pull/114",
+      "date": "2026-11-24",
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "awesome-claude-code-subagents-344",
@@ -48,7 +71,8 @@
       "title": "Corrected the CCPA business thresholds in VoltAgent's GDPR/CCPA compliance subagent against Cal. Civ. Code 1798.140(d)(1)",
       "url": "https://github.com/VoltAgent/awesome-claude-code-subagents/pull/344",
       "date": "2026-11-21",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "utexas-hof-2026",
@@ -59,7 +83,8 @@
       "url": "https://security.utexas.edu/hall-of-fame",
       "date": "2026-11-19",
       "status": "recognised",
-      "kind": "hall-of-fame"
+      "kind": "hall-of-fame",
+      "landed": false
     },
     {
       "id": "agent-control-standard-573",
@@ -69,7 +94,8 @@
       "title": "Answered the ACS scope-fit question on a post-action Work Closure profile from CONTRIBUTING's Priority Scope, Spec Review Principle 3 and the conformance-profile definition",
       "url": "https://github.com/GenAI-Security-Project/agent-control-standard/discussions/573#discussioncomment-19729671",
       "date": "2026-11-19",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "cdxgen-4062",
@@ -79,7 +105,8 @@
       "title": "Closed out cdxgen #4062 (Alpine apk keys emitted as cryptographic-asset breaking CycloneDX 1.5 / Dependency-Track): which release fixed it, reproduced on 12.9.2 and 13.8.0, and the v13 path",
       "url": "https://github.com/cdxgen/cdxgen/discussions/4062#discussioncomment-19729673",
       "date": "2026-11-19",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "cdxgen-4499",
@@ -89,7 +116,8 @@
       "title": "Reproduced cdxgen #4499 (node_modules walk lists subpath package.json manifests as components) on 13.8.0 and master 9b5f786, with root cause, a structural filter and a lockfile workaround",
       "url": "https://github.com/cdxgen/cdxgen/discussions/4499#discussioncomment-19729676",
       "date": "2026-11-19",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "agent-governance-toolkit-4560",
@@ -101,7 +129,8 @@
       "date": "2026-11-19",
       "status": "proposed",
       "maintainer_engaged": "2026-11-19",
-      "engagement_note": "Agentmetry author (Ioannis Loutsis) confirmed both reported issues (mapping and verification) and is building a govern() fixture plus separate chain-consistency and HMAC reporting from John's cases."
+      "engagement_note": "Agentmetry author (Ioannis Loutsis) confirmed both reported issues (mapping and verification) and is building a govern() fixture plus separate chain-consistency and HMAC reporting from John's cases.",
+      "landed": false
     },
     {
       "id": "openssl-33480",
@@ -111,7 +140,8 @@
       "title": "Answered the OpenSSL 3.5 LTS backport question for the method-store lock removal from the Stable Release Updates Policy, the 3.5.9 vs 4.1.0 code, and the project's explicit-fetch guidance",
       "url": "https://github.com/openssl/openssl/discussions/33480#discussioncomment-19729681",
       "date": "2026-11-19",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "lynis-1821",
@@ -121,7 +151,8 @@
       "title": "SSH-7410: check that sshd offers a post-quantum hybrid key exchange",
       "url": "https://github.com/CISOfy/lynis/pull/1821",
       "date": "2026-11-19",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "ai-atlas-nexus-335",
@@ -136,7 +167,8 @@
       "maintainer_engaged": "2026-11-19",
       "note": "Maintainer ingelise (Inge) approved then MERGED into main 2026-11-19 (compilation + tests passing). India's RBI FREE-AI Seven Sutras now in IBM AI Atlas Nexus beside OECD/UN/Australian AI principles. Inge invited a follow-on issue linking the Sutras to OECD principles via sssom.tsv + the Recommendation class.",
       "merged": "2026-11-19",
-      "followon_status": "Issue #336 opened 2026-11-20 at maintainer @ingelise's invitation: https://github.com/IBM/ai-atlas-nexus/issues/336 - SSSOM crosswalk + Recommendation-class question. Fact-gate CLEAR."
+      "followon_status": "Issue #336 opened 2026-11-20 at maintainer @ingelise's invitation: https://github.com/IBM/ai-atlas-nexus/issues/336 - SSSOM crosswalk + Recommendation-class question. Fact-gate CLEAR.",
+      "landed": true
     },
     {
       "id": "icsnpp-dnp3-20",
@@ -146,7 +178,8 @@
       "title": "Log DNP3 point values to dnp3_point_values.log",
       "url": "https://github.com/cisagov/icsnpp-dnp3/pull/20",
       "date": "2026-11-19",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "openssl-33179",
@@ -156,7 +189,8 @@
       "title": "Answered OpenSSL's question on whether expanded-only ML-DSA/ML-KEM private keys are used in practice, citing PKCS#11 3.2, RFC 9881 and NIST's ACVP vectors",
       "url": "https://github.com/openssl/openssl/discussions/33179#discussioncomment-19709212",
       "date": "2026-11-18",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "wshobson-agents-831",
@@ -167,7 +201,8 @@
       "url": "https://github.com/wshobson/agents/pull/831",
       "date": "2026-11-18",
       "status": "merged",
-      "merged": "2026-11-18"
+      "merged": "2026-11-18",
+      "landed": true
     },
     {
       "id": "cybernetic-agent-governance-engine-812",
@@ -177,7 +212,8 @@
       "title": "Fixed Google CAGE's routing seal so an HMAC seal is rejected at its exact expiry second, matching the JWT branch",
       "url": "https://github.com/google/cybernetic-agent-governance-engine/pull/812",
       "date": "2026-11-18",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "asvs-3361-proposal",
@@ -187,7 +223,8 @@
       "title": "Proposed adding the post-quantum rows (ML-KEM, ML-DSA, SLH-DSA, LMS/XMSS, RFC 10024 hybrid TLS groups) to OWASP ASVS 5.0 Appendix C, answering the maintainer's ask in #3361",
       "url": "https://github.com/OWASP/ASVS/issues/3361#issuecomment-6981667854",
       "date": "2026-11-18",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "complianceascode-content-nist-rev5",
@@ -197,7 +234,8 @@
       "title": "Updated 57 SCAP Security Guide rules (the upstream of RHEL/Fedora/Ubuntu/OpenShift compliance content) from NIST SP 800-53 controls withdrawn in Rev. 5 to their NIST-named successors",
       "url": "https://github.com/ComplianceAsCode/content/pull/15365",
       "date": "2026-11-18",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "w3c-vc-data-integrity-340",
@@ -207,7 +245,8 @@
       "title": "Added threat T6 (hardware key stores limited to classical cryptosuites, post-quantum migration) to the W3C VC Data Integrity threat model, at the editor's request (#340)",
       "url": "https://github.com/w3c/vc-data-integrity/pull/382",
       "date": "2026-11-18",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "w3c-did-resolution-360",
@@ -219,7 +258,8 @@
       "date": "2026-11-18",
       "status": "merged",
       "status_changed": "2026-11-18",
-      "merged": "2026-11-19"
+      "merged": "2026-11-19",
+      "landed": true
     },
     {
       "id": "w3c-vc-bitstring-status-list-201",
@@ -229,7 +269,8 @@
       "title": "Fixed the W3C Bitstring Status List example encodedList values to follow the spec's own GZIP rule and replaced an undecodable explainer example (#201)",
       "url": "https://github.com/w3c/vc-bitstring-status-list/pull/228",
       "date": "2026-11-18",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "tractusx-sdk-256",
@@ -239,7 +280,8 @@
       "title": "Fixed Eclipse Tractus-X SDK's PostgresConnectionManager, which could not be instantiated, by implementing clear_connections_by_party (maintainer-filed #256)",
       "url": "https://github.com/eclipse-tractusx/tractusx-sdk/pull/309",
       "date": "2026-11-18",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "google-adk-python-8237",
@@ -249,7 +291,8 @@
       "title": "Stopped Google ADK's AutoTracingPlugin from writing secret_key, aws_secret_access_key and passwd argument values into OpenTelemetry spans, with a drift guard against the debug logger's redaction list",
       "url": "https://github.com/google/adk-python/pull/8237",
       "date": "2026-11-18",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "trivy-11014",
@@ -259,7 +302,8 @@
       "title": "Showed with a reproduction that current Trivy DBs now flag cxf-core 4.1.3, because the GHSA entries were reviewed after the question was asked",
       "url": "https://github.com/aquasecurity/trivy/discussions/11014#discussioncomment-19661944",
       "date": "2026-11-17",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "trivy-11031",
@@ -269,7 +313,8 @@
       "title": "Updated the pip vendored-SBOM thread: pip 26.3 clears the msgpack finding, pip declined to drop setuptools, and a purl-scoped ignore was tested",
       "url": "https://github.com/aquasecurity/trivy/discussions/11031#discussioncomment-19661945",
       "date": "2026-11-17",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "www-project-ai-security-and-privacy-guide-285",
@@ -280,7 +325,8 @@
       "url": "https://github.com/OWASP/www-project-ai-security-and-privacy-guide/pull/285",
       "date": "2026-11-17",
       "status": "merged",
-      "status_changed": "2026-11-16"
+      "status_changed": "2026-11-16",
+      "landed": true
     },
     {
       "id": "agent-governance-toolkit-4581",
@@ -290,7 +336,8 @@
       "title": "Fixed Microsoft Agent Governance Toolkit's credential redactor so secrets under quoted JSON and dict keys are caught and redacted in MCP tool responses",
       "url": "https://github.com/microsoft/agent-governance-toolkit/pull/4581",
       "date": "2026-11-17",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "AI-Infra-Guard-768",
@@ -301,7 +348,8 @@
       "url": "https://github.com/Tencent/AI-Infra-Guard/pull/768",
       "date": "2026-11-16",
       "status": "merged",
-      "status_changed": "2026-11-17"
+      "status_changed": "2026-11-17",
+      "landed": true
     },
     {
       "id": "checkov-7803",
@@ -311,7 +359,8 @@
       "title": "Fixed Checkov's CloudFormation TLS check so it stops failing load balancers that use AWS's post-quantum and FIPS TLS 1.3 policies",
       "url": "https://github.com/bridgecrewio/checkov/pull/7803",
       "date": "2026-11-16",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "circl-721",
@@ -321,7 +370,8 @@
       "title": "Added RFC 9909 X.509 identifiers and key encodings for all twelve SLH-DSA parameter sets to Cloudflare's CIRCL, tested against the RFC's example keys",
       "url": "https://github.com/cloudflare/circl/pull/721",
       "date": "2026-11-16",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "agentic_security-385",
@@ -332,7 +382,8 @@
       "url": "https://github.com/msoedov/agentic_security/pull/385",
       "date": "2026-11-16",
       "status": "merged",
-      "status_changed": "2026-11-16"
+      "status_changed": "2026-11-16",
+      "landed": true
     },
     {
       "id": "fprime-6400",
@@ -342,7 +393,8 @@
       "title": "Proposed a fix to NASA JPL F Prime's CCSDS TM framer so an out-of-range virtual channel ID can no longer silently corrupt the spacecraft ID in downlinked telemetry frames",
       "url": "https://github.com/nasa/fprime/pull/6400",
       "date": "2026-11-16",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "skillspector-1134",
@@ -356,7 +408,8 @@
       "maintainer_engaged": "2026-11-19",
       "approved": "2026-11-19",
       "note": "Merged into main by maintainer rng1995. Tool-poisoning findings (TP1-TP4) now tagged MITRE ATLAS AML.T0110 across all 16 finding sites. NVIDIA repo, AI-security lane.",
-      "merged": "2026-11-19"
+      "merged": "2026-11-19",
+      "landed": true
     },
     {
       "id": "awesome-copilot-6451",
@@ -366,7 +419,8 @@
       "title": "Corrected GitHub awesome-copilot's OWASP agent compliance skill to the published OWASP Top 10 for Agentic Applications 2026",
       "url": "https://github.com/github/awesome-copilot/pull/6451",
       "date": "2026-11-16",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "cyclonedx-spec-1219",
@@ -378,7 +432,8 @@
       "date": "2026-11-16",
       "status": "merged",
       "merged": "2026-11-19",
-      "note": "Merged into master by Steve Springett (CycloneDX lead); approved by Basil Hess + Springett. Adds Composite ML-DSA (RFC 10073, post-quantum) to the CycloneDX cryptography registry."
+      "note": "Merged into master by Steve Springett (CycloneDX lead); approved by Basil Hess + Springett. Adds Composite ML-DSA (RFC 10073, post-quantum) to the CycloneDX cryptography registry.",
+      "landed": true
     },
     {
       "id": "agent-control-standard-566",
@@ -388,7 +443,8 @@
       "title": "Reported that ACS's signature registry names no FIPS 205 parameter set for SLH-DSA and leaves ML-DSA/SLH-DSA mode and context string open, so two conforming implementations can fail to verify each other; proposed the FIPS 205 names and the RFC 9964 pure, empty-context rule",
       "url": "https://github.com/GenAI-Security-Project/agent-control-standard/issues/566",
       "date": "2026-11-16",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "cybernetic-agent-governance-engine-777",
@@ -399,7 +455,8 @@
       "url": "https://github.com/google/cybernetic-agent-governance-engine/pull/777",
       "date": "2026-11-16",
       "status": "merged",
-      "merged": "2026-11-18"
+      "merged": "2026-11-18",
+      "landed": true
     },
     {
       "id": "semgrep-rules-4146",
@@ -409,7 +466,8 @@
       "title": "Fixed Semgrep's API Gateway TLS rule so it no longer flags AWS's TLS 1.3 and post-quantum security policies as insecure",
       "url": "https://github.com/semgrep/semgrep-rules/pull/4146",
       "date": "2026-11-15",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "steampipe-mod-aws-compliance-1020",
@@ -419,7 +477,8 @@
       "title": "Added the RBI NBFC Cybersecurity, Technology Risk, Resilience and Assurance Directions, 2026 benchmark to Turbot's AWS Compliance mod, replacing a framework RBI repealed in July 2026",
       "url": "https://github.com/turbot/steampipe-mod-aws-compliance/pull/1020",
       "date": "2026-11-15",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "cybernetic-agent-governance-engine-763",
@@ -430,7 +489,8 @@
       "url": "https://github.com/google/cybernetic-agent-governance-engine/pull/763",
       "date": "2026-11-15",
       "status": "merged",
-      "merged": "2026-11-18"
+      "merged": "2026-11-18",
+      "landed": true
     },
     {
       "id": "common-cloud-controls-1316",
@@ -440,7 +500,8 @@
       "title": "Moved every NIST CSF mapping in FINOS Common Cloud Controls (13 catalogs, 38 entries) from CSF 1.1 to CSF 2.0 using NIST's official 1.1-to-2.0 crosswalk",
       "url": "https://github.com/finos/common-cloud-controls/pull/1316",
       "date": "2026-11-15",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "fprime-6395",
@@ -450,7 +511,8 @@
       "title": "Reported to NASA JPL F Prime that its CCSDS TM framer lets an out-of-range virtual channel ID silently overwrite the spacecraft ID in telemetry frames, and proposed a tested fix",
       "url": "https://github.com/nasa/fprime/issues/6395",
       "date": "2026-11-15",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "liboqs-2706",
@@ -460,7 +522,8 @@
       "title": "Proposed a fix to restore NIST ACVP test coverage for 24 SLH-DSA (FIPS 205) pre-hash parameter sets in liboqs that had been running zero vectors while reporting green",
       "url": "https://github.com/open-quantum-safe/liboqs/pull/2706",
       "date": "2026-11-15",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "liboqs-2707",
@@ -470,7 +533,8 @@
       "title": "Proposed a fix to liboqs's ACVP harness so external-interface SLH-DSA (FIPS 205) signature-verification vectors actually verify in builds without ML-DSA, instead of exiting 0 untested",
       "url": "https://github.com/open-quantum-safe/liboqs/pull/2707",
       "date": "2026-11-15",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "wstg-1680",
@@ -481,7 +545,8 @@
       "url": "https://github.com/OWASP/wstg/pull/1680",
       "date": "2026-11-14",
       "status": "merged",
-      "status_changed": "2026-11-17"
+      "status_changed": "2026-11-17",
+      "landed": true
     },
     {
       "id": "uncut-8",
@@ -492,7 +557,8 @@
       "url": "https://github.com/Balanov/uncut/pull/8",
       "date": "2026-11-14",
       "status": "merged",
-      "status_changed": "2026-11-14"
+      "status_changed": "2026-11-14",
+      "landed": true
     },
     {
       "id": "pytm-394",
@@ -503,7 +569,8 @@
       "url": "https://github.com/OWASP/pytm/pull/394",
       "date": "2026-11-14",
       "status": "merged",
-      "status_changed": "2026-11-14"
+      "status_changed": "2026-11-14",
+      "landed": true
     },
     {
       "id": "security-study-plan-42",
@@ -513,7 +580,8 @@
       "title": "Corrected the EU AI Act timeline in two security-study-plan guides against Regulation (EU) 2026/1744",
       "url": "https://github.com/jassics/security-study-plan/pull/42",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "mcp-for-beginners-1255",
@@ -524,7 +592,8 @@
       "url": "https://github.com/microsoft/mcp-for-beginners/pull/1255",
       "date": "2026-11-13",
       "status": "merged",
-      "status_changed": "2026-11-20"
+      "status_changed": "2026-11-20",
+      "landed": true
     },
     {
       "id": "ai-engineering-from-scratch-794",
@@ -534,7 +603,8 @@
       "title": "Corrected the EU AI Act high-risk dates in AI Engineering from Scratch's regulation lesson against Regulation (EU) 2026/1744",
       "url": "https://github.com/rohitg00/ai-engineering-from-scratch/pull/794",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "OSCAL-2298-tests",
@@ -544,7 +614,8 @@
       "title": "Contributed constraint tests and two risk-response checks to NIST OSCAL PR #2298 (fixes #2296, raised by John), offered co-authorship by the PR author",
       "url": "https://github.com/usnistgov/OSCAL/pull/2298#issuecomment-6848375068",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "nist-sp800-82r4-comment",
@@ -554,7 +625,8 @@
       "title": "Submitted 12 public comments on the initial public draft of NIST SP 800-82 Rev. 4 (OT security), with an OSCAL OT overlay",
       "url": "https://csrc.nist.gov/pubs/sp/800/82/r4/ipd",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "inspect_ai-6545",
@@ -565,7 +637,8 @@
       "url": "https://github.com/UKGovernmentBEIS/inspect_ai/pull/6545",
       "date": "2026-11-13",
       "status": "merged",
-      "status_changed": "2026-11-13"
+      "status_changed": "2026-11-13",
+      "landed": true
     },
     {
       "id": "trivy-11635",
@@ -575,7 +648,8 @@
       "title": "Added ML-KEM, SLH-DSA and HashSLH-DSA (FIPS 203/205) to Trivy's cryptographic asset catalog, as agreed with the maintainers",
       "url": "https://github.com/aquasecurity/trivy/pull/11635",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "oscal-content-358",
@@ -585,7 +659,8 @@
       "title": "Fixed the risk reference in NIST's IFA POA&M example (bug John reported in #356)",
       "url": "https://github.com/usnistgov/oscal-content/pull/358",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "bot-hq-1",
@@ -595,7 +670,8 @@
       "title": "Fixed a crash: a malformed session cookie stopped the Bot HQ agent server (now treated as signed out)",
       "url": "https://github.com/nickvasilescu/bot-hq/pull/1",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "oc-137",
@@ -606,7 +682,8 @@
       "url": "https://github.com/only-cli/oc/pull/137",
       "date": "2026-11-13",
       "status": "merged",
-      "status_changed": "2026-11-17"
+      "status_changed": "2026-11-17",
+      "landed": true
     },
     {
       "id": "CheatSheetSeries-2963",
@@ -617,7 +694,8 @@
       "url": "https://github.com/OWASP/CheatSheetSeries/pull/2963",
       "date": "2026-11-13",
       "status": "merged",
-      "status_changed": "2026-11-15"
+      "status_changed": "2026-11-15",
+      "landed": true
     },
     {
       "id": "agent-governance-toolkit-4541-ans",
@@ -627,7 +705,8 @@
       "title": "Answered how to bind an exported EU AI Act Annex IV evidence report to its evidence; found the per-source digest is never written",
       "url": "https://github.com/microsoft/agent-governance-toolkit/discussions/4541#discussioncomment-19590526",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "agent-governance-toolkit-4564-ans",
@@ -637,11 +716,13 @@
       "title": "Answered where downstream relying-party review claims belong relative to AGT compliance receipts (in-toto + SCITT)",
       "url": "https://github.com/microsoft/agent-governance-toolkit/discussions/4564#discussioncomment-19590528",
       "date": "2026-11-13",
-      "status": "accepted",
+      "status": "answered",
       "accepted": "2026-11-18",
       "maintainer_engaged": "2026-11-19",
       "engagement_note": "OP cullenmeyers MARKED John answer as THE accepted answer 2026-11-18 (where a downstream relying-party claim belongs relative to AGT receipts: a separate in-toto/SCITT attestation whose subject is the evidence digest, not inside the receipt). On 2026-11-19 zambodotdev (Brennan Zambo) publicly corroborated it with a production handover system (AER-1 receipts; separate handover object; claim as a separate recorded act bound to receipt digests) and raised the multi-reviewer design edge for BoundaryAttest to pin down. | John replied to zambodotdev 2026-11-19 distinguishing custody-acceptance (exclusive) from reliance/review claims (plural, append-only) - resolves the multi-reviewer edge: https://github.com/microsoft/agent-governance-toolkit/discussions/4564#discussioncomment-19757907",
-      "closing_reply": "Closing reply posted 2026-11-20 (discussioncomment-19760006) after @zambodotdev publicly confirmed the custody-vs-reliance split; answer remains accepted."
+      "closing_reply": "Closing reply posted 2026-11-20 (discussioncomment-19760006) after @zambodotdev publicly confirmed the custody-vs-reliance split; answer remains accepted.",
+      "status_note": "Marked as the answer by the person who asked, not by a maintainer; not counted as accepted.",
+      "landed": false
     },
     {
       "id": "go-chain-18-ans",
@@ -651,7 +732,8 @@
       "title": "Answered how to add separate witness data and SLH-DSA post-quantum signatures to go-chain, with the consensus limits that block them today",
       "url": "https://github.com/bams-repo/go-chain/discussions/18#discussioncomment-19590524",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "google_workspace_mcp-1390",
@@ -661,7 +743,8 @@
       "title": "Closed a credential-file gap in the Google Workspace MCP server: Docker registry credentials (.docker/config.json) were never blocked from file reads",
       "url": "https://github.com/taylorwilsdon/google_workspace_mcp/pull/1390",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "fastmcp-526",
@@ -672,7 +755,8 @@
       "url": "https://github.com/punkpeye/fastmcp/pull/526",
       "date": "2026-11-13",
       "status": "merged",
-      "merged": "2026-11-17"
+      "merged": "2026-11-17",
+      "landed": true
     },
     {
       "id": "crosswalk-378",
@@ -682,7 +766,8 @@
       "title": "Proposed adding India's DPDP Act, DPDP Rules 2025 and RBI FREE-AI to the OWASP GenAI Crosswalk (first APAC jurisdiction)",
       "url": "https://github.com/GenAI-Security-Project/crosswalk/issues/378",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "sonar-cryptography-567",
@@ -692,7 +777,8 @@
       "title": "Proposed PyCryptodome detection rules for the CBOMkit sonar-cryptography scanner, so Python code using it gets a full cryptographic inventory",
       "url": "https://github.com/cbomkit/sonar-cryptography/issues/567",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "cdxgen-4793",
@@ -703,7 +789,8 @@
       "url": "https://github.com/cdxgen/cdxgen/issues/4793",
       "date": "2026-11-13",
       "status": "accepted",
-      "note": "Closed as completed by the maintainer; fixed upstream in cdxgen #4799 (merged 2026-11-13)."
+      "note": "Closed as completed by the maintainer; fixed upstream in cdxgen #4799 (merged 2026-11-13).",
+      "landed": true
     },
     {
       "id": "cdxgen-4794",
@@ -714,7 +801,8 @@
       "url": "https://github.com/cdxgen/cdxgen/issues/4794",
       "date": "2026-11-13",
       "status": "accepted",
-      "note": "Closed as completed by the maintainer; fixed upstream in cdxgen #4799 (merged 2026-11-13)."
+      "note": "Closed as completed by the maintainer; fixed upstream in cdxgen #4799 (merged 2026-11-13).",
+      "landed": true
     },
     {
       "id": "conpot-686",
@@ -724,7 +812,8 @@
       "title": "Made the Conpot ICS honeypot answer malformed Modbus function 43 requests as the Modbus specification requires, so one bad request no longer reveals the honeypot",
       "url": "https://github.com/mushorg/conpot/pull/686",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "icsnpp-modbus-27",
@@ -734,7 +823,8 @@
       "title": "Fixed Modbus Read Device Identification logging in CISA's Zeek package used by Malcolm: wrong conformity level and wrong object names",
       "url": "https://github.com/cisagov/icsnpp-modbus/pull/27",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "mastg-4039",
@@ -744,7 +834,8 @@
       "title": "Reported that the OWASP MASTG says FIPS 203 specifies CRYSTALS-Kyber; it specifies ML-KEM (fix branch ready)",
       "url": "https://github.com/OWASP/mastg/issues/4039",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "specification-1214",
@@ -754,7 +845,8 @@
       "title": "Proposed adding composite ML-DSA (RFC 10073) to the CycloneDX cryptography registry used by CBOM tools",
       "url": "https://github.com/CycloneDX/specification/issues/1214",
       "date": "2026-11-13",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "zeek-slmp",
@@ -766,7 +858,8 @@
       "date": "2026-11-13",
       "status": "approved",
       "approved": "2026-11-19",
-      "note": "Maintainer bbannier (Benjamin Bannier) approved; awaiting merge."
+      "note": "Maintainer bbannier (Benjamin Bannier) approved; awaiting merge.",
+      "landed": false
     },
     {
       "id": "packages-285",
@@ -779,7 +872,8 @@
       "status": "merged",
       "approved": "2026-11-19",
       "note": "Merged into master by maintainer bbannier 2026-11-19. zeek-slmp now in the official Zeek package source.",
-      "merged": "2026-11-19"
+      "merged": "2026-11-19",
+      "landed": true
     },
     {
       "id": "Malcolm-1302",
@@ -790,7 +884,8 @@
       "url": "https://github.com/cisagov/Malcolm/discussions/1302",
       "date": "2026-11-13",
       "status": "proposed",
-      "note": "mentions zeek-slmp; not the zeek PR - status restored to proposed"
+      "note": "mentions zeek-slmp; not the zeek PR - status restored to proposed",
+      "landed": false
     },
     {
       "id": "attack-ics-T0873",
@@ -800,7 +895,8 @@
       "title": "Submitted a procedure example for T0873 Project File Infection (CyberAv3ngers, CISA AA26-097A) and reported a broken campaign link",
       "url": "https://attack.mitre.org/techniques/T0873/",
       "date": "2026-11-13",
-      "status": "submitted by email"
+      "status": "submitted by email",
+      "landed": false
     },
     {
       "id": "uncut-6",
@@ -812,7 +908,8 @@
       "date": "2026-11-13",
       "status": "merged",
       "status_changed": "2026-11-13",
-      "note": "PR #6 lived in a fork, so maintainer Balanov merged the same commits as PR #7 (merged 2026-11-13T14:43:53Z) and said so in the thread"
+      "note": "PR #6 lived in a fork, so maintainer Balanov merged the same commits as PR #7 (merged 2026-11-13T14:43:53Z) and said so in the thread",
+      "landed": true
     },
     {
       "id": "claude-code-templates-1521",
@@ -822,7 +919,8 @@
       "title": "Corrected the OWASP ASVS 5.0 logging chapter reference in claude-code-templates' AI agent audit specialist from V7 (Session Management) to V16 (Security Logging and Error Handling)",
       "url": "https://github.com/davila7/claude-code-templates/pull/1521",
       "date": "2026-11-12",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "endoflife.date-11593",
@@ -832,7 +930,8 @@
       "title": "Added Suricata's release and end-of-life data to endoflife.date, sourced from OISF's EOL policy and ChangeLog",
       "url": "https://github.com/endoflife-date/endoflife.date/pull/11593",
       "date": "2026-11-12",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "mcp-scanner-308",
@@ -843,7 +942,8 @@
       "url": "https://github.com/cisco-ai-defense/mcp-scanner/pull/308",
       "date": "2026-11-12",
       "status": "merged",
-      "status_changed": "2026-11-19"
+      "status_changed": "2026-11-19",
+      "landed": true
     },
     {
       "id": "github-mcp-server-3825",
@@ -855,7 +955,8 @@
       "date": "2026-11-12",
       "status": "merged",
       "merged": "2026-11-19",
-      "note": "Approved by GitHub maintainer @SamMorrowDrums and merged into main 2026-11-19. Copilot review had flagged that the original policy text implied token approval applies to ALL org-member-created tokens; correction landed against GitHub own PAT policy documentation. Marquee: github/github-mcp-server is GitHub official MCP server."
+      "note": "Approved by GitHub maintainer @SamMorrowDrums and merged into main 2026-11-19. Copilot review had flagged that the original policy text implied token approval applies to ALL org-member-created tokens; correction landed against GitHub own PAT policy documentation. Marquee: github/github-mcp-server is GitHub official MCP server.",
+      "landed": true
     },
     {
       "id": "promptfoo-12396",
@@ -865,7 +966,8 @@
       "title": "Added an India DPDP Act 2023 and DPDP Rules 2025 red-team preset to promptfoo, mapping seven obligations to its existing attack plugins (flagship F1)",
       "url": "https://github.com/promptfoo/promptfoo/pull/12396",
       "date": "2026-11-12",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "osv-scanner-97",
@@ -875,7 +977,8 @@
       "title": "Proposed opt-in exploit intelligence (CISA KEV + FIRST EPSS) for Google osv-scanner findings, with a three-PR design (flagship F4)",
       "url": "https://github.com/google/osv-scanner/issues/97#issuecomment-6818032744",
       "date": "2026-11-12",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "trivy-discussion-11625",
@@ -885,7 +988,8 @@
       "title": "Proposed filesystem/repo scanning and ML-KEM/SLH-DSA support for Trivy's cryptographic asset (CBOM) scanner (flagship F3)",
       "url": "https://github.com/aquasecurity/trivy/discussions/11625",
       "date": "2026-11-12",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "fedramp-rfc0035",
@@ -895,7 +999,8 @@
       "title": "Public comment on FedRAMP RFC-0035 (cryptographic module rules): proposed CycloneDX CBOM as the module inventory format, with per-algorithm validation and NIST post-quantum security levels",
       "url": "https://github.com/FedRAMP/community/discussions/179#discussioncomment-19559831",
       "date": "2026-11-12",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "oscal-2296",
@@ -905,7 +1010,8 @@
       "title": "Tested the proposed assessment-results reference constraints for NIST OSCAL (#2296) against develop and the official examples, offered tests and extra risk checks, and reported a broken reference in the official POA&M example",
       "url": "https://github.com/usnistgov/OSCAL/issues/2296#issuecomment-6819379676",
       "date": "2026-11-12",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "scubagear-2577",
@@ -915,7 +1021,8 @@
       "title": "Proposed an OSCAL catalog release artifact for CISA ScubaGear's Microsoft 365 secure configuration baselines, carrying the NIST SP 800-53 mappings (port of ScubaGoggles #1058); trial run produced 162 controls passing OSCAL CLI",
       "url": "https://github.com/cisagov/ScubaGear/issues/2577",
       "date": "2026-11-12",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "oscal-2292",
@@ -925,7 +1032,8 @@
       "title": "Contributed an ISO/IEC 27001 design for modelling the Statement of Applicability and risk assessment in NIST OSCAL v2 (gap analysis, minimal proposal, open questions)",
       "url": "https://github.com/usnistgov/OSCAL/issues/2292#issuecomment-6821371096",
       "date": "2026-11-12",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "oscal-content-356",
@@ -935,7 +1043,8 @@
       "title": "Reported a broken risk reference in NIST's official IFA POA&M example (risk-uuid points at a mitigating factor), found while testing OSCAL #2296 constraints",
       "url": "https://github.com/usnistgov/oscal-content/issues/356",
       "date": "2026-11-12",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "prowler-13332",
@@ -945,7 +1054,8 @@
       "title": "Corrected Prowler's RBI compliance framework, which was named as RBI-wide but is RBI's repealed framework for urban cooperative banks",
       "url": "https://github.com/prowler-cloud/prowler/issues/13332",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "grokbot-clone-2",
@@ -955,7 +1065,8 @@
       "title": "Fixed a cross-site scripting hole in grokbot-clone's app-connect callback, reproduced before and after on a local server",
       "url": "https://github.com/nickvasilescu/grokbot-clone/pull/2",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "grokbot-clone-3",
@@ -965,7 +1076,8 @@
       "title": "Made grokbot-clone listen on localhost by default, closing a same-network account takeover through the dev login",
       "url": "https://github.com/nickvasilescu/grokbot-clone/pull/3",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "grokbot-clone-4",
@@ -975,7 +1087,8 @@
       "title": "Stopped a malformed WebSocket upgrade from crashing grokbot-clone's server, reproduced the crash and the fix on a local run",
       "url": "https://github.com/nickvasilescu/grokbot-clone/pull/4",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "grokbot-clone-5",
@@ -985,7 +1098,8 @@
       "title": "Closed an approval bypass where grokbot-clone's Composio sandbox tools could act without the user's approval",
       "url": "https://github.com/nickvasilescu/grokbot-clone/pull/5",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "claude-skill-2",
@@ -995,7 +1109,8 @@
       "title": "Fixed shoot.py argument parsing in MotionSites' claude-skill so --wait no longer sends screenshots to the wrong folder; verified before/after",
       "url": "https://github.com/Motionsites-AI/claude-skill/pull/2",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "obscura-1513",
@@ -1006,7 +1121,8 @@
       "url": "https://github.com/h4ckf0r0day/obscura/pull/1513",
       "date": "2026-11-11",
       "status": "merged",
-      "status_changed": "2026-11-11"
+      "status_changed": "2026-11-11",
+      "landed": true
     },
     {
       "id": "bama-19",
@@ -1016,7 +1132,8 @@
       "title": "Fixed a SIGPIPE crash in bama's agent-cli template so the generated app survives an early CLI disconnect; reproduced and fixed with a focused Swift harness",
       "url": "https://github.com/daveebbelaar/bama/pull/19",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "grokbot-clone-6",
@@ -1026,7 +1143,8 @@
       "title": "Hardened grokbot-clone's approval handling so a missing or unknown decision can no longer silently approve a tool call",
       "url": "https://github.com/nickvasilescu/grokbot-clone/pull/6",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "grokbot-clone-7",
@@ -1036,7 +1154,8 @@
       "title": "Stopped grokbot-clone routines from being scheduled to run every second (unbounded model-API cost)",
       "url": "https://github.com/nickvasilescu/grokbot-clone/pull/7",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "grokbot-clone-8",
@@ -1046,7 +1165,8 @@
       "title": "Clamped grokbot-clone's conversation row limit so a negative or non-numeric value can't return the whole history",
       "url": "https://github.com/nickvasilescu/grokbot-clone/pull/8",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "specification-1123",
@@ -1056,7 +1176,8 @@
       "title": "Answered the CycloneDX discussion on representing a component bundled inside another (HBase bundling a.jar) with a spec-cited recommendation",
       "url": "https://github.com/CycloneDX/specification/discussions/1123#discussioncomment-19534342",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "stack-diagram-8",
@@ -1067,7 +1188,8 @@
       "url": "https://github.com/caru-ini/stack-diagram/pull/8",
       "date": "2026-11-11",
       "status": "merged",
-      "status_changed": "2026-11-12"
+      "status_changed": "2026-11-12",
+      "landed": true
     },
     {
       "id": "trivy-11528",
@@ -1078,7 +1200,8 @@
       "url": "https://github.com/aquasecurity/trivy/discussions/11528#discussioncomment-19535994",
       "date": "2026-11-11",
       "status": "proposed",
-      "area_was": "AI governance"
+      "area_was": "AI governance",
+      "landed": false
     },
     {
       "id": "liboqs-2468",
@@ -1088,7 +1211,8 @@
       "title": "Answered a researcher's question on real-world PQC migration challenges with a practitioner breakdown across discovery, inventory, migration and compliance",
       "url": "https://github.com/open-quantum-safe/liboqs/discussions/2468#discussioncomment-19536128",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "ai-governance-framework-449",
@@ -1098,7 +1222,8 @@
       "title": "Added an India obligation reference set (RBI FREE-AI, DPDP Act and Rules, CERT-In Directions) to the FINOS AI Governance Framework, mapped to 14 risks",
       "url": "https://github.com/finos/ai-governance-framework/pull/449",
       "date": "2026-11-11",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "obscura-1530",
@@ -1110,7 +1235,8 @@
       "date": "2026-11-11",
       "status": "proposed",
       "area_was": "AI governance",
-      "title_raw": "perf(render): opacity and color inline style writes force a full relayout on the next read, transform writes do not"
+      "title_raw": "perf(render): opacity and color inline style writes force a full relayout on the next read, transform writes do not",
+      "landed": false
     },
     {
       "id": "obscura-1531",
@@ -1124,7 +1250,8 @@
       "area_was": "AI governance",
       "title_raw": "fetch: writing to a closed pipe panics and exits 1 (| head, | grep -q)",
       "status_changed": "2026-11-17",
-      "note": "closed as completed by maintainer SGavrl via fix PR #1607 (merged 2026-11-17)"
+      "note": "closed as completed by maintainer SGavrl via fix PR #1607 (merged 2026-11-17)",
+      "landed": true
     },
     {
       "id": "grc-skills-62",
@@ -1135,7 +1262,8 @@
       "url": "https://github.com/Sushegaad/Claude-Skills-Governance-Risk-and-Compliance/issues/62",
       "date": "2026-11-10",
       "status": "accepted",
-      "status_changed": "2026-11-10"
+      "status_changed": "2026-11-10",
+      "landed": true
     },
     {
       "id": "claude-skills-1121",
@@ -1146,7 +1274,8 @@
       "url": "https://github.com/alirezarezvani/claude-skills/pull/1121",
       "date": "2026-11-10",
       "status": "merged",
-      "status_changed": "2026-11-10"
+      "status_changed": "2026-11-10",
+      "landed": true
     },
     {
       "id": "promptfoo-12367",
@@ -1156,7 +1285,8 @@
       "title": "Updated promptfoo's EU AI Act application dates to match Regulation (EU) 2026/1744",
       "url": "https://github.com/promptfoo/promptfoo/pull/12367",
       "date": "2026-11-10",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "wshobson-agents-821",
@@ -1167,7 +1297,8 @@
       "url": "https://github.com/wshobson/agents/issues/821",
       "date": "2026-11-10",
       "status": "accepted",
-      "status_changed": "2026-11-18"
+      "status_changed": "2026-11-18",
+      "landed": true
     },
     {
       "id": "shorlist-2",
@@ -1178,7 +1309,8 @@
       "url": "https://github.com/shorlist/shorlist/pull/2",
       "date": "2026-11-10",
       "status": "merged",
-      "status_changed": "2026-11-10"
+      "status_changed": "2026-11-10",
+      "landed": true
     },
     {
       "id": "qrp-mcp-15",
@@ -1189,7 +1321,8 @@
       "url": "https://github.com/StanimirTenev/qrp-mcp/pull/15",
       "date": "2026-11-09",
       "status": "merged",
-      "status_changed": "2026-11-10"
+      "status_changed": "2026-11-10",
+      "landed": true
     },
     {
       "id": "cryptoscan-95",
@@ -1199,7 +1332,8 @@
       "title": "Closed the open item on the executive order behind the CISA/NIST CBOM minimum elements (EO 14412 Sec. 5(d)) and corrected OMB M-23-02 and NIST IR 8547 dates in the docs",
       "url": "https://github.com/csnp/cryptoscan/issues/95",
       "date": "2026-11-09",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "app-store-compliance-626",
@@ -1209,7 +1343,8 @@
       "title": "Showed the EU AI Act Article 5(1a) ban is narrower than the project's deadline entry, and that Article 4 on AI literacy was replaced by Regulation (EU) 2026/1744",
       "url": "https://github.com/mjmirza/app-store-compliance/issues/626#issuecomment-6747725334",
       "date": "2026-11-09",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "sbom-tools-450",
@@ -1220,7 +1355,8 @@
       "url": "https://github.com/sbom-tool/sbom-tools/pull/450",
       "date": "2026-11-04",
       "status": "merged",
-      "status_changed": "2026-11-09"
+      "status_changed": "2026-11-09",
+      "landed": true
     },
     {
       "id": "cosai-ws4-297",
@@ -1230,7 +1366,8 @@
       "title": "Framework alignment review of the Modality-Agnostic Taxonomy: identifier corrections and NIST IR 8477 relationship mapping",
       "url": "https://github.com/cosai-oasis/ws4-secure-design-agentic-systems/issues/297#issuecomment-6624935891",
       "date": "2026-11-04",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "pkic-cbom-12",
@@ -1240,7 +1377,8 @@
       "title": "Regulatory alignment proposal for cryptographic inventories: versioned mappings, the RBI Q-SAFE mandate and audit-safe wording",
       "url": "https://github.com/pkic/cbom/issues/12#issuecomment-6626132686",
       "date": "2026-11-04",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "owasp-acs-33",
@@ -1250,7 +1388,8 @@
       "title": "Normative-requirement ledger for ACS v0.1.0: 105 requirements classified by role, profile and applicability",
       "url": "https://github.com/GenAI-Security-Project/agent-control-standard/issues/33#issuecomment-6611206742",
       "date": "2026-11-03",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "atf-22",
@@ -1260,7 +1399,8 @@
       "title": "Crosswalk to the EU AI Act as amended by the Digital Omnibus, India's DPDP Act and RBI FREE-AI",
       "url": "https://github.com/massivescale-ai/agentic-trust-framework/issues/22",
       "date": "2026-11-03",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     },
     {
       "id": "pqca-6",
@@ -1270,7 +1410,8 @@
       "title": "Tracker taxonomy aligned to CISA's PQC product categories (Tables 2 and 3)",
       "url": "https://github.com/PQCA/wg-readiness-tracking/issues/6#issuecomment-6610783195",
       "date": "2026-11-03",
-      "status": "proposed"
+      "status": "proposed",
+      "landed": false
     }
   ],
   "newsletter": {
@@ -1323,11 +1464,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 353266520627,
-    "sessions": 14539,
-    "messages": 2201541,
-    "avg_30d": 4947127425,
-    "as_of": "2026-11-21 16:03 IST",
+    "tokens": 353631288273,
+    "sessions": 14632,
+    "messages": 2206679,
+    "avg_30d": 4853372833,
+    "as_of": "2026-11-24 12:04 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -1584,36 +1725,6 @@
         "date": "2026-11-14"
       },
       {
-        "key": "microsoft",
-        "name": "Microsoft",
-        "sub": "github.com/microsoft",
-        "logo": "assets/home/img/achievements/org-microsoft.png",
-        "kinds": [
-          "merged",
-          "accepted"
-        ],
-        "items": [
-          {
-            "title": "Corrected Microsoft's MCP for Beginners security lesson, which quoted a retired 2025-11-25 session rule as a requirement of MCP spec 2026-07-28",
-            "url": "https://github.com/microsoft/mcp-for-beginners/pull/1255",
-            "date": "2026-11-13",
-            "kind": "merged",
-            "project": "mcp-for-beginners"
-          },
-          {
-            "title": "Answered where downstream relying-party review claims belong relative to AGT compliance receipts (in-toto + SCITT)",
-            "url": "https://github.com/microsoft/agent-governance-toolkit/discussions/4564#discussioncomment-19590528",
-            "date": "2026-11-13",
-            "kind": "accepted",
-            "project": "agent-governance-toolkit"
-          }
-        ],
-        "merged": 1,
-        "accepted": 1,
-        "recognised": 0,
-        "date": "2026-11-13"
-      },
-      {
         "key": "cdxgen",
         "name": "OWASP cdxgen",
         "sub": "github.com/cdxgen",
@@ -1803,6 +1914,28 @@
         "accepted": 0,
         "recognised": 0,
         "date": "2026-11-16"
+      },
+      {
+        "key": "microsoft",
+        "name": "Microsoft",
+        "sub": "github.com/microsoft",
+        "logo": "assets/home/img/achievements/org-microsoft.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Corrected Microsoft's MCP for Beginners security lesson, which quoted a retired 2025-11-25 session rule as a requirement of MCP spec 2026-07-28",
+            "url": "https://github.com/microsoft/mcp-for-beginners/pull/1255",
+            "date": "2026-11-13",
+            "kind": "merged",
+            "project": "mcp-for-beginners"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-13"
       },
       {
         "key": "ukgovernmentbeis",
@@ -2132,7 +2265,17 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-24 11:36 IST"
+    "as_of": "2026-11-24 13:15 IST"
+  },
+  "counts": {
+    "contributions": 120,
+    "accepted": 33,
+    "merged": 28,
+    "issues_accepted": 5,
+    "recognised": 1,
+    "projects": 87,
+    "in_review": 86,
+    "organisations": 26
   },
   "updated": "2026-11-24"
 }

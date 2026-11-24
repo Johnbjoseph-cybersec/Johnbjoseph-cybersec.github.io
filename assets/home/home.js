@@ -33,7 +33,7 @@
         var st = s[n.getAttribute('data-src')]; if (st) n.textContent = st.source.replace(/, reported by John$/, '') + ' · ' + monthYear(st.as_of);
       });
     });
-    safe('ledger', function () { ledger(d.contributions || []); });
+    safe('ledger', function () { ledger(d.contributions || [], d.counts); });
     safe('achievements', function () { achFromData(d.achievements); });
     safe('newsletter', function () {
       var nl = d.newsletter; if (!nl || !nl.latest || !nl.latest.length) return;
@@ -67,15 +67,17 @@
   }
 
   /* contributions ledger: scoreboard + Latest / Accepted / In review views, grouped by project, newest first */
-  function ledger(all) {
+  function ledger(all, cnt) {
     var list = all.slice(); if (!list.length) return;
     var box = document.getElementById('ledger'); if (!box) return;
-    function isWon(c) { return /merged|accepted/.test((c.status || '').toLowerCase()); }
+    // 'accepted' is decided once, by the builder (c.landed; COUNT DEFINITIONS in build_site_data.py). Older data has no flag.
+    function isWon(c) { return typeof c.landed === 'boolean' ? c.landed : /merged|accepted/.test((c.status || '').toLowerCase()); }
+    function isRecog(c) { return /recogn/.test((c.status || '').toLowerCase()); }
     // Newest first everywhere (John, 2026-11-14: a won-first default hid every new proposal, so the page looked stale).
     list.sort(function (a, b) { return (a.date < b.date ? 1 : a.date > b.date ? -1 : 0) || (isWon(b) - isWon(a)); });
-    var won = list.filter(isWon), open = list.filter(function (c) { return !isWon(c); });
+    var won = list.filter(isWon), open = list.filter(function (c) { return !isWon(c) && !isRecog(c); });   // in review = not accepted, not recognition
     var keys = {}; list.forEach(function (c) { keys[c.org + '/' + c.project] = 1; });
-    var nProj = Object.keys(keys).length;
+    var nProj = cnt && typeof cnt.projects === 'number' ? cnt.projects : Object.keys(keys).length;
     [['openN1', list.length], ['openN2', won.length], ['openN3', nProj]].forEach(function (x) { var n = document.getElementById(x[0]); if (n) { n.textContent = String(x[1]); n.setAttribute('data-value', x[1]); } });
     var barEl = document.getElementById('openBar'); if (barEl) barEl.style.setProperty('--p', (list.length ? won.length / list.length : 0).toFixed(3));
     var LIMIT = 6, view = 'all', expanded = false, sets = { won: won, open: open, all: list };

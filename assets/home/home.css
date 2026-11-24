@@ -759,7 +759,8 @@ a.tile:hover, .tile:hover { border-color: var(--line-2); }
 .rail-x__fill { position: absolute; left: 4px; top: 0; width: 1px; height: 100%; background: var(--accent); transform-origin: 0 0; transform: scaleY(0); box-shadow: 0 0 8px var(--accent-glow); }
 .rail-x a { position: relative; display: block; width: 9px; height: 9px; border-radius: 50%; background: var(--bg); border: 1.5px solid var(--dim); transition: border-color .3s, background .3s, transform .3s var(--ease); }
 .rail-x a span { position: absolute; left: 18px; top: 50%; transform: translate(-6px, -50%); font: 500 10.5px/1 var(--mono); color: var(--muted); white-space: nowrap; opacity: 0; transition: opacity .25s, transform .3s var(--ease); pointer-events: none; }
-.rail-x a:hover span, .rail-x a.is-on span { opacity: 1; transform: translate(0, -50%); }
+/* labels on hover only: the always-on label collided with body text in the gutter (John 2026-11-24) */
+.rail-x a:hover span, .rail-x a:focus-visible span { opacity: 1; transform: translate(0, -50%); background: var(--bg); padding: 3px 6px; border-radius: 4px; }
 .rail-x a.is-on { border-color: var(--accent); background: var(--accent); transform: scale(1.25); }
 .rail-x a.is-past { border-color: var(--accent); }
 @media (min-width: 1460px) { .is-scrolled .rail-x { display: flex; } }
@@ -874,4 +875,6 @@ a.tile:hover, .tile:hover { border-color: var(--line-2); }
 .bio { display: block; margin: 64px 0 0; padding-top: 40px; border-top: 1px solid var(--line); }
 .bio__txt p { color: var(--muted); max-width: 46em; margin: 0 0 14px; font-size: 16.5px; line-height: 1.6; text-wrap: pretty; }
 .bio__txt .eyebrow { margin-bottom: 14px; }
-.bio__txt .bio__lead { color: var(--text); font-size: clamp(19px, 1.65vw, 24px); line-height: 1.38; letter-spacing: -.02em; font-weight: 500; border-left: 2px solid var(--accent); padding-left: 20px; margin-bottom: 20px; }
+.bio__txt { max-width: 46rem; }
+.bio__txt p { max-width: none; }
+.bio__txt .bio__lead { color: var(--text); font-size: clamp(19px, 1.65vw, 24px); line-height: 1.38; letter-spacing: -.02em; font-weight: 500; margin-bottom: 20px; }
