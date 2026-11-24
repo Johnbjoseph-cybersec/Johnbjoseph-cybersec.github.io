@@ -882,5 +882,5 @@ a.tile:hover, .tile:hover { border-color: var(--line-2); }
 .bio__cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 56px; border-top: 1px solid var(--line-2); }
 .bio__col { padding-top: 22px; }
 .bio__k { display: block; font: 500 11.5px/1 var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
-.bio__txt .bio__col p { margin: 0; font-size: 15.5px; line-height: 1.62; }
+.bio__txt .bio__col p { margin: 0; font-size: 14.5px; line-height: 1.6; text-align: justify; text-justify: inter-word; -webkit-hyphens: auto; hyphens: auto; hyphenate-limit-chars: 7 3 3; text-wrap: wrap; }
 @media (max-width: 1000px) { .bio__cols { grid-template-columns: minmax(0, 1fr); gap: 0; } .bio__col { padding: 20px 0 22px; } .bio__col + .bio__col { border-top: 1px solid var(--line); } }
