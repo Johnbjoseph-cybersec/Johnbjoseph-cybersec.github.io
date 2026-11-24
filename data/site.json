@@ -86,6 +86,17 @@
       "landed": false
     },
     {
+      "id": "zeek-6128",
+      "project": "zeek",
+      "org": "zeek",
+      "area": "OT security",
+      "title": "Fixed Zeek's DNP3 analyzer so device attributes (configuration ID, position, operator and owner names) reach scripts instead of silently corrupting the rest of the response",
+      "url": "https://github.com/zeek/zeek/pull/6128",
+      "date": "2026-11-24",
+      "status": "proposed",
+      "landed": false
+    },
+    {
       "id": "awesome-claude-code-subagents-344",
       "project": "awesome-claude-code-subagents",
       "org": "VoltAgent",
@@ -2287,16 +2298,16 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-24 14:56 IST"
+    "as_of": "2026-11-24 15:19 IST"
   },
   "counts": {
-    "contributions": 122,
+    "contributions": 123,
     "accepted": 33,
     "merged": 28,
     "issues_accepted": 5,
     "recognised": 1,
-    "projects": 88,
-    "in_review": 88,
+    "projects": 89,
+    "in_review": 89,
     "organisations": 26
   },
   "updated": "2026-11-24"
