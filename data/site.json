@@ -64,6 +64,17 @@
       "landed": false
     },
     {
+      "id": "cpex-plugins-223",
+      "project": "cpex-plugins",
+      "org": "IBM",
+      "area": "AI governance / privacy",
+      "title": "Proposed opt-in India Aadhaar (Verhoeff-validated) and PAN detection for the Rust PII filter in IBM's ContextForge MCP gateway",
+      "url": "https://github.com/IBM/cpex-plugins/issues/223",
+      "date": "2026-11-24",
+      "status": "proposed",
+      "landed": false
+    },
+    {
       "id": "awesome-claude-code-subagents-344",
       "project": "awesome-claude-code-subagents",
       "org": "VoltAgent",
@@ -1464,11 +1475,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 353631288273,
-    "sessions": 14632,
-    "messages": 2206679,
-    "avg_30d": 4853372833,
-    "as_of": "2026-11-24 12:04 IST",
+    "tokens": 354376099124,
+    "sessions": 14694,
+    "messages": 2214048,
+    "avg_30d": 4867372072,
+    "as_of": "2026-11-24 14:04 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -2236,7 +2247,7 @@
         "id": "BGTiXGaMhLU",
         "title": "I Built a FREE GRC Practice Lab… You Won’t Believe What Happened Next...",
         "date": "2026-02-13",
-        "views": 2354
+        "views": 2355
       },
       {
         "id": "yo4xZccg940",
@@ -2248,7 +2259,7 @@
         "id": "NG2w4D6VPDw",
         "title": "I Built a Free GRC AI Agent for My GRC Practice Lab Using WebGPU + WebLLM",
         "date": "2026-03-24",
-        "views": 1279
+        "views": 1280
       },
       {
         "id": "4ftBGaUufA8",
@@ -2265,16 +2276,16 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-24 13:24 IST"
+    "as_of": "2026-11-24 14:20 IST"
   },
   "counts": {
-    "contributions": 120,
+    "contributions": 121,
     "accepted": 33,
     "merged": 28,
     "issues_accepted": 5,
     "recognised": 1,
-    "projects": 87,
-    "in_review": 86,
+    "projects": 88,
+    "in_review": 87,
     "organisations": 26
   },
   "updated": "2026-11-24"
