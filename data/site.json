@@ -75,6 +75,17 @@
       "landed": false
     },
     {
+      "id": "prowler-13540",
+      "project": "prowler",
+      "org": "prowler-cloud",
+      "area": "post-quantum cryptography",
+      "title": "Proposed and built Prowler's AWS KMS post-quantum key check (ML-DSA / ML-KEM), the one AWS key store its PQC check series had not covered",
+      "url": "https://github.com/prowler-cloud/prowler/issues/13540",
+      "date": "2026-11-24",
+      "status": "proposed",
+      "landed": false
+    },
+    {
       "id": "awesome-claude-code-subagents-344",
       "project": "awesome-claude-code-subagents",
       "org": "VoltAgent",
@@ -2276,16 +2287,16 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-24 14:20 IST"
+    "as_of": "2026-11-24 14:56 IST"
   },
   "counts": {
-    "contributions": 121,
+    "contributions": 122,
     "accepted": 33,
     "merged": 28,
     "issues_accepted": 5,
     "recognised": 1,
     "projects": 88,
-    "in_review": 87,
+    "in_review": 88,
     "organisations": 26
   },
   "updated": "2026-11-24"
