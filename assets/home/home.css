@@ -875,6 +875,12 @@ a.tile:hover, .tile:hover { border-color: var(--line-2); }
 .bio { display: block; margin: 64px 0 0; padding-top: 40px; border-top: 1px solid var(--line); }
 .bio__txt p { color: var(--muted); max-width: 46em; margin: 0 0 14px; font-size: 16.5px; line-height: 1.6; text-wrap: pretty; }
 .bio__txt .eyebrow { margin-bottom: 14px; }
-.bio__txt { max-width: 46rem; }
+.bio__txt { max-width: none; }
 .bio__txt p { max-width: none; }
-.bio__txt .bio__lead { color: var(--text); font-size: clamp(19px, 1.65vw, 24px); line-height: 1.38; letter-spacing: -.02em; font-weight: 500; margin-bottom: 20px; }
+.bio__txt .bio__lead { color: var(--text); font-size: clamp(19px, 1.65vw, 24px); line-height: 1.38; letter-spacing: -.02em; font-weight: 500; max-width: 40em; margin-bottom: 28px; }
+/* Bio columns share the story timeline's grid so the edges line up (John 2026-11-24: "properly formatted") */
+.bio__cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 56px; border-top: 1px solid var(--line-2); }
+.bio__col { padding-top: 22px; }
+.bio__k { display: block; font: 500 11.5px/1 var(--mono); color: var(--dim); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
+.bio__txt .bio__col p { margin: 0; font-size: 15.5px; line-height: 1.62; }
+@media (max-width: 1000px) { .bio__cols { grid-template-columns: minmax(0, 1fr); gap: 0; } .bio__col { padding: 20px 0 22px; } .bio__col + .bio__col { border-top: 1px solid var(--line); } }
