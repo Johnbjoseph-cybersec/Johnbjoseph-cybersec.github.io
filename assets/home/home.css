@@ -869,3 +869,11 @@ a.tile:hover, .tile:hover { border-color: var(--line-2); }
 @media (max-width: 1000px) { .launch__more { display: none; } }
 @media (max-width: 560px) { .launch__txt { display: none; } }
 @media (prefers-reduced-motion: reduce) { .launch, .launch svg { transition: none; } .launch:hover { transform: none; } }
+
+/* Third-person bio card (2026-11-24) */
+.bio { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 40px; align-items: start; margin: 64px 0 0; padding-top: 40px; border-top: 1px solid var(--line); }
+.bio__img { width: 100%; height: auto; aspect-ratio: 933 / 1400; object-fit: cover; border-radius: 14px; border: 1px solid var(--line); display: block; }
+.bio__txt p { color: var(--muted); max-width: 46em; margin: 0 0 14px; font-size: 16.5px; line-height: 1.6; text-wrap: pretty; }
+.bio__txt .eyebrow { margin-bottom: 14px; }
+.bio__txt .bio__lead { color: var(--text); font-size: clamp(19px, 1.65vw, 24px); line-height: 1.38; letter-spacing: -.02em; font-weight: 500; border-left: 2px solid var(--accent); padding-left: 20px; margin-bottom: 20px; }
+@media (max-width: 760px) { .bio { grid-template-columns: minmax(0, 1fr); gap: 24px; } .bio__img { max-width: 220px; } }
