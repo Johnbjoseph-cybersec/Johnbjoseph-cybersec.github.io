@@ -1497,11 +1497,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 354661615696,
-    "sessions": 14737,
-    "messages": 2216386,
-    "avg_30d": 4868600427,
-    "as_of": "2026-11-24 16:04 IST",
+    "tokens": 354692206793,
+    "sessions": 14754,
+    "messages": 2216973,
+    "avg_30d": 4852644797,
+    "as_of": "2026-11-24 18:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -2243,7 +2243,7 @@
         "id": "4errQPTkgDA",
         "title": "ISO 27090 Explained: The 9 Ways Attackers Target Your AI",
         "date": "2026-10-26",
-        "views": 192
+        "views": 193
       },
       {
         "id": "K5dwdPedoMA",
@@ -2263,13 +2263,13 @@
         "id": "VsZ54SHovJU",
         "title": "How to Build a Practical GRC Program from Scratch | With Moses Omolaiye (Founder, MitigateIT)",
         "date": "2026-02-21",
-        "views": 2430
+        "views": 2432
       },
       {
         "id": "BGTiXGaMhLU",
         "title": "I Built a FREE GRC Practice Lab… You Won’t Believe What Happened Next...",
         "date": "2026-02-13",
-        "views": 2355
+        "views": 2356
       },
       {
         "id": "yo4xZccg940",
@@ -2281,13 +2281,13 @@
         "id": "NG2w4D6VPDw",
         "title": "I Built a Free GRC AI Agent for My GRC Practice Lab Using WebGPU + WebLLM",
         "date": "2026-03-24",
-        "views": 1281
+        "views": 1282
       },
       {
         "id": "4ftBGaUufA8",
         "title": "I Built the ISO 27001 Practical Course, I Wish Existed",
         "date": "2026-05-19",
-        "views": 946
+        "views": 948
       },
       {
         "id": "_8DzH-mjYug",
@@ -2298,7 +2298,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-24 17:25 IST"
+    "as_of": "2026-11-24 19:26 IST"
   },
   "counts": {
     "contributions": 123,
