@@ -1497,11 +1497,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 354376099124,
-    "sessions": 14694,
-    "messages": 2214048,
-    "avg_30d": 4867372072,
-    "as_of": "2026-11-24 14:04 IST",
+    "tokens": 354661615696,
+    "sessions": 14737,
+    "messages": 2216386,
+    "avg_30d": 4868600427,
+    "as_of": "2026-11-24 16:04 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -2281,7 +2281,7 @@
         "id": "NG2w4D6VPDw",
         "title": "I Built a Free GRC AI Agent for My GRC Practice Lab Using WebGPU + WebLLM",
         "date": "2026-03-24",
-        "views": 1280
+        "views": 1281
       },
       {
         "id": "4ftBGaUufA8",
@@ -2298,7 +2298,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-24 15:25 IST"
+    "as_of": "2026-11-24 17:25 IST"
   },
   "counts": {
     "contributions": 123,
