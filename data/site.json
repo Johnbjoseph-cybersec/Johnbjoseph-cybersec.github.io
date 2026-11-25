@@ -1511,11 +1511,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 354985150400,
-    "sessions": 14867,
-    "messages": 2221625,
-    "avg_30d": 4830196665,
-    "as_of": "2026-11-25 10:03 IST",
+    "tokens": 355114161802,
+    "sessions": 14897,
+    "messages": 2223317,
+    "avg_30d": 4803807341,
+    "as_of": "2026-11-25 14:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -2309,7 +2309,7 @@
         "id": "4errQPTkgDA",
         "title": "ISO 27090 Explained: The 9 Ways Attackers Target Your AI",
         "date": "2026-10-26",
-        "views": 193
+        "views": 194
       },
       {
         "id": "K5dwdPedoMA",
@@ -2329,7 +2329,7 @@
         "id": "VsZ54SHovJU",
         "title": "How to Build a Practical GRC Program from Scratch | With Moses Omolaiye (Founder, MitigateIT)",
         "date": "2026-02-21",
-        "views": 2437
+        "views": 2441
       },
       {
         "id": "BGTiXGaMhLU",
@@ -2347,7 +2347,7 @@
         "id": "NG2w4D6VPDw",
         "title": "I Built a Free GRC AI Agent for My GRC Practice Lab Using WebGPU + WebLLM",
         "date": "2026-03-24",
-        "views": 1293
+        "views": 1294
       },
       {
         "id": "4ftBGaUufA8",
@@ -2364,7 +2364,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-25 13:17 IST"
+    "as_of": "2026-11-25 15:17 IST"
   },
   "counts": {
     "contributions": 124,
