@@ -426,8 +426,9 @@
       "title": "Proposed a fix to NASA JPL F Prime's CCSDS TM framer so an out-of-range virtual channel ID can no longer silently corrupt the spacecraft ID in downlinked telemetry frames",
       "url": "https://github.com/nasa/fprime/pull/6400",
       "date": "2026-11-16",
-      "status": "proposed",
-      "landed": false
+      "status": "merged",
+      "status_changed": "2026-11-24",
+      "landed": true
     },
     {
       "id": "skillspector-1134",
@@ -544,8 +545,9 @@
       "title": "Reported to NASA JPL F Prime that its CCSDS TM framer lets an out-of-range virtual channel ID silently overwrite the spacecraft ID in telemetry frames, and proposed a tested fix",
       "url": "https://github.com/nasa/fprime/issues/6395",
       "date": "2026-11-15",
-      "status": "proposed",
-      "landed": false
+      "status": "accepted",
+      "status_changed": "2026-11-24",
+      "landed": true
     },
     {
       "id": "liboqs-2706",
@@ -776,8 +778,9 @@
       "title": "Closed a credential-file gap in the Google Workspace MCP server: Docker registry credentials (.docker/config.json) were never blocked from file reads",
       "url": "https://github.com/taylorwilsdon/google_workspace_mcp/pull/1390",
       "date": "2026-11-13",
-      "status": "proposed",
-      "landed": false
+      "status": "merged",
+      "status_changed": "2026-11-24",
+      "landed": true
     },
     {
       "id": "fastmcp-526",
@@ -1729,6 +1732,36 @@
         "date": "2026-11-16"
       },
       {
+        "key": "nasa",
+        "name": "NASA",
+        "sub": "github.com/nasa",
+        "logo": "assets/home/img/achievements/org-nasa.png",
+        "kinds": [
+          "merged",
+          "accepted"
+        ],
+        "items": [
+          {
+            "title": "Proposed a fix to NASA JPL F Prime's CCSDS TM framer so an out-of-range virtual channel ID can no longer silently corrupt the spacecraft ID in downlinked telemetry frames",
+            "url": "https://github.com/nasa/fprime/pull/6400",
+            "date": "2026-11-16",
+            "kind": "merged",
+            "project": "fprime"
+          },
+          {
+            "title": "Reported to NASA JPL F Prime that its CCSDS TM framer lets an out-of-range virtual channel ID silently overwrite the spacecraft ID in telemetry frames, and proposed a tested fix",
+            "url": "https://github.com/nasa/fprime/issues/6395",
+            "date": "2026-11-15",
+            "kind": "accepted",
+            "project": "fprime"
+          }
+        ],
+        "merged": 1,
+        "accepted": 1,
+        "recognised": 0,
+        "date": "2026-11-16"
+      },
+      {
         "key": "balanov",
         "name": "uncut",
         "sub": "by Balanov on GitHub",
@@ -2007,6 +2040,28 @@
             "date": "2026-11-13",
             "kind": "merged",
             "project": "oc"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-13"
+      },
+      {
+        "key": "taylorwilsdon",
+        "name": "google_workspace_mcp",
+        "sub": "by taylorwilsdon on GitHub",
+        "logo": "assets/home/img/achievements/org-taylorwilsdon.jpg",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Closed a credential-file gap in the Google Workspace MCP server: Docker registry credentials (.docker/config.json) were never blocked from file reads",
+            "url": "https://github.com/taylorwilsdon/google_workspace_mcp/pull/1390",
+            "date": "2026-11-13",
+            "kind": "merged",
+            "project": "google_workspace_mcp"
           }
         ],
         "merged": 1,
@@ -2298,17 +2353,17 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-25 08:41 IST"
+    "as_of": "2026-11-25 09:14 IST"
   },
   "counts": {
     "contributions": 123,
-    "accepted": 33,
-    "merged": 28,
-    "issues_accepted": 5,
+    "accepted": 36,
+    "merged": 30,
+    "issues_accepted": 6,
     "recognised": 1,
     "projects": 89,
-    "in_review": 89,
-    "organisations": 26
+    "in_review": 86,
+    "organisations": 28
   },
   "updated": "2026-11-25"
 }
