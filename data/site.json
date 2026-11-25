@@ -31,6 +31,17 @@
   },
   "contributions": [
     {
+      "id": "opik-9778",
+      "project": "opik",
+      "org": "comet-ml",
+      "area": "AI governance / privacy",
+      "title": "Proposed India Aadhaar and PAN classes for the PII guardrail in Comet's Opik (23.5k stars)",
+      "url": "https://github.com/comet-ml/opik/issues/9778",
+      "date": "2026-11-25",
+      "status": "proposed",
+      "landed": false
+    },
+    {
       "id": "agent-control-standard-33",
       "project": "agent-control-standard",
       "org": "GenAI-Security-Project",
@@ -1500,11 +1511,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 354759163650,
-    "sessions": 14792,
-    "messages": 2218144,
-    "avg_30d": 4844502042,
-    "as_of": "2026-11-24 20:04 IST",
+    "tokens": 354985150400,
+    "sessions": 14867,
+    "messages": 2221625,
+    "avg_30d": 4830196665,
+    "as_of": "2026-11-25 10:03 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -2353,16 +2364,16 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-25 09:14 IST"
+    "as_of": "2026-11-25 10:27 IST"
   },
   "counts": {
-    "contributions": 123,
+    "contributions": 124,
     "accepted": 36,
     "merged": 30,
     "issues_accepted": 6,
     "recognised": 1,
-    "projects": 89,
-    "in_review": 86,
+    "projects": 90,
+    "in_review": 87,
     "organisations": 28
   },
   "updated": "2026-11-25"
