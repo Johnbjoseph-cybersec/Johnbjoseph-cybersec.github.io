@@ -1511,11 +1511,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 355137023369,
-    "sessions": 14917,
-    "messages": 2223843,
-    "avg_30d": 4799342697,
-    "as_of": "2026-11-25 16:04 IST",
+    "tokens": 355158491275,
+    "sessions": 14933,
+    "messages": 2224297,
+    "avg_30d": 4807012214,
+    "as_of": "2026-11-25 18:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -1573,8 +1573,8 @@
           "prerelease": false,
           "url": "https://github.com/Johnbjoseph-cybersec/rewindagents/releases/tag/v1.2.0"
         },
-        "last_commit": "2026-11-19",
-        "as_of": "2026-11-19 12:50 IST",
+        "last_commit": "2026-11-25",
+        "as_of": "2026-11-25 19:18 IST",
         "source": "GitHub API"
       }
     }
@@ -2316,7 +2316,7 @@
         "id": "4errQPTkgDA",
         "title": "ISO 27090 Explained: The 9 Ways Attackers Target Your AI",
         "date": "2026-10-26",
-        "views": 196
+        "views": 201
       },
       {
         "id": "K5dwdPedoMA",
@@ -2371,7 +2371,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-25 17:18 IST"
+    "as_of": "2026-11-25 19:18 IST"
   },
   "counts": {
     "contributions": 124,
