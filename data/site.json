@@ -31,6 +31,17 @@
   },
   "contributions": [
     {
+      "id": "stitch-skills-115",
+      "project": "stitch-skills",
+      "org": "google-labs-code",
+      "area": "AI agent skills",
+      "title": "Fixed the React and React Native validators in Google Labs' Stitch agent skills so colors and web tags inside StyleSheet.create, map callbacks and wrapped components are checked again",
+      "url": "https://github.com/google-labs-code/stitch-skills/pull/115",
+      "date": "2026-11-27",
+      "status": "proposed",
+      "landed": false
+    },
+    {
       "id": "opik-9778",
       "project": "opik",
       "org": "comet-ml",
@@ -2371,16 +2382,16 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-27 03:43 IST"
+    "as_of": "2026-11-27 03:52 IST"
   },
   "counts": {
-    "contributions": 124,
+    "contributions": 125,
     "accepted": 36,
     "merged": 30,
     "issues_accepted": 6,
     "recognised": 1,
-    "projects": 90,
-    "in_review": 87,
+    "projects": 91,
+    "in_review": 88,
     "organisations": 28
   },
   "updated": "2026-11-27"
