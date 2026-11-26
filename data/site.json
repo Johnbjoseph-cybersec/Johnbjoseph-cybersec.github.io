@@ -42,6 +42,28 @@
       "landed": false
     },
     {
+      "id": "obsidian-prism-119",
+      "project": "obsidian-prism",
+      "org": "RMvdesi",
+      "area": "AI coding agent desktop UI (Antigravity plugin)",
+      "title": "Fixed Obsidian Prism (2.2k stars, Trendshift number 1 on 2026-11-27) so a Thought Translator style preset is saved when it is clicked instead of being lost when the settings sheet closes (issue #105)",
+      "url": "https://github.com/RMvdesi/obsidian-prism/pull/119",
+      "date": "2026-11-27",
+      "status": "proposed",
+      "landed": false
+    },
+    {
+      "id": "openset-llm-77",
+      "project": "openset-llm",
+      "org": "opensetlabs",
+      "area": "local LLM inference",
+      "title": "Reported that the openset-llm installer fails at the model graft step on machines where numpy is installed per user",
+      "url": "https://github.com/opensetlabs/openset-llm/issues/77",
+      "date": "2026-11-27",
+      "status": "proposed",
+      "landed": false
+    },
+    {
       "id": "opik-9778",
       "project": "opik",
       "org": "comet-ml",
@@ -2382,16 +2404,16 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-27 03:53 IST"
+    "as_of": "2026-11-27 03:58 IST"
   },
   "counts": {
-    "contributions": 125,
+    "contributions": 127,
     "accepted": 36,
     "merged": 30,
     "issues_accepted": 6,
     "recognised": 1,
-    "projects": 91,
-    "in_review": 88,
+    "projects": 93,
+    "in_review": 90,
     "organisations": 28
   },
   "updated": "2026-11-27"
