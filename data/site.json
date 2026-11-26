@@ -434,7 +434,7 @@
       "project": "fprime",
       "org": "nasa",
       "area": "Space systems security",
-      "title": "Proposed a fix to NASA JPL F Prime's CCSDS TM framer so an out-of-range virtual channel ID can no longer silently corrupt the spacecraft ID in downlinked telemetry frames",
+      "title": "Fixed NASA JPL F Prime's CCSDS TM framer so an out-of-range virtual channel ID can no longer silently corrupt the spacecraft ID in downlinked telemetry frames",
       "url": "https://github.com/nasa/fprime/pull/6400",
       "date": "2026-11-16",
       "status": "merged",
@@ -878,7 +878,7 @@
       "project": "mastg",
       "org": "OWASP",
       "area": "Post-quantum",
-      "title": "Reported that the OWASP MASTG says FIPS 203 specifies CRYSTALS-Kyber; it specifies ML-KEM (fix branch ready)",
+      "title": "Reported that the OWASP MASTG says FIPS 203 specifies CRYSTALS-Kyber; it specifies ML-KEM",
       "url": "https://github.com/OWASP/mastg/issues/4039",
       "date": "2026-11-13",
       "status": "proposed",
@@ -1511,11 +1511,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 355158491275,
-    "sessions": 14933,
-    "messages": 2224297,
-    "avg_30d": 4807012214,
-    "as_of": "2026-11-25 18:02 IST",
+    "tokens": 355868743696,
+    "sessions": 15040,
+    "messages": 2232841,
+    "avg_30d": 4557052912,
+    "as_of": "2026-11-27 00:04 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -1760,7 +1760,7 @@
         ],
         "items": [
           {
-            "title": "Proposed a fix to NASA JPL F Prime's CCSDS TM framer so an out-of-range virtual channel ID can no longer silently corrupt the spacecraft ID in downlinked telemetry frames",
+            "title": "Fixed NASA JPL F Prime's CCSDS TM framer so an out-of-range virtual channel ID can no longer silently corrupt the spacecraft ID in downlinked telemetry frames",
             "url": "https://github.com/nasa/fprime/pull/6400",
             "date": "2026-11-16",
             "kind": "merged",
@@ -2316,7 +2316,7 @@
         "id": "4errQPTkgDA",
         "title": "ISO 27090 Explained: The 9 Ways Attackers Target Your AI",
         "date": "2026-10-26",
-        "views": 207
+        "views": 208
       },
       {
         "id": "K5dwdPedoMA",
@@ -2336,13 +2336,13 @@
         "id": "VsZ54SHovJU",
         "title": "How to Build a Practical GRC Program from Scratch | With Moses Omolaiye (Founder, MitigateIT)",
         "date": "2026-02-21",
-        "views": 2445
+        "views": 2446
       },
       {
         "id": "BGTiXGaMhLU",
         "title": "I Built a FREE GRC Practice Lab… You Won’t Believe What Happened Next...",
         "date": "2026-02-13",
-        "views": 2374
+        "views": 2376
       },
       {
         "id": "yo4xZccg940",
@@ -2354,13 +2354,13 @@
         "id": "NG2w4D6VPDw",
         "title": "I Built a Free GRC AI Agent for My GRC Practice Lab Using WebGPU + WebLLM",
         "date": "2026-03-24",
-        "views": 1304
+        "views": 1305
       },
       {
         "id": "4ftBGaUufA8",
         "title": "I Built the ISO 27001 Practical Course, I Wish Existed",
         "date": "2026-05-19",
-        "views": 953
+        "views": 957
       },
       {
         "id": "_8DzH-mjYug",
@@ -2371,7 +2371,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-26 22:55 IST"
+    "as_of": "2026-11-27 01:43 IST"
   },
   "counts": {
     "contributions": 124,
@@ -2383,5 +2383,5 @@
     "in_review": 87,
     "organisations": 28
   },
-  "updated": "2026-11-26"
+  "updated": "2026-11-27"
 }
