@@ -64,6 +64,17 @@
       "landed": false
     },
     {
+      "id": "openset-llm-78",
+      "project": "openset-llm",
+      "org": "opensetlabs",
+      "area": "local LLM inference",
+      "title": "Fixed the openset-llm installer so a machine with numpy installed per user no longer fails at the model graft step after the weights are downloaded",
+      "url": "https://github.com/opensetlabs/openset-llm/pull/78",
+      "date": "2026-11-27",
+      "status": "proposed",
+      "landed": false
+    },
+    {
       "id": "opik-9778",
       "project": "opik",
       "org": "comet-ml",
@@ -1544,11 +1555,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 356985717754,
-    "sessions": 15237,
-    "messages": 2245844,
-    "avg_30d": 4472675120,
-    "as_of": "2026-11-27 03:17 IST",
+    "tokens": 357333840762,
+    "sessions": 15291,
+    "messages": 2249958,
+    "avg_30d": 4431228489,
+    "as_of": "2026-11-27 04:02 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -2404,16 +2415,16 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-27 03:59 IST"
+    "as_of": "2026-11-27 04:04 IST"
   },
   "counts": {
-    "contributions": 127,
+    "contributions": 128,
     "accepted": 36,
     "merged": 30,
     "issues_accepted": 6,
     "recognised": 1,
     "projects": 93,
-    "in_review": 90,
+    "in_review": 91,
     "organisations": 28
   },
   "updated": "2026-11-27"
