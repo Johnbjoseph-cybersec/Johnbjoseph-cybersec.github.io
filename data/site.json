@@ -38,8 +38,10 @@
       "title": "Fixed the React and React Native validators in Google Labs' Stitch agent skills so colors and web tags inside StyleSheet.create, map callbacks and wrapped components are checked again",
       "url": "https://github.com/google-labs-code/stitch-skills/pull/115",
       "date": "2026-11-27",
-      "status": "proposed",
-      "landed": false
+      "status": "merged",
+      "note": "Merged by Google Labs (google-labs-code).",
+      "status_changed": "2026-11-28",
+      "landed": true
     },
     {
       "id": "obsidian-prism-119",
@@ -49,8 +51,10 @@
       "title": "Fixed Obsidian Prism (2.2k stars, Trendshift number 1 on 2026-11-27) so a Thought Translator style preset is saved when it is clicked instead of being lost when the settings sheet closes (issue #105)",
       "url": "https://github.com/RMvdesi/obsidian-prism/pull/119",
       "date": "2026-11-27",
-      "status": "proposed",
-      "landed": false
+      "status": "merged",
+      "note": "Integrated by the maintainer into their own commit with Co-authored-by John B Joseph and a credit in docs/CONTRIBUTORS.md (resolves their open issue #105).",
+      "status_changed": "2026-11-28",
+      "landed": true
     },
     {
       "id": "openset-llm-77",
@@ -60,8 +64,10 @@
       "title": "Reported that the openset-llm installer fails at the model graft step on machines where numpy is installed per user",
       "url": "https://github.com/opensetlabs/openset-llm/issues/77",
       "date": "2026-11-27",
-      "status": "proposed",
-      "landed": false
+      "status": "accepted",
+      "note": "Issue John opened; closed as completed via merged PR #78.",
+      "status_changed": "2026-11-28",
+      "landed": true
     },
     {
       "id": "openset-llm-78",
@@ -71,8 +77,10 @@
       "title": "Fixed the openset-llm installer so a machine with numpy installed per user no longer fails at the model graft step after the weights are downloaded",
       "url": "https://github.com/opensetlabs/openset-llm/pull/78",
       "date": "2026-11-27",
-      "status": "proposed",
-      "landed": false
+      "status": "merged",
+      "note": "Merged; closes issue #77.",
+      "status_changed": "2026-11-28",
+      "landed": true
     },
     {
       "id": "opik-9778",
@@ -1735,6 +1743,36 @@
         "date": "2026-11-17"
       },
       {
+        "key": "opensetlabs",
+        "name": "Open Set Labs",
+        "sub": "github.com/opensetlabs",
+        "logo": "assets/home/img/achievements/org-opensetlabs.png",
+        "kinds": [
+          "merged",
+          "accepted"
+        ],
+        "items": [
+          {
+            "title": "Reported that the openset-llm installer fails at the model graft step on machines where numpy is installed per user",
+            "url": "https://github.com/opensetlabs/openset-llm/issues/77",
+            "date": "2026-11-27",
+            "kind": "accepted",
+            "project": "openset-llm"
+          },
+          {
+            "title": "Fixed the openset-llm installer so a machine with numpy installed per user no longer fails at the model graft step after the weights are downloaded",
+            "url": "https://github.com/opensetlabs/openset-llm/pull/78",
+            "date": "2026-11-27",
+            "kind": "merged",
+            "project": "openset-llm"
+          }
+        ],
+        "merged": 1,
+        "accepted": 1,
+        "recognised": 0,
+        "date": "2026-11-27"
+      },
+      {
         "key": "wshobson",
         "name": "agents",
         "sub": "by wshobson on GitHub",
@@ -1910,6 +1948,50 @@
         "accepted": 1,
         "recognised": 0,
         "date": "2026-11-11"
+      },
+      {
+        "key": "google-labs-code",
+        "name": "Google Labs Code",
+        "sub": "github.com/google-labs-code",
+        "logo": "assets/home/img/achievements/org-google-labs-code.png",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Fixed the React and React Native validators in Google Labs' Stitch agent skills so colors and web tags inside StyleSheet.create, map callbacks and wrapped components are checked again",
+            "url": "https://github.com/google-labs-code/stitch-skills/pull/115",
+            "date": "2026-11-27",
+            "kind": "merged",
+            "project": "stitch-skills"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-27"
+      },
+      {
+        "key": "rmvdesi",
+        "name": "obsidian-prism",
+        "sub": "by RMvdesi on GitHub",
+        "logo": "assets/home/img/achievements/org-rmvdesi.jpg",
+        "kinds": [
+          "merged"
+        ],
+        "items": [
+          {
+            "title": "Fixed Obsidian Prism (2.2k stars, Trendshift number 1 on 2026-11-27) so a Thought Translator style preset is saved when it is clicked instead of being lost when the settings sheet closes (issue #105)",
+            "url": "https://github.com/RMvdesi/obsidian-prism/pull/119",
+            "date": "2026-11-27",
+            "kind": "merged",
+            "project": "obsidian-prism"
+          }
+        ],
+        "merged": 1,
+        "accepted": 0,
+        "recognised": 0,
+        "date": "2026-11-27"
       },
       {
         "key": "ibm",
@@ -2415,17 +2497,17 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-28 23:16 IST"
+    "as_of": "2026-11-28 23:23 IST"
   },
   "counts": {
     "contributions": 128,
-    "accepted": 36,
-    "merged": 30,
-    "issues_accepted": 6,
+    "accepted": 40,
+    "merged": 33,
+    "issues_accepted": 7,
     "recognised": 1,
     "projects": 93,
-    "in_review": 91,
-    "organisations": 28
+    "in_review": 87,
+    "organisations": 31
   },
   "updated": "2026-11-28"
 }
