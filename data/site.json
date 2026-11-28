@@ -1563,11 +1563,11 @@
     ]
   },
   "mindledger": {
-    "tokens": 357333840762,
-    "sessions": 15291,
-    "messages": 2249958,
-    "avg_30d": 4431228489,
-    "as_of": "2026-11-27 04:02 IST",
+    "tokens": 357559149362,
+    "sessions": 15329,
+    "messages": 2252609,
+    "avg_30d": 3487507693,
+    "as_of": "2026-11-29 00:09 IST",
     "source": "My token ledger, synced every 2 hours"
   },
   "projects": [
@@ -2462,7 +2462,7 @@
         "id": "VsZ54SHovJU",
         "title": "How to Build a Practical GRC Program from Scratch | With Moses Omolaiye (Founder, MitigateIT)",
         "date": "2026-02-21",
-        "views": 2454
+        "views": 2457
       },
       {
         "id": "BGTiXGaMhLU",
@@ -2497,7 +2497,7 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-28 23:23 IST"
+    "as_of": "2026-11-29 00:22 IST"
   },
   "counts": {
     "contributions": 128,
@@ -2509,5 +2509,5 @@
     "in_review": 87,
     "organisations": 31
   },
-  "updated": "2026-11-28"
+  "updated": "2026-11-29"
 }
