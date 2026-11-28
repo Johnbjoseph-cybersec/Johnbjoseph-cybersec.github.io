@@ -31,6 +31,17 @@
   },
   "contributions": [
     {
+      "id": "app-store-compliance-2435",
+      "project": "app-store-compliance",
+      "org": "mjmirza",
+      "area": "app store compliance tooling (Google Play target API)",
+      "title": "Fixed the App Store Compliance guard (7k stars) so a Google Play target API below the floor, set with targetSdkVersion(35), is no longer passed as clear",
+      "url": "https://github.com/mjmirza/app-store-compliance/pull/2435",
+      "date": "2026-11-29",
+      "status": "proposed",
+      "landed": false
+    },
+    {
       "id": "stitch-skills-115",
       "project": "stitch-skills",
       "org": "google-labs-code",
@@ -2497,16 +2508,16 @@
     ],
     "feed_n": 15,
     "source": "YouTube channel feed, views as YouTube reports them",
-    "as_of": "2026-11-29 00:22 IST"
+    "as_of": "2026-11-29 00:24 IST"
   },
   "counts": {
-    "contributions": 128,
+    "contributions": 129,
     "accepted": 40,
     "merged": 33,
     "issues_accepted": 7,
     "recognised": 1,
     "projects": 93,
-    "in_review": 87,
+    "in_review": 88,
     "organisations": 31
   },
   "updated": "2026-11-29"
